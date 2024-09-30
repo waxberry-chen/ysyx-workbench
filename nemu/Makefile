@@ -35,9 +35,16 @@ include $(FILELIST_MK)
 
 # Filter out directories and files in blacklist to obtain the final set of source files
 DIRS-BLACKLIST-y += $(DIRS-BLACKLIST)
+ifneq ($(strip $(DIRS-BLACKLIST-y)),)
 SRCS-BLACKLIST-y += $(SRCS-BLACKLIST) $(shell find -L $(DIRS-BLACKLIST-y) -name "*.c")
+else
+SRCS-BLACKLIST-y += $(SRCS-BLACKLIST)
+endif
 SRCS-y += $(shell find -L $(DIRS-y) -name "*.c")
 SRCS = $(filter-out $(SRCS-BLACKLIST-y),$(SRCS-y))
+
+# $(info DIRS-BLACKLIST-y: $(DIRS-BLACKLIST-y))
+# $(info DIRS-y: $(DIRS-y))
 
 # Extract compiler and options from menuconfig
 ifneq ($(CONFIG_CC),)
