@@ -35,6 +35,7 @@ static char* rl_gets() {
 
   line_read = readline("(nemu) ");
 
+//add the command to history list.
   if (line_read && *line_read) {
     add_history(line_read);
   }
@@ -54,6 +55,44 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+//my code begin
+static int cmd_si(char *args){
+  int step_num;
+  if (args == NULL){
+    step_num = 1;
+  }else{
+    sscanf(args, "%d", &step_num);
+  }
+//should add limit to the step number. 添加对不合适步数(字符, 过大的数)的判断. 
+  cpu_exec(step_num);
+  printf("%d steps executed.\n", step_num);
+
+  return 0;
+};
+
+static int cmd_info(char *args){
+  if (strcmp(args, "r") == 0){
+    //print registers.
+    isa_reg_display();
+  // }else if (strcmp(args, "w") == 0){
+    //print infomations of watchpoint.
+  }else{
+    printf("ERROR: Wrong arguments given.(info r or w)");
+  }
+  
+  return 0;
+}
+
+// static int cmd_x(char *args){
+
+// };
+
+// static int cmd_p(char *args){
+
+// };
+
+//end
+
 static struct {
   const char *name;
   const char *description;
@@ -62,6 +101,10 @@ static struct {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
+  { "si", "Single step execution, step into N steps", cmd_si},
+  { "info", "Give the information of registers(r) or watchpoint(w)", cmd_info},
+  // { "x", "", cmd_x},
+  // { "p", "", cmd_p},
 
   /* TODO: Add more commands */
 
@@ -112,6 +155,7 @@ void sdb_mainloop() {
     /* treat the remaining string as the arguments,
      * which may need further parsing
      */
+    //HERE WE NEED MULTIPLE ARGUMENTS
     char *args = cmd + strlen(cmd) + 1;
     if (args >= str_end) {
       args = NULL;

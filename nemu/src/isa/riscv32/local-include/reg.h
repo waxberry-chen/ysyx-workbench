@@ -23,8 +23,10 @@ static inline int check_reg_idx(int idx) {
   return idx;
 }
 
+//use gpr(idx) as a substitute for cpu.gpr[check_reg_idx]
 #define gpr(idx) (cpu.gpr[check_reg_idx(idx)])
 
+//idx --> name
 static inline const char* reg_name(int idx) {
   extern const char* regs[];
   return regs[check_reg_idx(idx)];
