@@ -18,6 +18,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
+#include <memory/paddr.h>
 
 static int is_batch_mode = false;
 
@@ -83,9 +84,22 @@ static int cmd_info(char *args){
   return 0;
 }
 
-// static int cmd_x(char *args){
-
-// };
+static int cmd_x(char *args){
+  int i;
+  int wordlen;
+  paddr_t base_addr;
+if (args == NULL){
+  printf("2 arguments needed\n format: x N EXPR");
+}else{
+  sscanf(args, "%d %x", &wordlen, &base_addr);
+  paddr_t cur_addr = base_addr;
+  for(i = 0; i < wordlen; i++){
+    printf("0x%08x:\t%08x\n", cur_addr, paddr_read(cur_addr, 4));
+    cur_addr = cur_addr + 4;
+  }
+}
+return 0;
+};
 
 // static int cmd_p(char *args){
 
@@ -101,9 +115,9 @@ static struct {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-  { "si", "Single step execution, step into N steps", cmd_si},
-  { "info", "Give the information of registers(r) or watchpoint(w)", cmd_info},
-  // { "x", "", cmd_x},
+  { "si", "USAGE: si [N] -step into N steps, N=1 default", cmd_si},
+  { "info", "USAGE: info r/w -print the information", cmd_info},
+  { "x", "USAGE: x N EXPR -print 4N Byte base on base address EXPR", cmd_x},
   // { "p", "", cmd_p},
 
   /* TODO: Add more commands */
