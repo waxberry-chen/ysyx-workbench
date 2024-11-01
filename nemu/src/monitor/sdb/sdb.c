@@ -101,9 +101,16 @@ if (args == NULL){
 return 0;
 };
 
-// static int cmd_p(char *args){
-
-// };
+static int cmd_p(char *args){
+  bool success;
+  word_t result = expr(args, &success);
+  if(!success){
+    printf("Calculation failed\n");
+  }else{
+    printf("%d\n", result);
+  }
+  return 0;
+};
 
 //end
 
@@ -118,7 +125,7 @@ static struct {
   { "si", "USAGE: si [N] -step into N steps, N=1 default", cmd_si},
   { "info", "USAGE: info r/w -print the information", cmd_info},
   { "x", "USAGE: x N EXPR -print 4N Byte base on base address EXPR", cmd_x},
-  // { "p", "", cmd_p},
+  { "p", "USAGE: p EXPR -calculate the expression", cmd_p},
 
   /* TODO: Add more commands */
 
