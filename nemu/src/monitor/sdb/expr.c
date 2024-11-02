@@ -21,7 +21,9 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_NUM
+  TK_NOTYPE = 256, 
+  TK_EQ, 
+  TK_NUM = 1
 
   /* TODO: Add more token types */
 
@@ -77,6 +79,7 @@ typedef struct token {
 static Token tokens[32] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
+//Get tokens[]
 static bool make_token(char *e) {
   int position = 0;
   int i;
@@ -102,7 +105,7 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
 
-Token token;
+        Token token;
 
         switch (rules[i].token_type) {
           case TK_NOTYPE:
@@ -112,8 +115,10 @@ Token token;
           strncpy(token.str, substr_start, substr_len );
           token.str[substr_len] = '\0';
           tokens[nr_token] = token;
-          printf("token[%d]: \ntype: %c\ncontent: %s\n", nr_token, token.type, token.str);
+          //TEST
+          //printf("token[%d]: \ntype: %c\ncontent: %s\n", nr_token, token.type, token.str);
           nr_token = nr_token +1;
+          break;
         }
 
         break;
@@ -129,15 +134,89 @@ Token token;
   return true;
 }
 
+bool check_parentheses(int p, int q){
+  if((tokens[p].type == '(') && (tokens[q].type == ')')){
+    return true;
+  }else{
+    return false;
+  }
+}
+
+int find_op(int p, int q){
+  int i;
+  int op = -1;
+  int flag = 0;
+  for(i = p; i < q; i++){
+    if(tokens[i].type == '('){
+      while(tokens[i].type != ')')
+      i++;
+    }
+    if(!flag && (tokens[i].type == '*'|| tokens[i].type == '/')){
+      flag = 1;
+      op = i;
+    }else if(!flag && (tokens[i].type == '+' || tokens[i].type == '-')){
+      flag = 1;
+      op = i;
+    }
+  }
+  if(op == -1){
+    printf("ERROR: operator not found");
+    return 0;
+  }else{
+    return op;
+  }
+}
+
+word_t eval(int p, int q){
+  int op;
+  if (p > q) {
+    /* Bad expression */
+    return 1;
+  }else if (p == q) {
+    /* Single token.
+     * For now this token should be a number.
+     * Return the value of the number.
+     */
+    return atoi(tokens[p].str);
+  }else if (check_parentheses(p, q) == true) {
+    /* The expression is surrounded by a matched pair of parentheses.
+     * If that is the case, just throw away the parentheses.
+     */
+    return eval(p + 1, q - 1);
+  }else {
+    //find main operator
+    op = find_op(p, q);
+    }
+    //op = the position of 主运算符 in the token expression;
+    word_t val1 = eval(p, op - 1);
+    word_t val2 = eval(op + 1, q);
+
+    switch (tokens[op].type) {
+      case '+': return val1 + val2;
+      case '-': return val1 - val2;
+      case '*': return val1 * val2;
+      case '/': 
+      if(val2 == 0){
+        printf("ERROR: Zero can't be divided");
+        return 0;
+      }else{
+        return val1 / val2;
+      }
+      default: assert(0);
+    }
+}
+
+
 
 word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
     return 0;
+  }else{
+    *success = true;
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  //TODO();
 
-  return 0;
+  return eval(0, nr_token-1);
 }
