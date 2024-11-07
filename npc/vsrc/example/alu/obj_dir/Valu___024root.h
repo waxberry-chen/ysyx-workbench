@@ -6,12 +6,15 @@
 #define VERILATED_VALU___024ROOT_H_  // guard
 
 #include "verilated.h"
+class Valu___024unit;
 
 
 class Valu__Syms;
 
 class alignas(VL_CACHE_LINE_BYTES) Valu___024root final : public VerilatedModule {
   public:
+    // CELLS
+    Valu___024unit* __PVT____024unit;
 
     // DESIGN SPECIFIC STATE
     VL_IN8(clk,0,0);

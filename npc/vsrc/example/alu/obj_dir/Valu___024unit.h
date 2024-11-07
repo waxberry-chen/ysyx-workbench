@@ -13,6 +13,13 @@ class Valu__Syms;
 class alignas(VL_CACHE_LINE_BYTES) Valu___024unit final : public VerilatedModule {
   public:
 
+    // ENUMS (that were declared public)
+    enum operation_t {
+        add = 1U,
+        sub = 2U,
+        nop = 0U
+    };
+
     // INTERNAL VARIABLES
     Valu__Syms* const vlSymsp;
 

@@ -18,6 +18,7 @@ Valu::Valu(VerilatedContext* _vcontextp__, const char* _vcname__)
     , in_valid{vlSymsp->TOP.in_valid}
     , out{vlSymsp->TOP.out}
     , out_valid{vlSymsp->TOP.out_valid}
+    , __PVT____024unit{vlSymsp->TOP.__PVT____024unit}
     , rootp{&(vlSymsp->TOP)}
 {
     // Register model with the context
