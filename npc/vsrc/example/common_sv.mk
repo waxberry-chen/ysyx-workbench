@@ -1,6 +1,7 @@
 #Name of the module
-MODULE=alu
+SOURCE_V=$(wildcard ./*.sv)
 
+MODULE=$(patsubst %.sv, %, $(SOURCE_SV))
 RANDOM_INIT=+verilator+rand+reset+2
 OPTFLAGS=--x-assign unique --x-initial unique
 
@@ -13,7 +14,7 @@ verilate: .stamp.verilate
 
 #make build 构建可执行文件
 .PHONY:build
-build: obj_dir/V$(MODULE)
+build: obj_dir/Valu
 
 #make wave 生成波形并查看
 .PHONY:waves

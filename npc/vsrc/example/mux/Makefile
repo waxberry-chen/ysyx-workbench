@@ -1,5 +1,5 @@
 #Name of the module
-MODULE=alu
+MODULE=switch
 
 RANDOM_INIT=+verilator+rand+reset+2
 OPTFLAGS=--x-assign unique --x-initial unique
@@ -32,16 +32,16 @@ waveform.vcd: ./obj_dir/V$(MODULE)
 	@echo "### BUILDING SIM ###"
 	make -C obj_dir -f V$(MODULE).mk V$(MODULE)
 
-.stamp.verilate: $(MODULE).sv tb_$(MODULE).cpp
+.stamp.verilate: $(MODULE).v tb_$(MODULE).cpp
 	@echo
 	@echo "### VERILATING ###"
-	verilator -Wall --trace $(OPTFLAGS) -cc $(MODULE).sv --exe tb_$(MODULE).cpp
+	verilator -Wall --trace $(OPTFLAGS) -cc $(MODULE).v --exe tb_$(MODULE).cpp
 	@touch .stamp.verilate
 
 #detect the problems without compiling
 .PHONY:lint
-lint: $(MODULE).sv
-	verilator --lint-only $(MODULE).sv
+lint: $(MODULE).v
+	verilator --lint-only $(MODULE).v
 
 .PHONY: clean
 clean:
