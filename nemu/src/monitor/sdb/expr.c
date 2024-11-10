@@ -147,20 +147,22 @@ int find_op(int p, int q){
   int op = -1;
   int flag = 0;
   for(i = p; i < q; i++){
+    //skip the parentheses
     if(tokens[i].type == '('){
       while(tokens[i].type != ')')
       i++;
     }
     if(!flag && (tokens[i].type == '*'|| tokens[i].type == '/')){
-      flag = 1;
       op = i;
-    }else if(!flag && (tokens[i].type == '+' || tokens[i].type == '-')){
+    }
+    if((tokens[i].type == '+' || tokens[i].type == '-')){
       flag = 1;
       op = i;
     }
   }
   if(op == -1){
     printf("ERROR: operator not found");
+    assert(0);
     return 0;
   }else{
     return op;
