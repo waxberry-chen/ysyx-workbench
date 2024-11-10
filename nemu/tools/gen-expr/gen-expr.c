@@ -30,9 +30,51 @@ static char *code_format =
 "  printf(\"%%u\", result); "
 "  return 0; "
 "}";
+static char *buf_cur = NULL;
+static char *buf_end = buf + (sizeof(buf)/sizeof(buf[0]));
+
+
+static int choose(int n){
+  return rand() % n;
+}
+
+static void gen_num(){
+  int num = choose(10);
+  if(buf_cur < buf_end){
+    int n_writes = snprintf(buf_cur, buf_end-buf_cur, "%d", num);
+    if(n_writes > 0){
+      buf_cur += n_writes;
+    }
+  }
+}
+
+void gen(const char c){
+  if(buf_cur < buf_end){
+    int n_writes = snprintf(buf_cur, buf_end-buf_cur, "%c", c);
+    if(n_writes > 0){
+      buf_cur += n_writes;
+    }
+  }
+  
+}
+
+static char ops[] = {'+', '-', '*', '/'};
+static void gen_rand_op(){
+  int op_index = choose(sizeof(ops));
+  char op = ops[op_index];
+  gen(op);
+}
 
 static void gen_rand_expr() {
-  buf[0] = '\0';
+  //生成结束条件
+  //buf[0] = '\0';
+
+  switch(choose(5)){
+    case 0: gen_num(); break;
+    case 1: gen('('); gen_rand_expr(); gen(')');break;
+    case 2: gen(' ');
+    default: gen_rand_expr(); gen_rand_op(); gen_rand_expr(); break;
+  }
 }
 
 int main(int argc, char *argv[]) {
@@ -44,6 +86,7 @@ int main(int argc, char *argv[]) {
   }
   int i;
   for (i = 0; i < loop; i ++) {
+    buf_cur = buf;
     gen_rand_expr();
 
     sprintf(code_buf, code_format, buf);
