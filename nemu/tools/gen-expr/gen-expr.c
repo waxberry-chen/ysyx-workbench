@@ -20,6 +20,9 @@
 #include <assert.h>
 #include <string.h>
 
+#define MAX_RECURSION_DEPTH 10
+static int depth = 0;
+
 // this should be enough
 static char buf[65536] = {};
 static char code_buf[65536 + 128] = {}; // a little larger than `buf`
@@ -66,15 +69,28 @@ static void gen_rand_op(){
 }
 
 static void gen_rand_expr() {
-  //生成结束条件
+  //防止过多的递归
+  if(depth > MAX_RECURSION_DEPTH){
+    gen_num();
+    return;
+  }
+  depth++;
   //buf[0] = '\0';
 
-  switch(choose(5)){
+  switch(choose(3)){
     case 0: gen_num(); break;
     case 1: gen('('); gen_rand_expr(); gen(')');break;
-    case 2: gen(' ');
-    default: gen_rand_expr(); gen_rand_op(); gen_rand_expr(); break;
+    default: gen_rand_expr(); gen_rand_op(); 
+      if(buf_cur[-1] == '/'){
+        do {
+          gen_rand_expr();
+        }while (buf_cur[-1] == '0' && buf_cur[-2] == '/');
+      } else {
+        gen_rand_expr();
+      }
+      break;
   }
+  depth--;
 }
 
 int main(int argc, char *argv[]) {
@@ -96,7 +112,7 @@ int main(int argc, char *argv[]) {
     fputs(code_buf, fp);
     fclose(fp);
 
-    int ret = system("gcc /tmp/.code.c -o /tmp/.expr");
+    int ret = system("gcc /tmp/.code.c -Wall -Werror -o /tmp/.expr");
     if (ret != 0) continue;
 
     fp = popen("/tmp/.expr", "r");
@@ -106,6 +122,7 @@ int main(int argc, char *argv[]) {
     ret = fscanf(fp, "%d", &result);
     pclose(fp);
 
+    //原为%u, 为什么?
     printf("%u %s\n", result, buf);
   }
   return 0;

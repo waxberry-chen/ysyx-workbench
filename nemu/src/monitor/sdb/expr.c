@@ -23,7 +23,10 @@
 enum {
   TK_NOTYPE = 256, 
   TK_EQ, 
-  TK_NUM = 1
+  TK_NUM = 1,
+  TK_HEX = 2,
+  TK_REG = 3
+
 
   /* TODO: Add more token types */
 
@@ -134,9 +137,22 @@ static bool make_token(char *e) {
   return true;
 }
 
+//False, parentheses need to be matched! 
 bool check_parentheses(int p, int q){
   if((tokens[p].type == '(') && (tokens[q].type == ')')){
-    return true;
+    int par = 0;
+    for(int i = p; i <= q; i++){
+      if(tokens[i].type == '('){
+        par++;
+      }else if(tokens[i].type == ')'){
+        par--;
+      }
+
+      if(par == 0 && i < q){
+        return false;
+      }
+    }
+    return par == 0;
   }else{
     return false;
   }
@@ -145,26 +161,64 @@ bool check_parentheses(int p, int q){
 int find_op(int p, int q){
   int i;
   int op = -1;
-  int flag = 0;
-  for(i = p; i < q; i++){
+  int paren_level = 0;
+  for(i = p; i <= q; i++){
     //skip the parentheses
+
     if(tokens[i].type == '('){
-      while(tokens[i].type != ')')
-      i++;
+      paren_level++;
+    } else if (tokens[i].type == ')'){
+      paren_level--;
     }
-    if(!flag && (tokens[i].type == '*'|| tokens[i].type == '/')){
-      op = i;
-    }
-    if((tokens[i].type == '+' || tokens[i].type == '-')){
-      flag = 1;
-      op = i;
+
+    // if(tokens[i].type == '('){
+    //   int par = q;
+    //   for(par = q; par > p; par--){
+    //     if(check_parentheses(p, par) == true){
+    //       i = par + 1;
+    //     }
+    //   }
+
+      // int par = 0;
+      // while(!par || tokens[i].type != ')'){
+      //   if(tokens[i].type == '('){
+      //     par++;
+      //   }else if(tokens[i].type == ')'){
+      //     par--;
+      //   }
+      //   i++;
+      // }
+      //}
+    if(paren_level == 0){
+      if((tokens[i].type == '+' || tokens[i].type == '-')){
+        op = i;
+      }
     }
   }
+
   if(op == -1){
-    printf("ERROR: operator not found");
+    for(i = p; i <= q; i++){
+      if(tokens[i].type == '('){
+        paren_level++;
+      }else if(tokens[i].type == ')'){
+        paren_level--;
+      }
+
+      if(paren_level == 0){
+        if(tokens[i].type == '*' || tokens[i].type == '/'){
+          op = i;
+        }
+      }
+    }
+  }
+
+  if(op == -1){
+    printf("paren_level: %d\n", paren_level);
+    printf("ERROR: operator not found\n");
     assert(0);
     return 0;
   }else{
+    printf("find No.%d: %c\n",op , tokens[op].type);
     return op;
   }
 }
@@ -188,7 +242,6 @@ word_t eval(int p, int q){
   }else {
     //find main operator
     op = find_op(p, q);
-    }
     //op = the position of 主运算符 in the token expression;
     word_t val1 = eval(p, op - 1);
     word_t val2 = eval(op + 1, q);
@@ -206,6 +259,7 @@ word_t eval(int p, int q){
       }
       default: assert(0);
     }
+  }
 }
 
 

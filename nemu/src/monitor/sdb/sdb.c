@@ -199,10 +199,46 @@ void sdb_mainloop() {
   }
 }
 
+void test_expr(){
+  FILE *fp = fopen("/Users/yimingchen/prj/ysyx-workbench/nemu/tools/gen-expr/input", "r");
+  if(fp == NULL){
+    perror("test_expr: Failed to open the test file.");
+  }
+  //这里面answer和result只能对应%u, 不能%lu
+  char *e = NULL;
+  word_t answer;
+
+  size_t len = 0;
+  ssize_t read;
+  bool success = false;
+
+  while(true){
+    if(fscanf(fp, "%u", &answer) == -1)
+      break;
+    read = getline(&e, &len, fp);
+    e[read-1] = '\0';
+
+    word_t result = expr(e, &success);
+
+    assert(success);
+    if(result != answer){
+      puts(e);
+      printf("Expected: %u\tGot: %u\n", answer, result);
+      assert(0);
+    }
+  }
+
+  fclose(fp);
+  if(e)
+    free(e);
+  Log("test_expr: PASS");
+}
+
 void init_sdb() {
   /* Compile the regular expressions. */
   init_regex();
-
+  /* Test expression calculation. */
+  //test_expr();
   /* Initialize the watchpoint pool. */
   init_wp_pool();
 }
