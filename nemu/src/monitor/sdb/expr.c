@@ -19,18 +19,37 @@
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
+#include "expr.h"
+#include <memory/paddr.h>
 
 enum {
   TK_NOTYPE = 256, 
-  TK_EQ, 
+  TK_EQ, TK_NEQ,
   TK_NUM = 1,
   TK_HEX = 2,
-  TK_REG = 3
+  TK_REG = 3,
+
+  TK_POS, TK_NEG, TK_DREF,
+  TK_AND, TK_OR, TK_GT, TK_LT, TK_GE, TK_LE
 
 
   /* TODO: Add more token types */
 
 };
+
+static int bound_types[] = {')', TK_NUM, TK_REG};
+static int nop_types[] = {'(', ')', TK_NUM, TK_REG};
+static int op1_type[] = {TK_NEG, TK_POS, TK_DREF};
+//static int op_type[] = {'+', '-', '*', '-'};
+
+static bool oftypes(int type, int types[], int size){
+  for(int i = 0; i < size; i++){
+    if(type == types[i]){
+      return true;
+    }
+  }
+  return false;
+}
 
 static struct rule {
   const char *regex;
@@ -47,9 +66,17 @@ static struct rule {
   {"\\*", '*'},
   {"/", '/'},
   {"==", TK_EQ},        // equal
+  {"!=", TK_NEQ},
   {"\\(", '('},
   {"\\)", ')'},
-  {"[0-9]+", TK_NUM},
+  {"(0x)?[0-9a-fA-F]+", TK_NUM},
+  {"\\$[a-zA-Z]*[0-9]*", TK_REG},
+  {"&&", TK_AND},
+  {"\\|\\|", TK_OR},
+  {">", TK_GT}, 
+  {"<", TK_LT}, 
+  {">=", TK_GE},
+  {"<=", TK_LE},
 
 };
 
@@ -161,103 +188,141 @@ bool check_parentheses(int p, int q){
 int find_op(int p, int q){
   int i;
   int op = -1;
-  int paren_level = 0;
+  int par = 0;
+  int op_priority = 0;
   for(i = p; i <= q; i++){
     //skip the parentheses
-
     if(tokens[i].type == '('){
-      paren_level++;
-    } else if (tokens[i].type == ')'){
-      paren_level--;
-    }
-
-    // if(tokens[i].type == '('){
-    //   int par = q;
-    //   for(par = q; par > p; par--){
-    //     if(check_parentheses(p, par) == true){
-    //       i = par + 1;
-    //     }
-    //   }
-
-      // int par = 0;
-      // while(!par || tokens[i].type != ')'){
-      //   if(tokens[i].type == '('){
-      //     par++;
-      //   }else if(tokens[i].type == ')'){
-      //     par--;
-      //   }
-      //   i++;
-      // }
-      //}
-    if(paren_level == 0){
-      if((tokens[i].type == '+' || tokens[i].type == '-')){
+      par++;
+    }else if(tokens[i].type == ')'){
+      if (par == 0){
+        return -1;
+      }
+      par--;
+    }else if(OFTYPES(tokens[i].type, nop_types)){
+      continue;
+    }else if(par > 0){
+      continue;
+    }else{
+      int tmp_priority = 0;
+      switch(tokens[i].type){
+        case TK_OR: tmp_priority++;
+        case TK_AND: tmp_priority++;
+        case TK_EQ: case TK_NEQ: tmp_priority++;
+        case TK_GT: case TK_LT: case TK_GE: case TK_LE: tmp_priority++;
+        case '+': case '-': tmp_priority++;
+        case '*': case '/': tmp_priority++;
+        case TK_NEG: case TK_POS: case TK_DREF: tmp_priority++; break;
+        default: assert(0);
+      }
+      //here the judgement logic
+      if(tmp_priority >= op_priority || (tmp_priority == op_priority && !OFTYPES(tokens[i].type, op1_type))){
+        op_priority = tmp_priority;
         op = i;
       }
     }
   }
-
-  if(op == -1){
-    for(i = p; i <= q; i++){
-      if(tokens[i].type == '('){
-        paren_level++;
-      }else if(tokens[i].type == ')'){
-        paren_level--;
-      }
-
-      if(paren_level == 0){
-        if(tokens[i].type == '*' || tokens[i].type == '/'){
-          op = i;
-        }
-      }
-    }
+  if(par != 0){
+    return -1;
   }
 
-  if(op == -1){
-    printf("paren_level: %d\n", paren_level);
-    printf("ERROR: operator not found\n");
-    assert(0);
-    return 0;
-  }else{
-    printf("find No.%d: %c\n",op , tokens[op].type);
-    return op;
+  return op;
+}
+
+static word_t parse_operand(int i, bool *valid){
+  switch(tokens[i].type) {
+    case TK_NUM:
+      if(strncmp("0x", tokens[i].str, 2) == 0){
+        return strtol(tokens[i].str, NULL, 16);
+      }else{
+        return strtol(tokens[i].str, NULL, 10);
+      }
+    case TK_REG:
+      return isa_reg_str2val(tokens[i].str, valid);
+    default:
+      *valid = false;
+      return 0;
   }
 }
 
-word_t eval(int p, int q){
-  int op;
-  if (p > q) {
-    /* Bad expression */
-    return 1;
-  }else if (p == q) {
-    /* Single token.
-     * For now this token should be a number.
-     * Return the value of the number.
-     */
-    return atoi(tokens[p].str);
-  }else if (check_parentheses(p, q) == true) {
-    /* The expression is surrounded by a matched pair of parentheses.
-     * If that is the case, just throw away the parentheses.
-     */
-    return eval(p + 1, q - 1);
-  }else {
-    //find main operator
-    op = find_op(p, q);
-    //op = the position of 主运算符 in the token expression;
-    word_t val1 = eval(p, op - 1);
-    word_t val2 = eval(op + 1, q);
+//unary calculation
+word_t unary_cal(int op, word_t val, bool *valid){
+  switch(tokens[op].type){
+    case TK_NEG: return -val;
+    case TK_POS: return val;
+    case TK_DREF: return paddr_read(val, 4);
+    default: *valid = false;
+  }
+  return 0;
+}
 
-    switch (tokens[op].type) {
-      case '+': return val1 + val2;
-      case '-': return val1 - val2;
-      case '*': return val1 * val2;
-      case '/': 
+word_t binary_cal(word_t val1, int op, word_t val2, bool *valid){
+  switch (tokens[op].type) {
+    case '+': return val1 + val2;
+    case '-': return val1 - val2;
+    case '*': return val1 * val2;
+    case '/': 
       if(val2 == 0){
         printf("ERROR: Zero can't be divided");
         return 0;
       }else{
         return val1 / val2;
       }
-      default: assert(0);
+    case TK_AND: return val1 && val2;
+    case TK_OR: return val1 || val2;
+    case TK_EQ: return val1 == val2;
+    case TK_NEQ: return val1 != val2;
+    case TK_GT: return val1 > val2;
+    case TK_LT: return val1 < val2;
+    case TK_GE: return val1 >= val2;
+    case TK_LE: return val1 <= val2;
+    default: *valid = false; return 0;
+    //default: assert(0);
+  }
+}
+
+word_t eval(int p, int q, bool *valid){
+  *valid = true;
+  int op;
+  if (p > q) {
+    /* Bad expression */
+    *valid = false;
+    return 0;
+  }else if (p == q) {
+    /* Single token.
+     * For now this token should be a number.
+     * Return the value of the number.
+     */
+    return parse_operand(p, valid);
+    //return atoi(tokens[p].str);
+  }else if (check_parentheses(p, q) == true) {
+    /* The expression is surrounded by a matched pair of parentheses.
+     * If that is the case, just throw away the parentheses.
+     */
+    return eval(p + 1, q - 1, valid);
+  }else {
+    //find main operator
+    op = find_op(p, q);
+    //op = the position of 主运算符 in the token expression;
+    if(op < 0){
+      printf("ERROR: find_op() failed\n");
+      assert(0);
+      return -1;
+    }
+    bool valid1, valid2;
+    word_t val1 = eval(p, op - 1, &valid1);
+    word_t val2 = eval(op + 1, q, &valid2);
+
+    if(!valid2){
+      valid = false;
+      return 0;
+    }
+    if(valid1){
+      word_t rc = binary_cal(val1, op, val2, valid);
+      return rc;
+    }else{
+      word_t rc = unary_cal(op, val2, valid);
+      return rc;
     }
   }
 }
@@ -273,6 +338,17 @@ word_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
+  for(int i = 0; i < nr_token; i++){
+    if(tokens[i].type == '*' || tokens[i].type == '-' || tokens[i].type == '+'){
+      if(i == 0 || !OFTYPES(tokens[i-1].type, bound_types)){
+        switch(tokens[i].type){
+          case '-': tokens[i].type = TK_NEG; break;
+          case '+': tokens[i].type = TK_POS; break;
+          case '*': tokens[i].type = TK_DREF; break;
+        }
+      }
+    }
+  }
 
-  return eval(0, nr_token-1);
+  return eval(0, nr_token-1, success);
 }
