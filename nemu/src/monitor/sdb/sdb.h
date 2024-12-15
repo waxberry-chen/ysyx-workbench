@@ -20,4 +20,10 @@
 
 word_t expr(char *e, bool *success);
 
+void wp_watch(char *expr, word_t res);
+
+void wp_remove(int no);
+
+void wp_iterate();
+
 #endif

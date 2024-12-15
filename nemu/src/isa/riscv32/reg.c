@@ -32,5 +32,14 @@ void isa_reg_display() {
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
+  //$ra -> ra
+  // char *r_name;
+  // r_name = s+1;
+  int i;
+  for(i = 0; i < MUXDEF(CONFIG_RVE, 16, 32); i++){
+    if(strcmp(s + 1, reg_name(i)) == 0){
+      return gpr(i);
+    }
+  }
   return 0;
 }

@@ -112,6 +112,31 @@ static int cmd_p(char *args){
   return 0;
 };
 
+static int cmd_w(char *args){
+  if(!args){
+    printf("Usage: w EXPR\n");
+    return 0;
+  }
+  bool success;
+  word_t res = expr(args, &success);
+  if(!success){
+    puts("Invalid expression");
+  }else{
+    wp_watch(args, res);
+  }
+  return 0;
+}
+
+static int cmd_d(char *args){
+  char *arg = strtok(NULL, "");
+  if(!arg){
+    printf("Usage: d N\n");
+    return 0;
+  }
+  int no = strtol(arg, NULL, 10);
+  wp_remove(no);
+  return 0;
+}
 //end
 
 static struct {
@@ -126,6 +151,8 @@ static struct {
   { "info", "USAGE: info r/w -print the information", cmd_info},
   { "x", "USAGE: x N EXPR -print 4N Byte base on base address EXPR", cmd_x},
   { "p", "USAGE: p EXPR -calculate the expression", cmd_p},
+  { "w", "USAGE: w EXPR -set watchpoint at result of EXPR", cmd_w},
+  { "d", "USAGE: d N -delete watchpoint NO.N", cmd_d},
 
   /* TODO: Add more commands */
 
