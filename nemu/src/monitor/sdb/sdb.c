@@ -75,8 +75,9 @@ static int cmd_info(char *args){
   if (strcmp(args, "r") == 0){
     //print registers.
     isa_reg_display();
-  // }else if (strcmp(args, "w") == 0){
+   }else if (strcmp(args, "w") == 0){
     //print infomations of watchpoint.
+    wp_iterate();
   }else{
     printf("ERROR: Wrong arguments given.(info r or w)");
   }
