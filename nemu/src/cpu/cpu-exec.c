@@ -17,6 +17,7 @@
 #include <cpu/decode.h>
 #include <cpu/difftest.h>
 #include <locale.h>
+#include "../monitor/sdb/sdb.h"
 
 /* The assembly code of instructions executed is only output to the screen
  * when the number of instructions executed is less than this value.
@@ -24,6 +25,8 @@
  * You can modify this value as you want.
  */
 #define MAX_INST_TO_PRINT 10
+
+#define CONFIG_WATCHPOINT 1
 
 CPU_state cpu = {};
 uint64_t g_nr_guest_inst = 0;
@@ -104,6 +107,9 @@ void cpu_exec(uint64_t n) {
   switch (nemu_state.state) {
     case NEMU_END: case NEMU_ABORT: case NEMU_QUIT:
       printf("Program execution has ended. To restart the program, exit NEMU and run again.\n");
+      return;
+    case NEMU_STOP:
+      printf("Watchpoint triggered, program execution has stopped.\n");
       return;
     default: nemu_state.state = NEMU_RUNNING;
   }

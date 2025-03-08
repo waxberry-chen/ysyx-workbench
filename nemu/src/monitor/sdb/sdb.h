@@ -26,4 +26,6 @@ void wp_remove(int no);
 
 void wp_iterate();
 
+void wp_difftest();
+
 #endif

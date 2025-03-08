@@ -17,12 +17,12 @@
 
 #define NR_WP 32
 
-typedef struct watchpoint {
+typedef struct watchpoint{
   int NO;
   struct watchpoint *next;
 
   /* TODO: Add more members if necessary */
-  char *expr;
+  char expr[32];
   word_t old;
 
 } WP;
@@ -48,6 +48,7 @@ static WP* new_wp(){
   free_ = free_->next;
   ret->next = head;
   head = ret;
+  printf("new_wp success.\n");
   return ret;
 }
 
@@ -67,8 +68,16 @@ static void free_wp(WP *wp){
 }
 
 void wp_watch(char *expr, word_t res){
+  if(expr == NULL){
+    fprintf(stderr, "Error: NULL expression pointer.\n");
+    return;
+  }
   WP *wp = new_wp();
-  strcpy(wp->expr, expr);
+  if(wp == NULL){
+    fprintf(stderr, "Error: Failed to allocate new watchpoint.\n");
+    return;
+  }
+  strcpy(wp->expr, expr); //may cause segmentation fault.
   wp->old = res;
   printf("Watchpoint %d: %s\n", wp->NO, expr);
 }
@@ -99,7 +108,7 @@ void wp_difftest(){
     bool _;
     word_t new = expr(h->expr, &_);
     if(h->old != new){
-      printf("Watchpoint %d: %s\nOld value = %u\nNew value = %u\n", h->NO, h->expr, h->old, new);
+      printf("Watchpoint %d: %s\n\tValue: %u->%u\n", h->NO, h->expr, h->old, new);
       h->old = new;
     }
     h = h->next;

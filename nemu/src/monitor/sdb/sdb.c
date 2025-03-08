@@ -19,6 +19,7 @@
 #include <readline/history.h>
 #include "sdb.h"
 #include <memory/paddr.h>
+#include <stdbool.h>
 
 static int is_batch_mode = false;
 
@@ -108,7 +109,7 @@ static int cmd_p(char *args){
   if(!success){
     printf("Calculation failed\n");
   }else{
-    printf("%d\n", result);
+    printf("DEC:\t%d\nHEX:\t0x%x\n", result, result);
   }
   return 0;
 };
