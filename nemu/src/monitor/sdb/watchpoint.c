@@ -48,7 +48,6 @@ static WP* new_wp(){
   free_ = free_->next;
   ret->next = head;
   head = ret;
-  printf("new_wp success.\n");
   return ret;
 }
 
@@ -79,7 +78,7 @@ void wp_watch(char *expr, word_t res){
   }
   strcpy(wp->expr, expr); //may cause segmentation fault.
   wp->old = res;
-  printf("Watchpoint %d: %s\n", wp->NO, expr);
+  printf("Watchpoint %d set: %s\n", wp->NO, expr);
 }
 
 void wp_remove(int no){
@@ -89,28 +88,29 @@ void wp_remove(int no){
   printf("Delete watchpoint %d: %s\n", wp->NO, wp->expr);
 }
 
-void wp_iterate(){
-  WP *h = head;
-  if(!h){
+void wp_display(){
+  WP *cur = head;
+  if(!cur){
     puts("No watchpoints");
     return;
   }
-  printf("%-8s%-8s\n", "Num", "What");
-  while (h){
-    printf("%-8d%-8s\n", h->NO, h->expr);
-    h = h->next;
+  printf("%-8s%-8s\n", "No", "Expr");
+  while (cur){
+    printf("%-8d%-8s\n", cur->NO, cur->expr);
+    cur = cur->next;
   }
 }
 
 void wp_difftest(){
-  WP *h = head;
-  while(h){
-    bool _;
-    word_t new = expr(h->expr, &_);
-    if(h->old != new){
-      printf("Watchpoint %d: %s\n\tValue: %u->%u\n", h->NO, h->expr, h->old, new);
-      h->old = new;
+  WP *cur = head;
+  while(cur){
+    bool valid;
+    word_t new = expr(cur->expr, &valid);
+    if(cur->old != new){
+      printf("Watchpoint No.%d triggered: %s\tValue: %u->%u\n", cur->NO, cur->expr, cur->old, new);
+      cur->old = new;
+      nemu_state.state = NEMU_STOP;
     }
-    h = h->next;
+    cur = cur->next;
   }
 }

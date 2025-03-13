@@ -26,7 +26,7 @@
  */
 #define MAX_INST_TO_PRINT 10
 
-#define CONFIG_WATCHPOINT 1
+//#define CONFIG_WATCHPOINT 1
 
 CPU_state cpu = {};
 uint64_t g_nr_guest_inst = 0;
@@ -104,18 +104,18 @@ void assert_fail_msg() {
 /* Simulate how the CPU works. */
 void cpu_exec(uint64_t n) {
   g_print_step = (n < MAX_INST_TO_PRINT);
+  // Check the state.
   switch (nemu_state.state) {
     case NEMU_END: case NEMU_ABORT: case NEMU_QUIT:
       printf("Program execution has ended. To restart the program, exit NEMU and run again.\n");
       return;
-    case NEMU_STOP:
-      printf("Watchpoint triggered, program execution has stopped.\n");
-      return;
+    // Breakpoint, stop.
     default: nemu_state.state = NEMU_RUNNING;
   }
 
   uint64_t timer_start = get_time();
 
+  // Execute
   execute(n);
 
   uint64_t timer_end = get_time();

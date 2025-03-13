@@ -24,7 +24,7 @@ void wp_watch(char *expr, word_t res);
 
 void wp_remove(int no);
 
-void wp_iterate();
+void wp_display();
 
 void wp_difftest();
 

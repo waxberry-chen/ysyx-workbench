@@ -20,7 +20,7 @@
 #include <assert.h>
 #include <string.h>
 
-#define MAX_RECURSION_DEPTH 10
+#define MAX_RECURSION_DEPTH 3
 static int depth = 0;
 
 // this should be enough
@@ -42,8 +42,9 @@ static int choose(int n){
 }
 
 static void gen_num(){
-  int num = choose(10);
+  int num = choose(100);
   if(buf_cur < buf_end){
+    // Return string length written
     int n_writes = snprintf(buf_cur, buf_end-buf_cur, "%d", num);
     if(n_writes > 0){
       buf_cur += n_writes;
@@ -74,29 +75,29 @@ static void gen_rand_expr() {
     gen_num();
     return;
   }
-  depth++;
   //buf[0] = '\0';
 
   switch(choose(3)){
     case 0: gen_num(); break;
-    case 1: gen('('); gen_rand_expr(); gen(')');break;
+    case 1: gen('('); gen_rand_expr(); gen(')'); break;
     default: gen_rand_expr(); gen_rand_op(); 
-      if(buf_cur[-1] == '/'){
-        do {
-          gen_rand_expr();
-        }while (buf_cur[-1] == '0' && buf_cur[-2] == '/');
-      } else {
-        gen_rand_expr();
-      }
+      // if(buf_cur[-1] == '/'){
+      //   do {
+      //     gen_rand_expr();
+      //   }while (buf_cur[-1] == '0' && buf_cur[-2] == '/');
+      // } else {
+         gen_rand_expr(); depth++;
+      // }
       break;
   }
-  depth--;
+  depth = 0;
 }
 
 int main(int argc, char *argv[]) {
   int seed = time(0);
   srand(seed);
   int loop = 1;
+  // Read command line parameter into $(loop)
   if (argc > 1) {
     sscanf(argv[1], "%d", &loop);
   }
@@ -105,8 +106,10 @@ int main(int argc, char *argv[]) {
     buf_cur = buf;
     gen_rand_expr();
 
+    // Write code into a string
     sprintf(code_buf, code_format, buf);
 
+    // Save the string into a file
     FILE *fp = fopen("/tmp/.code.c", "w");
     assert(fp != NULL);
     fputs(code_buf, fp);
@@ -122,7 +125,6 @@ int main(int argc, char *argv[]) {
     ret = fscanf(fp, "%d", &result);
     pclose(fp);
 
-    //原为%u, 为什么?
     printf("%u %s\n", result, buf);
   }
   return 0;

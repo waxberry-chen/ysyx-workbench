@@ -56,6 +56,7 @@ static int cmd_q(char *args) {
 }
 
 static int cmd_help(char *args);
+static int cmd_test_expr(char *args);
 
 //my code begin
 static int cmd_si(char *args){
@@ -78,7 +79,7 @@ static int cmd_info(char *args){
     isa_reg_display();
    }else if (strcmp(args, "w") == 0){
     //print infomations of watchpoint.
-    wp_iterate();
+    wp_display();
   }else{
     printf("ERROR: Wrong arguments given.(info r or w)");
   }
@@ -86,11 +87,13 @@ static int cmd_info(char *args){
   return 0;
 }
 
+// Scan memory
 static int cmd_x(char *args){
   int i;
   int wordlen;
   paddr_t base_addr;
 if (args == NULL){
+  // EXPR only hex number now
   printf("2 arguments needed\n format: x N EXPR");
 }else{
   sscanf(args, "%d %x", &wordlen, &base_addr);
@@ -103,6 +106,7 @@ if (args == NULL){
 return 0;
 };
 
+// Expression calculate
 static int cmd_p(char *args){
   bool success;
   word_t result = expr(args, &success);
@@ -114,6 +118,7 @@ static int cmd_p(char *args){
   return 0;
 };
 
+// Watchpoint
 static int cmd_w(char *args){
   if(!args){
     printf("Usage: w EXPR\n");
@@ -129,6 +134,7 @@ static int cmd_w(char *args){
   return 0;
 }
 
+// Delete watchpoint
 static int cmd_d(char *args){
   char *arg = strtok(NULL, "");
   if(!arg){
@@ -139,7 +145,6 @@ static int cmd_d(char *args){
   wp_remove(no);
   return 0;
 }
-//end
 
 static struct {
   const char *name;
@@ -155,7 +160,7 @@ static struct {
   { "p", "USAGE: p EXPR -calculate the expression", cmd_p},
   { "w", "USAGE: w EXPR -set watchpoint at result of EXPR", cmd_w},
   { "d", "USAGE: d N -delete watchpoint NO.N", cmd_d},
-
+  {"test", "Test expr()", cmd_test_expr}
   /* TODO: Add more commands */
 
 };
@@ -261,6 +266,12 @@ void test_expr(){
   if(e)
     free(e);
   Log("test_expr: PASS");
+}
+
+// Test expression
+static int cmd_test_expr(char *args){
+  test_expr();
+  return 0;
 }
 
 void init_sdb() {
