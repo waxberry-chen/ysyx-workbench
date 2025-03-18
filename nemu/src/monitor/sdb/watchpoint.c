@@ -54,7 +54,7 @@ static WP* new_wp(){
 static void free_wp(WP *wp){
   WP* h = head;
   if(h == wp){
-    head = NULL;
+    head = head->next;
   }else{
     while(h && h->next != wp){
       h = h->next;

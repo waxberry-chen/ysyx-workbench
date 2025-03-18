@@ -41,6 +41,7 @@ static int bound_types[] = {')', TK_NUM, TK_REG};
 static int nop_types[] = {'(', ')', TK_NUM, TK_REG};
 static int op1_type[] = {TK_NEG, TK_POS, TK_DREF};
 //static int op_type[] = {'+', '-', '*', '-'};
+static int cal_depth = 0;
 
 static bool oftypes(int type, int types[], int size){
   for(int i = 0; i < size; i++){
@@ -106,7 +107,7 @@ typedef struct token {
   char str[32];
 } Token;
 
-static Token tokens[32] __attribute__((used)) = {};
+static Token tokens[1024] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
 //Get tokens[]
@@ -267,7 +268,7 @@ word_t binary_cal(word_t val1, int op, word_t val2, bool *valid){
         printf("ERROR: Zero can't be divided");
         return 0;
       }else{
-        return val1 / val2;
+        return (int)val1 / (int)val2;
       }
     case TK_AND: return val1 && val2;
     case TK_OR: return val1 || val2;
@@ -310,9 +311,30 @@ word_t eval(int p, int q, bool *valid){
       assert(0);
       return -1;
     }
+    /* ------------------------------- TEST EXPR -------------------------------- */
+    // else{
+    //   cal_depth++;
+    //   printf("LEVEL %d:", cal_depth);
+    //   // for(int i = 0; i<cal_depth;i++){
+    //   //   printf("\t");
+    //   // }
+    //   for(int i = p; i < op; i++){
+    //     printf("%s", tokens[i].str);
+    //   }
+    //   printf(" %s ", tokens[op].str);
+    //   for(int i = op+1; i < q+1; i++){
+    //     printf("%s", tokens[i].str);
+    //   }
+    //   printf("\n");
+    // }
+    /* ------------------------------- TEST EXPR -------------------------------- */
     bool valid1, valid2;
     word_t val1 = eval(p, op - 1, &valid1);
     word_t val2 = eval(op + 1, q, &valid2);
+
+    //
+    //printf("%d %s %d\n", val1, tokens[op].str, val2);
+    //
 
     if(!valid2){
       valid = false;
@@ -352,4 +374,5 @@ word_t expr(char *e, bool *success) {
   }
 
   return eval(0, nr_token-1, success);
+  cal_depth = 0;
 }

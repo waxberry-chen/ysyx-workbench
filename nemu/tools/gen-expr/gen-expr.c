@@ -24,8 +24,10 @@
 static int depth = 0;
 
 // this should be enough
-static char buf[65536] = {};
-static char code_buf[65536 + 128] = {}; // a little larger than `buf`
+// static char buf[65536] = {};
+// static char code_buf[65536 + 128] = {}; // a little larger than `buf`
+static char buf[1024] = {};
+static char code_buf[1024 + 128] = {}; // a little larger than `buf`
 static char *code_format =
 "#include <stdio.h>\n"
 "int main() { "
@@ -79,7 +81,7 @@ static void gen_rand_expr() {
 
   switch(choose(3)){
     case 0: gen_num(); break;
-    case 1: gen('('); gen_rand_expr(); gen(')'); break;
+    case 1: gen('('); gen_rand_expr(); gen(')'); depth++; break;
     default: gen_rand_expr(); gen_rand_op(); 
       // if(buf_cur[-1] == '/'){
       //   do {
@@ -90,7 +92,7 @@ static void gen_rand_expr() {
       // }
       break;
   }
-  depth = 0;
+  //depth = 0;
 }
 
 int main(int argc, char *argv[]) {
@@ -105,6 +107,7 @@ int main(int argc, char *argv[]) {
   for (i = 0; i < loop; i ++) {
     buf_cur = buf;
     gen_rand_expr();
+    depth = 0;
 
     // Write code into a string
     sprintf(code_buf, code_format, buf);
