@@ -20,7 +20,7 @@
 #include <assert.h>
 #include <string.h>
 
-#define MAX_RECURSION_DEPTH 3
+#define MAX_RECURSION_DEPTH 10
 static int depth = 0;
 
 // this should be enough
