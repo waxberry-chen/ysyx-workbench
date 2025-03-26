@@ -235,7 +235,7 @@ void sdb_mainloop() {
 }
 
 void test_expr(){
-  FILE *fp = fopen("/Users/yimingchen/prj/ysyx-workbench/nemu/tools/gen-expr/input", "r");
+  FILE *fp = fopen("/home/cym/prj/ysyx-workbench/nemu/tools/gen-expr/input", "r");
   if(fp == NULL){
     perror("test_expr: Failed to open the test file.");
   }
