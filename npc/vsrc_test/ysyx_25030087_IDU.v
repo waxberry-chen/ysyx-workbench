@@ -1,4 +1,5 @@
 `include "ysyx_25030087_defs.v"
+import "DPI-C" function void npc_trap();
 module ysyx_25030087_IDU(
     input   [`ysyx_25030087_CPU_WIDTH-1:0]      inst,
 
@@ -20,6 +21,7 @@ module ysyx_25030087_IDU(
     always @(*) begin
         case(op_code)
             7'b0011011: begin
+                // addi
                 if(funct3 == 3'b000)begin
                     operand_rs1 = rs1;
                     operand_rs2 = rs2;
@@ -27,6 +29,12 @@ module ysyx_25030087_IDU(
                     operand_rd  = rd;
                     reg_w_en    = 1'b1;
                     imm_en      = 1'b1;
+                end
+            end
+            7'b1110011: begin
+                // ebreak
+                if(immi == 32'd1 && rs1 == 5'd0 && rd == 5'd0 && funct3 == 3'd0) begin
+                    npc_trap();
                 end
             end
             default: begin
