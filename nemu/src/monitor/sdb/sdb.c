@@ -82,7 +82,7 @@ static int cmd_info(char *args){
     //print infomations of watchpoint.
     wp_display();
   }else{
-    printf("ERROR: Wrong arguments given.(info r or w)");
+    printf("ERROR: Wrong arguments given.(info r or w)\n");
   }
   
   return 0;
@@ -95,7 +95,7 @@ static int cmd_x(char *args){
   paddr_t base_addr;
 if (args == NULL){
   // EXPR only hex number now
-  printf("2 arguments needed\n format: x N EXPR");
+  printf("2 arguments needed\n format: x N EXPR\n");
 }else{
   sscanf(args, "%d %x", &wordlen, &base_addr);
   paddr_t cur_addr = base_addr;
