@@ -45,9 +45,13 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
   IFDEF(CONFIG_WATCHPOINT, wp_difftest());
 }
 
+// ##### Execute sigle instruction & generate trace log when itrace on ##### //
 static void exec_once(Decode *s, vaddr_t pc) {
+  // Initialize the structural body
   s->pc = pc;
   s->snpc = pc;
+  // Execute the inst based on ISA
+  // Contain: fetch decode
   isa_exec_once(s);
   cpu.pc = s->dnpc;
 #ifdef CONFIG_ITRACE
@@ -70,6 +74,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
   memset(p, ' ', space_len);
   p += space_len;
 
+  // Use disassemble tool to print human-readable code
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
   disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
       MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst, ilen);

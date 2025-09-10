@@ -20,6 +20,7 @@
 #include "sdb.h"
 #include <memory/paddr.h>
 #include <stdbool.h>
+#include <unistd.h>
 
 static int is_batch_mode = false;
 
@@ -34,7 +35,9 @@ static char* rl_gets() {
     free(line_read);
     line_read = NULL;
   }
-
+  // A blank line returns the empty string "", 
+  // which is a valid C string that has a null terminator (\0). 
+  // Press C-D (EOF), return NULL.
   line_read = readline("(nemu) ");
 
 //add the command to history list.
@@ -67,7 +70,7 @@ static int cmd_si(char *args){
   }else{
     sscanf(args, "%d", &step_num);
   }
-//should add limit to the step number. 添加对不合适步数(字符, 过大的数)的判断. 
+// should add limit to the step number. 添加对不合适步数(字符, 过大的数)的判断. 
   cpu_exec(step_num);
   printf("%d steps executed.\n", step_num);
 
@@ -205,13 +208,15 @@ void sdb_mainloop() {
     char *str_end = str + strlen(str);
 
     /* extract the first token as the command */
+    // The strtok() and strtok_r() return a pointer to the next token
+    // or NULL if there is no more
     char *cmd = strtok(str, " ");
     if (cmd == NULL) { continue; }
 
     /* treat the remaining string as the arguments,
      * which may need further parsing
      */
-    //HERE WE NEED MULTIPLE ARGUMENTS
+    // HERE WE NEED MULTIPLE ARGUMENTS
     char *args = cmd + strlen(cmd) + 1;
     if (args >= str_end) {
       args = NULL;
@@ -221,7 +226,7 @@ void sdb_mainloop() {
     extern void sdl_clear_event_queue();
     sdl_clear_event_queue();
 #endif
-
+    // Judge the command by dispatch table, the benefit of function pointer
     int i;
     for (i = 0; i < NR_CMD; i ++) {
       if (strcmp(cmd, cmd_table[i].name) == 0) {
