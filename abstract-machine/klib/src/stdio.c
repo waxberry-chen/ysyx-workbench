@@ -13,6 +13,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   panic("Not implemented");
 }
 
+// Write to a character string
 int sprintf(char *out, const char *fmt, ...) {
   panic("Not implemented");
 }
