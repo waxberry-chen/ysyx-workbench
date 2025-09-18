@@ -18,6 +18,7 @@
 #include <cpu/difftest.h>
 #include <locale.h>
 #include "../monitor/sdb/sdb.h"
+#include <cpu/iringbuf.h>
 
 /* The assembly code of instructions executed is only output to the screen
  * when the number of instructions executed is less than this value.
@@ -26,7 +27,9 @@
  */
 #define MAX_INST_TO_PRINT 10
 
-//#define CONFIG_WATCHPOINT 1
+// #define CONFIG_WATCHPOINT 1
+#define CONFIG_IRINGBUF 1
+#define CONFIG_IRINGBUF_NUM 10
 
 CPU_state cpu = {};
 uint64_t g_nr_guest_inst = 0;
@@ -37,12 +40,22 @@ void device_update();
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
-  if (ITRACE_COND) { log_write("%s\n", _this->logbuf); }
+  if (ITRACE_COND) { 
+    log_write("%s\n", _this->logbuf); 
+    // printf("INFO: logbuf: %s, length: %ld\n", _this->logbuf, strlen(_this->logbuf));
+    }
 #endif
   if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 
   IFDEF(CONFIG_WATCHPOINT, wp_difftest());
+}
+
+/********** Func to Activate Iringbuffer **********/
+static void iringbuffer_dump(iringbuf *rb, Decode *_this, vaddr_t dnpc) {
+#ifdef CONFIG_IRINGBUF
+  iringbuf_write(rb, _this->logbuf);
+#endif
 }
 
 // ##### Execute sigle instruction & generate trace log when itrace on ##### //
@@ -83,15 +96,33 @@ static void exec_once(Decode *s, vaddr_t pc) {
 
 static void execute(uint64_t n) {
   Decode s;
+  // Initialization Iringbuffer
+  #ifdef CONFIG_IRINGBUF
+  iringbuf* rb = iringbuf_init(CONFIG_IRINGBUF_NUM);
+  #endif
   for (;n > 0; n --) {
     exec_once(&s, cpu.pc);
     g_nr_guest_inst ++;
+    // iringbuffer start
+    IFDEF(CONFIG_IRINGBUF, iringbuffer_dump(rb, &s, cpu.pc));
+    // iringbuffer end
     trace_and_difftest(&s, cpu.pc);
     if (nemu_state.state != NEMU_RUNNING) break;
     IFDEF(CONFIG_DEVICE, device_update());
   }
+  #ifdef CONFIG_IRINGBUF
+    char *iringbuf_out = iringbuf_read(rb, CONFIG_IRINGBUF_NUM);
+    if(nemu_state.halt_ret != 0) {
+      Log("iringbuf: bad exit, last %d instruction is:\n%s", CONFIG_IRINGBUF_NUM, iringbuf_out);
+    } else {
+      Log("iringbuf: good exit");
+    }
+    iringbuf_free(rb);
+    free(iringbuf_out);
+  #endif
 }
 
+// Provide some statistic data
 static void statistic() {
   IFNDEF(CONFIG_TARGET_AM, setlocale(LC_NUMERIC, ""));
 #define NUMBERIC_FMT MUXDEF(CONFIG_TARGET_AM, "%", "%'") PRIu64
@@ -123,6 +154,7 @@ void cpu_exec(uint64_t n) {
   // Execute
   execute(n);
 
+  // Automaticlly calculate running time
   uint64_t timer_end = get_time();
   g_timer += timer_end - timer_start;
 
