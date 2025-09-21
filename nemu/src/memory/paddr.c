@@ -24,6 +24,9 @@ static uint8_t *pmem = NULL;
 static uint8_t pmem[CONFIG_MSIZE] PG_ALIGN = {};
 #endif
 
+// Add mtrace
+// #define CONFIG_MTRACE 1
+
 uint8_t* guest_to_host(paddr_t paddr) { return pmem + paddr - CONFIG_MBASE; }
 paddr_t host_to_guest(uint8_t *haddr) { return haddr - pmem + CONFIG_MBASE; }
 
@@ -50,14 +53,41 @@ void init_mem() {
   Log("physical memory area [" FMT_PADDR ", " FMT_PADDR "]", PMEM_LEFT, PMEM_RIGHT);
 }
 
+void mtrace_display(paddr_t addr, word_t data, int len, int choose) {
+  // find data value
+  if (likely(in_pmem(addr))) {
+    if (choose == 0){
+      Log("\nmtrace: Read from memory:\n\tAddr: "FMT_PADDR"\tData: "FMT_WORD"\tLen: %d", addr, data, len);
+    } else if (choose == 1) {
+      Log("\nmtrace: Write into memory:\n\tAddr: "FMT_PADDR"\tData: "FMT_WORD"\tLen: %d", addr, data, len);
+    } else {
+      panic("ERROR: The value of 'choose' needs to be 0 or 1");
+    }
+  } else {
+    out_of_bound(addr);
+  }
+}
+
 word_t paddr_read(paddr_t addr, int len) {
-  if (likely(in_pmem(addr))) return pmem_read(addr, len);
-  IFDEF(CONFIG_DEVICE, return mmio_read(addr, len));
+  if (likely(in_pmem(addr))) {
+    word_t paddr_read_data = pmem_read(addr, len);
+    // ----- mtrace start ----- //
+    #ifdef CONFIG_MTRACE
+      mtrace_display(addr, paddr_read_data, len, 0);
+    #endif
+    // ----- mtrace end ----- //
+    return paddr_read_data;
+  }
+  // UNTESTED
+  IFDEF(CONFIG_DEVICE, word_t paddr_read_data = mmio_read(addr, len); return paddr_read_data);
   out_of_bound(addr);
   return 0;
 }
 
 void paddr_write(paddr_t addr, int len, word_t data) {
+  #ifdef CONFIG_MTRACE
+      mtrace_display(addr, data, len, 1);
+  #endif
   if (likely(in_pmem(addr))) { pmem_write(addr, len, data); return; }
   IFDEF(CONFIG_DEVICE, mmio_write(addr, len, data); return);
   out_of_bound(addr);

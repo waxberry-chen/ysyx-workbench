@@ -153,6 +153,18 @@ config ITRACE_COND
   string "Only trace instructions when the condition is true"
   default "true"
 
+config IRINGBUF
+  bool "Enable iringbuffer"
+  default y
+
+config IRINGBUF_NUM
+  depends on IRINGBUF
+  int "Capacity of the instruction ringbuffer"
+  default 10
+
+config MTRACE
+  bool "Enable mtrace"
+  default n
 
 config DIFFTEST
   depends on TARGET_NATIVE_ELF

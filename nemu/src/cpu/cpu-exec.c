@@ -27,9 +27,10 @@
  */
 #define MAX_INST_TO_PRINT 10
 
+/***** Parameters integrated into menuconfig *****/
 // #define CONFIG_WATCHPOINT 1
-#define CONFIG_IRINGBUF 1
-#define CONFIG_IRINGBUF_NUM 10
+// #define CONFIG_IRINGBUF 1
+// #define CONFIG_IRINGBUF_NUM 20
 
 CPU_state cpu = {};
 uint64_t g_nr_guest_inst = 0;

@@ -49,10 +49,12 @@ char *iringbuf_read(iringbuf *rb, int size) {
     char *iringbuf_out = malloc(size*sizeof(char[128]));
     char *current_pos = iringbuf_out;
     // size_t read_ptr = (rb->head + rb->size - 1) % rb->size;
-    size_t read_ptr = (rb->head + size - rb->size) % size;
+    size_t read_ptr = (rb->head + rb->size - size) % rb->size;
     for(int i = 0; i < size; i++) {
         int len = sprintf(current_pos, "\t%s\n", rb->ringbuffer[read_ptr]); // not safe
-        current_pos += len;
+        if(strlen(rb->ringbuffer[read_ptr]) != 0){
+            current_pos += len;
+        } 
         read_ptr = (read_ptr+1) % rb->size;
     }
     return iringbuf_out;
