@@ -95,7 +95,7 @@ static int parse_args(int argc, char *argv[]) {
         printf("\t-l,--log=FILE           output log to FILE\n");
         printf("\t-d,--diff=REF_SO        run DiffTest with reference REF_SO\n");
         printf("\t-p,--port=PORT          run DiffTest with port PORT\n");
-        printg("\t-e,--elf=FILE           read in elf file\n");
+        printf("\t-e,--elf=FILE           read in elf file\n");
         printf("\n");
         exit(0);
     }
@@ -116,7 +116,7 @@ void init_monitor(int argc, char *argv[]) {
   init_log(log_file);
 
   /* Init the elf file. */
-  init_ftrace(elf_file);
+  IFDEF(CONFIG_FTRACE, init_ftrace(elf_file));
 
   /* Initialize memory. */
   init_mem();
