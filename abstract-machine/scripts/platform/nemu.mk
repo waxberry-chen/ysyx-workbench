@@ -17,8 +17,8 @@ NEMUFLAGS += -l $(shell dirname $(IMAGE).elf)/00_nemu-log.txt
 # NEMUFLAGS += --batch
 FILE_NAME = $(ALL)-$(ARCH)
 ELF_FILE_NAME = $(addsuffix .elf, $(FILE_NAME))
-NEMUFLAGS += --elf $(abspath ./build/$(ELF_FILE_NAME))
-# $(info NEMUFLAGS: $(NEMUFLAGS))
+NEMUFLAGS += -e $(abspath ./build/$(ELF_FILE_NAME))
+$(info NEMUFLAGS: $(NEMUFLAGS))
 
 MAINARGS_MAX_LEN = 64
 MAINARGS_PLACEHOLDER = The insert-arg rule in Makefile will insert mainargs here.

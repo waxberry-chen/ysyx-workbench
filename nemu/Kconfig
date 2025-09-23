@@ -166,6 +166,10 @@ config MTRACE
   bool "Enable mtrace"
   default n
 
+config FTRACE
+  bool "Enable ftrace"
+  default n
+
 config DIFFTEST
   depends on TARGET_NATIVE_ELF
   bool "Enable differential testing"

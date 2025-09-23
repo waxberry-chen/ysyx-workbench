@@ -1,13 +1,14 @@
 #include <ftrace.h>
 /********** Global Variables **********/
-#define MAX_FUNC_COUNT 30
-#define CONFIG_FTRACE
 
 #ifdef CONFIG_FTRACE
-FuncInfo func_lut[MAX_FUNC_COUNT];
-int func_count;
 
-char *read_elf_file(const char *file_name) {
+#define MAX_FUNC_COUNT 50 // WHY 30 CAUSE SEGEMENTATION FAULT?
+FuncInfo func_lut[MAX_FUNC_COUNT];
+static int func_count = 0;
+static int ftrace_depth = 0;
+
+static char *read_elf_file(const char *file_name) {
     // 1. Open file use fopen()
     FILE *fp = fopen(file_name, "rb");   // 'b' nowadays has no effect, but portable to non-UNIX environment. 
     if(fp == NULL) {
@@ -39,7 +40,7 @@ char *read_elf_file(const char *file_name) {
 }
 
 // WE NEED: Function name; Function address; Function size
-void parse_elf_file(char *elf_content) {
+static void parse_elf_file(char *elf_content) {
     // 1. Get elf header
     Elf32_Ehdr *header = (Elf32_Ehdr *)elf_content;
     // Check "MAGIC NUM", 0x7F (\177), 'E', 'L'. 'F'
@@ -80,31 +81,63 @@ void parse_elf_file(char *elf_content) {
     // printf("Test1, %d\n", sym_count);
     for(int i=0; i<sym_count; i++) {
         // Check the type
+        // HERE I MADE SERVERAL MISTAKES
         if(ELF32_ST_TYPE(symtab[i].st_info) == STT_FUNC) {
-            func_lut[i].func_name = strtab + symtab[i].st_name;
-            func_lut[i].func_addr = symtab[i].st_value;
-            func_lut[i].func_size = symtab[i].st_size;
-            // printf("INFO: find function:\n\tname: %s\taddr: 0x%x\tsize: %d\n", 
-            //     func_lut[i].func_name, func_lut[i].func_addr, func_lut[i].func_size);
+            // func_lut[func_count].func_name = strtab + symtab[i].st_name; // char *func_name
+            strncpy(func_lut[func_count].func_name, strtab + symtab[i].st_name, 15);
+            func_lut[func_count].func_addr = symtab[i].st_value;
+            func_lut[func_count].func_size = symtab[i].st_size;
+            // printf("INFO1: find function:\n\tname: %s\taddr: 0x%x\tsize: %d\n", 
+            //     func_lut[func_count].func_name, func_lut[func_count].func_addr, func_lut[func_count].func_size);
+            func_count++;
         }
     }
 }
 
 void init_ftrace(const char *elf_file) {
-    if(elf_file == NULL) {
-        panic("ERROR: ftrace recieve null"); 
-        return;
-    }
+    if(elf_file == NULL) {panic("ERROR: ftrace recieve null"); return;}
     char *elf_buffer = read_elf_file(elf_file);
     // printf("INFO: elf read\n");
-    if(elf_buffer == NULL) {
-        panic("ERROR: read_elf_file open failed");
+    if(elf_buffer == NULL) {panic("ERROR: read_elf_file open failed");return;}
+    parse_elf_file(elf_buffer);
+    free(elf_buffer);   // free the same space but change name
+}
+
+void ftrace_call(vaddr_t pc, vaddr_t dst) {
+    if (func_count == 0) {
+        panic("ERROR: func_lut seems to be empty");
         return;
     }
+    char *func_name = NULL;
+    for(int i=0; i<func_count; i++){
+        if(dst==func_lut[i].func_addr)
+            func_name = func_lut[i].func_name;
+        // printf("INFO: Try function:\n\tname: %s\taddr: 0x%x\tsize: %d\n", 
+        //     func_lut[i].func_name, func_lut[i].func_addr, func_lut[i].func_size);
+    }
+    if(func_name == NULL) {
+        panic("ERROR: Get function name failed (call)");
+    }
+    Log("0x%x: %*scall [%s@0x%x]", pc, ftrace_depth*2, "", func_name, dst);
+    ftrace_depth++;
+}
 
-    parse_elf_file(elf_buffer);
-
-    free(elf_buffer);   // free the same space but change name
+void ftrace_ret(vaddr_t pc, vaddr_t dst) {
+    if (func_count == 0) {
+        panic("ERROR: func_lut seems to be empty");
+        return;
+    }
+    char *func_name = NULL;
+    for(int i=0; i<func_count; i++) {
+        if(func_lut[i].func_addr<dst && dst<(func_lut[i].func_addr+func_lut[i].func_size)){
+            func_name = func_lut[i].func_name;
+        }
+    }
+    if(func_name == NULL) {
+        panic("ERROR: Get function name failed (return)");
+    }
+    Log("0x%x: %*sret [%s@0x%x]", pc, ftrace_depth*2, "", func_name, dst);
+    ftrace_depth--;
 }
 
 #endif
