@@ -65,7 +65,7 @@ static int decode_exec(Decode *s) {
   decode_operand(s, &rd, &src1, &src2, &imm, concat(TYPE_, type)); \
   __VA_ARGS__ ; \
 }
-IFDEF(CONFIG_FTRACE, rs1_for_jalr = BITS(INSTPAT_INST(s), 19, 15));
+IFDEF(CONFIG_FTRACE, int rs1_for_jalr = BITS(INSTPAT_INST(s), 19, 15));
 
   INSTPAT_START();
   // RISCV32I
@@ -114,9 +114,9 @@ IFDEF(CONFIG_FTRACE, rs1_for_jalr = BITS(INSTPAT_INST(s), 19, 15));
 
   //RISCV32M
   INSTPAT("0000001 ????? ????? 000 ????? 01100 11", mul    , R, R(rd) = src1 * src2);
-  INSTPAT("0000001 ????? ????? 001 ????? 01100 11", mulh   , R, R(rd) = BITS(SEXT((int)src1 * (int)src2, 64), 63, 32));
-  INSTPAT("0000001 ????? ????? 010 ????? 01100 11", mulhsu , R, R(rd) = BITS(SEXT(((int)src1 * src2), 64), 63, 32));
-  INSTPAT("0000001 ????? ????? 011 ????? 01100 11", mulhu  , R, R(rd) = BITS(SEXT((src1 * src2), 64), 63, 32));
+  INSTPAT("0000001 ????? ????? 001 ????? 01100 11", mulh   , R, R(rd) = BITS(SEXT((int64_t)(int32_t)src1 * (int64_t)(int32_t)src2, 64), 63, 32)); // HERE DIFFICULT
+  INSTPAT("0000001 ????? ????? 010 ????? 01100 11", mulhsu , R, R(rd) = BITS(SEXT(((int64_t)(int32_t)src1 * (uint64_t)src2), 64), 63, 32));
+  INSTPAT("0000001 ????? ????? 011 ????? 01100 11", mulhu  , R, R(rd) = BITS(SEXT(((uint64_t)src1 * (uint64_t)src2), 64), 63, 32));
   INSTPAT("0000001 ????? ????? 100 ????? 01100 11", div    , R, R(rd) = (int)src1 / (int)src2);
   INSTPAT("0000001 ????? ????? 101 ????? 01100 11", divu   , R, R(rd) = src1 / src2);
   INSTPAT("0000001 ????? ????? 110 ????? 01100 11", rem    , R, R(rd) = ((int)src1 % (int)src2));

@@ -14,7 +14,7 @@ LDFLAGS   += --defsym=_pmem_start=0x80000000 --defsym=_entry_offset=0x0
 LDFLAGS   += --gc-sections -e _start
 # Here add batch mode
 NEMUFLAGS += -l $(shell dirname $(IMAGE).elf)/00_nemu-log.txt 
-# NEMUFLAGS += --batch
+NEMUFLAGS += --batch
 FILE_NAME = $(ALL)-$(ARCH)
 ELF_FILE_NAME = $(addsuffix .elf, $(FILE_NAME))
 NEMUFLAGS += -e $(abspath ./build/$(ELF_FILE_NAME))
