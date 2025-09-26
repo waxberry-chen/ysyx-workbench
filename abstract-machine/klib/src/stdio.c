@@ -6,7 +6,46 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
 int printf(const char *fmt, ...) {
-  panic("Not implemented");
+  va_list ap;
+  int d;
+  char c, *s;
+  int count = 0;
+
+  va_start(ap, fmt);
+  while (*fmt) {
+    if(*fmt == '%') {
+      switch(*++fmt) {
+        case 's':
+          s = va_arg(ap, char *);
+          for(const char *p  = s; *p; p++) {
+            putch(*p);
+            count++;
+          }
+          fmt++;
+          break;
+        case 'c':
+          c = va_arg(ap, int);
+          putch(c);
+          count++;
+          fmt++;
+          break;
+        case 'd':
+          d = va_arg(ap, int);
+          char num_buf[32];
+          int d_len = my_itoa(num_buf, d);
+          count+=d_len;
+          fmt++;
+          for(int i=0; i<d_len; i++) putch(num_buf[i]);
+          break;
+      }
+    } else {
+      putch(*fmt);
+      count++;
+      fmt++;
+    }
+  }
+  va_end(ap);
+  return count;
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {

@@ -67,19 +67,33 @@ void *memset(void *s, int c, size_t n) {
   for(i=0; i<n; i++) {
     p[i] = c; // why here p cant be const?
   }
-  return p;
+  return s;
 }
 
 void *memmove(void *dst, const void *src, size_t n) {
-  panic("Not implemented");
+  // CONVERT
+  unsigned char *ptr_src = (unsigned char *)src;
+  unsigned char *ptr_dst = (unsigned char *)dst;
+  if(dst<src)
+  for(size_t i=0; i<n; i++) ptr_dst[i]=ptr_src[i];
+  else if (dst>src)
+  for(size_t i=n; i>0; i--) ptr_dst[i-1]=ptr_src[i-1];
+  return dst; 
 }
 
 void *memcpy(void *out, const void *in, size_t n) {
-  panic("Not implemented");
+  // CONVERT
+  unsigned char *p1 = (unsigned char *)out;
+  unsigned char *p2 = (unsigned char *)in;
+  size_t i;
+  for(i=0; i<n;i++) {
+    p1[i] = p2[i];
+  }
+  return out;
 }
 
 int memcmp(const void *s1, const void *s2, size_t n) {
-  // 需要转换为纯粹的无符号字节比较
+  // Need to convert to unsigned char to compare
   const unsigned char *p1 = s1; // must initialization
   const unsigned char *p2 = s2;  
   while(n>0) {
