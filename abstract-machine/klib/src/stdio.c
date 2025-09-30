@@ -21,28 +21,25 @@ int printf(const char *fmt, ...) {
             putch(*p);
             count++;
           }
-          fmt++;
           break;
         case 'c':
           c = va_arg(ap, int);
           putch(c);
           count++;
-          fmt++;
           break;
         case 'd':
           d = va_arg(ap, int);
           char num_buf[32];
           int d_len = my_itoa(num_buf, d);
           count+=d_len;
-          fmt++;
           for(int i=0; i<d_len; i++) putch(num_buf[i]);
           break;
       }
     } else {
       putch(*fmt);
       count++;
-      fmt++;
     }
+    fmt++;
   }
   va_end(ap);
   return count;

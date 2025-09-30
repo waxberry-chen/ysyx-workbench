@@ -1,11 +1,19 @@
 #include <am.h>
 #include <nemu.h>
+/*********************************************************
+ * Add AM_TIMER_UPTIME Function
+ *    (Defined in 'abstract-machine/am/include/amdev.h')
+ * GOAL: Get AM_TIMER_UPTIME register
+ *********************************************************/
+
 
 void __am_timer_init() {
 }
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
-  uptime->us = 0;
+  uint64_t high32 = inl(RTC_ADDR+4);
+  uint64_t low32  = inl(RTC_ADDR);
+  uptime->us = (high32<<32)|low32;
 }
 
 void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {

@@ -53,11 +53,11 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 }
 
 /********** Func to Activate Iringbuffer **********/
-static void iringbuffer_dump(iringbuf *rb, Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_IRINGBUF
+static void iringbuffer_dump(iringbuf *rb, Decode *_this, vaddr_t dnpc) {
   iringbuf_write(rb, _this->logbuf);
-#endif
 }
+#endif
 
 // ##### Execute sigle instruction & generate trace log when itrace on ##### //
 static void exec_once(Decode *s, vaddr_t pc) {

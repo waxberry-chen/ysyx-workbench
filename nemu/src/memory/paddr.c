@@ -53,6 +53,7 @@ void init_mem() {
   Log("physical memory area [" FMT_PADDR ", " FMT_PADDR "]", PMEM_LEFT, PMEM_RIGHT);
 }
 
+#ifdef CONFIG_MTRACE
 void mtrace_display(paddr_t addr, word_t data, int len, int choose) {
   // find data value
   if (likely(in_pmem(addr))) {
@@ -67,6 +68,7 @@ void mtrace_display(paddr_t addr, word_t data, int len, int choose) {
     out_of_bound(addr);
   }
 }
+#endif
 
 word_t paddr_read(paddr_t addr, int len) {
   if (likely(in_pmem(addr))) {

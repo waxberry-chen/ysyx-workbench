@@ -15,9 +15,9 @@ LDFLAGS   += --gc-sections -e _start
 # Here add batch mode
 NEMUFLAGS += -l $(shell dirname $(IMAGE).elf)/00_nemu-log.txt 
 NEMUFLAGS += --batch
-FILE_NAME = $(ALL)-$(ARCH)
-ELF_FILE_NAME = $(addsuffix .elf, $(FILE_NAME))
-NEMUFLAGS += -e $(abspath ./build/$(ELF_FILE_NAME))
+# FILE_NAME = $(ALL)-$(ARCH)
+# ELF_FILE_NAME = $(addsuffix .elf, $(FILE_NAME))
+NEMUFLAGS += -e $(abspath $(IMAGE).elf)
 $(info NEMUFLAGS: $(NEMUFLAGS))
 
 MAINARGS_MAX_LEN = 64

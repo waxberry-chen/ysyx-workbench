@@ -19,7 +19,11 @@
 
 static uint32_t *rtc_port_base = NULL;
 
+// Timer callback function:
+// Only offset == 4 will get time, stored time in rtc_port_base[0] and [1]
+// So we need first RTC_ADDR+4 then RTC_ADDR
 static void rtc_io_handler(uint32_t offset, int len, bool is_write) {
+  // offset = addr - map->low
   assert(offset == 0 || offset == 4);
   if (!is_write && offset == 4) {
     uint64_t us = get_time();
@@ -42,6 +46,7 @@ void init_timer() {
 #ifdef CONFIG_HAS_PORT_IO
   add_pio_map ("rtc", CONFIG_RTC_PORT, rtc_port_base, 8, rtc_io_handler);
 #else
+// (const char *name, paddr_t addr, void *space, uint32_t len, io_callback_t callback)
   add_mmio_map("rtc", CONFIG_RTC_MMIO, rtc_port_base, 8, rtc_io_handler);
 #endif
   IFNDEF(CONFIG_TARGET_AM, add_alarm_handle(timer_intr));
