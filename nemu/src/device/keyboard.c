@@ -41,6 +41,7 @@ enum {
 #define SDL_KEYMAP(k) keymap[SDL_SCANCODE_ ## k] = NEMU_KEY_ ## k;
 static uint32_t keymap[256] = {};
 
+// *** key lut here ***
 static void init_keymap() {
   MAP(NEMU_KEYS, SDL_KEYMAP)
 }
@@ -49,6 +50,7 @@ static void init_keymap() {
 static int key_queue[KEY_QUEUE_LEN] = {};
 static int key_f = 0, key_r = 0;
 
+// ********** FIFO START *********** //
 static void key_enqueue(uint32_t am_scancode) {
   key_queue[key_r] = am_scancode;
   key_r = (key_r + 1) % KEY_QUEUE_LEN;
@@ -63,9 +65,11 @@ static uint32_t key_dequeue() {
   }
   return key;
 }
+// ********** FIFO END *********** //
 
 void send_key(uint8_t scancode, bool is_keydown) {
   if (nemu_state.state == NEMU_RUNNING && keymap[scancode] != NEMU_KEY_NONE) {
+    // key down, mask scancode
     uint32_t am_scancode = keymap[scancode] | (is_keydown ? KEYDOWN_MASK : 0);
     key_enqueue(am_scancode);
   }
