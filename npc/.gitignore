@@ -9,5 +9,4 @@
 !*.cpp
 !.gitignore
 !README.md
-build/
-obj_dir/
+**/build/

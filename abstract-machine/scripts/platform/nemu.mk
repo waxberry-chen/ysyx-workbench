@@ -18,7 +18,7 @@ NEMUFLAGS += --batch
 # FILE_NAME = $(ALL)-$(ARCH)
 # ELF_FILE_NAME = $(addsuffix .elf, $(FILE_NAME))
 NEMUFLAGS += -e $(abspath $(IMAGE).elf)
-$(info NEMUFLAGS: $(NEMUFLAGS))
+# $(info NEMUFLAGS: $(NEMUFLAGS))
 
 MAINARGS_MAX_LEN = 64
 MAINARGS_PLACEHOLDER = The insert-arg rule in Makefile will insert mainargs here.
