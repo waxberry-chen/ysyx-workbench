@@ -8,7 +8,7 @@ $(VBIN): $(CSRC) $(VSRC)
 
 run: $(VBIN) $(IMG)
 	@echo "$(COLOR_YELLOW)INFO-IMG:$(COLOR_NONE) $(notdir $(IMG))"
-	$(VBIN) $(ARGS) $(IMG)
+	$(VBIN) $(IMG) $(ARGS)
 
 
 clean:
