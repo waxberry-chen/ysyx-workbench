@@ -5,6 +5,9 @@
 #include <stdint.h>
 #include <assert.h>
 
+#include "config.h"
+#include "debug.h"
+
 #define MAX_SIM_TIME 4000000
 
 typedef uint32_t word_t; 
@@ -13,6 +16,7 @@ typedef unsigned long long duword_t;
 typedef long long dsword_t;
 
 #define FMT_WORD "0x%08x"
+#define FMT_PADDR "0x%08x"
 
 typedef word_t vaddr_t;
 typedef word_t paddr_t;
