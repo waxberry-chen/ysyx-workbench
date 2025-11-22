@@ -18,7 +18,23 @@ int main(int argc, char *argv[]) {
   printf(ANSI_FG_GREEN  "Loading img: %s\n" ANSI_NONE , argv[1]);
   // ***** load img into memory *****
   uint64_t size = load_img(argv[1]); 
-  
+  // no difftest temporarily
+  init_disasm("riscv32");
 
-  return 0;
+  init_sdb(argv[3]);
+
+  // wave tracer
+  Verilated::traceEverOn(true);
+  dut->trace(m_trace, 5);
+  m_trace->("waveform.vcd");
+  reset(1);
+
+  sdb_main_loop();
+
+  printf(ANSI_FG_GREEN "Testcase end!\n" ANSI_NONE);
+
+  m_trace->close();
+  delete dut;
+
+  return sim_state.state == SIM_ABORT;
 }

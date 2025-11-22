@@ -27,7 +27,7 @@ paddr_t host_to_guest(uint8_t *haddr) {
     return CONFIG_MBASE + haddr - pmem;
 }
 
-word_t host_read(void *haddr, len){
+word_t host_read(void *haddr, int len){
     switch (len) {
         case 1: return *(uint8_t) haddr;
         case 2: return *(uint16_t)haddr;
@@ -45,7 +45,7 @@ void host_write(void *haddr, len, void data){
     }
 }
 
-word_t pmem_read(paddr_t paddr, int len) {
+word_t pmem_read(paddr_t paddr, int len, word_t *rdata) {
     if(in_pmem(paddr)) {
         *rdata = host_read(guest_to_host(paddr), 1<<mask);
         return;
