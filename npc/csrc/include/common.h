@@ -78,6 +78,7 @@ void host_write(void *haddr, int len, word_t wdata);
 *     SBD     *
 ***************/
 void init_sdb();
+void sdb_mainloop();
 void cpu_exec(unsigned int n);
 void isa_reg_display();
 word_t isa_reg_str2val(const char *s, bool *success);

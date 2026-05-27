@@ -1,26 +1,12 @@
-/***************************************************************************************
-* Copyright (c) 2014-2024 Zihao Yu, Nanjing University
-*
-* NEMU is licensed under Mulan PSL v2.
-* You can use this software according to the terms and conditions of the Mulan PSL v2.
-* You may obtain a copy of Mulan PSL v2 at:
-*          http://license.coscl.org.cn/MulanPSL2
-*
-* THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
-* EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
-* MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
-*
-* See the Mulan PSL v2 for more details.
-***************************************************************************************/
-
 #include <isa.h>
-
-/* We use the POSIX regex functions to process regular expressions.
- * Type 'man regex' for more information about POSIX regex functions.
- */
 #include <regex.h>
-#include "expr.h"
 #include <memory/paddr.h>
+#include "common.h"
+#include "debug.h"
+
+#define OFTYPES(type, types) oftypes(type, types, ARRLEN(types))
+#define ARRLEN(arr) (int)(sizeof(arr) / sizeof(arr[0]))
+#define NR_REGEX ARRLEN(rules)
 
 enum {
   TK_NOTYPE = 256, 
@@ -78,8 +64,6 @@ static struct rule {
 
 };
 
-#define NR_REGEX ARRLEN(rules)
-
 static regex_t re[NR_REGEX] = {};
 
 /* Rules are used for many times.
@@ -94,7 +78,7 @@ void init_regex() {
     ret = regcomp(&re[i], rules[i].regex, REG_EXTENDED);
     if (ret != 0) {
       regerror(ret, &re[i], error_msg, 128);
-      panic("regex compilation failed: %s\n%s", error_msg, rules[i].regex);
+      //panic("regex compilation failed: %s\n%s", error_msg, rules[i].regex);
     }
   }
 }
@@ -346,8 +330,6 @@ word_t eval(int p, int q, bool *valid){
     }
   }
 }
-
-
 
 word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
