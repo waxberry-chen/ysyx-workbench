@@ -14,8 +14,11 @@
 #**************************************************************************************/
 
 REPO_PATH = repo
+# fix version for NEMU
+CAPSTONE_VERSION = 6.0.0-Alpha4
+
 ifeq ($(wildcard repo/include/capstone/capstone.h),)
-  $(shell git clone --depth=1 git@github.com:capstone-engine/capstone.git $(REPO_PATH))
+  $(shell git clone --depth=1 --branch $(CAPSTONE_VERSION) git@github.com:capstone-engine/capstone.git $(REPO_PATH))
 endif
 
 CAPSTONE = $(REPO_PATH)/libcapstone.so.5
