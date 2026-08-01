@@ -13,3 +13,8 @@
 nvboard/
 /fceux-am
 !compile_commands.json/am-kernels
+
+# Keep the lectures
+/docs/*
+!/docs/notes/
+!/docs/notes/**

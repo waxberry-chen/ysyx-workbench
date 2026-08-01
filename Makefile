@@ -1,5 +1,5 @@
 STUID = ysyx_25030087
-STUNAME = 陈一鸣
+STUNAME = ChenYiming
 
 # DO NOT modify the following code!!!
 
