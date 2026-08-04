@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <assert.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include "config.h"
 #include "debug.h"
@@ -69,19 +70,21 @@ uint64_t load_img(char *img_name);
 // DPI-C
 extern "C" void pmem_read(bool re, paddr_t raddr, uint32_t mask, word_t *rdata);
 extern "C" void pmem_write(bool we, paddr_t waddr, uint32_t mask, word_t wdata);
-word_t paddr_read(paddr_t addr, int len, word_t *rdata);
+
+word_t paddr_read(paddr_t addr, int len);
 void paddr_write(paddr_t addr, int len, word_t wdata);
 word_t host_read(void *haddr, int len);
 void host_write(void *haddr, int len, word_t wdata);
 
 /**************
-*     SBD     *
+*     SDB     *
 ***************/
-void init_sdb();
+void init_sdb(char *mode);
 void sdb_mainloop();
 void cpu_exec(unsigned int n);
+// isa.h in nemu
+// define in sim.c
 void isa_reg_display();
 word_t isa_reg_str2val(const char *s, bool *success);
-
 
 #endif

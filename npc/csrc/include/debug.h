@@ -1,3 +1,6 @@
+#ifndef __DEBUG_H__
+#define __DEBUG_H__
+
 #define ANSI_FG_BLACK   "\33[1;30m"
 #define ANSI_FG_RED     "\33[1;31m"
 #define ANSI_FG_GREEN   "\33[1;32m"
@@ -37,3 +40,5 @@
   } while (0)
 
 #define panic(format, ...) Assert(0, format, ## __VA_ARGS__)
+
+#endif

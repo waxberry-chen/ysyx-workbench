@@ -5,8 +5,10 @@
 !*.mk
 !*.[cSh]
 !*.v
+!*.sv
 !*.cc
 !*.cpp
+!*.f
 !.gitignore
 !README.md
 **/build/

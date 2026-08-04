@@ -1,8 +1,8 @@
-#include <isa.h>
 #include <regex.h>
-#include <memory/paddr.h>
+#include "../memory/paddr.h"
 #include "common.h"
 #include "debug.h"
+#include <stdlib.h>
 
 #define OFTYPES(type, types) oftypes(type, types, ARRLEN(types))
 #define ARRLEN(arr) (int)(sizeof(arr) / sizeof(arr[0]))
@@ -292,33 +292,11 @@ word_t eval(int p, int q, bool *valid){
       assert(0);
       return -1;
     }
-    /* ------------------------------- TEST EXPR -------------------------------- */
-    // else{
-    //   cal_depth++;
-    //   printf("LEVEL %d:", cal_depth);
-    //   // for(int i = 0; i<cal_depth;i++){
-    //   //   printf("\t");
-    //   // }
-    //   for(int i = p; i < op; i++){
-    //     printf("%s", tokens[i].str);
-    //   }
-    //   printf(" %s ", tokens[op].str);
-    //   for(int i = op+1; i < q+1; i++){
-    //     printf("%s", tokens[i].str);
-    //   }
-    //   printf("\n");
-    // }
-    /* ------------------------------- TEST EXPR -------------------------------- */
     bool valid1, valid2;
     word_t val1 = eval(p, op - 1, &valid1);
     word_t val2 = eval(op + 1, q, &valid2);
-
-    //
-    //printf("%d %s %d\n", val1, tokens[op].str, val2);
-    //
-
     if(!valid2){
-      valid = false;
+      *valid = false;
       return 0;
     }
     if(valid1){

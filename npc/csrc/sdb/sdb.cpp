@@ -1,12 +1,13 @@
+#include <readline/readline.h>
+#include <readline/history.h>
 #include "common.h"
-
-
+#include <stdlib.h>
 
 void init_regex();
-void init_wp_pool();
 
 extern void cpu_exec(uint32_t n);
 extern word_t expr(char *e, bool *success);
+static int is_batch_mode = false;
 
 // ***** add *****
 /* We use the `readline' library to provide more flexibility to read from stdin. */
@@ -18,7 +19,7 @@ static char* rl_gets() {
     line_read = NULL;
   }
 
-  line_read = readline("(sim) ");
+  line_read = readline("(npc) ");
 
   if (line_read && *line_read) {
     add_history(line_read);
@@ -33,13 +34,22 @@ static int cmd_c(char *args) {
 }
 
 static int cmd_q(char *args) {
-  // Lab2 TODO: implement the quit command
+  sim_state.state = SIM_QUIT;
   return 0;
 }
 
 static int cmd_si(char *args) {
   char *arg = strtok(NULL, " ");
-  // Lab2 TODO: implement the si [N] command
+    long steps;
+  if (arg == NULL) {
+    steps = 1;
+  } else {
+    char *endptr;
+    steps = strtol(args, &endptr, 10);
+  }
+  cpu_exec(steps);
+  printf("si: %ld steps executed\n", steps);
+  return 0;
   return 0;
 }
 
@@ -50,8 +60,7 @@ static int cmd_info(char *args) {
     printf("Usage: info r\n");
   } 
   else if(strcmp(arg, "r") == 0) {
-  // Lab2 TODO: implement the info r command
-
+    isa_reg_display();
   } 
   else {
     printf("Usage: info r\n");
@@ -103,17 +112,90 @@ static int cmd_p(char *args) {
 
 static int cmd_help(char *args);
 
+static struct {
+  const char *name;
+  const char *description;
+  int (*handler) (char *);
+} cmd_table [] = {
+  { "help", "Display informations about all supported commands", cmd_help },
+  { "c", "Continue the execution of the program", cmd_c },
+  { "q", "Exit NEMU", cmd_q },
+  { "exit", "Exit NEMU", cmd_q },
+  { "si", "Excute several steps", cmd_si },
+  { "info", "Print the info of rigisters(r)", cmd_info },
+  { "x", "Scan the mem", cmd_x },
+  { "p", "Calc expressions", cmd_p},
+};
+
+#define ARRLEN(arr) (int)(sizeof(arr) / sizeof(arr[0]))
+
+#define NR_CMD ARRLEN(cmd_table)
+
+static int cmd_help(char *args) {
+  /* extract the first argument */
+  char *arg = strtok(NULL, " ");
+  int i;
+
+  if (arg == NULL) {
+    /* no argument given */
+    for (i = 0; i < NR_CMD; i ++) {
+      printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
+    }
+  }
+  else {
+    for (i = 0; i < NR_CMD; i ++) {
+      if (strcmp(arg, cmd_table[i].name) == 0) {
+        printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
+        return 0;
+      }
+    }
+    printf("Unknown command '%s'\n", arg);
+  }
+  return 0;
+}
+
 // ***** add *****
+
+void sdb_set_batch_mode() {
+  is_batch_mode = true;
+}
 
 void sdb_mainloop() {
     if(is_batch_mode) {
-        cmd_c();
+        cmd_c(NULL);
         return;
     }
+  for (char *str; (str = rl_gets()) != NULL; ) {
+    char *str_end = str + strlen(str);
+
+    /* extract the first token as the command */
+    char *cmd = strtok(str, " ");
+    if (cmd == NULL) { continue; }
+
+    /* treat the remaining string as the arguments,
+     * which may need further parsing
+     */
+    char *args = cmd + strlen(cmd) + 1;
+    if (args >= str_end) {
+      args = NULL;
+    }
+
+    int i;
+    for (i = 0; i < NR_CMD; i ++) {
+      if (strcmp(cmd, cmd_table[i].name) == 0) {
+        if (cmd_table[i].handler(args) < 0) { return; }
+        break;
+      }
+    }
+
+    if (i == NR_CMD) { printf("Unknown command '%s'\n", cmd); }
+  }
 }
 
-void init_sdb() {
-    init_regex();
+void init_sdb(char *mode) {
+  init_regex();
 
-    init_wp_pool();
+  if (mode && strcmp(mode, "-b") == 0) {
+    sdb_set_batch_mode();
+  }
 }
