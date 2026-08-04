@@ -35,7 +35,7 @@ static int cmd_c(char *args) {
 
 static int cmd_q(char *args) {
   sim_state.state = SIM_QUIT;
-  return 0;
+  return -1;
 }
 
 static int cmd_si(char *args) {
@@ -49,7 +49,6 @@ static int cmd_si(char *args) {
   }
   cpu_exec(steps);
   printf("si: %ld steps executed\n", steps);
-  return 0;
   return 0;
 }
 

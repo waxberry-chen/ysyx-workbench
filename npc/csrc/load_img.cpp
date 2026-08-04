@@ -2,7 +2,7 @@
 #include "common.h"
 #include "debug.h"
 
-extern paddr_t pmem[];
+extern uint8_t pmem[];
 
 uint64_t load_img(char *img_name) {
     if (img_name == NULL) {
@@ -14,8 +14,10 @@ uint64_t load_img(char *img_name) {
 
     fseek(fp, 0, SEEK_END);
     long size = ftell(fp);
-    fseek(fp, 0, SEEK_SET);
+
     Log("The image is %s, size = %ld", img_name, size);
+
+    fseek(fp, 0, SEEK_SET);
     int ret = fread(pmem, size, 1, fp);
     assert(ret==1);
 

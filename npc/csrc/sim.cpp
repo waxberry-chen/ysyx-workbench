@@ -67,11 +67,11 @@ void reset(int n) {
     single_cycle();
   }
   dut->rstn = 1;
-  dut->eval();
+  dut->eval();  // use to load first inst
 }
 
 // ** End simulation by software **
-// check if the program should end
+// check if the program should end, run to ebreak
 inline bool test_break(){
   return dut->inst == 0x00100073U;
 }

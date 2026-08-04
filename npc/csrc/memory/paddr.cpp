@@ -8,7 +8,7 @@ extern Vysyx_core *dut;
 uint8_t pmem[CONFIG_MSIZE];
 
 static inline bool in_pmem(paddr_t addr) {
-    return ((paddr_t)CONFIG_MBASE < addr) && (addr < (paddr_t)CONFIG_MBASE + CONFIG_MSIZE);
+    return (addr >= CONFIG_MBASE) && (addr < (paddr_t)CONFIG_MBASE + CONFIG_MSIZE);
 }
 
 static void out_of_bound(paddr_t addr) {
@@ -66,6 +66,7 @@ extern "C" void pmem_read(bool re, paddr_t paddr, uint32_t size, word_t *rdata) 
     if(!re) return;
     if(in_pmem(paddr)) {
         *rdata = host_read(guest_to_host(paddr), size);
+        // printf("addr: %08x\tinst: %08x\n", paddr, *rdata); // debug
         return;
     }
     // mmio

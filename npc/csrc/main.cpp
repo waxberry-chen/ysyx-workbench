@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
   Verilated::traceEverOn(true);
   dut->trace(m_trace, 5);
   m_trace->open("waveform.fst");
-  reset(1);
+  reset(3);
 
   sdb_mainloop();
 

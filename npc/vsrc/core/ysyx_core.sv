@@ -42,7 +42,7 @@ module ysyx_core #(
     assign commit_wb = 1;
     assign uncache_read_wb = inst[6:0] == 7'b0000011 && alu_res[31:28] == 4'ha;
 
-    // program counter
+    // // program counter
     ysyx_gnrl_dffrs #(
         .DW(32),
         .RST(32'h80000000)
@@ -52,6 +52,15 @@ module ysyx_core #(
         .clk    (clk),
         .rst_n  (rstn)
     );
+    
+    // PC #(
+    //     .PC_RST(32'h80000000)
+    // ) pc (
+    //     .clk(clk),
+    //     .rstn(rstn),
+    //     .pc_next(pc_next),
+    //     .pc_cur(pc_cur)
+    // );
 
     ysyx_i_ram #(
         .DEPTH(I_CACHE_DEPTH)
@@ -104,7 +113,7 @@ module ysyx_core #(
         .N  (2)
     ) alu_sel0 (
         .out_data   (alu_src0),
-        .in_data    ({rf_rd0, pc_cur}), 
+        .in_data    ({pc_cur, rf_rd0}), // high->1, low->0
         .sel        (alu_src0_sel)
     );
 
@@ -113,7 +122,7 @@ module ysyx_core #(
         .N  (2)
     ) alu_sel1 (
         .out_data   (alu_src1),
-        .in_data    ({rf_rd1, imm}), 
+        .in_data    ({imm, rf_rd1}), 
         .sel        (alu_src1_sel)
     );
 
@@ -170,7 +179,7 @@ module ysyx_core #(
         .N (4)
     ) rf_sel (
         .out_data   (rf_wd), 
-        .in_data    ({alu_res, pc_add4, dm_rd, 32'h0}),
+        .in_data    ({32'h0, dm_rd, pc_add4, alu_res}),
         .sel        (rf_wd_sel)
     );
 
