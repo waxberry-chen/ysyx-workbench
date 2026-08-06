@@ -8,13 +8,14 @@ $(VBIN): $(CSRC) $(VSRC)
 	@verilator $(VFLAGS) $(CSRC) $(CINC_DIR)
 	@make -s -C $(OBJ_DIR) -f $(REWRITE_MK)
 
+# here should put $(IMG) at last 
 run: $(VBIN) $(IMG)
 	@echo "$(COLOR_YELLOW)load_img:$(COLOR_NONE) $(notdir $(IMG))"
-	$(VBIN) $(IMG) $(ARGS)
+	$(VBIN) $(ARGS) $(IMG)
 
 gdb: $(VBIN) $(ILM_IMG) $(DLM_IMG)
 	@echo "$(COLOR_YELLOW)load_img:$(COLOR_NONE) $(ILM_IMG) $(DLM_IMG)"
-	@gdb -s $(VBIN) --args $(VBIN) $(IMG) $(ARGS)
+	@gdb -s $(VBIN) --args $(VBIN) $(ARGS) $(IMG)
 
 clean:
 	@echo rm -rf OBJ_DIR *vcd

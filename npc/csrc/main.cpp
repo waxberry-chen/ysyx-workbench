@@ -19,14 +19,16 @@ uint32_t *cpu_gpr = NULL;
 extern SimState sim_state;
 
 int main(int argc, char *argv[]) {
+  /* welcome */
   printf(ANSI_FG_YELLOW "Hello, ysyx!\n" ANSI_NONE);
-  printf(ANSI_FG_GREEN  "Loading img: %s\n" ANSI_NONE , argv[1]);
-  // ***** load img into memory *****
-  uint64_t size = load_img(argv[1]); 
+  
+  init_sdb(argc, argv);
+  /* load img into memory */
+  printf(ANSI_FG_GREEN  "Loading img: %s\n" ANSI_NONE , sdb_args.img_file);
+  uint64_t size = load_img(sdb_args.img_file); 
   // no difftest temporarily
   init_disasm("riscv32");
 
-  init_sdb(argv[2]);
   // wave tracer
   Verilated::traceEverOn(true);
   dut->trace(m_trace, 5);

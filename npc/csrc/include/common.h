@@ -66,7 +66,7 @@ bool test_break();
 /*****************
 *     MEMORY     *
 ******************/
-uint64_t load_img(char *img_name);
+uint64_t load_img(const char *img_name);
 // DPI-C
 extern "C" void pmem_read(bool re, paddr_t raddr, uint32_t mask, word_t *rdata);
 extern "C" void pmem_write(bool we, paddr_t waddr, uint32_t mask, word_t wdata);
@@ -79,12 +79,22 @@ void host_write(void *haddr, int len, word_t wdata);
 /**************
 *     SDB     *
 ***************/
-void init_sdb(char *mode);
+void init_sdb(int argc, char **argv);
 void sdb_mainloop();
 void cpu_exec(unsigned int n);
 // isa.h in nemu
 // define in sim.c
 void isa_reg_display();
 word_t isa_reg_str2val(const char *s, bool *success);
+
+typedef struct {
+    int difftest_port;
+    const char *log_file;
+    const char *diff_so_file;
+    const char *elf_file;
+    const char *img_file;
+} Sdb_args;
+
+extern Sdb_args sdb_args;
 
 #endif

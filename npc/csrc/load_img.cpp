@@ -4,7 +4,7 @@
 
 extern uint8_t pmem[];
 
-uint64_t load_img(char *img_name) {
+uint64_t load_img(const char *img_name) {
     if (img_name == NULL) {
         Log("No image given in npc-load_img");
         return 4096;

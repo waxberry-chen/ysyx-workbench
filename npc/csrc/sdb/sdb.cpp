@@ -2,6 +2,7 @@
 #include <readline/history.h>
 #include "common.h"
 #include <stdlib.h>
+#include <getopt.h>
 
 void init_regex();
 
@@ -191,10 +192,56 @@ void sdb_mainloop() {
   }
 }
 
-void init_sdb(char *mode) {
-  init_regex();
+Sdb_args sdb_args = {
+  .difftest_port = 0, 
+  .log_file = NULL, 
+  .diff_so_file = NULL, 
+  .elf_file = NULL,
+  .img_file = NULL,
+};
 
-  if (mode && strcmp(mode, "-b") == 0) {
-    sdb_set_batch_mode();
+/* the parse_args fuction should place IMG (img_file) at last */
+static int parse_args(int argc, char *argv[]) {
+  // Long options
+  const struct option table[] = {
+    {"batch"    , no_argument      , NULL, 'b'},
+    {"log"      , required_argument, NULL, 'l'},
+    {"diff"     , required_argument, NULL, 'd'},
+    {"port"     , required_argument, NULL, 'p'},
+    {"elf"      , required_argument, NULL, 'e'},
+    {"help"     , no_argument      , NULL, 'h'},
+    {0          , 0                , NULL,  0 },
+  };
+  int o;
+  // Short options
+  printf("INFO: parse_args: %s\n", argv[1]);
+  while ( (o = getopt_long(argc, argv, "-bhl:d:p:e:", table, NULL)) != -1) {
+    switch (o) {
+      case 'b': sdb_set_batch_mode(); break;
+      case 'p': sscanf(optarg, "%d", &sdb_args.difftest_port); break;
+      case 'l': sdb_args.log_file = optarg; break;
+      case 'd': sdb_args.diff_so_file = optarg; break;
+      case 'e': sdb_args.elf_file = optarg; break;
+      case 1: sdb_args.img_file = optarg; return 0; // at last is img_file
+      default:
+        printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
+        printf("\t-b,--batch              run with batch mode\n");
+        printf("\t-l,--log=FILE           output log to FILE\n");
+        printf("\t-d,--diff=REF_SO        run DiffTest with reference REF_SO\n");
+        printf("\t-p,--port=PORT          run DiffTest with port PORT\n");
+        printf("\t-e,--elf=FILE           read in elf file\n");
+        printf("\n");
+        exit(0);
+    }
   }
+  return 0;
+}
+
+void init_sdb(int argc, char **argv) {
+  init_regex();
+  /* parse arguments */
+  parse_args(argc, argv);
+  // if (mode && (strcmp(mode, "--batch") == 0 || strcmp(mode, "-b") == 0) ) {
+  //   sdb_set_batch_mode();
+  // }
 }
