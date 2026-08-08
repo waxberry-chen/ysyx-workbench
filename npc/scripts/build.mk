@@ -1,4 +1,4 @@
-ARGS ?= 
+ARGS ?= -d $(NEMU_HOME)/build/riscv32-nemu-interpreter-so
 IMG ?= $(NPC_HOME)/dummy-riscv32e-npc.bin
 
 VFLAGS += --trace-fst
@@ -18,6 +18,7 @@ gdb: $(VBIN) $(ILM_IMG) $(DLM_IMG)
 	@gdb -s $(VBIN) --args $(VBIN) $(ARGS) $(IMG)
 
 clean:
-	@echo rm -rf OBJ_DIR *vcd
+	@echo rm -rf OBJ_DIR *vcd/fst
 	@rm -rf $(OBJ_DIR)
 	@rm -rf *.vcd
+	@rm -rf *.fst

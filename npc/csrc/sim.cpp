@@ -111,10 +111,10 @@ void cpu_exec(unsigned int n){
     }
 
     if (dut->commit_wb) {
-    //   if(npc_cpu_uncache_pre){
-    //     difftest_sync();
-    //   }
-    //   difftest_step();
+      if(npc_cpu_uncache_pre){  // use for future mmio
+        difftest_sync();
+      }
+      difftest_step();
   
       g_nr_guest_inst++;
       npc_cpu_uncache_pre = dut->uncache_read_wb;

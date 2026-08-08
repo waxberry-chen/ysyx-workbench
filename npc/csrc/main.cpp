@@ -26,7 +26,10 @@ int main(int argc, char *argv[]) {
   /* load img into memory */
   printf(ANSI_FG_GREEN  "Loading img: %s\n" ANSI_NONE , sdb_args.img_file);
   uint64_t size = load_img(sdb_args.img_file); 
-  // no difftest temporarily
+
+  difftest_init_npc(sdb_args.diff_so_file, size, sdb_args.difftest_port);  // port unused for NEMU
+
+  // disassembling init, llvm here while capstone in NEMU
   init_disasm("riscv32");
 
   // wave tracer

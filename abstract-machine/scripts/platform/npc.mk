@@ -19,6 +19,7 @@ NPCFLAGS += --batch
 # FILE_NAME = $(ALL)-$(ARCH)
 # ELF_FILE_NAME = $(addsuffix .elf, $(FILE_NAME))
 NPCFLAGS += -e $(abspath $(IMAGE).elf)
+NPCFLAGS += -d $(abspath $(NEMU_HOME)/build/riscv32-nemu-interpreter-so)
 
 MAINARGS_MAX_LEN = 64
 MAINARGS_PLACEHOLDER = The insert-arg rule in Makefile will insert mainargs here.

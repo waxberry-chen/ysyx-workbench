@@ -52,6 +52,7 @@ typedef struct {
 
 enum {SIM_RUNNING, SIM_STOP, SIM_END, SIM_ABORT, SIM_QUIT};
 
+// Harness maintain states for RTL and simulation process
 extern CPU_state sim_cpu;
 extern SimState sim_state;
 
@@ -76,6 +77,9 @@ void paddr_write(paddr_t addr, int len, word_t wdata);
 word_t host_read(void *haddr, int len);
 void host_write(void *haddr, int len, word_t wdata);
 
+uint8_t* guest_to_host(paddr_t paddr);
+paddr_t host_to_guest(uint8_t *haddr);
+
 /**************
 *     SDB     *
 ***************/
@@ -96,5 +100,15 @@ typedef struct {
 } Sdb_args;
 
 extern Sdb_args sdb_args;
+
+/***************
+*   Difftest   *
+****************/
+
+void difftest_skip_ref();
+void difftest_init_npc(const char *ref_so_file, long img_size, int port);
+void difftest_sync();
+void difftest_step();
+
 
 #endif
