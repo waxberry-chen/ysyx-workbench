@@ -20,11 +20,15 @@ typedef struct {
   char asm_buf[128];
 } inst_log;
 
-void print_itrace(inst_log *inst_log, Vysyx_core *dut);
+void itrace_commit_print(inst_log *inst_log, vaddr_t commit_pc, word_t commit_inst);
 // void difftest_step();
 
+// str: a string buffer, dump disasmbled asm code. 
+// size: size of str buffer. 
+// pc: the pc of inst. 
+// code: inst code. 
+// nbyte: the length of inst code, representative value is 4. 
 extern void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
-
 
 // static const char *csr_names[] = {"mstatus", "mtvec", "mepc",  "mcause"};
 // uint32_t *cpu_mstatus = NULL, *cpu_mtvec = NULL, *cpu_mepc = NULL, *cpu_mcause = NULL;
@@ -93,13 +97,14 @@ void cpu_exec(unsigned int n){
     default: sim_state.state = SIM_RUNNING;
   }
   inst_log inst_log;
-  while (n > 0) {
-    #ifdef CONFIG_ITRACE
-    if(n < CONFIG_ITRACE_MAX_INST){
-      print_itrace(&inst_log, dut);
-    }
-    #endif
-    
+
+  // do not print to much insts in sdb
+  #ifdef CONFIG_ITRACE
+  bool itrace_print = false; 
+  if (n < CONFIG_ITRACE_MAX_INST) itrace_print = true;
+  #endif
+
+  while (n > 0) {    
     // Capture the instruction and its commit metadata before the active edge.
     // In the current single-cycle core, they describe the instruction that the
     // following single_cycle() will commit.
@@ -123,6 +128,11 @@ void cpu_exec(unsigned int n){
       set_state();
       g_nr_guest_inst++;
       n--;
+      #ifdef CONFIG_ITRACE
+      if(itrace_print){
+        itrace_commit_print(&inst_log, commit_pc, commit_inst);
+      }
+      #endif
       difftest_step(commit_pc, commit_inst, skip_ref, g_nr_guest_inst);
     }
 
@@ -192,9 +202,10 @@ void isa_reg_display() {
 //   }
 }
 
-void print_itrace(inst_log *inst_log, Vysyx_core *dut) {
-  inst_log->pc = dut->pc_cur;
-  inst_log->inst = dut->inst;
+void itrace_commit_print(inst_log *inst_log, vaddr_t commit_pc, word_t commit_inst) {
+  // disassemble and print based on commit_pc and commit_inst
+  inst_log->pc = commit_pc;
+  inst_log->inst = commit_inst;
   disassemble(inst_log->asm_buf, sizeof(inst_log->asm_buf), inst_log->pc, (uint8_t *)&inst_log->inst, 4);
   printf("0x%08x: %08x\t%s\n", inst_log->pc, inst_log->inst, inst_log->asm_buf);
 }
