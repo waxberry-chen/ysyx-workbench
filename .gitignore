@@ -12,9 +12,12 @@
 !init.sh
 nvboard/
 /fceux-am
-!compile_commands.json/am-kernels
+!compile_commands.json
+/am-kernels
 
 # Keep the lectures
 /docs/*
 !/docs/notes/
 !/docs/notes/**
+!/docs/lectures/
+!/docs/lectures/**
