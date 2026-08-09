@@ -55,7 +55,6 @@ void single_cycle() {
   #endif
   dut->eval();
   m_trace->dump(sim_time++); 
-  if(dut->commit_wb == 1) set_state();
 }
 
 // simulate a reset
@@ -68,6 +67,7 @@ void reset(int n) {
   }
   dut->rstn = 1;
   dut->eval();  // use to load first inst
+  set_state();
 }
 
 // ** End simulation by software **
@@ -93,16 +93,22 @@ void cpu_exec(unsigned int n){
     default: sim_state.state = SIM_RUNNING;
   }
   inst_log inst_log;
-  bool npc_cpu_uncache_pre = 0;
-  while (n--) {
+  while (n > 0) {
     #ifdef CONFIG_ITRACE
     if(n < CONFIG_ITRACE_MAX_INST){
       print_itrace(&inst_log, dut);
     }
     #endif
     
-    // execute single instruction
-    if(test_break()) {
+    // Capture the instruction and its commit metadata before the active edge.
+    // In the current single-cycle core, they describe the instruction that the
+    // following single_cycle() will commit.
+    bool will_commit = dut->commit_wb;
+    vaddr_t commit_pc = dut->pc_cur;
+    word_t commit_inst = dut->inst;
+    bool skip_ref = dut->uncache_read_wb;
+
+    if(will_commit && test_break()) {
       // set the end state
       sim_state.halt_pc = dut->pc_cur;
       sim_state.halt_ret = cpu_gpr[10];
@@ -110,21 +116,20 @@ void cpu_exec(unsigned int n){
       break;
     }
 
-    if (dut->commit_wb) {
-      if(npc_cpu_uncache_pre){  // use for future mmio
-        difftest_sync();
-      }
-      difftest_step();
-  
-      g_nr_guest_inst++;
-      npc_cpu_uncache_pre = dut->uncache_read_wb;
-    }
     // your cpu step a cycle
     single_cycle();
 
-#ifdef DEVICE
-    // device_update();
-#endif
+    if (will_commit) {
+      set_state();
+      g_nr_guest_inst++;
+      n--;
+      difftest_step(commit_pc, commit_inst, skip_ref, g_nr_guest_inst);
+    }
+
+
+  #ifdef DEVICE
+      // device_update();
+  #endif
     if(sim_state.state != SIM_RUNNING) break;
   }
 

@@ -3,6 +3,7 @@
 *******************************************/
 #include "common.h"
 #include "debug.h"
+#include "../utils/disasm.h"
 #include <dlfcn.h>
 
 enum { DIFFTEST_TO_DUT, DIFFTEST_TO_REF };
@@ -24,6 +25,41 @@ static const char *regs[] = {
   "a6", "a7", "s2", "s3", "s4", "s5", "s6", "s7",
   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 };  // reg table
+
+#define DIFFTEST_TRACE_SIZE 16
+
+typedef struct {
+    uint64_t nr_inst;
+    vaddr_t pc;
+    word_t inst;
+} DifftestTrace;
+
+static DifftestTrace trace_ring[DIFFTEST_TRACE_SIZE];
+static size_t trace_head = 0;
+static size_t trace_count = 0;
+
+static void record_trace(uint64_t nr_inst, vaddr_t pc, word_t inst) {
+    trace_ring[trace_head] = { nr_inst, pc, inst };
+    trace_head = (trace_head + 1) % DIFFTEST_TRACE_SIZE;
+    if (trace_count < DIFFTEST_TRACE_SIZE) {
+        trace_count++;
+    }
+}
+
+static void dump_recent_trace() {
+    printf("Recent committed instructions:\n");
+    size_t start = (trace_head + DIFFTEST_TRACE_SIZE - trace_count) % DIFFTEST_TRACE_SIZE;
+    for (size_t i = 0; i < trace_count; i++) {
+        const DifftestTrace *trace = &trace_ring[(start + i) % DIFFTEST_TRACE_SIZE];
+        word_t inst = trace->inst;
+        char asm_buf[128];
+        disassemble(asm_buf, sizeof(asm_buf), trace->pc, (uint8_t *)&inst, sizeof(inst));
+        printf("%c #%llu " FMT_WORD ": %08x\t%s\n",
+            i + 1 == trace_count ? '>' : ' ',
+            (unsigned long long)trace->nr_inst,
+            trace->pc, trace->inst, asm_buf);
+    }
+}
 
 /* Skip */
 static bool is_skip_ref = false;
@@ -70,22 +106,33 @@ void difftest_init_npc(const char *ref_so_file, long img_size, int port) {
     difftest_regcpy(&sim_cpu, DIFFTEST_TO_REF); // CPU_state type contains pc
 }
 
-// specific isa-related regs check
-bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
-    // check gpr first
-    for (int i=0; i<32; i++) {
-        if(sim_cpu.gpr[i] != ref_r->gpr[i]) {
-            printf(ANSI_BG_RED "DIFFTEST: gpr[%d] (%s) = 0x" FMT_WORD " (dut); 0x" 
-            FMT_WORD " (nemu)" ANSI_NONE "\n", i, regs[i], sim_cpu.gpr[i], ref_r->gpr[i]);
-            return false;
+// Compare the architectural state after the instruction at pc commits.
+static bool isa_difftest_checkregs(const CPU_state *ref_r, vaddr_t pc,
+        word_t inst, uint64_t nr_inst) {
+    bool matched = sim_cpu.pc == ref_r->pc;
+    for (int i = 0; i < 32; i++) {
+        matched = matched && sim_cpu.gpr[i] == ref_r->gpr[i];
+    }
+    if (matched) {
+        return true;
+    }
+
+    word_t inst_copy = inst;
+    char asm_buf[128];
+    disassemble(asm_buf, sizeof(asm_buf), pc, (uint8_t *)&inst_copy, sizeof(inst_copy));
+    printf(ANSI_FG_RED "DIFFTEST mismatch after instruction #%llu\n" ANSI_NONE,
+        (unsigned long long)nr_inst);
+    printf("  instruction : " FMT_WORD ": %08x\t%s\n", pc, inst, asm_buf);
+    printf("  next pc     : " FMT_WORD " (dut), " FMT_WORD " (ref)\n",
+        sim_cpu.pc, ref_r->pc);
+    for (int i = 0; i < 32; i++) {
+        if (sim_cpu.gpr[i] != ref_r->gpr[i]) {
+            printf("  gpr[%2d] %-3s: " FMT_WORD " (dut), " FMT_WORD " (ref)\n",
+                i, regs[i], sim_cpu.gpr[i], ref_r->gpr[i]);
         }
     }
-    // pc 
-    if (sim_cpu.pc != ref_r->pc) {
-        printf(ANSI_BG_RED "DIFFTEST: pc = 0x" FMT_WORD " (dut.pc); 0x" FMT_WORD " (nemu.pc)" ANSI_NONE "\n", sim_cpu.pc, ref_r->pc);
-        return false;
-    }
-    return true;
+    dump_recent_trace();
+    return false;
 }
 
 // check mem
@@ -101,8 +148,8 @@ bool isa_difftest_checkmem(uint8_t *ref_pmem, vaddr_t pc) {
   return true;
 }
 
-static void checkregs(CPU_state *ref, vaddr_t pc) {
-  if (!isa_difftest_checkregs(ref, pc)) {
+static void checkregs(const CPU_state *ref, vaddr_t pc, word_t inst, uint64_t nr_inst) {
+  if (!isa_difftest_checkregs(ref, pc, inst, nr_inst)) {
     sim_state.state = SIM_ABORT;
     sim_state.halt_pc = pc;
     isa_reg_display();
@@ -116,11 +163,20 @@ static void checkmem(uint8_t *ref_pmem, vaddr_t pc) {
   }
 }
 
-void difftest_step() {
+void difftest_step(vaddr_t pc, word_t inst, bool skip_ref, uint64_t nr_inst) {
+    record_trace(nr_inst, pc, inst);
+
+    // Device reads may be nondeterministic. Do not execute the instruction on
+    // REF; use the committed DUT state as the new common baseline instead.
+    if (skip_ref) {
+        difftest_sync();
+        return;
+    }
+
     CPU_state ref_r;
-    difftest_regcpy(&ref_r, DIFFTEST_TO_DUT);   // ref_r maintained in harness, dut side
     difftest_exec(1);
-    checkregs(&ref_r, sim_cpu.pc);
+    difftest_regcpy(&ref_r, DIFFTEST_TO_DUT);   // ref_r maintained in harness, dut side
+    checkregs(&ref_r, pc, inst, nr_inst);
 }
 
 // copy our registers to nemu

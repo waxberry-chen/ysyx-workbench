@@ -108,7 +108,7 @@ extern Sdb_args sdb_args;
 void difftest_skip_ref();
 void difftest_init_npc(const char *ref_so_file, long img_size, int port);
 void difftest_sync();
-void difftest_step();
+void difftest_step(vaddr_t pc, word_t inst, bool skip_ref, uint64_t nr_inst);
 
 
 #endif
