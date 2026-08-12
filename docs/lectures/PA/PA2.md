@@ -351,7 +351,12 @@ make ARCH=riscv32-nemu run mainargs=I-love-PA
 
 **[必做] 运行 `alu-tests`**
 
-在 `am-kernels/tests/alu-tests/` 根据 README 编译并运行，验证各种 C 运算生成的指令。编译可能需要约一分钟；失败时从第一个错误用例及其反汇编定位指令语义。
+在 `am-kernels/tests/alu-tests/` 根据 README 编译并运行  ，验证各种 C 运算生成的指令。编译可能需要约一分钟；失败时从第一个错误用例及其反汇编定位指令语义。
+
+```bash
+cd am-kernels/tests/alu-tests
+make ARCH=riscv32-nemu run
+```
 
 ### 7.3 时钟
 
@@ -364,6 +369,10 @@ NEMU 用两个 32 位设备寄存器提供 64 位微秒时间。AM 用 `AM_TIMER
 - 阅读设备回调，确定读取次序如何保证高低 32 位来自同一次时间采样，不要凭地址顺序猜测。
 - 在 `riscv32-nemu` 运行 `am-tests` 的 `real-time clock test`；应每隔 1 秒输出一行。
 - `AM_TIMER_RTC` 未实现导致日期恒为 1900 年 0 月 0 日，这是预期行为，不是 bug。
+
+```bash
+make ARCH=riscv32-nemu run mainargs=t
+```
 
 **[必做] 测量 NEMU 性能**
 

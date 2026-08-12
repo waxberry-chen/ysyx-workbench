@@ -6,6 +6,7 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <string.h>
+#include <stdlib.h> // malloc
 
 #include "config.h"
 #include "debug.h"
@@ -110,5 +111,16 @@ void difftest_init_npc(const char *ref_so_file, long img_size, int port);
 void difftest_sync();
 void difftest_step(vaddr_t pc, word_t inst, bool skip_ref, uint64_t nr_inst);
 
+/***********
+*   MMIO   *
+***********/
+void init_device();
+
+word_t mmio_read(paddr_t addr, int len);
+void mmio_write(paddr_t addr, int len, word_t data);
+
+/* get time */
+uint64_t get_time();      // relative time (us-level)
+struct tm *get_time_tm(); // real time
 
 #endif

@@ -10,6 +10,8 @@
 void __am_timer_init() {
 }
 
+// inside ioe_read/write
+//  io_read/write (reg) -> ioe_read/write
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
   uint64_t high32 = inl(RTC_ADDR+4);
   uint64_t low32  = inl(RTC_ADDR);

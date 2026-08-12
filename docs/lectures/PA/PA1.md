@@ -100,7 +100,7 @@ while (1) {
 NEMU 用 C 数据结构模拟这些部件：
 
 - 物理内存：`nemu/src/memory/paddr.c` 中的 `pmem`。
-- CPU 状态：`nemu/src/isa/$ISA/include/isa-def.h` 中的 `CPU_state`，全局实例 `cpu` 位于 `nemu/src/cpu/cpu-exec.c`。
+- CPU 状态：`nemu/src/isa/$ISA/include/isa-def.h` 中的 `riscv32_CPU_state`，同时在 `nemu/include/isa.h` 中定义 `typedef concat(__GUEST_ISA__, _CPU_state) CPU_state;`, 全局实例 `cpu` 位于 `nemu/src/cpu/cpu-exec.c`。
 - 指令执行循环：`cpu_exec()`、`execute()`、`exec_once()`。
 - ISA 相关执行逻辑：`nemu/src/isa/$ISA/inst.c`。
 

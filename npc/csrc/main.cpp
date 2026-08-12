@@ -28,6 +28,7 @@ int main(int argc, char *argv[]) {
   uint64_t size = load_img(sdb_args.img_file); 
 
   difftest_init_npc(sdb_args.diff_so_file, size, sdb_args.difftest_port);  // port unused for NEMU
+  init_device();
 
   // disassembling init, llvm here while capstone in NEMU
   init_disasm("riscv32");

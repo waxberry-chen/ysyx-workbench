@@ -48,7 +48,12 @@ void host_write(void *haddr, int size, word_t wdata){
 
 // size: 1 2 4 8 (Byte)
 word_t paddr_read(paddr_t paddr, int size) {
-    if (in_pmem(paddr)) return host_read(guest_to_host(paddr), size);
+    if (in_pmem(paddr)) { 
+        return host_read(guest_to_host(paddr), size);
+    } else {
+        IFDEF(CONFIG_DEVICE, return mmio_read(paddr, size)); 
+        // mmio_read will check the addr
+    }
     out_of_bound(paddr);
     return 0;
 }
@@ -57,6 +62,8 @@ void paddr_write(paddr_t paddr, int size, word_t wdata) {
     if(in_pmem(paddr)) {
         host_write(guest_to_host(paddr), size, wdata);
         return;
+    } else {
+        IFDEF(CONFIG_DEVICE, mmio_write(paddr, size, wdata); return);
     }
     out_of_bound(paddr);
 }

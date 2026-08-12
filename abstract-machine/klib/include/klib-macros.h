@@ -15,11 +15,15 @@
 #define putstr(s) \
   ({ for (const char *p = s; *p; p++) putch(*p); })
 
+// bare-metal domain
+// define a reg_T type __io_param
+//    pass in __am_* functions to get value
 #define io_read(reg) \
   ({ reg##_T __io_param; \
     ioe_read(reg, &__io_param); \
     __io_param; })
 
+// initialize reg_T type struct, pass in to __am_* funcs to write
 #define io_write(reg, ...) \
   ({ reg##_T __io_param = (reg##_T) { __VA_ARGS__ }; \
     ioe_write(reg, &__io_param); })

@@ -55,5 +55,7 @@ bool ioe_init() {
   return true;
 }
 
+// ioe_read/write -> __am_* function 
+//                              with abstract reg_T struct pass in
 void ioe_read (int reg, void *buf) { ((handler_t)lut[reg])(buf); }
 void ioe_write(int reg, void *buf) { ((handler_t)lut[reg])(buf); }
