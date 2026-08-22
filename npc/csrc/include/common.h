@@ -10,6 +10,7 @@
 
 #include "config.h"
 #include "debug.h"
+#include "macro.h"
 
 #define MAX_SIM_TIME 4000000
 

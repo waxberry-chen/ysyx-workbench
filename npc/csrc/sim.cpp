@@ -111,7 +111,7 @@ void cpu_exec(unsigned int n){
     bool will_commit = dut->commit_wb;
     vaddr_t commit_pc = dut->pc_cur;
     word_t commit_inst = dut->inst;
-    bool skip_ref = dut->uncache_read_wb;
+    bool skip_ref = dut->commit_is_mmio;
 
     if(will_commit && test_break()) {
       // set the end state

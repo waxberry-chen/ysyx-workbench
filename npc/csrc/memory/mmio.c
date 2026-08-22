@@ -1,4 +1,5 @@
-#include "common.h"
+#include "map.h"
+#include "paddr.h"
 #define NR_MAP 16
 
 static IOMap maps[NR_MAP] = {};

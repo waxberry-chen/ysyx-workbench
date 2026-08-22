@@ -1,15 +1,12 @@
 #include "Vysyx_core.h"
 
 #include <assert.h>
-#include "common.h"
+#include "map.h"
+#include "paddr.h"
 
 extern Vysyx_core *dut;
 
 uint8_t pmem[CONFIG_MSIZE];
-
-static inline bool in_pmem(paddr_t addr) {
-    return (addr >= CONFIG_MBASE) && (addr < (paddr_t)CONFIG_MBASE + CONFIG_MSIZE);
-}
 
 static void out_of_bound(paddr_t addr) {
     Log("ERROR: address " FMT_PADDR " is out of bound of pmem[" FMT_PADDR ", " FMT_PADDR ")\n",
@@ -46,6 +43,7 @@ void host_write(void *haddr, int size, word_t wdata){
     }
 }
 
+// npc sdb interface
 // size: 1 2 4 8 (Byte)
 word_t paddr_read(paddr_t paddr, int size) {
     if (in_pmem(paddr)) { 
@@ -68,6 +66,7 @@ void paddr_write(paddr_t paddr, int size, word_t wdata) {
     out_of_bound(paddr);
 }
 
+// DPIC interface
 #ifndef AXI
 extern "C" void pmem_read(bool re, paddr_t paddr, uint32_t size, word_t *rdata) {
     if(!re) return;
@@ -76,7 +75,7 @@ extern "C" void pmem_read(bool re, paddr_t paddr, uint32_t size, word_t *rdata) 
         // printf("addr: %08x\tinst: %08x\n", paddr, *rdata); // debug
         return;
     }
-    // mmio
+    *rdata = mmio_read(paddr, size);    // mmio
 }
 
 extern "C" void pmem_write(bool we, paddr_t paddr, uint32_t size, word_t wdata) {
@@ -85,7 +84,7 @@ extern "C" void pmem_write(bool we, paddr_t paddr, uint32_t size, word_t wdata) 
         host_write(guest_to_host(paddr), size, wdata);
         return;
     }
-    // mmio
+    mmio_write(paddr, size, wdata);     // mmio
 }
 
 #else

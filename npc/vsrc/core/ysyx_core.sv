@@ -6,7 +6,7 @@ module ysyx_core #(
     (
         input           clk, rstn,
         output  [31: 0] pc_cur, inst,
-        output          commit_wb, uncache_read_wb
+        output          commit_wb, commit_is_mmio
 `ifdef DEBUG
         ,
         output          putchar,
@@ -40,7 +40,9 @@ module ysyx_core #(
 
     // single cycle, always commit
     assign commit_wb = 1;
-    assign uncache_read_wb = inst[6:0] == 7'b0000011 && alu_res[31:28] == 4'ha;
+
+    // load/store mmio address, used by rtl harness to skip ref
+    assign commit_is_mmio = (inst[6:0] == 7'b0000011 || inst[6:0] == 7'b0100011) && alu_res[31:28] == 4'ha;
 
     // // program counter
     ysyx_gnrl_dffrs #(
@@ -65,6 +67,7 @@ module ysyx_core #(
     ysyx_i_ram #(
         .DEPTH(I_CACHE_DEPTH)
     ) i_ram (
+        .rstn(rstn),
         .addr(pc_cur),
         .inst(inst)
     );
