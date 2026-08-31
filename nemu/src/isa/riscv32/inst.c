@@ -55,6 +55,52 @@ static void decode_operand(Decode *s, int *rd, word_t *src1, word_t *src2, word_
   }
 }
 
+word_t csr_read(word_t index) {
+  switch (index) {
+    case 0x300: return cpu.csr.mstatus;
+    case 0x305: return cpu.csr.mtvec;
+    case 0x341: return cpu.csr.mepc;
+    case 0x342: return cpu.csr.mcause;
+    default: assert(0);
+  } 
+}
+
+void csr_write(word_t index, word_t wdata) {
+  switch(index) {
+    case 0x300: cpu.csr.mstatus = wdata; return;
+    case 0x305: cpu.csr.mtvec   = wdata; return;
+    case 0x341: cpu.csr.mepc    = wdata; return;
+    case 0x342: cpu.csr.mcause  = wdata; return;
+    default: assert(0);
+  }
+}
+
+#define MSTATUS_MIE  (1u << 3)
+#define MSTATUS_MPIE (1u << 7)
+#define MSTATUS_MPP  (3u << 11)
+
+static void m_trap_update_mstatus(word_t *mstatus) {
+  word_t old = *mstatus;
+  // MIE -> MPIE
+  *mstatus = (old & ~MSTATUS_MPIE) | ((old & MSTATUS_MIE) << 4);
+  // MIE set 0
+  *mstatus &= ~MSTATUS_MIE;
+  // MPP <- M-mode (0x3)
+  *mstatus = (*mstatus & ~MSTATUS_MPP) | MSTATUS_MPP;
+}
+
+static void m_ret_update_mstatus(word_t *mstatus) {
+  word_t old = *mstatus;
+  // MPIE -> MIE
+  *mstatus = (old & ~MSTATUS_MIE) | ((old & MSTATUS_MPIE) >> 4);
+  // MPIE set 1 
+  *mstatus |= MSTATUS_MPIE;
+  // always M-mode 
+  *mstatus = (*mstatus & ~MSTATUS_MPP) | MSTATUS_MPP;
+}
+
+// isa_raise_intr() in `nemu/src/isa/riscv32/system/intr.c`
+
 static int decode_exec(Decode *s) {
   s->dnpc = s->snpc;
 
@@ -122,6 +168,12 @@ IFDEF(CONFIG_FTRACE, int rs1_for_jalr = BITS(INSTPAT_INST(s), 19, 15));
   INSTPAT("0000001 ????? ????? 110 ????? 01100 11", rem    , R, R(rd) = ((int)src1 % (int)src2));
   INSTPAT("0000001 ????? ????? 111 ????? 01100 11", remu   , R, R(rd) = (src1 % src2));
 
+  // priv
+  INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw  , I, if (rd != 0) {R(rd) = csr_read(imm);} csr_write(imm, src1));
+  INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs  , I, R(rd) = csr_read(imm); csr_write(imm, R(rd) | src1););
+
+  INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , N, s->dnpc = isa_raise_intr(11, s->pc); m_trap_update_mstatus(&cpu.csr.mstatus)); 
+  INSTPAT("0011000 00010 00000 000 00000 11100 11", mret   , N, s->dnpc = cpu.csr.mepc; m_ret_update_mstatus(&cpu.csr.mstatus));
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // environment break, R(10) is $a0
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc)); // 
   INSTPAT_END();
