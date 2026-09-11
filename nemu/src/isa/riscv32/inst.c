@@ -170,7 +170,7 @@ IFDEF(CONFIG_FTRACE, int rs1_for_jalr = BITS(INSTPAT_INST(s), 19, 15));
 
   // priv
   INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw  , I, if (rd != 0) {R(rd) = csr_read(imm);} csr_write(imm, src1));
-  INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs  , I, R(rd) = csr_read(imm); csr_write(imm, R(rd) | src1););
+  INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs  , I, word_t old = csr_read(imm); if (rd != 0) {R(rd) = old;} csr_write(imm, old | src1););
 
   INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , N, s->dnpc = isa_raise_intr(11, s->pc); m_trap_update_mstatus(&cpu.csr.mstatus)); 
   INSTPAT("0011000 00010 00000 000 00000 11100 11", mret   , N, s->dnpc = cpu.csr.mepc; m_ret_update_mstatus(&cpu.csr.mstatus));
