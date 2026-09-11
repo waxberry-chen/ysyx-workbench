@@ -106,6 +106,25 @@ void difftest_init_npc(const char *ref_so_file, long img_size, int port) {
     difftest_regcpy(&sim_cpu, DIFFTEST_TO_REF); // CPU_state type contains pc
 }
 
+static inline bool check_csr(const CSR *ref, const CSR *dut){ 
+  bool ok = true;
+  #define CHECK_CSR(name)                                                   \
+    do {                                                                    \
+      if (ref->name != dut->name) {                                         \
+        printf("CSR %-8s mismatch: ref = " FMT_WORD ", dut = " FMT_WORD     \
+               "\n", #name, ref->name, dut->name);                          \
+        ok = false;                                                         \
+      }                                                                     \
+  } while (0)
+
+  CHECK_CSR(mstatus);
+  CHECK_CSR(mtvec);
+  CHECK_CSR(mepc);
+  CHECK_CSR(mcause);
+
+  return ok;
+}
+
 // Compare the architectural state after the instruction at pc commits.
 static bool isa_difftest_checkregs(const CPU_state *ref_r, vaddr_t pc,
         word_t inst, uint64_t nr_inst) {
@@ -113,10 +132,12 @@ static bool isa_difftest_checkregs(const CPU_state *ref_r, vaddr_t pc,
     for (int i = 0; i < 32; i++) {
         matched = matched && sim_cpu.gpr[i] == ref_r->gpr[i];
     }
+    bool csr_matched = check_csr(&ref_r->csr, &sim_cpu.csr);
+    matched = matched && csr_matched;
     if (matched) {
         return true;
     }
-
+    // not matched, print disassemble
     word_t inst_copy = inst;
     char asm_buf[128];
     disassemble(asm_buf, sizeof(asm_buf), pc, (uint8_t *)&inst_copy, sizeof(inst_copy));
