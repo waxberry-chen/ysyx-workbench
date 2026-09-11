@@ -3,6 +3,7 @@
 ################################
 TOP_MODULE 	:= ysyx_core
 RTL_LIST	:= filelist.f
+LINT_TOP	?= $(TOP_MODULE)
 
 NPC_HOME	:= $(abspath .)
 OBJ_DIR		:= $(abspath ./build)
@@ -30,6 +31,15 @@ VFLAGS 				= --trace --cc -stats --exe -O3 --threads-dpi all \
 						-Wno-fatal \
 						-Wno-REDEFMACRO \
 						--timescale-override "1ns/1ps"
+
+LINT_FLAGS			= --lint-only --sv -Wall -Wno-fatal \
+						-F $(VSRC_PATH) \
+						--top-module $(LINT_TOP)
+
+# Usage: make lint [LINT_TOP=<module>]
+.PHONY: lint
+lint:
+	verilator $(LINT_FLAGS)
 
 all: run
 	@echo "'all' target equals to 'run'"

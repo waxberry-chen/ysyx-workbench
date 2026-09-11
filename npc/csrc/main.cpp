@@ -14,7 +14,7 @@ size_t sim_time = 0;
 CPU_state sim_cpu;
 
 uint32_t *cpu_gpr = NULL;
-// uint32_t *cpu_csr[NR_CSR];
+uint32_t *cpu_csr[NR_CSR];
 
 extern SimState sim_state;
 
@@ -34,16 +34,21 @@ int main(int argc, char *argv[]) {
   init_disasm("riscv32");
 
   // wave tracer
-  Verilated::traceEverOn(true);
-  dut->trace(m_trace, 5);
-  m_trace->open("waveform.fst");
+  #ifdef CONFIG_FST
+    Verilated::traceEverOn(true);
+    dut->trace(m_trace, 5);
+    m_trace->open("waveform.fst");
+  #endif
   reset(3);
 
   sdb_mainloop();
 
   printf(ANSI_FG_GREEN "Testcase end!\n" ANSI_NONE);
-
-  m_trace->close();
+  
+  #ifdef CONFIG_FST
+    m_trace->close();
+  #endif
+  
   delete dut;
   return sim_state.state == SIM_ABORT;
 }
