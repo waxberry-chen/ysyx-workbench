@@ -28,6 +28,7 @@
 
 `include "./vsrc/gnrl/ysyx_global.sv"
 // 0 delay wire
+/* verilator lint_off DECLFILENAME */
 module ysyx_gnrl_0dffl # (
   parameter DW = 32
 ) (

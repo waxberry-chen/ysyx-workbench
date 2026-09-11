@@ -72,6 +72,10 @@ module ysyx_core #(
         .inst(inst)
     );
 
+    wire csr_we;
+    wire [12-1:0] csr_addr;
+    wire [32-1:0] trap_cause;
+    wire trap_valid, mret_valid;
 
     ysyx_idu inst_decoder (
         .inst           (inst),
@@ -87,13 +91,18 @@ module ysyx_core #(
         .rf_wd_sel      (rf_wd_sel),        // regfile write select
         .dm_type        (dm_type),          // to d-cache
         .dm_we_raw      (dm_we_raw),        // d-cache & putchar
-        .dm_re_raw      (dm_re)             // to d-cache
+        .dm_re_raw      (dm_re),            // to d-cache
+        .csr_we         (csr_we),
+        .csr_addr       (csr_addr),
+        .trap_valid     (trap_valid),
+        .trap_cause     (trap_cause),
+        .mret_valid     (mret_valid)
     );
 
     assign rf_rs1   =   inst[19 : 15];
     assign rf_rs2   =   inst[24 : 20];
     assign rf_rd    =   inst[11 : 7];
-    ysyx_regfile reg_file (
+    ysyx_regfile ysyx_regfile (
         .clk    (clk    ),
         .rf_rs1 (rf_rs1 ),
         .rf_rs2 (rf_rs2 ),
@@ -102,6 +111,31 @@ module ysyx_core #(
         .rf_wd  (rf_wd  ),
         .rf_rd0 (rf_rd0 ),
         .rf_rd1 (rf_rd1 )
+    );
+
+    // csr write back: normal write
+    wire [32-1:0] csr_rdata, csr_wdata;
+    assign csr_wdata =  (inst[6:0]==7'h73)?
+                        (inst[14:12]==3'b010)?(rf_rd0|csr_rdata):(inst[14:12]==3'b001)?rf_rd0:32'h0:32'h0;
+
+    wire [32-1:0] trap_target, mret_target;
+
+    ysyx_csr ysyx_csr(
+        .clk    (clk), 
+        .rst_n  (rstn),
+        // csr r/w interface
+        .csr_addr   (csr_addr),
+        .csr_wdata  (csr_wdata),
+        .csr_we     (csr_we),
+        .csr_rdata  (csr_rdata),
+        // trap event
+        .trap_valid (trap_valid),
+        .trap_epc   (pc_cur),
+        .trap_cause (trap_cause),
+        .mret_valid (mret_valid),
+        // addr targets
+        .trap_target(trap_target),
+        .mret_target(mret_target)
     );
 
     ysyx_gen_imm gen_imm (
@@ -148,7 +182,7 @@ module ysyx_core #(
     assign pc_jal_br = alu_res;
     assign pc_jalr = alu_res & 32'HFFFFFFFE;
     // decide next pc
-    assign pc_next = (jal | br) ? pc_jal_br : (jalr ? pc_jalr : pc_add4);
+    assign pc_next = (jal | br) ? pc_jal_br : (jalr ? pc_jalr : (trap_valid ? trap_target: (mret_valid ? mret_target : pc_add4)));
 
     ysyx_d_ram_ctrl #(
         .DEPTH(D_CACHE_DEPTH)
@@ -182,7 +216,7 @@ module ysyx_core #(
         .N (4)
     ) rf_sel (
         .out_data   (rf_wd), 
-        .in_data    ({32'h0, dm_rd, pc_add4, alu_res}),
+        .in_data    ({csr_rdata, dm_rd, pc_add4, alu_res}),
         .sel        (rf_wd_sel)
     );
 

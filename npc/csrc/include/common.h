@@ -34,16 +34,20 @@ typedef uint16_t ioaddr_t;
 ******************/
 extern uint32_t *cpu_gpr;
 
-// typedef struct {
-//     word_t mepc;
-//     word_t mstatus;
-//     word_t mcause;
-//     word_t mtvec;
-// } CSR;
+enum {CSR_MSTATUS=0, CSR_MTVEC, CSR_MEPC, CSR_MCAUSE, NR_CSR};
+extern uint32_t *cpu_csr[NR_CSR];
+
+typedef struct {
+  word_t mstatus; // 0x300
+  word_t mtvec;   // 0x305
+  word_t mepc;    // 0x341
+  word_t mcause;  // 0x342
+} CSR;
 
 typedef struct {
     word_t gpr[32];
     word_t pc;
+    CSR csr;
 } CPU_state;
 
 typedef struct {

@@ -1,17 +1,22 @@
 module
     ysyx_idu (
-        input                   [31 : 0]        inst,
+        input       [31 : 0]    inst,
 
-        output      reg         [2 : 0]         imm_type,   // imm type, total 6
-        output                                  alu_src0_sel, alu_src1_sel,
-        output      reg         [4 : 0]         alu_ctrl,
-        output                  [2 : 0]         br_type,
-        output                                  br_en, jal, jalr,
-        output                                  rf_we,
-        output      reg         [1 : 0]         rf_wd_sel,
-        output                  [2 : 0]         dm_type,
-        output                                  dm_we_raw,
-        output                                  dm_re_raw
+        output reg  [2 : 0]     imm_type,   // imm type, total 6
+        output                  alu_src0_sel, alu_src1_sel,
+        output reg  [4 : 0]     alu_ctrl,
+        output      [2 : 0]     br_type,
+        output                  br_en, jal, jalr,
+        output                  rf_we,
+        output reg  [1 : 0]     rf_wd_sel,
+        output      [2 : 0]     dm_type,
+        output                  dm_we_raw,
+        output                  dm_re_raw, 
+        output                  csr_we,     // csr write enable
+        output      [12-1:0]    csr_addr,   // csr addr
+        output                  trap_valid,
+        output      [32-1:0]    trap_cause,
+        output                  mret_valid
     );
 
     wire        [6 : 0]         opcode;
@@ -23,7 +28,7 @@ module
 
     wire                        is_r_type, is_i_type, is_s_type, is_b_type, is_u_type, is_j_type;
     assign is_r_type = (opcode == 7'H33);
-    assign is_i_type = (opcode == 7'H03 || opcode == 7'H13 || opcode == 7'H67 /* || opcode == 7'H73 */);
+    assign is_i_type = (opcode == 7'H03 || opcode == 7'H13 || opcode == 7'H67 || opcode == 7'H73);
     assign is_s_type = (opcode == 7'H23);
     assign is_b_type = (opcode == 7'H63);
     assign is_u_type = (opcode == 7'H17 || opcode == 7'H37);
@@ -37,6 +42,12 @@ module
     assign is_jalr = (opcode == 7'H67);
     assign is_auipc = (opcode == 7'H17);
     assign is_lui = (opcode == 7'H37);
+
+    wire is_priv, is_csrr_sw, is_ecall, is_mret;
+    assign is_priv  = (opcode == 7'h73);
+    assign is_ecall = is_priv & (inst[31:7] == 25'h0);
+    assign is_mret  = is_priv & (inst[31:7] == 25'h604000);
+    assign is_csrr_sw = is_priv & ((inst[14:12] == 3'b001) | (inst[14:12] == 3'b010));
 
     always @(*) begin
         imm_type = 3'H0;
@@ -59,6 +70,7 @@ module
         rf_wd_sel = 2'H0;
         if(is_j_type || is_jalr) rf_wd_sel = 2'H1;
         if(is_load) rf_wd_sel = 2'H2;
+        if(is_priv) rf_wd_sel = 2'h3;   // csr to rd
     end
 
     assign alu_src0_sel = (is_auipc || is_j_type || is_b_type);
@@ -71,5 +83,12 @@ module
     assign dm_type = funct3;
     assign dm_we_raw = is_s_type;
     assign dm_re_raw = is_load;
+
+    assign csr_we   = (is_ecall || is_mret || is_csrr_sw);
+    assign csr_addr =   (is_ecall || is_mret) ? 12'h300:            // mstatus
+                        (is_csrr_sw)          ? inst[31:20]:12'h0;  // csr segment
+    assign trap_valid = is_ecall;
+    assign trap_cause = is_ecall ? 32'hb:32'h0;                     // here mcause should be decimal 11
+    assign mret_valid = is_mret;
 
 endmodule
