@@ -14,14 +14,25 @@ uint8_t* new_space(int size) {
   return p;
 }
 
-static void check_bound(IOMap *map, paddr_t addr) {
+static bool check_bound(IOMap *map, paddr_t addr, int len) {
   if (map == NULL) {
-    Assert(map != NULL, "address (" FMT_PADDR ") is out of bound at pc = " FMT_WORD, addr, sim_cpu.pc);
+    fflush(stdout);
+    fprintf(stderr, "address (" FMT_PADDR ") does not match any MMIO map at pc = " FMT_WORD "\n",
+        addr, sim_cpu.pc);
+  } else if (addr < map->low || addr > map->high || (paddr_t)(len - 1) > map->high - addr) {
+    fflush(stdout);
+    fprintf(stderr,
+        "%d-byte access at address " FMT_PADDR " is out of bound {%s} "
+        "[" FMT_PADDR ", " FMT_PADDR "] at pc = " FMT_WORD "\n",
+        len, addr, map->name, map->low, map->high, sim_cpu.pc);
   } else {
-    Assert(addr <= map->high && addr >= map->low,
-        "address (" FMT_PADDR ") is out of bound {%s} [" FMT_PADDR ", " FMT_PADDR "] at pc = " FMT_WORD,
-        addr, map->name, map->low, map->high, sim_cpu.pc);
+    return true;
   }
+
+  sim_state.halt_pc = sim_cpu.pc;
+  sim_state.halt_ret = 1;
+  sim_state.state = SIM_END;
+  return false;
 }
 
 static void invoke_callback(io_callback_t c, paddr_t offset, int len, bool is_write) {
@@ -37,7 +48,7 @@ void init_map() {
 /* Check map and invoke callback function */
 word_t map_read(paddr_t addr, int len, IOMap *map) {
   assert(len >= 1 && len <= 8);
-  check_bound(map, addr);
+  if (!check_bound(map, addr, len)) return 0;
   // offset here, once read 8 bytes
   paddr_t offset = addr - map->low;
   invoke_callback(map->callback, offset, len, false); // prepare data to read
@@ -47,7 +58,7 @@ word_t map_read(paddr_t addr, int len, IOMap *map) {
 
 void map_write(paddr_t addr, int len, word_t data, IOMap *map) {
   assert(len >= 1 && len <= 8);
-  check_bound(map, addr);
+  if (!check_bound(map, addr, len)) return;
   paddr_t offset = addr - map->low;
   host_write(map->space + offset, len, data);
   invoke_callback(map->callback, offset, len, true);
