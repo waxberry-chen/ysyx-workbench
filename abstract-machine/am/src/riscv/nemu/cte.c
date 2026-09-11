@@ -32,7 +32,16 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 }
 
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
-  return NULL;
+  uintptr_t stack_top = (uintptr_t) kstack.end & ~0xfu; // downward 16 byte alignment
+
+  Context *context = (Context *)(stack_top - sizeof(Context));
+  memset(context, 0, sizeof(Context));
+
+  context->mepc = (uintptr_t)entry;
+  context->gpr[10] = (uintptr_t)arg;  // a0 pass first param
+  context->mstatus = 3u << 11;
+
+  return context;
 }
 
 void yield() {
