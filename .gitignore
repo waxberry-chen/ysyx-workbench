@@ -14,6 +14,7 @@ nvboard/
 /fceux-am
 !compile_commands.json
 /am-kernels
+/rt-thread-am
 
 # Keep the lectures
 /docs/*
