@@ -8,6 +8,7 @@
 ./vsrc/core/ysyx_d_ram.sv
 ./vsrc/core/ysyx_d_ram_ctrl.sv
 ./vsrc/core/ysyx_csr.sv
+./vsrc/core/ysyx_main_fsm.sv
 
 ./vsrc/gnrl/ysyx_global.sv
 ./vsrc/gnrl/ysyx_gnrl_primitive.sv
