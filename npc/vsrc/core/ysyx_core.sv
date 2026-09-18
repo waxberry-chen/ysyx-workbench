@@ -148,10 +148,10 @@ module ysyx_core #(
         .csr_we     (csr_we & commit_wb),
         .csr_rdata  (csr_rdata),
         // trap event
-        .trap_valid (trap_valid),
+        .trap_valid (trap_valid & commit_wb),
         .trap_epc   (pc_cur),
         .trap_cause (trap_cause),
-        .mret_valid (mret_valid),
+        .mret_valid (mret_valid & commit_wb),
         // addr targets
         .trap_target(trap_target),
         .mret_target(mret_target)
@@ -226,7 +226,7 @@ module ysyx_core #(
         .wd(dm_wd),
         .we(dm_we & commit_wb),
         .rd(dm_rd_raw),
-        .re(dm_re),
+        .re(dm_re & commit_wb),
         .mask(mask)
     );
 

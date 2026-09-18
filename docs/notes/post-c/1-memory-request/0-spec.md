@@ -2,7 +2,7 @@
 
 此文档用于规划完成 ysyx 增量点1: 可变延时访存握手 的实现. 
 
-## 主要计划加入的模块: 
+## 主要计划加入的内容:
 
 ### 1. CPU 中一个 Main FSM
 
@@ -21,6 +21,29 @@ Q: 我这个状态机应该放在顶层 `ysyx_core.sv` 模块中还是放在 `np
 拉出 valid-ready 信号组到顶层, 或使用 DPI-C 函数绑定指针到对应的 valid-ready 信号组, 然后在 C++ RTL Harness 中写 slave 逻辑与随机延时. 
 
 ### 3. inst register 用于保存指令
+
+### 4. 状态写入控制
+
+所有需要由 CPU 状态控制的信号:
+- GPRs we
+- PC update
+- CSRs we
+- trap/mret_valid
+- data ram store
+- data ram load (multi MMIO read may be harmful)
+
+### 5. 后续 B1 总线系统
+
+当前 instruction fetch 握手稳定后，按以下最小范围完成 B1：
+
+1. 以同一 transaction contract 改造 load/store，形成独立的 IFU read port 和 LSU read/write port；
+2. 将两者实现为单 outstanding 的 AXI4-Lite master，并用固定/随机延迟及 backpressure 测试五个独立通道；
+3. 实现简单固定优先级 Arbiter，将 IFU/LSU 合并为 CPU 唯一的对外 master port；
+4. 实现最小 Xbar，按地址路由至 SRAM、UART 和 CLINT，未命中地址返回 `DECERR`；
+5. 实现练习用 AXI4-Lite SRAM slave、UART TX 寄存器，以及只提供 64-bit `mtime` 的 CLINT；
+6. 用 directed test、assertion、随机延迟和 RT-Thread 检查握手保持、响应归属、非法访问及端到端功能。
+
+进入 B2 时保留 CPU 内部 Arbiter 和 CLINT；练习用 SRAM、UART 及外部地址路由由 ysyxSoC 替换，同时将 CPU 单一对外接口扩展为符合 ysyxSoC 约定的 AXI4 master。B1 不追求多 outstanding、复杂仲裁或高度参数化的通用 interconnect。
 
 ## 第一轮 Review
 
