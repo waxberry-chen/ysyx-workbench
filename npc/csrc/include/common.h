@@ -103,6 +103,7 @@ typedef struct {
     const char *diff_so_file;
     const char *elf_file;
     const char *img_file;
+    const char *commit_trace_file;
     uint32_t ram_seed;
     uint32_t ram_max_latency;
     uint32_t ram_ready_percent;

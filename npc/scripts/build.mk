@@ -3,7 +3,7 @@ IMG ?= $(NPC_HOME)/dummy-riscv32e-npc.bin
 
 VFLAGS += --trace-fst
 
-$(VBIN): $(CSRC) $(VSRC) $(VSRC_PATH)
+$(VBIN): $(CSRC) $(CHEADERS) $(VSRC) $(VSRC_PATH)
 	@echo "$(COLOR_YELLOW)INFO:$(COLOR_NONE) Verilating $(VBIN)..."
 	@verilator $(VFLAGS) $(CSRC) $(CINC_DIR)
 	@make -s -C $(OBJ_DIR) -f $(REWRITE_MK)

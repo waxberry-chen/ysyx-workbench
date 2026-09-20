@@ -198,6 +198,7 @@ Sdb_args sdb_args = {
   .diff_so_file = NULL, 
   .elf_file = NULL,
   .img_file = NULL,
+  .commit_trace_file = NULL,
   .ram_seed = 42,
   .ram_max_latency = 3,
   .ram_ready_percent = 75,
@@ -207,6 +208,7 @@ enum {
   OPT_RAM_SEED = 256,
   OPT_RAM_MAX_LATENCY,
   OPT_RAM_READY_PERCENT,
+  OPT_COMMIT_TRACE,
 };
 
 static uint32_t parse_u32_option(const char *name, const char *value) {
@@ -231,6 +233,7 @@ static int parse_args(int argc, char *argv[]) {
     {"ram-seed" , required_argument, NULL, OPT_RAM_SEED},
     {"ram-max-latency", required_argument, NULL, OPT_RAM_MAX_LATENCY},
     {"ram-ready-percent", required_argument, NULL, OPT_RAM_READY_PERCENT},
+    {"commit-trace", required_argument, NULL, OPT_COMMIT_TRACE},
     {"help"     , no_argument      , NULL, 'h'},
     {0          , 0                , NULL,  0 },
   };
@@ -257,6 +260,9 @@ static int parse_args(int argc, char *argv[]) {
           exit(1);
         }
         break;
+      case OPT_COMMIT_TRACE:
+        sdb_args.commit_trace_file = optarg;
+        break;
       case 1: sdb_args.img_file = optarg; return 0; // at last is img_file
       default:
         printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
@@ -268,6 +274,7 @@ static int parse_args(int argc, char *argv[]) {
         printf("\t--ram-seed=SEED         set the reproducible RAM random seed\n");
         printf("\t--ram-max-latency=N     set maximum response wait cycles\n");
         printf("\t--ram-ready-percent=N   set request ready probability [1, 100]\n");
+        printf("\t--commit-trace=FILE     write every committed instruction to FILE\n");
         printf("\n");
         exit(0);
     }

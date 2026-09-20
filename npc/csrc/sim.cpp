@@ -5,6 +5,8 @@
 #include "include/debug.h"
 #include "include/common.h"
 #include "include/ram_model.h"
+#include "include/commit_trace.h"
+#include "include/sim_stats.h"
 #include "utils/disasm.h"
 #include "memory/paddr.h"
 
@@ -59,6 +61,9 @@ void single_cycle() {
     m_trace->dump(sim_time++);
   #endif
 
+  sim_stats_sample_cycle(dut->rstn, dut->if_req_valid, dut->if_req_ready,
+                         dut->if_rsp_valid, dut->if_rsp_ready);
+
   ram_model_sample();
 
   dut->clk = 1;
@@ -100,6 +105,7 @@ inline bool test_break(){
 
 static void statistic() {
   Log("total guest instructions = %ld", g_nr_guest_inst);
+  sim_stats_report();
   ram_model_report();
 }
 
@@ -151,6 +157,8 @@ void cpu_exec(unsigned int n){
     if (will_commit) {
       set_state();
       g_nr_guest_inst++;
+      sim_stats_record_commit(commit_pc, sim_cpu.pc);
+      commit_trace_record(g_nr_guest_inst, commit_pc, commit_inst, &sim_cpu);
       n--;
       #ifdef CONFIG_ITRACE
       if(itrace_print){

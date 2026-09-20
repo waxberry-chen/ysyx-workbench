@@ -5,6 +5,8 @@
 #include "./include/common.h"
 #include "./include/debug.h"
 #include "./include/ram_model.h"
+#include "./include/commit_trace.h"
+#include "./include/sim_stats.h"
 #include "./utils/disasm.h"
 
 // ********** Hardware **********
@@ -26,6 +28,8 @@ int main(int argc, char *argv[]) {
   init_sdb(argc, argv);
   init_ram_model(sdb_args.ram_seed, sdb_args.ram_max_latency,
                  sdb_args.ram_ready_percent);
+  commit_trace_init(sdb_args.commit_trace_file);
+  sim_stats_reset();
   /* load img into memory */
   printf(ANSI_FG_GREEN  "Loading img: %s\n" ANSI_NONE , sdb_args.img_file);
   uint64_t size = load_img(sdb_args.img_file); 
@@ -51,7 +55,9 @@ int main(int argc, char *argv[]) {
   #ifdef CONFIG_FST
     m_trace->close();
   #endif
+  commit_trace_close();
   
   delete dut;
-  return sim_state.state == SIM_ABORT;
+  return sim_state.state == SIM_ABORT ||
+         (sim_state.state == SIM_END && sim_state.halt_ret != 0);
 }
