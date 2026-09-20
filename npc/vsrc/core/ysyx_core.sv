@@ -5,28 +5,28 @@ module ysyx_core #(
         parameter I_CACHE_DEPTH = 8
     )
     (
-        input           clk, rstn,
-        output  [31: 0] pc_cur, inst,
-        output          commit_wb, commit_is_mmio,
+        input           clk, rst_n,
+        output  [31: 0] commit_pc, commit_inst,
+        output          commit_valid, commit_is_mmio,
 
         // instruction memory request/response interface
-        output           if_req_valid, 
-        input            if_req_ready, 
-        output [32-1: 0] if_req_addr,
-        input            if_rsp_valid, 
-        output           if_rsp_ready, 
-        input  [32-1: 0] if_rsp_data,
+        output           imem_req_valid,
+        input            imem_req_ready,
+        output [32-1: 0] imem_req_addr,
+        input            imem_rsp_valid,
+        output           imem_rsp_ready,
+        input  [32-1: 0] imem_rsp_data,
 
         // data memory request/response interface
-        output           d_req_valid,
-        input            d_req_ready,
-        output           d_req_write,
-        output [32-1: 0] d_req_addr,
-        output [2-1: 0]  d_req_size,
-        output [32-1: 0] d_req_wdata,
-        input            d_rsp_valid,
-        output           d_rsp_ready,
-        input  [32-1: 0] d_rsp_data
+        output           dmem_req_valid,
+        input            dmem_req_ready,
+        output           dmem_req_write,
+        output [32-1: 0] dmem_req_addr,
+        output [2-1: 0]  dmem_req_size,
+        output [32-1: 0] dmem_req_wdata,
+        input            dmem_rsp_valid,
+        output           dmem_rsp_ready,
+        input  [32-1: 0] dmem_rsp_data
 
         `ifdef DEBUG
             ,
@@ -35,8 +35,7 @@ module ysyx_core #(
         `endif
     );
 
-    wire        [31 : 0]                        pc_next;//, pc_cur;
-//    wire        [31 : 0]                        inst;
+    wire        [31 : 0]                        pc_next;
     wire        [2 : 0]                         imm_type;
     wire                                        alu_src0_sel, alu_src1_sel;
     wire        [4 : 0]                         alu_ctrl;
@@ -56,45 +55,45 @@ module ysyx_core #(
     wire        [31 : 0]                        pc_add4, pc_jal_br, pc_jalr;
     wire        [31 : 0]                        dm_rd;
     wire                                        dm_re;
-    wire                                        lsu_op_valid, lsu_op_ready;
+    wire                                        lsu_req_valid, lsu_req_ready;
     wire                                        lsu_rsp_valid, lsu_rsp_ready;
 
     // single cycle, always commit
-    // assign commit_wb = 1;
+    // assign commit_valid = 1;
 
     // load/store mmio address, used by rtl harness to skip ref
-    assign commit_is_mmio = (inst[6:0] == 7'b0000011 || inst[6:0] == 7'b0100011) && alu_res[31:28] == 4'ha;
+    assign commit_is_mmio = (commit_inst[6:0] == 7'b0000011 || commit_inst[6:0] == 7'b0100011) && alu_res[31:28] == 4'ha;
 
     // // program counter
     ysyx_gnrl_dfflrs #(
         .DW(32),
         .RST(PC_RST)
     ) u_pc (
-        .lden   (commit_wb),
+        .lden   (commit_valid),
         .dnxt   (pc_next), 
-        .qout   (pc_cur),
+        .qout   (commit_pc),
         .clk    (clk),
-        .rst_n  (rstn)
+        .rst_n  (rst_n)
     );
     
     ysyx_main_fsm u_ysyx_main_fsm(
         .clk          	(clk           ),
-        .rst_n        	(rstn         ),
-        .if_req_valid 	(if_req_valid  ),
-        .if_req_ready 	(if_req_ready  ),
-        .if_rsp_valid 	(if_rsp_valid  ),
-        .if_rsp_ready 	(if_rsp_ready  ),
+        .rst_n        	(rst_n         ),
+        .imem_req_valid(imem_req_valid),
+        .imem_req_ready(imem_req_ready),
+        .imem_rsp_valid(imem_rsp_valid),
+        .imem_rsp_ready(imem_rsp_ready),
         .lsu_access     (dm_re | dm_we_raw),
-        .lsu_op_valid   (lsu_op_valid  ),
-        .lsu_op_ready   (lsu_op_ready  ),
+        .lsu_req_valid  (lsu_req_valid ),
+        .lsu_req_ready  (lsu_req_ready ),
         .lsu_rsp_valid  (lsu_rsp_valid ),
         .lsu_rsp_ready  (lsu_rsp_ready ),
-        .commit_wb    	(commit_wb     )
+        .commit_valid 	(commit_valid  )
     );
     
     wire inst_update;
-    assign if_req_addr = pc_cur;
-    assign inst_update = if_rsp_valid & if_rsp_ready;
+    assign imem_req_addr = commit_pc;
+    assign inst_update = imem_rsp_valid & imem_rsp_ready;
 
     // inst register
     ysyx_gnrl_dfflrs #(
@@ -102,10 +101,10 @@ module ysyx_core #(
         .RST(32'h00000013)  // nop
     ) u_inst_reg (
         .lden   (inst_update),
-        .dnxt   (if_rsp_data), 
-        .qout   (inst),
+        .dnxt   (imem_rsp_data),
+        .qout   (commit_inst),
         .clk    (clk),
-        .rst_n  (rstn)
+        .rst_n  (rst_n)
     );
 
     wire csr_we;
@@ -114,7 +113,7 @@ module ysyx_core #(
     wire trap_valid, mret_valid;
 
     ysyx_idu inst_decoder (
-        .inst           (inst),
+        .inst           (commit_inst),
         .imm_type       (imm_type),         // use to generate imm num
         .alu_src0_sel   (alu_src0_sel),
         .alu_src1_sel   (alu_src1_sel),
@@ -135,15 +134,15 @@ module ysyx_core #(
         .mret_valid     (mret_valid)
     );
 
-    assign rf_rs1   =   inst[19 : 15];
-    assign rf_rs2   =   inst[24 : 20];
-    assign rf_rd    =   inst[11 : 7];
+    assign rf_rs1   =   commit_inst[19 : 15];
+    assign rf_rs2   =   commit_inst[24 : 20];
+    assign rf_rd    =   commit_inst[11 : 7];
     ysyx_regfile ysyx_regfile (
         .clk    (clk    ),
         .rf_rs1 (rf_rs1 ),
         .rf_rs2 (rf_rs2 ),
         .rf_rd  (rf_rd  ),
-        .rf_we  (rf_we & commit_wb  ),
+        .rf_we  (rf_we & commit_valid),
         .rf_wd  (rf_wd  ),
         .rf_rd0 (rf_rd0 ),
         .rf_rd1 (rf_rd1 )
@@ -151,31 +150,31 @@ module ysyx_core #(
 
     // csr write back: normal write
     wire [32-1:0] csr_rdata, csr_wdata;
-    assign csr_wdata =  (inst[6:0]==7'h73)?
-                        (inst[14:12]==3'b010)?(rf_rd0|csr_rdata):(inst[14:12]==3'b001)?rf_rd0:32'h0:32'h0;
+    assign csr_wdata =  (commit_inst[6:0]==7'h73)?
+                        (commit_inst[14:12]==3'b010)?(rf_rd0|csr_rdata):(commit_inst[14:12]==3'b001)?rf_rd0:32'h0:32'h0;
 
     wire [32-1:0] trap_target, mret_target;
 
     ysyx_csr ysyx_csr(
         .clk    (clk), 
-        .rst_n  (rstn),
+        .rst_n  (rst_n),
         // csr r/w interface
         .csr_addr   (csr_addr),
         .csr_wdata  (csr_wdata),
-        .csr_we     (csr_we & commit_wb),
+        .csr_we     (csr_we & commit_valid),
         .csr_rdata  (csr_rdata),
         // trap event
-        .trap_valid (trap_valid & commit_wb),
-        .trap_epc   (pc_cur),
+        .trap_valid (trap_valid & commit_valid),
+        .trap_epc   (commit_pc),
         .trap_cause (trap_cause),
-        .mret_valid (mret_valid & commit_wb),
+        .mret_valid (mret_valid & commit_valid),
         // addr targets
         .trap_target(trap_target),
         .mret_target(mret_target)
     );
 
     ysyx_gen_imm gen_imm (
-        .inst       (inst),
+        .inst       (commit_inst),
         .imm_type   (imm_type),
         
         .imm        (imm)
@@ -186,7 +185,7 @@ module ysyx_core #(
         .N  (2)
     ) alu_sel0 (
         .out_data   (alu_src0),
-        .in_data    ({pc_cur, rf_rd0}), // high->1, low->0
+        .in_data    ({commit_pc, rf_rd0}), // high->1, low->0
         .sel        (alu_src0_sel)
     );
 
@@ -214,7 +213,7 @@ module ysyx_core #(
         .br         (br)
     );
 
-    assign pc_add4 = pc_cur + 32'H4;
+    assign pc_add4 = commit_pc + 32'H4;
     assign pc_jal_br = alu_res;
     assign pc_jalr = alu_res & 32'HFFFFFFFE;
     // decide next pc
@@ -222,25 +221,25 @@ module ysyx_core #(
 
     ysyx_lsu u_ysyx_lsu (
         .clk         (clk          ),
-        .rst_n       (rstn         ),
-        .op_valid    (lsu_op_valid ),
-        .op_ready    (lsu_op_ready ),
-        .op_write    (dm_we_raw    ),
-        .op_addr     (alu_res      ),
-        .op_type     (dm_type      ),
-        .op_wdata    (rf_rd1       ),
+        .rst_n       (rst_n        ),
+        .req_valid   (lsu_req_valid),
+        .req_ready   (lsu_req_ready),
+        .req_write   (dm_we_raw    ),
+        .req_addr    (alu_res      ),
+        .req_type    (dm_type      ),
+        .req_wdata   (rf_rd1       ),
         .rsp_valid   (lsu_rsp_valid),
         .rsp_ready   (lsu_rsp_ready),
         .rsp_rdata   (dm_rd        ),
-        .d_req_valid (d_req_valid  ),
-        .d_req_ready (d_req_ready  ),
-        .d_req_write (d_req_write  ),
-        .d_req_addr  (d_req_addr   ),
-        .d_req_size  (d_req_size   ),
-        .d_req_wdata (d_req_wdata  ),
-        .d_rsp_valid (d_rsp_valid  ),
-        .d_rsp_ready (d_rsp_ready  ),
-        .d_rsp_data  (d_rsp_data   )
+        .dmem_req_valid(dmem_req_valid),
+        .dmem_req_ready(dmem_req_ready),
+        .dmem_req_write(dmem_req_write),
+        .dmem_req_addr (dmem_req_addr ),
+        .dmem_req_size (dmem_req_size ),
+        .dmem_req_wdata(dmem_req_wdata),
+        .dmem_rsp_valid(dmem_rsp_valid),
+        .dmem_rsp_ready(dmem_rsp_ready),
+        .dmem_rsp_data (dmem_rsp_data )
     );
 
     ysyx_gnrl_data_mux #(
@@ -253,7 +252,7 @@ module ysyx_core #(
     );
 
 `ifdef DEBUG
-    assign putchar = dm_we_raw && commit_wb && (&alu_res);
+    assign putchar = dm_we_raw && commit_valid && (&alu_res);
     assign c = rf_rd1[7 : 0];
 `endif
 

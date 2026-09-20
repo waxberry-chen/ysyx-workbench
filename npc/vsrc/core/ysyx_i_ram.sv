@@ -3,7 +3,7 @@ module
         parameter DEPTH = 8
     )
     (
-        input               rstn,
+        input               rst_n,
         input   [31 : 0]    addr,
         output  [31 : 0]    inst
     );
@@ -13,7 +13,7 @@ module
     import "DPI-C" function void pmem_read(input bit re, input int addr, input int mask, output int rword);
     
     wire re;
-    assign re = rstn;
+    assign re = rst_n;
 
     reg [31:0] inst_r;
     assign inst = inst_r;

@@ -24,27 +24,27 @@ class InstructionRamModel {
 
   // Drive slave outputs while clk is low, before the active edge.
   void drive() {
-    if (!dut->rstn) {
-      dut->if_req_ready = 0;
-      dut->if_rsp_valid = 0;
-      dut->if_rsp_data = 0;
+    if (!dut->rst_n) {
+      dut->imem_req_ready = 0;
+      dut->imem_rsp_valid = 0;
+      dut->imem_rsp_data = 0;
       return;
     }
 
-    dut->if_req_ready =
+    dut->imem_req_ready =
         state_ == IDLE && (rng_() % 100u) < ready_percent_;
-    dut->if_rsp_valid = state_ == RESP;
-    dut->if_rsp_data = response_data_;
+    dut->imem_rsp_valid = state_ == RESP;
+    dut->imem_rsp_data = response_data_;
   }
 
   // Capture the settled handshake inputs before the active edge.  tick()
   // consumes this snapshot after the RTL sequential state has updated.
   void sample() {
-    req_fire_ = dut->if_req_valid && dut->if_req_ready;
-    rsp_fire_ = dut->if_rsp_valid && dut->if_rsp_ready;
-    req_stalled_ = dut->if_req_valid && !dut->if_req_ready;
-    rsp_stalled_ = dut->if_rsp_valid && !dut->if_rsp_ready;
-    sampled_request_addr_ = dut->if_req_addr;
+    req_fire_ = dut->imem_req_valid && dut->imem_req_ready;
+    rsp_fire_ = dut->imem_rsp_valid && dut->imem_rsp_ready;
+    req_stalled_ = dut->imem_req_valid && !dut->imem_req_ready;
+    rsp_stalled_ = dut->imem_rsp_valid && !dut->imem_rsp_ready;
+    sampled_request_addr_ = dut->imem_req_addr;
     sample_valid_ = true;
   }
 
@@ -52,7 +52,7 @@ class InstructionRamModel {
     assert(sample_valid_);
     sample_valid_ = false;
 
-    if (!dut->rstn) {
+    if (!dut->rst_n) {
       reset();
       return;
     }
@@ -162,37 +162,37 @@ class DataRamModel {
   }
 
   void drive() {
-    if (!dut->rstn) {
-      dut->d_req_ready = 0;
-      dut->d_rsp_valid = 0;
-      dut->d_rsp_data = 0;
+    if (!dut->rst_n) {
+      dut->dmem_req_ready = 0;
+      dut->dmem_rsp_valid = 0;
+      dut->dmem_rsp_data = 0;
       return;
     }
 
-    dut->d_req_ready =
+    dut->dmem_req_ready =
         state_ == IDLE && (rng_() % 100u) < ready_percent_;
-    dut->d_rsp_valid = state_ == RESP;
-    dut->d_rsp_data = response_data_;
+    dut->dmem_rsp_valid = state_ == RESP;
+    dut->dmem_rsp_data = response_data_;
   }
 
   void sample() {
-    req_fire_ = dut->d_req_valid && dut->d_req_ready;
-    rsp_fire_ = dut->d_rsp_valid && dut->d_rsp_ready;
-    req_stalled_ = dut->d_req_valid && !dut->d_req_ready;
-    rsp_stalled_ = dut->d_rsp_valid && !dut->d_rsp_ready;
+    req_fire_ = dut->dmem_req_valid && dut->dmem_req_ready;
+    rsp_fire_ = dut->dmem_rsp_valid && dut->dmem_rsp_ready;
+    req_stalled_ = dut->dmem_req_valid && !dut->dmem_req_ready;
+    rsp_stalled_ = dut->dmem_rsp_valid && !dut->dmem_rsp_ready;
 
-    if (dut->rstn && previous_request_stalled_) {
-      assert(dut->d_req_valid);
-      assert(dut->d_req_write == stalled_request_write_);
-      assert(dut->d_req_addr == stalled_request_addr_);
-      assert(dut->d_req_size == stalled_request_size_);
-      assert(dut->d_req_wdata == stalled_request_wdata_);
+    if (dut->rst_n && previous_request_stalled_) {
+      assert(dut->dmem_req_valid);
+      assert(dut->dmem_req_write == stalled_request_write_);
+      assert(dut->dmem_req_addr == stalled_request_addr_);
+      assert(dut->dmem_req_size == stalled_request_size_);
+      assert(dut->dmem_req_wdata == stalled_request_wdata_);
     }
 
-    sampled_request_write_ = dut->d_req_write;
-    sampled_request_addr_ = dut->d_req_addr;
-    sampled_request_size_ = dut->d_req_size;
-    sampled_request_wdata_ = dut->d_req_wdata;
+    sampled_request_write_ = dut->dmem_req_write;
+    sampled_request_addr_ = dut->dmem_req_addr;
+    sampled_request_size_ = dut->dmem_req_size;
+    sampled_request_wdata_ = dut->dmem_req_wdata;
 
     previous_request_stalled_ = req_stalled_;
     if (req_stalled_) {
@@ -208,7 +208,7 @@ class DataRamModel {
     assert(sample_valid_);
     sample_valid_ = false;
 
-    if (!dut->rstn) {
+    if (!dut->rst_n) {
       reset();
       return;
     }

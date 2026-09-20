@@ -5,10 +5,11 @@
 #include <stdint.h>
 
 void sim_stats_reset();
-void sim_stats_sample_cycle(bool rstn, bool if_req_valid, bool if_req_ready,
-                            bool if_rsp_valid, bool if_rsp_ready,
-                            bool d_req_valid, bool d_req_ready,
-                            bool d_rsp_valid, bool d_rsp_ready);
+void sim_stats_sample_cycle(bool rst_n,
+                            bool imem_req_valid, bool imem_req_ready,
+                            bool imem_rsp_valid, bool imem_rsp_ready,
+                            bool dmem_req_valid, bool dmem_req_ready,
+                            bool dmem_rsp_valid, bool dmem_rsp_ready);
 void sim_stats_record_commit(uint32_t pc, uint32_t npc);
 void sim_stats_report();
 

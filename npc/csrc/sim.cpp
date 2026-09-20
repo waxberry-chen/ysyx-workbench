@@ -39,7 +39,7 @@ static const char *csr_names[] = {"mstatus", "mtvec", "mepc",  "mcause"};
 // load the state of your simulated cpu into sim_cpu
 // called in every sim cycle
 void set_state() {
-  sim_cpu.pc = dut->pc_cur;
+  sim_cpu.pc = dut->commit_pc;
   memcpy(&sim_cpu.gpr[0], cpu_gpr, 4 * 32);
   sim_cpu.csr.mstatus = *cpu_csr[CSR_MSTATUS];
   sim_cpu.csr.mtvec   = *cpu_csr[CSR_MTVEC];
@@ -61,10 +61,11 @@ void single_cycle() {
     m_trace->dump(sim_time++);
   #endif
 
-  sim_stats_sample_cycle(dut->rstn, dut->if_req_valid, dut->if_req_ready,
-                         dut->if_rsp_valid, dut->if_rsp_ready,
-                         dut->d_req_valid, dut->d_req_ready,
-                         dut->d_rsp_valid, dut->d_rsp_ready);
+  sim_stats_sample_cycle(dut->rst_n,
+                         dut->imem_req_valid, dut->imem_req_ready,
+                         dut->imem_rsp_valid, dut->imem_rsp_ready,
+                         dut->dmem_req_valid, dut->dmem_req_ready,
+                         dut->dmem_rsp_valid, dut->dmem_rsp_ready);
 
   ram_model_sample();
 
@@ -89,12 +90,12 @@ void single_cycle() {
 // simulate a reset
 void reset(int n) {
   dut->clk = 0;
-  dut->rstn = 0;
+  dut->rst_n = 0;
   dut->eval();
   while (n-- > 0) {
     single_cycle();
   }
-  dut->rstn = 1;
+  dut->rst_n = 1;
   dut->eval();  // use to load first inst
   set_state();
 }
@@ -102,7 +103,7 @@ void reset(int n) {
 // ** End simulation by software **
 // check if the program should end, run to ebreak
 inline bool test_break(){
-  return dut->inst == 0x00100073U;
+  return dut->commit_inst == 0x00100073U;
 }
 
 static void statistic() {
@@ -136,14 +137,14 @@ void cpu_exec(unsigned int n){
     // Capture the instruction and its commit metadata before the active edge.
     // In the current single-cycle core, they describe the instruction that the
     // following single_cycle() will commit.
-    bool will_commit = dut->commit_wb;
-    vaddr_t commit_pc = dut->pc_cur;
-    word_t commit_inst = dut->inst;
+    bool will_commit = dut->commit_valid;
+    vaddr_t commit_pc = dut->commit_pc;
+    word_t commit_inst = dut->commit_inst;
     bool skip_ref = dut->commit_is_mmio;
 
     if(will_commit && test_break()) {
       // set the end state
-      sim_state.halt_pc = dut->pc_cur;
+      sim_state.halt_pc = dut->commit_pc;
       sim_state.halt_ret = cpu_gpr[10];
       sim_state.state = SIM_END;
       break;
@@ -201,7 +202,7 @@ static const char *regs[] = {
 word_t isa_reg_str2val(const char *s, bool *success) {;
   if(!strcmp(s, "pc")){
     *success = true;
-    return dut->pc_cur;
+    return dut->commit_pc;
   }
   for(int i = 0; i < 32; i++){
     if(!strcmp(s, regs[i])){

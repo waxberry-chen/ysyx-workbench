@@ -27,21 +27,22 @@ void sim_stats_reset() {
   stats = {};
 }
 
-void sim_stats_sample_cycle(bool rstn, bool if_req_valid, bool if_req_ready,
-                            bool if_rsp_valid, bool if_rsp_ready,
-                            bool d_req_valid, bool d_req_ready,
-                            bool d_rsp_valid, bool d_rsp_ready) {
-  if (!rstn) {
+void sim_stats_sample_cycle(bool rst_n,
+                            bool imem_req_valid, bool imem_req_ready,
+                            bool imem_rsp_valid, bool imem_rsp_ready,
+                            bool dmem_req_valid, bool dmem_req_ready,
+                            bool dmem_rsp_valid, bool dmem_rsp_ready) {
+  if (!rst_n) {
     return;
   }
 
   stats.cycles++;
-  stats.if_request_stall_cycles += if_req_valid && !if_req_ready;
-  stats.if_response_wait_cycles += if_rsp_ready && !if_rsp_valid;
-  stats.if_response_stall_cycles += if_rsp_valid && !if_rsp_ready;
-  stats.data_request_stall_cycles += d_req_valid && !d_req_ready;
-  stats.data_response_wait_cycles += d_rsp_ready && !d_rsp_valid;
-  stats.data_response_stall_cycles += d_rsp_valid && !d_rsp_ready;
+  stats.if_request_stall_cycles += imem_req_valid && !imem_req_ready;
+  stats.if_response_wait_cycles += imem_rsp_ready && !imem_rsp_valid;
+  stats.if_response_stall_cycles += imem_rsp_valid && !imem_rsp_ready;
+  stats.data_request_stall_cycles += dmem_req_valid && !dmem_req_ready;
+  stats.data_response_wait_cycles += dmem_rsp_ready && !dmem_rsp_valid;
+  stats.data_response_stall_cycles += dmem_rsp_valid && !dmem_rsp_ready;
 }
 
 void sim_stats_record_commit(uint32_t pc, uint32_t npc) {

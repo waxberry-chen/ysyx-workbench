@@ -222,9 +222,9 @@ Gate：基线结果和 seed 可复现；当前工作独立提交。
 
 目标：core 不再直接调用 DPI data RAM，load/store 真正支持可变延迟。
 
-> Checkpoint 1（2026-09-20）建立了 core 顶层 `d_req/d_rsp` 和独立 C++ data transaction FSM。Checkpoint 2 已进一步抽取 single-outstanding `ysyx_lsu`，backend 不再观察外部 memory handshake；Phase 1 至此完成。详见 [`dev-log.md`](dev-log.md)。
+> Checkpoint 1（2026-09-20）建立了 core 顶层 data-memory request/response channel 和独立 C++ data transaction FSM。Checkpoint 2 已进一步抽取 single-outstanding `ysyx_lsu`，backend 不再观察外部 memory handshake；当前接口名已统一为 `dmem_req/dmem_rsp`。Phase 1 至此完成，详见 [`dev-log.md`](dev-log.md)。
 
-1. [x] 在 `ysyx_core` 顶层增加简单 `d_req/d_rsp` 端口；扩展 C++ RAM model 为独立 I/D transaction FSM。
+1. [x] 在 `ysyx_core` 顶层增加简单 `dmem_req/dmem_rsp` 端口；扩展 C++ RAM model 为独立 I/D transaction FSM。
 2. [x] 实现 `ysyx_lsu`：接收 backend 已计算的 effective address，内部保存 direction/address/size/wdata，完成 request holding、load extension、response buffering 和 single-outstanding control。当前普通 ALU 继续兼任 AGU 加法器，AXI byte strobe 留给 Phase 4 adapter。
 3. [x] backend 在 LSU response 前保持当前 instruction context；load/store 只在成功 response 后 commit。
 4. [x] 删除 core 内 `ysyx_d_ram` 实例；DPI 只留在 harness/model 一侧。
@@ -240,26 +240,39 @@ Gate：基线结果和 seed 可复现；当前工作独立提交。
 
 Gate：所有 CPU tests 与 DiffTest 在 I/D 独立随机延迟下通过；MMIO 输出不重不漏。
 
-完成状态（2026-09-20）：lint、LSU directed test、35/35 CPU tests、固定/压力 seed、hello UART、yield-os/CSR DiffTest 和 commit-trace 等价性均通过。由于 LSU 在仅有一笔 outstanding 且 response buffer 为空时始终接收 memory response，系统级 `d_rsp_valid && !d_rsp_ready` 预期为 0；真正被 backpressure 的是 LSU 到 backend 的 buffered result，这已由 directed test 覆盖。
+完成状态（2026-09-20）：lint、LSU directed test、35/35 CPU tests、固定/压力 seed、hello UART、yield-os/CSR DiffTest 和 commit-trace 等价性均通过。由于 LSU 在仅有一笔 outstanding 且 response buffer 为空时始终接收 memory response，系统级 `dmem_rsp_valid && !dmem_rsp_ready` 预期为 0；真正被 backpressure 的是 LSU 到 backend 的 buffered result，这已由 directed test 覆盖。
 
 ### Phase 2：建立 elastic frontend/backend
 
 目标：替换集中式 `IF_REQ -> IF_WAIT -> EXEC` 调度，形成真实前后端解耦。
 
+#### Phase 2 命名约定
+
+进入 Phase 2 前已统一稳定边界：active-low reset 使用 `rst_n`；harness 只观察 `commit_valid/commit_pc/commit_inst/commit_is_mmio`；core memory channel 使用 `imem_req/imem_rsp` 与 `dmem_req/dmem_rsp`；backend 与 LSU 使用 `lsu_req/lsu_rsp`。Phase 2 新增或迁移的信号遵循：
+
+- IFU 到 backend 的 instruction context 使用 `if_ctx_valid/ready/pc/inst/error`，预测字段继续采用 `if_ctx_pred_*`；
+- backend 到 IFU 的控制流恢复接口使用 `redirect_valid/target`，buffer 清除事件统一使用 `flush`；
+- decoder 输出统一加 `dec_` 前缀，并将旧 `dm_re/dm_we_raw/dm_type` 拆为 `dec_is_load/dec_is_store/dec_mem_size/dec_mem_unsigned`；
+- GPR 接口使用 `rs1_idx/rs2_idx/rd_idx`、`rs1_data/rs2_data` 和 `gpr_wen/wb_data`，避免用 `rd0/rd1` 表示 source operand；
+- execution datapath 使用 `alu_lhs/alu_rhs/alu_result`、`branch_taken` 等语义名称；
+- 有状态信号使用 `_q`，对应 next-state 使用 `_d`，handshake 事件使用 `_fire`；实例统一使用 `u_<role>`。
+
+这些修改随相关 context/stage 落地完成，不单独对仍将删除的 `ysyx_main_fsm` 做美化重命名。
+
 #### Phase 2A：IFU 与 IFQ
 
 1. 实现 `ysyx_ifu`，由它拥有 fetch PC、request outstanding、response 和 redirect discard 状态。
 2. 加入 2-entry IFQ；backend stall 时 IFU 可继续预取至队列满，发 request 时必须预扣一个返回 credit。
-3. 将 `{pc, inst, fetch_err, prediction metadata}` 作为完整 context 入队。
+3. 将 `if_ctx_{pc,inst,error,pred_*}` 作为完整 context 入队，并通过 `if_ctx_valid/if_ctx_ready` 交给 backend。
 4. directed test 覆盖：queue full、response stall、redirect 时无 outstanding、redirect 时有 outstanding、旧 response 返回。
 
 #### Phase 2B：opbuf 与 backend
 
-1. 加入 1-entry opbuf，锁存 instruction context、译码结果、operand 和提交所需控制。
+1. 加入 1-entry opbuf，锁存 instruction context、`dec_*` 译码结果、`rs1_data/rs2_data` 和提交所需控制。
 2. EXU 只消费 opbuf，不再直接读取 IFU 当前组合输出。
 3. ALU/branch/CSR 指令完成后集中 commit；load/store 通过 LSU 等待。
 4. 允许旧 ALU 指令 commit 与新指令进入 EXU 同周期，加入 GPR writeback-to-read bypass。
-5. 分支、jump、trap、mret 统一产生 redirect，并 flush IFQ/opbuf 中的年轻 context。
+5. 分支、jump、trap、mret 统一产生 `redirect_valid/redirect_target`，并用 `flush` 清除 IFQ/opbuf 中的年轻 context。
 6. 删除 `ysyx_main_fsm`；`ysyx_core` 退化为模块连接和 architectural state 集成层。
 
 核心 assertions：
@@ -277,7 +290,7 @@ Gate：随机 I/D stall 下回归通过；branch/trap/yield-os/CSR DiffTest 通�
 
 目标：总线错误通过 architectural path 处理，不依赖 harness abort。
 
-1. 将 `fetch_rsp_resp`、`lsu_rsp_resp` 带入 instruction context。
+1. 将 `imem_rsp_error` 作为 `if_ctx_error` 带入 instruction context，并让 `lsu_rsp_error` 随 LSU result 返回 backend。
 2. 至少实现 instruction/load/store access fault（`mcause=1/5/7`）；如采用 `mtval`，同步补齐 CSR、NEMU reference 和 DiffTest state。
 3. exception 不执行正常 GPR/CSR/store writeback，redirect 到 `mtvec`，年轻 context flush。
 4. commit trace 增加 stall reason、redirect reason、memory address/response；默认终端仍只打印有限窗口。
