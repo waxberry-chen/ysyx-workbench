@@ -262,7 +262,7 @@ Gate：所有 CPU tests 与 DiffTest 在 I/D 独立随机延迟下通过；MMIO 
 #### Phase 2A：IFU 与 IFQ
 
 1. 实现 `ysyx_ifu`，由它拥有 fetch PC、request outstanding、response 和 redirect discard 状态。
-2. 加入 2-entry IFQ；backend stall 时 IFU 可继续预取至队列满，发 request 时必须预扣一个返回 credit。
+2. 使用 `ysyx_gnrl_fifo` 加入 2-entry IFQ；backend stall 时 IFU 可继续预取至队列满，发 request 时必须预扣一个返回 credit。单 entry 的边界缓冲统一使用 `ysyx_gnrl_rv_reg`；两者均通过 `flush` 丢弃 redirect 前的年轻 context。
 3. 将 `if_ctx_{pc,inst,error,pred_*}` 作为完整 context 入队，并通过 `if_ctx_valid/if_ctx_ready` 交给 backend。
 4. directed test 覆盖：queue full、response stall、redirect 时无 outstanding、redirect 时有 outstanding、旧 response 返回。
 

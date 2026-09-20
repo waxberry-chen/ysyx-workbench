@@ -241,3 +241,122 @@ module ysyx_gnrl_data_mux # (
   end 
   endgenerate
 endmodule
+
+// One-entry elastic buffer using a ready/valid interface.
+//
+// The input can replace the current output in the same cycle in which the
+// current output is consumed.  While the output is stalled, both valid and
+// data remain stable.  flush discards the buffered transaction and blocks
+// both handshakes in the cycle in which it is asserted.
+module ysyx_gnrl_rv_reg # (
+  parameter DW = 32
+) (
+  input               in_valid,
+  output              in_ready,
+  input      [DW-1:0] in_data,
+  output              out_valid,
+  input               out_ready,
+  output     [DW-1:0] out_data,
+  input               flush,
+  input               clk,
+  input               rst_n
+);
+reg          valid_q;
+reg [DW-1:0] data_q;
+
+assign in_ready  = (~flush) & ((~valid_q) | out_ready);
+assign out_valid = (~flush) & valid_q;
+assign out_data  = data_q;
+
+always @(posedge clk or negedge rst_n)
+begin : RV_REG_PROC
+  if (rst_n == 1'b0) begin
+    valid_q <= 1'b0;
+    data_q  <= {DW{1'b0}};
+  end
+  else if (flush == 1'b1) begin
+    valid_q <= 1'b0;
+  end
+  else if (in_ready == 1'b1) begin
+    valid_q <= in_valid;
+    if (in_valid == 1'b1)
+      data_q <= in_data;
+  end
+end
+endmodule
+
+// Register-based synchronous FIFO with ready/valid interfaces.
+//
+// A full FIFO may accept a new item when its current head is consumed in the
+// same cycle.  There is no combinational input-to-output bypass: an accepted
+// item becomes visible after the active clock edge.  This behavior makes the
+// primitive suitable for small instruction/context queues.
+module ysyx_gnrl_fifo # (
+  parameter DW    = 32,
+  parameter DEPTH = 2
+) (
+  input               in_valid,
+  output              in_ready,
+  input      [DW-1:0] in_data,
+  output              out_valid,
+  input               out_ready,
+  output     [DW-1:0] out_data,
+  input               flush,
+  input               clk,
+  input               rst_n
+);
+localparam PTR_W = (DEPTH <= 1) ? 1 : $clog2(DEPTH);
+localparam CNT_W = (DEPTH <= 1) ? 1 : $clog2(DEPTH + 1);
+localparam [PTR_W-1:0] LAST_PTR    = PTR_W'(DEPTH - 1);
+localparam [CNT_W-1:0] DEPTH_COUNT = CNT_W'(DEPTH);
+
+reg [DW-1:0] storage [0:DEPTH-1];
+reg [PTR_W-1:0] read_ptr_q;
+reg [PTR_W-1:0] write_ptr_q;
+reg [CNT_W-1:0] count_q;
+
+wire push;
+wire pop;
+
+assign out_valid = (~flush) & (count_q != {CNT_W{1'b0}});
+assign pop       = out_valid & out_ready;
+assign in_ready  = (~flush) & ((count_q != DEPTH_COUNT) | pop);
+assign push      = in_valid & in_ready;
+assign out_data  = out_valid ? storage[read_ptr_q] : {DW{1'b0}};
+
+always @(posedge clk or negedge rst_n)
+begin : FIFO_STATE_PROC
+  if (rst_n == 1'b0) begin
+    read_ptr_q  <= {PTR_W{1'b0}};
+    write_ptr_q <= {PTR_W{1'b0}};
+    count_q     <= {CNT_W{1'b0}};
+  end
+  else if (flush == 1'b1) begin
+    read_ptr_q  <= {PTR_W{1'b0}};
+    write_ptr_q <= {PTR_W{1'b0}};
+    count_q     <= {CNT_W{1'b0}};
+  end
+  else begin
+    if (push == 1'b1) begin
+      storage[write_ptr_q] <= in_data;
+      if (write_ptr_q == LAST_PTR)
+        write_ptr_q <= {PTR_W{1'b0}};
+      else
+        write_ptr_q <= write_ptr_q + 1'b1;
+    end
+
+    if (pop == 1'b1) begin
+      if (read_ptr_q == LAST_PTR)
+        read_ptr_q <= {PTR_W{1'b0}};
+      else
+        read_ptr_q <= read_ptr_q + 1'b1;
+    end
+
+    case ({push, pop})
+      2'b10: count_q <= count_q + 1'b1;
+      2'b01: count_q <= count_q - 1'b1;
+      default: count_q <= count_q;
+    endcase
+  end
+end
+endmodule
