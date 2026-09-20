@@ -126,3 +126,124 @@ Phase 1 开始后沿用现有统计口径，并补齐：
 5. 对 `load-store`、hello 和 RTC 执行多 seed I/D 独立延迟回归。
 
 Phase 2 引入 IFQ/opbuf 后再把 frontend flush 变成实际 counter，并增加可强制 `if_rsp_ready=0` 的 directed response-backpressure 测试。
+
+## 2026-09-20：Phase 1 checkpoint 1——data transaction boundary
+
+### 1. 提交边界
+
+本 checkpoint 只完成建议提交 `refactor(npc): expose data request response port`，不继续混入 `ysyx_lsu` 模块抽取。
+
+完成后的结构是：
+
+```text
+ysyx_core
+  current decode/ALU/d_ram_ctrl
+  current main FSM + D_REQ/D_WAIT/D_COMMIT
+          |
+          | d_req/d_rsp
+          v
+C++ DataRamModel -> paddr_read/paddr_write -> PMEM/MMIO
+```
+
+core 已不再实例化或编译 DPI-based `ysyx_d_ram`；被接受的 data request 由 C++ model 锁存，经过独立随机 latency 后只调用一次 `paddr_read()` 或 `paddr_write()`。这使 memory/MMIO side effect 不会因 request/response stall 重放。
+
+### 2. 接口与时序
+
+顶层新增：
+
+```text
+d_req_valid / d_req_ready
+d_req_write / d_req_addr / d_req_size / d_req_wdata
+d_rsp_valid / d_rsp_ready / d_rsp_data
+```
+
+`d_req_size` 使用 `log2(bytes)` 编码：0/1/2 分别表示 1/2/4-byte access。当前简单 transaction 支持课程已有的 unaligned access；转换 AXI4-Lite 时再由 LSU/adapter 生成 byte lane 和 strobe，必要时处理跨 beat 访问。
+
+FSM 暂时扩展为：
+
+```text
+IF_REQ -> IF_WAIT -> EXEC
+                       | non-memory: commit
+                       v memory
+                     D_REQ -> D_WAIT -> D_COMMIT -> IF_REQ
+```
+
+- `D_REQ` 在 request stall 时保持 instruction、address、size 和 write data；
+- `D_WAIT` 不更新 PC/GPR/CSR，也不重新发 request；
+- response handshake 时锁存 load data；
+- `D_COMMIT` 在下一有效边沿完成 load writeback/store commit 和 PC 更新。
+
+增加 `D_COMMIT` 而不是让 response handshake 直接 commit，是为了保持当前 harness 的既有约定：`cpu_exec()` 在 active edge 前读取已经稳定的 `commit_wb/pc/inst`。它增加一个周期，但此 checkpoint 优先保证时序含义明确；后续重构 harness sampling 或 LSU response buffer 时可重新评估。
+
+### 3. C++ model 与检查
+
+I/D port 各有独立 FSM 和 PRNG stream：
+
+```text
+IDLE --req_fire--> WAIT --latency_done--> RESP --rsp_fire--> IDLE
+```
+
+data seed 由 command-line RAM seed 异或固定常量得到，因此配置可复现，同时 I/D timing schedule 不共用 RNG 状态。
+
+DataRamModel 当前检查：
+
+- request stall 后下一周期 `valid/write/addr/size/wdata` 必须保持；
+- request size 只能是 1/2/4 bytes；
+- 非 IDLE 状态不能接受第二笔 request；
+- response 数不得超过 accepted request 数；
+- memory backend 每笔 request 最多调用一次。
+
+simulation statistics 已新增 data request stall、response wait/stall；model report 另行给出 load/store/request/response 数量。
+
+### 4. 等价性与性能基线
+
+确定性 `cpu-tests/add`，seed 42、最大 latency 3、I/D request-ready 75%：
+
+| Metric | Phase 0 | Checkpoint 1 |
+| --- | ---: | ---: |
+| committed instructions | 1095 | 1095 |
+| cycles | 5319 | 6639 |
+| CPI | 4.858 | 6.063 |
+| data transactions | N/A | 282 |
+| data loads/stores | N/A | 243 / 39 |
+| data request stall cycles | N/A | 117 |
+| data response wait cycles | N/A | 395 |
+
+CPI 上升是预期结果：原 data RAM 为零延迟组合读/沿上写，现在每条 load/store 都经过 `D_REQ/D_WAIT/D_COMMIT`，并叠加随机 request stall/response latency。当前目标是建立正确 transaction boundary，而不是在仍为集中式串行 core 时优化性能。
+
+Phase 0 和 checkpoint 1 的完整 `add` commit trace 逐字节相同，SHA-256 均为：
+
+```text
+4a87442ab99f4b4d6e362ee8f38dd67c2299954785b211081f051fc03eb4af75
+```
+
+这说明 cycle timing 已改变，但 1095 个 commit 后的 PC、instruction 和 architectural-state hash 未改变。
+
+### 5. 验证记录
+
+| Item | Configuration | Result |
+| --- | --- | --- |
+| RTL lint | `make -C npc lint` | 通过，仅剩既存 unused warnings |
+| RV32E CPU tests | 默认 seed 42/max-latency 3/ready 75% | 35/35 PASS，DiffTest ON |
+| fixed-seed add | seeds 1～10/max-latency 7/ready 50% | 全部 GOOD TRAP；每次 282 requests = 282 responses |
+| unaligned stress | seeds 1～3/max-latency 10/ready 30% | 全部 GOOD TRAP |
+| hello/UART | `mainargs=I-love-ysyx` | 字符不重不漏，GOOD TRAP |
+| RTC | 7 s timeout window | 连续输出 1～6 seconds；主动 timeout 124 |
+| yield-os/CSR DiffTest | 6 s timeout window | 持续交替输出 `AB`；无 CSR mismatch |
+| Phase 0 trace comparison | `cmp` full traces | 完全相同 |
+
+10-seed `add` stress 中 cycles 为 10106～10476，CPI 为 9.229～9.567；不同 seed 的 I/D stall 计数不同，证明两侧随机 timing 确实参与执行。
+
+### 6. 尚未完成的 Phase 1 工作
+
+当前仍是一个过渡结构：`ysyx_main_fsm` 知道 `D_REQ/D_WAIT/D_COMMIT`，地址、size 和 load extension 仍由 core 中的 `ysyx_d_ram_ctrl` 组合产生。
+
+下一独立提交应当：
+
+1. 新建 `ysyx_lsu`，迁入 AGU payload、load extension、request holding、response buffer 和 single-outstanding control；
+2. backend 只发送一笔 LSU operation 并等待 completion，不观察外部 `d_req/d_rsp`；
+3. 将 data response backpressure 作为 directed test，验证 LSU response buffer；
+4. 为 load/store response error 预留字段，但精确 access fault 留到 Phase 3；
+5. 再次运行同一 commit trace、35 CPU tests、MMIO workload 和多 seed regression。
+
+因此本 checkpoint 值得单独提交，但不能把整个 Phase 1 标记为完成。

@@ -13,6 +13,9 @@ struct SimStats {
   uint64_t if_request_stall_cycles;
   uint64_t if_response_wait_cycles;
   uint64_t if_response_stall_cycles;
+  uint64_t data_request_stall_cycles;
+  uint64_t data_response_wait_cycles;
+  uint64_t data_response_stall_cycles;
   uint64_t redirects;
 };
 
@@ -25,7 +28,9 @@ void sim_stats_reset() {
 }
 
 void sim_stats_sample_cycle(bool rstn, bool if_req_valid, bool if_req_ready,
-                            bool if_rsp_valid, bool if_rsp_ready) {
+                            bool if_rsp_valid, bool if_rsp_ready,
+                            bool d_req_valid, bool d_req_ready,
+                            bool d_rsp_valid, bool d_rsp_ready) {
   if (!rstn) {
     return;
   }
@@ -34,6 +39,9 @@ void sim_stats_sample_cycle(bool rstn, bool if_req_valid, bool if_req_ready,
   stats.if_request_stall_cycles += if_req_valid && !if_req_ready;
   stats.if_response_wait_cycles += if_rsp_ready && !if_rsp_valid;
   stats.if_response_stall_cycles += if_rsp_valid && !if_rsp_ready;
+  stats.data_request_stall_cycles += d_req_valid && !d_req_ready;
+  stats.data_response_wait_cycles += d_rsp_ready && !d_rsp_valid;
+  stats.data_response_stall_cycles += d_rsp_valid && !d_rsp_ready;
 }
 
 void sim_stats_record_commit(uint32_t pc, uint32_t npc) {
@@ -57,7 +65,11 @@ void sim_stats_report() {
   Log("  IF response stall cycles= %" PRIu64,
       stats.if_response_stall_cycles);
   Log("  redirects               = %" PRIu64, stats.redirects);
-  Log("  data request stalls     = N/A (no data handshake in Phase 0)");
-  Log("  data response waits     = N/A (no data handshake in Phase 0)");
-  Log("  frontend flushes        = N/A (no buffered frontend in Phase 0)");
+  Log("  data request stall cycles = %" PRIu64,
+      stats.data_request_stall_cycles);
+  Log("  data response wait cycles = %" PRIu64,
+      stats.data_response_wait_cycles);
+  Log("  data response stall cycles= %" PRIu64,
+      stats.data_response_stall_cycles);
+  Log("  frontend flushes        = N/A (no buffered frontend yet)");
 }

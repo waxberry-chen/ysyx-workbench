@@ -5,7 +5,6 @@
 ./vsrc/core/ysyx_branch.sv
 ./vsrc/core/ysyx_gen_imm.sv
 ./vsrc/core/ysyx_i_ram.sv
-./vsrc/core/ysyx_d_ram.sv
 ./vsrc/core/ysyx_d_ram_ctrl.sv
 ./vsrc/core/ysyx_csr.sv
 ./vsrc/core/ysyx_main_fsm.sv

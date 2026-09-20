@@ -222,11 +222,13 @@ Gate：基线结果和 seed 可复现；当前工作独立提交。
 
 目标：core 不再直接调用 DPI data RAM，load/store 真正支持可变延迟。
 
-1. 在 `ysyx_core` 顶层增加简单 `d_req/d_rsp` 端口；扩展 C++ RAM model 为独立 I/D transaction FSM。
+> Checkpoint 1（2026-09-20）已完成：core 顶层已暴露简单 `d_req/d_rsp`，C++ 使用独立 data transaction FSM，旧 `ysyx_d_ram` DPI module 已移除；现有集中式 FSM 暂时扩展为 `D_REQ/D_WAIT/D_COMMIT`。该状态可作为独立提交点，但 **Phase 1 尚未完成**，下一提交才抽取 `ysyx_lsu` 并收缩 backend FSM。详见 [`dev-log.md`](dev-log.md#2026-09-20phase-1-checkpoint-1data-transaction-boundary)。
+
+1. [x] 在 `ysyx_core` 顶层增加简单 `d_req/d_rsp` 端口；扩展 C++ RAM model 为独立 I/D transaction FSM。
 2. 实现 `ysyx_lsu`，迁入 AGU、wstrb、load extension 和单 outstanding 状态。
 3. backend 在 LSU response 前保存当前 instruction context；load/store 只在成功 response 后 commit。
-4. 删除 core 内 `ysyx_d_ram` 实例；DPI 只留在 harness/model 一侧。
-5. 为 data request、data response 分别注入随机 backpressure 和 latency。
+4. [x] 删除 core 内 `ysyx_d_ram` 实例；DPI 只留在 harness/model 一侧。
+5. [ ] data request 已覆盖随机 backpressure，response 已覆盖随机 latency；response backpressure 与 LSU response buffer 一并在下一 checkpoint 验证。
 
 最小 assertions：
 

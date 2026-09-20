@@ -16,7 +16,18 @@ module ysyx_core #(
         output [32-1: 0] if_req_addr,
         input            if_rsp_valid, 
         output           if_rsp_ready, 
-        input  [32-1: 0] if_rsp_data
+        input  [32-1: 0] if_rsp_data,
+
+        // data memory request/response interface
+        output           d_req_valid,
+        input            d_req_ready,
+        output           d_req_write,
+        output [32-1: 0] d_req_addr,
+        output [2-1: 0]  d_req_size,
+        output [32-1: 0] d_req_wdata,
+        input            d_rsp_valid,
+        output           d_rsp_ready,
+        input  [32-1: 0] d_rsp_data
 
         `ifdef DEBUG
             ,
@@ -74,6 +85,11 @@ module ysyx_core #(
         .if_req_ready 	(if_req_ready  ),
         .if_rsp_valid 	(if_rsp_valid  ),
         .if_rsp_ready 	(if_rsp_ready  ),
+        .d_access       (dm_re | dm_we ),
+        .d_req_valid    (d_req_valid   ),
+        .d_req_ready    (d_req_ready   ),
+        .d_rsp_valid    (d_rsp_valid   ),
+        .d_rsp_ready    (d_rsp_ready   ),
         .commit_wb    	(commit_wb     )
     );
     
@@ -220,16 +236,24 @@ module ysyx_core #(
         .mask(mask)
     );
 
-    ysyx_d_ram #(
-        .DEPTH(D_CACHE_DEPTH)
-    ) d_ram (
-        .clk(clk),
-        .addr(dm_addr),
-        .wd(dm_wd),
-        .we(dm_we & commit_wb),
-        .rd(dm_rd_raw),
-        .re(dm_re & commit_wb),
-        .mask(mask)
+    assign d_req_write = dm_we;
+    assign d_req_addr  = dm_addr;
+    assign d_req_size  = mask;
+    assign d_req_wdata = dm_wd;
+
+    wire d_rsp_fire;
+    assign d_rsp_fire = d_rsp_valid & d_rsp_ready;
+
+    // D_WAIT consumes the response; D_COMMIT performs architectural
+    // writeback on the following edge, so retain the returned load data.
+    ysyx_gnrl_dfflr #(
+        .DW(32)
+    ) u_d_rsp_data (
+        .lden   (d_rsp_fire),
+        .dnxt   (d_rsp_data),
+        .qout   (dm_rd_raw),
+        .clk    (clk),
+        .rst_n  (rstn)
     );
 
     ysyx_gnrl_data_mux #(

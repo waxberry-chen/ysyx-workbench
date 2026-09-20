@@ -62,7 +62,9 @@ void single_cycle() {
   #endif
 
   sim_stats_sample_cycle(dut->rstn, dut->if_req_valid, dut->if_req_ready,
-                         dut->if_rsp_valid, dut->if_rsp_ready);
+                         dut->if_rsp_valid, dut->if_rsp_ready,
+                         dut->d_req_valid, dut->d_req_ready,
+                         dut->d_rsp_valid, dut->d_rsp_ready);
 
   ram_model_sample();
 
