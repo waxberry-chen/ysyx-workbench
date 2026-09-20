@@ -50,6 +50,7 @@ lint:
 
 LSU_TEST_OBJ := $(OBJ_DIR)/lsu-test
 PRIMITIVE_TEST_OBJ := $(OBJ_DIR)/primitive-test
+IFU_TEST_OBJ := $(OBJ_DIR)/ifu-test
 
 .PHONY: lsu-test
 lsu-test:
@@ -67,6 +68,15 @@ primitive-test:
 		$(NPC_HOME)/vsrc/gnrl/ysyx_gnrl_primitive.sv \
 		$(NPC_HOME)/tests/ysyx_gnrl_buffer_tb.sv
 	$(PRIMITIVE_TEST_OBJ)/Vysyx_gnrl_buffer_tb
+
+.PHONY: ifu-test
+ifu-test:
+	verilator --binary --timing --assert --sv -Wall -Wno-fatal \
+		-Wno-BLKSEQ -Wno-SYNCASYNCNET -Wno-TIMESCALEMOD \
+		--top-module ysyx_ifu_tb --Mdir $(IFU_TEST_OBJ) \
+		$(NPC_HOME)/vsrc/gnrl/ysyx_gnrl_primitive.sv \
+		$(VSRC_DIR)/ysyx_ifu.sv $(NPC_HOME)/tests/ysyx_ifu_tb.sv
+	$(IFU_TEST_OBJ)/Vysyx_ifu_tb
 
 # Re-run one deterministic image under several instruction-memory timing
 # schedules.  Per-seed logs are build artifacts under build/seed-logs/.

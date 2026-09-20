@@ -1,86 +1,87 @@
 `default_nettype none
 
+// Transitional backend controller used until Phase 2B introduces an opbuf.
+// Instruction fetch ownership lives entirely in ysyx_ifu; this FSM only
+// accepts instruction contexts, executes one instruction, and waits for LSU
+// completion when necessary.
 module ysyx_main_fsm (
-    input clk, 
-    input rst_n,
-    
-    output reg          imem_req_valid,
-    input               imem_req_ready,
+    input  clk,
+    input  rst_n,
 
-    input               imem_rsp_valid,
-    output reg          imem_rsp_ready,
+    input       if_ctx_valid,
+    output      if_ctx_ready,
+    input       control_redirect,
 
-    input               lsu_access,
-    output reg          lsu_req_valid,
-    input               lsu_req_ready,
-    input               lsu_rsp_valid,
-    output reg          lsu_rsp_ready,
+    input       lsu_access,
+    output      lsu_req_valid,
+    input       lsu_req_ready,
+    input       lsu_rsp_valid,
+    output      lsu_rsp_ready,
 
-    output reg          commit_valid
+    output      commit_valid
 );
 
-localparam  IF_REQ   = 2'd0,
-            IF_WAIT  = 2'd1,
-            EXEC     = 2'd2,
-            LSU_WAIT = 2'd3;
+localparam [1:0] WAIT_CTX = 2'd0,
+                 EXEC     = 2'd1,
+                 LSU_WAIT = 2'd2;
 
-wire    [1:0] state;
-reg     [1:0] next_state;
+reg [1:0] state_q;
+reg [1:0] state_d;
 
+assign lsu_req_valid = (state_q == EXEC) & lsu_access;
+assign lsu_rsp_ready = state_q == LSU_WAIT;
+assign commit_valid  = ((state_q == EXEC) & (~lsu_access)) |
+                       ((state_q == LSU_WAIT) & lsu_rsp_valid);
+assign if_ctx_ready  = (state_q == WAIT_CTX) |
+                       (commit_valid & (~control_redirect));
 
-// current state register
-ysyx_gnrl_dffr #(.DW(2)) ysyx_state_register (
-    .dnxt   (next_state), 
-    .qout   (state), 
-    .clk    (clk), 
-    .rst_n  (rst_n)
-);
+always @(posedge clk or negedge rst_n) begin
+    if (!rst_n)
+        state_q <= WAIT_CTX;
+    else
+        state_q <= state_d;
+end
 
-// next state & output logic
 always @(*) begin
-    next_state   = state;
-    imem_req_valid = 0;
-    imem_rsp_ready = 0;
-    lsu_req_valid = 0;
-    lsu_rsp_ready = 0;
-    commit_valid = 0;
-    if (!rst_n) begin
-        next_state = IF_REQ;
-    end else begin
-        case (state)
-            IF_REQ: begin
-                imem_req_valid = 1;
-                if (imem_req_ready) begin
-                    next_state = IF_WAIT;
-                end
-            end
-            IF_WAIT: begin
-                imem_rsp_ready = 1;
-                if (imem_rsp_valid) begin
-                    next_state = EXEC;
-                end
-            end
-            EXEC: begin
-                if (lsu_access) begin
-                    lsu_req_valid = 1;
-                    if (lsu_req_ready) begin
-                        next_state = LSU_WAIT;
-                    end
+    state_d = state_q;
+
+    case (state_q)
+        WAIT_CTX: begin
+            if (if_ctx_valid)
+                state_d = EXEC;
+        end
+
+        EXEC: begin
+            if (lsu_access) begin
+                if (lsu_req_ready)
+                    state_d = LSU_WAIT;
+            end else begin
+                if (control_redirect) begin
+                    state_d = WAIT_CTX;
                 end else begin
-                    commit_valid = 1;
-                    next_state = IF_REQ;
+                    if (if_ctx_valid)
+                        state_d = EXEC;
+                    else
+                        state_d = WAIT_CTX;
                 end
             end
-            LSU_WAIT: begin
-                lsu_rsp_ready = 1;
-                if (lsu_rsp_valid) begin
-                    commit_valid = 1;
-                    next_state = IF_REQ;
+        end
+
+        LSU_WAIT: begin
+            if (lsu_rsp_valid) begin
+                if (control_redirect) begin
+                    state_d = WAIT_CTX;
+                end else begin
+                    if (if_ctx_valid)
+                        state_d = EXEC;
+                    else
+                        state_d = WAIT_CTX;
                 end
             end
-            default: next_state = IF_REQ;
-        endcase
-    end
+        end
+
+        default: state_d = WAIT_CTX;
+    endcase
 end
 
 property p_memory_commit_requires_lsu_response;
@@ -88,6 +89,12 @@ property p_memory_commit_requires_lsu_response;
         commit_valid && lsu_access |-> lsu_rsp_valid;
 endproperty
 assert property (p_memory_commit_requires_lsu_response);
+
+property p_redirect_does_not_accept_old_context;
+    @(posedge clk) disable iff (!rst_n)
+        commit_valid && control_redirect |-> !if_ctx_ready;
+endproperty
+assert property (p_redirect_does_not_accept_old_context);
 
 endmodule
 

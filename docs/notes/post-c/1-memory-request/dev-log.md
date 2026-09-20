@@ -125,7 +125,7 @@ Phase 1 开始后沿用现有统计口径，并补齐：
 4. 相同 `add` trace 的 architectural state 对比；
 5. 对 `load-store`、hello 和 RTC 执行多 seed I/D 独立延迟回归。
 
-Phase 2 引入 IFQ/opbuf 后再把 frontend flush 变成实际 counter，并增加可强制 `if_rsp_ready=0` 的 directed response-backpressure 测试。
+Phase 2 引入 IFQ/opbuf 后再把 frontend flush 变成实际 counter，并以 directed test 验证 fetch credit：已接受 request 的 response 必须始终有预留空间；真正的动态 backpressure 发生在 IFQ 到 backend 的 context 边界。
 
 ## 2026-09-20：Phase 1 checkpoint 1——data transaction boundary
 
@@ -301,3 +301,64 @@ backend FSM 另行断言 memory instruction 只有在 `lsu_rsp_valid` 时才能 
 | architectural trace | `add`, seed 42/max-latency 3/ready 75% | 1095 commits；SHA-256 仍为 `4a87442ab99f4b4d6e362ee8f38dd67c2299954785b211081f051fc03eb4af75` |
 
 Phase 1 至此达到计划 gate。下一提交点进入 Phase 2A：先定义 frontend instruction-context 接口，再抽取 IFU 和最小 IFQ；不要继续在现有 `ysyx_main_fsm` 中增加 fetch 状态。
+
+## 2026-09-20：Phase 2A——elastic IFU 与 2-entry IFQ
+
+### 1. 实现边界
+
+本轮把 instruction fetch 从集中式 FSM 中完整抽出：
+
+```text
+imem req/rsp <-> ysyx_ifu(REQ/WAIT/DROP) <-> 2-entry IFQ
+                                                |
+                                                | if_ctx valid/ready
+                                                v
+                              transitional backend controller
+                                  WAIT_CTX/EXEC/LSU_WAIT
+```
+
+- `ysyx_ifu` 独立维护 speculative `fetch_pc_q`、已接受请求的 `request_pc_q` 和 single-outstanding 生命周期；
+- IFQ 保存 `{pc, inst}`，对 backend 提供稳定的 `if_ctx_valid/ready/pc/inst/error/pred_*` 边界；第一版 `error=0`、prediction 为 static not-taken；
+- backend stall 或等待 LSU 时，IFU 可继续预取直到 2-entry IFQ 满；顺序指令 commit 时可在同一边沿接收下一 context；
+- architectural `commit_pc` 仍只在 commit 边沿更新，因此 C++ harness/DiffTest 的既有采样契约未改变；assertion 检查被接受 context 的 PC 必须等于当前或 commit 后的 architectural PC；
+- 原 `ysyx_main_fsm` 不再接触 `imem_req/imem_rsp`，暂时只承担 `WAIT_CTX/EXEC/LSU_WAIT` backend 控制，Phase 2B 再由 opbuf/EXU control 取代。
+
+### 2. Credit 与 redirect 语义
+
+IFU 仅在 `ifq_in_ready` 时拉高 request valid。由于 memory side 只有一笔 outstanding，request handshake 等价于为未来 response 预留一个 IFQ entry；等待期间 IFQ 只可能被 backend 消费，不会被其他 producer 填满。因此正常 response 到达时总有 credit，`imem_rsp_ready` 无需随机拉低。
+
+redirect 按请求所处阶段处理：
+
+1. 请求尚未 handshake：压低旧 request valid，并把 fetch PC 改为 target；
+2. 请求已经 handshake、response 未返回：清空 IFQ并转入 `DROP`；
+3. stale response 返回：正常完成 memory handshake，但不写入 IFQ，随后才从 target 恢复 fetch；
+4. redirect 与旧 response 同周期出现：直接消费并丢弃 response，无需多停留一轮 `DROP`。
+
+这种实现没有取消 memory transaction，也不会把旧路径 instruction context 暴露给 backend。代价是 single-outstanding 下必须等 stale response 返回后才能请求 target，后续若引入多 outstanding 再改用 epoch/tag。
+
+### 3. 定向检查与验证
+
+新增 `make -C npc ifu-test`，覆盖 request payload stall、backend stall、IFQ 填满与顺序、无 outstanding redirect、带 outstanding redirect、stale response discard，以及 redirect 与旧 response 同周期发生。IFU/core assertions 另行检查：
+
+- stalled request/context 保持；
+- fresh response 必须已有 IFQ credit；
+- `DROP` response 不得进入 IFQ；
+- redirect commit 不得接收旧 context；
+- backend 接收的 context PC 与 architectural PC 边界一致；
+- Phase 2A 的静态预测 metadata 自洽。
+
+| Item | Configuration | Result |
+| --- | --- | --- |
+| RTL lint | `make -C npc lint` | 通过；仅剩既存 `ysyx_gen_imm.inst[6:0]` unused warning |
+| primitive / LSU / IFU directed tests | Verilator assertions ON | 全部 PASS |
+| RV32E CPU tests | 默认 seed 42/max-latency 3/ready 75% | 35/35 PASS，DiffTest ON |
+| add stress | seeds 1～10/max-latency 10/ready 30% | 全部 GOOD TRAP；CPI 10.151～10.464 |
+| hello/UART | seed 7/max-latency 10/ready 30% | 输出完整，GOOD TRAP |
+| yield-os/CSR DiffTest | seed 9/max-latency 7/ready 50%，5 s window | 持续交替输出 `AB`，无 mismatch/assertion；timeout 124 为主动终止 |
+| architectural trace | `add`, seed 42/max-latency 3/ready 75% | 与 Phase 1 完整 trace 逐字节相同，SHA-256 为 `4a87442ab99f4b4d6e362ee8f38dd67c2299954785b211081f051fc03eb4af75` |
+
+### 4. 当前性能观察与 Phase 2B handoff
+
+固定 `add` workload 的 committed instructions 仍为 1095；cycles 从 Phase 1 的 6639 降为 5121，CPI 从 6.063 降为 4.677。instruction requests 从 1096 增至 1258，是 static sequential prefetch 在 212 次 redirect 附近读取年轻/错误路径指令的预期开销；结束时 requests 比 responses 多 1，是仿真在 `ebreak` 前停止时仍有一笔合法 speculative fetch outstanding。
+
+Phase 2A 只完成 frontend elasticization。下一步 Phase 2B 仍需：把当前 instruction register 演化为带完整 decode/reg-read context 的 opbuf，形成明确 EXU/commit control，统一 GPR bypass，并最终删除 `ysyx_main_fsm`。

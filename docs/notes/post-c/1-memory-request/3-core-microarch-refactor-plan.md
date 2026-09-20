@@ -261,10 +261,14 @@ Gate：所有 CPU tests 与 DiffTest 在 I/D 独立随机延迟下通过；MMIO 
 
 #### Phase 2A：IFU 与 IFQ
 
-1. 实现 `ysyx_ifu`，由它拥有 fetch PC、request outstanding、response 和 redirect discard 状态。
-2. 使用 `ysyx_gnrl_fifo` 加入 2-entry IFQ；backend stall 时 IFU 可继续预取至队列满，发 request 时必须预扣一个返回 credit。单 entry 的边界缓冲统一使用 `ysyx_gnrl_rv_reg`；两者均通过 `flush` 丢弃 redirect 前的年轻 context。
-3. 将 `if_ctx_{pc,inst,error,pred_*}` 作为完整 context 入队，并通过 `if_ctx_valid/if_ctx_ready` 交给 backend。
-4. directed test 覆盖：queue full、response stall、redirect 时无 outstanding、redirect 时有 outstanding、旧 response 返回。
+1. [x] 实现 `ysyx_ifu`，由它拥有 fetch PC、request outstanding、response 和 redirect discard 状态。
+2. [x] 使用 `ysyx_gnrl_fifo` 加入 2-entry IFQ；backend stall 时 IFU 可继续预取至队列满，发 request 时必须预扣一个返回 credit。单 entry 的边界缓冲统一使用 `ysyx_gnrl_rv_reg`；两者均通过 `flush` 丢弃 redirect 前的年轻 context。
+3. [x] 将 `if_ctx_{pc,inst,error,pred_*}` 作为完整 context 入队，并通过 `if_ctx_valid/if_ctx_ready` 交给 backend。
+4. [x] directed test 覆盖：request stall、backend stall、queue full、redirect 时无 outstanding、redirect 时有 outstanding、旧 response 返回。
+
+完成状态（2026-09-20）：`ysyx_ifu` 以 `REQ/WAIT/DROP` 管理单笔 fetch transaction；request 只在 IFQ 有 credit 时发出，故正常 response 到达时无需临时 backpressure。redirect 同步清空 IFQ；已经握手且不可取消的旧请求转入 `DROP`，其 response 仅解除 outstanding，不进入 IFQ。当前 prediction metadata 为 static not-taken，`error` 留待 Phase 3 接入。原 `ysyx_main_fsm` 已不再管理 instruction-memory handshake，但仍作为 `WAIT_CTX/EXEC/LSU_WAIT` 过渡 backend controller，待 Phase 2B 的 opbuf/EXU 落地后删除。
+
+Phase 2A gate 已通过：IFU directed test、primitive/LSU tests、lint、35/35 CPU tests、10-seed 压力回归、hello、yield-os/CSR DiffTest 和完整 commit-trace 等价性均正常。固定 `add` 配置下 cycles 从 6639 降至 5121，CPI 从 6.063 降至 4.677；这证明 fetch 已能与 backend/LSU 等待重叠，但不作为后续结构决策的唯一性能依据。
 
 #### Phase 2B：opbuf 与 backend
 

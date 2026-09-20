@@ -72,5 +72,5 @@ void sim_stats_report() {
       stats.data_response_wait_cycles);
   Log("  data response stall cycles= %" PRIu64,
       stats.data_response_stall_cycles);
-  Log("  frontend flushes        = N/A (no buffered frontend yet)");
+  Log("  frontend flushes        = %" PRIu64, stats.redirects);
 }

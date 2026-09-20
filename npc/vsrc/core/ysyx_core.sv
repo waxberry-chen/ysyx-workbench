@@ -2,7 +2,7 @@
 
 module ysyx_core #(
         parameter PC_RST = 32'H80000000,
-        parameter I_CACHE_DEPTH = 8
+        parameter IFQ_DEPTH = 2
     )
     (
         input           clk, rst_n,
@@ -57,6 +57,14 @@ module ysyx_core #(
     wire                                        dm_re;
     wire                                        lsu_req_valid, lsu_req_ready;
     wire                                        lsu_rsp_valid, lsu_rsp_ready;
+    wire                                        if_ctx_valid, if_ctx_ready;
+    wire        [31 : 0]                        if_ctx_pc, if_ctx_inst;
+    wire                                        if_ctx_error, if_ctx_pred_taken;
+    wire        [31 : 0]                        if_ctx_pred_npc;
+    wire                                        if_ctx_fire;
+    wire                                        control_redirect;
+    wire                                        redirect_valid;
+    wire        [31 : 0]                        redirect_target;
 
     // single cycle, always commit
     // assign commit_valid = 1;
@@ -76,32 +84,52 @@ module ysyx_core #(
         .rst_n  (rst_n)
     );
     
-    ysyx_main_fsm u_ysyx_main_fsm(
-        .clk          	(clk           ),
-        .rst_n        	(rst_n         ),
-        .imem_req_valid(imem_req_valid),
-        .imem_req_ready(imem_req_ready),
-        .imem_rsp_valid(imem_rsp_valid),
-        .imem_rsp_ready(imem_rsp_ready),
-        .lsu_access     (dm_re | dm_we_raw),
-        .lsu_req_valid  (lsu_req_valid ),
-        .lsu_req_ready  (lsu_req_ready ),
-        .lsu_rsp_valid  (lsu_rsp_valid ),
-        .lsu_rsp_ready  (lsu_rsp_ready ),
-        .commit_valid 	(commit_valid  )
+    ysyx_ifu #(
+        .PC_RST   (PC_RST),
+        .IFQ_DEPTH(IFQ_DEPTH)
+    ) u_ifu (
+        .clk              (clk),
+        .rst_n            (rst_n),
+        .redirect_valid   (redirect_valid),
+        .redirect_target  (redirect_target),
+        .if_ctx_valid     (if_ctx_valid),
+        .if_ctx_ready     (if_ctx_ready),
+        .if_ctx_pc        (if_ctx_pc),
+        .if_ctx_inst      (if_ctx_inst),
+        .if_ctx_error     (if_ctx_error),
+        .if_ctx_pred_taken(if_ctx_pred_taken),
+        .if_ctx_pred_npc  (if_ctx_pred_npc),
+        .imem_req_valid   (imem_req_valid),
+        .imem_req_ready   (imem_req_ready),
+        .imem_req_addr    (imem_req_addr),
+        .imem_rsp_valid   (imem_rsp_valid),
+        .imem_rsp_ready   (imem_rsp_ready),
+        .imem_rsp_data    (imem_rsp_data)
     );
-    
-    wire inst_update;
-    assign imem_req_addr = commit_pc;
-    assign inst_update = imem_rsp_valid & imem_rsp_ready;
+
+    ysyx_main_fsm u_backend_ctrl (
+        .clk             (clk),
+        .rst_n           (rst_n),
+        .if_ctx_valid    (if_ctx_valid),
+        .if_ctx_ready    (if_ctx_ready),
+        .control_redirect(control_redirect),
+        .lsu_access      (dm_re | dm_we_raw),
+        .lsu_req_valid   (lsu_req_valid),
+        .lsu_req_ready   (lsu_req_ready),
+        .lsu_rsp_valid   (lsu_rsp_valid),
+        .lsu_rsp_ready   (lsu_rsp_ready),
+        .commit_valid    (commit_valid)
+    );
+
+    assign if_ctx_fire = if_ctx_valid & if_ctx_ready;
 
     // inst register
     ysyx_gnrl_dfflrs #(
         .DW(32),
         .RST(32'h00000013)  // nop
     ) u_inst_reg (
-        .lden   (inst_update),
-        .dnxt   (imem_rsp_data),
+        .lden   (if_ctx_fire),
+        .dnxt   (if_ctx_inst),
         .qout   (commit_inst),
         .clk    (clk),
         .rst_n  (rst_n)
@@ -216,8 +244,15 @@ module ysyx_core #(
     assign pc_add4 = commit_pc + 32'H4;
     assign pc_jal_br = alu_res;
     assign pc_jalr = alu_res & 32'HFFFFFFFE;
-    // decide next pc
-    assign pc_next = (jal | br) ? pc_jal_br : (jalr ? pc_jalr : (trap_valid ? trap_target: (mret_valid ? mret_target : pc_add4)));
+    // Architectural next PC and frontend recovery.  Static sequential fetch
+    // is corrected only when the executing instruction actually redirects.
+    assign pc_next = trap_valid ? trap_target :
+                     (mret_valid ? mret_target :
+                     ((jal | br) ? pc_jal_br :
+                     (jalr ? pc_jalr : pc_add4)));
+    assign control_redirect = trap_valid | mret_valid | jal | jalr | br;
+    assign redirect_valid   = commit_valid & control_redirect;
+    assign redirect_target  = pc_next;
 
     ysyx_lsu u_ysyx_lsu (
         .clk         (clk          ),
@@ -255,6 +290,24 @@ module ysyx_core #(
     assign putchar = dm_we_raw && commit_valid && (&alu_res);
     assign c = rf_rd1[7 : 0];
 `endif
+
+    // The queue context consumed at an architectural boundary must match the
+    // PC expected by the in-order backend.  A sequential commit may consume
+    // the next context in the same cycle; WAIT_CTX consumes the current PC.
+    property p_context_pc_matches_architectural_pc;
+        @(posedge clk) disable iff (!rst_n)
+            if_ctx_fire |->
+                if_ctx_pc == (commit_valid ? pc_next : commit_pc);
+    endproperty
+    assert property (p_context_pc_matches_architectural_pc);
+
+    property p_phase2a_static_prediction_metadata;
+        @(posedge clk) disable iff (!rst_n)
+            if_ctx_valid |->
+                !if_ctx_error && !if_ctx_pred_taken &&
+                if_ctx_pred_npc == if_ctx_pc + 32'd4;
+    endproperty
+    assert property (p_phase2a_static_prediction_metadata);
 
 endmodule
 
