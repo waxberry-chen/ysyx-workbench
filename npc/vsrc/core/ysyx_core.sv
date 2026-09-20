@@ -1,3 +1,5 @@
+`default_nettype none
+
 module ysyx_core #(
         parameter PC_RST = 32'H80000000,
         parameter I_CACHE_DEPTH = 8,
@@ -8,10 +10,10 @@ module ysyx_core #(
         output  [31: 0] pc_cur, inst,
         output          commit_wb, commit_is_mmio,
 
-        // inst ram interface
+        // instruction memory request/response interface
         output           if_req_valid, 
         input            if_req_ready, 
-        output [32-1: 0] if_req_data,
+        output [32-1: 0] if_req_addr,
         input            if_rsp_valid, 
         output           if_rsp_ready, 
         input  [32-1: 0] if_rsp_data
@@ -56,7 +58,7 @@ module ysyx_core #(
     // // program counter
     ysyx_gnrl_dfflrs #(
         .DW(32),
-        .RST(32'h80000000)
+        .RST(PC_RST)
     ) u_pc (
         .lden   (commit_wb),
         .dnxt   (pc_next), 
@@ -76,7 +78,7 @@ module ysyx_core #(
     );
     
     wire inst_update;
-    assign if_req_data = pc_cur;
+    assign if_req_addr = pc_cur;
     assign inst_update = if_rsp_valid & if_rsp_ready;
 
     // inst register
@@ -240,8 +242,10 @@ module ysyx_core #(
     );
 
 `ifdef DEBUG
-    assign putchar = dm_we_raw && (&dm_addr);
+    assign putchar = dm_we && commit_wb && (&dm_addr);
     assign c = rf_rd1[7 : 0];
 `endif
 
 endmodule
+
+`default_nettype wire

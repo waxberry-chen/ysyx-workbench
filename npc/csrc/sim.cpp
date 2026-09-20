@@ -4,6 +4,7 @@
 #include <bits/stdc++.h>
 #include "include/debug.h"
 #include "include/common.h"
+#include "include/ram_model.h"
 #include "utils/disasm.h"
 #include "memory/paddr.h"
 
@@ -49,11 +50,24 @@ uint64_t g_nr_guest_inst = 0;
 
 // simulate a single cycle
 void single_cycle() {
+  // Drive and settle inputs while clk is low so the FST contains the values
+  // sampled by the following active edge.
+  dut->clk = 0;
+  ram_model_drive();
+  dut->eval();
+  #ifdef CONFIG_FST
+    m_trace->dump(sim_time++);
+  #endif
+
+  ram_model_sample();
+
   dut->clk = 1;
   dut->eval();
   #ifdef CONFIG_FST
-    m_trace->dump(sim_time++); 
+    m_trace->dump(sim_time++);
   #endif
+  ram_model_tick();
+
   dut->clk = 0;
   #ifdef AXI
   pmem_write();
@@ -61,7 +75,7 @@ void single_cycle() {
   #endif
   dut->eval();
   #ifdef CONFIG_FST
-    m_trace->dump(sim_time++); 
+    m_trace->dump(sim_time++);
   #endif
 }
 
@@ -78,28 +92,6 @@ void reset(int n) {
   set_state();
 }
 
-bool ram_req_handshake(paddr_t *if_req_addr) {
-  // req handshake
-  dut->if_req_ready = 1;
-  if(dut->if_req_valid) {
-    *if_req_addr = dut->if_req_data;
-    return true;
-  }
-  return false;
-}
-
-bool ram_rsp_handshake(int *ram_latency, paddr_t if_req_addr) {
-  // n cycle latency
-  dut->if_rsp_valid = 0;
-  if (*ram_latency <= 0) {
-    dut->if_rsp_valid = 1;
-    pmem_read(1, if_req_addr, 4, &dut->if_rsp_data);
-    return false;
-  }
-  (*ram_latency)--;
-  return true;
-}
-
 // ** End simulation by software **
 // check if the program should end, run to ebreak
 inline bool test_break(){
@@ -108,6 +100,7 @@ inline bool test_break(){
 
 static void statistic() {
   Log("total guest instructions = %ld", g_nr_guest_inst);
+  ram_model_report();
 }
 
 // void device_update();
@@ -131,13 +124,6 @@ void cpu_exec(unsigned int n){
   if (n < CONFIG_ITRACE_MAX_INST) itrace_print = true;
   #endif
 
-  #ifdef CONFIG_RAM
-    bool req_done = false;
-    paddr_t if_req_addr = 0;
-    int ram_latency = 0;
-    srand(42);
-  #endif
-  
   while (n > 0) {    
     // Capture the instruction and its commit metadata before the active edge.
     // In the current single-cycle core, they describe the instruction that the
@@ -154,15 +140,6 @@ void cpu_exec(unsigned int n){
       sim_state.state = SIM_END;
       break;
     }
-
-    #ifdef CONFIG_RAM
-      if(req_done == false) {
-        req_done = ram_req_handshake(&if_req_addr);
-        ram_latency = rand() % 4;   // random 0-3 cycle latency
-      } else {
-        req_done = ram_rsp_handshake(&ram_latency, if_req_addr);
-      }
-    #endif
 
     // your cpu step a cycle
     single_cycle();

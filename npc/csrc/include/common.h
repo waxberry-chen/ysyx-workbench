@@ -103,6 +103,9 @@ typedef struct {
     const char *diff_so_file;
     const char *elf_file;
     const char *img_file;
+    uint32_t ram_seed;
+    uint32_t ram_max_latency;
+    uint32_t ram_ready_percent;
 } Sdb_args;
 
 extern Sdb_args sdb_args;

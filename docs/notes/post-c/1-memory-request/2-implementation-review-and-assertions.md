@@ -2,7 +2,7 @@
 
 本文记录第一版 instruction fetch request/response 实现通过 CPU tests 后，仍值得改进的部分，并说明是否需要为此改写 SystemVerilog，以及 assertion 在此类设计中的用途。
 
-> 审阅基线（2026-09-17）：最近的已提交版本为 `b272322f5fdc`（`feat(p-c-1): i ram handshake support v1`）；在此基础上，当前 working tree 还包含尚未提交的 `trap_valid`、`mret_valid` 和 data-memory read enable 的 `commit_wb` 门控修正。该 hash 用于标识被审阅的已提交基线，未提交内容仍应结合 `git status`/`git diff` 判断。
+> 审阅基线（2026-09-17）：最近的已提交版本为 `b272322f5fdc`（`feat(p-c-1): i ram handshake support v1`）。本文后续改进目前仍位于 working tree；该 hash 只标识最初被审阅的已提交基线，具体状态应结合 `git status`/`git diff` 判断。
 
 ## 1. 当前实现处于什么状态
 
@@ -12,16 +12,19 @@
 - request/response 分别使用 valid-ready 握手；
 - response handshake 时锁存指令；
 - PC、GPR、CSR、trap/mret 和 data-memory enable 均由 `commit_wb` 门控；
-- C++ memory model 可注入 0～3 cycle 的随机 response latency；
+- C++ memory model 独立位于 `npc/csrc/memory/ram_model.cpp`，使用跨 `cpu_exec()` 持久化的 `IDLE/WAIT/RESP` FSM；
+- request handshake 时锁存地址并生成 latency，backend 每笔 transaction 只读取一次；
+- response valid/data 保持到 response handshake；
+- request ready、最大 response latency 和随机 seed 均可配置并记录；
 - 修正 latency 计数器递减错误后，现有 CPU tests 可以通过。
 
-这说明 CPU 已不再依赖“组合读、当拍得到指令”的假设。但当前 C++ 模型只在现有三状态 CPU、request 永远 ready、response 一定会立即被接收等条件下工作，还不是完整、可复用的 ready-valid slave。
+CPU 已不再依赖“组合读、当拍得到指令”的假设；当前 C++ 模型也不再依赖 request 永远 ready 或 response 立即被接收。模型目前仍是 instruction port、single-outstanding slave，后续可复用同一 transaction contract 改造 load/store。
 
 ## 2. 建议改进项
 
-### P0：把 C++ RAM 写成持久化 transaction FSM
+### P0：把 C++ RAM 写成持久化 transaction FSM（已完成）
 
-当前 `req_done`、地址和 latency 都是 `cpu_exec()` 的局部变量，且 response 产生函数没有判断 `if_rsp_ready`。建议改为一个生命周期独立于单次 `cpu_exec()` 命令的对象：
+原实现的 `req_done`、地址和 latency 都是 `cpu_exec()` 局部变量，且产生 response 时没有检查 `if_rsp_ready`。现已改为生命周期独立于单次调试命令的对象：
 
 ```text
 IDLE --req_fire--> WAIT --latency_done--> RESP --rsp_fire--> IDLE
@@ -43,9 +46,9 @@ rsp_fire = if_rsp_valid && if_rsp_ready
 2. 多次执行 SDB 的 `si/c` 时，memory transaction 和随机序列不应随 `cpu_exec()` 被重新初始化；
 3. 未来把同一模型用于 load/store 或 MMIO 时，backend read/write 必须对每笔 transaction 只执行一次，不能因等待而重复产生设备副作用。
 
-### P0：明确每周期的仿真调度
+### P0：明确每周期的仿真调度（已完成）
 
-建议把每个 cycle 的顺序固定并写入注释：
+每个 cycle 已按以下顺序调度并写入注释：
 
 ```text
 memory model drive inputs
@@ -58,11 +61,19 @@ memory model drive inputs
 
 具体代码可以根据 Verilator harness 的结构调整，但必须能回答两个问题：握手在哪个 edge 被采样，以及 model 在什么时候改变 `valid/data`。不要让一次 helper 调用同时含混地完成 drive、sample 和 transaction 状态切换。
 
-当前 `single_cycle()` 只在 `clk=1; eval()` 和 `clk=0; eval()` 之后 dump。所以上升沿触发的寄存器更新和随后收敛的组合逻辑通常显示在同一 timestamp，无法从 FST 中区分 delta-cycle；而 C++ 若在前一个 low-phase dump 之后才修改 memory input，又没有先保持 `clk=0` 执行一次 `eval()/dump()`，该输入也会到上升沿后的 dump 才首次可见。若要让波形清楚呈现 setup value，应在拉高时钟前先完成 `drive -> eval -> dump`，再执行 rising-edge `eval -> dump`。
+`single_cycle()` 现在会先保持 `clk=0` 完成 `drive -> eval -> dump`，采样 handshake 后再执行 rising-edge `eval -> dump`，因此 C++ memory input 的 setup value 可在 FST 中单独观察。寄存器更新及其引起的组合逻辑收敛仍显示在同一个 post-edge timestamp，不用于区分 delta-cycle。
 
-### P1：扩大 backpressure 覆盖范围
+### P1：扩大 backpressure 覆盖范围（已完成 request 侧）
 
-当前 `if_req_ready` 恒为 1，只随机化 response latency，因此尚未验证 requester 能否在 request stall 时保持 `valid/address`。
+`if_req_ready` 现由持久化 model 随机拉低，用于验证 requester 在 request stall 时保持 `valid/address`。参数通过 NPC 命令行传入：
+
+```text
+--ram-seed=SEED
+--ram-max-latency=N
+--ram-ready-percent=N
+```
+
+默认配置为 seed 42、最大等待 3 cycles、request ready 概率 75%。仿真结束时打印 request/response 数量和两侧 stall cycles，便于确认测试确实覆盖 backpressure。当前 CPU 在 `IF_WAIT` 中始终准备接收 response，因此 response stall 计数通常为 0；model 已能保持 response，主动随机化该方向留待 IFU 解耦后进行。
 
 建议按以下顺序扩展：
 
@@ -71,15 +82,16 @@ memory model drive inputs
 3. 随机拉低 `if_req_ready`；
 4. 若未来允许 response backpressure，再随机化 CPU 的 `if_rsp_ready`。
 
-随机数发生器应初始化一次，seed 可由参数传入并打印到日志。C++ 可使用 `std::mt19937` 代替全局 `srand/rand`；固定 seed 用于复现，变化 seed 用于扩大探索范围。
+随机数发生器现使用 `std::mt19937`，仅在 model 初始化/reset 时设置 seed，不再随每次 `cpu_exec()` 重置。固定 seed 用于复现，变化 seed 用于扩大探索范围。
 
-### P1：收紧 RTL 的接口与防错约束
+### P1：收紧 RTL 的接口与防错约束（已完成）
 
-- 将 `if_req_data` 改名为 `if_req_addr`，直接表达 payload 含义；
-- reset 期间不发起 request，或在接口约定中明确 slave 必须忽略 reset 期间的信号；
-- 保留组合逻辑的默认赋值和 `case default`，避免 latch 和非法状态卡死；
-- 建议在 RTL 文件开头使用 `` `default_nettype none ``，文件末尾恢复 `` `default_nettype wire ``。这仍是传统 Verilog 写法，却能禁止拼写错误自动生成隐式 wire；此前 `csrr_wdata` 一类错误即可在编译期被发现；
-- `DEBUG` 下的 `putchar` 最好也使用最终的 store transaction/commit enable，而不是仅使用 decoder 的 raw intent。
+- [x] 将 `if_req_data` 改名为 `if_req_addr`，直接表达 payload 含义；
+- [x] reset 期间强制 CPU request/response 控制信号及 memory-model 输出无效；
+- [x] 保留组合逻辑默认赋值和 `case default`，避免 latch 和非法状态卡死；
+- [x] 在 core/FSM 使用 `` `default_nettype none ``，避免拼写错误自动生成 wire；
+- [x] `DEBUG` 下的 `putchar` 改用最终 store enable 与 `commit_wb`；
+- [x] `PC_RST` 参数用于 PC reset value，并修正 data RAM mask 常量位宽告警。
 
 ### P1：加入少量协议 assertion
 
@@ -143,7 +155,7 @@ DiffTest 检查 commit 后的架构结果
 a_if_req_stable_when_stalled:
   assert property (@(posedge clk) disable iff (!rstn)
     if_req_valid && !if_req_ready
-    |=> if_req_valid && $stable(if_req_data));
+    |=> if_req_valid && $stable(if_req_addr));
 ```
 
 逐项理解：
@@ -154,7 +166,7 @@ a_if_req_stable_when_stalled:
 - `disable iff (!rstn)`：reset 有效时不启动检查，并取消尚未完成的检查；
 - `if_req_valid && !if_req_ready`：前件，即“本拍 request 正在等待”；
 - `|=>`：非重叠蕴含；当前件在本拍成立时，后件必须在下一拍成立；
-- `$stable(if_req_data)`：本拍采样值必须和上一拍相同。
+- `$stable(if_req_addr)`：本拍采样值必须和上一拍相同。
 
 因此整条规则的含义是：若第 N 拍发生 request stall，则第 N+1 拍 `if_req_valid` 仍为 1，而且 request address 与第 N 拍一致。
 
@@ -199,14 +211,22 @@ a_no_side_effect_without_commit:
 
 虽然 `assert property` 属于 SystemVerilog Assertions（SVA），它不要求主体 RTL 同时改成 `logic/always_ff/enum` 风格。可以继续保留传统 Verilog RTL，仅在验证边界使用少量 SVA。
 
-## 7. 推荐实施顺序
+## 7. 本轮验证结果（2026-09-18）
 
-1. 将 C++ RAM 改为持久化 `IDLE/WAIT/RESP` FSM；
-2. response 必须保持到 `rsp_fire`，backend 每笔 transaction 只访问一次；
-3. seed 初始化和 transaction state 移出 `cpu_exec()`；
-4. 加入 request ready backpressure；
-5. 先添加 request/response stability 两条 assertion；
-6. 再添加“无 commit 则无架构副作用”检查；
-7. 使用固定 seed 完成 CPU tests 与系统级回归，再用多 seed 扩大验证。
+- `make lint`：通过；剩余告警为已有的未使用参数/位段，本轮已消除 data RAM mask 的位宽扩展告警。
+- 完整清理并重建 Verilator 模型：通过。
+- RV32E NPC 全量 CPU tests：35/35 通过。
+- 压力配置 `seed=1, max_latency=10, ready=30%`：`bubble-sort` 通过，产生 306846 个 request stall cycles，且 request/response 计数一致。
+- 在同一 NPC 进程中分多次执行 `si 1` 后再 `c`：正常 HIT GOOD TRAP，验证 transaction 状态和 RNG 不会因 `cpu_exec()` 返回而重置。
+- `am-tests` interrupt/yield 启动 smoke test：运行 30 s 未观察到 abort；该 case 持续运行，不作为有限时长的 pass/fail 用例。
 
-完成这些内容后，这个增量的价值不再只是“给 RAM 加随机等待”，而是建立了一份可迁移到 D-port、总线 adapter、cache 和流水线前端的 transaction contract，以及最小的周期级协议验证方法。
+当前边界：当前 CPU 在 `IF_WAIT` 始终保持 `if_rsp_ready=1`，所以尚未主动覆盖 response stall；RAM model 已具备正确保持 response 的能力。另外，现有 `npc/Makefile` 的 Verilator 目标尚未正确展开 `filelist.f` 为 RTL 依赖，所以 RTL 修改后验证时应先执行 `make clean`；该构建依赖问题不属于本轮三项改造。
+
+## 8. 后续顺序
+
+1. 添加 request/response stability 两条 assertion；
+2. 添加“无 commit 则无架构副作用”检查；
+3. IFU 解耦后主动制造 response backpressure；
+4. 使用多个固定 seed 回归，在失败时记录 seed 以便复现。
+
+完成本轮改造后，这个增量的价值不再只是“给 RAM 加随机等待”，而是建立了一份可迁移到 D-port、总线 adapter、cache 和流水线前端的 transaction contract。

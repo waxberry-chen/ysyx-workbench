@@ -1,3 +1,5 @@
+`default_nettype none
+
 module ysyx_main_fsm (
     input clk, 
     input rst_n,
@@ -33,26 +35,32 @@ always @(*) begin
     if_req_valid = 0;
     if_rsp_ready = 0;
     commit_wb    = 0;
-    case (state)
-        IF_REQ: begin
-            if_req_valid = 1;
-            if (if_req_ready) begin
-                next_state = IF_WAIT;
+    if (!rst_n) begin
+        next_state = IF_REQ;
+    end else begin
+        case (state)
+            IF_REQ: begin
+                if_req_valid = 1;
+                if (if_req_ready) begin
+                    next_state = IF_WAIT;
+                end
             end
-        end
-        IF_WAIT: begin
-            if_rsp_ready = 1;
-            if (if_rsp_valid) begin
-                next_state = EXEC;
+            IF_WAIT: begin
+                if_rsp_ready = 1;
+                if (if_rsp_valid) begin
+                    next_state = EXEC;
+                end
             end
-        end
-        EXEC: begin
-            commit_wb = 1;
-            next_state = IF_REQ;
-        end
-        default: next_state = IF_REQ;
-    endcase
+            EXEC: begin
+                commit_wb = 1;
+                next_state = IF_REQ;
+            end
+            default: next_state = IF_REQ;
+        endcase
+    end
 end
 
 
 endmodule
+
+`default_nettype wire

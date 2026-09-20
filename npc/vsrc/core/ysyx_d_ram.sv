@@ -17,9 +17,9 @@ module
     import "DPI-C" function void pmem_write(input bit we, input int addr, input int mask, input int wword);
 
     always @(*) begin
-        pmem_read(re, addr, 30'H1 << mask, rd);
+        pmem_read(re, addr, 32'H1 << mask, rd);
     end
     always @(posedge clk) begin
-        if(we) pmem_write(we, addr, 30'H1 << mask, wd);
+        if(we) pmem_write(we, addr, 32'H1 << mask, wd);
     end
 endmodule

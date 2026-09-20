@@ -198,7 +198,26 @@ Sdb_args sdb_args = {
   .diff_so_file = NULL, 
   .elf_file = NULL,
   .img_file = NULL,
+  .ram_seed = 42,
+  .ram_max_latency = 3,
+  .ram_ready_percent = 75,
 };
+
+enum {
+  OPT_RAM_SEED = 256,
+  OPT_RAM_MAX_LATENCY,
+  OPT_RAM_READY_PERCENT,
+};
+
+static uint32_t parse_u32_option(const char *name, const char *value) {
+  char *end = NULL;
+  unsigned long parsed = strtoul(value, &end, 0);
+  if (value[0] == '\0' || end == NULL || *end != '\0' || parsed > UINT32_MAX) {
+    fprintf(stderr, "Invalid value for %s: %s\n", name, value);
+    exit(1);
+  }
+  return (uint32_t)parsed;
+}
 
 /* the parse_args fuction should place IMG (img_file) at last */
 static int parse_args(int argc, char *argv[]) {
@@ -209,6 +228,9 @@ static int parse_args(int argc, char *argv[]) {
     {"diff"     , required_argument, NULL, 'd'},
     {"port"     , required_argument, NULL, 'p'},
     {"elf"      , required_argument, NULL, 'e'},
+    {"ram-seed" , required_argument, NULL, OPT_RAM_SEED},
+    {"ram-max-latency", required_argument, NULL, OPT_RAM_MAX_LATENCY},
+    {"ram-ready-percent", required_argument, NULL, OPT_RAM_READY_PERCENT},
     {"help"     , no_argument      , NULL, 'h'},
     {0          , 0                , NULL,  0 },
   };
@@ -222,6 +244,19 @@ static int parse_args(int argc, char *argv[]) {
       case 'l': sdb_args.log_file = optarg; break;
       case 'd': sdb_args.diff_so_file = optarg; break;
       case 'e': sdb_args.elf_file = optarg; break;
+      case OPT_RAM_SEED:
+        sdb_args.ram_seed = parse_u32_option("--ram-seed", optarg);
+        break;
+      case OPT_RAM_MAX_LATENCY:
+        sdb_args.ram_max_latency = parse_u32_option("--ram-max-latency", optarg);
+        break;
+      case OPT_RAM_READY_PERCENT:
+        sdb_args.ram_ready_percent = parse_u32_option("--ram-ready-percent", optarg);
+        if (sdb_args.ram_ready_percent == 0 || sdb_args.ram_ready_percent > 100) {
+          fprintf(stderr, "--ram-ready-percent must be in [1, 100]\n");
+          exit(1);
+        }
+        break;
       case 1: sdb_args.img_file = optarg; return 0; // at last is img_file
       default:
         printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
@@ -230,6 +265,9 @@ static int parse_args(int argc, char *argv[]) {
         printf("\t-d,--diff=REF_SO        run DiffTest with reference REF_SO\n");
         printf("\t-p,--port=PORT          run DiffTest with port PORT\n");
         printf("\t-e,--elf=FILE           read in elf file\n");
+        printf("\t--ram-seed=SEED         set the reproducible RAM random seed\n");
+        printf("\t--ram-max-latency=N     set maximum response wait cycles\n");
+        printf("\t--ram-ready-percent=N   set request ready probability [1, 100]\n");
         printf("\n");
         exit(0);
     }

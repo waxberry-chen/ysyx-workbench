@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "./include/common.h"
 #include "./include/debug.h"
+#include "./include/ram_model.h"
 #include "./utils/disasm.h"
 
 // ********** Hardware **********
@@ -23,6 +24,8 @@ int main(int argc, char *argv[]) {
   printf(ANSI_FG_YELLOW "Hello, ysyx!\n" ANSI_NONE);
   
   init_sdb(argc, argv);
+  init_ram_model(sdb_args.ram_seed, sdb_args.ram_max_latency,
+                 sdb_args.ram_ready_percent);
   /* load img into memory */
   printf(ANSI_FG_GREEN  "Loading img: %s\n" ANSI_NONE , sdb_args.img_file);
   uint64_t size = load_img(sdb_args.img_file); 
