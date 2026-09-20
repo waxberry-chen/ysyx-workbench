@@ -2,8 +2,7 @@
 
 module ysyx_core #(
         parameter PC_RST = 32'H80000000,
-        parameter I_CACHE_DEPTH = 8,
-        parameter D_CACHE_DEPTH = 8
+        parameter I_CACHE_DEPTH = 8
     )
     (
         input           clk, rstn,
@@ -55,10 +54,10 @@ module ysyx_core #(
     wire        [31 : 0]                        alu_res;
     wire                                        br;
     wire        [31 : 0]                        pc_add4, pc_jal_br, pc_jalr;
-    wire        [31 : 0]                        dm_rd_raw, dm_rd, dm_wd;
-    wire        [31 : 0]                        dm_addr;
-    wire                                        dm_we, dm_re;
-    wire [1:0] mask;    
+    wire        [31 : 0]                        dm_rd;
+    wire                                        dm_re;
+    wire                                        lsu_op_valid, lsu_op_ready;
+    wire                                        lsu_rsp_valid, lsu_rsp_ready;
 
     // single cycle, always commit
     // assign commit_wb = 1;
@@ -85,11 +84,11 @@ module ysyx_core #(
         .if_req_ready 	(if_req_ready  ),
         .if_rsp_valid 	(if_rsp_valid  ),
         .if_rsp_ready 	(if_rsp_ready  ),
-        .d_access       (dm_re | dm_we ),
-        .d_req_valid    (d_req_valid   ),
-        .d_req_ready    (d_req_ready   ),
-        .d_rsp_valid    (d_rsp_valid   ),
-        .d_rsp_ready    (d_rsp_ready   ),
+        .lsu_access     (dm_re | dm_we_raw),
+        .lsu_op_valid   (lsu_op_valid  ),
+        .lsu_op_ready   (lsu_op_ready  ),
+        .lsu_rsp_valid  (lsu_rsp_valid ),
+        .lsu_rsp_ready  (lsu_rsp_ready ),
         .commit_wb    	(commit_wb     )
     );
     
@@ -221,39 +220,27 @@ module ysyx_core #(
     // decide next pc
     assign pc_next = (jal | br) ? pc_jal_br : (jalr ? pc_jalr : (trap_valid ? trap_target: (mret_valid ? mret_target : pc_add4)));
 
-    ysyx_d_ram_ctrl #(
-        .DEPTH(D_CACHE_DEPTH)
-    ) d_ram_ctrl (
-        .addr_raw(alu_res),
-        .wd_raw(rf_rd1),
-        .rd_raw(dm_rd_raw),
-        .we_raw(dm_we_raw),
-        .dm_type(dm_type),
-        .addr(dm_addr),
-        .wd(dm_wd),
-        .rd(dm_rd),
-        .we(dm_we),
-        .mask(mask)
-    );
-
-    assign d_req_write = dm_we;
-    assign d_req_addr  = dm_addr;
-    assign d_req_size  = mask;
-    assign d_req_wdata = dm_wd;
-
-    wire d_rsp_fire;
-    assign d_rsp_fire = d_rsp_valid & d_rsp_ready;
-
-    // D_WAIT consumes the response; D_COMMIT performs architectural
-    // writeback on the following edge, so retain the returned load data.
-    ysyx_gnrl_dfflr #(
-        .DW(32)
-    ) u_d_rsp_data (
-        .lden   (d_rsp_fire),
-        .dnxt   (d_rsp_data),
-        .qout   (dm_rd_raw),
-        .clk    (clk),
-        .rst_n  (rstn)
+    ysyx_lsu u_ysyx_lsu (
+        .clk         (clk          ),
+        .rst_n       (rstn         ),
+        .op_valid    (lsu_op_valid ),
+        .op_ready    (lsu_op_ready ),
+        .op_write    (dm_we_raw    ),
+        .op_addr     (alu_res      ),
+        .op_type     (dm_type      ),
+        .op_wdata    (rf_rd1       ),
+        .rsp_valid   (lsu_rsp_valid),
+        .rsp_ready   (lsu_rsp_ready),
+        .rsp_rdata   (dm_rd        ),
+        .d_req_valid (d_req_valid  ),
+        .d_req_ready (d_req_ready  ),
+        .d_req_write (d_req_write  ),
+        .d_req_addr  (d_req_addr   ),
+        .d_req_size  (d_req_size   ),
+        .d_req_wdata (d_req_wdata  ),
+        .d_rsp_valid (d_rsp_valid  ),
+        .d_rsp_ready (d_rsp_ready  ),
+        .d_rsp_data  (d_rsp_data   )
     );
 
     ysyx_gnrl_data_mux #(
@@ -266,7 +253,7 @@ module ysyx_core #(
     );
 
 `ifdef DEBUG
-    assign putchar = dm_we && commit_wb && (&dm_addr);
+    assign putchar = dm_we_raw && commit_wb && (&alu_res);
     assign c = rf_rd1[7 : 0];
 `endif
 

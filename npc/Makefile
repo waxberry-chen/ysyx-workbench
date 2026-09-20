@@ -29,7 +29,7 @@ VSRC		:= $(abspath $(shell sed -e '/^[[:space:]]*\#/d' -e '/^[[:space:]]*$$/d' $
 # NEMUISO 	:= $(NEMU_HOME)/build/riscv32-nemu-interpreter-so
 
 ### Verilator Flags ###
-VFLAGS 				= --trace --cc -stats --exe -O3 --threads-dpi all \
+VFLAGS 				= --trace --cc -stats --exe --assert -O3 --threads-dpi all \
 						-F $(VSRC_PATH) \
 						-Mdir $(OBJ_DIR) \
 						-DDIFF \
@@ -47,6 +47,16 @@ LINT_FLAGS			= --lint-only --sv -Wall -Wno-fatal \
 .PHONY: lint
 lint:
 	verilator $(LINT_FLAGS)
+
+LSU_TEST_OBJ := $(OBJ_DIR)/lsu-test
+
+.PHONY: lsu-test
+lsu-test:
+	verilator --binary --timing --assert --sv -Wall -Wno-fatal \
+		-Wno-BLKSEQ -Wno-SYNCASYNCNET -Wno-TIMESCALEMOD \
+		--top-module ysyx_lsu_tb --Mdir $(LSU_TEST_OBJ) \
+		$(VSRC_DIR)/ysyx_lsu.sv $(NPC_HOME)/tests/ysyx_lsu_tb.sv
+	$(LSU_TEST_OBJ)/Vysyx_lsu_tb
 
 # Re-run one deterministic image under several instruction-memory timing
 # schedules.  Per-seed logs are build artifacts under build/seed-logs/.

@@ -222,13 +222,13 @@ Gate：基线结果和 seed 可复现；当前工作独立提交。
 
 目标：core 不再直接调用 DPI data RAM，load/store 真正支持可变延迟。
 
-> Checkpoint 1（2026-09-20）已完成：core 顶层已暴露简单 `d_req/d_rsp`，C++ 使用独立 data transaction FSM，旧 `ysyx_d_ram` DPI module 已移除；现有集中式 FSM 暂时扩展为 `D_REQ/D_WAIT/D_COMMIT`。该状态可作为独立提交点，但 **Phase 1 尚未完成**，下一提交才抽取 `ysyx_lsu` 并收缩 backend FSM。详见 [`dev-log.md`](dev-log.md#2026-09-20phase-1-checkpoint-1data-transaction-boundary)。
+> Checkpoint 1（2026-09-20）建立了 core 顶层 `d_req/d_rsp` 和独立 C++ data transaction FSM。Checkpoint 2 已进一步抽取 single-outstanding `ysyx_lsu`，backend 不再观察外部 memory handshake；Phase 1 至此完成。详见 [`dev-log.md`](dev-log.md)。
 
 1. [x] 在 `ysyx_core` 顶层增加简单 `d_req/d_rsp` 端口；扩展 C++ RAM model 为独立 I/D transaction FSM。
-2. 实现 `ysyx_lsu`，迁入 AGU、wstrb、load extension 和单 outstanding 状态。
-3. backend 在 LSU response 前保存当前 instruction context；load/store 只在成功 response 后 commit。
+2. [x] 实现 `ysyx_lsu`：接收 backend 已计算的 effective address，内部保存 direction/address/size/wdata，完成 request holding、load extension、response buffering 和 single-outstanding control。当前普通 ALU 继续兼任 AGU 加法器，AXI byte strobe 留给 Phase 4 adapter。
+3. [x] backend 在 LSU response 前保持当前 instruction context；load/store 只在成功 response 后 commit。
 4. [x] 删除 core 内 `ysyx_d_ram` 实例；DPI 只留在 harness/model 一侧。
-5. [ ] data request 已覆盖随机 backpressure，response 已覆盖随机 latency；response backpressure 与 LSU response buffer 一并在下一 checkpoint 验证。
+5. [x] data request 覆盖随机 backpressure，memory response 覆盖随机 latency；standalone LSU test 另行覆盖 backend 暂不接收 result 时的 response-buffer holding。
 
 最小 assertions：
 
@@ -239,6 +239,8 @@ Gate：基线结果和 seed 可复现；当前工作独立提交。
 - load/store 未完成时不得 commit。
 
 Gate：所有 CPU tests 与 DiffTest 在 I/D 独立随机延迟下通过；MMIO 输出不重不漏。
+
+完成状态（2026-09-20）：lint、LSU directed test、35/35 CPU tests、固定/压力 seed、hello UART、yield-os/CSR DiffTest 和 commit-trace 等价性均通过。由于 LSU 在仅有一笔 outstanding 且 response buffer 为空时始终接收 memory response，系统级 `d_rsp_valid && !d_rsp_ready` 预期为 0；真正被 backpressure 的是 LSU 到 backend 的 buffered result，这已由 directed test 覆盖。
 
 ### Phase 2：建立 elastic frontend/backend
 

@@ -247,3 +247,57 @@ Phase 0 和 checkpoint 1 的完整 `add` commit trace 逐字节相同，SHA-256 
 5. 再次运行同一 commit trace、35 CPU tests、MMIO workload 和多 seed regression。
 
 因此本 checkpoint 值得单独提交，但不能把整个 Phase 1 标记为完成。
+
+## 2026-09-20：Phase 1 checkpoint 2——single-outstanding LSU
+
+### 1. 提交边界与结论
+
+本轮基于 `93a1189 refactor(npc): expose data request response port`，完成可独立提交的 LSU transaction owner：
+
+```text
+backend/main FSM -- op valid/ready --> ysyx_lsu -- d_req/d_rsp --> RAM model
+                 <-- result v/r -----
+```
+
+- 新增 `ysyx_lsu`，在 operation handshake 时锁存 `{write, address, type, wdata}`；
+- LSU 独自管理 `REQ -> WAIT -> RESP` 生命周期，外部 request stall 时 payload 不依赖仍在变化的组合信号；
+- LSU 在 memory response handshake 时完成 load sign/zero extension，并将结果缓冲到 backend 接收；
+- 原 `ysyx_d_ram_ctrl` 删除，其 size 和 load-extension 职责迁入 LSU；
+- `ysyx_main_fsm` 从 `IF_REQ/IF_WAIT/EXEC/D_REQ/D_WAIT/D_COMMIT` 收缩为 `IF_REQ/IF_WAIT/EXEC/LSU_WAIT`，只发起 LSU operation 并等待完成，不再观察 `d_req/d_rsp`。
+
+当前普通 ALU 仍计算 `base + immediate`，即兼任简单 AGU；这与参考核“EXU/AGU 形成请求、LSU 拥有 transaction”的边界一致。简单 transaction 的 size 仍用 `log2(bytes)` 表示，AXI byte strobe 在 Phase 4 adapter 中生成。
+
+### 2. Commit 时序
+
+memory response 先被 LSU 寄存到 `RESP` 状态；下一周期 `lsu_rsp_valid` 已在 active edge 前稳定，backend 同时拉高 `lsu_rsp_ready` 与 `commit_wb`。该 edge 完成 GPR/PC architectural update 和 LSU result handshake。
+
+因此无需 checkpoint 1 的独立 `D_COMMIT` 状态，也没有改变 harness 的约定：`cpu_exec()` 仍可在调用 `single_cycle()` 前采样即将 commit 的 PC、instruction 和 MMIO 属性。指定配置下 `add` 的 cycle 数仍为 6639，说明本次模块抽取没有增加额外气泡。
+
+### 3. 防错与定向验证
+
+NPC Verilator 构建已启用 `--assert`。LSU 内加入三项接口 invariant：
+
+1. external request 被 stall 时，`valid` 与全部 payload 必须保持；
+2. backend result 被 stall 时，`valid` 与 read data 必须保持；
+3. 没有处于 external response-wait 状态时，不允许 memory 返回 response。
+
+backend FSM 另行断言 memory instruction 只有在 `lsu_rsp_valid` 时才能 commit；single-outstanding 则由 LSU 的互斥 `IDLE/REQ/WAIT/RESP` 状态编码直接保证。
+
+新增 `make -C npc lsu-test` standalone test，显式制造两周期 request backpressure、两周期 backend response backpressure，并检查 signed-byte load extension、第二笔 store payload 和 single-outstanding 生命周期。
+
+这里系统统计中的 data response stall 仍为 0 是设计结果：单 outstanding LSU 在等待 external response 时，其一项 response buffer 必然为空，所以 `d_rsp_ready=1`；memory response 一旦握手，就由 LSU 缓冲并允许 backend 对 result 施加 backpressure。无需为了产生非零计数而故意拒收已经到达的 memory response。
+
+### 4. 验证记录
+
+| Item | Configuration | Result |
+| --- | --- | --- |
+| RTL lint | `make -C npc lint` | 通过，仅有既存 unused parameter/signal warning |
+| LSU directed test | `make -C npc lsu-test` | PASS；协议 assertions 启用 |
+| RV32E CPU tests | 默认 seed 42/max-latency 3/ready 75% | 35/35 PASS，DiffTest ON，assertions ON |
+| fixed-seed add | seeds 1～10/max-latency 7/ready 50% | 全部 GOOD TRAP |
+| unaligned stress | seeds 1～3/max-latency 10/ready 30% | 全部 GOOD TRAP |
+| hello/UART | `mainargs=I-love-ysyx` | 输出完整且 GOOD TRAP |
+| yield-os/CSR DiffTest | 6 s observation window | 持续交替输出 `AB`，无 mismatch/assertion；timeout 124 为主动终止 |
+| architectural trace | `add`, seed 42/max-latency 3/ready 75% | 1095 commits；SHA-256 仍为 `4a87442ab99f4b4d6e362ee8f38dd67c2299954785b211081f051fc03eb4af75` |
+
+Phase 1 至此达到计划 gate。下一提交点进入 Phase 2A：先定义 frontend instruction-context 接口，再抽取 IFU 和最小 IFQ；不要继续在现有 `ysyx_main_fsm` 中增加 fetch 状态。
