@@ -8,10 +8,9 @@
 
 ## 0. 结论与启动门槛
 
-当前功能基线足以开始重构，无需重做 C 阶段。但在大量修改 RTL 前有两个必须先处理的工程阻塞：
+当前功能基线足以开始重构，无需重做 C 阶段。在大量修改 RTL 前，剩余的立即门槛是将当前 RAM model、backpressure、RTL 门控与文档形成可回退的 baseline commit，不与 IFU/LSU 重构混在同一批 diff 中。
 
-1. 将当前 RAM model、backpressure、RTL 门控与文档形成可回退的 baseline commit，不与 IFU/LSU 重构混在同一批 diff 中。
-2. 修正 `npc/Makefile` 中 Verilator 目标的 RTL 依赖。当前 `$(VSRC)` 未由 `filelist.f` 展开，修改 `.sv` 后可能错误显示 up to date；重构期间不应依赖人工记忆每次执行 `make clean`。
+RTL build dependency 问题已于 2026-09-20 修复：`npc/Makefile` 现会将 `filelist.f` 展开为 `$(VSRC)`，Verilator binary 同时依赖所有 RTL source 与 `filelist.f` 本身，不再需要为了使 RTL 变更生效而手动 `make clean`。
 
 Phase 0 同时应增加 total-cycle 计数，记录 cycles、committed instructions、CPI、主要 stall 和固定 seed commit trace。这不阻止结构重构，但在声称“微架构优化”前必须具备，否则只能证明功能等价，无法量化收益。
 
@@ -147,7 +146,7 @@ PC、GPR、CSR、store、trap/mret 的最终 enable 必须由 commit/transaction
 
 ### Phase 0：冻结基线
 
-1. 修正 RTL build dependency，用一次 `.sv` touch 验证会触发重建。
+1. [x] 修正 RTL build dependency；已用 Make `-W` 分别模拟 `.sv` 与 `filelist.f` 更新，均会触发 Verilator recipe。
 2. 完成当前 working tree 的 lint、CPU tests、hello、RTC、yield-os、CSR DiffTest 与压力 seed 回归。
 3. 增加并记录 cycles/instructions/CPI/stall 基线。
 4. 提交当前变更，后续每个 phase 使用独立小提交。

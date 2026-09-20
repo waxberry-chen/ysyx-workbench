@@ -220,7 +220,7 @@ a_no_side_effect_without_commit:
 - 在同一 NPC 进程中分多次执行 `si 1` 后再 `c`：正常 HIT GOOD TRAP，验证 transaction 状态和 RNG 不会因 `cpu_exec()` 返回而重置。
 - `am-tests` interrupt/yield 启动 smoke test：运行 30 s 未观察到 abort；该 case 持续运行，不作为有限时长的 pass/fail 用例。
 
-当前边界：当前 CPU 在 `IF_WAIT` 始终保持 `if_rsp_ready=1`，所以尚未主动覆盖 response stall；RAM model 已具备正确保持 response 的能力。另外，现有 `npc/Makefile` 的 Verilator 目标尚未正确展开 `filelist.f` 为 RTL 依赖，所以 RTL 修改后验证时应先执行 `make clean`；该构建依赖问题不属于本轮三项改造。
+当前边界：当前 CPU 在 `IF_WAIT` 始终保持 `if_rsp_ready=1`，所以尚未主动覆盖 response stall；RAM model 已具备正确保持 response 的能力。`npc/Makefile` 已于 2026-09-20 将 `filelist.f` 展开为 RTL 依赖，修改 RTL 后不再需要额外执行 `make clean` 才能触发 Verilator 重建。
 
 ## 8. 后续顺序
 

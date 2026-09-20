@@ -10,13 +10,16 @@ OBJ_DIR		:= $(abspath ./build)
 CSRC_DIR 	:= $(abspath ./csrc)
 VSRC_DIR	:= $(abspath ./vsrc/core)
 REWRITE_MK 	:= $(abspath ./scripts/rewrite.mk)
+VSRC_PATH	:= $(abspath ./$(RTL_LIST))
 
 VERILOG_TOP := $(VSRC_DIR)/$(TOP_MODULE).v
 VBIN		:= $(OBJ_DIR)/$(addprefix V, $(basename $(notdir $(VERILOG_TOP)))) 	# generate VBIN
-VSRC_PATH	:= $(abspath ./$(RTL_LIST))
 
 CINC_DIR 	:= -CFLAGS -I$(CSRC_DIR)/include -I$(NEMU_HOME)/tools/capstone/repo/include
 CSRC 		:= $(shell find $(CSRC_DIR) -name "*.c*")
+# filelist.f is currently a source-only list.  Expand it so RTL edits are real
+# prerequisites of the Verilator binary instead of relying on `make clean`.
+VSRC		:= $(abspath $(shell sed -e '/^[[:space:]]*\#/d' -e '/^[[:space:]]*$$/d' $(VSRC_PATH)))
 
 ### Difftest ###
 # NEMUISO 	:= $(NEMU_HOME)/build/riscv32-nemu-interpreter-so
