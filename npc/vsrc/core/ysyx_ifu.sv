@@ -28,7 +28,8 @@ module ysyx_ifu #(
     output     [31:0]  imem_req_addr,
     input              imem_rsp_valid,
     output             imem_rsp_ready,
-    input      [31:0]  imem_rsp_data
+    input      [31:0]  imem_rsp_data,
+    input              imem_rsp_error
 );
 
 localparam [1:0] REQ  = 2'd0,
@@ -41,8 +42,8 @@ reg [31:0] request_pc_q;
 
 wire        ifq_in_valid;
 wire        ifq_in_ready;
-wire [63:0] ifq_in_data;
-wire [63:0] ifq_out_data;
+wire [64:0] ifq_in_data;
+wire [64:0] ifq_out_data;
 wire        req_fire;
 wire        rsp_fire;
 
@@ -58,10 +59,10 @@ assign imem_rsp_ready = (state_q == DROP) |
 assign rsp_fire       = imem_rsp_valid & imem_rsp_ready;
 
 assign ifq_in_valid = (state_q == WAIT) & imem_rsp_valid & (~redirect_valid);
-assign ifq_in_data  = {request_pc_q, imem_rsp_data};
+assign ifq_in_data  = {imem_rsp_error, request_pc_q, imem_rsp_data};
 
 ysyx_gnrl_fifo #(
-    .DW   (64),
+    .DW   (65),
     .DEPTH(IFQ_DEPTH)
 ) u_ifq (
     .in_valid (ifq_in_valid),
@@ -75,9 +76,9 @@ ysyx_gnrl_fifo #(
     .rst_n    (rst_n)
 );
 
+assign if_ctx_error      = ifq_out_data[64];
 assign if_ctx_pc         = ifq_out_data[63:32];
 assign if_ctx_inst       = ifq_out_data[31:0];
-assign if_ctx_error      = 1'b0;
 assign if_ctx_pred_taken = 1'b0;
 assign if_ctx_pred_npc   = if_ctx_pc + 32'd4;
 

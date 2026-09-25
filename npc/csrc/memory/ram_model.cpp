@@ -6,6 +6,7 @@
 
 #include "Vysyx_core.h"
 #include "common.h"
+#include "paddr.h"
 
 extern Vysyx_core *dut;
 
@@ -28,6 +29,7 @@ class InstructionRamModel {
       dut->imem_req_ready = 0;
       dut->imem_rsp_valid = 0;
       dut->imem_rsp_data = 0;
+      dut->imem_rsp_error = 0;
       return;
     }
 
@@ -35,6 +37,7 @@ class InstructionRamModel {
         state_ == IDLE && (rng_() % 100u) < ready_percent_;
     dut->imem_rsp_valid = state_ == RESP;
     dut->imem_rsp_data = response_data_;
+    dut->imem_rsp_error = response_error_;
   }
 
   // Capture the settled handshake inputs before the active edge.  tick()
@@ -96,9 +99,10 @@ class InstructionRamModel {
 
   void report() const {
     Log("I-RAM transactions: requests = %" PRIu64 ", responses = %" PRIu64
+        ", errors = %" PRIu64
         ", request stall cycles = %" PRIu64
         ", response stall cycles = %" PRIu64,
-        request_count_, response_count_, request_stall_cycles_,
+        request_count_, response_count_, error_count_, request_stall_cycles_,
         response_stall_cycles_);
   }
 
@@ -109,9 +113,11 @@ class InstructionRamModel {
     state_ = IDLE;
     request_addr_ = 0;
     response_data_ = 0;
+    response_error_ = false;
     latency_left_ = 0;
     request_count_ = 0;
     response_count_ = 0;
+    error_count_ = 0;
     request_stall_cycles_ = 0;
     response_stall_cycles_ = 0;
     rng_.seed(seed_);
@@ -125,7 +131,15 @@ class InstructionRamModel {
   void prepare_response() {
     // Access the backend exactly once per accepted request.  RESP may then be
     // held for an arbitrary number of cycles without repeating the read.
-    pmem_read(true, request_addr_, 4, &response_data_);
+    response_error_ = !in_pmem_range(request_addr_, 4);
+    if (response_error_) {
+      response_data_ = 0;
+      error_count_++;
+      Log("I-RAM access error: addr = " FMT_PADDR ", size = 4",
+          request_addr_);
+    } else {
+      response_data_ = host_read(guest_to_host(request_addr_), 4);
+    }
   }
 
   State state_ = IDLE;
@@ -134,9 +148,11 @@ class InstructionRamModel {
   uint32_t ready_percent_ = 75;
   paddr_t request_addr_ = 0;
   word_t response_data_ = 0;
+  bool response_error_ = false;
   uint32_t latency_left_ = 0;
   uint64_t request_count_ = 0;
   uint64_t response_count_ = 0;
+  uint64_t error_count_ = 0;
   uint64_t request_stall_cycles_ = 0;
   uint64_t response_stall_cycles_ = 0;
   std::mt19937 rng_;
@@ -166,6 +182,7 @@ class DataRamModel {
       dut->dmem_req_ready = 0;
       dut->dmem_rsp_valid = 0;
       dut->dmem_rsp_data = 0;
+      dut->dmem_rsp_error = 0;
       return;
     }
 
@@ -173,6 +190,7 @@ class DataRamModel {
         state_ == IDLE && (rng_() % 100u) < ready_percent_;
     dut->dmem_rsp_valid = state_ == RESP;
     dut->dmem_rsp_data = response_data_;
+    dut->dmem_rsp_error = response_error_;
   }
 
   void sample() {
@@ -265,10 +283,11 @@ class DataRamModel {
     Log("D-RAM transactions: requests = %" PRIu64
         " (loads = %" PRIu64 ", stores = %" PRIu64 ")"
         ", responses = %" PRIu64
+        ", errors = %" PRIu64
         ", request stall cycles = %" PRIu64
         ", response stall cycles = %" PRIu64,
         request_count_, load_count_, store_count_, response_count_,
-        request_stall_cycles_, response_stall_cycles_);
+        error_count_, request_stall_cycles_, response_stall_cycles_);
   }
 
  private:
@@ -277,9 +296,11 @@ class DataRamModel {
   void reset() {
     state_ = IDLE;
     response_data_ = 0;
+    response_error_ = false;
     latency_left_ = 0;
     request_count_ = 0;
     response_count_ = 0;
+    error_count_ = 0;
     load_count_ = 0;
     store_count_ = 0;
     request_stall_cycles_ = 0;
@@ -296,10 +317,18 @@ class DataRamModel {
   void prepare_response() {
     const uint32_t size_bytes = 1u << request_size_;
     if (request_write_) {
-      paddr_write(request_addr_, size_bytes, request_wdata_);
       response_data_ = 0;
+      response_error_ =
+          !paddr_try_write(request_addr_, size_bytes, request_wdata_);
     } else {
-      response_data_ = paddr_read(request_addr_, size_bytes);
+      response_error_ =
+          !paddr_try_read(request_addr_, size_bytes, &response_data_);
+      if (response_error_) response_data_ = 0;
+    }
+    if (response_error_) {
+      error_count_++;
+      Log("D-RAM %s access error: addr = " FMT_PADDR ", size = %u",
+          request_write_ ? "store" : "load", request_addr_, size_bytes);
     }
   }
 
@@ -312,9 +341,11 @@ class DataRamModel {
   uint32_t request_size_ = 0;
   word_t request_wdata_ = 0;
   word_t response_data_ = 0;
+  bool response_error_ = false;
   uint32_t latency_left_ = 0;
   uint64_t request_count_ = 0;
   uint64_t response_count_ = 0;
+  uint64_t error_count_ = 0;
   uint64_t load_count_ = 0;
   uint64_t store_count_ = 0;
   uint64_t request_stall_cycles_ = 0;

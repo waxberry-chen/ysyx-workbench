@@ -10,6 +10,14 @@ module ysyx_core #(
     output     [31:0]  commit_inst,
     output             commit_valid,
     output             commit_is_mmio,
+    output             commit_exception,
+    output     [31:0]  commit_exception_cause,
+    output             commit_redirect_valid,
+    output     [1:0]   commit_redirect_reason,
+    output             commit_mem_valid,
+    output             commit_mem_write,
+    output     [31:0]  commit_mem_addr,
+    output             commit_mem_error,
 
     output             imem_req_valid,
     input              imem_req_ready,
@@ -17,6 +25,7 @@ module ysyx_core #(
     input              imem_rsp_valid,
     output             imem_rsp_ready,
     input      [31:0]  imem_rsp_data,
+    input              imem_rsp_error,
 
     output             dmem_req_valid,
     input              dmem_req_ready,
@@ -26,7 +35,8 @@ module ysyx_core #(
     output     [31:0]  dmem_req_wdata,
     input              dmem_rsp_valid,
     output             dmem_rsp_ready,
-    input      [31:0]  dmem_rsp_data
+    input      [31:0]  dmem_rsp_data,
+    input              dmem_rsp_error
 
 `ifdef DEBUG
     ,
@@ -34,6 +44,11 @@ module ysyx_core #(
     output     [7:0]   c
 `endif
 );
+
+localparam [1:0] REDIRECT_NONE      = 2'd0;
+localparam [1:0] REDIRECT_CONTROL   = 2'd1;
+localparam [1:0] REDIRECT_EXCEPTION = 2'd2;
+localparam [1:0] REDIRECT_MRET      = 2'd3;
 
 // Frontend instruction context.
 wire        if_ctx_valid;
@@ -114,9 +129,6 @@ wire [31:0] exu_commit_inst;
 wire [31:0] commit_npc;
 wire        redirect_valid;
 wire [31:0] redirect_target;
-wire        commit_mem_valid;
-wire        commit_mem_write;
-wire [31:0] commit_mem_addr;
 wire [31:0] commit_mem_wdata;
 
 // CSR architectural interface.
@@ -141,6 +153,7 @@ wire [31:0] lsu_req_wdata;
 wire        lsu_rsp_valid;
 wire        lsu_rsp_ready;
 wire [31:0] lsu_rsp_rdata;
+wire        lsu_rsp_error;
 
 ysyx_gnrl_dfflrs #(
     .DW (32),
@@ -176,7 +189,8 @@ ysyx_ifu #(
     .imem_req_addr    (imem_req_addr),
     .imem_rsp_valid   (imem_rsp_valid),
     .imem_rsp_ready   (imem_rsp_ready),
-    .imem_rsp_data    (imem_rsp_data)
+    .imem_rsp_data    (imem_rsp_data),
+    .imem_rsp_error   (imem_rsp_error)
 );
 
 ysyx_idu u_decoder (
@@ -361,6 +375,7 @@ ysyx_exu u_exu (
     .lsu_rsp_valid    (lsu_rsp_valid),
     .lsu_rsp_ready    (lsu_rsp_ready),
     .lsu_rsp_rdata    (lsu_rsp_rdata),
+    .lsu_rsp_error    (lsu_rsp_error),
     // commit pack
     .commit_valid     (commit_valid),
     .commit_pc        (exu_commit_pc),
@@ -371,6 +386,9 @@ ysyx_exu u_exu (
     .commit_mem_write (commit_mem_write),
     .commit_mem_addr  (commit_mem_addr),
     .commit_mem_wdata (commit_mem_wdata),
+    .commit_mem_error (commit_mem_error),
+    .commit_exception (commit_exception),
+    .commit_exception_cause(commit_exception_cause),
     // redirect channel 
     .redirect_valid   (redirect_valid),
     .redirect_target  (redirect_target)
@@ -407,6 +425,7 @@ ysyx_lsu u_lsu (
     .rsp_valid      (lsu_rsp_valid),
     .rsp_ready      (lsu_rsp_ready),
     .rsp_rdata      (lsu_rsp_rdata),
+    .rsp_error      (lsu_rsp_error),
 
     .dmem_req_valid (dmem_req_valid),
     .dmem_req_ready (dmem_req_ready),
@@ -416,13 +435,20 @@ ysyx_lsu u_lsu (
     .dmem_req_wdata (dmem_req_wdata),
     .dmem_rsp_valid (dmem_rsp_valid),
     .dmem_rsp_ready (dmem_rsp_ready),
-    .dmem_rsp_data  (dmem_rsp_data)
+    .dmem_rsp_data  (dmem_rsp_data),
+    .dmem_rsp_error (dmem_rsp_error)
 );
 
 assign if_ctx_fire = if_ctx_valid & if_ctx_ready;
+assign commit_redirect_valid = redirect_valid;
+assign commit_redirect_reason = commit_exception ? REDIRECT_EXCEPTION :
+                                (exu_mret_commit ? REDIRECT_MRET :
+                                (redirect_valid ? REDIRECT_CONTROL :
+                                                  REDIRECT_NONE));
 
 `ifdef DEBUG
-assign putchar = commit_valid && commit_mem_write && (&commit_mem_addr);
+assign putchar = commit_valid && commit_mem_write && !commit_mem_error &&
+                 (&commit_mem_addr);
 assign c       = commit_mem_wdata[7:0];
 `endif
 
@@ -479,6 +505,14 @@ property p_commit_memory_metadata;
             (commit_mem_wdata == op_rs2_data);
 endproperty
 assert property (p_commit_memory_metadata);
+
+property p_exception_redirects_without_normal_writeback;
+    @(posedge clk) disable iff (!rst_n)
+        commit_exception |-> redirect_valid && exu_trap_commit &&
+                              !gpr_write_valid && !exu_csr_write_valid &&
+                              !exu_mret_commit;
+endproperty
+assert property (p_exception_redirects_without_normal_writeback);
 
 endmodule
 

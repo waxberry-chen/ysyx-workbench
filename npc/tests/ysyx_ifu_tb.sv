@@ -22,6 +22,7 @@ wire [31:0] imem_req_addr;
 reg         imem_rsp_valid = 1'b0;
 wire        imem_rsp_ready;
 reg  [31:0] imem_rsp_data = 32'b0;
+reg         imem_rsp_error = 1'b0;
 
 always #5 clk = ~clk;
 
@@ -45,7 +46,8 @@ ysyx_ifu #(
     .imem_req_addr    (imem_req_addr),
     .imem_rsp_valid   (imem_rsp_valid),
     .imem_rsp_ready   (imem_rsp_ready),
-    .imem_rsp_data    (imem_rsp_data)
+    .imem_rsp_data    (imem_rsp_data),
+    .imem_rsp_error   (imem_rsp_error)
 );
 
 task tick;
@@ -213,6 +215,21 @@ initial begin
     check(!if_ctx_valid && imem_req_valid &&
           imem_req_addr == 32'h8000_0300,
           "same-cycle redirect/response recovery is incorrect");
+
+    // A non-stale memory error travels with the corresponding instruction
+    // context instead of terminating the simulation in the memory model.
+    imem_req_ready = 1'b1;
+    tick;
+    imem_req_ready = 1'b0;
+    imem_rsp_data = 32'b0;
+    imem_rsp_error = 1'b1;
+    imem_rsp_valid = 1'b1;
+    tick;
+    imem_rsp_valid = 1'b0;
+    imem_rsp_error = 1'b0;
+    settle;
+    check(if_ctx_valid && if_ctx_pc == 32'h8000_0300 && if_ctx_error,
+          "instruction response error did not enter the context");
 
     $display("ysyx_ifu directed test: PASS");
     $finish;

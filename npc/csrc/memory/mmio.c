@@ -10,6 +10,12 @@ static IOMap* fetch_mmio_map(paddr_t addr) {
   return (mapid == -1 ? NULL : &maps[mapid]);
 }
 
+static bool mmio_access_valid(IOMap *map, paddr_t addr, int len) {
+  return map != NULL && len >= 1 && len <= 8 &&
+         addr >= map->low && addr <= map->high &&
+         (paddr_t)(len - 1) <= map->high - addr;
+}
+
 static void report_mmio_overlap(const char *name1, paddr_t l1, paddr_t r1,
     const char *name2, paddr_t l2, paddr_t r2) {
   panic("MMIO region %s@[" FMT_PADDR ", " FMT_PADDR "] is overlapped "
@@ -46,4 +52,18 @@ word_t mmio_read(paddr_t addr, int len) {
 
 void mmio_write(paddr_t addr, int len, word_t data) {
   map_write(addr, len, data, fetch_mmio_map(addr));
+}
+
+bool mmio_try_read(paddr_t addr, int len, word_t *rdata) {
+  IOMap *map = fetch_mmio_map(addr);
+  if (!mmio_access_valid(map, addr, len)) return false;
+  *rdata = map_read(addr, len, map);
+  return true;
+}
+
+bool mmio_try_write(paddr_t addr, int len, word_t data) {
+  IOMap *map = fetch_mmio_map(addr);
+  if (!mmio_access_valid(map, addr, len)) return false;
+  map_write(addr, len, data, map);
+  return true;
 }

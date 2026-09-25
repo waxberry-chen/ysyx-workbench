@@ -55,6 +55,7 @@ wire [31:0] lsu_req_wdata;
 reg         lsu_rsp_valid = 1'b0;
 wire        lsu_rsp_ready;
 reg  [31:0] lsu_rsp_rdata = 32'b0;
+reg         lsu_rsp_error = 1'b0;
 wire        commit_valid;
 wire [31:0] commit_pc;
 wire [31:0] commit_inst;
@@ -64,6 +65,9 @@ wire        commit_mem_valid;
 wire        commit_mem_write;
 wire [31:0] commit_mem_addr;
 wire [31:0] commit_mem_wdata;
+wire        commit_mem_error;
+wire        commit_exception;
+wire [31:0] commit_exception_cause;
 wire        redirect_valid;
 wire [31:0] redirect_target;
 
@@ -100,6 +104,7 @@ task clear_op;
 begin
     op_valid = 1'b0;
     op_inst = 32'h0000_0013;
+    op_fetch_error = 1'b0;
     op_imm = 32'b0;
     op_alu_lhs_pc = 1'b0;
     op_alu_rhs_imm = 1'b0;
@@ -242,7 +247,8 @@ initial begin
     op_trap_cause = 32'd11;
     settle;
     check(commit_valid && trap_commit && trap_epc == 32'h8000_00c0 &&
-          trap_cause == 32'd11,
+          trap_cause == 32'd11 && commit_exception &&
+          commit_exception_cause == 32'd11,
           "trap commit metadata is incorrect");
     check(redirect_valid && redirect_target == trap_target,
           "trap did not redirect to mtvec");
@@ -258,6 +264,78 @@ initial begin
           redirect_target == mret_target,
           "mret commit or redirect is incorrect");
     tick;
+
+    // An instruction fetch access fault is already an exception context.  It
+    // must not execute whatever bits happened to accompany the failed fetch.
+    clear_op;
+    set_pc(32'h0000_0000);
+    op_valid = 1'b1;
+    op_fetch_error = 1'b1;
+    op_is_load = 1'b1;
+    op_gpr_wen = 1'b1;
+    settle;
+    check(commit_valid && commit_exception &&
+          commit_exception_cause == 32'd1 && trap_commit &&
+          redirect_valid && redirect_target == trap_target,
+          "fetch access fault did not trap precisely");
+    check(!lsu_req_valid && !gpr_write_valid && !csr_write_valid &&
+          !commit_mem_valid,
+          "fetch access fault produced a normal side effect");
+    tick;
+
+    // A failed load retires as cause 5 and must not write its destination.
+    clear_op;
+    set_pc(32'h8000_0100);
+    op_valid = 1'b1;
+    op_is_load = 1'b1;
+    op_mem_type = 3'd2;
+    op_alu_rhs_imm = 1'b1;
+    op_rs1_data = 32'h0000_0000;
+    op_gpr_wen = 1'b1;
+    op_wb_sel = 2'd2;
+    op_rd_idx = 5'd7;
+    lsu_req_ready = 1'b1;
+    tick;
+    lsu_req_ready = 1'b0;
+    lsu_rsp_valid = 1'b1;
+    lsu_rsp_error = 1'b1;
+    settle;
+    check(commit_valid && commit_exception &&
+          commit_exception_cause == 32'd5 && commit_mem_error &&
+          commit_mem_valid && !commit_mem_write,
+          "load access fault cause or metadata is incorrect");
+    check(!gpr_write_valid && trap_commit && redirect_valid,
+          "load access fault produced normal writeback");
+    tick;
+    lsu_rsp_valid = 1'b0;
+    lsu_rsp_error = 1'b0;
+
+    // A failed store uses cause 7.  The memory slave is responsible for not
+    // applying a side effect when it returns an error response.
+    clear_op;
+    set_pc(32'h8000_0120);
+    op_valid = 1'b1;
+    op_is_store = 1'b1;
+    op_mem_type = 3'd2;
+    op_alu_rhs_imm = 1'b1;
+    op_rs1_data = 32'h0000_0000;
+    op_rs2_data = 32'hdead_beef;
+    lsu_req_ready = 1'b1;
+    tick;
+    lsu_req_ready = 1'b0;
+    lsu_rsp_valid = 1'b1;
+    lsu_rsp_error = 1'b1;
+    settle;
+    check(commit_valid && commit_exception &&
+          commit_exception_cause == 32'd7 && commit_mem_error &&
+          commit_mem_valid && commit_mem_write,
+          "store access fault cause or metadata is incorrect");
+    check(!gpr_write_valid && !csr_write_valid && trap_commit &&
+          redirect_valid,
+          "store access fault produced a normal architectural writeback");
+    tick;
+    lsu_rsp_valid = 1'b0;
+    lsu_rsp_error = 1'b0;
 
     clear_op;
     settle;

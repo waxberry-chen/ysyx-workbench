@@ -298,12 +298,14 @@ Phase 2B gate 已通过：EXU directed test、primitive/LSU/IFU tests、lint、3
 
 目标：总线错误通过 architectural path 处理，不依赖 harness abort。
 
-1. 将 `imem_rsp_error` 作为 `if_ctx_error` 带入 instruction context，并让 `lsu_rsp_error` 随 LSU result 返回 backend。
-2. 至少实现 instruction/load/store access fault（`mcause=1/5/7`）；如采用 `mtval`，同步补齐 CSR、NEMU reference 和 DiffTest state。
-3. exception 不执行正常 GPR/CSR/store writeback，redirect 到 `mtvec`，年轻 context flush。
-4. commit trace 增加 stall reason、redirect reason、memory address/response；默认终端仍只打印有限窗口。
+1. [x] 将 `imem_rsp_error` 作为 `if_ctx_error` 带入 instruction context，并让 `lsu_rsp_error` 随 LSU result 返回 backend。
+2. [x] 实现 instruction/load/store access fault（`mcause=1/5/7`）；本阶段不引入 `mtval`，避免扩大尚无 workload 需求的 CSR/DiffTest ABI。
+3. [x] exception 不执行正常 GPR/CSR/store writeback，redirect 到 `mtvec`，年轻 context flush；失败 store 在 C++ backend 校验通过前不产生副作用。
+4. [x] commit trace v3 记录 exception/cause、redirect reason、memory address/response，以及相邻 commit 之间的 cycle 数和 stall bitmask；DiffTest 失败时的有限 ring trace 同步显示这些字段。
 
 Gate：人为制造 fetch/load/store error 都能得到一次精确 trap 或受控 BAD TRAP，并可从 trace 定位首个错误 transaction。
+
+完成状态（2026-09-25）：IFU/LSU response error 已贯通到统一 EXU commit；NEMU reference 的 `difftest_raise_intr()` 可在不执行 faulting instruction 的情况下构造相同 trap 后状态。`make -C npc access-fault-test` 分别注入非法取指、load 和 store，检查 `mcause=1/5/7`、`mepc`、GOOD TRAP、RAM error log 与 commit trace fault record，三项均通过。正常路径的 35/35 CPU tests、10-seed `add` 压力回归、hello、yield-os/CSR DiffTest 均正常；固定 `add` 的前五列 architectural trace 与 Phase 2B 完全一致。
 
 ### Phase 4：AXI4-Lite IFU/LSU masters
 

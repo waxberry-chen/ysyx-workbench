@@ -12,6 +12,11 @@ static inline bool in_pmem(paddr_t addr) {
     return (addr >= CONFIG_MBASE) && (addr < (paddr_t)CONFIG_MBASE + CONFIG_MSIZE);
 }
 
+static inline bool in_pmem_range(paddr_t addr, int len) {
+    return len >= 1 && addr >= PMEM_LEFT && addr <= PMEM_RIGHT &&
+           (paddr_t)(len - 1) <= PMEM_RIGHT - addr;
+}
+
 void pmem_read();
 void pmem_write();
 

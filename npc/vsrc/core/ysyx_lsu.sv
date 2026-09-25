@@ -19,6 +19,7 @@ module ysyx_lsu (
     output             rsp_valid,
     input              rsp_ready,
     output     [31:0]  rsp_rdata,
+    output             rsp_error,
 
     output             dmem_req_valid,
     input              dmem_req_ready,
@@ -28,7 +29,8 @@ module ysyx_lsu (
     output     [31:0]  dmem_req_wdata,
     input              dmem_rsp_valid,
     output             dmem_rsp_ready,
-    input      [31:0]  dmem_rsp_data
+    input      [31:0]  dmem_rsp_data,
+    input              dmem_rsp_error
 );
 
 localparam [1:0] IDLE = 2'd0,
@@ -42,6 +44,7 @@ reg [31:0] req_addr_q;
 reg [2:0]  req_type_q;
 reg [31:0] req_wdata_q;
 reg [31:0] response_data;
+reg        response_error;
 
 wire req_fire;
 wire dmem_req_fire;
@@ -63,6 +66,7 @@ assign dmem_rsp_fire  = dmem_rsp_valid & dmem_rsp_ready;
 
 assign rsp_valid = state == RESP;
 assign rsp_rdata = response_data;
+assign rsp_error = response_error;
 assign rsp_fire  = rsp_valid & rsp_ready;
 
 always @(posedge clk or negedge rst_n) begin
@@ -73,6 +77,7 @@ always @(posedge clk or negedge rst_n) begin
         req_type_q    <= 3'b0;
         req_wdata_q   <= 32'b0;
         response_data <= 32'b0;
+        response_error <= 1'b0;
     end else begin
         case (state)
             IDLE: begin
@@ -93,7 +98,8 @@ always @(posedge clk or negedge rst_n) begin
 
             WAIT: begin
                 if (dmem_rsp_fire) begin
-                    if (req_write_q) begin
+                    response_error <= dmem_rsp_error;
+                    if (dmem_rsp_error || req_write_q) begin
                         response_data <= 32'b0;
                     end else begin
                         case (req_type_q)
@@ -133,7 +139,7 @@ assert property (p_request_stable_when_stalled);
 property p_response_stable_when_stalled;
     @(posedge clk) disable iff (!rst_n)
         rsp_valid && !rsp_ready
-        |=> rsp_valid && $stable(rsp_rdata);
+        |=> rsp_valid && $stable({rsp_rdata, rsp_error});
 endproperty
 assert property (p_response_stable_when_stalled);
 

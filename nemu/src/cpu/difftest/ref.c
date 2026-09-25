@@ -42,7 +42,17 @@ __EXPORT void difftest_exec(uint64_t n) {
 }
 
 __EXPORT void difftest_raise_intr(word_t NO) {
-  assert(0);
+  word_t old_mstatus = cpu.csr.mstatus;
+  const word_t mstatus_mie = 1u << 3;
+  const word_t mstatus_mpie = 1u << 7;
+  const word_t mstatus_mpp = 3u << 11;
+
+  cpu.pc = isa_raise_intr(NO, cpu.pc);
+  cpu.csr.mstatus =
+      (old_mstatus & ~mstatus_mpie) | ((old_mstatus & mstatus_mie) << 4);
+  cpu.csr.mstatus &= ~mstatus_mie;
+  cpu.csr.mstatus =
+      (cpu.csr.mstatus & ~mstatus_mpp) | mstatus_mpp;
 }
 
 __EXPORT void difftest_init(int port) {

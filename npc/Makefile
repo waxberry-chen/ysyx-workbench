@@ -4,9 +4,6 @@
 TOP_MODULE 	:= ysyx_core
 RTL_LIST	:= filelist.f
 LINT_TOP	?= $(TOP_MODULE)
-RAM_SEEDS	?= 1 2 3 4 5 6 7 8 9 10
-RAM_MAX_LATENCY ?= 7
-RAM_READY_PERCENT ?= 50
 
 NPC_HOME	:= $(abspath .)
 OBJ_DIR		:= $(abspath ./build)
@@ -48,67 +45,7 @@ LINT_FLAGS			= --lint-only --sv -Wall -Wno-fatal \
 lint:
 	verilator $(LINT_FLAGS)
 
-LSU_TEST_OBJ := $(OBJ_DIR)/lsu-test
-PRIMITIVE_TEST_OBJ := $(OBJ_DIR)/primitive-test
-IFU_TEST_OBJ := $(OBJ_DIR)/ifu-test
-EXU_TEST_OBJ := $(OBJ_DIR)/exu-test
-
-.PHONY: lsu-test
-lsu-test:
-	verilator --binary --timing --assert --sv -Wall -Wno-fatal \
-		-Wno-BLKSEQ -Wno-SYNCASYNCNET -Wno-TIMESCALEMOD \
-		--top-module ysyx_lsu_tb --Mdir $(LSU_TEST_OBJ) \
-		$(VSRC_DIR)/ysyx_lsu.sv $(NPC_HOME)/tests/ysyx_lsu_tb.sv
-	$(LSU_TEST_OBJ)/Vysyx_lsu_tb
-
-.PHONY: primitive-test
-primitive-test:
-	verilator --binary --timing --assert --sv -Wall -Wno-fatal \
-		-Wno-BLKSEQ -Wno-SYNCASYNCNET -Wno-TIMESCALEMOD \
-		--top-module ysyx_gnrl_buffer_tb --Mdir $(PRIMITIVE_TEST_OBJ) \
-		$(NPC_HOME)/vsrc/gnrl/ysyx_gnrl_primitive.sv \
-		$(NPC_HOME)/tests/ysyx_gnrl_buffer_tb.sv
-	$(PRIMITIVE_TEST_OBJ)/Vysyx_gnrl_buffer_tb
-
-.PHONY: ifu-test
-ifu-test:
-	verilator --binary --timing --assert --sv -Wall -Wno-fatal \
-		-Wno-BLKSEQ -Wno-SYNCASYNCNET -Wno-TIMESCALEMOD \
-		--top-module ysyx_ifu_tb --Mdir $(IFU_TEST_OBJ) \
-		$(NPC_HOME)/vsrc/gnrl/ysyx_gnrl_primitive.sv \
-		$(VSRC_DIR)/ysyx_ifu.sv $(NPC_HOME)/tests/ysyx_ifu_tb.sv
-	$(IFU_TEST_OBJ)/Vysyx_ifu_tb
-
-.PHONY: exu-test
-exu-test:
-	verilator --binary --timing --assert --sv -Wall -Wno-fatal \
-		-Wno-BLKSEQ -Wno-SYNCASYNCNET -Wno-TIMESCALEMOD \
-		--top-module ysyx_exu_tb --Mdir $(EXU_TEST_OBJ) \
-		$(NPC_HOME)/vsrc/gnrl/ysyx_gnrl_primitive.sv \
-		$(VSRC_DIR)/ysyx_alu.sv $(VSRC_DIR)/ysyx_branch.sv \
-		$(VSRC_DIR)/ysyx_exu.sv $(NPC_HOME)/tests/ysyx_exu_tb.sv
-	$(EXU_TEST_OBJ)/Vysyx_exu_tb
-
-# Re-run one deterministic image under several instruction-memory timing
-# schedules.  Per-seed logs are build artifacts under build/seed-logs/.
-.PHONY: seed-regress
-seed-regress: $(VBIN) $(IMG)
-	@mkdir -p $(OBJ_DIR)/seed-logs
-	@set -eu; \
-	for seed in $(RAM_SEEDS); do \
-		log=$(OBJ_DIR)/seed-logs/seed-$$seed.log; \
-		echo "RAM seed $$seed -> $$log"; \
-		if ! $(VBIN) $(ARGS) -b \
-			--ram-seed=$$seed \
-			--ram-max-latency=$(RAM_MAX_LATENCY) \
-			--ram-ready-percent=$(RAM_READY_PERCENT) \
-			$(IMG) > $$log 2>&1; then \
-			tail -40 $$log; exit 1; \
-		fi; \
-		grep -q "HIT GOOD TRAP" $$log || { tail -40 $$log; exit 1; }; \
-	done
-	@echo "All RAM seeds passed: $(RAM_SEEDS)"
-
+.PHONY: all sim
 all: run
 	@echo "'all' target equals to 'run'"
 
@@ -121,3 +58,4 @@ COLOR_YELLOW 		= \033[33m
 COLOR_NONE  		= \033[0m
 
 include ./scripts/build.mk
+include ./scripts/tests.mk

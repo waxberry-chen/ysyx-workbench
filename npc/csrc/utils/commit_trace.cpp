@@ -45,18 +45,27 @@ void commit_trace_init(const char *path) {
     exit(1);
   }
 
-  fprintf(trace_file, "# NPC commit trace v1\n");
-  fprintf(trace_file, "# nr pc inst npc architectural_state_hash\n");
+  fprintf(trace_file, "# NPC commit trace v3\n");
+  fprintf(trace_file,
+          "# nr pc inst npc architectural_state_hash exception cause "
+          "redirect redirect_reason mem_valid mem_write mem_addr mem_error "
+          "cycles_since_commit stall_mask\n");
 }
 
 void commit_trace_record(uint64_t nr_inst, uint32_t pc, uint32_t inst,
-                         const CPU_state *state) {
+                         const CPU_state *state, const CommitInfo *info) {
   if (trace_file == nullptr) {
     return;
   }
 
-  fprintf(trace_file, "%" PRIu64 " %08x %08x %08x %016" PRIx64 "\n",
-          nr_inst, pc, inst, state->pc, architectural_state_hash(state));
+  fprintf(trace_file,
+          "%" PRIu64 " %08x %08x %08x %016" PRIx64
+          " %u %08x %u %u %u %u %08x %u %u %08x\n",
+          nr_inst, pc, inst, state->pc, architectural_state_hash(state),
+          info->exception, info->exception_cause, info->redirect,
+          info->redirect_reason, info->mem_valid, info->mem_write,
+          info->mem_addr, info->mem_error, info->cycles_since_commit,
+          info->stall_mask);
 }
 
 void commit_trace_close() {

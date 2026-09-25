@@ -135,14 +135,26 @@ void cpu_exec(unsigned int n){
 
   while (n > 0) {    
     // Capture the instruction and its commit metadata before the active edge.
-    // In the current single-cycle core, they describe the instruction that the
+    // They describe the instruction or precise exception event that the
     // following single_cycle() will commit.
     bool will_commit = dut->commit_valid;
     vaddr_t commit_pc = dut->commit_pc;
     word_t commit_inst = dut->commit_inst;
     bool skip_ref = dut->commit_is_mmio;
+    CommitInfo commit_info = {
+      .exception = (bool)dut->commit_exception,
+      .exception_cause = dut->commit_exception_cause,
+      .redirect = (bool)dut->commit_redirect_valid,
+      .redirect_reason = dut->commit_redirect_reason,
+      .mem_valid = (bool)dut->commit_mem_valid,
+      .mem_write = (bool)dut->commit_mem_write,
+      .mem_addr = dut->commit_mem_addr,
+      .mem_error = (bool)dut->commit_mem_error,
+      .cycles_since_commit = 0,
+      .stall_mask = 0,
+    };
 
-    if(will_commit && test_break()) {
+    if(will_commit && !commit_info.exception && test_break()) {
       // set the end state
       sim_state.halt_pc = dut->commit_pc;
       sim_state.halt_ret = cpu_gpr[10];
@@ -159,16 +171,22 @@ void cpu_exec(unsigned int n){
 
     if (will_commit) {
       set_state();
+      const CommitCycleObservation cycle_observation =
+          sim_stats_take_commit_observation();
+      commit_info.cycles_since_commit = cycle_observation.cycles;
+      commit_info.stall_mask = cycle_observation.stall_mask;
       g_nr_guest_inst++;
       sim_stats_record_commit(commit_pc, sim_cpu.pc);
-      commit_trace_record(g_nr_guest_inst, commit_pc, commit_inst, &sim_cpu);
+      commit_trace_record(g_nr_guest_inst, commit_pc, commit_inst, &sim_cpu,
+                          &commit_info);
       n--;
       #ifdef CONFIG_ITRACE
       if(itrace_print){
         itrace_commit_print(&inst_log, commit_pc, commit_inst);
       }
       #endif
-      difftest_step(commit_pc, commit_inst, skip_ref, g_nr_guest_inst);
+      difftest_step(commit_pc, commit_inst, skip_ref, g_nr_guest_inst,
+                    &commit_info);
     }
 
 

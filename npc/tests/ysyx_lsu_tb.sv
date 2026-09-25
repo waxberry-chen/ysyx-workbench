@@ -14,6 +14,7 @@ reg  [31:0] req_wdata = 32'b0;
 wire        rsp_valid;
 reg         rsp_ready = 1'b0;
 wire [31:0] rsp_rdata;
+wire        rsp_error;
 wire        dmem_req_valid;
 reg         dmem_req_ready = 1'b0;
 wire        dmem_req_write;
@@ -23,6 +24,7 @@ wire [31:0] dmem_req_wdata;
 reg         dmem_rsp_valid = 1'b0;
 wire        dmem_rsp_ready;
 reg  [31:0] dmem_rsp_data = 32'b0;
+reg         dmem_rsp_error = 1'b0;
 
 always #5 clk = ~clk;
 
@@ -38,6 +40,7 @@ ysyx_lsu dut (
     .rsp_valid   (rsp_valid),
     .rsp_ready   (rsp_ready),
     .rsp_rdata   (rsp_rdata),
+    .rsp_error   (rsp_error),
     .dmem_req_valid(dmem_req_valid),
     .dmem_req_ready(dmem_req_ready),
     .dmem_req_write(dmem_req_write),
@@ -46,7 +49,8 @@ ysyx_lsu dut (
     .dmem_req_wdata(dmem_req_wdata),
     .dmem_rsp_valid(dmem_rsp_valid),
     .dmem_rsp_ready(dmem_rsp_ready),
-    .dmem_rsp_data (dmem_rsp_data)
+    .dmem_rsp_data (dmem_rsp_data),
+    .dmem_rsp_error(dmem_rsp_error)
 );
 
 task tick;
@@ -106,7 +110,7 @@ initial begin
     dmem_rsp_valid = 1'b1;
     tick;
     dmem_rsp_valid = 1'b0;
-    check(rsp_valid && rsp_rdata == 32'hffff_ff80,
+    check(rsp_valid && !rsp_error && rsp_rdata == 32'hffff_ff80,
           "signed byte load result is incorrect");
 
     // The backend is not ready: result must remain buffered and stable.
@@ -144,12 +148,37 @@ initial begin
     dmem_rsp_data  = 32'ha5a5_a5a5;
     tick;
     dmem_rsp_valid = 1'b0;
-    check(rsp_valid && rsp_rdata == 32'b0,
+    check(rsp_valid && !rsp_error && rsp_rdata == 32'b0,
           "store completion should not expose memory response data");
 
     rsp_ready = 1'b1;
     tick;
+    rsp_ready = 1'b0;
     check(req_ready, "LSU did not complete the store");
+
+    // Error is buffered with the response and suppresses load formatting.
+    req_valid = 1'b1;
+    req_write = 1'b0;
+    req_addr  = 32'h0000_0000;
+    req_type  = 3'h2;
+    tick;
+    req_valid = 1'b0;
+    dmem_req_ready = 1'b1;
+    tick;
+    dmem_req_ready = 1'b0;
+    dmem_rsp_data  = 32'hffff_ffff;
+    dmem_rsp_error = 1'b1;
+    dmem_rsp_valid = 1'b1;
+    tick;
+    dmem_rsp_valid = 1'b0;
+    dmem_rsp_error = 1'b0;
+    check(rsp_valid && rsp_error && rsp_rdata == 32'b0,
+          "memory error did not propagate through the response buffer");
+    tick;
+    check(rsp_valid && rsp_error && rsp_rdata == 32'b0,
+          "error response changed under backend backpressure");
+    rsp_ready = 1'b1;
+    tick;
 
     $display("ysyx_lsu directed test: PASS");
     $finish;

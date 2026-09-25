@@ -32,14 +32,16 @@ typedef struct {
     uint64_t nr_inst;
     vaddr_t pc;
     word_t inst;
+    CommitInfo info;
 } DifftestTrace;
 
 static DifftestTrace trace_ring[DIFFTEST_TRACE_SIZE];
 static size_t trace_head = 0;
 static size_t trace_count = 0;
 
-static void record_trace(uint64_t nr_inst, vaddr_t pc, word_t inst) {
-    trace_ring[trace_head] = { nr_inst, pc, inst };
+static void record_trace(uint64_t nr_inst, vaddr_t pc, word_t inst,
+        const CommitInfo *info) {
+    trace_ring[trace_head] = { nr_inst, pc, inst, *info };
     trace_head = (trace_head + 1) % DIFFTEST_TRACE_SIZE;
     if (trace_count < DIFFTEST_TRACE_SIZE) {
         trace_count++;
@@ -54,10 +56,24 @@ static void dump_recent_trace() {
         word_t inst = trace->inst;
         char asm_buf[128];
         disassemble(asm_buf, sizeof(asm_buf), trace->pc, (uint8_t *)&inst, sizeof(inst));
-        printf("%c #%llu " FMT_WORD ": %08x\t%s\n",
+        printf("%c #%llu " FMT_WORD ": %08x\t%s",
             i + 1 == trace_count ? '>' : ' ',
             (unsigned long long)trace->nr_inst,
             trace->pc, trace->inst, asm_buf);
+        if (trace->info.exception) {
+            printf("  exception=%u", trace->info.exception_cause);
+        }
+        if (trace->info.mem_valid) {
+            printf("  mem=%c@" FMT_PADDR "%s",
+                trace->info.mem_write ? 'W' : 'R', trace->info.mem_addr,
+                trace->info.mem_error ? "/ERR" : "");
+        }
+        if (trace->info.redirect) {
+            printf("  redirect=%u", trace->info.redirect_reason);
+        }
+        printf("  cycles=%u stall_mask=0x%02x",
+            trace->info.cycles_since_commit, trace->info.stall_mask);
+        putchar('\n');
     }
 }
 
@@ -94,6 +110,9 @@ void difftest_init_npc(const char *ref_so_file, long img_size, int port) {
     assert(difftest_regcpy);
     difftest_exec = (void (*)(uint64_t))dlsym(handle, "difftest_exec");
     assert(difftest_exec);
+    difftest_raise_intr =
+        (void (*)(word_t))dlsym(handle, "difftest_raise_intr");
+    assert(difftest_raise_intr);
     difftest_init = (void (*)(int))dlsym(handle, "difftest_init");
     assert(difftest_init);
 
@@ -184,8 +203,19 @@ static void checkmem(uint8_t *ref_pmem, vaddr_t pc) {
   }
 }
 
-void difftest_step(vaddr_t pc, word_t inst, bool skip_ref, uint64_t nr_inst) {
-    record_trace(nr_inst, pc, inst);
+void difftest_step(vaddr_t pc, word_t inst, bool skip_ref, uint64_t nr_inst,
+        const CommitInfo *info) {
+    record_trace(nr_inst, pc, inst, info);
+
+    // The failed instruction does not execute on REF.  Raise the same precise
+    // exception at REF's current PC, then compare post-trap architectural state.
+    if (info->exception) {
+        CPU_state ref_r;
+        difftest_raise_intr(info->exception_cause);
+        difftest_regcpy(&ref_r, DIFFTEST_TO_DUT);
+        checkregs(&ref_r, pc, inst, nr_inst);
+        return;
+    }
 
     // Device reads may be nondeterministic. Do not execute the instruction on
     // REF; use the committed DUT state as the new common baseline instead.

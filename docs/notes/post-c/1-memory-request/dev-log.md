@@ -417,3 +417,64 @@ decoder + GPR read + WB bypass
 | architectural trace | `add`, seed 42/max-latency 3/ready 75% | 与 Phase 2A 基线逐字节相同，SHA-256 为 `4a87442ab99f4b4d6e362ee8f38dd67c2299954785b211081f051fc03eb4af75` |
 
 固定 workload 仍为 1095 commits、5121 cycles、CPI 4.677，说明本次 backend 分层没有引入额外气泡。Phase 2 至此完成，下一步按计划进入 Phase 3：让 instruction/data access error 走精确 architectural trap，而不是由 harness 直接终止仿真。
+
+## 2026-09-25：Phase 3——精确 access fault 与可观察性
+
+### 1. 结论
+
+Phase 3 已完成。非法 instruction fetch、load 和 store 不再由 C++ `check_bound()` 直接终止进程，而是作为 response error 返回 RTL，并在统一 commit 边界产生精确异常：
+
+```text
+instruction access fault -> mcause = 1
+load access fault        -> mcause = 5
+store access fault       -> mcause = 7
+```
+
+异常指令把自身 PC 写入 `mepc`、跳转 `mtvec`，且不产生正常 GPR/CSR/mret writeback。错误 store 先完成地址合法性检查，失败时不修改 PMEM/MMIO，因而没有不可撤销的正常 side effect。
+
+### 2. RTL 与 memory model
+
+- IFU 将 `imem_rsp_error` 与 `{pc, inst}` 一起写入 IFQ，error 始终属于原 request 的 instruction context；redirect 后的 stale response 仍按原规则丢弃。
+- LSU 将 `dmem_rsp_error` 与 response data 一起缓冲；backend stall 时二者都必须保持稳定。
+- EXU 对 fetch error 直接完成 fault commit，不错误发起 LSU transaction；load/store 只在对应 LSU response 返回后决定成功 commit 或 access fault。
+- exception、普通 trap 共用 CSR trap event 与 redirect/flush path；assertions 检查异常不得伴随正常 GPR/CSR/mret writeback，memory error 必须产生 cause 5/7。
+- C++ RAM model 通过非终止式 `paddr_try_read/write()` 返回访问结果，并分别统计、打印 I/D transaction error。instruction fetch 当前只允许 PMEM；data access 允许 PMEM 或已注册 MMIO map。
+
+本阶段未实现 `mtval`。当前验证需求只要求 cause/epc/target，贸然增加它会同步扩大 CSR、NEMU state 和 DiffTest ABI；需要地址类异常诊断时再作为独立增量加入。
+
+### 3. DiffTest 与 trace
+
+NPC 在 exception commit 时不让 NEMU 执行 faulting instruction，而是调用 reference `difftest_raise_intr(cause)`；reference 以当前 PC 更新 `mepc/mcause/mstatus` 并跳转 `mtvec`，随后照常比较 PC/GPR/CSR。这保持了“错误指令没有正常执行，但 trap 后 architectural state 必须一致”的对比语义。
+
+commit trace 升级为 v3，新增：
+
+```text
+exception cause redirect redirect_reason
+mem_valid mem_write mem_addr mem_error
+cycles_since_commit stall_mask
+```
+
+`redirect_reason`：0/1/2/3 分别表示 none、control-flow、exception、mret。`stall_mask` 是从上一 commit 到本次 commit 期间观察到的条件集合，而不是把所有 frontend overlap 都归因给当前指令；bit 0～5 依次是 IF request stall、IF response wait、IF response backpressure、D request stall、D response wait、D response backpressure。全局累计值仍由 simulation statistics 输出。
+
+### 4. 定向测试与验证
+
+新增 `npc/tests/access_fault.S`，由 `make -C npc access-fault-test` 构建三个最小 image。trap handler 同时检查 `mcause` 与 `mepc`，Make target 还检查 GOOD TRAP、RAM error log 和 trace 中的 exception record。
+
+| Item | Result |
+| --- | --- |
+| RTL lint | 通过；仅剩既存 `ysyx_gen_imm.inst[6:0]` unused warning |
+| primitive / IFU / LSU / EXU directed tests | 全部 PASS，assertions ON |
+| fetch/load/store access-fault test | 三项 PASS，DiffTest ON；cause 分别为 1/5/7 |
+| RV32E CPU tests | 35/35 PASS，DiffTest ON |
+| fixed-seed `add` | seeds 1～10、max-latency 7、ready 50%，全部 GOOD TRAP |
+| hello/UART | 正确输出参数并 GOOD TRAP |
+| yield-os/CSR DiffTest | 持续交替输出 `AB`，观察窗口内无 mismatch/assertion |
+| architectural trace | 固定 `add` 的 `nr/pc/inst/npc/state-hash` 与 Phase 2B 完全一致 |
+
+trace 格式增加字段后不能再与 v1 文件逐字节 `cmp`；本次抽取两代 trace 的前五列比较，SHA-256 均为 `bbf8496edf2329d695eb4437641ced89bba9cf0b6006f1a0b5955c32941e9284`。
+
+### 5. 构建问题记录
+
+验证过程中曾把 NEMU 的 native 配置仅通过命令行强制链接为 `*-so`。文件形式虽显示为 shared object，却仍混入 native device 配置，导致长 CPU tests 在 reference 侧出现随机 segmentation fault。正确做法是让 NEMU Kconfig 实际选择 `TARGET_SHARE`、同步 generated config 后再重建；不能只凭产物文件名或 `-shared` 判断 DiffTest reference 配置正确。
+
+Phase 3 gate 至此关闭。下一步可进入 Phase 4，在不改变 backend-facing IFU/LSU transaction 接口的前提下实现 AXI4-Lite adapters。

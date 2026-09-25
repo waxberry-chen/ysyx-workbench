@@ -56,6 +56,26 @@ typedef struct {
     uint32_t halt_ret;
 } SimState;
 
+typedef struct {
+    bool exception;
+    word_t exception_cause;
+    bool redirect;
+    uint8_t redirect_reason;
+    bool mem_valid;
+    bool mem_write;
+    paddr_t mem_addr;
+    bool mem_error;
+    uint32_t cycles_since_commit;
+    uint32_t stall_mask;
+} CommitInfo;
+
+enum {
+  COMMIT_REDIRECT_NONE = 0,
+  COMMIT_REDIRECT_CONTROL = 1,
+  COMMIT_REDIRECT_EXCEPTION = 2,
+  COMMIT_REDIRECT_MRET = 3,
+};
+
 enum {SIM_RUNNING, SIM_STOP, SIM_END, SIM_ABORT, SIM_QUIT};
 
 // Harness maintain states for RTL and simulation process
@@ -80,6 +100,8 @@ extern "C" void pmem_write(bool we, paddr_t waddr, uint32_t mask, word_t wdata);
 
 word_t paddr_read(paddr_t addr, int len);
 void paddr_write(paddr_t addr, int len, word_t wdata);
+bool paddr_try_read(paddr_t addr, int len, word_t *rdata);
+bool paddr_try_write(paddr_t addr, int len, word_t wdata);
 word_t host_read(void *haddr, int len);
 void host_write(void *haddr, int len, word_t wdata);
 
@@ -118,7 +140,8 @@ extern Sdb_args sdb_args;
 void difftest_skip_ref();
 void difftest_init_npc(const char *ref_so_file, long img_size, int port);
 void difftest_sync();
-void difftest_step(vaddr_t pc, word_t inst, bool skip_ref, uint64_t nr_inst);
+void difftest_step(vaddr_t pc, word_t inst, bool skip_ref, uint64_t nr_inst,
+                   const CommitInfo *info);
 
 /***********
 *   MMIO   *
@@ -127,6 +150,8 @@ void init_device();
 
 word_t mmio_read(paddr_t addr, int len);
 void mmio_write(paddr_t addr, int len, word_t data);
+bool mmio_try_read(paddr_t addr, int len, word_t *rdata);
+bool mmio_try_write(paddr_t addr, int len, word_t data);
 
 /* get time */
 uint64_t get_time();      // relative time (us-level)

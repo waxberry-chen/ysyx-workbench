@@ -66,6 +66,33 @@ void paddr_write(paddr_t paddr, int size, word_t wdata) {
     out_of_bound(paddr);
 }
 
+// Transaction-model interface.  Unlike the debugger helpers above, these
+// functions report an access error to RTL instead of terminating simulation.
+// A failed write performs no memory or MMIO side effect.
+bool paddr_try_read(paddr_t paddr, int size, word_t *rdata) {
+    if (in_pmem_range(paddr, size)) {
+        *rdata = host_read(guest_to_host(paddr), size);
+        return true;
+    }
+#ifdef CONFIG_DEVICE
+    return mmio_try_read(paddr, size, rdata);
+#else
+    return false;
+#endif
+}
+
+bool paddr_try_write(paddr_t paddr, int size, word_t wdata) {
+    if (in_pmem_range(paddr, size)) {
+        host_write(guest_to_host(paddr), size, wdata);
+        return true;
+    }
+#ifdef CONFIG_DEVICE
+    return mmio_try_write(paddr, size, wdata);
+#else
+    return false;
+#endif
+}
+
 // DPIC interface
 #ifndef AXI
 extern "C" void pmem_read(bool re, paddr_t paddr, uint32_t size, word_t *rdata) {
