@@ -272,12 +272,12 @@ Phase 2A gate 已通过：IFU directed test、primitive/LSU tests、lint、35/35
 
 #### Phase 2B：opbuf 与 backend
 
-1. 加入 1-entry opbuf，锁存 instruction context、`dec_*` 译码结果、`rs1_data/rs2_data` 和提交所需控制。
-2. EXU 只消费 opbuf，不再直接读取 IFU 当前组合输出。
-3. ALU/branch/CSR 指令完成后集中 commit；load/store 通过 LSU 等待。
-4. 允许旧 ALU 指令 commit 与新指令进入 EXU 同周期，加入 GPR writeback-to-read bypass。
-5. 分支、jump、trap、mret 统一产生 `redirect_valid/redirect_target`，并用 `flush` 清除 IFQ/opbuf 中的年轻 context。
-6. 删除 `ysyx_main_fsm`；`ysyx_core` 退化为模块连接和 architectural state 集成层。
+1. [x] 加入 1-entry opbuf，锁存 instruction context、`dec_*` 译码结果、`rs1_data/rs2_data` 和提交所需控制。
+2. [x] EXU 只消费 opbuf，不再直接读取 IFU 当前组合输出。
+3. [x] ALU/branch/CSR 指令完成后集中 commit；load/store 通过 LSU 等待。
+4. [x] 允许旧 ALU 指令 commit 与新指令进入 EXU 同周期，加入 GPR writeback-to-read bypass。
+5. [x] 分支、jump、trap、mret 统一产生 `redirect_valid/redirect_target`，并用 `flush` 清除 IFQ/opbuf 中的年轻 context。
+6. [x] 删除 `ysyx_main_fsm`；`ysyx_core` 退化为模块连接和 architectural state 集成层。
 
 核心 assertions：
 
@@ -289,6 +289,10 @@ Phase 2A gate 已通过：IFU directed test、primitive/LSU tests、lint、35/35
 - stale fetch response 不能进入 IFQ。
 
 Gate：随机 I/D stall 下回归通过；branch/trap/yield-os/CSR DiffTest 通过；与 Phase 0 commit trace 仅允许周期位置不同。
+
+完成状态（2026-09-20）：decoder 和 GPR read 以 IFQ head 为输入，完整 decode/operand/commit context 进入基于 `ysyx_gnrl_rv_reg` 的 1-entry opbuf；`ysyx_exu` 统一完成 ALU、branch、CSR、redirect 和 commit，并以局部 `mem_wait_q` 持有 load/store 至 LSU result 返回。旧指令 commit 与新 context 入队可同周期发生，RAW 由 writeback-to-read bypass 处理。redirect 指令是 opbuf 中最老指令，本身在 commit 时出队；同周期 IFU 已抑制并 flush 年轻 context，因此无需清除正在 commit 的 opbuf entry。`ysyx_main_fsm` 已删除。
+
+Phase 2B gate 已通过：EXU directed test、primitive/LSU/IFU tests、lint、35/35 CPU tests、10-seed 压力回归、hello、yield-os/CSR DiffTest 均正常；固定 `add` 配置下 commit trace 哈希仍为 `4a87442ab99f4b4d6e362ee8f38dd67c2299954785b211081f051fc03eb4af75`，cycles/CPI 与 Phase 2A 相同（5121/4.677）。
 
 ### Phase 3：精确错误语义与可观察性
 

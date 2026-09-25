@@ -362,3 +362,58 @@ redirect 按请求所处阶段处理：
 固定 `add` workload 的 committed instructions 仍为 1095；cycles 从 Phase 1 的 6639 降为 5121，CPI 从 6.063 降为 4.677。instruction requests 从 1096 增至 1258，是 static sequential prefetch 在 212 次 redirect 附近读取年轻/错误路径指令的预期开销；结束时 requests 比 responses 多 1，是仿真在 `ebreak` 前停止时仍有一笔合法 speculative fetch outstanding。
 
 Phase 2A 只完成 frontend elasticization。下一步 Phase 2B 仍需：把当前 instruction register 演化为带完整 decode/reg-read context 的 opbuf，形成明确 EXU/commit control，统一 GPR bypass，并最终删除 `ysyx_main_fsm`。
+
+## 2026-09-20：Phase 2B——opbuf 与集中式 EXU/commit
+
+### 1. 结构变化
+
+本轮删除过渡用的 `ysyx_main_fsm`，形成明确的单发射、顺序 elastic frontend/backend：
+
+```text
+IFU + 2-entry IFQ
+        |
+        | instruction context
+        v
+decoder + GPR read + WB bypass
+        |
+        | decoded operation context
+        v
+1-entry opbuf -> EXU/commit -> ALU / branch / CSR
+                     |
+                     +-----------> LSU -> dmem
+```
+
+- `ysyx_opbuf` 保存 PC、instruction、预测信息、立即数、ALU/branch/memory/CSR 控制、寄存器编号及两个 source operand，共 277 bit context；
+- `ysyx_exu` 只消费稳定的 opbuf context，不依赖 IFQ/decoder 的当前组合输出；
+- 普通指令组合完成并 commit，memory 指令由 EXU 的 `mem_wait_q` 保持至 LSU result 返回；
+- `ysyx_core` 只保留模块互连、architectural PC、GPR/CSR 实例和少量跨边界 assertion。
+
+### 2. 同周期替换与数据相关
+
+普通指令可在 commit 的同一周期释放 opbuf，并由 IFQ head 填入下一项。此时 decoder 读到的 GPR array 仍是 active edge 前的旧值，所以 core 对两个 source operand 分别实现 writeback-to-read bypass：当 `commit_gpr_wen && commit_rd_idx == dec_rs*_idx` 时，送入 opbuf 的是 `commit_wb_data`。
+
+这一 bypass 只解决“上一条在本周期写回、下一条在本周期入队”的 RAW；执行期间没有多条在途 backend 指令，因此不需要通用 forwarding network 或 scoreboard。
+
+### 3. Commit、memory 与 redirect
+
+- ALU/branch/CSR 的结果、GPR writeback、CSR/trap/mret event、memory metadata 和 redirect 都由 EXU 的同一 commit 边界产生；
+- load/store 只 issue 一次 LSU operation，等待期间 opbuf context 保持，收到 LSU result 后才 commit；
+- branch/jump/trap/mret commit 时统一生成 `redirect_valid/redirect_target`，IFU 同步 flush IFQ，并丢弃已握手但尚未返回的旧路径 fetch；
+- redirect 指令本身是当前最老 opbuf entry，会随 commit 正常出队；同周期 IFU 不允许年轻 context 进入 opbuf，因此无需 flush 正在完成的 entry；
+- architectural `commit_pc` 仍只在 commit edge 更新，保持 C++ harness/DiffTest 的原采样契约。
+
+新增 assertions 检查 opbuf/LSU request stall stability、memory commit 必须有 LSU result、commit PC 与 architectural PC 一致、同周期 GPR bypass 正确，以及静态预测 metadata 自洽。
+
+### 4. 验证记录
+
+| Item | Configuration | Result |
+| --- | --- | --- |
+| RTL lint | `make -C npc lint` | 通过；仅剩既存 `ysyx_gen_imm.inst[6:0]` unused warning |
+| directed tests | primitive / LSU / IFU / EXU，Verilator assertions ON | 全部 PASS；EXU 覆盖 ALU、taken branch、CSR、stalled load、trap、mret |
+| RV32E CPU tests | 默认 seed 42/max-latency 3/ready 75% | 35/35 PASS，DiffTest ON |
+| add stress | seeds 1～10/max-latency 10/ready 30% | 全部 GOOD TRAP |
+| hello/UART | seed 7/max-latency 10/ready 30% | 输出完整，GOOD TRAP |
+| yield-os/CSR DiffTest | seed 9/max-latency 7/ready 50%，5 s window | 持续交替输出 `AB`，无 mismatch/assertion；timeout 124 为主动终止 |
+| architectural trace | `add`, seed 42/max-latency 3/ready 75% | 与 Phase 2A 基线逐字节相同，SHA-256 为 `4a87442ab99f4b4d6e362ee8f38dd67c2299954785b211081f051fc03eb4af75` |
+
+固定 workload 仍为 1095 commits、5121 cycles、CPI 4.677，说明本次 backend 分层没有引入额外气泡。Phase 2 至此完成，下一步按计划进入 Phase 3：让 instruction/data access error 走精确 architectural trap，而不是由 harness 直接终止仿真。
