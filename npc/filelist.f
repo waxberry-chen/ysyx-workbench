@@ -6,9 +6,10 @@
 ./vsrc/core/ysyx_gen_imm.sv
 ./vsrc/core/ysyx_i_ram.sv
 ./vsrc/core/ysyx_ifu.sv
+./vsrc/core/ysyx_opbuf.sv
+./vsrc/core/ysyx_exu.sv
 ./vsrc/core/ysyx_lsu.sv
 ./vsrc/core/ysyx_csr.sv
-./vsrc/core/ysyx_main_fsm.sv
 
 ./vsrc/gnrl/ysyx_global.sv
 ./vsrc/gnrl/ysyx_gnrl_primitive.sv
