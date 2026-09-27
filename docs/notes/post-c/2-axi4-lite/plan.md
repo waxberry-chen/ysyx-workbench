@@ -18,7 +18,7 @@ Arbiter、Xbar、RTL AXI slave/device 和 ysyxSoC 接入属于后续阶段，不
 - 前序重构计划：[`3-core-microarch-refactor-plan.md`](../1-memory-request/3-core-microarch-refactor-plan.md)
 - 当前微架构说明：[`4-current-npc-architecture.md`](../1-memory-request/4-current-npc-architecture.md)
 - Post-C 总体路线：[`roadmap.md`](../roadmap.md)
-- AXI4-Lite 协议摘录：[`amba-axi4-lite-extract.pdf`](../../../ref-spec/amba-axi4-lite-extract.pdf)
+- AXI4-Lite 协议摘录：[`b-amba-axi4-lite-extract.pdf`](../../../ref-spec/b-amba-axi4-lite-extract.pdf)
 - AXI 信号与默认值资料：[`docs/ref-spec/`](../../../ref-spec/)
 - 重组后的 ysyx B 阶段讲义：[`ysyx2306-b-stage.md`](../../../lectures/ysyx/ysyx2306-b-stage.md)
 - 原始 B1 总线讲义：[`basic/1.7.md`](../../../misc/ysyx/docs/2306/basic/1.7.md)
@@ -33,9 +33,9 @@ Arbiter、Xbar、RTL AXI slave/device 和 ysyxSoC 接入属于后续阶段，不
 不把 AXI channel 状态直接写入 IFU 和 LSU，而是在 memory-side 增加两个 adapter：
 
 ```text
-ysyx_ifu ── imem req/rsp ── ysyx_ifu_axi4lite_adpt ── AR/R
+ysyx_ifu ── imem req/rsp ── ysyx_ifu_axi4lite_adapter ── AR/R
 
-ysyx_lsu ── dmem req/rsp ── ysyx_lsu_axi4lite_adpt ── AR/R/AW/W/B
+ysyx_lsu ── dmem req/rsp ── ysyx_lsu_axi4lite_adapter ── AR/R/AW/W/B
 ```
 
 这样可以保持现有职责不变：
@@ -81,7 +81,17 @@ LSU read path 与 IFU 类似。write path 必须独立处理 AW 和 W：
 
 ### 3.5 窄访问和错误
 
-第一版只接受自然对齐访问，不拆分跨边界 transaction：
+第一版只接受自然对齐访问，不拆分跨边界 transaction。byte 任意对齐，halfword
+要求 `addr[0] == 0`，word 要求 `addr[1:0] == 0`。不满足时由 EXU 在
+发出 local/AXI request 前产生精确异常：
+
+```text
+load address misaligned  -> mcause = 4
+store address misaligned -> mcause = 6
+```
+
+异常指令不产生正常 architectural side effect，也不得发出 AXI transaction。
+对合法窄访问，adapter 使用对齐后的总线地址和 byte lane：
 
 ```text
 bus_addr = {req_addr[31:2], 2'b00}
@@ -90,7 +100,8 @@ WDATA    = req_wdata << (8 * req_addr[1:0])
 rsp_data = RDATA >> (8 * req_addr[1:0])
 ```
 
-load 的 sign/zero extension 仍由 LSU 完成。非法对齐加入 assertion，后续再单独实现 address-misaligned exception。
+load 的 sign/zero extension 仍由 LSU 完成。adapter 中的 alignment assertion 用于检查
+core-side contract，不负责替代 architectural exception。
 
 AXI response 统一映射为：
 
@@ -113,6 +124,10 @@ LSU  AWPROT = 3'b001  // privileged, secure, data
 
 Milestone 2 完成后，`ysyx_core` 暂时暴露 IFU、LSU 两套 AXI4-Lite master。后续 `3-axi4-lite-interconnect` 再将它们合并为一套 external master。
 
+adapter 模块内部的 AXI 端统一命名为 `m_axi_*`，`ysyx_core` 顶层分别使用
+`ifu_axi_*`、`lsu_axi_*`。完整信号、位宽、reset 和 local transaction 契约冻结在
+[`0-freeze-baseline.md`](0-freeze-baseline.md)。
+
 本阶段不实现 burst、AXI ID、多 outstanding、cache、Arbiter 或 Xbar。
 
 ## 4. 阶段划分
@@ -123,9 +138,12 @@ Milestone 2 完成后，`ysyx_core` 暂时暴露 IFU、LSU 两套 AXI4-Lite mast
 - 冻结 adapter local side、AXI side 的信号、位宽和命名；
 - 明确自然对齐、byte lane、response error 和 reset 约定。
 
+完成状态（2026-09-28）：已复现 Phase 3 功能、trace 和 CPI 基线，并冻结 local/AXI
+接口契约；详见 [`0-freeze-baseline.md`](0-freeze-baseline.md)。
+
 ### 阶段 1：IFU AXI4-Lite adapter
 
-- 实现 `ysyx_ifu_axi4lite_adpt`；
+- 实现 `ysyx_ifu_axi4lite_adapter`；
 - 增加 adapter standalone directed test，覆盖 AR stall、延迟 R、response backpressure 和错误 response；
 - 增加 `IFU + adapter + scripted AXI read slave` 的小型 SystemVerilog integration test；
 - 覆盖 redirect 发生在 AR handshake 前、AR handshake 后等待 R，以及 R response 同拍到达三种情况；
@@ -133,6 +151,7 @@ Milestone 2 完成后，`ysyx_core` 暂时暴露 IFU、LSU 两套 AXI4-Lite mast
 
 ### 阶段 2：LSU AXI4-Lite adapter
 
+- 先在 EXU 完成 load/store address-misaligned 精确异常及定向测试，确保非法访问不进入 LSU/AXI；
 - 实现 read path 和 AW/W independent write path；
 - 实现 `WSTRB/WDATA` packing 和 `RDATA` normalization；
 - 增加 standalone directed test；
@@ -151,7 +170,8 @@ Milestone 2 完成后，`ysyx_core` 暂时暴露 IFU、LSU 两套 AXI4-Lite mast
 - adapter directed tests 和 protocol assertions 通过；
 - lint、现有 IFU/LSU/EXU tests 通过；
 - fetch/load/store access-fault tests 通过；
-- 35/35 CPU tests、固定 seed 随机 stall、hello 和 yield-os/DiffTest 通过；
+- 除旧 `unalign` 成功访问 case 外的 34 项 CPU tests、固定 seed 随机 stall、hello 和 yield-os/DiffTest 通过；
+- load/store address-misaligned 定向测试通过，检查 `mcause=4/6`、`mepc`、无 AXI request 和无正常写回；
 - commit trace architectural fields 与 Phase 3 一致；
 - 记录 adapter 引入的 cycles/CPI/stall 变化；
 - 冻结两套 master 接口，作为后续 Arbiter 的输入。
@@ -196,11 +216,11 @@ request 和 response 两侧各增加一次寄存转发，预计相对直接连�
 新增：
 
 ```text
-npc/vsrc/bus/ysyx_ifu_axi4lite_adpt.sv
-npc/vsrc/bus/ysyx_lsu_axi4lite_adpt.sv
-npc/tests/ysyx_ifu_axi4lite_adpt_tb.sv
-npc/tests/ysyx_ifu_axi4lite_adpt_integ_tb.sv
-npc/tests/ysyx_lsu_axi4lite_adpt_tb.sv
+npc/vsrc/bus/ysyx_ifu_axi4lite_adapter.sv
+npc/vsrc/bus/ysyx_lsu_axi4lite_adapter.sv
+npc/tests/ysyx_ifu_axi4lite_adapter_tb.sv
+npc/tests/ysyx_ifu_axi4lite_adapter_integ_tb.sv
+npc/tests/ysyx_lsu_axi4lite_adapter_tb.sv
 ```
 
 主要修改：
