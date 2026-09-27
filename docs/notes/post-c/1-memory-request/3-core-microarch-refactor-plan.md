@@ -182,8 +182,8 @@ npc/vsrc/core/
   ysyx_bpu_gshare.sv        optional phase, not initial dependency
 
 npc/vsrc/bus/
-  ysyx_ifu_axi_lite.sv
-  ysyx_lsu_axi_lite.sv
+  ysyx_ifu_axi4lite_adpt.sv
+  ysyx_lsu_axi4lite_adpt.sv
   ysyx_axi_lite_arbiter.sv
   ysyx_axi_lite_xbar.sv
 
@@ -306,6 +306,8 @@ Phase 2B gate 已通过：EXU directed test、primitive/LSU/IFU tests、lint、3
 Gate：人为制造 fetch/load/store error 都能得到一次精确 trap 或受控 BAD TRAP，并可从 trace 定位首个错误 transaction。
 
 完成状态（2026-09-25）：IFU/LSU response error 已贯通到统一 EXU commit；NEMU reference 的 `difftest_raise_intr()` 可在不执行 faulting instruction 的情况下构造相同 trap 后状态。`make -C npc access-fault-test` 分别注入非法取指、load 和 store，检查 `mcause=1/5/7`、`mepc`、GOOD TRAP、RAM error log 与 commit trace fault record，三项均通过。正常路径的 35/35 CPU tests、10-seed `add` 压力回归、hello、yield-os/CSR DiffTest 均正常；固定 `add` 的前五列 architectural trace 与 Phase 2B 完全一致。
+
+> **后续规划说明（2026-09-28）**：本文件以 Phase 3 作为 `1-memory-request` 的完成边界。下面 Phase 4～7 是早期形成的后续设想，保留用于理解设计演进，但其任务拆分、优先级、目录归属和验收标准已由 [`../roadmap.md`](../roadmap.md) 重新规划，不再作为当前执行计划。当前工作从 [`../2-axi4-lite/plan.md`](../2-axi4-lite/plan.md) 开始，并按 roadmap 中与目录编号一致的 milestones 推进。
 
 ### Phase 4：AXI4-Lite IFU/LSU masters
 

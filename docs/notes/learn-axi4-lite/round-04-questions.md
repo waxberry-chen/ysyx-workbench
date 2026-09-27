@@ -20,7 +20,7 @@
 - 当前工程：
   - `npc/vsrc/core/ysyx_lsu.sv`
   - `npc/csrc/memory/ram_model.cpp` 中 `DataRamModel`
-  - `docs/notes/post-c/2-axi4-lite/0-plan.md` 中 LSU adapter 的架构决策
+  - `docs/notes/post-c/2-axi4-lite/plan.md` 中 LSU adapter 的架构决策
 
 ## 问题
 
