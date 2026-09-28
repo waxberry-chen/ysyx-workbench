@@ -149,6 +149,12 @@ adapter 模块内部的 AXI 端统一命名为 `m_axi_*`，`ysyx_core` 顶层分
 - 覆盖 redirect 发生在 AR handshake 前、AR handshake 后等待 R，以及 R response 同拍到达三种情况；
 - 检查旧 AXI transaction 仍正常完成、旧 response 不进入 IFQ，随后从 redirect target 重新取指；
 
+完成状态（2026-09-28）：全寄存 single-outstanding adapter、standalone directed test
+和 `IFU + adapter` integration test 均已完成；协议 corner cases、既有回归和 Phase 3
+architectural baseline 均通过，详见
+[`1-ifu-axi4-lite-adapter.md`](1-ifu-axi4-lite-adapter.md)。adapter 尚未接入
+`ysyx_core` 顶层，这是阶段 3 的集成任务。
+
 ### 阶段 2：LSU AXI4-Lite adapter
 
 - 先在 EXU 完成 load/store address-misaligned 精确异常及定向测试，确保非法访问不进入 LSU/AXI；

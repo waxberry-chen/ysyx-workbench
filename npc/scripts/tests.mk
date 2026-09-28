@@ -11,6 +11,8 @@ DIRECTED_TEST_FLAGS := --binary --timing --assert --sv -Wall -Wno-fatal \
 LSU_TEST_OBJ := $(OBJ_DIR)/lsu-test
 PRIMITIVE_TEST_OBJ := $(OBJ_DIR)/primitive-test
 IFU_TEST_OBJ := $(OBJ_DIR)/ifu-test
+IFU_AXI_ADAPTER_TEST_OBJ := $(OBJ_DIR)/ifu-axi4lite-adapter-test
+IFU_AXI_ADAPTER_INTEG_TEST_OBJ := $(OBJ_DIR)/ifu-axi4lite-adapter-integ-test
 EXU_TEST_OBJ := $(OBJ_DIR)/exu-test
 
 .PHONY: lsu-test
@@ -35,6 +37,26 @@ ifu-test:
 		$(NPC_HOME)/vsrc/gnrl/ysyx_gnrl_primitive.sv \
 		$(VSRC_DIR)/ysyx_ifu.sv $(NPC_HOME)/tests/ysyx_ifu_tb.sv
 	$(IFU_TEST_OBJ)/Vysyx_ifu_tb
+
+.PHONY: ifu-axi4lite-adapter-test
+ifu-axi4lite-adapter-test:
+	verilator $(DIRECTED_TEST_FLAGS) \
+		--top-module ysyx_ifu_axi4lite_adapter_tb \
+		--Mdir $(IFU_AXI_ADAPTER_TEST_OBJ) \
+		$(NPC_HOME)/vsrc/bus/ysyx_ifu_axi4lite_adapter.sv \
+		$(NPC_HOME)/tests/ysyx_ifu_axi4lite_adapter_tb.sv
+	$(IFU_AXI_ADAPTER_TEST_OBJ)/Vysyx_ifu_axi4lite_adapter_tb
+
+.PHONY: ifu-axi4lite-adapter-integ-test
+ifu-axi4lite-adapter-integ-test:
+	verilator $(DIRECTED_TEST_FLAGS) \
+		--top-module ysyx_ifu_axi4lite_adapter_integ_tb \
+		--Mdir $(IFU_AXI_ADAPTER_INTEG_TEST_OBJ) \
+		$(NPC_HOME)/vsrc/gnrl/ysyx_gnrl_primitive.sv \
+		$(VSRC_DIR)/ysyx_ifu.sv \
+		$(NPC_HOME)/vsrc/bus/ysyx_ifu_axi4lite_adapter.sv \
+		$(NPC_HOME)/tests/ysyx_ifu_axi4lite_adapter_integ_tb.sv
+	$(IFU_AXI_ADAPTER_INTEG_TEST_OBJ)/Vysyx_ifu_axi4lite_adapter_integ_tb
 
 .PHONY: exu-test
 exu-test:
