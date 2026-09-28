@@ -30,34 +30,48 @@ void sim_stats_reset() {
 }
 
 void sim_stats_sample_cycle(bool rst_n,
-                            bool imem_req_valid, bool imem_req_ready,
-                            bool imem_rsp_valid, bool imem_rsp_ready,
-                            bool dmem_req_valid, bool dmem_req_ready,
-                            bool dmem_rsp_valid, bool dmem_rsp_ready) {
+                            bool if_arvalid, bool if_arready,
+                            bool if_rvalid, bool if_rready,
+                            bool d_arvalid, bool d_arready,
+                            bool d_rvalid, bool d_rready,
+                            bool d_awvalid, bool d_awready,
+                            bool d_wvalid, bool d_wready,
+                            bool d_bvalid, bool d_bready) {
   if (!rst_n) {
     return;
   }
 
   stats.cycles++;
   stats.interval_cycles++;
-  stats.if_request_stall_cycles += imem_req_valid && !imem_req_ready;
-  stats.if_response_wait_cycles += imem_rsp_ready && !imem_rsp_valid;
-  stats.if_response_stall_cycles += imem_rsp_valid && !imem_rsp_ready;
-  stats.data_request_stall_cycles += dmem_req_valid && !dmem_req_ready;
-  stats.data_response_wait_cycles += dmem_rsp_ready && !dmem_rsp_valid;
-  stats.data_response_stall_cycles += dmem_rsp_valid && !dmem_rsp_ready;
+  const bool if_request_stall = if_arvalid && !if_arready;
+  const bool if_response_wait = if_rready && !if_rvalid;
+  const bool if_response_stall = if_rvalid && !if_rready;
+  const bool data_request_stall =
+      (d_arvalid && !d_arready) || (d_awvalid && !d_awready) ||
+      (d_wvalid && !d_wready);
+  const bool data_response_wait =
+      (d_rready && !d_rvalid) || (d_bready && !d_bvalid);
+  const bool data_response_stall =
+      (d_rvalid && !d_rready) || (d_bvalid && !d_bready);
 
-  if (imem_req_valid && !imem_req_ready)
+  stats.if_request_stall_cycles += if_request_stall;
+  stats.if_response_wait_cycles += if_response_wait;
+  stats.if_response_stall_cycles += if_response_stall;
+  stats.data_request_stall_cycles += data_request_stall;
+  stats.data_response_wait_cycles += data_response_wait;
+  stats.data_response_stall_cycles += data_response_stall;
+
+  if (if_request_stall)
     stats.interval_stall_mask |= STALL_IF_REQUEST;
-  if (imem_rsp_ready && !imem_rsp_valid)
+  if (if_response_wait)
     stats.interval_stall_mask |= STALL_IF_RESPONSE;
-  if (imem_rsp_valid && !imem_rsp_ready)
+  if (if_response_stall)
     stats.interval_stall_mask |= STALL_IF_RSP_BACKPRESSURE;
-  if (dmem_req_valid && !dmem_req_ready)
+  if (data_request_stall)
     stats.interval_stall_mask |= STALL_D_REQUEST;
-  if (dmem_rsp_ready && !dmem_rsp_valid)
+  if (data_response_wait)
     stats.interval_stall_mask |= STALL_D_RESPONSE;
-  if (dmem_rsp_valid && !dmem_rsp_ready)
+  if (data_response_stall)
     stats.interval_stall_mask |= STALL_D_RSP_BACKPRESSURE;
 }
 

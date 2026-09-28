@@ -19,24 +19,34 @@ module ysyx_core #(
     output     [31:0]  commit_mem_addr,
     output             commit_mem_error,
 
-    output             imem_req_valid,
-    input              imem_req_ready,
-    output     [31:0]  imem_req_addr,
-    input              imem_rsp_valid,
-    output             imem_rsp_ready,
-    input      [31:0]  imem_rsp_data,
-    input              imem_rsp_error,
+    output             ifu_axi_arvalid,
+    input              ifu_axi_arready,
+    output     [31:0]  ifu_axi_araddr,
+    output     [2:0]   ifu_axi_arprot,
+    input              ifu_axi_rvalid,
+    output             ifu_axi_rready,
+    input      [31:0]  ifu_axi_rdata,
+    input      [1:0]   ifu_axi_rresp,
 
-    output             dmem_req_valid,
-    input              dmem_req_ready,
-    output             dmem_req_write,
-    output     [31:0]  dmem_req_addr,
-    output     [1:0]   dmem_req_size,
-    output     [31:0]  dmem_req_wdata,
-    input              dmem_rsp_valid,
-    output             dmem_rsp_ready,
-    input      [31:0]  dmem_rsp_data,
-    input              dmem_rsp_error
+    output             lsu_axi_awvalid,
+    input              lsu_axi_awready,
+    output     [31:0]  lsu_axi_awaddr,
+    output     [2:0]   lsu_axi_awprot,
+    output             lsu_axi_wvalid,
+    input              lsu_axi_wready,
+    output     [31:0]  lsu_axi_wdata,
+    output     [3:0]   lsu_axi_wstrb,
+    input              lsu_axi_bvalid,
+    output             lsu_axi_bready,
+    input      [1:0]   lsu_axi_bresp,
+    output             lsu_axi_arvalid,
+    input              lsu_axi_arready,
+    output     [31:0]  lsu_axi_araddr,
+    output     [2:0]   lsu_axi_arprot,
+    input              lsu_axi_rvalid,
+    output             lsu_axi_rready,
+    input      [31:0]  lsu_axi_rdata,
+    input      [1:0]   lsu_axi_rresp
 
 `ifdef DEBUG
     ,
@@ -59,6 +69,15 @@ wire        if_ctx_error;
 wire        if_ctx_pred_taken;
 wire [31:0] if_ctx_pred_npc;
 wire        if_ctx_fire;
+
+// IFU-local memory interface.  AXI channel state is owned by the adapter.
+wire        imem_req_valid;
+wire        imem_req_ready;
+wire [31:0] imem_req_addr;
+wire        imem_rsp_valid;
+wire        imem_rsp_ready;
+wire [31:0] imem_rsp_data;
+wire        imem_rsp_error;
 
 // Decode and register-read context entering opbuf.
 wire [2:0]  dec_imm_type;
@@ -154,6 +173,19 @@ wire        lsu_rsp_valid;
 wire        lsu_rsp_ready;
 wire [31:0] lsu_rsp_rdata;
 wire        lsu_rsp_error;
+
+// LSU-local memory interface.  Address alignment and byte-lane conversion
+// happen before the request reaches the external AXI4-Lite master ports.
+wire        dmem_req_valid;
+wire        dmem_req_ready;
+wire        dmem_req_write;
+wire [31:0] dmem_req_addr;
+wire [1:0]  dmem_req_size;
+wire [31:0] dmem_req_wdata;
+wire        dmem_rsp_valid;
+wire        dmem_rsp_ready;
+wire [31:0] dmem_rsp_data;
+wire        dmem_rsp_error;
 
 ysyx_gnrl_dfflrs #(
     .DW (32),
@@ -437,6 +469,60 @@ ysyx_lsu u_lsu (
     .dmem_rsp_ready (dmem_rsp_ready),
     .dmem_rsp_data  (dmem_rsp_data),
     .dmem_rsp_error (dmem_rsp_error)
+);
+
+ysyx_ifu_axi4lite_adapter u_ifu_axi4lite_adapter (
+    .clk           (clk),
+    .rst_n         (rst_n),
+    .imem_req_valid(imem_req_valid),
+    .imem_req_ready(imem_req_ready),
+    .imem_req_addr (imem_req_addr),
+    .imem_rsp_valid(imem_rsp_valid),
+    .imem_rsp_ready(imem_rsp_ready),
+    .imem_rsp_data (imem_rsp_data),
+    .imem_rsp_error(imem_rsp_error),
+    .m_axi_arvalid (ifu_axi_arvalid),
+    .m_axi_arready (ifu_axi_arready),
+    .m_axi_araddr  (ifu_axi_araddr),
+    .m_axi_arprot  (ifu_axi_arprot),
+    .m_axi_rvalid  (ifu_axi_rvalid),
+    .m_axi_rready  (ifu_axi_rready),
+    .m_axi_rdata   (ifu_axi_rdata),
+    .m_axi_rresp   (ifu_axi_rresp)
+);
+
+ysyx_lsu_axi4lite_adapter u_lsu_axi4lite_adapter (
+    .clk           (clk),
+    .rst_n         (rst_n),
+    .dmem_req_valid(dmem_req_valid),
+    .dmem_req_ready(dmem_req_ready),
+    .dmem_req_write(dmem_req_write),
+    .dmem_req_addr (dmem_req_addr),
+    .dmem_req_size (dmem_req_size),
+    .dmem_req_wdata(dmem_req_wdata),
+    .dmem_rsp_valid(dmem_rsp_valid),
+    .dmem_rsp_ready(dmem_rsp_ready),
+    .dmem_rsp_data (dmem_rsp_data),
+    .dmem_rsp_error(dmem_rsp_error),
+    .m_axi_awvalid (lsu_axi_awvalid),
+    .m_axi_awready (lsu_axi_awready),
+    .m_axi_awaddr  (lsu_axi_awaddr),
+    .m_axi_awprot  (lsu_axi_awprot),
+    .m_axi_wvalid  (lsu_axi_wvalid),
+    .m_axi_wready  (lsu_axi_wready),
+    .m_axi_wdata   (lsu_axi_wdata),
+    .m_axi_wstrb   (lsu_axi_wstrb),
+    .m_axi_bvalid  (lsu_axi_bvalid),
+    .m_axi_bready  (lsu_axi_bready),
+    .m_axi_bresp   (lsu_axi_bresp),
+    .m_axi_arvalid (lsu_axi_arvalid),
+    .m_axi_arready (lsu_axi_arready),
+    .m_axi_araddr  (lsu_axi_araddr),
+    .m_axi_arprot  (lsu_axi_arprot),
+    .m_axi_rvalid  (lsu_axi_rvalid),
+    .m_axi_rready  (lsu_axi_rready),
+    .m_axi_rdata   (lsu_axi_rdata),
+    .m_axi_rresp   (lsu_axi_rresp)
 );
 
 assign if_ctx_fire = if_ctx_valid & if_ctx_ready;

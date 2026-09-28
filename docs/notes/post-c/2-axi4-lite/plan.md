@@ -178,6 +178,12 @@ lane、错误传播、backpressure、reset 和 transaction 去重。验证记录
 - 分别随机化 AR、R、AW、W、B channel timing；
 - 保持现有 memory model 初始化、统计和错误注入入口。
 
+完成状态（2026-09-28）：两个 adapter 已在 `ysyx_core` 内完成 local-side 连接，core
+顶层改为暴露 IFU read-only 和 LSU read/write 两套 AXI4-Lite master；C++ RAM model 已
+迁移为 AXI slave transaction model，独立处理 AR/R/AW/W/B timing、AW/W 汇合、`WSTRB`
+写入和 AXI response。功能回归及 architectural trace 保持正确，详见
+[`3-core-and-simulation-integration.md`](3-core-and-simulation-integration.md)。
+
 ### 阶段 4：回归与阶段验收
 
 - adapter directed tests 和 protocol assertions 通过；

@@ -20,10 +20,13 @@ enum {
 
 void sim_stats_reset();
 void sim_stats_sample_cycle(bool rst_n,
-                            bool imem_req_valid, bool imem_req_ready,
-                            bool imem_rsp_valid, bool imem_rsp_ready,
-                            bool dmem_req_valid, bool dmem_req_ready,
-                            bool dmem_rsp_valid, bool dmem_rsp_ready);
+                            bool if_arvalid, bool if_arready,
+                            bool if_rvalid, bool if_rready,
+                            bool d_arvalid, bool d_arready,
+                            bool d_rvalid, bool d_rready,
+                            bool d_awvalid, bool d_awready,
+                            bool d_wvalid, bool d_wready,
+                            bool d_bvalid, bool d_bready);
 void sim_stats_record_commit(uint32_t pc, uint32_t npc);
 CommitCycleObservation sim_stats_take_commit_observation();
 void sim_stats_report();

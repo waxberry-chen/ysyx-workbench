@@ -62,10 +62,13 @@ void single_cycle() {
   #endif
 
   sim_stats_sample_cycle(dut->rst_n,
-                         dut->imem_req_valid, dut->imem_req_ready,
-                         dut->imem_rsp_valid, dut->imem_rsp_ready,
-                         dut->dmem_req_valid, dut->dmem_req_ready,
-                         dut->dmem_rsp_valid, dut->dmem_rsp_ready);
+                         dut->ifu_axi_arvalid, dut->ifu_axi_arready,
+                         dut->ifu_axi_rvalid, dut->ifu_axi_rready,
+                         dut->lsu_axi_arvalid, dut->lsu_axi_arready,
+                         dut->lsu_axi_rvalid, dut->lsu_axi_rready,
+                         dut->lsu_axi_awvalid, dut->lsu_axi_awready,
+                         dut->lsu_axi_wvalid, dut->lsu_axi_wready,
+                         dut->lsu_axi_bvalid, dut->lsu_axi_bready);
 
   ram_model_sample();
 
