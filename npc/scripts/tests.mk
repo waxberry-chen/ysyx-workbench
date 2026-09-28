@@ -13,7 +13,9 @@ PRIMITIVE_TEST_OBJ := $(OBJ_DIR)/primitive-test
 IFU_TEST_OBJ := $(OBJ_DIR)/ifu-test
 IFU_AXI_ADAPTER_TEST_OBJ := $(OBJ_DIR)/ifu-axi4lite-adapter-test
 IFU_AXI_ADAPTER_INTEG_TEST_OBJ := $(OBJ_DIR)/ifu-axi4lite-adapter-integ-test
+LSU_AXI_ADAPTER_TEST_OBJ := $(OBJ_DIR)/lsu-axi4lite-adapter-test
 EXU_TEST_OBJ := $(OBJ_DIR)/exu-test
+ADDRESS_MISALIGNED_TEST_DIR := $(OBJ_DIR)/address-misaligned-test
 
 .PHONY: lsu-test
 lsu-test:
@@ -57,6 +59,15 @@ ifu-axi4lite-adapter-integ-test:
 		$(NPC_HOME)/vsrc/bus/ysyx_ifu_axi4lite_adapter.sv \
 		$(NPC_HOME)/tests/ysyx_ifu_axi4lite_adapter_integ_tb.sv
 	$(IFU_AXI_ADAPTER_INTEG_TEST_OBJ)/Vysyx_ifu_axi4lite_adapter_integ_tb
+
+.PHONY: lsu-axi4lite-adapter-test
+lsu-axi4lite-adapter-test:
+	verilator $(DIRECTED_TEST_FLAGS) \
+		--top-module ysyx_lsu_axi4lite_adapter_tb \
+		--Mdir $(LSU_AXI_ADAPTER_TEST_OBJ) \
+		$(NPC_HOME)/vsrc/bus/ysyx_lsu_axi4lite_adapter.sv \
+		$(NPC_HOME)/tests/ysyx_lsu_axi4lite_adapter_tb.sv
+	$(LSU_AXI_ADAPTER_TEST_OBJ)/Vysyx_lsu_axi4lite_adapter_tb
 
 .PHONY: exu-test
 exu-test:
@@ -111,6 +122,40 @@ access-fault-test: $(VBIN) \
 		grep -Eq " 1 0000000$$cause 1 " $$trace || { cat $$trace; exit 1; }; \
 	done
 	@echo "Instruction/load/store access fault tests: PASS"
+
+$(ADDRESS_MISALIGNED_TEST_DIR)/load.elf: $(NPC_HOME)/tests/address_misaligned.S
+	@mkdir -p $(ADDRESS_MISALIGNED_TEST_DIR)
+	$(RISCV_GCC) $(ACCESS_FAULT_CFLAGS) -DFAULT_KIND=2 -DFAULT_CAUSE=4 \
+		-o $@ $<
+
+$(ADDRESS_MISALIGNED_TEST_DIR)/store.elf: $(NPC_HOME)/tests/address_misaligned.S
+	@mkdir -p $(ADDRESS_MISALIGNED_TEST_DIR)
+	$(RISCV_GCC) $(ACCESS_FAULT_CFLAGS) -DFAULT_KIND=3 -DFAULT_CAUSE=6 \
+		-o $@ $<
+
+$(ADDRESS_MISALIGNED_TEST_DIR)/%.bin: $(ADDRESS_MISALIGNED_TEST_DIR)/%.elf
+	$(RISCV_OBJCOPY) -O binary --only-section=.text $< $@
+
+.PHONY: address-misaligned-test
+address-misaligned-test: $(VBIN) \
+	$(ADDRESS_MISALIGNED_TEST_DIR)/load.bin \
+	$(ADDRESS_MISALIGNED_TEST_DIR)/store.bin
+	@set -eu; \
+	for kind in load store; do \
+		log=$(ADDRESS_MISALIGNED_TEST_DIR)/$$kind.log; \
+		trace=$(ADDRESS_MISALIGNED_TEST_DIR)/$$kind.trace; \
+		case $$kind in load) cause=4;; store) cause=6;; esac; \
+		echo "Address-misaligned $$kind -> $$log"; \
+		$(VBIN) $(ARGS) -b --commit-trace=$$trace \
+			$(ADDRESS_MISALIGNED_TEST_DIR)/$$kind.bin \
+			> $$log 2>&1; \
+		grep -q "HIT GOOD TRAP" $$log || { tail -40 $$log; exit 1; }; \
+		grep -q "D-RAM transactions: requests = 0 " $$log || \
+			{ tail -40 $$log; exit 1; }; \
+		grep -Eq " 1 0000000$$cause 1 " $$trace || \
+			{ cat $$trace; exit 1; }; \
+	done
+	@echo "Load/store address-misaligned tests: PASS"
 
 # Re-run one deterministic image under several instruction-memory timing
 # schedules.  Per-seed logs are build artifacts under build/seed-logs/.

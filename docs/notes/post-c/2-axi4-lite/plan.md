@@ -163,6 +163,13 @@ architectural baseline 均通过，详见
 - 增加 standalone directed test；
 - 覆盖 AW-first、W-first、窄访问、错误 response 和重复副作用检查。
 
+完成状态（2026-09-28）：EXU 已实现 load/store address-misaligned 精确异常，端到端
+测试确认 `mcause=4/6`、`mepc`、DiffTest 和零 D-RAM request；全寄存 LSU adapter
+及 standalone directed test 已完成，覆盖 read、AW/W independence、B response、byte
+lane、错误传播、backpressure、reset 和 transaction 去重。验证记录见
+[`2-lsu-axi4-lite-adapter.md`](2-lsu-axi4-lite-adapter.md)。adapter 尚未接入
+`ysyx_core`，留待阶段 3 统一集成。
+
 ### 阶段 3：Core 与仿真环境集成
 
 - 在 `ysyx_core` 内连接 IFU/LSU local 接口和两个 adapter；

@@ -96,6 +96,8 @@ wire [31:0] branch_target;
 wire [31:0] jalr_target;
 wire        control_redirect;
 wire        operation_complete;
+wire        address_misaligned;
+wire        data_misaligned_exception;
 wire        data_access_exception;
 wire        exception_valid;
 wire [31:0] exception_cause;
@@ -125,14 +127,20 @@ assign pc_plus4      = op_pc + 32'd4;
 assign branch_target = alu_result;
 assign jalr_target   = alu_result & 32'hffff_fffe;
 
+assign address_misaligned =
+    ((op_mem_type[1:0] == 2'd1) && alu_result[0]) |
+    ((op_mem_type[1:0] == 2'd2) && (alu_result[1:0] != 2'b00));
+assign data_misaligned_exception = memory_operation & address_misaligned;
 assign data_access_exception = memory_operation & mem_wait_q &
                                lsu_rsp_valid & lsu_rsp_error;
-assign exception_valid = op_fetch_error | data_access_exception |
-                         op_trap_valid;
+assign exception_valid = op_fetch_error | data_misaligned_exception |
+                         data_access_exception | op_trap_valid;
 assign exception_cause = op_fetch_error ? 32'd1 :
+                         (data_misaligned_exception ?
+                          (op_is_store ? 32'd6 : 32'd4) :
                          (data_access_exception ?
                           (op_is_store ? 32'd7 : 32'd5) :
-                          op_trap_cause);
+                          op_trap_cause));
 
 assign commit_npc = exception_valid ? trap_target :
                     (op_mret_valid ? mret_target :
@@ -141,7 +149,8 @@ assign commit_npc = exception_valid ? trap_target :
 assign control_redirect = exception_valid | op_mret_valid |
                           op_is_jal | op_is_jalr | branch_taken;
 
-assign lsu_req_valid = op_valid & memory_operation & (~mem_wait_q);
+assign lsu_req_valid = op_valid & memory_operation &
+                       (~data_misaligned_exception) & (~mem_wait_q);
 assign lsu_req_write = op_is_store;
 assign lsu_req_addr  = alu_result;
 assign lsu_req_type  = op_mem_type;
@@ -151,7 +160,8 @@ assign lsu_req_fire  = lsu_req_valid & lsu_req_ready;
 assign lsu_rsp_ready = op_valid & mem_wait_q;
 assign lsu_rsp_fire  = lsu_rsp_valid & lsu_rsp_ready;
 
-assign operation_complete = op_fetch_error | (~op_is_mem) |
+assign operation_complete = op_fetch_error | data_misaligned_exception |
+                            (~op_is_mem) |
                             (mem_wait_q & lsu_rsp_valid);
 assign commit_valid = op_valid & operation_complete;
 assign op_ready     = commit_valid;
@@ -186,7 +196,7 @@ assign commit_mem_valid = commit_valid & memory_operation;
 assign commit_mem_write = op_is_store;
 assign commit_mem_addr  = alu_result;
 assign commit_mem_wdata = op_rs2_data;
-assign commit_mem_error = commit_mem_valid & lsu_rsp_error;
+assign commit_mem_error = commit_mem_valid & data_access_exception;
 assign commit_exception = commit_valid & exception_valid;
 assign commit_exception_cause = exception_cause;
 assign commit_is_mmio   = commit_mem_valid & (alu_result[31:28] == 4'ha);
@@ -207,7 +217,8 @@ end
 
 property p_memory_commit_requires_lsu_response;
     @(posedge clk) disable iff (!rst_n)
-        commit_mem_valid |-> mem_wait_q && lsu_rsp_valid;
+        commit_mem_valid && !data_misaligned_exception
+        |-> mem_wait_q && lsu_rsp_valid;
 endproperty
 assert property (p_memory_commit_requires_lsu_response);
 
@@ -245,6 +256,14 @@ property p_fetch_error_does_not_issue_lsu;
         op_valid && op_fetch_error |-> !lsu_req_valid;
 endproperty
 assert property (p_fetch_error_does_not_issue_lsu);
+
+property p_misaligned_memory_does_not_issue_lsu;
+    @(posedge clk) disable iff (!rst_n)
+        op_valid && data_misaligned_exception
+        |-> commit_exception && !lsu_req_valid && !commit_mem_error &&
+            (commit_exception_cause == (op_is_store ? 32'd6 : 32'd4));
+endproperty
+assert property (p_misaligned_memory_does_not_issue_lsu);
 
 property p_memory_error_raises_access_fault;
     @(posedge clk) disable iff (!rst_n)

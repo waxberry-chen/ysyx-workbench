@@ -283,6 +283,52 @@ initial begin
           "fetch access fault produced a normal side effect");
     tick;
 
+    // A misaligned halfword load traps before issuing an LSU request.  It is
+    // still identified as a memory instruction in commit metadata, but it is
+    // not a bus response error.
+    clear_op;
+    set_pc(32'h8000_00f0);
+    op_valid = 1'b1;
+    op_is_load = 1'b1;
+    op_mem_type = 3'd1;
+    op_alu_rhs_imm = 1'b1;
+    op_rs1_data = 32'h8000_1001;
+    op_gpr_wen = 1'b1;
+    op_wb_sel = 2'd2;
+    op_rd_idx = 5'd7;
+    settle;
+    check(commit_valid && commit_exception &&
+          commit_exception_cause == 32'd4 && trap_commit &&
+          redirect_valid && redirect_target == trap_target,
+          "misaligned load did not raise cause 4");
+    check(commit_mem_valid && !commit_mem_write &&
+          commit_mem_addr == 32'h8000_1001 && !commit_mem_error &&
+          !lsu_req_valid && !gpr_write_valid,
+          "misaligned load produced a request or normal side effect");
+    tick;
+
+    // A misaligned word store raises cause 6 and must not reach LSU, so no
+    // partial store can become visible.
+    clear_op;
+    set_pc(32'h8000_00f4);
+    op_valid = 1'b1;
+    op_is_store = 1'b1;
+    op_mem_type = 3'd2;
+    op_alu_rhs_imm = 1'b1;
+    op_rs1_data = 32'h8000_1002;
+    op_rs2_data = 32'hdead_beef;
+    settle;
+    check(commit_valid && commit_exception &&
+          commit_exception_cause == 32'd6 && trap_commit &&
+          redirect_valid && redirect_target == trap_target,
+          "misaligned store did not raise cause 6");
+    check(commit_mem_valid && commit_mem_write &&
+          commit_mem_addr == 32'h8000_1002 &&
+          commit_mem_wdata == 32'hdead_beef && !commit_mem_error &&
+          !lsu_req_valid && !gpr_write_valid && !csr_write_valid,
+          "misaligned store produced a request or normal side effect");
+    tick;
+
     // A failed load retires as cause 5 and must not write its destination.
     clear_op;
     set_pc(32'h8000_0100);
