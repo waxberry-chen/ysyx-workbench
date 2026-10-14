@@ -195,6 +195,11 @@ lane、错误传播、backpressure、reset 和 transaction 去重。验证记录
 - 记录 adapter 引入的 cycles/CPI/stall 变化；
 - 冻结两套 master 接口，作为后续 Arbiter 的输入。
 
+完成状态（2026-09-28）：新增 `make -C npc axi4lite-signoff` 聚合入口并完成全量验收；
+directed tests、异常、34 项 CPU tests、trace hash、10 个随机 seed 和 AM/MMIO smoke tests
+全部通过。两套 AXI4-Lite master interface 已冻结，已知性能代价与阶段边界见
+[`4-signoff.md`](4-signoff.md)。Milestone `2-axi4-lite` 至此关闭。
+
 ## 5. Optional：降低 adapter 固定延迟
 
 全寄存 adapter 的无 stall 路径预计为：

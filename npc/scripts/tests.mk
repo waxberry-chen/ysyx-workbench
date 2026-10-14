@@ -4,6 +4,17 @@
 RAM_SEEDS ?= 1 2 3 4 5 6 7 8 9 10
 RAM_MAX_LATENCY ?= 7
 RAM_READY_PERCENT ?= 50
+AM_SMOKE_SECONDS ?= 10
+
+AXI_SIGNOFF_DIR := $(OBJ_DIR)/axi4lite-signoff
+AXI_CPU_TEST_DIR := $(NPC_HOME)/../am-kernels/tests/cpu-tests
+AXI_HELLO_DIR := $(NPC_HOME)/../am-kernels/kernels/hello
+AXI_YIELD_OS_DIR := $(NPC_HOME)/../am-kernels/kernels/yield-os
+AXI_AM_TEST_DIR := $(NPC_HOME)/../am-kernels/tests/am-tests
+AXI_CPU_TESTS := $(filter-out unalign,$(basename \
+	$(notdir $(wildcard $(AXI_CPU_TEST_DIR)/tests/*.c))))
+AXI_ADD_IMG := $(AXI_CPU_TEST_DIR)/build/add-riscv32e-npc.bin
+AXI_ARCH_TRACE_HASH := bbf8496edf2329d695eb4437641ced89bba9cf0b6006f1a0b5955c32941e9284
 
 DIRECTED_TEST_FLAGS := --binary --timing --assert --sv -Wall -Wno-fatal \
 	-Wno-BLKSEQ -Wno-SYNCASYNCNET -Wno-TIMESCALEMOD
@@ -176,3 +187,108 @@ seed-regress: $(VBIN) $(IMG)
 		grep -q "HIT GOOD TRAP" $$log || { tail -40 $$log; exit 1; }; \
 	done
 	@echo "All RAM seeds passed: $(RAM_SEEDS)"
+
+# AXI4-Lite milestone sign-off.  Keep the orchestration here rather than in
+# the main Makefile so the default build interface remains small.
+.PHONY: axi4lite-directed-regress
+axi4lite-directed-regress:
+	$(MAKE) lint primitive-test ifu-test lsu-test exu-test \
+		ifu-axi4lite-adapter-test ifu-axi4lite-adapter-integ-test \
+		lsu-axi4lite-adapter-test access-fault-test \
+		address-misaligned-test
+
+.PHONY: axi4lite-cpu-regress
+axi4lite-cpu-regress:
+	@set -eu; \
+	mkdir -p $(AXI_SIGNOFF_DIR); \
+	log=$(AXI_SIGNOFF_DIR)/cpu-tests.log; \
+	$(MAKE) -C $(AXI_CPU_TEST_DIR) ARCH=riscv32e-npc \
+		ALL="$(AXI_CPU_TESTS)" run > $$log 2>&1; \
+	cat $$log; \
+	if grep -q "FAIL" $$log; then exit 1; fi; \
+	pass_count=$$(grep -c "PASS" $$log || true); \
+	if [ $$pass_count -ne $(words $(AXI_CPU_TESTS)) ]; then \
+		echo "Expected $(words $(AXI_CPU_TESTS)) CPU-test PASS lines, got $$pass_count"; \
+		exit 1; \
+	fi
+
+.PHONY: axi4lite-trace-test
+axi4lite-trace-test: $(VBIN)
+	@set -eu; \
+	test -f $(AXI_ADD_IMG) || { \
+		echo "Missing $(AXI_ADD_IMG); run axi4lite-cpu-regress first"; \
+		exit 1; \
+	}; \
+	mkdir -p $(AXI_SIGNOFF_DIR); \
+	trace=$(AXI_SIGNOFF_DIR)/add.trace; \
+	log=$(AXI_SIGNOFF_DIR)/add.log; \
+	$(VBIN) $(ARGS) -b \
+		--ram-seed=42 --ram-max-latency=3 --ram-ready-percent=75 \
+		--commit-trace=$$trace $(AXI_ADD_IMG) > $$log 2>&1; \
+	grep -q "HIT GOOD TRAP" $$log || { tail -40 $$log; exit 1; }; \
+	grep -q "committed instructions = 1095" $$log || \
+		{ tail -40 $$log; exit 1; }; \
+	grep -q "I-RAM transactions: requests = 1310, responses = 1310" \
+		$$log || { tail -40 $$log; exit 1; }; \
+	grep -q "D-RAM transactions: requests = 282 (loads = 243, stores = 39), responses = 282" \
+		$$log || { tail -40 $$log; exit 1; }; \
+	arch_hash=$$(awk '!/^#/ {print $$1, $$2, $$3, $$4, $$5}' $$trace | \
+		sha256sum | cut -d ' ' -f 1); \
+	if [ "$$arch_hash" != "$(AXI_ARCH_TRACE_HASH)" ]; then \
+		echo "Architectural trace hash mismatch:"; \
+		echo "  expected $(AXI_ARCH_TRACE_HASH)"; \
+		echo "  actual   $$arch_hash"; \
+		exit 1; \
+	fi; \
+	echo "AXI4-Lite architectural trace: PASS ($$arch_hash)"
+
+.PHONY: axi4lite-am-smoke
+axi4lite-am-smoke:
+	@set -eu; \
+	mkdir -p $(AXI_SIGNOFF_DIR); \
+	hello_log=$(AXI_SIGNOFF_DIR)/hello.log; \
+	$(MAKE) -C $(AXI_HELLO_DIR) ARCH=riscv32e-npc run \
+		mainargs=I-love-ysyx > $$hello_log 2>&1; \
+	grep -q "Hello, AbstractMachine!" $$hello_log || \
+		{ tail -40 $$hello_log; exit 1; }; \
+	grep -q "mainargs = 'I-love-ysyx'." $$hello_log || \
+		{ tail -40 $$hello_log; exit 1; }; \
+	grep -q "HIT GOOD TRAP" $$hello_log || \
+		{ tail -40 $$hello_log; exit 1; }; \
+	echo "UART hello smoke test: PASS"; \
+	rtc_log=$(AXI_SIGNOFF_DIR)/rtc.log; \
+	status=0; \
+	timeout $(AM_SMOKE_SECONDS)s $(MAKE) -C $(AXI_AM_TEST_DIR) \
+		ARCH=riscv32e-npc run mainargs=t > $$rtc_log 2>&1 || status=$$?; \
+	if [ $$status -ne 124 ] && [ $$status -ne 143 ]; then \
+		tail -40 $$rtc_log; exit 1; \
+	fi; \
+	grep -q "GMT (" $$rtc_log || { tail -40 $$rtc_log; exit 1; }; \
+	if grep -Eq "mismatch|Assertion failed|ABORT" $$rtc_log; then \
+		tail -40 $$rtc_log; exit 1; \
+	fi; \
+	echo "RTC smoke test: PASS (expected timeout)"; \
+	yield_log=$(AXI_SIGNOFF_DIR)/yield-os.log; \
+	status=0; \
+	timeout $(AM_SMOKE_SECONDS)s $(MAKE) -C $(AXI_YIELD_OS_DIR) \
+		ARCH=riscv32e-npc run > $$yield_log 2>&1 || status=$$?; \
+	if [ $$status -ne 124 ] && [ $$status -ne 143 ]; then \
+		tail -40 $$yield_log; exit 1; \
+	fi; \
+	grep -q "ABAB" $$yield_log || { tail -40 $$yield_log; exit 1; }; \
+	if grep -Eq "mismatch|Assertion failed|ABORT" $$yield_log; then \
+		tail -40 $$yield_log; exit 1; \
+	fi; \
+	echo "yield-os smoke test: PASS (expected timeout)"
+
+.PHONY: axi4lite-signoff
+axi4lite-signoff:
+	$(MAKE) axi4lite-directed-regress
+	$(MAKE) axi4lite-cpu-regress
+	$(MAKE) axi4lite-trace-test
+	$(MAKE) seed-regress IMG=$(AXI_ADD_IMG) \
+		RAM_SEEDS='$(RAM_SEEDS)' \
+		RAM_MAX_LATENCY=$(RAM_MAX_LATENCY) \
+		RAM_READY_PERCENT=$(RAM_READY_PERCENT)
+	$(MAKE) axi4lite-am-smoke AM_SMOKE_SECONDS=$(AM_SMOKE_SECONDS)
+	@echo "AXI4-Lite milestone sign-off: PASS"

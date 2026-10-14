@@ -19,10 +19,11 @@
 1-memory-request：弹性前后端 + 精确访存异常
         │
         ▼
-当前主线
+已完成
 2-axi4-lite：IFU/LSU AXI4-Lite adapters，保留 local req/rsp 边界
         │
         ▼
+当前主线
 3-axi4-lite-interconnect：Arbiter -> Xbar -> SRAM/UART/CLINT/DECERR
         │               同步建立 lint/SVA/随机回压基线
         ▼
@@ -171,9 +172,13 @@
 - 基线能由单条或少量命令复现；
 - 后续不再重新引入集中式 main FSM。
 
-### Milestone 2：完成 `2-axi4-lite` adapters
+### Milestone 2：完成 `2-axi4-lite` adapters（已完成）
 
 已有实施细节以 [`2-axi4-lite/plan.md`](2-axi4-lite/plan.md) 为准。这个 milestone 只负责把 IFU/LSU 的 local transaction 转换成两套 AXI4-Lite master，不混入 Arbiter、Xbar 或设备。
+
+2026-09-28 已完成实现与功能/协议 sign-off；结果和可重复回归入口见
+[`2-axi4-lite/4-signoff.md`](2-axi4-lite/4-signoff.md)。更深的 coverage/formal 项与下一阶段
+interconnect system-level test plan 合并实施。
 
 #### 实现顺序
 
