@@ -1,7 +1,7 @@
 # M3 面试 Q&A：AXI4-Lite 互联
 
-> 更新：2026-10-14，随 S2 Xbar/default 实现与验证更新。
-> 当前已验证 standalone Arbiter、Xbar/default 及后两者连接；SRAM/UART/CLINT 与 Core 集成尚未完成。实测范围见 [S1 报告](../1-arbiter.md)、[S2 报告](../2-xbar.md)。
+> 更新：2026-10-14，随 S3 SRAM/UART/CLINT 实现与验证更新。
+> 当前已验证 standalone Arbiter、Xbar/default、SRAM/UART/CLINT；完整 fabric 与 Core 集成尚未完成。实测范围见 [S1 报告](../1-arbiter.md)、[S2 报告](../2-xbar.md)、[S3 报告](../3-slaves.md)。
 
 本文件按有价值的进展更新，不要求每次提交记录。回答用于解释本工程的决策，计划中的能力不表述为已完成。
 
@@ -51,7 +51,7 @@
 
 **追问与取舍：** 统计应区分 completed、reset-aborted 和已发生的 side effect。不能跨 reset 强求 request=response，也不能把清空响应误认为写从未发生。单独 reset 一个 slave 的恢复协议不在当前范围内。
 
-**证据：** S1 的 13 个 reset 时点测试；该轮 `10143 accepted = 10132 completed + 11 aborted`。scripted slave 检查 reset 后不重复执行旧事务；真实 UART/存储器的 reset 副作用仍待后续 slave 验证。
+**证据：** S1 的 13 个 reset 时点测试；该轮 `10143 accepted = 10132 completed + 11 aborted`。scripted slave 检查 reset 后不重复执行旧事务；S3 又以真实 UART/SRAM/CLINT 的 24 个 reset 场景验证不重放字符、保留内存和 timer 清零；完整系统 reset 仍待集成。
 
 ## 7. 为什么需要独立总线测试，CPU 跑通不够吗？
 
@@ -73,14 +73,54 @@
 
 **简短回答：** 地址不在任何窗口内，由 Xbar 选择 default slave 返回 DECERR；地址映射到了设备，但操作不合法，由设备返回 SLVERR。即使已经知道地址无效，AXI 写响应也必须等 AW/W 都被接受，不能收到 AW 就提前回 B，否则留下的 W 可能污染下一笔事务。
 
-**追问与取舍：** default 不做存储/设备访问，WSTRB=0 也不能把未映射地址变成成功。它返回稳定的 DECERR，读数据为零，等待上游接收，然后才能服务新事务。Xbar 原样转发 mapped 未对齐地址；不能把地址对齐后误访问另一个合法寄存器。S2 已验证 default；实际 mapped slave 的 SLVERR 生成和无副作用仍待 S3。
+**追问与取舍：** default 不做存储/设备访问，WSTRB=0 也不能把未映射地址变成成功。它返回稳定的 DECERR，读数据为零，等待上游接收，然后才能服务新事务。Xbar 原样转发 mapped 未对齐地址；不能把地址对齐后误访问另一个合法寄存器。S2 已验证 default；S3 已独立验证 mapped slave 的 SLVERR 生成和无副作用，完整 fabric 的端到端传播仍待集成。
 
 **证据：** [DECERR RTL](../../../../../npc/vsrc/bus/ysyx_axi4lite_decerr.sv)、[直接 slave 测试](../../../../../npc/tests/axi4lite_decerr_tb.cpp)及 Xbar/default 连接回归；错误后继续运行 mapped 请求。
 
 ## 10. SRAM 容量为什么用范围比较，如何避免地址镜像和加法溢出？
 
-**简短回答：** 只截取地址低位做索引可能把越界地址映射回 SRAM。Xbar 先比较完整地址是否在 `[base, base+bytes)` 内，结束地址用 33-bit 计算，并拒绝零容量、未对齐、溢出或与 MMIO 重叠的配置。真正进入 SRAM 后才能计算相对索引，S3 还需要保证存储索引与同一容量一致。
+**简短回答：** 只截取地址低位做索引可能把越界地址映射回 SRAM。Xbar 先比较完整地址是否在 `[base, base+bytes)` 内，结束地址用 33-bit 计算，并拒绝零容量、未对齐、溢出或与 MMIO 重叠的配置。SRAM 自身也检查完整范围和对齐，再按相对索引访问；S3 已用同一容量参数验证索引和边界。
 
 **追问与取舍：** 不依赖 2 的幂次容量可以让边界更明确，但不能据此宣称面积更优。验证应包含第一/最后合法 word、结束地址、未对齐末字节和镜像风险地址，并换一个非 2 的幂次容量重跑，避免测试和实现共享同一错误假设。
 
 **证据：** [S2 报告](../2-xbar.md)：1 MiB 与 12 KiB 完整回归、七种参数守卫检查。尚无真实 SRAM macro 或综合 PPA 结论。
+
+## 11. 为什么把公共 AXI 控制和设备逻辑分开？
+
+**简短回答：** 三个 slave 都需要独立收 AW/W、串行处理事务、保持 R/B，并在 reset 时清理控制状态。我把这些放进同一个 frontend，设备后端只决定读值、合法性和副作用，减少三份握手逻辑各自演化的风险。
+
+**追问与取舍：** 当前后端时序是固定的：AR 握手边沿采样读数据，AW/W 收齐后下一边沿执行一次写。它没有通用的可变延迟后端握手；换 SRAM macro 时要重新核对时序，不能只替换 array 后就宣称完成适配。
+
+**证据：** [frontend RTL](../../../../../npc/vsrc/bus/ysyx_axi4lite_slave_frontend.sv) 与 [S3 报告](../3-slaves.md)，三个设备均通过独立 AW/W 顺序和长响应反压测试。
+
+## 12. UART 为什么在写执行时输出，而不是每次 BVALID 时输出？
+
+**简短回答：** BVALID 可能因 BREADY=0 持续很多周期，它表达的是同一个未被消费的响应。UART 的副作用只在完整写执行边沿发生一次，输出一个周期的 tx_valid；之后无论 B 等多久，都只保持响应，不重新输出。
+
+**追问与取舍：** 本项目 sink 必须每周期能接收。如果将来连接有流控的串口或 FIFO，就需要明确事件接受与缓冲契约。reset 只能丢弃未完成控制状态，不能收回已输出字符；验证要分别数事件、完成响应和 reset-aborted。
+
+**证据：** [UART RTL](../../../../../npc/vsrc/periph/ysyx_axi4lite_uart.sv) 的 A09 属性；S3 每种容量观察 93 个正确字节，包含完整字符串、长 B hold 和已执行写后的 reset。
+
+## 13. WSTRB=0 是不是所有设备都应该成功？
+
+**简短回答：** strobe 表示哪些 byte 被写，不等于绕过地址或权限检查。我的 SRAM 在合法 data-write 地址上把零 strobe 当作 OKAY no-op；UART 的合法 TX word 也如此。CLINT 只读，任何写都返回 SLVERR；default 对未映射地址仍返回 DECERR。
+
+**追问与取舍：** SRAM 对稀疏 strobe 逐 byte 更新，支持全部 16 种；UART 只接受 lane0 或 zero。非法地址、未对齐地址或 instruction-tagged write 不能因 strobe 为零而变成成功。这些设备权限是本项目策略，不能泛化成所有 AXI slave 的固定规则。
+
+**证据：** [S3 的 byte mask 与错误用例](../3-slaves.md)，包括首末 word、非法地址零 strobe、全部 PROT 和写后内容核对。
+
+## 14. mtime 在 R 被反压时还会增长，为什么读值不能跟着变？
+
+**简短回答：** RVALID 一旦发布，RDATA 必须保持到握手。我在 AR 接受边沿采样更新前的 mtime 半字，之后由响应寄存器保持；计数器继续走。这使一次总线读有明确采样点。
+
+**追问与取舍：** RV32 分两次读 64-bit 时间仍可能撕裂，所以要 high1-low-high2，高位变化就重试。S3 在低位将溢出时实际触发一次重试，还验证了 64-bit 回绕。AM 迁移和微秒换算属于 S4；名义 MTIME_HZ 只是时间单位配置，不是综合 Fmax。
+
+**证据：** [CLINT RTL](../../../../../npc/vsrc/periph/ysyx_axi4lite_clint.sv) 与 [独立总线测试](../../../../../npc/tests/axi4lite_slaves_tb.cpp)；参考值来自独立时钟计数，不从 DUT mtime 读取生成。
+
+## 15. Verilator 中的 1 MiB SRAM 能直接算作已实现的物理 SRAM 吗？
+
+**简短回答：** 不能。目前是可仿真的 RTL word array 和 AXI 控制，还没有指定 macro、工艺库或映射结果。reset 不清空 array，预装载由仿真 host 在 reset 期间完成；不能把 Verilator 的默认零值当作硬件上电内容。
+
+**追问与取舍：** 后续综合要明确 array 被映射成什么、容量和读写时序如何处理。若用 SRAM macro，需要其功能、面积和时序模型；不能排除存储面积却对外宣称完整 SoC PPA。镜像、BSS、heap 和 debugger 的真实访问源还要在 S4 对齐。
+
+**证据：** [SRAM RTL](../../../../../npc/vsrc/periph/ysyx_axi4lite_sram.sv) 与 S3 的 1 MiB/12 KiB/4 B 回归、reset 内容保留测试；尚无综合/STA 结论。

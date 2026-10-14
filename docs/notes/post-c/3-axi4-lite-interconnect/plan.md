@@ -1,10 +1,10 @@
 # M3：AXI4-Lite Interconnect 设计与验收计划
 
-> 日期：2026-10-14；状态：S0–S2 已完成，SRAM/UART/CLINT 与系统集成待实施。
+> 日期：2026-10-14；状态：S0–S3 已完成，Core/B1 系统集成待实施。
 > 阅读时 HEAD：`c6dd719`；M2 实现基线：`5b6f29c`。本文不代表重新执行了 M2 验收。  
 > 配套：[测试矩阵](test-plan.md)、[开发日志](dev-log.md)、[总路线](../roadmap.md)。
 
-2026-10-14：S0/S1 已完成，基线见 [0-baseline.md](0-baseline.md)，Arbiter 实现与验证见 [1-arbiter.md](1-arbiter.md)，M3 测试状态见 [test-status.csv](test-status.csv)。S2 的 Xbar/default 实现与验证见 [2-xbar.md](2-xbar.md)，当前可进入 S3 SRAM/UART/CLINT；尚未集成 Core。
+2026-10-14：S0/S1 已完成，基线见 [0-baseline.md](0-baseline.md)，Arbiter 实现与验证见 [1-arbiter.md](1-arbiter.md)，M3 测试状态见 [test-status.csv](test-status.csv)。S2 的 Xbar/default 实现与验证见 [2-xbar.md](2-xbar.md)，S3 的设备实现与独立验证见 [3-slaves.md](3-slaves.md)，当前可进入 S4 系统集成。
 
 ## 1. 目标、依据与边界
 
@@ -113,6 +113,8 @@ reset 会中止未完成事务，不跨 reset 补发旧响应。已经执行的 
 
 slaves 分别保存 AW/W；即使 W 先到也不能丢失或重复使用。第一版一次仅服务一个 read 或 write，输入同时出现时预留一种，已占用后屏蔽另一种。request 完整且合法时仅执行一次 read sample/write effect，生成寄存 response，保持到 response 握手。不以 RREADY/BREADY 决定是否生成响应。
 
+S3 明确权限边界：三个 mapped slave 仅支持 data write，`AWPROT[2]=1` 返回 SLVERR，包括 WSTRB=0；`PROT[1:0]` 不实施权限隔离。这是项目策略，不是 AXI 通用限制。SRAM 允许 instruction read，UART/CLINT 拒绝 instruction read；default 仍一律 DECERR。
+
 所有错误在副作用前判定：失败 write 不改变内存/设备，失败 read 的 RDATA 固定为 0。不得先写成功，再由注入器把 B 改成错误以模拟“精确 store fault”。协议/scoreboard 错误可以使测试失败；正常软件访问非法地址必须通过 AXI error 返回，不能由 harness abort 代替。
 
 ### 4.3 SRAM
@@ -173,7 +175,7 @@ slaves 分别保存 AW/W；即使 W 先到也不能丢失或重复使用。第�
 | S0 基线（已完成） | 保存 M2 版本、配置、镜像/hash；检查当前接口与本计划；为测试 ID 建立结果清单 | 已明确 legacy/b1 隔离约定并完成 legacy 独立 NPC 构建；最小相关回归通过，profile selector/AM 隔离在 S4 实施 |
 | S1 Arbiter（已完成） | owner/type、RR、独立 AW/W 槽、响应返回；独立 driver + scripted slave | T01–T04/T08 的 Arbiter 部分通过；10 seeds × 1000 笔随机事务与 13 个 reset 场景通过，详见 S1 报告 |
 | S2 Xbar（已完成） | 地址范围、target holding、default error slave | T05/T06/T08 的 Xbar/default 子集通过；两种容量、10 seeds × 1000 笔及 reset 恢复通过，见 S2 报告；mapped slave 错误待 S3 |
-| S3 Slaves | SRAM、UART、CLINT 及仿真输出/初始化边界 | T07/T09/T10 通过，包括全部 WSTRB、计时器 rollover 和 exactly-once |
+| S3 Slaves（已完成） | SRAM、UART、CLINT、公共 frontend 及仿真输出/初始化边界 | T07/T09/T10 设备子集通过；三种容量各完成 30000 笔随机事务、全部 WSTRB、rollover 与 UART exactly-once；AM/系统部分待 S4 |
 | S4 系统集成 | 两个 wrapper、filelist、harness、loader、AM profile、DiffTest | 有限 CPU 程序、hello、uptime、yield-os 与异常回归通过 |
 | S5 RT-Thread 与 closure | 固定 BSP/workload、随机回归、coverage、波形与性能结果 | 测试矩阵所有必测项有证据，未完成项如实列出，不假称 sign-off |
 
@@ -208,7 +210,7 @@ M3 期间可准备 DC/PT 最小 flow；M3 稳定后进入 M4 正式面积/时序
 
 ## 8. 风险、待验证项与阻塞判定
 
-**目前没有阻塞进入 S3 SRAM/UART/CLINT 的事项。** 下列项目须在对应步骤解决：
+**目前没有阻塞进入 S4 系统集成的事项。** 下列项目须在对应步骤解决：
 
 | 项目 | 当前状态 | 何时构成阻塞 / 处理方式 |
 | --- | --- | --- |

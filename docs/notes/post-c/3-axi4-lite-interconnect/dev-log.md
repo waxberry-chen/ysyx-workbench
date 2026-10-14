@@ -82,3 +82,18 @@
 - 更新阶段状态及有价值的 Q&A。未改变 production filelist、Core、harness、AM/NEMU；mapped slave 的 SLVERR、SRAM 字节写、UART/CLINT 副作用仍待 S3。
 
 原始日志、源码、CSV 与测试程序已保存到 build 外的 `artifacts/m3-s2-20261014.tar.gz`。当前无未解决阻塞；下一步 S3 SRAM/UART/CLINT。
+
+## 2026-10-14：S3 SRAM/UART/CLINT 实现与独立验证完成
+
+状态：**S3 PASS，无阻塞，可进入 S4**。报告：[3-slaves.md](3-slaves.md)；证据：[s3-manifest.json](s3-manifest.json)。运行起点 `6fb1750`，初始工作区干净。
+
+- 新增公共 slave frontend：AR 边沿采样，独立 AW/W 槽，收齐后的独立执行阶段，寄存 R/B，read/write 串行和 RR。
+- SRAM 支持全部 16 个 strobe、完整范围/对齐检查、reset 保留内容；UART 用单周期 tx 事件连接始终可消费的仿真 sink；CLINT 按时钟计数、AR 边沿采样、reset 清零。
+- 明确 data-write 权限：mapped slave 拒绝 AWPROT[2]=1，包括零 strobe；低两位不实施权限隔离。正常 Core 的请求编码不受影响。
+- 新增 `b1-slaves-test` 与 `b1-slaves-config-test`。1 MiB、12 KiB、4 B 均完成 seeds 1–10 × 三设备 × 1000 笔；每种容量总记账 32125 accepted / 32107 completed / 18 aborted，436 个 coverage bin。
+- 全部 byte mask × 首末 word、错误访问无副作用、UART 字符流、24 个 reset 场景、CLINT 低位/64-bit rollover 均通过；high-low-high 实际重试一次。
+- 三种容量各观察 93 个 UART 事件、核对 2442 笔非零 mask 的 SRAM 写。六个参数守卫用例、strict SVA lint、synthesis 分支静态 lint、S2 Xbar/default 回归通过。
+- 首次编译遇 ccache 沙箱权限，授权后通过；首轮功能测试已通过，后续补强 reset 数据差异、非法地址零 strobe 和最小容量边界。没有观察到 RTL 功能 mismatch。
+- 仿真 host 只在初始 reset 装载 SRAM，mtime 预置只用于 rollover 实验；正常事务由 AXI 驱动。具体镜像 loader、harness 输出、AM timer/容量和 Core 集成仍在 S4。
+
+本轮未修改 production Core/filelist、harness、AM/NEMU，未重跑 CPU/DiffTest，也未执行实际综合/STA/formal。更新阶段状态、Q&A 与展示入口；源码、日志、CSV 和测试程序归档到 build 外的 `artifacts/m3-s3-20261014.tar.gz`。下一步 S4 系统集成。

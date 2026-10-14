@@ -1,0 +1,246 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-14",
+  "stage": "M3 S3",
+  "status": "PASS",
+  "scope": "standalone SRAM/UART/CLINT and shared AXI frontend; full fabric/Core integration pending",
+  "base_commit": "6fb175035ba2f892dae88dbe8337ab0289f9e46b",
+  "initial_workspace_clean": true,
+  "candidate": "uncommitted sources identified by SHA-256; production Core/filelist/harness/AM/NEMU unchanged",
+  "source_sha256": {
+    ".gitignore": "809affa12e1e2c4a480db65c001223225181b12de04798127ccc2d94c2cd16c1",
+    "npc/.gitignore": "efea655f801b3e53a0067874980c4af4b387d478912e28a5ba2c98f22db1960f",
+    "npc/Makefile": "9792c9dea9a4b4e78f5054a7c63d06a7f5fa66c1d1961aa6339a3621d5eb43a4",
+    "npc/scripts/build.mk": "c14683b891b9f6943fa01b3669821272e8bc35b42561287400f3cc1dcf544749",
+    "npc/scripts/tests.mk": "162d6dae02463bc1a97e21b9095353a519be79cfbb4d9d89d1c09558419ee12a",
+    "npc/vsrc/bus/ysyx_axi4lite_slave_frontend.sv": "256f5493d94251f494e969c6f47c83e9efffaa93a33651c1770b36f850b74d15",
+    "npc/vsrc/periph/ysyx_axi4lite_sram.sv": "69a3df97b4c8ac73b51efb2856999e73a5fce596f0f206e6ced30dc668321556",
+    "npc/vsrc/periph/ysyx_axi4lite_uart.sv": "5b1626741752e3965aca7c0934800d3e1c8f67f2bb5dfa27a7c2370445942f5c",
+    "npc/vsrc/periph/ysyx_axi4lite_clint.sv": "33209f70615788be230b2ef0ca49580e131595f1f0bde888b4725076c174d069",
+    "npc/tests/axi4lite_slaves_test_top.sv": "75da4ad70dd047ccbb454a2897a3b8e826da64c6ee9438f52ecaf0de713144fd",
+    "npc/tests/axi4lite_slaves_tb.cpp": "bfcd96976b9443f0ba096602e7f1051d6f1c67c862d7ce615b97e5f7df7c5253",
+    "npc/tests/axi4lite_slaves_config_tb.cpp": "a3f999b789da045861237db038d7ca5133f925e2773fb739b5199420e621133b",
+    "npc/tests/axi4lite_slaves_config_test.py": "bd8a5255e6c73d7f641b50f106f4ba78384f1c0c83e805ee1b7e711e0802440b",
+    "npc/vsrc/bus/ysyx_axi4lite_xbar.sv": "b546fa1c464bd45c5d223b0c3b96e52fb2ce1c90fb5ade084b8041fd5128cc19",
+    "npc/vsrc/bus/ysyx_axi4lite_decerr.sv": "dcaa36608c78c2bc3ee7abfb73cdec1814d0a0832c19bee3f74d22e2163c9c0a",
+    "npc/tests/axi4lite_xbar_test_top.sv": "0d3cf257831ec3a3e5ba6c73d26b58c1a463412a9899c55dde972cb72bedf36a",
+    "npc/tests/axi4lite_xbar_tb.cpp": "2d63bc52952230ebda468424c01543747d68c8eb959e66a7dcfca925a128ab74",
+    "npc/tests/axi4lite_decerr_tb.cpp": "7136f688ea267fde48cae029083810852e3565dd9a1908c8c52ca82f2c3fab89"
+  },
+  "tools": {
+    "verilator": "Verilator 5.008 2023-03-04 rev v5.008",
+    "g++": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+    "make": "GNU Make 4.3",
+    "python3": "Python 3.10.12"
+  },
+  "commands": [
+    {
+      "argv": [
+        "make",
+        "-C",
+        "npc",
+        "b1-slaves-test"
+      ],
+      "exit": 2,
+      "log": "logs/sandbox-failure.log",
+      "reason": "ccache temporary directory read-only; approved execution outside sandbox"
+    },
+    {
+      "argv": [
+        "make",
+        "-C",
+        "npc",
+        "b1-slaves-test"
+      ],
+      "exit": 0,
+      "log": "logs/initial-functional-pass.log",
+      "note": "initial test before expanding illegal zero-strobe/reset data/minimum-capacity coverage"
+    },
+    {
+      "argv": [
+        "make",
+        "-C",
+        "npc",
+        "b1-slaves-test",
+        "b1-slaves-config-test"
+      ],
+      "exit": 0,
+      "log": "logs/enhanced-pass.log"
+    },
+    {
+      "argv": [
+        "make",
+        "-C",
+        "npc",
+        "b1-slaves-test",
+        "b1-slaves-config-test",
+        "b1-xbar-test"
+      ],
+      "exit": 0,
+      "log": "logs/final-and-s2-compatibility.log"
+    },
+    {
+      "argv": [
+        "make",
+        "-C",
+        "npc",
+        "b1-slaves-test",
+        "B1_TEST_SRAM_BYTES=12288",
+        "OBJ_DIR=/home/cym/prj/ysyx-workbench/npc/build/s3-cap12k"
+      ],
+      "exit": 0,
+      "log": "logs/capacity-12k-final.log"
+    },
+    {
+      "argv": [
+        "make",
+        "-C",
+        "npc",
+        "b1-slaves-test",
+        "B1_TEST_SRAM_BYTES=4",
+        "OBJ_DIR=/home/cym/prj/ysyx-workbench/npc/build/s3-min"
+      ],
+      "exit": 0,
+      "log": "logs/capacity-minimum.log"
+    },
+    {
+      "argv": [
+        "verilator",
+        "--lint-only",
+        "--sv",
+        "-Wall",
+        "-DSYNTHESIS",
+        "--top-module",
+        "axi4lite_slaves_test_top",
+        "npc/vsrc/bus/ysyx_axi4lite_slave_frontend.sv",
+        "npc/vsrc/periph/ysyx_axi4lite_sram.sv",
+        "npc/vsrc/periph/ysyx_axi4lite_uart.sv",
+        "npc/vsrc/periph/ysyx_axi4lite_clint.sv",
+        "npc/tests/axi4lite_slaves_test_top.sv"
+      ],
+      "exit": 0,
+      "log": "logs/synthesis-branch-lint.log"
+    }
+  ],
+  "configuration": {
+    "SRAM_BYTES": [
+      1048576,
+      12288,
+      4
+    ],
+    "random_seeds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "random_transactions_per_seed_per_slave": 1000,
+    "assertions": true,
+    "reset": "all devices and driver together; SRAM content retained; mtime cleared; no UART replay",
+    "preload": "deterministic byte pattern via Verilator public_flat_rw, once while reset held; only AXI runtime writes",
+    "mtime_preset": "test-only controlled seed for rollover; no production preset port",
+    "write_permission": "AWPROT[2]=1 returns SLVERR for all mapped slaves; PROT[1:0] ignored",
+    "lint_waiver": "SYNCASYNCNET only with async reset/SVA; none in SYNTHESIS branch"
+  },
+  "results": {
+    "per_capacity": {
+      "accepted": 32125,
+      "completed": 32107,
+      "reset_aborted": 18,
+      "random_completed": 30000,
+      "observed_uart_events": 93,
+      "successful_nonzero_sram_writes": 2442,
+      "coverage_bins": 436,
+      "cycles": 405707,
+      "mask_boundary_bins": 32,
+      "address_permission_transactions": 512,
+      "reset_cases": 24,
+      "high_low_high_retries": 1,
+      "full_64bit_wrap": "PASS"
+    },
+    "parameter_guards": [
+      {
+        "case": "minimum",
+        "SRAM_BYTES": "4",
+        "expected_valid": "True",
+        "exit_code": "0",
+        "result": "PASS"
+      },
+      {
+        "case": "non_power_of_two",
+        "SRAM_BYTES": "12288",
+        "expected_valid": "True",
+        "exit_code": "0",
+        "result": "PASS"
+      },
+      {
+        "case": "zero",
+        "SRAM_BYTES": "0",
+        "expected_valid": "False",
+        "exit_code": "-6",
+        "result": "PASS"
+      },
+      {
+        "case": "misaligned",
+        "SRAM_BYTES": "6",
+        "expected_valid": "False",
+        "exit_code": "-6",
+        "result": "PASS"
+      },
+      {
+        "case": "overlap",
+        "SRAM_BYTES": "536870988",
+        "expected_valid": "False",
+        "exit_code": "-6",
+        "result": "PASS"
+      },
+      {
+        "case": "overflow",
+        "SRAM_BYTES": "2147483652",
+        "expected_valid": "False",
+        "exit_code": "-6",
+        "result": "PASS"
+      }
+    ],
+    "s2_compatibility": {
+      "xbar": {
+        "accepted": 10488,
+        "completed": 10446,
+        "aborted": 42,
+        "bins": 215
+      },
+      "decerr": {
+        "accepted": 328,
+        "completed": 317,
+        "aborted": 11,
+        "bins": 65
+      }
+    }
+  },
+  "not_run": [
+    "full Arbiter+Xbar+actual slaves fabric and master/route crosses",
+    "Core/CPU/DiffTest and AM workload regression",
+    "AM high-low-high migration/uptime units/calibration",
+    "production image loader/UART sink/debugger integration",
+    "actual synthesis/STA/SRAM macro/PPA",
+    "formal/four-state simulation",
+    "system waveforms and performance closure"
+  ],
+  "next_stage": "S4 Core/B1 system integration",
+  "blockers": [],
+  "integrity": "SHA256SUMS enumerates archived payloads; tar content verified; tracked manifest additionally contains archive digest",
+  "archive": {
+    "path": "artifacts/m3-s3-20261014.tar.gz",
+    "sha256": "8927a6e436b514af4b2ac91ee7d0119a97ead5178bcf3f02ebbf03f5800d717f",
+    "bytes": 922178,
+    "storage": "local ignored artifacts directory; no remote backup",
+    "payload_files": 56,
+    "verified": true
+  }
+}

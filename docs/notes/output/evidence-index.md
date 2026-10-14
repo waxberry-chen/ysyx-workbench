@@ -8,7 +8,8 @@
 | --- | --- | --- | --- |
 | 弹性前后端与事务控制 | [`npc/vsrc/core/`](../../../npc/vsrc/core/) | [架构导读](../post-c/1-memory-request/4-current-npc-architecture.md)、[开发记录](../post-c/1-memory-request/dev-log.md) | 架构导读是 Phase 2B 快照；精确访存异常等后续行为以开发记录和源码为准 |
 | IFU/LSU AXI4-Lite adapters | [`npc/vsrc/bus/`](../../../npc/vsrc/bus/) | [IFU 记录](../post-c/2-axi4-lite/1-ifu-axi4-lite-adapter.md)、[LSU 记录](../post-c/2-axi4-lite/2-lsu-axi4-lite-adapter.md) | 各 single-outstanding；无 burst/AXI ID；外部窄 MMIO 读语义需在 SoC 接入前重新核对 |
-| AXI4-Lite Arbiter、Xbar/default | [`npc/vsrc/bus/`](../../../npc/vsrc/bus/) | [S1](../post-c/3-axi4-lite-interconnect/1-arbiter.md)、[S2](../post-c/3-axi4-lite-interconnect/2-xbar.md)、[Q&A](../post-c/3-axi4-lite-interconnect/qa/README.md) | 模块回归与 Xbar/default 连接通过；双 master 完整 fabric、实际设备及 Core 集成待完成 |
+| AXI4-Lite Arbiter、Xbar/default | [`npc/vsrc/bus/`](../../../npc/vsrc/bus/) | [S1](../post-c/3-axi4-lite-interconnect/1-arbiter.md)、[S2](../post-c/3-axi4-lite-interconnect/2-xbar.md)、[Q&A](../post-c/3-axi4-lite-interconnect/qa/README.md) | 模块回归与 Xbar/default 连接通过；双 master 完整 fabric 与 Core 集成待完成 |
+| RTL SRAM/UART/CLINT | [`npc/vsrc/periph/`](../../../npc/vsrc/periph/) | [S3 设备报告](../post-c/3-axi4-lite-interconnect/3-slaves.md)、[manifest](../post-c/3-axi4-lite-interconnect/s3-manifest.json) | 三种容量模块测试、byte mask、事件与 timer rollover 通过；尚无 Core 集成、AM 迁移或 SRAM macro/PPA 证据 |
 | Core/仿真集成及异常回归 | [`npc/scripts/tests.mk`](../../../npc/scripts/tests.mk) | [集成记录](../post-c/2-axi4-lite/3-core-and-simulation-integration.md)、[阶段验收](../post-c/2-axi4-lite/4-signoff.md) | cause 1/4/5/6/7 定向测试；CPU tests 34/34，排除原 `unalign`；尚非完整 ISA compliance |
 | 随机回压与软件 smoke | 同上 | [阶段验收 §2～3](../post-c/2-axi4-lite/4-signoff.md) | 随机回归为 `add`、seed 1～10、latency 7、ready 50%；RTC/yield-os 为预期 timeout smoke |
 | 架构一致性与性能样本 | commit trace / simulation statistics | [基线](../post-c/2-axi4-lite/0-freeze-baseline.md)、[验收 §4、§6](../post-c/2-axi4-lite/4-signoff.md) | 固定 `add` 样本：1095 commits，5121 → 7801 cycles；架构字段 hash 一致。不是通用性能结论或 PPA 优化成果 |
@@ -23,7 +24,7 @@ make -C npc axi4lite-signoff
 
 ## 尚未形成的证据
 
-- 双 master 完整 RTL fabric、SRAM/UART/CLINT、Core 系统集成与 ysyxSoC 启动/中断闭环。
+- 双 master 完整 RTL fabric、Core/设备系统集成与 ysyxSoC 启动/中断闭环。
 - DC 映射综合、PrimeTime STA、面积/关键路径/时序结果。
 - 明确条件下的架构优化对照实验、功耗分析或 PnR 结果。
 - machine-readable functional coverage closure 与 bounded formal 结果。

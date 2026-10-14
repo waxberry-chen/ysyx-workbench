@@ -84,6 +84,32 @@ b1-decerr-test:
 b1-xbar-config-test:
 	python3 $(NPC_HOME)/tests/axi4lite_xbar_config_test.py $(OBJ_DIR)/b1-xbar-config-test
 
+# S3 device tests; simulation preload/preset access stays in the testbench.
+B1_SLAVES_OBJ := $(OBJ_DIR)/b1-slaves-test
+B1_SLAVES_RTL := $(NPC_HOME)/vsrc/bus/ysyx_axi4lite_slave_frontend.sv \
+	$(NPC_HOME)/vsrc/periph/ysyx_axi4lite_sram.sv \
+	$(NPC_HOME)/vsrc/periph/ysyx_axi4lite_uart.sv \
+	$(NPC_HOME)/vsrc/periph/ysyx_axi4lite_clint.sv
+B1_SLAVES_TOP := $(NPC_HOME)/tests/axi4lite_slaves_test_top.sv
+.PHONY: b1-slaves-lint b1-slaves-test
+b1-slaves-lint:
+	verilator --lint-only --sv -Wall --assert -Wno-SYNCASYNCNET \
+		--top-module axi4lite_slaves_test_top -GSRAM_BYTES=$(B1_TEST_SRAM_BYTES) \
+		$(B1_SLAVES_RTL) $(B1_SLAVES_TOP)
+
+b1-slaves-test: b1-slaves-lint
+	@mkdir -p $(B1_SLAVES_OBJ)
+	verilator --cc --exe --build --assert --sv -Wall -Wno-SYNCASYNCNET \
+		--top-module axi4lite_slaves_test_top -GSRAM_BYTES=$(B1_TEST_SRAM_BYTES) \
+		--Mdir $(B1_SLAVES_OBJ) \
+		-CFLAGS '-std=c++14 -Wall -Wextra -DTEST_SRAM_BYTES=$(B1_TEST_SRAM_BYTES)' \
+		$(B1_SLAVES_RTL) $(B1_SLAVES_TOP) $(NPC_HOME)/tests/axi4lite_slaves_tb.cpp
+	$(B1_SLAVES_OBJ)/Vaxi4lite_slaves_test_top $(B1_SLAVES_OBJ)/coverage.csv
+
+.PHONY: b1-slaves-config-test
+b1-slaves-config-test:
+	python3 $(NPC_HOME)/tests/axi4lite_slaves_config_test.py $(OBJ_DIR)/b1-slaves-config-test
+
 .PHONY: lsu-test
 lsu-test:
 	verilator $(DIRECTED_TEST_FLAGS) \

@@ -1,9 +1,9 @@
 # M3 验证与验收矩阵
 
-> 2026-10-14；状态：S1 Arbiter、S2 Xbar/default 子集已通过，其余 slave/系统测试待推进。
+> 2026-10-14；状态：S1–S3 模块子集已通过，完整 fabric、AM 与 Core 系统测试待推进。
 > 设计契约见 [plan.md](plan.md)，实际执行记录写入 [dev-log.md](dev-log.md)；本文件不记录未经运行的 PASS。
 
-S0 已复测 M2 最小基线，见 [0-baseline.md](0-baseline.md)。S1 结果见 [1-arbiter.md](1-arbiter.md)，S2 结果见 [2-xbar.md](2-xbar.md)。T01–T15 的实施/执行状态维护在 [test-status.csv](test-status.csv)；`ARBITER_PASS`、`XBAR_PASS`、`XBAR_DECERR_PASS` 均仅指对应模块子集，legacy 或 standalone 证据不等于 M3 系统验收。
+S0 已复测 M2 最小基线，见 [0-baseline.md](0-baseline.md)。S1 结果见 [1-arbiter.md](1-arbiter.md)，S2 结果见 [2-xbar.md](2-xbar.md)，S3 结果见 [3-slaves.md](3-slaves.md)。T01–T15 的实施/执行状态维护在 [test-status.csv](test-status.csv)；`ARBITER_PASS`、`XBAR_PASS`、`XBAR_DECERR_PASS`、`SLAVES_PASS` 均仅指对应模块子集，legacy 或 standalone 证据不等于 M3 系统验收。
 
 ## 1. 验证对象与责任
 
@@ -97,11 +97,16 @@ make -C rt-thread-am/bsp/abstract-machine ARCH=riscv32e-npc run
 
 最后一条是从当前 BSP Makefile 推导的入口，未确认构建成功；BSP 依赖 `files.mk`、`rtconfig.h` 和环境变量，干净环境必要时先按该 BSP 的 `init` 目标生成配置，并记录工具/生成输入。
 
-以下均为 **拟新增目标，当前不能直接运行**：
+已实现的模块入口：
+
+```bash
+make -C npc b1-xbar-test b1-xbar-config-test
+make -C npc b1-slaves-test b1-slaves-config-test
+```
+
+以下为 **拟新增目标，当前不能直接运行**：
 
 ```text
-make -C npc b1-xbar-test
-make -C npc b1-slaves-test
 make -C npc b1-directed-regress
 make -C npc b1-random-regress
 make -C npc b1-system-regress
