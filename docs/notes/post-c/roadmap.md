@@ -223,9 +223,9 @@ interconnect system-level test plan 合并实施。
 
 2026-10-14 已建立[设计与实施计划](3-axi4-lite-interconnect/plan.md)、[验收矩阵](3-axi4-lite-interconnect/test-plan.md)和[开发日志](3-axi4-lite-interconnect/dev-log.md)。
 
-目前已完成 [S0 legacy 基线](3-axi4-lite-interconnect/0-baseline.md)、[S1 Arbiter](3-axi4-lite-interconnect/1-arbiter.md)、[S2 Xbar/default](3-axi4-lite-interconnect/2-xbar.md) 和 [S3 SRAM/UART/CLINT](3-axi4-lite-interconnect/3-slaves.md) 的对应验收；设计取舍记录在[阶段 Q&A](3-axi4-lite-interconnect/qa/README.md)。
+目前已完成 [S0 legacy 基线](3-axi4-lite-interconnect/0-baseline.md)、[S1 Arbiter](3-axi4-lite-interconnect/1-arbiter.md)、[S2 Xbar/default](3-axi4-lite-interconnect/2-xbar.md)、[S3 SRAM/UART/CLINT](3-axi4-lite-interconnect/3-slaves.md) 和 [S4 系统集成](3-axi4-lite-interconnect/4-integration.md) 的对应验收；设计取舍记录在[阶段 Q&A](3-axi4-lite-interconnect/qa/README.md)。
 
-当前下一步为 **S4 Core/B1 系统集成**。S0 仅验证 legacy 基线，S1–S3 是模块及有限连接验证，不代表整个 M3 系统已验收。
+当前下一步为 **S5 RT-Thread 与 coverage closure**。S4 的 53 个有限系统程序及 legacy 兼容回归通过；完整 fabric 随机/交叉覆盖、系统波形和 RT-Thread 仍待 S5，不代表整个 M3 已验收。
 
 #### 实现顺序
 

@@ -4,7 +4,7 @@
 > 阅读时 HEAD：`c6dd719`；M2 实现基线：`5b6f29c`。本文不代表重新执行了 M2 验收。  
 > 配套：[测试矩阵](test-plan.md)、[开发日志](dev-log.md)、[总路线](../roadmap.md)。
 
-2026-10-14：S0/S1 已完成，基线见 [0-baseline.md](0-baseline.md)，Arbiter 实现与验证见 [1-arbiter.md](1-arbiter.md)，M3 测试状态见 [test-status.csv](test-status.csv)。S2 的 Xbar/default 实现与验证见 [2-xbar.md](2-xbar.md)，S3 的设备实现与独立验证见 [3-slaves.md](3-slaves.md)，当前可进入 S4 系统集成。
+2026-10-14：S0/S1 已完成，基线见 [0-baseline.md](0-baseline.md)，Arbiter 实现与验证见 [1-arbiter.md](1-arbiter.md)，M3 测试状态见 [test-status.csv](test-status.csv)。S2 的 Xbar/default 实现与验证见 [2-xbar.md](2-xbar.md)，S3 的设备实现与独立验证见 [3-slaves.md](3-slaves.md)，S4 系统集成已完成，见 [4-integration.md](4-integration.md)；当前可进入 S5。
 
 ## 1. 目标、依据与边界
 
@@ -176,7 +176,7 @@ S3 明确权限边界：三个 mapped slave 仅支持 data write，`AWPROT[2]=1`
 | S1 Arbiter（已完成） | owner/type、RR、独立 AW/W 槽、响应返回；独立 driver + scripted slave | T01–T04/T08 的 Arbiter 部分通过；10 seeds × 1000 笔随机事务与 13 个 reset 场景通过，详见 S1 报告 |
 | S2 Xbar（已完成） | 地址范围、target holding、default error slave | T05/T06/T08 的 Xbar/default 子集通过；两种容量、10 seeds × 1000 笔及 reset 恢复通过，见 S2 报告；mapped slave 错误待 S3 |
 | S3 Slaves（已完成） | SRAM、UART、CLINT、公共 frontend 及仿真输出/初始化边界 | T07/T09/T10 设备子集通过；三种容量各完成 30000 笔随机事务、全部 WSTRB、rollover 与 UART exactly-once；AM/系统部分待 S4 |
-| S4 系统集成 | 两个 wrapper、filelist、harness、loader、AM profile、DiffTest | 有限 CPU 程序、hello、uptime、yield-os 与异常回归通过 |
+| S4 系统集成（已完成） | 两个 wrapper、filelist、harness、loader、AM profile、DiffTest | 53 个有限系统程序、第二组容量/频率的 AM 程序及 legacy 兼容回归通过；见 S4 报告 |
 | S5 RT-Thread 与 closure | 固定 BSP/workload、随机回归、coverage、波形与性能结果 | 测试矩阵所有必测项有证据，未完成项如实列出，不假称 sign-off |
 
 建议文件落点（开始实现时再创建）：
@@ -210,13 +210,13 @@ M3 期间可准备 DC/PT 最小 flow；M3 稳定后进入 M4 正式面积/时序
 
 ## 8. 风险、待验证项与阻塞判定
 
-**目前没有阻塞进入 S4 系统集成的事项。** 下列项目须在对应步骤解决：
+**目前没有阻塞进入 S5 的事项。** 下列项目须在对应步骤解决：
 
 | 项目 | 当前状态 | 何时构成阻塞 / 处理方式 |
 | --- | --- | --- |
-| 1 MiB 容量与 RT-Thread 需求 | 尚未量测，参数可调整 | S4/S5 检查 ELF、stack、heap；不足则显式扩大并重建，不能越界继续运行 |
+| 1 MiB 容量与 RT-Thread 需求 | S4 有限程序通过，RT-Thread 尚未量测；容量/heap/linker 已统一 | S5 检查 RT-Thread 的 ELF、stack、heap；不足则显式扩大并重建，不能越界继续运行 |
 | RT-Thread BSP 源码与构建配置 | 本地存在，未复测 | S5 若构建输入缺失或 workload 依赖尚未实现的 RX/interrupt，记录具体缺口；先选择本地可实现的无 RX、协作调度 workload，不能以启动 banner 代替验证 |
-| timer AM 兼容 | 旧快照/日历契约已识别 | S4 必须迁移 high-low-high、has_rtc 和 profile；不能让旧 AM 成功读到不存在的寄存器 |
+| timer AM 兼容 | S4 已迁移 high-low-high、has_rtc=false、profile 和单位换算；两组配置通过 | S5 BSP 沿用新契约；不要恢复不存在的日历寄存器访问 |
 | RV32E x16–x31 合规收尾 | 既有遗留，不属互联协议改动 | 保留准确能力声明；不要顺带扩大 ISA 重构范围 |
 | formal / 四值 / DC/PT | 本次未探测工具与库 | 属性与仿真先行；M4 相关项标待验，不阻塞无依赖的 RTL 工作 |
 | ysyxSoC 窄 MMIO 地址/size | Lite 无法还原原始 read size | M5 单独核对契约；不把 B1 地址图/对齐读语义当成通用 SoC wrapper |

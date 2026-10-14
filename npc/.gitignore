@@ -10,6 +10,7 @@
 !*.cpp
 !/tests/axi4lite_xbar_config_test.py
 !/tests/axi4lite_slaves_config_test.py
+!/tests/b1_system_test.py
 !*.f
 !.gitignore
 !README.md

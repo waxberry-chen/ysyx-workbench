@@ -1,12 +1,24 @@
 ################################
 #     Main Makefile of npc     #
 ################################
-TOP_MODULE 	:= ysyx_core
-RTL_LIST	:= filelist.f
+NPC_PLATFORM ?= legacy
+SRAM_BYTES ?= 1048576
+MTIME_HZ ?= 1000000
+ifeq ($(NPC_PLATFORM),b1)
+TOP_MODULE := ysyx_b1_top
+RTL_LIST := filelist-b1.f
+PLATFORM_CFLAGS := -DNPC_B1 -DNPC_SRAM_BYTES=$(SRAM_BYTES) -DNPC_MTIME_HZ=$(MTIME_HZ)
+PLATFORM_VFLAGS := -GSRAM_BYTES=$(SRAM_BYTES)
+else ifeq ($(NPC_PLATFORM),legacy)
+TOP_MODULE := ysyx_core
+RTL_LIST := filelist.f
+else
+$(error NPC_PLATFORM must be legacy or b1)
+endif
 LINT_TOP	?= $(TOP_MODULE)
 
 NPC_HOME	:= $(abspath .)
-OBJ_DIR		:= $(abspath ./build)
+OBJ_DIR := $(abspath ./build$(if $(filter b1,$(NPC_PLATFORM)),/b1-$(SRAM_BYTES)-$(MTIME_HZ)))
 CSRC_DIR 	:= $(abspath ./csrc)
 VSRC_DIR	:= $(abspath ./vsrc/core)
 REWRITE_MK 	:= $(abspath ./scripts/rewrite.mk)
@@ -17,6 +29,10 @@ VBIN		:= $(OBJ_DIR)/$(addprefix V, $(basename $(notdir $(VERILOG_TOP)))) 	# gene
 
 CINC_DIR 	:= -CFLAGS -I$(CSRC_DIR)/include -I$(NEMU_HOME)/tools/capstone/repo/include
 CSRC 		:= $(shell find $(CSRC_DIR) -name "*.c*")
+ifeq ($(NPC_PLATFORM),b1)
+CSRC := $(filter-out $(CSRC_DIR)/memory/ram_model.cpp $(CSRC_DIR)/memory/map.c \
+  $(CSRC_DIR)/memory/mmio.c $(wildcard $(CSRC_DIR)/periph/*.c),$(CSRC))
+endif
 CHEADERS	:= $(shell find $(CSRC_DIR) -name "*.h")
 # filelist.f is currently a source-only list.  Expand it so RTL edits are real
 # prerequisites of the Verilator binary instead of relying on `make clean`.
@@ -26,7 +42,7 @@ VSRC		:= $(abspath $(shell sed -e '/^[[:space:]]*\#/d' -e '/^[[:space:]]*$$/d' $
 # NEMUISO 	:= $(NEMU_HOME)/build/riscv32-nemu-interpreter-so
 
 ### Verilator Flags ###
-VFLAGS 				= --trace --cc -stats --exe --assert -O3 --threads-dpi all \
+VFLAGS = $(PLATFORM_VFLAGS) -CFLAGS "$(PLATFORM_CFLAGS)" --trace --cc -stats --exe --assert -O3 --threads-dpi all \
 						-F $(VSRC_PATH) \
 						-Mdir $(OBJ_DIR) \
 						-DDIFF \

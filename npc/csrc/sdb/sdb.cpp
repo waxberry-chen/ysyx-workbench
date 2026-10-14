@@ -241,6 +241,12 @@ static int parse_args(int argc, char *argv[]) {
   // Short options
   printf("INFO: parse_args: %s\n", argv[1]);
   while ( (o = getopt_long(argc, argv, "-bhl:d:p:e:", table, NULL)) != -1) {
+#ifdef NPC_B1
+    if (o == OPT_RAM_SEED || o == OPT_RAM_MAX_LATENCY || o == OPT_RAM_READY_PERCENT) {
+      fprintf(stderr, "Legacy C++ RAM timing options are unavailable in B1 (fixed RTL timing)\n");
+      exit(1);
+    }
+#endif
     switch (o) {
       case 'b': sdb_set_batch_mode(); break;
       case 'p': sscanf(optarg, "%d", &sdb_args.difftest_port); break;

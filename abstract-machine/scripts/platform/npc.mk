@@ -13,6 +13,12 @@ LDSCRIPTS += $(AM_HOME)/scripts/linker.ld
 LDFLAGS   += --defsym=_pmem_start=0x80000000 --defsym=_entry_offset=0x0
 LDFLAGS   += --gc-sections -e _start
 
+ifeq ($(NPC_PLATFORM),b1)
+CFLAGS += -DNPC_B1 -DPMEM_SIZE=$(SRAM_BYTES) -DMTIME_HZ=$(MTIME_HZ)
+LDFLAGS += --defsym=_pmem_size=$(SRAM_BYTES)
+LDSCRIPTS += $(AM_HOME)/scripts/npc-b1.ld
+endif
+
 ##### NPC FLAGS #####
 NPCFLAGS += -l $(shell dirname $(IMAGE).elf)/01_npc-log.txt 
 NPCFLAGS += --batch
@@ -34,6 +40,6 @@ image: image-dep
 	@$(OBJCOPY) -S --set-section-flags .bss=alloc,contents -O binary $(IMAGE).elf $(IMAGE).bin
 
 run: insert-arg
-	$(MAKE) -C $(NPC_HOME) run ARGS="$(NPCFLAGS)" IMG=$(IMAGE).bin
+	$(MAKE) -C $(NPC_HOME) run NPC_PLATFORM=$(NPC_PLATFORM) SRAM_BYTES=$(SRAM_BYTES) MTIME_HZ=$(MTIME_HZ) ARGS="$(NPCFLAGS)" IMG=$(IMAGE).bin
 
 .PHONY: insert-arg

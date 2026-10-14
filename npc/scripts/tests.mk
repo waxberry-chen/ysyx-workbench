@@ -1,6 +1,14 @@
 # Secondary verification targets.  Common build paths and the main Verilator
 # binary are defined by the parent Makefile and scripts/build.mk.
 
+.PHONY: b1-system-test
+b1-system-test:
+	$(MAKE) NPC_PLATFORM=b1 SRAM_BYTES=$(SRAM_BYTES) MTIME_HZ=$(MTIME_HZ) build
+	python3 $(NPC_HOME)/tests/b1_system_test.py \
+		--binary $(NPC_HOME)/build/b1-$(SRAM_BYTES)-$(MTIME_HZ)/Vysyx_b1_top \
+		--out $(NPC_HOME)/build/b1-system-test-$(SRAM_BYTES)-$(MTIME_HZ) \
+		--sram-bytes $(SRAM_BYTES) --mtime-hz $(MTIME_HZ)
+
 RAM_SEEDS ?= 1 2 3 4 5 6 7 8 9 10
 RAM_MAX_LATENCY ?= 7
 RAM_READY_PERCENT ?= 50

@@ -1,5 +1,6 @@
 #include <verilated_fst_c.h>
-#include "Vysyx_core.h"
+#include "dut.h"
+#include "platform.h"
 
 #include <stdio.h>
 #include "./include/common.h"
@@ -10,7 +11,7 @@
 #include "./utils/disasm.h"
 
 // ********** Hardware **********
-Vysyx_core *dut = new Vysyx_core;
+NpcDut *dut = new NpcDut;
 VerilatedFstC *m_trace = new VerilatedFstC;
 
 size_t sim_time = 0;
@@ -26,16 +27,20 @@ int main(int argc, char *argv[]) {
   printf(ANSI_FG_YELLOW "Hello, ysyx!\n" ANSI_NONE);
   
   init_sdb(argc, argv);
-  init_ram_model(sdb_args.ram_seed, sdb_args.ram_max_latency,
-                 sdb_args.ram_ready_percent);
+  platform_init();
   commit_trace_init(sdb_args.commit_trace_file);
   sim_stats_reset();
+  #ifdef CONFIG_FST
+    Verilated::traceEverOn(true);
+  #endif
   /* load img into memory */
   printf(ANSI_FG_GREEN  "Loading img: %s\n" ANSI_NONE , sdb_args.img_file);
   uint64_t size = load_img(sdb_args.img_file); 
 
   difftest_init_npc(sdb_args.diff_so_file, size, sdb_args.difftest_port);  // port unused for NEMU
+#ifndef NPC_B1
   init_device();
+#endif
 
   // disassembling init, llvm here while capstone in NEMU
   init_disasm("riscv32");

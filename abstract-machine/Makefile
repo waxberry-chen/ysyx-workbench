@@ -45,22 +45,36 @@ endif
 
 ## 2. General Compilation Targets
 
+# NPC profile/capacity/frequency are part of every object and library path.
+ARCH_BUILD := $(ARCH)
+ifneq ($(filter %-npc,$(ARCH)),)
+NPC_PLATFORM ?= legacy
+SRAM_BYTES ?= 1048576
+MTIME_HZ ?= 1000000
+ifeq ($(NPC_PLATFORM),b1)
+ARCH_BUILD := $(ARCH)-b1-$(SRAM_BYTES)-$(MTIME_HZ)
+else ifneq ($(NPC_PLATFORM),legacy)
+$(error NPC_PLATFORM must be legacy or b1)
+endif
+export NPC_PLATFORM SRAM_BYTES MTIME_HZ
+endif
+
 ### Create the destination directory (`build/$ARCH`)
 WORK_DIR  = $(shell pwd)
-DST_DIR   = $(WORK_DIR)/build/$(ARCH)
+DST_DIR   = $(WORK_DIR)/build/$(ARCH_BUILD)
 $(shell mkdir -p $(DST_DIR))
 
 ### Compilation targets (a binary image or archive)
-IMAGE_REL = build/$(NAME)-$(ARCH)
+IMAGE_REL = build/$(NAME)-$(ARCH_BUILD)
 IMAGE     = $(abspath $(IMAGE_REL))
 # $(info IN MAKEFILE HERE: $(IMAGE))
-ARCHIVE   = $(WORK_DIR)/build/$(NAME)-$(ARCH).a
+ARCHIVE   = $(WORK_DIR)/build/$(NAME)-$(ARCH_BUILD).a
 
 ### Collect the files to be linked: object files (`.o`) and libraries (`.a`)
 OBJS      = $(addprefix $(DST_DIR)/, $(addsuffix .o, $(basename $(SRCS))))
 LIBS     := $(sort $(LIBS) am klib) # lazy evaluation ("=") causes infinite recursions
 LINKAGE   = $(OBJS) \
-  $(addsuffix -$(ARCH).a, $(join \
+  $(addsuffix -$(ARCH_BUILD).a, $(join \
     $(addsuffix /build/, $(addprefix $(AM_HOME)/, $(LIBS))), \
     $(LIBS) ))
 
@@ -100,22 +114,22 @@ LDFLAGS  += -z noexecstack $(addprefix -T, $(LDSCRIPTS))
 ## 5. Compilation Rules
 
 ### Rule (compile): a single `.c` -> `.o` (gcc)
-$(DST_DIR)/%.o: %.c
+$(DST_DIR)/%.o: %.c $(AM_HOME)/Makefile $(wildcard $(AM_HOME)/scripts/platform/$(PLATFORM).mk)
 	@mkdir -p $(dir $@) && echo + CC $<
 	@$(CC) -std=gnu11 $(CFLAGS) -c -o $@ $(realpath $<)
 
 ### Rule (compile): a single `.cc` -> `.o` (g++)
-$(DST_DIR)/%.o: %.cc
+$(DST_DIR)/%.o: %.cc $(AM_HOME)/Makefile $(wildcard $(AM_HOME)/scripts/platform/$(PLATFORM).mk)
 	@mkdir -p $(dir $@) && echo + CXX $<
 	@$(CXX) -std=c++17 $(CXXFLAGS) -c -o $@ $(realpath $<)
 
 ### Rule (compile): a single `.cpp` -> `.o` (g++)
-$(DST_DIR)/%.o: %.cpp
+$(DST_DIR)/%.o: %.cpp $(AM_HOME)/Makefile $(wildcard $(AM_HOME)/scripts/platform/$(PLATFORM).mk)
 	@mkdir -p $(dir $@) && echo + CXX $<
 	@$(CXX) -std=c++17 $(CXXFLAGS) -c -o $@ $(realpath $<)
 
 ### Rule (compile): a single `.S` -> `.o` (gcc, which preprocesses and calls as)
-$(DST_DIR)/%.o: %.S
+$(DST_DIR)/%.o: %.S $(AM_HOME)/Makefile $(wildcard $(AM_HOME)/scripts/platform/$(PLATFORM).mk)
 	@mkdir -p $(dir $@) && echo + AS $<
 	@$(AS) $(ASFLAGS) -c -o $@ $(realpath $<)
 

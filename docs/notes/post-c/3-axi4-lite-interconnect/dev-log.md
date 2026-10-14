@@ -97,3 +97,16 @@
 - 仿真 host 只在初始 reset 装载 SRAM，mtime 预置只用于 rollover 实验；正常事务由 AXI 驱动。具体镜像 loader、harness 输出、AM timer/容量和 Core 集成仍在 S4。
 
 本轮未修改 production Core/filelist、harness、AM/NEMU，未重跑 CPU/DiffTest，也未执行实际综合/STA/formal。更新阶段状态、Q&A 与展示入口；源码、日志、CSV 和测试程序归档到 build 外的 `artifacts/m3-s3-20261014.tar.gz`。下一步 S4 系统集成。
+
+## 2026-10-14：S4 Core/B1 系统集成完成
+
+状态：**S4 PASS，无未解决阻塞，可进入 S5**。报告：[4-integration.md](4-integration.md)；证据：[s4-manifest.json](s4-manifest.json)。起点 `d5d4fcf`，初始工作区干净。
+
+- 新增 Core+Arbiter、B1 两个 wrapper 与独立 filelist/profile；harness 负责有界 preload、真实 RTL SRAM 调试读取、UART event sink 和被动统计，B1 不链接旧 C++ slave。
+- AM 的容量、heap/linker、对象/库/镜像路径及 high-low-high/MTIME_HZ/has_rtc 契约统一。默认 1 MiB / 1 MHz；另测 256 KiB / 2 MHz。
+- 默认配置 53 个有限程序 PASS：34 CPU、hello、lanes、uptime、有限 yield-os、14 个异常、SRAM 末端 redirect；全部 DiffTest ON。第二配置的 3 个 AM 程序通过；debugger/loader/参数/watchdog 与链接容量负例通过。
+- legacy 34 CPU、固定 add trace、原 IFU+adapter redirect 和 cause 1/4/5/6/7 通过。B1 add 1095 commits / 16402 cycles，与 legacy 架构 trace hash 一致；时序模型不同，不宣称 PPA 或优化收益。
+- 实际修复 Verilator VPATH 复用父目录 legacy 对象导致 B1 DiffTest 初始化按 128 MiB 拷贝并崩溃的问题。测试开发还修正 UART 预期、AM TEST/NAME 递归传参、头文件和裸机 PIE 选项；未观察到最终 RTL 功能 mismatch。
+- 三顶层 lint 只有既有 immediate 未使用位告警。源码、镜像、reference、逐项日志、commit/UART trace、CSV 与工具版本归档到 build 外；更新 Q&A 与展示入口。
+
+S5 保留完整 fabric 随机 shim/scoreboard、redirect phase × response/reset 交叉覆盖、RT-Thread、波形及 M3 closure。当前没有综合/STA/formal/PPA 结果，不将 S4 通过等同于 M3 sign-off。

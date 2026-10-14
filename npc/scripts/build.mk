@@ -3,10 +3,17 @@ IMG ?= $(NPC_HOME)/dummy-riscv32e-npc.bin
 
 VFLAGS += --trace-fst
 
-$(VBIN): $(CSRC) $(CHEADERS) $(VSRC) $(VSRC_PATH)
+BUILD_CONFIG := $(OBJ_DIR)/npc-build-config
+.PHONY: build-config-force
+$(BUILD_CONFIG): build-config-force
+	@mkdir -p $(OBJ_DIR)
+	@printf '%s\n' '$(NPC_PLATFORM) $(SRAM_BYTES) $(MTIME_HZ) $(VFLAGS)' > $@.tmp
+	@cmp -s $@.tmp $@ || cp $@.tmp $@
+
+$(VBIN): $(BUILD_CONFIG) $(NPC_HOME)/Makefile $(wildcard $(NPC_HOME)/scripts/*.mk) $(CSRC) $(CHEADERS) $(VSRC) $(VSRC_PATH)
 	@echo "$(COLOR_YELLOW)INFO:$(COLOR_NONE) Verilating $(VBIN)..."
 	@verilator $(VFLAGS) $(CSRC) $(CINC_DIR)
-	@make -s -C $(OBJ_DIR) -f $(REWRITE_MK)
+	@make -s -C $(OBJ_DIR) -f $(REWRITE_MK) VTOP=$(notdir $(VBIN))
 
 # here should put $(IMG) at last 
 run: $(VBIN) $(IMG)
@@ -22,3 +29,6 @@ clean:
 	@rm -rf $(OBJ_DIR)
 	@rm -rf *.vcd
 	@rm -rf *.fst
+
+.PHONY: build
+build: $(VBIN)

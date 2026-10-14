@@ -4,11 +4,11 @@
 #include <inttypes.h>
 #include <random>
 
-#include "Vysyx_core.h"
+#include "dut.h"
 #include "common.h"
 #include "paddr.h"
 
-extern Vysyx_core *dut;
+extern NpcDut *dut;
 
 #ifdef CONFIG_RAM
 namespace {

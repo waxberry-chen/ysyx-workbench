@@ -113,7 +113,7 @@
 
 **简短回答：** RVALID 一旦发布，RDATA 必须保持到握手。我在 AR 接受边沿采样更新前的 mtime 半字，之后由响应寄存器保持；计数器继续走。这使一次总线读有明确采样点。
 
-**追问与取舍：** RV32 分两次读 64-bit 时间仍可能撕裂，所以要 high1-low-high2，高位变化就重试。S3 在低位将溢出时实际触发一次重试，还验证了 64-bit 回绕。AM 迁移和微秒换算属于 S4；名义 MTIME_HZ 只是时间单位配置，不是综合 Fmax。
+**追问与取舍：** RV32 分两次读 64-bit 时间仍可能撕裂，所以要 high1-low-high2，高位变化就重试。S3 在低位将溢出时实际触发一次重试，还验证了 64-bit 回绕。S4 已完成 AM 迁移，并以 1 MHz、2 MHz 两种名义频率检查微秒换算；MTIME_HZ 是时间单位配置，不是综合 Fmax。
 
 **证据：** [CLINT RTL](../../../../../npc/vsrc/periph/ysyx_axi4lite_clint.sv) 与 [独立总线测试](../../../../../npc/tests/axi4lite_slaves_tb.cpp)；参考值来自独立时钟计数，不从 DUT mtime 读取生成。
 
@@ -121,6 +121,30 @@
 
 **简短回答：** 不能。目前是可仿真的 RTL word array 和 AXI 控制，还没有指定 macro、工艺库或映射结果。reset 不清空 array，预装载由仿真 host 在 reset 期间完成；不能把 Verilator 的默认零值当作硬件上电内容。
 
-**追问与取舍：** 后续综合要明确 array 被映射成什么、容量和读写时序如何处理。若用 SRAM macro，需要其功能、面积和时序模型；不能排除存储面积却对外宣称完整 SoC PPA。镜像、BSS、heap 和 debugger 的真实访问源还要在 S4 对齐。
+**追问与取舍：** 后续综合要明确 array 被映射成什么、容量和读写时序如何处理。若用 SRAM macro，需要其功能、面积和时序模型；不能排除存储面积却对外宣称完整 SoC PPA。S4 已统一镜像/零填充、heap/linker 容量和 debugger 真实访问源。
 
 **证据：** [SRAM RTL](../../../../../npc/vsrc/periph/ysyx_axi4lite_sram.sv) 与 S3 的 1 MiB/12 KiB/4 B 回归、reset 内容保留测试；尚无综合/STA 结论。
+
+## 16. 为什么分了 build 目录，仍可能串用两种硬件配置？
+
+**简短回答：** 对象搜索路径也属于构建配置。S4 的 B1 子目录曾通过 Verilator 默认 VPATH=`..` 找到 legacy 的 dut.o，导致 1 MiB DUT 的 DiffTest 初始化仍拷贝 128 MiB 并崩溃。GDB 和反汇编定位后，移除父目录对象搜索，并让 host 对象依赖配置 stamp。
+
+**追问与取舍：** RTL、host 宏、AM 对象、静态库和镜像都要按 profile/容量/频率区分。只改顶层模块名或只重建应用，仍可能链接错误的旧库。最终以 legacy/B1 来回构建和第二组容量/频率运行验证隔离。
+
+**证据：** [S4 bug case 与归档](../4-integration.md)，修复前 crash 日志、修复后 53 个 B1 系统程序和 34 个 legacy CPU tests。
+
+## 17. 接入 RTL SRAM 后，为什么调试器不能继续读 host pmem？
+
+**简短回答：** host pmem 只是装载缓冲，运行中的 store 更新的是 RTL array。继续读 host 缓冲会看到旧值。S4 在初始 reset 把同一内容装入 DUT/REF；运行期 debugger 直接读真实 RTL SRAM，UART 只消费一次 TX 事件。
+
+**追问与取舍：** 仿真 preload 不等于可综合的上电初始化。调试读也不能偷偷产生设备副作用，因此当前 B1 debugger 只支持 SRAM 读，不提供绕过 AXI 的运行期写。
+
+**证据：** 两种容量的 lanes 程序写入末 word，SDB 均观察到 `0x13579bdf`；hello 与双上下文 UART 字节流精确匹配，见 [S4](../4-integration.md)。
+
+## 18. MMIO 被 DiffTest skip 后，错误访问还验证得到吗？
+
+**简短回答：** 必须先处理异常，再处理正常 MMIO skip。B1 的 UART/CLINT 可能返回 SLVERR；此时 REF 不执行原访存，而是在同一架构 PC 引发对应 trap，再比较 GPR/CSR。正常设备读的非确定值才同步 DUT 状态到 REF。
+
+**追问与取舍：** 正常 MMIO skip 本身不证明设备正确，还要独立核对 UART 字节流、mtime 单调/单位和总线错误/副作用。错误旧取指也不能仅因收到 DECERR 就触发 trap，要核对 redirect 后是否仍属于有效指令。
+
+**证据：** S4 的 14 个精确异常用例、65 次 yield trap，以及末端 SRAM 返回时实际产生但未提交异常的 speculative DECERR；完整 redirect 时序交叉覆盖仍待 S5。

@@ -1,5 +1,6 @@
 #include "verilated_dpi.h"
-#include "Vysyx_core.h"
+#include "dut.h"
+#include "platform.h"
 #include "verilated_fst_c.h"
 #include <bits/stdc++.h>
 #include "include/debug.h"
@@ -12,7 +13,7 @@
 
 using namespace std;
 
-extern Vysyx_core *dut;
+extern NpcDut *dut;
 extern uint64_t sim_time;
 extern VerilatedFstC *m_trace;
 extern uint8_t pmem[];
@@ -55,29 +56,22 @@ void single_cycle() {
   // Drive and settle inputs while clk is low so the FST contains the values
   // sampled by the following active edge.
   dut->clk = 0;
+#ifndef NPC_B1
   ram_model_drive();
+#endif
   dut->eval();
   #ifdef CONFIG_FST
     m_trace->dump(sim_time++);
   #endif
 
-  sim_stats_sample_cycle(dut->rst_n,
-                         dut->ifu_axi_arvalid, dut->ifu_axi_arready,
-                         dut->ifu_axi_rvalid, dut->ifu_axi_rready,
-                         dut->lsu_axi_arvalid, dut->lsu_axi_arready,
-                         dut->lsu_axi_rvalid, dut->lsu_axi_rready,
-                         dut->lsu_axi_awvalid, dut->lsu_axi_awready,
-                         dut->lsu_axi_wvalid, dut->lsu_axi_wready,
-                         dut->lsu_axi_bvalid, dut->lsu_axi_bready);
-
-  ram_model_sample();
+  platform_sample();
 
   dut->clk = 1;
   dut->eval();
   #ifdef CONFIG_FST
     m_trace->dump(sim_time++);
   #endif
-  ram_model_tick();
+  platform_tick();
 
   dut->clk = 0;
   #ifdef AXI
@@ -112,7 +106,7 @@ inline bool test_break(){
 static void statistic() {
   Log("total guest instructions = %ld", g_nr_guest_inst);
   sim_stats_report();
-  ram_model_report();
+  platform_report();
 }
 
 // void device_update();

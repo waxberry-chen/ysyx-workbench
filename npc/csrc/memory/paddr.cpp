@@ -1,10 +1,11 @@
-#include "Vysyx_core.h"
+#include "dut.h"
+#include "platform.h"
 
 #include <assert.h>
 #include "map.h"
 #include "paddr.h"
 
-extern Vysyx_core *dut;
+extern NpcDut *dut;
 
 uint8_t pmem[CONFIG_MSIZE];
 
@@ -46,6 +47,9 @@ void host_write(void *haddr, int size, word_t wdata){
 // npc sdb interface
 // size: 1 2 4 8 (Byte)
 word_t paddr_read(paddr_t paddr, int size) {
+#ifdef NPC_B1
+    return platform_read(paddr, size);
+#else
     if (in_pmem(paddr)) { 
         return host_read(guest_to_host(paddr), size);
     } else {
@@ -54,9 +58,13 @@ word_t paddr_read(paddr_t paddr, int size) {
     }
     out_of_bound(paddr);
     return 0;
+#endif
 }
 
 void paddr_write(paddr_t paddr, int size, word_t wdata) {
+#ifdef NPC_B1
+    platform_write(paddr, size, wdata);
+#else
     if(in_pmem(paddr)) {
         host_write(guest_to_host(paddr), size, wdata);
         return;
@@ -64,11 +72,13 @@ void paddr_write(paddr_t paddr, int size, word_t wdata) {
         IFDEF(CONFIG_DEVICE, mmio_write(paddr, size, wdata); return);
     }
     out_of_bound(paddr);
+#endif
 }
 
 // Transaction-model interface.  Unlike the debugger helpers above, these
 // functions report an access error to RTL instead of terminating simulation.
 // A failed write performs no memory or MMIO side effect.
+#ifndef NPC_B1
 bool paddr_try_read(paddr_t paddr, int size, word_t *rdata) {
     if (in_pmem_range(paddr, size)) {
         *rdata = host_read(guest_to_host(paddr), size);
@@ -92,9 +102,10 @@ bool paddr_try_write(paddr_t paddr, int size, word_t wdata) {
     return false;
 #endif
 }
+#endif
 
 // DPIC interface
-#ifndef AXI
+#if !defined(AXI) && !defined(NPC_B1)
 extern "C" void pmem_read(bool re, paddr_t paddr, uint32_t size, word_t *rdata) {
     if(!re) return;
     if(in_pmem(paddr)) {
