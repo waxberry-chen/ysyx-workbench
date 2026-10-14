@@ -221,6 +221,8 @@ interconnect system-level test plan 合并实施。
 
 这个 milestone 消费 Milestone 2 冻结的两套 master，把协议练习扩展为可独立验证的最小 AXI4-Lite system。
 
+2026-10-14 已建立[设计与实施计划](3-axi4-lite-interconnect/plan.md)、[验收矩阵](3-axi4-lite-interconnect/test-plan.md)和[开发日志](3-axi4-lite-interconnect/dev-log.md)；当前为计划状态，RTL 与新增验收入口尚未实施。
+
 #### 实现顺序
 
 1. 2-to-1 Arbiter 合并 IFU/LSU，请求接受后锁存 owner 至对应 response 完成；
