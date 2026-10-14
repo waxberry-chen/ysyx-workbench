@@ -1,8 +1,11 @@
 # Post-C Roadmap：从弹性 RV32E Core 到可展示的 SoC/RTL 项目
 
-> 状态基线：2026-09-28  
+> 规划更新：2026-10-14；实现基线：`5b6f29c`（AXI4-Lite 阶段验收）
+>
 > 求职方向优先级：SoC/RTL Design > Design Verification > Physical Design  
 > 本文用于决定 post-C 阶段的投入顺序。具体接口、地址映射和考核要求仍以开始该阶段时的最新版官方讲义与上游仓库为准。
+
+对外展示统一从 [`docs/notes/output/`](../output/README.md) 进入；开发与实验详录留在所属阶段。优先推进 RTL 主线，同步积累证据，不设置独立的 job-release 阶段，也不把整理简历变成等待完整 SoC/PPA 的串行任务。
 
 ## 1. 结论先行
 
@@ -32,13 +35,10 @@
 5-ysyx-soc-integration：AXI4 单拍子集封装 -> ysyxSoC 最小启动闭环
         │                    MROM/SRAM/UART/CLINT/DiffTest/RT-Thread
         ▼
-6-job-ready-release：冻结 Job-ready Release v1，开始正式投递
+6-icache-performance：已有统计扩展 -> trace/cachesim -> I-cache -> AXI burst
         │
         ▼
-7-icache-performance：计数器 -> trace/cachesim -> I-cache -> AXI burst
-        │
-        ▼
-8-role-deepening：根据数据只选一条主攻
+7-role-deepening：根据数据只选一条主攻
         ├─ RTL/CPU：弹性后端切级、forwarding/hazard、再考虑 GShare/BTB
         └─ DV：AXI 子系统 UVM/coverage closure + 更深的 formal
 ```
@@ -46,9 +46,9 @@
 核心调整有四点：
 
 1. **AXI4-Lite 和 ysyxSoC 仍是最高优先级**，因为它们把 CPU 模块、互联、设备、软件和验证真正连成系统。
-2. **lint、SVA、formal、综合、STA 和四值检查不是最后补票**，从 B1 起就作为每个里程碑的横向质量门。
+2. **验证和实现检查随设计推进**：日常优先 lint/单测/相关回归，稳定阶段补综合、STA、四值与适用的 formal；工具条件不足时明确待验，不把所有检查变成每次提交的前置条件。
 3. **五级流水不再是近期必做的整核重写**。在 ysyxSoC 和性能基线完成后，根据 CPI/stall/关键路径决定是否把当前弹性后端继续切级。
-4. **达到 Job-ready Release v1 后即可投递**。I-cache、流水深化和 UVM 是增强竞争力的后续版本，不应成为迟迟不整理项目、不开始投递的理由。
+4. **展示素材持续积累、按需包装**。需要投递时对已有证据做一次简短评估并生成简历，不以任一 milestone 或工具流程全部完成为前提。
 
 ## 2. 判断依据
 
@@ -109,7 +109,7 @@
 
 ## 4. 路线优先级
 
-### P0：必须完成，形成 Job-ready Release v1
+### P0：近期主线，形成 SoC/RTL 工程闭环
 
 - 冻结并整理当前 core refactor；
 - 明确 ISA 合规口径：补齐 RV32E 对 x16～x31 编码的非法指令检查，或准确调整项目描述；
@@ -121,7 +121,7 @@
 - lint、综合、STA、四值检查和至少一个网表 smoke test；
 - 架构图、test plan、结果表和一篇完整 bug story。
 
-### P1：强烈建议，形成 Design-oriented Release v2
+### P1：量化优化，增强设计深度
 
 - 性能事件计数器和可重复 benchmark；
 - trace 驱动的 cache 参数探索；
@@ -136,7 +136,7 @@
 - 依据 branch stall 占比加入 BTB/GShare；
 - 为 AXI interconnect 建立一个聚焦、可复用的 UVM 环境并完成 coverage closure；
 - 若确有多个时钟或复位域，再做真实 CDC/RDC 设计与检查；
-- OpenROAD 等更完整的 PPA/物理实现探索。
+- 后续确有物理实现需求时再裁剪既有 flow；近期不实施 PnR。
 
 ### 暂缓
 
@@ -259,12 +259,21 @@ interconnect system-level test plan 合并实施。
 
 ### Milestone 4：完成 `4-pre-soc-signoff`
 
-这个里程碑工作量不应很大，它的作用是防止“B1 仿真能跑，但接 SoC 时同时暴露协议、时序、复位和构建问题”。
+这个里程碑防止“B1 仿真能跑，但接 SoC 时同时暴露协议、时序、复位和构建问题”。先建立最小实现基线，工作量取决于现有 RTL、工艺库和可复用 flow；不在取得工具与输入前承诺全部检查已可运行。
+
+#### 工具与执行分工
+
+- 暂定 [Design Compiler](https://www.synopsys.com/implementation-and-signoff/rtl-synthesis-test/design-compiler.html) 做综合、[PrimeTime](https://www.synopsys.com/implementation-and-signoff/signoff/primetime.html) 做 STA；**PnR 暂不实施，也不作为近期主线的依赖**。
+- 用户提供可复用的旧 tapeout flow 后，先提取一个 top、一个 mode/corner 的最小路径，再逐项增加本项目需要的选项。重新审查 clocks、I/O delays、reset、false/multicycle paths；不继承旧工程未经解释的 waiver/约束。
+- 脚本在本仓库维护，待实际导入时集中放在 `npc/flow/`；本地负责编辑和可执行的静态检查，用户同步到具备完整 EDA 的服务器运行。不提前搭建复杂的通用 flow 框架。
+- 服务器按固定 RTL/脚本/SDC 版本运行，归档工具版本、库/PVT 标识、配置、命令和报告；详细结果归入本阶段，展示出口仅链接摘要。
+- 仓库只存可共享的脚本与配置模板；工艺库、license、机器路径及受限旧项目内容留在服务器/私有配置中。迁移前检查可复用、可公开的范围。
+- 无布局布线及提取寄生参数时，明确标注为 **pre-layout synthesis/STA**，记录互连估算与时钟假设；不得称为 post-route timing closure。脚本已编写、服务器已运行、检查通过分别记录，缺工具时标记待验。
 
 #### 必做
 
 - 明确 synthesizable core/top 与 Verilator-only harness 的边界；
-- 为时钟、输入/输出延迟和 false-path 形成最小 SDC；
+- 为时钟、输入/输出延迟形成最小 SDC；false/multicycle path 仅在有设计依据时添加；
 - 检查 latch、组合环、下降沿逻辑、隐式位宽转换和未驱动信号；
 - 检查 reset 后所有 control/valid/owner 状态，数据寄存器依赖 valid 屏蔽；
 - 运行四值 smoke test，优先暴露 X optimism 和初始化依赖；
@@ -286,17 +295,17 @@ interconnect system-level test plan 合并实施。
 
 #### 架构建议
 
-不要把 ysyxSoC 的完整 AXI4 信号直接扩散回 IFU、LSU。建议保留三层边界：
+不要把 ysyxSoC 的完整 AXI4 信号直接扩散回 IFU、LSU。保留 local req/rsp 边界，但不承诺 B2 只改最外层 wrapper：当前 Lite 读接口不传 size，且 adapter 已对齐地址，无法在下游还原窄 MMIO 读。先核对目标设备要求，必要时从 local 边界增加原生 AXI4 单拍 adapter；B1 的 Lite 系统继续作为独立验证对象。
 
 ```text
 IFU/LSU semantic state
         │ local req/rsp
         ▼
-AXI4-Lite adapters + core Arbiter
-        │ one 32-bit, single-outstanding AXI4-Lite master
+transport adapters + core Arbiter
+        │ single-outstanding；保留目标协议需要的 address/size
         ▼
-ysyx top wrapper / AXI4 single-beat subset mapping
-        │ full AXI4 port: LEN=0, fixed ID/size/burst 等
+ysyx top wrapper / AXI4 single-beat interface
+        │ LEN=0；ID/width/size/burst 按目标契约映射
         ▼
 ysyxSoC
 ```
@@ -305,7 +314,7 @@ ysyxSoC
 
 - ysyxSoC 顶层端口或生成方式变化时，主要改 wrapper；
 - 当前 core 仍用已经验证的 single-outstanding 语义；
-- 后续 I-cache 需要 burst 时，只扩展 refill 路径和顶层能力，不重写整个 core 控制。
+- 后续 I-cache 需要 burst 时，扩展 refill transport/仲裁及顶层能力，不重写整个 core 控制；不能假设 burst 信息能穿过既有 Lite 接口。
 
 这里的“仿照 RocketChip 生成 SoC 外层”应理解为：**复用上游生成的 SoC、遵守它的 BlackBox/top contract，并提供一个清晰的 CPU wrapper**。当前阶段不建议自己复制 RocketChip diplomacy、参数系统或重新搭建一个生成器框架。
 
@@ -350,30 +359,9 @@ ysyxSoC
 - DiffTest、hello 和 RT-Thread 在 SoC 环境通过；
 - timer interrupt 在 precise commit boundary 生效，trap/mret 可验证；
 - 保留 SoC block diagram、boot sequence、address map、关键波形和 bug list；
-- 完成 SoC 顶层综合/STA，说明 core 与 wrapper 的面积和关键路径。
+- 对明确的可综合 core/wrapper/互联边界完成综合/STA；说明是否包含上游 IP、SRAM macro 或模型，不将仿真 top 的结果当作完整 SoC 实现结果。
 
-### Milestone 6：完成 `6-job-ready-release` / Job-ready Release v1
-
-达到 Milestone 5 后，项目已经覆盖 CPU microarchitecture、RTL、AXI、interconnect、SoC integration、firmware/runtime、verification 和 synthesis/STA。此时应冻结一个面向求职的 release，并开始投递。
-
-#### Release 内容
-
-- 一页项目总览：目标、架构、个人工作、规模和结果；
-- core/AXI/SoC 三张层次清晰的图；
-- 一张验证矩阵：功能、协议、随机、DiffTest、formal、四值、网表；
-- 一张 metrics 表：cycles、CPI、Fmax、area、关键 stall；
-- 两篇 bug story：现象、最小复现、根因、波形/断言、修复、回归；
-- 一段短 demo：boot、UART、timer/RT-Thread；
-- 可复现命令、工具版本、已知限制和下一步；
-- 2～3 条有数字和验证证据的简历 bullet。
-
-#### 推荐项目叙事
-
-不要只写“实现 RV32E CPU”。更有区分度的叙事是：
-
-> 从集中式多周期控制出发，为支持可变延迟 memory 和精确异常，将 core 重构为 elastic frontend/backend；随后实现 AXI4-Lite masters、互联和错误传播，接入生成式 ysyxSoC，并用 DiffTest、随机回压、SVA/formal、综合与 STA 完成验证和实现闭环。
-
-### Milestone 7：完成 `7-icache-performance` / Design-oriented Release v2
+### Milestone 6：完成 `6-icache-performance`
 
 #### 为什么排在 ysyxSoC 后
 
@@ -384,7 +372,7 @@ ysyxSoC
 
 #### 顺序
 
-1. 增加 cycle/commit、IFU wait、LSU wait、branch redirect、cache hit/miss 等事件计数；
+1. 在已有 cycle/commit/stall 统计上补齐 branch redirect、cache hit/miss 等事件计数，明确重叠和统计口径；
 2. 固定 microbench workload、memory delay 和综合约束；
 3. 从 trace 建立 `cachesim`，先探索 line size/capacity/associativity；
 4. 实现参数化的最小 I-cache，先 single-beat refill；
@@ -409,7 +397,7 @@ ysyxSoC
 - 结论允许是“某配置不值得”，但必须有数据；
 - 保留 single-beat 与 burst refill 的关键波形和对比。
 
-### Milestone 8：进入 `8-role-deepening`，按证据选择深化方向
+### Milestone 7：进入 `7-role-deepening`，按证据选择深化方向
 
 #### 主方向 A：RTL/CPU Design（优先）
 
@@ -429,7 +417,7 @@ ysyxSoC
 - 明确每级保存的完整 instruction context；
 - redirect、exception、interrupt 只允许精确地更新 architectural state；
 - 用 forwarding/stall/flush assertions 和 DiffTest 证明正确；
-- 用 Fmax × IPC × area 证明切级是否真的有效。
+- 对同一 workload 比较 `执行时间 = cycles / 运行频率`，同时报告面积与时序代价；不得用 `Fmax × IPC × area` 作为越大越好的指标。
 
 #### 辅方向 B：Design Verification
 
@@ -451,14 +439,14 @@ ysyxSoC
 
 - 更完整的 SDC 和多 corner STA；
 - synthesis QoR、面积层次和 critical path 分析；
-- OpenROAD floorplan/place/CTS/route 的可复现 flow；
+- 复用既有 flow 完成 floorplan/place/CTS/route，工具届时确定；
 - 针对 congestion/timing 的 RTL 反馈修改。
 
 它目前排在 SoC/RTL 与 DV 之后，不应阻塞主线。
 
 ## 6. 贯穿所有阶段的质量门
 
-每个 milestone 都按同一模板验收：
+每个 milestone 按同一模板说明适用项，区分 PASS、FAIL、待验和不适用（附理由），不要求每次小改动都执行所有层级。缺少服务器工具不阻塞不依赖其结果的 RTL 开发，但不得据此声称综合/STA 已通过。
 
 | 类别 | 必须回答的问题 |
 | --- | --- |
@@ -485,9 +473,31 @@ L5  lint + synthesis/STA + 4-state/netlist smoke
 
 任何优化都先保存前一版结果，再在相同 workload、memory model、seed policy 和 timing constraint 下比较。
 
+### 实验记录的最低要求
+
+实验继续保存在所属阶段，如 [`2-axi4-lite/4-signoff.md`](2-axi4-lite/4-signoff.md)，不另建一套全局实验日志。下列字段按实验类型适用；不适用项可省略，缺失项标记未记录，不能推测补填历史数据。
+
+| 类别 | 必须留下的信息 |
+| --- | --- |
+| 版本与范围 | 日期、实验问题、baseline/candidate commit；未提交修改须有可定位的 patch；top、配置参数及实际包含的模块 |
+| 软件与仿真 | workload/ELF 或 bin hash、编译参数、模拟器/参考模型版本、DiffTest 开关、latency/ready/error 配置、seed 集合、终止条件 |
+| 实现流程 | DC/PT 版本、flow/SDC 版本、库/PVT 标识、时钟/I/O/例外约束、SRAM 实现、互连估算方式；区分 pre-layout/post-route |
+| 结果与复现 | 命令/入口、通过与排除项、cycles/commits/CPI/计数定义，或 area/WNS/TNS/关键路径/未约束路径检查；摘要及原始报告归档位置 |
+| 结论与限制 | 改善或退化、适用 workload、尚未验证之处；区分实测、估算与推断，记录下一步决策 |
+
+- 单个 `add` 样本不代表全程序性能；不同模型的相同 seed 不保证相同随机时序。优化对比优先补确定性延迟对照，再扩展 workload/seeds。
+- 各 stall counter 可重叠时不直接相加解释 CPI；Fmax 需说明推导方法和约束，仅达到某个 target 不代表测得最大频率。未做有条件说明的功耗分析，不声称完整 PPA 改善。
+- 重要结果摘要随文档入库；大日志/波形留在可定位的服务器归档或制品目录，并记录标识/hash，不能仅依赖随时可清理的 `build/`。对外版本只使用可公开的信息。
+
+### 持续积累展示素材
+
+[`docs/notes/output/`](../output/README.md) 保存项目简介、[证据总索引](../output/evidence-index.md)以及精选图/PPT、bug case 和简历素材。它只引用阶段实验，不复制维护另一份结果表。重要功能或优化验收后补充证据链接、更新状态；普通小提交不要求编写展示文章。
+
+需要投递时，检查“能解释设计与取舍、能定位证据与个人贡献、能说明限制”，从已有素材选取 2～3 条简历描述和少量图/案例即可。功能阶段仍保留技术验收与基线，不等同于求职资格门槛。
+
 ## 7. 投入比例与停止条件
 
-### 到 Job-ready Release v1 之前
+### 当前 RTL/SoC 主线期间
 
 建议按总投入比例控制范围：
 
@@ -498,9 +508,9 @@ L5  lint + synthesis/STA + 4-state/netlist smoke
 
 这不是日历承诺，而是防止 90% 时间都投入 RTL feature、最后没有验证和可展示证据。
 
-### 停止扩展并整理 release 的触发条件
+### 暂停扩展、补齐证据的触发条件
 
-满足以下条件就应先发布一个版本，而不是继续加功能：
+出现以下情况时先做必要收尾，再继续主线；不要求额外组织一次正式 job-release：
 
 - 新功能开始同时跨 core、bus、SoC 和 software 多层修改；
 - 当前 milestone 已通过但文档和结果表尚未整理；
@@ -513,24 +523,27 @@ L5  lint + synthesis/STA + 4-state/netlist smoke
 现有目录保持不动，后续开始对应阶段时再创建：
 
 ```text
-docs/notes/post-c/
-├── roadmap.md
-├── 1-memory-request/          # elastic core + precise memory exception
-├── 2-axi4-lite/               # IFU/LSU AXI4-Lite adapters
-├── 3-axi4-lite-interconnect/  # Arbiter/Xbar/minimal B1 slaves
-├── 4-pre-soc-signoff/         # SDC/synthesis/STA/4-state/netlist smoke
-├── 5-ysyx-soc-integration/    # B2 wrapper/boot/interrupt/system closure
-├── 6-job-ready-release/       # 架构、验证、PPA、bug stories、简历材料
-├── 7-icache-performance/      # trace/cachesim/I-cache/burst/metrics
-└── 8-role-deepening/          # pipeline/BPU 或 focused DV，按证据选择
+docs/notes/
+├── output/                       # 对外展示入口、证据索引与精选素材
+└── post-c/
+    ├── roadmap.md
+    ├── 1-memory-request/          # elastic core + precise memory exception
+    ├── 2-axi4-lite/               # IFU/LSU AXI4-Lite adapters
+    ├── 3-axi4-lite-interconnect/  # Arbiter/Xbar/minimal B1 slaves
+    ├── 4-pre-soc-signoff/         # SDC/synthesis/STA/4-state/netlist smoke
+    ├── 5-ysyx-soc-integration/    # B2 wrapper/boot/interrupt/system closure
+    ├── 6-icache-performance/      # trace/cachesim/I-cache/burst/metrics
+    └── 7-role-deepening/          # pipeline/BPU 或 focused DV，按证据选择
 ```
 
 目录编号与 milestone 编号严格一一对应。每个目录至少维护一份明确的 plan/spec 和独立的 `dev-log.md`；需要冻结接口、测试矩阵、sign-off 报告或性能结果时，再在该目录增加专题文件。未开始的 milestone 不预先创建空目录和空模板。
 
+原计划的独立 `6-job-ready-release` 已取消，未创建的 I-cache/深化阶段顺延为 6/7。展示入口放在与 `post-c/` 平级的 `docs/notes/output/`，不占用技术 milestone 编号。
+
 ## 9. 最近三个行动
 
-1. 按 [`2-axi4-lite/plan.md`](2-axi4-lite/plan.md) 完成 IFU adapter 的 standalone test，再做 LSU adapter；
-2. 在 adapter 开发同时建立 B1 的 test matrix、SVA 和综合/STA baseline，不等到 Arbiter/Xbar 完成后补；
-3. `3-axi4-lite-interconnect` 接近出口时再拉取并固定最新版 ysyxSoC revision，基于实际 top/BlackBox 接口编写 `5-ysyx-soc-integration` 的 integration spec。
+1. 进入 `3-axi4-lite-interconnect`，先冻结 arbitration/address-map 契约和最小测试矩阵，再实现 Arbiter/Xbar/slaves；
+2. 同步积累展示证据；用户提供旧 flow 后裁剪 DC/PT 的最小综合/STA 路径，在服务器运行前将结果标记为待验，不阻塞无依赖的 RTL 工作；
+3. 提前核对并固定 ysyxSoC revision 与接口契约，特别是窄 MMIO 读的地址/size 语义；当前 Lite adapter 已对齐地址，不能假设最外层固定 SIZE wrapper 能恢复这些信息。明确边界后再按 M5 实施集成。
 
 在这三项完成前，不启动 GShare、经典五级流水重写、D-cache 或大规模外设扩展。

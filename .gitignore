@@ -16,7 +16,7 @@ nvboard/
 /am-kernels
 /rt-thread-am
 
-# Keep the lectures
+# Keep maintained documentation, including notes/output
 /docs/*
 !/docs/notes/
 !/docs/notes/**
