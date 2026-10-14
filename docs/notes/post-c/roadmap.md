@@ -225,7 +225,7 @@ interconnect system-level test plan 合并实施。
 
 同日已完成 [S0 基线保存与最小回归](3-axi4-lite-interconnect/0-baseline.md)，可进入 S1 Arbiter 实现；该结果仅验证 legacy 基线，不代表 M3 互联系统已通过。
 
-随后完成 [S1 Arbiter 实现与独立验证](3-axi4-lite-interconnect/1-arbiter.md)，并建立[阶段 Q&A](3-axi4-lite-interconnect/qa/README.md)。当前下一步为 S2 Xbar/default slave；Arbiter 尚未接入 Core，不代表整个 M3 系统已验收。
+随后完成 [S1 Arbiter 实现与独立验证](3-axi4-lite-interconnect/1-arbiter.md)，并建立[阶段 Q&A](3-axi4-lite-interconnect/qa/README.md)。随后完成 [S2 Xbar/default 实现与独立验证](3-axi4-lite-interconnect/2-xbar.md)。当前下一步为 S3 SRAM/UART/CLINT；Arbiter/Xbar 尚未接入 Core，不代表整个 M3 系统已验收。
 
 #### 实现顺序
 

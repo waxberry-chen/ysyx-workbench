@@ -1,7 +1,7 @@
 # M3 面试 Q&A：AXI4-Lite 互联
 
-> 更新：2026-10-14，随 S1 Arbiter 实现与验证新增。
-> 当前已实现并验证 standalone Arbiter；Xbar/slaves/Core 集成尚未完成。实测范围见 [S1 报告](../1-arbiter.md)。
+> 更新：2026-10-14，随 S2 Xbar/default 实现与验证更新。
+> 当前已验证 standalone Arbiter、Xbar/default 及后两者连接；SRAM/UART/CLINT 与 Core 集成尚未完成。实测范围见 [S1 报告](../1-arbiter.md)、[S2 报告](../2-xbar.md)。
 
 本文件按有价值的进展更新，不要求每次提交记录。回答用于解释本工程的决策，计划中的能力不表述为已完成。
 
@@ -25,7 +25,7 @@
 
 **简短回答：** 在本模块里只有 LSU 能写，而且 LSU 自身只有一笔事务。Arbiter 可以凭 WVALID 预留 LSU 的写服务槽，先把 WDATA/WSTRB 存入独立槽，再等 AW。收齐后分别向下游发送 AW/W；不能用旧地址去转发 W，也不能要求 AWVALID 与 WVALID 同时出现。
 
-**追问与取舍：** 这依赖本项目“IFU 只读、LSU 单事务”的边界。推广到多个可写 master 时，必须保证 AW 和无地址的 W 属于同一个被选中的 master。Xbar 还需要在接受 AW 后锁存 target；那部分是 S2，当前尚未实现。
+**追问与取舍：** 这依赖本项目“IFU 只读、LSU 单事务”的边界。推广到多个可写 master 时，必须保证 AW 和无地址的 W 属于同一个被选中的 master。S2 Xbar 在接受 AW 后锁存 target；W-first 时 target 无效，不向任何 slave 转发，具体见下文。
 
 **证据：** RTL `aw_have_q/w_have_q`、`aw_sent_q/w_sent_q`；[独立测试台](../../../../../npc/tests/axi4lite_arbiter_tb.cpp)覆盖上下游 AW-first/same/W-first 的全部 9 个组合。真实 LSU adapter 通常同时发布 AWVALID/WVALID，因此额外使用独立 driver。
 
@@ -51,12 +51,36 @@
 
 **追问与取舍：** 统计应区分 completed、reset-aborted 和已发生的 side effect。不能跨 reset 强求 request=response，也不能把清空响应误认为写从未发生。单独 reset 一个 slave 的恢复协议不在当前范围内。
 
-**证据：** 13 个 reset 时点测试；本轮 `10143 accepted = 10132 completed + 11 aborted`。scripted slave 检查 reset 后不重复执行旧事务；真实 UART/存储器的 reset 副作用仍待后续 slave 验证。
+**证据：** S1 的 13 个 reset 时点测试；该轮 `10143 accepted = 10132 completed + 11 aborted`。scripted slave 检查 reset 后不重复执行旧事务；真实 UART/存储器的 reset 副作用仍待后续 slave 验证。
 
 ## 7. 为什么需要独立总线测试，CPU 跑通不够吗？
 
 **简短回答：** CPU 能产生的通道顺序有限，正常软件也很难稳定命中 AW-only/W-only、长响应反压或特定 reset 时点。我用独立 driver 控制这些情况，再由外部握手 scoreboard 检查数据与归属，不把 DUT 内部 owner 当成参考答案。
 
-**追问与取舍：** SVA 检查局部不变量，scoreboard 检查事务结果，覆盖计数确认场景实际命中。CPU/DiffTest 还要在集成后检查架构状态，几种验证不能互相替代。当前 74 个命中 bin 不是完整 M3 coverage closure，也不是代码覆盖率。
+**追问与取舍：** SVA 检查局部不变量，scoreboard 检查事务结果，覆盖计数确认场景实际命中。CPU/DiffTest 还要在集成后检查架构状态，几种验证不能互相替代。S1 的 74 个命中 bin 不是完整 M3 coverage closure，也不是代码覆盖率。
 
 **证据：** [测试台](../../../../../npc/tests/axi4lite_arbiter_tb.cpp)、[T01–T15 总矩阵](../test-plan.md)与 [阶段状态](../test-status.csv)。
+
+## 8. Xbar 为什么需要 target_valid？AWADDR 保持不就够了吗？
+
+**简短回答：** AW 还没被接受时，当前 AWADDR 可能没有意义；上次事务留下的地址也不能用于本次 W。我的 Xbar 在 AW 握手时同时锁存地址和 target，并置 target_valid。W-first 只保存数据，收齐后才向目标发送。上游握手后可以改变地址，因此转发和响应归路都必须用已保存的上下文。
+
+**追问与取舍：** target 一直保持到上游 response 握手；下游完成不等于上游完成。收齐再发送增加延迟，但简化第一版写事务归属；未来提前发送 AW 需要重新验证部分发送、reset 与占槽行为。
+
+**证据：** [Xbar RTL](../../../../../npc/vsrc/bus/ysyx_axi4lite_xbar.sv) 的 `target_valid_q`、`a05_target_holding`；[S2 测试](../2-xbar.md) 覆盖四路 W-first、握手后输入地址变化、响应反压及 reset。
+
+## 9. DECERR 和 SLVERR 的责任分别在哪里？为什么错误 slave 也要等 W？
+
+**简短回答：** 地址不在任何窗口内，由 Xbar 选择 default slave 返回 DECERR；地址映射到了设备，但操作不合法，由设备返回 SLVERR。即使已经知道地址无效，AXI 写响应也必须等 AW/W 都被接受，不能收到 AW 就提前回 B，否则留下的 W 可能污染下一笔事务。
+
+**追问与取舍：** default 不做存储/设备访问，WSTRB=0 也不能把未映射地址变成成功。它返回稳定的 DECERR，读数据为零，等待上游接收，然后才能服务新事务。Xbar 原样转发 mapped 未对齐地址；不能把地址对齐后误访问另一个合法寄存器。S2 已验证 default；实际 mapped slave 的 SLVERR 生成和无副作用仍待 S3。
+
+**证据：** [DECERR RTL](../../../../../npc/vsrc/bus/ysyx_axi4lite_decerr.sv)、[直接 slave 测试](../../../../../npc/tests/axi4lite_decerr_tb.cpp)及 Xbar/default 连接回归；错误后继续运行 mapped 请求。
+
+## 10. SRAM 容量为什么用范围比较，如何避免地址镜像和加法溢出？
+
+**简短回答：** 只截取地址低位做索引可能把越界地址映射回 SRAM。Xbar 先比较完整地址是否在 `[base, base+bytes)` 内，结束地址用 33-bit 计算，并拒绝零容量、未对齐、溢出或与 MMIO 重叠的配置。真正进入 SRAM 后才能计算相对索引，S3 还需要保证存储索引与同一容量一致。
+
+**追问与取舍：** 不依赖 2 的幂次容量可以让边界更明确，但不能据此宣称面积更优。验证应包含第一/最后合法 word、结束地址、未对齐末字节和镜像风险地址，并换一个非 2 的幂次容量重跑，避免测试和实现共享同一错误假设。
+
+**证据：** [S2 报告](../2-xbar.md)：1 MiB 与 12 KiB 完整回归、七种参数守卫检查。尚无真实 SRAM macro 或综合 PPA 结论。

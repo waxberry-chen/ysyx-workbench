@@ -48,6 +48,42 @@ b1-arbiter-test: b1-arbiter-lint
 	$(B1_ARBITER_TEST_OBJ)/Vysyx_axi4lite_arbiter \
 		$(B1_ARBITER_TEST_OBJ)/coverage.csv
 
+# S2 standalone routing and error sink; production filelist remains unchanged.
+B1_XBAR_TEST_OBJ := $(OBJ_DIR)/b1-xbar-test
+B1_DECERR_TEST_OBJ := $(OBJ_DIR)/b1-decerr-test
+B1_XBAR_RTL := $(NPC_HOME)/vsrc/bus/ysyx_axi4lite_xbar.sv
+B1_DECERR_RTL := $(NPC_HOME)/vsrc/bus/ysyx_axi4lite_decerr.sv
+B1_XBAR_TOP := $(NPC_HOME)/tests/axi4lite_xbar_test_top.sv
+# Test both the default capacity and a non-power-of-two range.
+B1_TEST_SRAM_BYTES ?= 1048576
+.PHONY: b1-xbar-lint b1-xbar-test b1-decerr-test
+b1-xbar-lint:
+	verilator --lint-only --sv -Wall --assert -Wno-SYNCASYNCNET \
+		--top-module axi4lite_xbar_test_top -GSRAM_BYTES=$(B1_TEST_SRAM_BYTES) \
+		$(B1_XBAR_RTL) $(B1_DECERR_RTL) $(B1_XBAR_TOP)
+
+b1-xbar-test: b1-xbar-lint b1-decerr-test
+	@mkdir -p $(B1_XBAR_TEST_OBJ)
+	verilator --cc --exe --build --assert --sv -Wall -Wno-SYNCASYNCNET \
+		--top-module axi4lite_xbar_test_top -GSRAM_BYTES=$(B1_TEST_SRAM_BYTES) \
+		--Mdir $(B1_XBAR_TEST_OBJ) \
+		-CFLAGS '-std=c++14 -Wall -Wextra -DTEST_SRAM_BYTES=$(B1_TEST_SRAM_BYTES)' \
+		$(B1_XBAR_RTL) $(B1_DECERR_RTL) $(B1_XBAR_TOP) \
+		$(NPC_HOME)/tests/axi4lite_xbar_tb.cpp
+	$(B1_XBAR_TEST_OBJ)/Vaxi4lite_xbar_test_top $(B1_XBAR_TEST_OBJ)/coverage.csv
+
+b1-decerr-test:
+	@mkdir -p $(B1_DECERR_TEST_OBJ)
+	verilator --cc --exe --build --assert --sv -Wall -Wno-SYNCASYNCNET \
+		--top-module ysyx_axi4lite_decerr --Mdir $(B1_DECERR_TEST_OBJ) \
+		-CFLAGS '-std=c++14 -Wall -Wextra' \
+		$(B1_DECERR_RTL) $(NPC_HOME)/tests/axi4lite_decerr_tb.cpp
+	$(B1_DECERR_TEST_OBJ)/Vysyx_axi4lite_decerr $(B1_DECERR_TEST_OBJ)/coverage.csv
+
+.PHONY: b1-xbar-config-test
+b1-xbar-config-test:
+	python3 $(NPC_HOME)/tests/axi4lite_xbar_config_test.py $(OBJ_DIR)/b1-xbar-config-test
+
 .PHONY: lsu-test
 lsu-test:
 	verilator $(DIRECTED_TEST_FLAGS) \

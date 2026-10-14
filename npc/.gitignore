@@ -8,6 +8,7 @@
 !*.sv
 !*.cc
 !*.cpp
+!/tests/axi4lite_xbar_config_test.py
 !*.f
 !.gitignore
 !README.md

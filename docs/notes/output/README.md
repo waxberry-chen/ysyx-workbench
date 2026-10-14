@@ -1,19 +1,19 @@
 # NPC：面向 SoC 集成的 RISC-V 处理器项目
 
-> 更新：2026-10-14；已提交实现基线：`5b6f29c`。此处是持续更新的展示入口，不是完整 SoC 或 tapeout sign-off 声明。
+> 更新：2026-10-14；Core/adapters 验收基线：`5b6f29c`。此处是持续更新的展示入口，不是完整 SoC 或 tapeout sign-off 声明。
 
 ## 项目简介
 
 基于[一生一芯](https://ysyx.oscc.cc/docs/)推进的软硬件协同工程，重点是处理器 RTL、总线/互联、验证和 SoC 集成。软件与模拟器用于提供 workload 和参考行为，后续通过综合、STA 和性能实验评估架构取舍。
 
-NPC 已从集中式多周期控制演进为单发射、顺序提交的弹性前后端：IFU、IFQ、opbuf、EXU、LSU 分别持有指令或访存上下文，由 commit/redirect 协调架构状态更新与控制流切换。当前已完成 IFU/LSU AXI4-Lite adapters，下一步是 Arbiter、Xbar 与最小 RTL slaves。
+NPC 已从集中式多周期控制演进为单发射、顺序提交的弹性前后端：IFU、IFQ、opbuf、EXU、LSU 分别持有指令或访存上下文，由 commit/redirect 协调架构状态更新与控制流切换。当前已完成 IFU/LSU AXI4-Lite adapters，以及 standalone Arbiter、Xbar/default 的实现与验证；下一步是 SRAM/UART/CLINT 和系统集成。
 
 ## 当前可展示内容
 
 | 主题 | 已有内容 | 边界 |
 | --- | --- | --- |
 | Core 微架构 | 弹性前后端、可变延迟访存、stale fetch 丢弃、精确访存异常 | 非经典五级流水；尚无 cache、多 outstanding |
-| 总线接口 | IFU/LSU 两套 AXI4-Lite master，独立 AW/W 握手、回压和错误传播 | C++ slave 为验证模型；RTL 互联/外设尚未完成 |
+| 总线接口与互联 | IFU/LSU AXI4-Lite adapters；standalone Arbiter、Xbar/default 已验证，见 [S2 报告](../post-c/3-axi4-lite-interconnect/2-xbar.md) | 互联尚未接入 Core；SRAM/UART/CLINT 待实现，软件仍走 legacy C++ slave |
 | 验证 | Verilator、commit trace、GPR/CSR DiffTest、模块测试、随机时序回归 | 不等于完整 ISA compliance 或 formal/coverage closure |
 | 系统 workload | CPU tests、UART hello、RTC、yield-os | 当前 NPC harness 环境，不代表已接入 ysyxSoC |
 

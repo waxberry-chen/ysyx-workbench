@@ -1,10 +1,10 @@
 # M3：AXI4-Lite Interconnect 设计与验收计划
 
-> 日期：2026-10-14；状态：S0/S1 已完成，Xbar/slaves 与系统集成待实施。
+> 日期：2026-10-14；状态：S0–S2 已完成，SRAM/UART/CLINT 与系统集成待实施。
 > 阅读时 HEAD：`c6dd719`；M2 实现基线：`5b6f29c`。本文不代表重新执行了 M2 验收。  
 > 配套：[测试矩阵](test-plan.md)、[开发日志](dev-log.md)、[总路线](../roadmap.md)。
 
-2026-10-14：S0/S1 已完成，基线见 [0-baseline.md](0-baseline.md)，Arbiter 实现与验证见 [1-arbiter.md](1-arbiter.md)，M3 测试状态见 [test-status.csv](test-status.csv)。当前可进入 S2；Xbar/slaves 尚未实现。
+2026-10-14：S0/S1 已完成，基线见 [0-baseline.md](0-baseline.md)，Arbiter 实现与验证见 [1-arbiter.md](1-arbiter.md)，M3 测试状态见 [test-status.csv](test-status.csv)。S2 的 Xbar/default 实现与验证见 [2-xbar.md](2-xbar.md)，当前可进入 S3 SRAM/UART/CLINT；尚未集成 Core。
 
 ## 1. 目标、依据与边界
 
@@ -172,7 +172,7 @@ slaves 分别保存 AW/W；即使 W 先到也不能丢失或重复使用。第�
 | --- | --- | --- |
 | S0 基线（已完成） | 保存 M2 版本、配置、镜像/hash；检查当前接口与本计划；为测试 ID 建立结果清单 | 已明确 legacy/b1 隔离约定并完成 legacy 独立 NPC 构建；最小相关回归通过，profile selector/AM 隔离在 S4 实施 |
 | S1 Arbiter（已完成） | owner/type、RR、独立 AW/W 槽、响应返回；独立 driver + scripted slave | T01–T04/T08 的 Arbiter 部分通过；10 seeds × 1000 笔随机事务与 13 个 reset 场景通过，详见 S1 报告 |
-| S2 Xbar | 地址范围、target holding、default error slave | T05/T06/T08 通过，W-first 与非法地址能完整结束 |
+| S2 Xbar（已完成） | 地址范围、target holding、default error slave | T05/T06/T08 的 Xbar/default 子集通过；两种容量、10 seeds × 1000 笔及 reset 恢复通过，见 S2 报告；mapped slave 错误待 S3 |
 | S3 Slaves | SRAM、UART、CLINT 及仿真输出/初始化边界 | T07/T09/T10 通过，包括全部 WSTRB、计时器 rollover 和 exactly-once |
 | S4 系统集成 | 两个 wrapper、filelist、harness、loader、AM profile、DiffTest | 有限 CPU 程序、hello、uptime、yield-os 与异常回归通过 |
 | S5 RT-Thread 与 closure | 固定 BSP/workload、随机回归、coverage、波形与性能结果 | 测试矩阵所有必测项有证据，未完成项如实列出，不假称 sign-off |
@@ -208,7 +208,7 @@ M3 期间可准备 DC/PT 最小 flow；M3 稳定后进入 M4 正式面积/时序
 
 ## 8. 风险、待验证项与阻塞判定
 
-**目前没有阻塞进入 S2 Xbar/default slave 的事项。** 下列项目须在对应步骤解决：
+**目前没有阻塞进入 S3 SRAM/UART/CLINT 的事项。** 下列项目须在对应步骤解决：
 
 | 项目 | 当前状态 | 何时构成阻塞 / 处理方式 |
 | --- | --- | --- |

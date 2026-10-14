@@ -68,3 +68,17 @@
 问题记录：最初 strict lint 报 reset/SVA 的 `SYNCASYNCNET`，在新测试入口只豁免这一项并说明原因，其他 RTL warnings 仍为 fatal；关闭 SVA 的 synthesis 分支 lint 无告警。编译再次遇到 ccache 沙箱权限，获准沙箱外执行后通过。没有观察到功能性错误。
 
 最终源码副本、命令、日志、coverage 和测试程序归档在 build 外的 `artifacts/m3-s1-20261014.tar.gz`；对应 hash 见 manifest。下一步实现 S2 的 target holding、地址 decode、default DECERR 及独立验证，沿用 S1 单 master 输出。
+
+## 2026-10-14：S2 Xbar/default 实现与独立验证完成
+
+状态：**S2 PASS，无阻塞，可进入 S3**。报告：[2-xbar.md](2-xbar.md)；源码/日志/归档摘要：[s2-manifest.json](s2-manifest.json)。运行起点为 `be83ff5`，初始工作区干净。
+
+- 实现四路范围译码、AR/AW 握手锁存 target、W-first 独立缓存、AW/W 独立转发与寄存响应；仅目标端口允许握手。
+- 实现独立 DECERR slave，read 返回零数据，write 收齐 AW/W 后返回错误，包含 WSTRB=0；共同 reset 丢弃旧响应。
+- 新增 `b1-xbar-test`（含 default 独立测试）和 `b1-xbar-config-test`；默认 1 MiB 与 12 KiB 各通过定向及 seeds 1–10 × 1000 笔随机测试。
+- 每个容量配置的 Xbar 记账为 10488 accepted / 10446 completed / 42 aborted，215 个 bin；DECERR 独立测试为 328 / 317 / 11，65 个 bin。四路各 12 个 reset 阶段及真实 default 连接恢复通过。
+- 七个容量守卫用例通过，其中四个非法配置按预期拒绝；SVA lint、synthesis 分支静态 lint、S1 Arbiter 回归通过。未运行真实综合/STA、formal 或 Core 系统回归。
+- 处理 ccache 沙箱权限、Verilator 5.008 顶层数组/SVA 生成 C++ 不兼容及无尺寸零参数告警；修正 TB 缩进告警与误计真实 DECERR 为成功写的统计，保留失败日志。未观察到 RTL 功能 mismatch。
+- 更新阶段状态及有价值的 Q&A。未改变 production filelist、Core、harness、AM/NEMU；mapped slave 的 SLVERR、SRAM 字节写、UART/CLINT 副作用仍待 S3。
+
+原始日志、源码、CSV 与测试程序已保存到 build 外的 `artifacts/m3-s2-20261014.tar.gz`。当前无未解决阻塞；下一步 S3 SRAM/UART/CLINT。

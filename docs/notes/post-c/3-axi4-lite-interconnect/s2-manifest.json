@@ -1,0 +1,255 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-14",
+  "stage": "M3 S2",
+  "status": "PASS",
+  "scope": "standalone Xbar and default DECERR slave plus their connection; SRAM/UART/CLINT and Core integration pending",
+  "base_commit": "be83ff5c75521ee47e61eb2b2dc0d417a131c9d8",
+  "initial_workspace_clean": true,
+  "candidate": "uncommitted sources identified by SHA-256; no production filelist/Core changes",
+  "source_sha256": {
+    ".gitignore": "809affa12e1e2c4a480db65c001223225181b12de04798127ccc2d94c2cd16c1",
+    "npc/vsrc/bus/ysyx_axi4lite_xbar.sv": "b546fa1c464bd45c5d223b0c3b96e52fb2ce1c90fb5ade084b8041fd5128cc19",
+    "npc/vsrc/bus/ysyx_axi4lite_decerr.sv": "dcaa36608c78c2bc3ee7abfb73cdec1814d0a0832c19bee3f74d22e2163c9c0a",
+    "npc/tests/axi4lite_xbar_test_top.sv": "0d3cf257831ec3a3e5ba6c73d26b58c1a463412a9899c55dde972cb72bedf36a",
+    "npc/tests/axi4lite_xbar_tb.cpp": "2d63bc52952230ebda468424c01543747d68c8eb959e66a7dcfca925a128ab74",
+    "npc/tests/axi4lite_decerr_tb.cpp": "7136f688ea267fde48cae029083810852e3565dd9a1908c8c52ca82f2c3fab89",
+    "npc/tests/axi4lite_xbar_config_tb.cpp": "b641d4df9db7165a83967f349c8a2df62f5249754c4618a527d21c704c0dcf3a",
+    "npc/tests/axi4lite_xbar_config_test.py": "a010d0de03da142198f909ab07864bd29ca5c3e5d6fb421f1d81719edb930be2",
+    "npc/scripts/tests.mk": "c2f7a60fb5eb88aa41e511c097fb8703baccb79042b41689922e37544231239f",
+    "npc/.gitignore": "5a5379a33b7cfd70bf3d0800c07d526a4dac3f1d7944a4397cd61edbf76e2727",
+    "npc/Makefile": "9792c9dea9a4b4e78f5054a7c63d06a7f5fa66c1d1961aa6339a3621d5eb43a4",
+    "npc/scripts/build.mk": "c14683b891b9f6943fa01b3669821272e8bc35b42561287400f3cc1dcf544749",
+    "npc/vsrc/bus/ysyx_axi4lite_arbiter.sv": "19e211aef162c3d2c993565e951b6baceb90381d6d5dddbdacbd128ddd370d9f",
+    "npc/tests/axi4lite_arbiter_tb.cpp": "48a06552d490a45870b9df7a4e39c8e8bab57f3b9a365d15ad16282df83b74db"
+  },
+  "tools": {
+    "verilator": "Verilator 5.008 2023-03-04 rev v5.008",
+    "g++": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+    "make": "GNU Make 4.3",
+    "python3": "Python 3.10.12"
+  },
+  "commands": [
+    {
+      "argv": [
+        "make",
+        "-C",
+        "npc",
+        "b1-xbar-test"
+      ],
+      "exit": 2,
+      "log": "logs/sandbox-failure.log",
+      "reason": "ccache temporary directory read-only in sandbox; approved external rerun"
+    },
+    {
+      "argv": [
+        "make",
+        "-C",
+        "npc",
+        "b1-xbar-test"
+      ],
+      "exit": 0,
+      "log": "logs/initial-functional-pass.log",
+      "note": "initial TB had C++ indentation warning and overcounted default successful-write events; fixed in final candidate"
+    },
+    {
+      "argv": [
+        "make",
+        "-C",
+        "npc",
+        "b1-xbar-test",
+        "b1-xbar-config-test"
+      ],
+      "exit": 2,
+      "log": "logs/config-top-array-failure.log",
+      "reason": "Verilator 5.008 direct top array SVA generated C++ type mismatch; use same wrapper as functional test"
+    },
+    {
+      "argv": [
+        "make",
+        "-C",
+        "npc",
+        "b1-xbar-test",
+        "b1-xbar-config-test"
+      ],
+      "exit": 2,
+      "log": "logs/config-unsized-parameter-failure.log",
+      "reason": "unsized zero parameter WIDTHCONCAT; use explicitly sized 32-bit CLI constants"
+    },
+    {
+      "argv": [
+        "make",
+        "-C",
+        "npc",
+        "b1-xbar-test",
+        "b1-xbar-config-test"
+      ],
+      "exit": 0,
+      "log": "logs/final.log"
+    },
+    {
+      "argv": [
+        "make",
+        "-C",
+        "npc",
+        "b1-xbar-test",
+        "B1_TEST_SRAM_BYTES=12288",
+        "OBJ_DIR=/home/cym/prj/ysyx-workbench/npc/build/s2-cap12k"
+      ],
+      "exit": 0,
+      "log": "logs/capacity-12k.log"
+    },
+    {
+      "argv": [
+        "make",
+        "-C",
+        "npc",
+        "b1-xbar-config-test",
+        "b1-arbiter-test"
+      ],
+      "exit": 0,
+      "log": "logs/config-and-arbiter-pass.log"
+    },
+    {
+      "argv": [
+        "verilator",
+        "--lint-only",
+        "--sv",
+        "-Wall",
+        "-DSYNTHESIS",
+        "--top-module",
+        "axi4lite_xbar_test_top",
+        "npc/vsrc/bus/ysyx_axi4lite_xbar.sv",
+        "npc/vsrc/bus/ysyx_axi4lite_decerr.sv",
+        "npc/tests/axi4lite_xbar_test_top.sv"
+      ],
+      "exit": 0,
+      "log": "logs/synthesis-branch-lint.log"
+    }
+  ],
+  "configuration": {
+    "SRAM_BYTES": [
+      1048576,
+      12288
+    ],
+    "route_order": [
+      "SRAM",
+      "UART",
+      "CLINT",
+      "DECERR"
+    ],
+    "random_seeds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "transactions_per_seed_per_capacity": 1000,
+    "assertions": true,
+    "lint_waiver": "SYNCASYNCNET only for async reset sampled in SVA; no waiver in SYNTHESIS branch"
+  },
+  "results": {
+    "xbar_per_capacity": {
+      "accepted": 10488,
+      "completed": 10446,
+      "reset_aborted": 42,
+      "scripted_successful_write_events": 1872,
+      "coverage_bins": 215,
+      "cycles": 204024,
+      "ordering_bins": 36,
+      "boundary_cases": 72,
+      "route_type_response_bins": 24,
+      "reset_route_phase_cases": 48,
+      "integrated_default_reset_cases": 2
+    },
+    "decerr_standalone": {
+      "accepted": 328,
+      "completed": 317,
+      "reset_aborted": 11,
+      "coverage_bins": 65,
+      "cycles": 9179
+    },
+    "arbiter_regression": {
+      "accepted": 10143,
+      "completed": 10132,
+      "reset_aborted": 11,
+      "coverage_bins": 74
+    },
+    "config_guards": [
+      {
+        "case": "minimum",
+        "SRAM_BYTES": "4",
+        "expected_valid": "True",
+        "exit_code": "0",
+        "result": "PASS"
+      },
+      {
+        "case": "non_power_of_two",
+        "SRAM_BYTES": "12288",
+        "expected_valid": "True",
+        "exit_code": "0",
+        "result": "PASS"
+      },
+      {
+        "case": "touch_mmio",
+        "SRAM_BYTES": "536870984",
+        "expected_valid": "True",
+        "exit_code": "0",
+        "result": "PASS"
+      },
+      {
+        "case": "zero",
+        "SRAM_BYTES": "0",
+        "expected_valid": "False",
+        "exit_code": "-6",
+        "result": "PASS"
+      },
+      {
+        "case": "misaligned",
+        "SRAM_BYTES": "6",
+        "expected_valid": "False",
+        "exit_code": "-6",
+        "result": "PASS"
+      },
+      {
+        "case": "overlap",
+        "SRAM_BYTES": "536870988",
+        "expected_valid": "False",
+        "exit_code": "-6",
+        "result": "PASS"
+      },
+      {
+        "case": "overflow",
+        "SRAM_BYTES": "2147483652",
+        "expected_valid": "False",
+        "exit_code": "-6",
+        "result": "PASS"
+      }
+    ]
+  },
+  "not_run": [
+    "formal/four-state",
+    "actual synthesis/STA/PPA",
+    "actual SRAM/UART/CLINT behavior",
+    "Arbiter+Xbar full fabric/master-route crosses",
+    "Core/AM/DiffTest/CPU regressions",
+    "system waveforms and performance comparisons"
+  ],
+  "next_stage": "S3 SRAM/UART/CLINT",
+  "blockers": [],
+  "integrity": "SHA256SUMS lists archived payloads; tar content verified; tracked manifest additionally holds external archive digest",
+  "archive": {
+    "path": "artifacts/m3-s2-20261014.tar.gz",
+    "sha256": "92ca8024f186e67a251cd8bba400b8581d4a6f8f157920e788ed400ef48686c6",
+    "bytes": 935863,
+    "storage": "local ignored artifacts directory; no remote backup",
+    "payload_files": 57,
+    "verified": true
+  }
+}

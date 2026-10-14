@@ -15,6 +15,7 @@ nvboard/
 !compile_commands.json
 /am-kernels
 /rt-thread-am
+/artifacts/
 
 # Keep maintained documentation, including notes/output
 /docs/*

@@ -1,9 +1,9 @@
 # M3 验证与验收矩阵
 
-> 2026-10-14；状态：S1 Arbiter 子集已实现并通过，其余模块/系统测试待推进。
+> 2026-10-14；状态：S1 Arbiter、S2 Xbar/default 子集已通过，其余 slave/系统测试待推进。
 > 设计契约见 [plan.md](plan.md)，实际执行记录写入 [dev-log.md](dev-log.md)；本文件不记录未经运行的 PASS。
 
-S0 已复测 M2 最小基线，见 [0-baseline.md](0-baseline.md)。S1 结果见 [1-arbiter.md](1-arbiter.md)。T01–T15 的实施/执行状态维护在 [test-status.csv](test-status.csv)；`ARBITER_PASS` 仅指 S1 的模块子集，legacy 或 standalone 证据不等于 M3 系统验收。
+S0 已复测 M2 最小基线，见 [0-baseline.md](0-baseline.md)。S1 结果见 [1-arbiter.md](1-arbiter.md)，S2 结果见 [2-xbar.md](2-xbar.md)。T01–T15 的实施/执行状态维护在 [test-status.csv](test-status.csv)；`ARBITER_PASS`、`XBAR_PASS`、`XBAR_DECERR_PASS` 均仅指对应模块子集，legacy 或 standalone 证据不等于 M3 系统验收。
 
 ## 1. 验证对象与责任
 
