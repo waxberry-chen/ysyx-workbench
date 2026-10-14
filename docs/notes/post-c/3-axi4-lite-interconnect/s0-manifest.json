@@ -1,0 +1,251 @@
+{
+  "date": "2026-10-14",
+  "stage": "M3 S0",
+  "status": "PASS",
+  "scope": "M2 legacy minimal baseline; not M3 interconnect sign-off",
+  "workspace_commit": "94dbfd146dc774b405c79c2558d10d9b066df405",
+  "m2_commit": "5b6f29cf0632ff6d5b4ea250e40b5e729d99baff",
+  "am_kernels_commit": "9804c83061d595712c0aef75c513318576480315",
+  "initial_worktrees": "root and am-kernels clean",
+  "source_comparison": "NPC RTL/C++/scripts/filelist/Makefile and tracked AM/NEMU unchanged from 5b6f29c",
+  "tools": {
+    "verilator": "Verilator 5.008 2023-03-04 rev v5.008",
+    "gcc-riscv": "riscv64-linux-gnu-gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0",
+    "g++": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+    "make": "GNU Make 4.3",
+    "llvm": "11.1.0",
+    "python": "Python 3.10.12"
+  },
+  "configuration": {
+    "top": "ysyx_core",
+    "filelist": "npc/filelist.f",
+    "profile": "legacy (implicit; NPC_PLATFORM selector not implemented)",
+    "pmem_base": "0x80000000",
+    "pmem_bytes": 134217728,
+    "reset_pc": "0x80000000",
+    "reset_cycles": 3,
+    "assertions": true,
+    "difftest": true,
+    "gpr_count": 32,
+    "fst_runtime_enabled": false,
+    "build_dir": "npc/build/m3-s0-20261014-legacy",
+    "fresh_npc_build": true,
+    "software_build": "existing AM/workload incremental builds; exact ELF/bin preserved",
+    "reference_build": "existing TARGET_SHARE binary; not rebuilt in S0",
+    "timing_default": {
+      "seed": 42,
+      "max_latency": 3,
+      "ready_percent": 75
+    },
+    "timing_deterministic": {
+      "seed": 42,
+      "max_latency": 0,
+      "ready_percent": 100
+    },
+    "random": {
+      "workload": "add",
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "max_latency": 7,
+      "ready_percent": 50
+    },
+    "termination": "GOOD TRAP at committed ebreak; no drain",
+    "ifq_depth": 2
+  },
+  "inputs": {
+    "npc-simulator": {
+      "source": "npc/build/m3-s0-20261014-legacy/Vysyx_core",
+      "archive": "inputs/Vysyx_core",
+      "sha256": "8b09e777635518f9c8acdb30673e143106fce981d4b33e2716d0ab35c8089350",
+      "bytes": 505280
+    },
+    "nemu-reference": {
+      "source": "nemu/build/riscv32-nemu-interpreter-so",
+      "archive": "inputs/riscv32-nemu-interpreter-so",
+      "sha256": "70e2b9ff4c19032e8b8e505cc702886a49d39625a5499700088600f5e9aa1eec",
+      "bytes": 53216
+    },
+    "nemu-config": {
+      "source": "nemu/.config",
+      "archive": "inputs/.config",
+      "sha256": "6fe32fd489492360f413c2412cb4bc32d1d581f92c571af8a9358b63f8c4642f",
+      "bytes": 1434
+    },
+    "nemu-autoconf": {
+      "source": "nemu/include/generated/autoconf.h",
+      "archive": "inputs/autoconf.h",
+      "sha256": "ea26d9cf311661a5ab787a040919b3c30ad1a4df19fb2e064611dd538e2ccc5b",
+      "bytes": 669
+    },
+    "npc-config": {
+      "source": "npc/csrc/include/config.h",
+      "archive": "inputs/config.h",
+      "sha256": "4e854e6269e82e2292553c79de87141bfdbd72b0d6cab1e95c04d4a84e2f65e0",
+      "bytes": 1440
+    },
+    "add-bin": {
+      "source": "am-kernels/tests/cpu-tests/build/add-riscv32e-npc.bin",
+      "archive": "inputs/add-riscv32e-npc.bin",
+      "sha256": "d28cd572a35085f9fc278b3f342a8774698e942459aa0a5944a180687cc1e4b5",
+      "bytes": 636
+    },
+    "add-elf": {
+      "source": "am-kernels/tests/cpu-tests/build/add-riscv32e-npc.elf",
+      "archive": "inputs/add-riscv32e-npc.elf",
+      "sha256": "daae3ee701c8c243e35105d2a7f2b68e71c9fc4a6245dc04641930eb7d27d924",
+      "bytes": 6024
+    },
+    "bubble-sort-bin": {
+      "source": "am-kernels/tests/cpu-tests/build/bubble-sort-riscv32e-npc.bin",
+      "archive": "inputs/bubble-sort-riscv32e-npc.bin",
+      "sha256": "8364bd63c6909af0e0f3a479b820c7ae79cf560049c41ed4deee2895e8c80ed2",
+      "bytes": 2056
+    },
+    "bubble-sort-elf": {
+      "source": "am-kernels/tests/cpu-tests/build/bubble-sort-riscv32e-npc.elf",
+      "archive": "inputs/bubble-sort-riscv32e-npc.elf",
+      "sha256": "300c0570752f5c0a752df251bc9e3be4b97505a1d40d9514b63b1757b986d2f3",
+      "bytes": 7264
+    },
+    "hello-bin": {
+      "source": "am-kernels/kernels/hello/build/hello-riscv32e-npc.bin",
+      "archive": "inputs/hello-riscv32e-npc.bin",
+      "sha256": "95dccde49fa3978b6e3d2fa8ab5d31757954cca106bbb2f8793452ab04673ec3",
+      "bytes": 288
+    },
+    "hello-elf": {
+      "source": "am-kernels/kernels/hello/build/hello-riscv32e-npc.elf",
+      "archive": "inputs/hello-riscv32e-npc.elf",
+      "sha256": "cd4756aa5fa79aea8862f3e03619879cbe80f53d9b431556a1aac07ea17c1aab",
+      "bytes": 5464
+    }
+  },
+  "source_snapshot_sha256": "518600d1351cf766e5dc05109b48c14566e2d2c1b9a9836fe30a93f4ce2d2eb2",
+  "source_manifest_sha256": "7981f426249fd27fca8551f24479f9f64eac4acb04074cb4aee75b5f2de29be2",
+  "directed_module_tests": 7,
+  "exceptions": [
+    {
+      "test": "access-fault-test/fetch",
+      "cause": 1,
+      "trap_pc": "00000000",
+      "result": "PASS"
+    },
+    {
+      "test": "access-fault-test/load",
+      "cause": 5,
+      "trap_pc": "8000000c",
+      "result": "PASS"
+    },
+    {
+      "test": "access-fault-test/store",
+      "cause": 7,
+      "trap_pc": "8000000c",
+      "result": "PASS"
+    },
+    {
+      "test": "address-misaligned-test/load",
+      "cause": 4,
+      "trap_pc": "80000018",
+      "result": "PASS"
+    },
+    {
+      "test": "address-misaligned-test/store",
+      "cause": 6,
+      "trap_pc": "80000018",
+      "result": "PASS"
+    }
+  ],
+  "cpu_tests": [
+    "add",
+    "bubble-sort"
+  ],
+  "deterministic_metrics": {
+    "add": {
+      "cycles": 5405,
+      "commits": 1095,
+      "redirects": 212,
+      "cpi": 4.936,
+      "architectural_sha256": "bbf8496edf2329d695eb4437641ced89bba9cf0b6006f1a0b5955c32941e9284",
+      "trace_sha256": "25e2ed5a28ccd6234d7afab3936c4b9d81d7e74ec3c1aceefe8e7c837662186e",
+      "transaction_lines": [
+        "I-RAM transactions: requests = 1308, responses = 1308, errors = 0, AR stall cycles = 0, R stall cycles = 0",
+        "D-RAM transactions: requests = 282 (loads = 243, stores = 39), responses = 282, errors = 0"
+      ]
+    },
+    "bubble-sort": {
+      "cycles": 631047,
+      "commits": 132175,
+      "redirects": 25274,
+      "cpi": 4.774,
+      "architectural_sha256": "a31181ac1564de26bac250dd92563e21ba80b9bfe28575ebf2d19f07f65741b6",
+      "trace_sha256": "93f1c9f6233dcb32ce467541972e2d5c1b7ed602e05aac94bcb66de5becf908a",
+      "transaction_lines": [
+        "I-RAM transactions: requests = 157450, responses = 157450, errors = 0, AR stall cycles = 0, R stall cycles = 0",
+        "D-RAM transactions: requests = 6158 (loads = 4723, stores = 1435), responses = 6158, errors = 0"
+      ]
+    },
+    "hello": {
+      "cycles": 2471,
+      "commits": 460,
+      "redirects": 155,
+      "cpi": 5.372,
+      "architectural_sha256": "b12a335dd7b56c5a33ebfbb632bc4220cd41674fad331ef0afa3152f2a6b3927",
+      "trace_sha256": "68a910cbc87f0b2f21f0892f1568d80887a9be3dbf56160f9c2b3707a1731cb9",
+      "transaction_lines": [
+        "I-RAM transactions: requests = 616, responses = 616, errors = 0, AR stall cycles = 0, R stall cycles = 0",
+        "D-RAM transactions: requests = 111 (loads = 56, stores = 55), responses = 111, errors = 0"
+      ]
+    }
+  },
+  "m2_architectural_sha256": "bbf8496edf2329d695eb4437641ced89bba9cf0b6006f1a0b5955c32941e9284",
+  "m2_full_trace_sha256": "af1a6979fa387c6fb1795cfb1079ae2073c9004f5c1c9cda97dbaed643b7ba6a",
+  "unrun": [
+    "34-case full CPU regression",
+    "RTC",
+    "yield-os",
+    "RT-Thread",
+    "M3 RTL/tests",
+    "formal",
+    "synthesis/STA"
+  ],
+  "environment_failures": [
+    "missing new OBJ_DIR parent; created before retry",
+    "ccache /run/user/1000/ccache-tmp blocked by sandbox; approved rerun outside sandbox"
+  ],
+  "raw_archive": "artifacts/m3-s0-20261014.tar.gz",
+  "schema_version": 1,
+  "m2_fixed_sample": {
+    "seed": 42,
+    "max_latency": 3,
+    "ready_percent": 75,
+    "cycles": 7801,
+    "commits": 1095,
+    "cpi": 7.124,
+    "if_requests": 1310,
+    "if_responses": 1310,
+    "data_requests": 282,
+    "data_responses": 282
+  },
+  "counter_definitions": {
+    "cycles": "non-reset simulated cycles through committed ebreak; no drain",
+    "redirects": "committed next PC != PC + 4",
+    "stall": "overlapping AXI handshake observations; not a CPI decomposition"
+  },
+  "archive": {
+    "path": "artifacts/m3-s0-20261014.tar.gz",
+    "sha256": "dea0f0b37c338d1312e1473e5dc5000ecef856916658318e8e82cee7a34741ec",
+    "bytes": 2735728,
+    "storage": "local ignored artifacts directory, outside npc/build; no remote backup performed",
+    "integrity": "all archived file digests checked against SHA256SUMS"
+  }
+}

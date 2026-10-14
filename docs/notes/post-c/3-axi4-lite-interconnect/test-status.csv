@@ -1,0 +1,16 @@
+test_id,assertion_ids,coverage_ids,implementation_status,verification_status,legacy_evidence,next_stage,evidence_index
+T01,A01,C01,NOT_STARTED,NOT_RUN,M2 adapter payload-holding tests PASS; fabric holding untested,S1,0-baseline.md
+T02,A02,C02,NOT_STARTED,NOT_RUN,No Arbiter exists,S1,0-baseline.md
+T03,A03,C03,NOT_STARTED,NOT_RUN,M2 LSU adapter ordering tests PASS; Arbiter ingress ordering untested,S1,0-baseline.md
+T04,A04,C04,NOT_STARTED,NOT_RUN,M2 single-outstanding adapters PASS; fabric ownership untested,S1,0-baseline.md
+T05,A05,C05,NOT_STARTED,NOT_RUN,No Xbar exists,S2,0-baseline.md
+T06,A06,C06,NOT_STARTED,NOT_RUN,M2 error propagation PASS; RTL route/error slaves untested,S2,0-baseline.md
+T07,A07,C07,NOT_STARTED,NOT_RUN,M2 adapter lane tests PASS; full SRAM WSTRB coverage untested,S3,0-baseline.md
+T08,A08,C08,NOT_STARTED,NOT_RUN,M2 adapter reset tests PASS; fabric epoch/effect reset untested,S1,0-baseline.md
+T09,A09,C09,NOT_STARTED,NOT_RUN,Legacy hello PASS; RTL UART exactly-once untested,S3,0-baseline.md
+T10,A10,C10,NOT_STARTED,NOT_RUN,Legacy timer not rerun in S0; RTL CLINT absent,S3,0-baseline.md
+T11,A11,C11,NOT_STARTED,NOT_RUN,Legacy cause 1/4/5/6/7 tests PASS; B1 fault origins untested,S4,0-baseline.md
+T12,A12,C12,NOT_STARTED,NOT_RUN,M2 IFU+adapter redirect test PASS; arbitration/redirect untested,S4,0-baseline.md
+T13,A01-A10,C01-C10,NOT_STARTED,NOT_RUN,Legacy add seeds 1-10 PASS; fabric scoreboard/random unimplemented,S5,0-baseline.md
+T14,A11-A12;protocol,C13,NOT_STARTED,NOT_RUN,S0 legacy CPU subset/trace/hello PASS; B1 and RT-Thread untested,S4-S5,0-baseline.md
+T15,lint;artifact checks,T/A/C traceability,NOT_STARTED,NOT_RUN,Legacy core lint and S0 manifest PASS; new tops/artifacts absent,S1-S5,0-baseline.md

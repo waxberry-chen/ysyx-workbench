@@ -4,6 +4,8 @@
 > 阅读时 HEAD：`c6dd719`；M2 实现基线：`5b6f29c`。本文不代表重新执行了 M2 验收。  
 > 配套：[测试矩阵](test-plan.md)、[开发日志](dev-log.md)、[总路线](../roadmap.md)。
 
+2026-10-14：S0 已完成，基线与实测范围见 [0-baseline.md](0-baseline.md)，M3 测试状态见 [test-status.csv](test-status.csv)。当前可进入 S1；Arbiter/Xbar/slaves 尚未实现。
+
 ## 1. 目标、依据与边界
 
 把已验收的 IFU/LSU 两套 AXI4-Lite master 接成最小 B1 系统：
@@ -168,7 +170,7 @@ slaves 分别保存 AW/W；即使 W 先到也不能丢失或重复使用。第�
 
 | 步骤 | 实现内容 | 进入下一步的条件 |
 | --- | --- | --- |
-| S0 基线 | 保存 M2 版本、配置、镜像/hash；检查当前接口与本计划；为测试 ID 建立结果清单 | 明确 legacy/b1 构建隔离，M2 最小相关回归可复现 |
+| S0 基线（已完成） | 保存 M2 版本、配置、镜像/hash；检查当前接口与本计划；为测试 ID 建立结果清单 | 已明确 legacy/b1 隔离约定并完成 legacy 独立 NPC 构建；最小相关回归通过，profile selector/AM 隔离在 S4 实施 |
 | S1 Arbiter | owner/type、RR、独立 AW/W 槽、响应返回；独立 driver + scripted slave | T01–T04/T08 的 Arbiter 部分通过，持续竞争与 response stall 无串路 |
 | S2 Xbar | 地址范围、target holding、default error slave | T05/T06/T08 通过，W-first 与非法地址能完整结束 |
 | S3 Slaves | SRAM、UART、CLINT 及仿真输出/初始化边界 | T07/T09/T10 通过，包括全部 WSTRB、计时器 rollover 和 exactly-once |

@@ -223,6 +223,8 @@ interconnect system-level test plan 合并实施。
 
 2026-10-14 已建立[设计与实施计划](3-axi4-lite-interconnect/plan.md)、[验收矩阵](3-axi4-lite-interconnect/test-plan.md)和[开发日志](3-axi4-lite-interconnect/dev-log.md)；当前为计划状态，RTL 与新增验收入口尚未实施。
 
+同日已完成 [S0 基线保存与最小回归](3-axi4-lite-interconnect/0-baseline.md)，可进入 S1 Arbiter 实现；该结果仅验证 legacy 基线，不代表 M3 互联系统已通过。
+
 #### 实现顺序
 
 1. 2-to-1 Arbiter 合并 IFU/LSU，请求接受后锁存 owner 至对应 response 完成；

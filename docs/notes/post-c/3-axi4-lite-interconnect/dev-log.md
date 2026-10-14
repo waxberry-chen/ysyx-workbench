@@ -36,3 +36,19 @@
 下一步按 S0 保存可复现的 M2 最小基线，然后实现 Arbiter 与 T01–T04/T08 对应的独立测试。Xbar、slaves 和软件迁移在各自步骤推进，避免一开始同时改动所有层次。
 
 后续每次记录：改变了什么契约/实现、为何改变、实际测试命令与结果、未验证范围、阻塞与下一步。失败实验和覆盖空洞同样保留；正式 M3 sign-off 另建报告，不回填虚构的历史数据。
+
+## 2026-10-14：S0 基线保存与最小回归完成
+
+状态：**PASS，无未解决阻塞，可进入 S1**。详细配置、命令、结果与归档说明见 [0-baseline.md](0-baseline.md)，结构化记录见 [s0-manifest.json](s0-manifest.json)。
+
+- 运行起点为 `94dbfd1`，主仓库和 am-kernels 工作区干净；确认 NPC RTL/仿真/构建和受管理的 AM/NEMU 源码与 `5b6f29c` 相同。
+- 使用新的 `npc/build/m3-s0-20261014-legacy/` 构建 NPC/模块测试；AM/workload 沿用增量构建，reference 使用已有共享库，精确输入均归档并计算 SHA-256。
+- lint、7 个模块/集成测试、5 个 access-fault/misaligned 程序、add/bubble-sort、add seeds 1–10 均通过；系统测试 DiffTest ON。
+- 固定 add 的架构与 full trace hash 均复现 M2；补充无额外随机停顿的 add/bubble-sort/hello 样本，cycles 分别为 5405/631047/2471。未运行全量 34 项 CPU tests、RTC、yield-os 或 RT-Thread。
+- 核对 M3 输入端口与事务语义；明确 S0 独立 OBJ_DIR 与 S4 profile/AM 构建隔离的区别。当前 `NPC_PLATFORM` 仍未实现，不能用传入该变量的 legacy 运行冒充 B1 验证。
+- 建立 [test-status.csv](test-status.csv)，覆盖 T01–T15 及对应 A/C ID，M3 实施和验证状态仍为未开始。
+- 日志、镜像、二进制、配置、330 个源码文件及 hash 保存到 build 之外的本地 `artifacts/m3-s0-20261014.tar.gz`；归档 digest 见 manifest，不提交原始构建产物。
+
+失败与处理：第一次因嵌套 Mdir 父目录不存在失败，创建 OBJ_DIR 后解决；第二次因沙箱阻止 ccache 写临时目录失败，获得沙箱外运行许可后原回归通过。保留两次失败日志，未为此修改 RTL。已知 lint unused 位域和 host 头文件宏重定义 warning 单独记录。
+
+本轮未改 RTL、harness、AM 或构建脚本。下一步只进入 Arbiter 与 T01–T04/T08 的 S1 范围；后续容量、AM timer、RT-Thread 与 EDA 待验证项继续保留。

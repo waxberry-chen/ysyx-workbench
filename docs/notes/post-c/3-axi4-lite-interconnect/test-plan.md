@@ -3,6 +3,8 @@
 > 2026-10-14；状态：计划，所有新增测试/属性/target 均待实现。  
 > 设计契约见 [plan.md](plan.md)，实际执行记录写入 [dev-log.md](dev-log.md)；本文件不记录未经运行的 PASS。
 
+S0 已复测 M2 最小基线，见 [0-baseline.md](0-baseline.md)。T01–T15 的实施/执行状态维护在 [test-status.csv](test-status.csv)；legacy 证据不等于 M3 测试通过。
+
 ## 1. 验证对象与责任
 
 分三层验证，避免 CPU workload 的有限协议行为留下空洞：
