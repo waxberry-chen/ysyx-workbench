@@ -1,0 +1,220 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-14",
+  "stage": "M3 S1",
+  "status": "PASS",
+  "scope": "standalone arbiter; no Core integration or system sign-off",
+  "base_commit": "4f9356d4285427384d1663f917016cfa6274a4e3",
+  "candidate": "uncommitted source snapshots identified by SHA-256",
+  "source_sha256": {
+    "npc/vsrc/bus/ysyx_axi4lite_arbiter.sv": "19e211aef162c3d2c993565e951b6baceb90381d6d5dddbdacbd128ddd370d9f",
+    "npc/tests/axi4lite_arbiter_tb.cpp": "48a06552d490a45870b9df7a4e39c8e8bab57f3b9a365d15ad16282df83b74db",
+    "npc/scripts/tests.mk": "f2c527fdbc9088014161a42f42f6330df01f9282342ae436b2d2b7d7d7f3ba2f"
+  },
+  "tools": {
+    "verilator": "Verilator 5.008 2023-03-04 rev v5.008",
+    "g++": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0"
+  },
+  "commands": [
+    {
+      "argv": [
+        "make",
+        "-C",
+        "npc",
+        "b1-arbiter-lint"
+      ],
+      "initial_exit": 2,
+      "diagnostic": "SYNCASYNCNET from async reset and sampled SVA reset; targeted documented waiver added"
+    },
+    {
+      "argv": [
+        "make",
+        "-C",
+        "npc",
+        "b1-arbiter-test"
+      ],
+      "sandbox_exit": 2,
+      "log": "logs/sandbox-build-failure.log",
+      "reason": "ccache temporary directory write denied"
+    },
+    {
+      "argv": [
+        "make",
+        "-C",
+        "npc",
+        "b1-arbiter-test"
+      ],
+      "approved_exit": 0,
+      "log": "logs/first-pass.log"
+    },
+    {
+      "argv": [
+        "verilator",
+        "--lint-only",
+        "--sv",
+        "-Wall",
+        "-DSYNTHESIS",
+        "--top-module",
+        "ysyx_axi4lite_arbiter",
+        "npc/vsrc/bus/ysyx_axi4lite_arbiter.sv"
+      ],
+      "exit": 0,
+      "output": "no diagnostics"
+    },
+    {
+      "argv": [
+        "make",
+        "-C",
+        "npc",
+        "b1-arbiter-test",
+        "lint",
+        "ifu-axi4lite-adapter-test",
+        "ifu-axi4lite-adapter-integ-test",
+        "lsu-axi4lite-adapter-test"
+      ],
+      "approved_exit": 0,
+      "log": "logs/final-regression.log"
+    }
+  ],
+  "configuration": {
+    "top": "ysyx_axi4lite_arbiter",
+    "assertions": true,
+    "rtl_warning_policy": "fatal except documented SYNCASYNCNET with SVA enabled",
+    "master_contract": "IFU read-only; LSU read OR write; one outstanding per input",
+    "random_seeds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "transactions_per_seed": 1000,
+    "random_delay_cycles": [
+      0,
+      7
+    ],
+    "directed_stall_cycles": [
+      0,
+      1,
+      7,
+      64,
+      257
+    ],
+    "watchdog_no_completion_cycles": 4096,
+    "reset_policy": "whole-system reset; abort outstanding; never replay completed slave effects",
+    "fst": false
+  },
+  "results": {
+    "accepted": 10143,
+    "completed": 10132,
+    "reset_aborted": 11,
+    "scripted_slave_effects": 893,
+    "coverage_bins": 74
+  },
+  "coverage": {
+    "AR/long": 7,
+    "AR/none": 977,
+    "AR/short": 6584,
+    "AW/long": 6,
+    "AW/none": 345,
+    "AW/short": 2219,
+    "B_delay/long": 4,
+    "B_delay/none": 380,
+    "B_delay/short": 2184,
+    "IFU_R/long": 4,
+    "IFU_R/none": 681,
+    "IFU_R/short": 4362,
+    "LSU_B/long": 12,
+    "LSU_B/none": 373,
+    "LSU_B/short": 2182,
+    "LSU_R/long": 3,
+    "LSU_R/none": 326,
+    "LSU_R/short": 2189,
+    "R_delay/long": 8,
+    "R_delay/none": 967,
+    "R_delay/short": 6592,
+    "W/long": 6,
+    "W/none": 395,
+    "W/short": 2169,
+    "fairness/winner_0": 4984,
+    "fairness/winner_1": 4993,
+    "long_stall/257": 1,
+    "ordering/-1/-1": 392,
+    "ordering/-1/0": 99,
+    "ordering/-1/1": 368,
+    "ordering/0/-1": 361,
+    "ordering/0/0": 143,
+    "ordering/0/1": 372,
+    "ordering/1/-1": 349,
+    "ordering/1/0": 119,
+    "ordering/1/1": 364,
+    "reset/ar_buffered": 1,
+    "reset/aw_only": 1,
+    "reset/aw_w_buffered": 1,
+    "reset/down_aw_only": 1,
+    "reset/down_w_only": 1,
+    "reset/hold_b": 1,
+    "reset/hold_ifu_r": 1,
+    "reset/hold_lsu_r": 1,
+    "reset/idle": 1,
+    "reset/reserved": 1,
+    "reset/w_only": 1,
+    "reset/wait_b": 1,
+    "reset/wait_r": 1,
+    "response/IFU_R/0": 1718,
+    "response/IFU_R/2": 1678,
+    "response/IFU_R/3": 1651,
+    "response/LSU_B/0": 891,
+    "response/LSU_B/2": 857,
+    "response/LSU_B/3": 819,
+    "response/LSU_R/0": 807,
+    "response/LSU_R/2": 861,
+    "response/LSU_R/3": 850,
+    "strobe/0": 167,
+    "strobe/1": 158,
+    "strobe/10": 158,
+    "strobe/11": 159,
+    "strobe/12": 168,
+    "strobe/13": 147,
+    "strobe/14": 158,
+    "strobe/15": 159,
+    "strobe/2": 162,
+    "strobe/3": 156,
+    "strobe/4": 151,
+    "strobe/5": 167,
+    "strobe/6": 166,
+    "strobe/7": 173,
+    "strobe/8": 154,
+    "strobe/9": 164
+  },
+  "coverage_sha256": "a8ac1a475c18a424d63c8fc477269509ab57f6e3d36d0d6e0a4dd7247960672c",
+  "test_binary_sha256": "459f7a3e74984bd35ce4a8cdda6d7481b22dfd51ed2db7215d88e20812da93ba",
+  "legacy_checks": [
+    "core lint",
+    "IFU adapter",
+    "IFU+adapter integration",
+    "LSU adapter"
+  ],
+  "not_run": [
+    "Core Arbiter integration",
+    "Xbar/slaves",
+    "CPU tests/DiffTest rerun",
+    "formal",
+    "synthesis/STA",
+    "4-state simulation"
+  ],
+  "next_stage": "S2 Xbar and default DECERR slave",
+  "blockers": [],
+  "archive": {
+    "path": "artifacts/m3-s1-20261014.tar.gz",
+    "sha256": "d2f96f23bc5a2b792ee00bfae00d61a030bcfe435f0dfb176c6d16accb04965a",
+    "bytes": 97682,
+    "storage": "local ignored artifacts outside build; no remote backup",
+    "integrity": "all entries verified against SHA256SUMS"
+  }
+}

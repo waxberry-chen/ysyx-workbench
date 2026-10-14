@@ -221,9 +221,11 @@ interconnect system-level test plan 合并实施。
 
 这个 milestone 消费 Milestone 2 冻结的两套 master，把协议练习扩展为可独立验证的最小 AXI4-Lite system。
 
-2026-10-14 已建立[设计与实施计划](3-axi4-lite-interconnect/plan.md)、[验收矩阵](3-axi4-lite-interconnect/test-plan.md)和[开发日志](3-axi4-lite-interconnect/dev-log.md)；当前为计划状态，RTL 与新增验收入口尚未实施。
+2026-10-14 已建立[设计与实施计划](3-axi4-lite-interconnect/plan.md)、[验收矩阵](3-axi4-lite-interconnect/test-plan.md)和[开发日志](3-axi4-lite-interconnect/dev-log.md)。
 
 同日已完成 [S0 基线保存与最小回归](3-axi4-lite-interconnect/0-baseline.md)，可进入 S1 Arbiter 实现；该结果仅验证 legacy 基线，不代表 M3 互联系统已通过。
+
+随后完成 [S1 Arbiter 实现与独立验证](3-axi4-lite-interconnect/1-arbiter.md)，并建立[阶段 Q&A](3-axi4-lite-interconnect/qa/README.md)。当前下一步为 S2 Xbar/default slave；Arbiter 尚未接入 Core，不代表整个 M3 系统已验收。
 
 #### 实现顺序
 

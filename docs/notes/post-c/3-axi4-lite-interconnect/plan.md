@@ -1,10 +1,10 @@
 # M3：AXI4-Lite Interconnect 设计与验收计划
 
-> 日期：2026-10-14；状态：设计计划已建立，RTL/测试尚未实施。  
+> 日期：2026-10-14；状态：S0/S1 已完成，Xbar/slaves 与系统集成待实施。
 > 阅读时 HEAD：`c6dd719`；M2 实现基线：`5b6f29c`。本文不代表重新执行了 M2 验收。  
 > 配套：[测试矩阵](test-plan.md)、[开发日志](dev-log.md)、[总路线](../roadmap.md)。
 
-2026-10-14：S0 已完成，基线与实测范围见 [0-baseline.md](0-baseline.md)，M3 测试状态见 [test-status.csv](test-status.csv)。当前可进入 S1；Arbiter/Xbar/slaves 尚未实现。
+2026-10-14：S0/S1 已完成，基线见 [0-baseline.md](0-baseline.md)，Arbiter 实现与验证见 [1-arbiter.md](1-arbiter.md)，M3 测试状态见 [test-status.csv](test-status.csv)。当前可进入 S2；Xbar/slaves 尚未实现。
 
 ## 1. 目标、依据与边界
 
@@ -143,7 +143,7 @@ slaves 分别保存 AW/W；即使 W 先到也不能丢失或重复使用。第�
 
 ### 5.1 顶层和 profile
 
-计划新增 `ysyx_core_axi4lite`（现有 Core + Arbiter，单 master）和 `ysyx_b1_top`（前者 + Xbar + slaves）。所有 commit/debug 观察端口向仿真层转接。`ysyx_core` 的双 master 作为内部模块和旧 standalone 验证接口保留；roadmap 所说“core 对外只剩一套 master”以新集成边界验收。
+计划新增 `ysyx_core_axi4lite`（现有 Core + Arbiter，单 master）和 `ysyx_b1_top`（前者 + Xbar + slaves）。所有 commit/debug 观察端口向仿真层转接。`ysyx_core` 的双 master 作为内部模块和旧 standalone 验证接口保留；roadmap 所说“core 对外只剩一套 master”以新集成边界验收。S1 Arbiter 目前仅 standalone 验证，尚未加入上述 wrapper。
 
 计划增加显式构建参数 `NPC_PLATFORM=legacy|b1`，初期默认 legacy；M3 sign-off 的所有系统入口明确指定 b1。两个 profile 使用不同的 Verilator 输出目录、filelist/top 选择及 AM 编译配置，避免复用旧对象。M2 的 `axi4lite-signoff` 留在 legacy；新 M3 targets 见 [测试计划](test-plan.md)。这些参数/targets 当前尚未实现。
 
@@ -171,7 +171,7 @@ slaves 分别保存 AW/W；即使 W 先到也不能丢失或重复使用。第�
 | 步骤 | 实现内容 | 进入下一步的条件 |
 | --- | --- | --- |
 | S0 基线（已完成） | 保存 M2 版本、配置、镜像/hash；检查当前接口与本计划；为测试 ID 建立结果清单 | 已明确 legacy/b1 隔离约定并完成 legacy 独立 NPC 构建；最小相关回归通过，profile selector/AM 隔离在 S4 实施 |
-| S1 Arbiter | owner/type、RR、独立 AW/W 槽、响应返回；独立 driver + scripted slave | T01–T04/T08 的 Arbiter 部分通过，持续竞争与 response stall 无串路 |
+| S1 Arbiter（已完成） | owner/type、RR、独立 AW/W 槽、响应返回；独立 driver + scripted slave | T01–T04/T08 的 Arbiter 部分通过；10 seeds × 1000 笔随机事务与 13 个 reset 场景通过，详见 S1 报告 |
 | S2 Xbar | 地址范围、target holding、default error slave | T05/T06/T08 通过，W-first 与非法地址能完整结束 |
 | S3 Slaves | SRAM、UART、CLINT 及仿真输出/初始化边界 | T07/T09/T10 通过，包括全部 WSTRB、计时器 rollover 和 exactly-once |
 | S4 系统集成 | 两个 wrapper、filelist、harness、loader、AM profile、DiffTest | 有限 CPU 程序、hello、uptime、yield-os 与异常回归通过 |
@@ -208,7 +208,7 @@ M3 期间可准备 DC/PT 最小 flow；M3 稳定后进入 M4 正式面积/时序
 
 ## 8. 风险、待验证项与阻塞判定
 
-**目前没有阻塞本计划落地或开始 Arbiter 实现的事项。** 下列项目须在对应步骤解决：
+**目前没有阻塞进入 S2 Xbar/default slave 的事项。** 下列项目须在对应步骤解决：
 
 | 项目 | 当前状态 | 何时构成阻塞 / 处理方式 |
 | --- | --- | --- |

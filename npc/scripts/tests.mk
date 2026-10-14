@@ -28,6 +28,26 @@ LSU_AXI_ADAPTER_TEST_OBJ := $(OBJ_DIR)/lsu-axi4lite-adapter-test
 EXU_TEST_OBJ := $(OBJ_DIR)/exu-test
 ADDRESS_MISALIGNED_TEST_DIR := $(OBJ_DIR)/address-misaligned-test
 
+B1_ARBITER_TEST_OBJ := $(OBJ_DIR)/b1-arbiter-test
+B1_ARBITER_RTL := $(NPC_HOME)/vsrc/bus/ysyx_axi4lite_arbiter.sv
+
+# S1 is standalone: no changes to the legacy core/filelist or C++ RAM model.
+# rst_n is asynchronous in state flops and sampled by disable-iff assertions;
+# waive only that known SYNCASYNCNET diagnostic, keeping other warnings fatal.
+.PHONY: b1-arbiter-lint b1-arbiter-test
+b1-arbiter-lint:
+	verilator --lint-only --sv -Wall --assert -Wno-SYNCASYNCNET \
+		--top-module ysyx_axi4lite_arbiter $(B1_ARBITER_RTL)
+
+b1-arbiter-test: b1-arbiter-lint
+	@mkdir -p $(B1_ARBITER_TEST_OBJ)
+	verilator --cc --exe --build --assert --sv -Wall -Wno-SYNCASYNCNET \
+		--top-module ysyx_axi4lite_arbiter --Mdir $(B1_ARBITER_TEST_OBJ) \
+		-CFLAGS '-std=c++14 -Wall -Wextra' \
+		$(B1_ARBITER_RTL) $(NPC_HOME)/tests/axi4lite_arbiter_tb.cpp
+	$(B1_ARBITER_TEST_OBJ)/Vysyx_axi4lite_arbiter \
+		$(B1_ARBITER_TEST_OBJ)/coverage.csv
+
 .PHONY: lsu-test
 lsu-test:
 	verilator $(DIRECTED_TEST_FLAGS) \

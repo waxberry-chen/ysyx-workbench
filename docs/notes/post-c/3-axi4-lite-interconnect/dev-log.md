@@ -52,3 +52,19 @@
 失败与处理：第一次因嵌套 Mdir 父目录不存在失败，创建 OBJ_DIR 后解决；第二次因沙箱阻止 ccache 写临时目录失败，获得沙箱外运行许可后原回归通过。保留两次失败日志，未为此修改 RTL。已知 lint unused 位域和 host 头文件宏重定义 warning 单独记录。
 
 本轮未改 RTL、harness、AM 或构建脚本。下一步只进入 Arbiter 与 T01–T04/T08 的 S1 范围；后续容量、AM timer、RT-Thread 与 EDA 待验证项继续保留。
+
+## 2026-10-14：S1 Arbiter 实现与独立验证完成
+
+状态：**S1 PASS，无阻塞，可进入 S2**。报告：[1-arbiter.md](1-arbiter.md)；实测 manifest：[s1-manifest.json](s1-manifest.json)。运行起点为 `4f9356d`，初始主仓库工作区干净。
+
+- 新增 `ysyx_axi4lite_arbiter.sv`：先预留 owner/type，独立缓存 AW/W、独立发送、寄存响应，直到上游响应握手才释放全局服务槽；采用两 master RR。
+- 新增独立 C++ AXI driver/scripted slave/scoreboard，不读取 DUT 内部状态；检查输出和输入双方 holding、请求唯一性、payload、错误码、owner、前进性及 reset epoch。
+- 新增 `b1-arbiter-lint` / `b1-arbiter-test`，后者自动运行定向、13 类 reset 和 seeds 1–10 每 seed 1000 笔随机事务，输出 74 个命中 coverage bin。
+- T01–T04/T08 的 Arbiter 子集通过；总接受 10143 笔、完成 10132 笔、reset 中止 11 笔，无剩余 outstanding。上下游 AW/W 顺序的 9 个组合均命中。
+- 最终 SVA lint、关闭属性的 synthesis 分支 lint、Core lint 和三个既有 adapter 测试通过。未运行 formal、真实综合/STA，也未重跑未受影响的 CPU/DiffTest 系统基线。
+- 新模块尚未接入 Core/filelist；Xbar、真实 slave、wrapper 与 AM/harness 均未改动。更新状态表时使用 `ARBITER_PASS`，不将整个 M3 的 T01–T15 标为完成。
+- 按 roadmap 的有价值进展规则新增 [qa/README.md](qa/README.md)，记录单事务取舍、owner 预留、AW/W 分离、响应回压、公平性前提、reset 与独立验证。
+
+问题记录：最初 strict lint 报 reset/SVA 的 `SYNCASYNCNET`，在新测试入口只豁免这一项并说明原因，其他 RTL warnings 仍为 fatal；关闭 SVA 的 synthesis 分支 lint 无告警。编译再次遇到 ccache 沙箱权限，获准沙箱外执行后通过。没有观察到功能性错误。
+
+最终源码副本、命令、日志、coverage 和测试程序归档在 build 外的 `artifacts/m3-s1-20261014.tar.gz`；对应 hash 见 manifest。下一步实现 S2 的 target holding、地址 decode、default DECERR 及独立验证，沿用 S1 单 master 输出。

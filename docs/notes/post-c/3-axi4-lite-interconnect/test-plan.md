@@ -1,9 +1,9 @@
 # M3 验证与验收矩阵
 
-> 2026-10-14；状态：计划，所有新增测试/属性/target 均待实现。  
+> 2026-10-14；状态：S1 Arbiter 子集已实现并通过，其余模块/系统测试待推进。
 > 设计契约见 [plan.md](plan.md)，实际执行记录写入 [dev-log.md](dev-log.md)；本文件不记录未经运行的 PASS。
 
-S0 已复测 M2 最小基线，见 [0-baseline.md](0-baseline.md)。T01–T15 的实施/执行状态维护在 [test-status.csv](test-status.csv)；legacy 证据不等于 M3 测试通过。
+S0 已复测 M2 最小基线，见 [0-baseline.md](0-baseline.md)。S1 结果见 [1-arbiter.md](1-arbiter.md)。T01–T15 的实施/执行状态维护在 [test-status.csv](test-status.csv)；`ARBITER_PASS` 仅指 S1 的模块子集，legacy 或 standalone 证据不等于 M3 系统验收。
 
 ## 1. 验证对象与责任
 
@@ -87,7 +87,7 @@ RT-Thread workload 在 S5 开始时冻结源码、迭代数与结束方式；若
 
 ## 5. 构建与命令契约
 
-现有可用入口（本次未运行）：
+legacy 可用入口（执行范围以各阶段报告为准）：
 
 ```bash
 make -C npc axi4lite-signoff
@@ -100,7 +100,6 @@ make -C rt-thread-am/bsp/abstract-machine ARCH=riscv32e-npc run
 以下均为 **拟新增目标，当前不能直接运行**：
 
 ```text
-make -C npc b1-arbiter-test
 make -C npc b1-xbar-test
 make -C npc b1-slaves-test
 make -C npc b1-directed-regress
@@ -108,6 +107,15 @@ make -C npc b1-random-regress
 make -C npc b1-system-regress
 make -C npc b1-signoff
 ```
+
+S1 已实现并运行的入口：
+
+```bash
+make -C npc b1-arbiter-lint
+make -C npc b1-arbiter-test
+```
+
+后者内含 lint、定向/reset 和 10 个固定 seed 的 standalone 随机测试，导出 `coverage.csv`，默认路径为 `npc/build/b1-arbiter-test/`。这些结果尚不覆盖 Xbar、RTL slaves 或 Core 集成。
 
 `b1-signoff` 依次调用 lint、定向、随机、系统回归并汇总 coverage；内部显式选 b1 profile。实现时可拆分目标，但必须保持一条聚合入口和可单独复现的子目标。M2 旧入口继续运行 legacy 环境，其 PASS 不能代替新 RTL system 的验收。
 
