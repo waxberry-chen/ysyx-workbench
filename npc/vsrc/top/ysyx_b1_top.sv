@@ -5,6 +5,10 @@
 module ysyx_b1_top #(parameter logic [31:0] SRAM_BYTES = 32'h00100000) (
     input wire  clk,
     input wire  rst_n,
+`ifdef B1_SIM_SHIM
+    input wire [4:0] sim_accept,
+    input wire [7:0] sim_delay [0:4],
+`endif
     output wire [31:0] commit_pc,
     output wire [31:0] commit_inst,
     output wire  commit_valid,
@@ -97,27 +101,90 @@ ysyx_core_axi4lite cpu (
     .m_axi_bresp(m_axi_bresp),
     .monitor_bus(monitor_bus)
 );
+wire  d_axi_arvalid;
+wire  d_axi_arready;
+wire [31:0] d_axi_araddr;
+wire [2:0] d_axi_arprot;
+wire  d_axi_rvalid;
+wire  d_axi_rready;
+wire [31:0] d_axi_rdata;
+wire [1:0] d_axi_rresp;
+wire  d_axi_awvalid;
+wire  d_axi_awready;
+wire [31:0] d_axi_awaddr;
+wire [2:0] d_axi_awprot;
+wire  d_axi_wvalid;
+wire  d_axi_wready;
+wire [31:0] d_axi_wdata;
+wire [3:0] d_axi_wstrb;
+wire  d_axi_bvalid;
+wire  d_axi_bready;
+wire [1:0] d_axi_bresp;
+`ifdef B1_SIM_SHIM
+axi4lite_delay_shim delay_shim (
+ .clk(clk), .rst_n(rst_n), .accept_enable(sim_accept), .delay_cycles(sim_delay),
+ .s_axi_arvalid(m_axi_arvalid), .m_axi_arvalid(d_axi_arvalid),
+ .s_axi_arready(m_axi_arready), .m_axi_arready(d_axi_arready),
+ .s_axi_araddr(m_axi_araddr), .m_axi_araddr(d_axi_araddr),
+ .s_axi_arprot(m_axi_arprot), .m_axi_arprot(d_axi_arprot),
+ .s_axi_rvalid(m_axi_rvalid), .m_axi_rvalid(d_axi_rvalid),
+ .s_axi_rready(m_axi_rready), .m_axi_rready(d_axi_rready),
+ .s_axi_rdata(m_axi_rdata), .m_axi_rdata(d_axi_rdata),
+ .s_axi_rresp(m_axi_rresp), .m_axi_rresp(d_axi_rresp),
+ .s_axi_awvalid(m_axi_awvalid), .m_axi_awvalid(d_axi_awvalid),
+ .s_axi_awready(m_axi_awready), .m_axi_awready(d_axi_awready),
+ .s_axi_awaddr(m_axi_awaddr), .m_axi_awaddr(d_axi_awaddr),
+ .s_axi_awprot(m_axi_awprot), .m_axi_awprot(d_axi_awprot),
+ .s_axi_wvalid(m_axi_wvalid), .m_axi_wvalid(d_axi_wvalid),
+ .s_axi_wready(m_axi_wready), .m_axi_wready(d_axi_wready),
+ .s_axi_wdata(m_axi_wdata), .m_axi_wdata(d_axi_wdata),
+ .s_axi_wstrb(m_axi_wstrb), .m_axi_wstrb(d_axi_wstrb),
+ .s_axi_bvalid(m_axi_bvalid), .m_axi_bvalid(d_axi_bvalid),
+ .s_axi_bready(m_axi_bready), .m_axi_bready(d_axi_bready),
+ .s_axi_bresp(m_axi_bresp), .m_axi_bresp(d_axi_bresp)
+);
+`else
+assign d_axi_arvalid = m_axi_arvalid;
+assign m_axi_arready = d_axi_arready;
+assign d_axi_araddr = m_axi_araddr;
+assign d_axi_arprot = m_axi_arprot;
+assign m_axi_rvalid = d_axi_rvalid;
+assign d_axi_rready = m_axi_rready;
+assign m_axi_rdata = d_axi_rdata;
+assign m_axi_rresp = d_axi_rresp;
+assign d_axi_awvalid = m_axi_awvalid;
+assign m_axi_awready = d_axi_awready;
+assign d_axi_awaddr = m_axi_awaddr;
+assign d_axi_awprot = m_axi_awprot;
+assign d_axi_wvalid = m_axi_wvalid;
+assign m_axi_wready = d_axi_wready;
+assign d_axi_wdata = m_axi_wdata;
+assign d_axi_wstrb = m_axi_wstrb;
+assign m_axi_bvalid = d_axi_bvalid;
+assign d_axi_bready = m_axi_bready;
+assign m_axi_bresp = d_axi_bresp;
+`endif
 ysyx_axi4lite_xbar #(.SRAM_BYTES(SRAM_BYTES)) xbar (
     .clk(clk), .rst_n(rst_n),
-    .s_axi_arvalid(m_axi_arvalid),
-    .s_axi_arready(m_axi_arready),
-    .s_axi_araddr(m_axi_araddr),
-    .s_axi_arprot(m_axi_arprot),
-    .s_axi_rvalid(m_axi_rvalid),
-    .s_axi_rready(m_axi_rready),
-    .s_axi_rdata(m_axi_rdata),
-    .s_axi_rresp(m_axi_rresp),
-    .s_axi_awvalid(m_axi_awvalid),
-    .s_axi_awready(m_axi_awready),
-    .s_axi_awaddr(m_axi_awaddr),
-    .s_axi_awprot(m_axi_awprot),
-    .s_axi_wvalid(m_axi_wvalid),
-    .s_axi_wready(m_axi_wready),
-    .s_axi_wdata(m_axi_wdata),
-    .s_axi_wstrb(m_axi_wstrb),
-    .s_axi_bvalid(m_axi_bvalid),
-    .s_axi_bready(m_axi_bready),
-    .s_axi_bresp(m_axi_bresp),
+    .s_axi_arvalid(d_axi_arvalid),
+    .s_axi_arready(d_axi_arready),
+    .s_axi_araddr(d_axi_araddr),
+    .s_axi_arprot(d_axi_arprot),
+    .s_axi_rvalid(d_axi_rvalid),
+    .s_axi_rready(d_axi_rready),
+    .s_axi_rdata(d_axi_rdata),
+    .s_axi_rresp(d_axi_rresp),
+    .s_axi_awvalid(d_axi_awvalid),
+    .s_axi_awready(d_axi_awready),
+    .s_axi_awaddr(d_axi_awaddr),
+    .s_axi_awprot(d_axi_awprot),
+    .s_axi_wvalid(d_axi_wvalid),
+    .s_axi_wready(d_axi_wready),
+    .s_axi_wdata(d_axi_wdata),
+    .s_axi_wstrb(d_axi_wstrb),
+    .s_axi_bvalid(d_axi_bvalid),
+    .s_axi_bready(d_axi_bready),
+    .s_axi_bresp(d_axi_bresp),
     .m_axi_arvalid(x_arvalid),
     .m_axi_arready(x_arready),
     .m_axi_araddr(x_araddr),

@@ -223,9 +223,9 @@ interconnect system-level test plan 合并实施。
 
 2026-10-14 已建立[设计与实施计划](3-axi4-lite-interconnect/plan.md)、[验收矩阵](3-axi4-lite-interconnect/test-plan.md)和[开发日志](3-axi4-lite-interconnect/dev-log.md)。
 
-目前已完成 [S0 legacy 基线](3-axi4-lite-interconnect/0-baseline.md)、[S1 Arbiter](3-axi4-lite-interconnect/1-arbiter.md)、[S2 Xbar/default](3-axi4-lite-interconnect/2-xbar.md)、[S3 SRAM/UART/CLINT](3-axi4-lite-interconnect/3-slaves.md) 和 [S4 系统集成](3-axi4-lite-interconnect/4-integration.md) 的对应验收；设计取舍记录在[阶段 Q&A](3-axi4-lite-interconnect/qa/README.md)。
+目前已完成 [S0 legacy 基线](3-axi4-lite-interconnect/0-baseline.md)、[S1 Arbiter](3-axi4-lite-interconnect/1-arbiter.md)、[S2 Xbar/default](3-axi4-lite-interconnect/2-xbar.md)、[S3 SRAM/UART/CLINT](3-axi4-lite-interconnect/3-slaves.md)、[S4 系统集成](3-axi4-lite-interconnect/4-integration.md) 和 [S5 closure](3-axi4-lite-interconnect/5-closure.md) 的对应验收；设计取舍记录在[阶段 Q&A](3-axi4-lite-interconnect/qa/README.md)。
 
-当前下一步为 **S5 RT-Thread 与 coverage closure**。S4 的 53 个有限系统程序及 legacy 兼容回归通过；完整 fabric 随机/交叉覆盖、系统波形和 RT-Thread 仍待 S5，不代表整个 M3 已验收。
+2026-10-15：**M3 功能/协议仿真验收 PASS**，范围见 [signoff](3-axi4-lite-interconnect/signoff.md)。完整 fabric 随机/必测交叉覆盖、18 个 redirect 组合、RT-Thread 双线程各 100 次迭代与三段实际波形已完成。当前下一步为 **M4：最小综合/STA flow 与实现基线**；formal、四值、EDA/PPA 不混入 M3 仿真 PASS。
 
 #### 实现顺序
 

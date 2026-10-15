@@ -4,11 +4,16 @@
 NPC_PLATFORM ?= legacy
 SRAM_BYTES ?= 1048576
 MTIME_HZ ?= 1000000
+B1_SIM_SHIM ?= 0
 ifeq ($(NPC_PLATFORM),b1)
 TOP_MODULE := ysyx_b1_top
 RTL_LIST := filelist-b1.f
 PLATFORM_CFLAGS := -DNPC_B1 -DNPC_SRAM_BYTES=$(SRAM_BYTES) -DNPC_MTIME_HZ=$(MTIME_HZ)
 PLATFORM_VFLAGS := -GSRAM_BYTES=$(SRAM_BYTES)
+ifeq ($(B1_SIM_SHIM),1)
+PLATFORM_CFLAGS += -DNPC_B1_SHIM
+PLATFORM_VFLAGS += -DB1_SIM_SHIM $(abspath tests/axi4lite_delay_shim.sv)
+endif
 else ifeq ($(NPC_PLATFORM),legacy)
 TOP_MODULE := ysyx_core
 RTL_LIST := filelist.f
@@ -19,6 +24,12 @@ LINT_TOP	?= $(TOP_MODULE)
 
 NPC_HOME	:= $(abspath .)
 OBJ_DIR := $(abspath ./build$(if $(filter b1,$(NPC_PLATFORM)),/b1-$(SRAM_BYTES)-$(MTIME_HZ)))
+ifeq ($(B1_SIM_SHIM),1)
+ifneq ($(NPC_PLATFORM),b1)
+$(error B1_SIM_SHIM=1 requires NPC_PLATFORM=b1)
+endif
+OBJ_DIR := $(OBJ_DIR)-shim
+endif
 CSRC_DIR 	:= $(abspath ./csrc)
 VSRC_DIR	:= $(abspath ./vsrc/core)
 REWRITE_MK 	:= $(abspath ./scripts/rewrite.mk)
@@ -37,6 +48,9 @@ CHEADERS	:= $(shell find $(CSRC_DIR) -name "*.h")
 # filelist.f is currently a source-only list.  Expand it so RTL edits are real
 # prerequisites of the Verilator binary instead of relying on `make clean`.
 VSRC		:= $(abspath $(shell sed -e '/^[[:space:]]*\#/d' -e '/^[[:space:]]*$$/d' $(VSRC_PATH)))
+ifeq ($(B1_SIM_SHIM),1)
+VSRC += $(abspath tests/axi4lite_delay_shim.sv)
+endif
 
 ### Difftest ###
 # NEMUISO 	:= $(NEMU_HOME)/build/riscv32-nemu-interpreter-so

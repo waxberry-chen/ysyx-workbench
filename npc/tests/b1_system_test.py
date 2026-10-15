@@ -49,7 +49,7 @@ def run(name, image, uart=b'', cause=None, route=None, misaligned=False):
         assert len(faults) == 1 and int(faults[0][6],16) == cause, (name,faults)
         if cause in (5,7): assert faults[0][12] == '1', name
     elif name == 'yield-os':
-        assert len(faults) == 65 and all(int(r[6],16)==11 for r in faults), name
+        assert len(faults) == 201 and all(int(r[6],16)==11 for r in faults), name
     else: assert not faults, (name,faults)
     if route:
         m = re.search(r'B1 route='+route+r' .*?rerr=(\d+) berr=(\d+)',log)
@@ -81,7 +81,7 @@ if not a.focused:
     run('hello',image,uart=b"Hello, AbstractMachine!\nmainargs = 'I-love-ysyx'.\n")
 
 for name,expected in [('lanes',b'lanes PASS\n'),('uptime',b'uptime PASS\n'),
-                       ('yield-os',b'AB'*32+b'\nyield-os PASS\n')]:
+                       ('yield-os',b'AB'*100+b'\nyield-os PASS\n')]:
     image=am_image(name,ROOT/'npc/tests/b1-am',args=[f'TEST={name}'])
     run(name,image,uart=expected)
 

@@ -382,3 +382,51 @@ axi4lite-signoff:
 		RAM_READY_PERCENT=$(RAM_READY_PERCENT)
 	$(MAKE) axi4lite-am-smoke AM_SMOKE_SECONDS=$(AM_SMOKE_SECONDS)
 	@echo "AXI4-Lite milestone sign-off: PASS"
+
+# Full B1 fabric, using independent IFU/LSU drivers and actual RTL devices.
+B1_FABRIC_DIR := $(NPC_HOME)/build/b1-fabric-test
+B1_FABRIC_RTL := $(wildcard $(NPC_HOME)/vsrc/bus/ysyx_axi4lite_*.sv) \
+ $(wildcard $(NPC_HOME)/vsrc/periph/ysyx_axi4lite_*.sv) \
+ $(NPC_HOME)/tests/axi4lite_delay_shim.sv $(NPC_HOME)/tests/axi4lite_fabric_test_top.sv
+.PHONY: b1-fabric-test
+b1-fabric-test:
+	verilator --cc --exe --build --trace --assert --sv -Wall -Wno-SYNCASYNCNET \
+	 -Wno-DECLFILENAME --top-module axi4lite_fabric_test_top --Mdir $(B1_FABRIC_DIR) \
+	 -CFLAGS '-std=c++14' $(B1_FABRIC_RTL) $(NPC_HOME)/tests/axi4lite_fabric_tb.cpp
+	$(B1_FABRIC_DIR)/Vaxi4lite_fabric_test_top $(B1_FABRIC_DIR)/coverage.csv $(B1_FABRIC_DIR)/representative.vcd
+
+.PHONY: b1-redirect-test
+b1-redirect-test:
+	verilator --cc --exe --build --assert --sv -Wall -Wno-SYNCASYNCNET \
+	 --top-module axi4lite_redirect_test_top --Mdir $(NPC_HOME)/build/b1-redirect-test \
+	 -CFLAGS '-std=c++14' $(NPC_HOME)/vsrc/gnrl/ysyx_gnrl_primitive.sv \
+	 $(VSRC_DIR)/ysyx_ifu.sv $(NPC_HOME)/vsrc/bus/ysyx_ifu_axi4lite_adapter.sv \
+	 $(B1_ARBITER_RTL) $(NPC_HOME)/tests/axi4lite_redirect_test_top.sv \
+	 $(NPC_HOME)/tests/axi4lite_redirect_tb.cpp
+	$(NPC_HOME)/build/b1-redirect-test/Vaxi4lite_redirect_test_top $(NPC_HOME)/build/b1-redirect-test/coverage.csv
+
+.PHONY: b1-directed-regress b1-random-regress b1-system-regress b1-signoff
+b1-directed-regress:
+	$(MAKE) b1-arbiter-test b1-xbar-test b1-xbar-config-test b1-slaves-test b1-slaves-config-test b1-redirect-test ifu-axi4lite-adapter-integ-test
+b1-random-regress:
+	$(MAKE) b1-fabric-test
+b1-system-regress:
+	@test "$(SRAM_BYTES):$(MTIME_HZ):$(B1_SIM_SHIM)" = "1048576:1000000:0" || \
+	 { echo 'S5 closure uses frozen SRAM_BYTES=1048576 MTIME_HZ=1000000 B1_SIM_SHIM=0; use b1-system-test for other configurations'; exit 1; }
+	$(MAKE) b1-system-test
+	$(MAKE) NPC_PLATFORM=b1 B1_SIM_SHIM=1 build
+	python3 $(NPC_HOME)/tests/b1_closure_test.py
+b1-signoff:
+	@test "$(SRAM_BYTES):$(MTIME_HZ):$(B1_SIM_SHIM)" = "1048576:1000000:0" || \
+	 { echo 'S5 signoff requires frozen SRAM_BYTES=1048576 MTIME_HZ=1000000 B1_SIM_SHIM=0'; exit 1; }
+	$(MAKE) NPC_PLATFORM=legacy lint
+	$(MAKE) NPC_PLATFORM=b1 lint
+	$(MAKE) NPC_PLATFORM=b1 LINT_TOP=ysyx_core_axi4lite lint
+	$(MAKE) b1-directed-regress
+	$(MAKE) b1-random-regress
+	$(MAKE) b1-system-regress
+	$(MAKE) b1-coverage-check
+
+.PHONY: b1-coverage-check
+b1-coverage-check:
+	python3 $(NPC_HOME)/tests/b1_coverage_check.py

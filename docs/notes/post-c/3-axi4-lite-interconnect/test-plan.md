@@ -1,9 +1,9 @@
 # M3 验证与验收矩阵
 
-> 2026-10-14；状态：S1–S3 模块子集已通过，完整 fabric、AM 与 Core 系统测试待推进。
+> 2026-10-15；状态：S0–S5 功能/协议仿真验收通过；结果、范围与限制见 signoff.md。
 > 设计契约见 [plan.md](plan.md)，实际执行记录写入 [dev-log.md](dev-log.md)；本文件不记录未经运行的 PASS。
 
-S0 已复测 M2 最小基线，见 [0-baseline.md](0-baseline.md)。S1 结果见 [1-arbiter.md](1-arbiter.md)，S2 结果见 [2-xbar.md](2-xbar.md)，S3 结果见 [3-slaves.md](3-slaves.md)。T01–T15 的实施/执行状态维护在 [test-status.csv](test-status.csv)；`ARBITER_PASS`、`XBAR_PASS`、`XBAR_DECERR_PASS`、`SLAVES_PASS` 均仅指对应模块子集，legacy 或 standalone 证据不等于 M3 系统验收。
+S0 已复测 M2 最小基线，见 [0-baseline.md](0-baseline.md)。S1 结果见 [1-arbiter.md](1-arbiter.md)，S2 结果见 [2-xbar.md](2-xbar.md)，S3 结果见 [3-slaves.md](3-slaves.md)。S4/S5 系统与 closure 见 [4-integration.md](4-integration.md)、[5-closure.md](5-closure.md)。T01–T15 的实施/执行状态维护在 [test-status.csv](test-status.csv)；`ARBITER_PASS`、`XBAR_PASS`、`XBAR_DECERR_PASS`、`SLAVES_PASS` 均仅指对应模块子集，legacy 或 standalone 证据不等于 M3 系统验收。
 
 ## 1. 验证对象与责任
 
@@ -63,6 +63,8 @@ scoreboard 为每个已预留/接受事务记录验证侧序号、owner、type�
 
 前进性采用有界仿真与明确假设：每个受控 channel 最多连续 stall 64 周期，driver 获得服务后 64 周期内提供缺失 AW/W，slave 内部延迟不超过 64 周期。在该配置下，单事务 watchdog 初设 4096 周期，持续竞争请求至完成初设 8192 周期；实现时按状态/各层缓冲推导并收紧，不能为掩盖 hang 任意放大。
 
+S5 已依据实际双层 shim/控制路径收紧 fabric watchdog 至 1024/2048 周期，推导见 [S5 报告](5-closure.md)。
+
 另做超过上述上限的合法长 stall 定向测试，使用匹配该用例的 watchdog。无限 READY=0 时只检查 holding/safety，不声称有界完成。无死锁与公平性结论必须附环境假设。
 
 对 owner/target holding、response 唯一归属、AW/W 汇合可尝试 bounded formal。记录 DUT 参数、assumptions、工具版本、深度与结果；bounded PASS 不表述为无界证明。工具不可用时保留可仿真的 SVA 与定向反例回归，formal 状态为待验。
@@ -95,7 +97,7 @@ make -C am-kernels/tests/cpu-tests ARCH=riscv32e-npc ALL=bubble-sort run
 make -C rt-thread-am/bsp/abstract-machine ARCH=riscv32e-npc run
 ```
 
-最后一条是从当前 BSP Makefile 推导的入口，未确认构建成功；BSP 依赖 `files.mk`、`rtconfig.h` 和环境变量，干净环境必要时先按该 BSP 的 `init` 目标生成配置，并记录工具/生成输入。
+最后一条是完整上游 BSP 的旧入口，不是 S5 验收配置。S5 使用 `npc/tests/b1-rtthread/` 的冻结最小协作 workload，明确省去 RX/shell/DFS；原完整 BSP 仍依赖 `files.mk`、`rtconfig.h` 和环境变量，干净环境必要时先按该 BSP 的 `init` 目标生成配置，并记录工具/生成输入。
 
 已实现的模块入口：
 
@@ -104,7 +106,7 @@ make -C npc b1-xbar-test b1-xbar-config-test
 make -C npc b1-slaves-test b1-slaves-config-test
 ```
 
-以下为 **拟新增目标，当前不能直接运行**：
+S5 已实现并运行的聚合目标：
 
 ```text
 make -C npc b1-directed-regress
@@ -124,7 +126,7 @@ make -C npc b1-arbiter-test
 
 `b1-signoff` 依次调用 lint、定向、随机、系统回归并汇总 coverage；内部显式选 b1 profile。实现时可拆分目标，但必须保持一条聚合入口和可单独复现的子目标。M2 旧入口继续运行 legacy 环境，其 PASS 不能代替新 RTL system 的验收。
 
-profile 传播示意（待实现）：`make ... ARCH=riscv32e-npc NPC_PLATFORM=b1 NPC_SRAM_BYTES=0x100000 run`。同名参数应贯穿 AM、NPC 和 RTL，具体代码落地后更新本文。
+profile 传播入口：`make ... ARCH=riscv32e-npc NPC_PLATFORM=b1 SRAM_BYTES=1048576 MTIME_HZ=1000000 run`。S4 已贯穿 AM、NPC、RTL，并隔离对象/库/镜像；S5 的真实 Core 延迟变体为 NPC_PLATFORM=b1 B1_SIM_SHIM=1，seed 由 NPC_SHIM_SEED 指定。
 
 ## 6. 性能与证据归档
 

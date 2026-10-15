@@ -2,7 +2,7 @@
 #include <am.h>
 #include <klib.h>
 #include <klib-macros.h>
-#define ROUNDS 32
+#define ROUNDS 100
 typedef union { uint8_t stack[32768]; struct { Context *cp; }; } PCB;
 static PCB pcb[2], boot, *current = &boot;
 static volatile unsigned done[2];

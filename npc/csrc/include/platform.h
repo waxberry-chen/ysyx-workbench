@@ -3,6 +3,7 @@
 #include <stddef.h>
 #include <stdint.h>
 void platform_init();
+void platform_drive();
 void platform_sample();
 void platform_tick();
 void platform_report();

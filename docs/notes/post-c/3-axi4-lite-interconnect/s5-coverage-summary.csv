@@ -1,0 +1,15 @@
+group,required_bins,hit_bins,status
+C01,35,35,PASS
+C02,4,4,PASS
+C03,20,20,PASS
+C04,6,6,PASS
+C05+C06,17,17,PASS
+C07,32,32,PASS
+C08,69,69,PASS
+C09,16,16,PASS
+C10,5,5,PASS
+T13 seeds,10,10,PASS
+C11 precise faults,14,14,PASS
+C12 redirect,18,18,PASS
+C13 S4 system programs,53,53,PASS
+C13 S5 system programs,23,23,PASS

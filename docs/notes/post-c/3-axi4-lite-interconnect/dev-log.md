@@ -110,3 +110,17 @@
 - 三顶层 lint 只有既有 immediate 未使用位告警。源码、镜像、reference、逐项日志、commit/UART trace、CSV 与工具版本归档到 build 外；更新 Q&A 与展示入口。
 
 S5 保留完整 fabric 随机 shim/scoreboard、redirect phase × response/reset 交叉覆盖、RT-Thread、波形及 M3 closure。当前没有综合/STA/formal/PPA 结果，不将 S4 通过等同于 M3 sign-off。
+
+## 2026-10-15：S5 完整互联、RT-Thread 与功能仿真 closure 完成
+
+状态：**S5 PASS，M3 功能/协议仿真 sign-off PASS，无未解决功能阻塞**。报告：[5-closure.md](5-closure.md)，验收范围：[signoff.md](signoff.md)，证据：[s5-manifest.json](s5-manifest.json)。起点 `5947ffd`，初始工作区干净。
+
+- 增加测试专用五通道寄存 delay shim，生产默认无 shim；真实 Core 变体与默认构建隔离。新增完整双 master + Arbiter/Xbar/真实设备 scoreboard，检查 byte memory、独立 mtime、实际写执行/UART 事件、owner/RR/路由/响应、reset epoch。
+- 最终 fabric 为 10510 accepted / 10350 completed / 160 aborted，780 个成功非零 write effect（704 SRAM、76 UART），371658 cycles，284 个 bin；10 seeds 各至少 1000 completed。覆盖 69 reset 场景、全部 strobe/合法 response cross、五通道 0/1/7/64/129 stall 与实际 AW/W 顺序/gap。
+- IFU+adapter+Arbiter 的 18 个 redirect phase/response/LSU 竞争组合通过；保留 M2 定向测试与真实 Core stale DECERR 用例。模块回归、参数守卫、三顶层 lint 通过。
+- S4 系统入口 53/53 通过，yield-os 扩大到每上下文 100 次；另有 add/bubble-sort 各 10 seed、RT-Thread 固定/shim、空参数 hello，共 23/23。架构 trace 对照均一致；legacy 固定 add trace 通过。
+- 冻结 RT-Thread `beb7fa1` 的最小 kernel + AM BSP context 配置，双线程各 100 次、heap buffer/释放后用量与 203 次 trap 检查通过。修正测试首次假定同优先级 ready queue 插入顺序的问题，不修改 scheduler；默认 1 MiB 足够此配置。
+- 真实 VCD 与三段 SVG、覆盖汇总/N/A、源码/BSP/config/镜像/hash 和日志归档到 build 外。新增一条 `b1-signoff` 聚合入口与单独的 directed/random/system/coverage 入口，并更新有价值的 Q&A。
+- 开发期补上仅在 Arbiter 后加 shim 时无法命中下游三种 AW/W 顺序的覆盖 hole，修正 TB 波形采样/类型、观察信号和实际 gap 统计；最终未发现生产 RTL 功能 mismatch。ccache 沙箱权限经授权解除。
+
+本机未找到 sby/yosys/iverilog，formal/四值未运行；DC/PT、SRAM macro、网表/功耗/PnR 仍无结果。下一步 M4 审计工具/工艺输入与最小 synthesis+STA flow，形成首版实现基线。

@@ -11,6 +11,9 @@
 !/tests/axi4lite_xbar_config_test.py
 !/tests/axi4lite_slaves_config_test.py
 !/tests/b1_system_test.py
+!/tests/b1_closure_test.py
+!/tests/b1_coverage_check.py
+!/tests/b1_waveforms.py
 !*.f
 !.gitignore
 !README.md

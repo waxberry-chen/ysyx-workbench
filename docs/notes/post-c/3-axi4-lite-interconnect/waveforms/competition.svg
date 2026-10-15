@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="345" viewBox="0 0 1100 345">
+<rect width="100%" height="100%" fill="white"/>
+<text x="20" y="26" font-family="sans-serif" font-size="19" fill="#152c48">IFU / LSU competition</text>
+<text x="20" y="48" font-family="sans-serif" font-size="12">Source: representative.vcd; cycles are simulation clock periods, not measured physical time.</text>
+<path d="M235.00 65 V313" stroke="#e0e6ee"/>
+<text x="235.00" y="333" text-anchor="middle" font-family="monospace" font-size="11">7</text>
+<path d="M332.65 65 V313" stroke="#e0e6ee"/>
+<text x="332.65" y="333" text-anchor="middle" font-family="monospace" font-size="11">9</text>
+<path d="M430.29 65 V313" stroke="#e0e6ee"/>
+<text x="430.29" y="333" text-anchor="middle" font-family="monospace" font-size="11">11</text>
+<path d="M527.94 65 V313" stroke="#e0e6ee"/>
+<text x="527.94" y="333" text-anchor="middle" font-family="monospace" font-size="11">13</text>
+<path d="M625.59 65 V313" stroke="#e0e6ee"/>
+<text x="625.59" y="333" text-anchor="middle" font-family="monospace" font-size="11">15</text>
+<path d="M723.24 65 V313" stroke="#e0e6ee"/>
+<text x="723.24" y="333" text-anchor="middle" font-family="monospace" font-size="11">17</text>
+<path d="M820.88 65 V313" stroke="#e0e6ee"/>
+<text x="820.88" y="333" text-anchor="middle" font-family="monospace" font-size="11">19</text>
+<path d="M918.53 65 V313" stroke="#e0e6ee"/>
+<text x="918.53" y="333" text-anchor="middle" font-family="monospace" font-size="11">21</text>
+<path d="M1016.18 65 V313" stroke="#e0e6ee"/>
+<text x="1016.18" y="333" text-anchor="middle" font-family="monospace" font-size="11">23</text>
+<text x="20" y="85" font-family="monospace" font-size="14">ifu_axi_arvalid</text>
+<path d="M235.00 69 H332.65" fill="none" stroke="#0967a0" stroke-width="2"/>
+<path d="M332.65 87 H1065.00 M332.65 69 V87" fill="none" stroke="#0967a0" stroke-width="2"/>
+<text x="20" y="125" font-family="monospace" font-size="14">ifu_axi_arready</text>
+<path d="M235.00 127 H259.41" fill="none" stroke="#0967a0" stroke-width="2"/>
+<path d="M259.41 109 H308.24 M259.41 127 V109" fill="none" stroke="#0967a0" stroke-width="2"/>
+<path d="M308.24 127 H1065.00 M308.24 109 V127" fill="none" stroke="#0967a0" stroke-width="2"/>
+<text x="20" y="165" font-family="monospace" font-size="14">lsu_axi_wvalid</text>
+<path d="M235.00 149 H1016.18" fill="none" stroke="#0967a0" stroke-width="2"/>
+<path d="M1016.18 167 H1065.00 M1016.18 149 V167" fill="none" stroke="#0967a0" stroke-width="2"/>
+<text x="20" y="205" font-family="monospace" font-size="14">lsu_axi_wready</text>
+<path d="M235.00 207 H942.94" fill="none" stroke="#0967a0" stroke-width="2"/>
+<path d="M942.94 189 H991.76 M942.94 207 V189" fill="none" stroke="#0967a0" stroke-width="2"/>
+<path d="M991.76 207 H1065.00 M991.76 189 V207" fill="none" stroke="#0967a0" stroke-width="2"/>
+<text x="20" y="245" font-family="monospace" font-size="14">ifu_axi_rvalid</text>
+<path d="M235.00 247 H796.47" fill="none" stroke="#0967a0" stroke-width="2"/>
+<path d="M796.47 229 H894.12 M796.47 247 V229" fill="none" stroke="#0967a0" stroke-width="2"/>
+<path d="M894.12 247 H1065.00 M894.12 229 V247" fill="none" stroke="#0967a0" stroke-width="2"/>
+<text x="20" y="285" font-family="monospace" font-size="14">ifu_axi_rready</text>
+<path d="M235.00 287 H869.71" fill="none" stroke="#0967a0" stroke-width="2"/>
+<path d="M869.71 269 H918.53 M869.71 287 V269" fill="none" stroke="#0967a0" stroke-width="2"/>
+<path d="M918.53 287 H1065.00 M918.53 269 V287" fill="none" stroke="#0967a0" stroke-width="2"/>
+</svg>

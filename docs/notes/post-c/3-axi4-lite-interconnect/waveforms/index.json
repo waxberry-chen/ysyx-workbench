@@ -1,0 +1,47 @@
+{
+  "source": "npc/build/b1-fabric-test/representative.vcd",
+  "source_sha256": "57c558cb877776b27b5216d2c47eb22f6e93d3ce96c2b1bb14ad28f297228207",
+  "timescale": "2 VCD ticks per clock; display uses cycles",
+  "views": [
+    {
+      "file": "competition.svg",
+      "start_cycle": 7,
+      "end_cycle": 24,
+      "signals": [
+        "ifu_axi_arvalid",
+        "ifu_axi_arready",
+        "lsu_axi_wvalid",
+        "lsu_axi_wready",
+        "ifu_axi_rvalid",
+        "ifu_axi_rready"
+      ]
+    },
+    {
+      "file": "w-first.svg",
+      "start_cycle": 21,
+      "end_cycle": 50,
+      "signals": [
+        "lsu_axi_wvalid",
+        "lsu_axi_wready",
+        "lsu_axi_awvalid",
+        "lsu_axi_awready",
+        "lsu_axi_bvalid",
+        "lsu_axi_bready"
+      ]
+    },
+    {
+      "file": "decerr.svg",
+      "start_cycle": 57,
+      "end_cycle": 74,
+      "signals": [
+        "ifu_axi_arvalid",
+        "ifu_axi_araddr",
+        "monitor_ar",
+        "monitor_r",
+        "ifu_axi_rvalid",
+        "ifu_axi_rready",
+        "ifu_axi_rresp"
+      ]
+    }
+  ]
+}

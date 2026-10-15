@@ -7,6 +7,7 @@
 #include "memory/paddr.h"
 #include <inttypes.h>
 #include <stdlib.h>
+#include <random>
 #ifdef NPC_B1
 #include "Vysyx_b1_top___024root.h"
 static_assert(NPC_MTIME_HZ > 0 && NPC_MTIME_HZ <= UINT32_MAX, "MTIME_HZ must fit a positive uint32_t");
@@ -19,11 +20,20 @@ uint64_t cycles=0, uart_events=0, limit=50000000;
 uint64_t if_accept=0,if_done=0,lsu_ar=0,lsu_aw=0,lsu_w=0,lsu_done=0;
 struct Route {uint64_t ar=0,aw=0,w=0,r=0,b=0,rerr=0,berr=0;} routes[4];
 FILE *uart_file=nullptr;
+#ifdef NPC_B1_SHIM
+std::mt19937 delay_rng;
+unsigned shim_seed=1;
+#endif
 auto& memory() {return dut->rootp->ysyx_b1_top__DOT__sram__DOT__mem;}
 }
 #endif
 void platform_init() {
 #ifdef NPC_B1
+#ifdef NPC_B1_SHIM
+  if(const char *seed=getenv("NPC_SHIM_SEED")) shim_seed=strtoul(seed,nullptr,0);
+  delay_rng.seed(shim_seed);
+  Log("B1 test shim seed=%u delay=0..7 accept=50%% forced every 8 cycles",shim_seed);
+#endif
   const char *max_cycles=getenv("NPC_MAX_CYCLES");
   if(max_cycles) {
     char *end=nullptr;limit=strtoull(max_cycles,&end,0);
@@ -31,10 +41,16 @@ void platform_init() {
   }
   const char *path=getenv("NPC_UART_LOG");
   if(path) {uart_file=fopen(path,"wb");Assert(uart_file,"Cannot open UART log %s",path);}
-  Log("NPC profile=b1 SRAM_BYTES=%u MTIME_HZ=%u timing=rtl-fixed max_cycles=%" PRIu64,
+  Log("NPC profile=b1 SRAM_BYTES=%u MTIME_HZ=%u max_cycles=%" PRIu64,
       (unsigned)NPC_SRAM_BYTES,(unsigned)NPC_MTIME_HZ,limit);
 #else
   init_ram_model(sdb_args.ram_seed,sdb_args.ram_max_latency,sdb_args.ram_ready_percent);
+#endif
+}
+void platform_drive() {
+#ifdef NPC_B1_SHIM
+  dut->sim_accept=(cycles%8==0)?31:delay_rng()&31;
+  for(int i=0;i<5;i++) dut->sim_delay[i]=delay_rng()%8;
 #endif
 }
 void platform_load(size_t size) {

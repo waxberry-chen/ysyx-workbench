@@ -1,10 +1,10 @@
 # M3：AXI4-Lite Interconnect 设计与验收计划
 
-> 日期：2026-10-14；状态：S0–S3 已完成，Core/B1 系统集成待实施。
+> 日期：2026-10-15；状态：S0–S5 已完成，M3 功能/协议仿真验收 PASS；实现/EDA 验收另见 M4。
 > 阅读时 HEAD：`c6dd719`；M2 实现基线：`5b6f29c`。本文不代表重新执行了 M2 验收。  
 > 配套：[测试矩阵](test-plan.md)、[开发日志](dev-log.md)、[总路线](../roadmap.md)。
 
-2026-10-14：S0/S1 已完成，基线见 [0-baseline.md](0-baseline.md)，Arbiter 实现与验证见 [1-arbiter.md](1-arbiter.md)，M3 测试状态见 [test-status.csv](test-status.csv)。S2 的 Xbar/default 实现与验证见 [2-xbar.md](2-xbar.md)，S3 的设备实现与独立验证见 [3-slaves.md](3-slaves.md)，S4 系统集成已完成，见 [4-integration.md](4-integration.md)；当前可进入 S5。
+进度（2026-10-15）：S0/S1 已完成，基线见 [0-baseline.md](0-baseline.md)，Arbiter 实现与验证见 [1-arbiter.md](1-arbiter.md)，M3 测试状态见 [test-status.csv](test-status.csv)。S2 的 Xbar/default 实现与验证见 [2-xbar.md](2-xbar.md)，S3 的设备实现与独立验证见 [3-slaves.md](3-slaves.md)，S4 系统集成已完成，见 [4-integration.md](4-integration.md)；S5 已完成，见 [5-closure.md](5-closure.md) 与 [signoff.md](signoff.md)；当前进入 M4。
 
 ## 1. 目标、依据与边界
 
@@ -35,6 +35,8 @@ ysyx_core（现有弹性 Core，含 IFU/LSU adapters）
 - 输入契约继承 [M2 冻结文档](../2-axi4-lite/0-freeze-baseline.md)与 [M2 sign-off](../2-axi4-lite/4-signoff.md)。下文的仲裁策略、容量和寄存器语义是本项目的 M3 设计选择，并非声称是完整 AXI/CLINT 标准要求。
 
 ## 2. 已核对的现状与迁移影响
+
+下表保留计划建立时的输入基线与迁移约束；当前实现与验收结果见 S4/S5 报告。
 
 | 现状与源码 | 对 M3 的约束 |
 | --- | --- |
@@ -145,11 +147,11 @@ S3 明确权限边界：三个 mapped slave 仅支持 data write，`AWPROT[2]=1`
 
 ### 5.1 顶层和 profile
 
-计划新增 `ysyx_core_axi4lite`（现有 Core + Arbiter，单 master）和 `ysyx_b1_top`（前者 + Xbar + slaves）。所有 commit/debug 观察端口向仿真层转接。`ysyx_core` 的双 master 作为内部模块和旧 standalone 验证接口保留；roadmap 所说“core 对外只剩一套 master”以新集成边界验收。S1 Arbiter 目前仅 standalone 验证，尚未加入上述 wrapper。
+已实现 `ysyx_core_axi4lite`（现有 Core + Arbiter，单 master）和 `ysyx_b1_top`（前者 + Xbar + slaves）。所有 commit/debug 观察端口向仿真层转接。`ysyx_core` 的双 master 作为内部模块和旧 standalone 验证接口保留；roadmap 所说“core 对外只剩一套 master”以新集成边界验收。S4 已实现上述 wrapper，S5 完成完整 fabric 与真实系统验收。
 
-计划增加显式构建参数 `NPC_PLATFORM=legacy|b1`，初期默认 legacy；M3 sign-off 的所有系统入口明确指定 b1。两个 profile 使用不同的 Verilator 输出目录、filelist/top 选择及 AM 编译配置，避免复用旧对象。M2 的 `axi4lite-signoff` 留在 legacy；新 M3 targets 见 [测试计划](test-plan.md)。这些参数/targets 当前尚未实现。
+已实现显式构建参数 `NPC_PLATFORM=legacy|b1`，初期默认 legacy；M3 sign-off 的所有系统入口明确指定 b1。两个 profile 使用不同的 Verilator 输出目录、filelist/top 选择及 AM 编译配置，避免复用旧对象。M2 的 `axi4lite-signoff` 留在 legacy；新 M3 targets 见 [测试计划](test-plan.md)。S4 已实现 profile，S5 已实现上述聚合 targets；实际参数为 SRAM_BYTES 与 MTIME_HZ。
 
-现有 `npc/Makefile` 固定 TOP_MODULE，且 `Vysyx_core` 类型散布在 C++ 中；集成需用小型统一 DUT 类型/访问适配层处理 profile，不逐处堆复制逻辑。若层次变化影响 GPR/CSR DPI scope、monitor 或统计，必须一起迁移并验证。
+S4 已通过统一 DUT 类型/访问适配层处理 profile，迁移 GPR/CSR DPI、monitor 与统计；S5 加入独立的测试 shim 构建目录。
 
 ### 5.2 内存、loader 与 DiffTest
 
@@ -177,7 +179,7 @@ S3 明确权限边界：三个 mapped slave 仅支持 data write，`AWPROT[2]=1`
 | S2 Xbar（已完成） | 地址范围、target holding、default error slave | T05/T06/T08 的 Xbar/default 子集通过；两种容量、10 seeds × 1000 笔及 reset 恢复通过，见 S2 报告；mapped slave 错误待 S3 |
 | S3 Slaves（已完成） | SRAM、UART、CLINT、公共 frontend 及仿真输出/初始化边界 | T07/T09/T10 设备子集通过；三种容量各完成 30000 笔随机事务、全部 WSTRB、rollover 与 UART exactly-once；AM/系统部分待 S4 |
 | S4 系统集成（已完成） | 两个 wrapper、filelist、harness、loader、AM profile、DiffTest | 53 个有限系统程序、第二组容量/频率的 AM 程序及 legacy 兼容回归通过；见 S4 报告 |
-| S5 RT-Thread 与 closure | 固定 BSP/workload、随机回归、coverage、波形与性能结果 | 测试矩阵所有必测项有证据，未完成项如实列出，不假称 sign-off |
+| S5 RT-Thread 与 closure（已完成） | 固定 BSP/workload、随机回归、coverage、波形与性能结果 | 必测合法 bins、18 个 redirect 组合、53+23 系统运行及固定 RT-Thread 通过；见 signoff.md，formal/四值/EDA 不纳入本阶段 PASS |
 
 建议文件落点（开始实现时再创建）：
 
@@ -210,15 +212,15 @@ M3 期间可准备 DC/PT 最小 flow；M3 稳定后进入 M4 正式面积/时序
 
 ## 8. 风险、待验证项与阻塞判定
 
-**目前没有阻塞进入 S5 的事项。** 下列项目须在对应步骤解决：
+**目前没有阻塞进入 M4 的已知功能问题；工具与工艺输入仍需在 M4 审计。** 下列项目须在对应步骤解决：
 
 | 项目 | 当前状态 | 何时构成阻塞 / 处理方式 |
 | --- | --- | --- |
-| 1 MiB 容量与 RT-Thread 需求 | S4 有限程序通过，RT-Thread 尚未量测；容量/heap/linker 已统一 | S5 检查 RT-Thread 的 ELF、stack、heap；不足则显式扩大并重建，不能越界继续运行 |
-| RT-Thread BSP 源码与构建配置 | 本地存在，未复测 | S5 若构建输入缺失或 workload 依赖尚未实现的 RX/interrupt，记录具体缺口；先选择本地可实现的无 RX、协作调度 workload，不能以启动 banner 代替验证 |
+| 1 MiB 容量与 RT-Thread 需求 | S5 最小 RT-Thread 配置已通过，1 MiB 足够；容量/heap/linker 已统一 | 其他 workload 仍需重查 ELF、stack、heap；不足则显式扩大并重建，不能越界继续运行 |
+| RT-Thread BSP 源码与构建配置 | 已冻结 local revision 和 npc/tests/b1-rtthread 最小配置；100 轮双线程/heap 检查通过 | 不代表原完整 shell/DFS BSP 或 timer 抢占已验收；扩展设备依赖时重新检查 |
 | timer AM 兼容 | S4 已迁移 high-low-high、has_rtc=false、profile 和单位换算；两组配置通过 | S5 BSP 沿用新契约；不要恢复不存在的日历寄存器访问 |
 | RV32E x16–x31 合规收尾 | 既有遗留，不属互联协议改动 | 保留准确能力声明；不要顺带扩大 ISA 重构范围 |
-| formal / 四值 / DC/PT | 本次未探测工具与库 | 属性与仿真先行；M4 相关项标待验，不阻塞无依赖的 RTL 工作 |
+| formal / 四值 / DC/PT | 本机无 sby/yosys/iverilog；DC/PT 未运行 | 属性与仿真先行；M4 相关项标待验，不阻塞无依赖的 RTL 工作 |
 | ysyxSoC 窄 MMIO 地址/size | Lite 无法还原原始 read size | M5 单独核对契约；不把 B1 地址图/对齐读语义当成通用 SoC wrapper |
 
 遇到真实阻塞时，开发日志应写明：阻塞哪一步、复现命令和错误、已尝试的处理、需要的最小输入；其他无依赖工作继续推进。

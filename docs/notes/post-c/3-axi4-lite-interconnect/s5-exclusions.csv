@@ -1,0 +1,7 @@
+bin,status,reason
+IFU write,N/A,IFU interface has no AW/W/B
+EXOKAY production,N/A,AXI4-Lite devices produce OKAY/SLVERR/DECERR only
+UART read OKAY,N/A,UART is write-only
+CLINT write OKAY,N/A,mtime registers are read-only
+IFU MMIO OKAY,N/A,instruction-tagged MMIO reads are rejected
+default OKAY/SLVERR,N/A,unmapped region always returns DECERR

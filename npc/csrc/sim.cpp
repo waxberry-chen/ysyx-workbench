@@ -56,6 +56,7 @@ void single_cycle() {
   // Drive and settle inputs while clk is low so the FST contains the values
   // sampled by the following active edge.
   dut->clk = 0;
+  platform_drive();
 #ifndef NPC_B1
   ram_model_drive();
 #endif

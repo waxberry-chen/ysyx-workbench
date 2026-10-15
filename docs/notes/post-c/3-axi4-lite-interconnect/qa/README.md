@@ -1,7 +1,7 @@
 # M3 面试 Q&A：AXI4-Lite 互联
 
-> 更新：2026-10-14，随 S3 SRAM/UART/CLINT 实现与验证更新。
-> 当前已验证 standalone Arbiter、Xbar/default、SRAM/UART/CLINT；完整 fabric 与 Core 集成尚未完成。实测范围见 [S1 报告](../1-arbiter.md)、[S2 报告](../2-xbar.md)、[S3 报告](../3-slaves.md)。
+> 更新：2026-10-15，随 S5 完整 fabric、RT-Thread 与验收更新。
+> 当前 M3 功能/协议仿真验收通过，实测范围见 [S5 报告](../5-closure.md) 与 [signoff](../signoff.md)；formal/四值/EDA 不在此 PASS 内。
 
 本文件按有价值的进展更新，不要求每次提交记录。回答用于解释本工程的决策，计划中的能力不表述为已完成。
 
@@ -9,7 +9,7 @@
 
 **简短回答：** 我希望先把双 master 的请求归属、AW/W 汇合和响应返回验证清楚，所以用一个服务槽串行处理 read/write。两个 adapter 仍可以各自持有请求，但只有一个进入 fabric。代价是 read/write 不能重叠，慢 slave 或 response backpressure 会阻塞另一个 master；全寄存缓冲还增加固定延迟。
 
-**追问与取舍：** 后续可拆分读写服务槽或支持多 outstanding，但需要相应增加 owner 队列、路由状态与验证。是否值得做要结合系统 CPI/仲裁等待和综合关键路径；S1 尚未有整核性能数据，不能声称该选择改善性能。
+**追问与取舍：** 后续可拆分读写服务槽或支持多 outstanding，但需要相应增加 owner 队列、路由状态与验证。是否值得做要结合系统 CPI/仲裁等待和综合关键路径；S5 已记录 add 固定 B1 的 16402 cycles / 1095 commits；没有等条件的优化或 Fmax 结果，不能声称该选择改善性能。
 
 **证据：** [设计契约 §3.2](../plan.md#32-全局一笔的精确定义)、[RTL](../../../../../npc/vsrc/bus/ysyx_axi4lite_arbiter.sv)；[S1 的状态与验证范围](../1-arbiter.md)。
 
@@ -147,4 +147,44 @@
 
 **追问与取舍：** 正常 MMIO skip 本身不证明设备正确，还要独立核对 UART 字节流、mtime 单调/单位和总线错误/副作用。错误旧取指也不能仅因收到 DECERR 就触发 trap，要核对 redirect 后是否仍属于有效指令。
 
-**证据：** S4 的 14 个精确异常用例、65 次 yield trap，以及末端 SRAM 返回时实际产生但未提交异常的 speculative DECERR；完整 redirect 时序交叉覆盖仍待 S5。
+**证据：** S4 的 14 个精确异常用例、65 次 yield trap，以及末端 SRAM 返回时实际产生但未提交异常的 speculative DECERR；S5 已完成含 Arbiter 的 18 个 redirect phase/response/竞争者组合。
+
+## 19. 为什么 CPU tests 全通过，还需要独立的 fabric driver？
+
+**简短回答：** 真实 adapter 通常同时发布 AW/W，也不会任意长时间拒收响应。CPU 程序能验证架构行为，却难以覆盖 W-first、每个通道的 64 周期 stall、复位时半笔写等协议情况。因此 S5 用两个独立 driver 加真实 RTL fabric，逐笔验证 owner、路由、数据和副作用，再用真实 Core 的 DiffTest 补架构检查。
+
+**追问与取舍：** 单层注入也可能留下空洞：Xbar 收齐写后重新同时发 AW/W，因此 Arbiter 后的随机 delay 不保证设备端出现三种握手顺序。我在设备边界也加测试 shim，并按实际握手而不是配置值统计 order/gap。
+
+**证据：** [S5 完整 fabric](../5-closure.md)：10 seeds 各至少 1000 完成，284 个有命中的 bin，最终 10510 = 10350 completed + 160 reset-aborted。
+
+## 20. 随机延迟能直接用随机数门控 VALID 吗？
+
+**简短回答：** 不能让已经发布但未握手的 VALID 下一拍消失。我的测试 shim 为每个通道缓存 payload，在接收时锁存延迟，倒计时完成后持续发布到握手；接受新输入的 READY 可以受门控，但输出不会随随机数撤销。
+
+**追问与取舍：** shim 有寄存级和容量，会改变时序；它属于测试变体，不进入默认生产配置。随机 seed 可复现不等于对不同模型施加了完全相同的延迟序列，也不能拿两种模型的 CPI 差异宣称优化收益。
+
+**证据：** [测试 shim](../../../../../npc/tests/axi4lite_delay_shim.sv) 的 holding assertion，及 add/bubble-sort 各 10 seed 的架构 trace 一致性。
+
+## 21. MMIO skip 的情况下，如何知道 UART 和 timer 真正确？
+
+**简短回答：** DiffTest 负责可比较的架构状态，设备行为由另一个 oracle 检查。S5 按实际 AR 接受边沿的独立计数器计算 mtime 预期，按 AW/W 接受边沿推导写执行；SRAM 实际写脉冲、字节数组和 UART 事件逐周期对照。不能以 DUT 的 target 或 error 输出生成预期。
+
+**追问与取舍：** reset 不能撤销已经发生的字符输出或 SRAM 写。必须把 accepted、completed、aborted 和 effect 分开记账；否则 reset 后重复输出、丢 response 与合法中止容易混在一起。
+
+**证据：** S5 的 69 reset 场景、完整内存扫描、76 个精确 UART 事件以及 high-low-high 拼接值与 low 采样时刻的严格相等检查。
+
+## 22. RT-Thread 跑起来，能说明支持操作系统和中断了吗？
+
+**简短回答：** 当前证明的是固定 RT-Thread kernel/BSP 配置下的协作线程切换和动态内存，不是完整设备或中断系统。两个线程各做 100 次可检查迭代，检查局部状态、heap buffer、交替输出及最终用量恢复，并在 203 次 cause 11 路径上通过 CSR DiffTest。
+
+**追问与取舍：** B1 没有 RX、mtimecmp 或 timer IRQ；我冻结了不依赖这些功能的配置，没有把启动 banner 或 timeout 当成通过。未来接入 timer-preemptive scheduling 需要重新验证中断时序、上下文保存和 BSP 契约。
+
+**证据：** [冻结 workload/config](../../../../../npc/tests/b1-rtthread/)；固定时序与 shim seed 42 的 262561 条架构提交完全一致，见 [S5](../5-closure.md)。
+
+## 23. 必测 coverage 全命中与 formal proof 有什么差别？
+
+**简短回答：** 功能覆盖说明约定的场景实际被激励，assertion/scoreboard 说明这些执行没有发现违例；它不穷举所有可能时序。我的 checker 对合法必测 bin 缺失直接失败，只把 IFU write 等结构性不可达情况标成 N/A。
+
+**追问与取舍：** 无死锁/公平性还依赖环境最终补齐请求、给出响应并允许消费。fabric 的 1024/2048 周期 watchdog 是当前有界仿真的失败条件，不是无界证明。当前机器没有 formal/四值工具，所以 M3 只给功能/协议仿真 PASS。
+
+**证据：** [覆盖汇总](../s5-coverage-summary.csv)、[N/A 原因](../s5-exclusions.csv) 与 [signoff 边界](../signoff.md)。

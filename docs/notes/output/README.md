@@ -1,24 +1,24 @@
 # NPC：面向 SoC 集成的 RISC-V 处理器项目
 
-> 更新：2026-10-14；Core/adapters 验收基线：`5b6f29c`。此处是持续更新的展示入口，不是完整 SoC 或 tapeout sign-off 声明。
+> 更新：2026-10-15；Core/adapters 验收基线：`5b6f29c`。此处是持续更新的展示入口，不是完整 SoC 或 tapeout sign-off 声明。
 
 ## 项目简介
 
 基于[一生一芯](https://ysyx.oscc.cc/docs/)推进的软硬件协同工程，重点是处理器 RTL、总线/互联、验证和 SoC 集成。软件与模拟器用于提供 workload 和参考行为，后续通过综合、STA 和性能实验评估架构取舍。
 
-NPC 已从集中式多周期控制演进为单发射、顺序提交的弹性前后端：IFU、IFQ、opbuf、EXU、LSU 分别持有指令或访存上下文，由 commit/redirect 协调架构状态更新与控制流切换。当前已完成 IFU/LSU AXI4-Lite adapters、Arbiter、Xbar/default、SRAM/UART/CLINT，并接入 Core/B1 系统；[S4 集成验收](../post-c/3-axi4-lite-interconnect/4-integration.md)通过，下一步是 RT-Thread 与完整覆盖收尾。
+NPC 已从集中式多周期控制演进为单发射、顺序提交的弹性前后端：IFU、IFQ、opbuf、EXU、LSU 分别持有指令或访存上下文，由 commit/redirect 协调架构状态更新与控制流切换。当前已完成 IFU/LSU AXI4-Lite adapters、Arbiter、Xbar/default、SRAM/UART/CLINT，并接入 Core/B1 系统；[M3 功能/协议仿真验收](../post-c/3-axi4-lite-interconnect/signoff.md)通过，包含固定 RT-Thread workload。下一步准备综合/STA 实现基线。
 
 ## 当前可展示内容
 
 | 主题 | 已有内容 | 边界 |
 | --- | --- | --- |
 | Core 微架构 | 弹性前后端、可变延迟访存、stale fetch 丢弃、精确访存异常 | 非经典五级流水；尚无 cache、多 outstanding |
-| 总线接口与互联 | IFU/LSU AXI4-Lite adapters；standalone Arbiter、Xbar/default 已验证，见 [S2 报告](../post-c/3-axi4-lite-interconnect/2-xbar.md) | 已接入 Core；完整 fabric 随机/交叉覆盖仍待 S5 |
+| 总线接口与互联 | IFU/LSU AXI4-Lite adapters；standalone Arbiter、Xbar/default 已验证，见 [S2 报告](../post-c/3-axi4-lite-interconnect/2-xbar.md) | 完整 fabric 随机/必测合法交叉覆盖通过；无 burst、多 outstanding |
 | RTL 设备 | SRAM byte mask、UART TX 事件、CLINT mtime，见 [S3 报告](../post-c/3-axi4-lite-interconnect/3-slaves.md) | 独立模块与 Core 系统测试通过；loader、输出 sink 和 AM 已适配，尚无 SRAM macro |
-| 验证 | Verilator、commit trace、GPR/CSR DiffTest、模块测试、随机时序回归 | 不等于完整 ISA compliance 或 formal/coverage closure |
-| 系统 workload | B1 的 CPU tests、UART hello、有限 uptime/yield-os，见 [S4](../post-c/3-axi4-lite-interconnect/4-integration.md) | B1 无日历 RTC；RT-Thread/ysyxSoC 待完成 |
+| 验证 | Verilator、commit trace、GPR/CSR DiffTest、模块测试、随机时序回归 | 必测功能 bins 已检查；不等于完整 ISA compliance 或 formal proof |
+| 系统 workload | B1 的 CPU tests、hello、uptime、yield-os、有限 RT-Thread，见 [S5](../post-c/3-axi4-lite-interconnect/5-closure.md) | RT-Thread 为协作调度，无 RX/timer IRQ；ysyxSoC 待接入 |
 
-最近阶段验收记录了 **34/34 CPU tests 通过，DiffTest 开启**；原 `unalign` 用例与项目的非对齐异常策略不兼容，另以 cause 4/6 定向测试验证。另有固定 `add` workload 的 10 个随机 seed 测试，不应表述为所有用例都做过十轮随机回归。结果、配置和复现入口见[证据索引](evidence-index.md)。S4 本轮实际重跑 B1 的 53 个有限系统程序、第二配置的 3 个 AM 程序和 legacy 34 个 CPU tests；B1 当前采用固定 RTL 时序，不能沿用 legacy 随机 seed 的覆盖声明。
+最近 M3 验收中，**34/34 CPU tests 通过，DiffTest 开启**；原 `unalign` 不符合本项目异常策略，另以 cause 4/6 定向用例验证。S5 重跑 53 个固定时序系统程序，另做 add/bubble-sort 各 10 个延迟 seed、2 次有限 RT-Thread 和空参数 hello。完整 fabric 有 10 seeds、每 seed 至少 1000 笔完成与 69 reset 场景；不能表述成所有 CPU 用例都做过十轮随机测试。配置、实际波形、覆盖及本地归档见[证据索引](evidence-index.md)。
 
 当前以 `riscv32e-npc` 为构建/workload 目标；RTL 仍有 32 项 GPR，尚未完成 RV32E 保留寄存器编码等合规收尾。尚无可对外引用的 DC/PrimeTime 面积与时序结果，也未完成 PnR。
 
