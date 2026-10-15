@@ -1,6 +1,6 @@
 # Post-C Roadmap：从弹性 RV32E Core 到可展示的 SoC/RTL 项目
 
-> 规划更新：2026-10-14；实现基线：`5b6f29c`（AXI4-Lite 阶段验收）
+> 规划更新：2026-10-15；M4 输入基线：`0fe53bf`（M3 功能/协议仿真验收后）
 >
 > 求职方向优先级：SoC/RTL Design > Design Verification > Physical Design  
 > 本文用于决定 post-C 阶段的投入顺序。具体接口、地址映射和考核要求仍以开始该阶段时的最新版官方讲义与上游仓库为准。
@@ -26,11 +26,12 @@
 2-axi4-lite：IFU/LSU AXI4-Lite adapters，保留 local req/rsp 边界
         │
         ▼
-当前主线
+功能/协议仿真验收已完成
 3-axi4-lite-interconnect：Arbiter -> Xbar -> SRAM/UART/CLINT/DECERR
-        │               同步建立 lint/SVA/随机回压基线
+        │               已建立 lint/SVA/随机回压基线
         ▼
-4-pre-soc-signoff：综合/STA/四值/网表 smoke + 可复现质量门
+当前主线
+4-pre-soc-signoff：DC/PT 面积与时序基线；附带 DC 功耗粗估
         ▼
 5-ysyx-soc-integration：AXI4 单拍子集封装 -> ysyxSoC 最小启动闭环
         │                    MROM/SRAM/UART/CLINT/DiffTest/RT-Thread
@@ -71,10 +72,10 @@
 按求职展示价值排序，主要缺口是：
 
 1. core 尚未通过标准 SoC 总线完成对外集成；
-2. 还没有 Arbiter/Xbar、设备错误响应和系统级 address map 闭环；
+2. M3 已完成 Arbiter/Xbar、设备错误响应和系统级 address map 闭环，仍需补实现检查；
 3. 还没有在 ysyxSoC 中完成 boot、UART、CLINT、AM 和 DiffTest 闭环；
 4. 项目缺少持续保存的综合面积、关键路径、Fmax、STA 约束和网表/四值证据；
-5. 验证已经有 directed/random/assertion，但还缺 test plan、功能覆盖率和可陈述的 closure；
+5. M3 已有 test plan、必测功能 bins 与仿真 closure，formal/四值/网表证据仍需区分并补齐；
 6. 性能数据目前能证明一次重构有效，但还不能说明瓶颈在哪里、下一项优化为何值得做。
 7. “RV32E”项目标识与当前 32-entry GPR、尚未拒绝 x16～x31 编码的实现之间仍需统一，避免对外展示时形成合规性歧义。
 
@@ -265,15 +266,18 @@ interconnect system-level test plan 合并实施。
 
 ### Milestone 4：完成 `4-pre-soc-signoff`
 
+2026-10-15：已建立 [M4 S0–S6 计划](4-pre-soc-signoff/plan.md)及目录，完成 `npc/ref-flow` 的[本地初读](4-pre-soc-signoff/0-ref-flow-review.md)。先学习裁剪，再构建 `npc/flow/`；本次尚未修改源码或运行 EDA。首次以 `ysyx_core_axi4lite`（Core + adapters + Arbiter）评估，S3 取得面积/时序，可附带 DC `report_power` 假设活动粗估；原 S4 四值/网表和 S5 workload/PTPX 延后；不代表含 SRAM/外设的完整 SoC PPA。S0 的[流程图与逐级输入输出](4-pre-soc-signoff/0-flow-map.md)区分工艺库与 design；[缺失脚本清单](4-pre-soc-signoff/missing-inputs.md)仅核查 flow 脚本/编排配置。PDK 已在服务器，保留原路径；本地只做 flow 蒸馏，不复现旧工程。
+
 这个里程碑防止“B1 仿真能跑，但接 SoC 时同时暴露协议、时序、复位和构建问题”。先建立最小实现基线，工作量取决于现有 RTL、工艺库和可复用 flow；不在取得工具与输入前承诺全部检查已可运行。
 
 #### 工具与执行分工
 
 - 暂定 [Design Compiler](https://www.synopsys.com/implementation-and-signoff/rtl-synthesis-test/design-compiler.html) 做综合、[PrimeTime](https://www.synopsys.com/implementation-and-signoff/signoff/primetime.html) 做 STA；**PnR 暂不实施，也不作为近期主线的依赖**。
-- 用户提供可复用的旧 tapeout flow 后，先提取一个 top、一个 mode/corner 的最小路径，再逐项增加本项目需要的选项。重新审查 clocks、I/O delays、reset、false/multicycle paths；不继承旧工程未经解释的 waiver/约束。
+- DC/PT User Guide 位于 `docs/userguide/`，通过 [M4 手册检索入口](4-pre-soc-signoff/manual-index.md)按主题/命令和 PDF 页码查阅；使用保留分页符的本地文本缓存，命令选项再按服务器实际版本帮助核对。
+- 已提供 `npc/ref-flow` 的裁剪快照；先提取一个 top、一个 mode/corner 的最小路径，再逐项增加本项目需要的选项。重新审查 clocks、I/O delays、reset、false/multicycle paths；不继承旧工程未经解释的 waiver/约束。
 - 脚本在本仓库维护，待实际导入时集中放在 `npc/flow/`；本地负责编辑和可执行的静态检查，用户同步到具备完整 EDA 的服务器运行。不提前搭建复杂的通用 flow 框架。
 - 服务器按固定 RTL/脚本/SDC 版本运行，归档工具版本、库/PVT 标识、配置、命令和报告；详细结果归入本阶段，展示出口仅链接摘要。
-- 仓库只存可共享的脚本与配置模板；工艺库、license、机器路径及受限旧项目内容留在服务器/私有配置中。迁移前检查可复用、可公开的范围。
+- 仓库只存可共享的脚本与配置模板；工艺库与 license 留在服务器；本地蒸馏时保留脚本/配置中的服务器 PDK 路径，公开版本再处理机器路径和受限内容。迁移前检查可复用、可公开的范围。
 - 无布局布线及提取寄生参数时，明确标注为 **pre-layout synthesis/STA**，记录互连估算与时钟假设；不得称为 post-route timing closure。脚本已编写、服务器已运行、检查通过分别记录，缺工具时标记待验。
 
 #### 必做
@@ -282,9 +286,9 @@ interconnect system-level test plan 合并实施。
 - 为时钟、输入/输出延迟形成最小 SDC；false/multicycle path 仅在有设计依据时添加；
 - 检查 latch、组合环、下降沿逻辑、隐式位宽转换和未驱动信号；
 - 检查 reset 后所有 control/valid/owner 状态，数据寄存器依赖 valid 屏蔽；
-- 运行四值 smoke test，优先暴露 X optimism 和初始化依赖；
-- 跑一次综合网表 smoke test；
 - 固化 `lint -> unit -> random -> system -> synth -> sta` 的可重复命令。
+
+本轮按用户决定只完成 DC/PT 面积与时序基线；`report_power` 为附带参考，记录活动/频率/负载/PVT 等假设，不能称为 workload 实测功耗。四值/网表 smoke 与 PTPX 活动分析延后，不作为本轮出口；相应验证能力仍标记未执行。
 
 #### 关于 CDC/RDC
 
@@ -295,7 +299,7 @@ interconnect system-level test plan 合并实施。
 - 生成的 RTL 不依赖 DPI-C 才能综合；
 - 工具报告和日志路径固定，可由干净工作区复现；
 - 已知 warning 有逐项说明，而不是全局屏蔽；
-- B1 release 有版本号和结果摘要。
+- DC/PT 基线有版本号和结果摘要，明确未做四值/网表动态验证与物理实现。
 
 ### Milestone 5：完成 `5-ysyx-soc-integration` / B2
 
@@ -546,7 +550,7 @@ docs/notes/
     ├── 1-memory-request/          # elastic core + precise memory exception
     ├── 2-axi4-lite/               # IFU/LSU AXI4-Lite adapters
     ├── 3-axi4-lite-interconnect/  # Arbiter/Xbar/minimal B1 slaves
-    ├── 4-pre-soc-signoff/         # SDC/synthesis/STA/4-state/netlist smoke
+    ├── 4-pre-soc-signoff/         # DC/PT 面积时序；DC 功耗粗估为附带项
     ├── 5-ysyx-soc-integration/    # B2 wrapper/boot/interrupt/system closure
     ├── 6-icache-performance/      # trace/cachesim/I-cache/burst/metrics
     └── 7-role-deepening/          # pipeline/BPU 或 focused DV，按证据选择
@@ -560,8 +564,8 @@ docs/notes/
 
 ## 9. 最近三个行动
 
-1. 进入 `3-axi4-lite-interconnect`，先冻结 arbitration/address-map 契约和最小测试矩阵，再实现 Arbiter/Xbar/slaves；
-2. 同步积累展示证据；用户提供旧 flow 后裁剪 DC/PT 的最小综合/STA 路径，在服务器运行前将结果标记为待验，不阻塞无依赖的 RTL 工作；
+1. 推进 M4 S0 的 flow 蒸馏：依据流程图、各级输入输出与脚本缺口清单，明确复用/重写边界；保留服务器 PDK 路径，不以本地补库或复现旧工程为前置条件；
+2. 按 M4 S1–S3 处理 DPI/初始化边界并构建 NPC 最小 DC/PT 流程，取得首次面积/时序；功耗仅附带 DC 假设活动粗估，原 S4/S5 延后。在服务器运行前标记待验，不阻塞无依赖的本地工作；
 3. 提前核对并固定 ysyxSoC revision 与接口契约，特别是窄 MMIO 读的地址/size 语义；当前 Lite adapter 已对齐地址，不能假设最外层固定 SIZE wrapper 能恢复这些信息。明确边界后再按 M5 实施集成。
 
 在这三项完成前，不启动 GShare、经典五级流水重写、D-cache 或大规模外设扩展。

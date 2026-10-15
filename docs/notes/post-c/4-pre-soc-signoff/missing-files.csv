@@ -1,0 +1,17 @@
+id,path,kind,status,evidence,missing_flow_knowledge,distillation_action
+R01,08_sta/c906_2_4/run.sta,flow_script_or_config,copied,Makefile: sta/sta_single,已补齐：按 FF/SS/TT 顺序设置 SCENARIO 并调用 pt_shell,可直接阅读 launcher；确认仅启动 STA，不代表已运行通过
+R02,09_px/time_based_power.tcl,flow_script_or_config,not_copied,Makefile: px/px_single,根链实际功耗输入与分析选项,优先参考；已有 pt_power_param.tcl 可用于蒸馏，但不代表同一配置
+R03,11_sim/syn/filelists/syn_base.fl,flow_script_or_config,copied,11_sim/syn/Makefile: FILELIST,已补齐：syn TB/SRAM wrapper/调试 filelist 的编译组织,参考编译编排；design TB/RTL 不作为 missing-files 扩展范围
+R04,11_sim/syn/run_simv.sh,flow_script_or_config,copied,11_sim/syn/Makefile: run,已补齐：SIM_WORK_DIR、simv 检查和信号处理,可直接阅读；超时处理位于 regress runner，不在此脚本内
+R05,11_sim/common/run_case.py,flow_script_or_config,copied,11_sim/syn/README.md,已补齐：syn/pnr 单用例编排、活动收集与 manifest,可直接阅读；pnr 分支缺失 runner 另列 R18
+R06,11_sim/syn/regress/run_regress.sh,flow_script_or_config,copied,11_sim/syn/Makefile: regress,已补齐：case 枚举、超时、结果/波形收集,汇总仍依赖缺失的 report_gen.pl，另列 R17
+R07,05_fm/run_r2n_formality.tcl,flow_script_or_config,not_copied,Makefile: formality_r2n,RTL/网表等价的实际输入与约束,可选参考；FM 非当前最小 synth/STA 依赖
+R08,05_fm/run_n2n_formality.tcl,flow_script_or_config,not_copied,Makefile: formality_n2n,物理变换前后等价契约,后续参考；不属于本轮 NPC 蒸馏重点
+R09,03_scr/Kconfig_system/Kconfig,flow_script_or_config,copied,03_scr/Kconfig_system/Makefile,已补齐：配置项定义及默认值来源,可直接核对 auto.tcl；NPC 初版仍不要求迁移 Kconfig
+R12,07_qrc/c904_2_4/run.qrc,flow_script_or_config,copied,Makefile: qrc; 07_qrc/README.md,已补齐：DEF/LEF 清单/tech 配置到三角 SPEF 的命令及归档,可读 QRC 契约；PDK 路径配置不列为缺失项；NPC 首次 pre-layout 不依赖
+R13,12_dataset/test_npi.py,flow_script_or_config,not_copied,Makefile: dataset,根默认链 dataset driver,非本轮 NPC 范围；补充后可核对与 main.py 的差异
+R14,12_dataset/main.py,flow_script_or_config,not_copied,12_dataset/Makefile; README.md,目录级 dataset driver,非本轮 NPC 范围
+R15,12_dataset/DatasetBuilder.py,flow_script_or_config,not_copied,12_dataset/README.md,数据集构建实现,非本轮 NPC 范围；仅文档点名
+R16,12_dataset/VerdiNPIClient.py,flow_script_or_config,not_copied,12_dataset/README.md,NPI/网表/波形访问接口,非本轮 NPC 范围；仅文档点名
+R17,11_sim/syn/regress/report_gen.pl,flow_script_or_config,not_copied,11_sim/syn/regress/run_regress.sh: perl report_gen.pl,回归结果聚合、regress_report 生成与失败判据,GLS 回归汇总参考；新补脚本直接调用，建议补拷
+R18,11_sim/pnr/run_simv.sh,flow_script_or_config,not_copied,11_sim/common/run_case.py: --level pnr; level_dir / run_simv.sh,选择 pnr 时的仿真启动与进程处理,条件依赖：仅 pnr 分支；不阻塞当前 syn 分支或 NPC 首次综合/STA
