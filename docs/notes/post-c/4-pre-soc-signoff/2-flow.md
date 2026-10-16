@@ -22,15 +22,15 @@ flowchart LR
 
 | 实现 | 输入 / 输出及依据 |
 | --- | --- |
-| `configs/npc_core.tcl` | top/filelist/宏、时钟与 I/O 数值假设、并行度、可选功耗开关；配置键缺失或拼写错误即失败 |
-| `configs/site.example.tcl` | 保留原服务器 DB 路径，选单个 RVT/TT 候选；实际 site 单独复制为忽略文件，不将文件名当作已核对的库内部属性 |
-| `common/flow.py` | 配置加载、路径/文件检查、输入快照、Git/库/工具 hash、独立 run、退出码与报告检查；不依赖第三方 Python 包 |
-| `common/setup.tcl` | 共享库、operating condition、WLM 设置和报告；所有 EDA 输入来自快照 |
-| `constraints/core.sdc` | 覆盖 clock、reset、全部 AXI 与 commit/monitor 输出；DC/PT 重放同一文件 |
-| `syn/probe.tcl` | 仅加载候选 DB，输出实际工具版本和 `report_lib`，为 site 填值提供依据 |
-| `syn/run.tcl` | 库配置先于 SV analyze/elaborate/link；WORK/run 隔离；普通 compile；导出网表/DDC/SDC、area/QoR/resources/reference/max/min/check 报告 |
-| `sta/run.tcl` | 同一 run 的 `core.v` 和库，重新应用相同设计约束；无 SPEF/propagated clock；输出 coverage、约束、路径分组与指标 |
-| `tests/` | SDC 端口覆盖与失败注入；模拟工具执行真实 Tcl 控制流程，验证的是脚本编排而非 EDA 语义 |
+| `00_indata/configs/npc_core.tcl` | top/filelist/宏、时钟与 I/O 数值假设、并行度、可选功耗开关；配置键缺失或拼写错误即失败 |
+| `00_indata/configs/site.example.tcl` | 默认从 `00_indata/DB/STD_NEW/` 选单个 RVT/TT 候选，支持外部绝对路径；实际 site 单独复制为忽略文件，不将文件名当作已核对的库内部属性 |
+| `01_common/flow.py` | 配置加载、路径/文件检查、输入快照、Git/库/工具 hash、独立 run、退出码与报告检查；不依赖第三方 Python 包 |
+| `01_common/setup.tcl` | 共享库、operating condition、WLM 设置和报告；所有 EDA 输入来自快照 |
+| `00_indata/constraints/core.sdc` | 覆盖 clock、reset、全部 AXI 与 commit/monitor 输出；DC/PT 重放同一文件 |
+| `02_syn/probe.tcl` | 仅加载候选 DB，输出实际工具版本和 `report_lib`，为 site 填值提供依据 |
+| `02_syn/run.tcl` | 库配置先于 SV analyze/elaborate/link；WORK/run 隔离；普通 compile；导出网表/DDC/SDC、area/QoR/resources/reference/max/min/check 报告 |
+| `03_sta/run.tcl` | 同一 run 的 `core.v` 和库，重新应用相同设计约束；无 SPEF/propagated clock；输出 coverage、约束、路径分组与指标 |
+| `04_tests/` | SDC 端口覆盖与失败注入；模拟工具执行真实 Tcl 控制流程，验证的是脚本编排而非 EDA 语义 |
 
 保留参考 flow 的阶段划分、日志/报告归档和失败传播思想，重写旧 top/库混选、文件清单、路径和约束。DC 采用 `compile -map_effort medium`，首轮不依赖 `compile_ultra`、Graphical 或额外 Foundation 库；不传 `-gate_clock`，不启用参考脚本中的 datapath gating。这样得到的是明确编译策略下的初始基线，之后换优化策略需要独立命名和重测。
 

@@ -3,7 +3,7 @@
 # 先用报告确认库内部名、operating condition、单位和默认 WLM，再填写 site。
 # 最外层 catch 将 Tcl 异常转换成非零进程退出码，供 Python driver 识别。
 if {[catch {
-    source [file join $::env(NPC_FLOW_SNAPSHOT) common setup.tcl]
+    source [file join $::env(NPC_FLOW_SNAPSHOT) 01_common setup.tcl]
     libraries
     library_reports
     complete

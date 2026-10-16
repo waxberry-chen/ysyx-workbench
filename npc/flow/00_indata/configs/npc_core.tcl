@@ -1,6 +1,6 @@
 # 设计配置：说明“综合什么”和“希望满足什么外部条件”，不填写服务器安装路径。
 # cfg 是 Tcl 字典，用 dict get cfg key 读取；末尾反斜杠把多行拼成一个命令。
-# 本文件只提供数值，constraints/core.sdc 才把数值施加到时钟/端口。
+# 本文件只提供数值，00_indata/constraints/core.sdc 才把数值施加到时钟/端口。
 #
 # top/filelist/sdc：顶层模块、按序的 SV 清单和时序约束，路径均相对 npc/。
 # defines：SYNTHESIS 去掉 DPI/SVA；不更换硬件数据通路或复位行为。
@@ -16,7 +16,7 @@
 # 数值取舍与边界见 docs/notes/post-c/4-pre-soc-signoff/2-flow.md §2。
 # Design contract. Timing numbers are in ns; loads in pF after site unit review.
 set cfg [dict create \
-    top ysyx_core_axi4lite filelist flow/filelists/core.f sdc flow/constraints/core.sdc \
+    top ysyx_core_axi4lite filelist flow/00_indata/filelists/core.f sdc flow/00_indata/constraints/core.sdc \
     defines SYNTHESIS period 10.0 input_min 0.2 input_max 2.0 \
     output_min 0.2 output_max 2.0 reset_min 0.2 reset_max 2.0 \
     uncertainty_setup 0.2 uncertainty_hold 0.05 clock_transition 0.1 \

@@ -76,3 +76,11 @@
 - 本次工艺报告确认内部名 `tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs`，条件名 `tt0p9v25c`，P/V/T 为 1.00/0.90 V/25 °C，单位 ns/pF，并包含 `ZeroWireload` 模型。模型存在不等于后续 design 已选中它；未据此自动修改 site 审核标记或宣称完成时序评估。
 - 原 mock 虚构了 `version` 命令，且没有枚举 `standard.sldb`，因此未覆盖这两个真实兼容问题。收紧 mock 后旧脚本失败；修复后 probe/synth/STA 控制流通过，并增加“退出 0、完成标记存在、错误只在报告中”的拒绝回归。
 - `make -C npc/flow check test` 共 30 项通过。未修改旧 run 快照/报告，未执行新的真实 DC/PT；服务器同步后使用新 run ID 验证。
+
+## 2026-10-17：编号 flow 目录、集中输入与 run 清理
+
+- 按用户要求改为 `00_indata/{configs,constraints,filelists,DB}`、`01_common`、`02_syn`、`03_sta`、`04_tests`；RTL 仍在 `npc/vsrc` 唯一维护，由 filelist 引用并冻结到 run。更新 Tcl/Python/Makefile 与 S1 检查的路径。
+- 默认 run 根目录改为 `npc/flow/build`；S1 scope 检查产物放到其下 `scope-check`。DB 示例默认相对 site 配置定位 `00_indata/DB/STD_NEW`，仍允许外部绝对路径；私有 site 与 DB/构建产物均忽略提交。旧 run 原位保留，不改绝对路径 manifest。
+- 新增 `make -C npc/flow clean RUN_ID=...`，只删指定 run，可清理失败产物后复用 ID，不依赖 SITE/EDA 可用性；拒绝空 ID、路径穿越、run 符号链接、无效 manifest 和 RUNNING 阶段。自定义/旧 RUN_ROOT 必须显式指定，清理会删除该 run 的诊断证据。
+- 快照改为枚举维护的脚本/输入目录，排除 build 与工艺数据，避免迁入 flow 后递归归档旧 run。新增失败 run 清理/重跑、删除边界和快照排除回归。
+- `make -C npc/flow check test`：33 项通过；`make -C npc synthesis-scope-check`：四种宏配置全部通过。未运行真实 DC/PT，服务器需迁移私有 site 和 DB 路径后继续；没有本地实施阻塞。

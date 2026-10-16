@@ -7,14 +7,15 @@
 # 必须是该库真实定义的工作条件。留空可执行 probe，但会阻止正式综合。
 # library_reviewed=1 是用户核对库报告后的声明，Python 并不会自行解析二进制 DB 验证单位。
 # time/capacitance_unit 必须匹配 SDC 的 ns/pF；area_unit 不能未经依据改写成 um^2。
-# wire_load_model 选择互连估算策略；具体含义与优先级见 common/setup.tcl。
-# 参考路径来自 ref-flow/03_scr/env/auto.tcl；无需为了本地检查把库搬到本机。
-# Copy to site.local.tcl on the server. Paths retained from ref-flow auto.tcl.
+# wire_load_model 选择互连估算策略；具体含义与优先级见 01_common/setup.tcl。
+# DB 默认放在 00_indata/DB；相对本配置文件求绝对路径，不依赖启动 cwd。
+# 原 ref-flow 路径为 /15T/Projects/c906-project-delivery/00_indata/DB/STD_NEW/。
+# Copy to site.local.tcl on the server. External absolute DB paths are also supported.
 # One RVT/TT candidate, not the original mixed RVT/LVT/HVT + SRAM glob.
 set site [dict create \
     dc_shell /15T/tools/synopsys/syn/O-2018.06-SP1/bin/dc_shell \
     pt_shell pt_shell \
-    target_db /15T/Projects/c906-project-delivery/00_indata/DB/STD_NEW/tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.db \
+    target_db [file normalize [file join [file dirname [info script]] .. DB STD_NEW tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.db]] \
     library_name tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs \
     operating_condition {} corner TT_0p9V_25C vt RVT \
     time_unit ns capacitance_unit pf area_unit library_area \

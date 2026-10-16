@@ -7,9 +7,9 @@ import re
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "build/m4-s1/scope"
+OUT = ROOT / "flow/build/scope-check"
 OUT.mkdir(parents=True, exist_ok=True)
-FILELIST = "flow/filelists/core.f"
+FILELIST = "flow/00_indata/filelists/core.f"
 COMMON = ["verilator", "--sv", "--top-module", "ysyx_core_axi4lite", "-f", FILELIST]
 
 # Exact file/signal waivers. All are unused data, not control/width/latch warnings.

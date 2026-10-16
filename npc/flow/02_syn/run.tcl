@@ -2,7 +2,7 @@
 # 普通非物理综合不会给出布局、时钟树或布线结果；脚本可运行也不等于时序达标。
 # 组织方式参考 ref-flow 的分阶段脚本；这里将库配置移到展开/link 之前。
 if {[catch {
-    source [file join $::env(NPC_FLOW_SNAPSHOT) common setup.tcl]
+    source [file join $::env(NPC_FLOW_SNAPSHOT) 01_common setup.tcl]
     if {[shell_is_in_topographical_mode]} {error "Baseline requires wire-load DC, not TOPO"}
     # 阶段 1：库/工作目录准备。WORK 保存 analyze 中间数据，每个 run 独立。
     libraries

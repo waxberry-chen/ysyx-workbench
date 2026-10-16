@@ -16,7 +16,7 @@
 
 当前小型 GPR/队列按 RTL 存储结构交给标准单元综合。**S1 不依赖 memory compiler**；B1 SRAM 宏映射属于另一个实现配置。组合除法和带复位 GPR 可能明显影响面积/时序，具体代价由 S3 报告确认，不能提前假设它们已经被优化掉。
 
-输入入口：[npc/flow/README.md](../../../../npc/flow/README.md)、[core.f](../../../../npc/flow/filelists/core.f)。清单包含 16 个 `.sv`，按 primitive → 组合运算/状态模块 → adapter → Core → Arbiter → top 排列。primitive 另行 include `vsrc/gnrl/ysyx_global.sv`，所以 hash 闭包为 17 个 RTL 文件。清单和 include 路径均相对 **npc/**；S2 的 launcher 必须切换到该目录或统一解析绝对路径，不能相对 run 目录直接读取。
+输入入口：[npc/flow/README.md](../../../../npc/flow/README.md)、[core.f](../../../../npc/flow/00_indata/filelists/core.f)。清单包含 16 个 `.sv`，按 primitive → 组合运算/状态模块 → adapter → Core → Arbiter → top 排列。primitive 另行 include `vsrc/gnrl/ysyx_global.sv`，所以 hash 闭包为 17 个 RTL 文件。清单和 include 路径均相对 **npc/**；S2 的 launcher 必须切换到该目录或统一解析绝对路径，不能相对 run 目录直接读取。
 
 以 SystemVerilog 模式解析，不照搬 C906 Verilog 读取设置。依据：本地 **DC User Guide P-2019.03，正文 6-3–6-5 / PDF 153–155**，区分 HDL 读取、analyze/elaborate 与 link；这些步骤的实际服务器兼容性仍需 S2/S3 验证。检索方式见 [manual-index.md](manual-index.md)。
 

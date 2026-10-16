@@ -26,4 +26,7 @@
 !/flow/**/*.py
 !/flow/**/*.tcl
 !/flow/**/*.sdc
-/flow/configs/*.local.tcl
+/flow/**/*.local.tcl
+# 工艺数据仅在本机/服务器使用，不提交供应商库。
+/flow/00_indata/DB/*
+!/flow/00_indata/DB/README.md

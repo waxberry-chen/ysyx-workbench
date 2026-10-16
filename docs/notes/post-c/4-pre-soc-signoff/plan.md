@@ -33,7 +33,7 @@
 | --- | --- | --- |
 | S0 学习与 flow 蒸馏 | 输出 ref-flow 执行顺序图与数据流图；记录每一级的入口、输入、输出；区分工艺库、design、flow 控制和工具环境；核查未拷贝的 flow 脚本；明确 NPC 裁剪范围 | `0-flow-map.md`、`0-ref-flow-review.md`、`missing-files.csv`、`manual-index.md` 与本地手册缓存；保留服务器库路径，推断处有标注；本地无需补 PDK、安装 EDA 或复现旧 flow |
 | S1 可综合与上电语义 | 去除实现路径 DPI 依赖；明确 x0/GPR/reset 语义；独立 filelist；审查 latch/环/位宽/未驱动/隐式初始化；形成 SDC 端口预算表 | lint 与受影响定向/系统回归通过；DIFF/harness 路径仍可运行；新增初始化策略有说明；四值动态验证延后，不能把两值回归写成 X 验证 |
-| S2 最小 NPC flow | 创建 configs/common/syn/sta 入口所需文件；库先于 elaborate/link；实现 preflight、失败退出、每次独立 run、manifest 与报告检查 | 缺文件/缺变量/错误 top 能提前失败；本地静态检查与后续服务器 preflight/工具语法检查分开记；工艺库保留服务器路径，design 路径适配 NPC，无隐式 fallback |
+| S2 最小 NPC flow | 创建 `00_indata`、`01_common`、`02_syn`、`03_sta` 入口所需文件；库先于 elaborate/link；实现 preflight、失败退出、每次独立 run、manifest 与报告检查 | 缺文件/缺变量/错误 top 能提前失败；本地静态检查与后续服务器 preflight/工具语法检查分开记；工艺库路径显式配置，design 路径适配 NPC，无隐式 fallback |
 | S3 综合与 STA 基线 | DC 分析/展开/映射，导出网表/SDC/DDC；PT 读同一网表和库，ideal clock，无 SPEF；报告 max/min、约束覆盖、area/关键路径 | **首次面积与时序评估**；link 无未解析引用，无非预期 latch/环/未约束功能端点；WNS/TNS 等如实记录，目标未满足可作为 FAIL 基线保存，不能称 timing PASS |
 | S4 四值与网表 smoke（延后） | 原计划保留为后续验证方向，本轮不搭建四值/门级仿真环境 | 不作为本轮 DC/PT 基线出口；未执行状态明确保留，不能声称网表等价或 X 验证通过 |
 | S5 活动与 PTPX（延后） | 本轮不生成功耗专用 VCD/SAIF、不建 PTPX flow；DC 简要估算并入 S3 | 不作为本轮出口；后续有具体低功耗优化问题时再启动 |
@@ -65,19 +65,20 @@ DC/PT 必须记录互连模型：若库具备并采用 wire-load，写明具体�
 
 ```text
 npc/flow/
-├── README.md                  # 范围、依赖、服务器运行方式
-├── Makefile                   # preflight / synth / sta / check
-├── configs/
-│   ├── npc_core.tcl           # top、corner、参数、工艺无关选项
-│   └── site.example.tcl       # 私有库/工具配置接口；实际 site 文件不入库
-├── filelists/core.f           # 首个 DUT 的 SV 源文件闭包
-├── constraints/core.sdc       # clocks / IO / reset；有据可查的例外
-├── common/                    # preflight、共享配置、报告检查/manifest
-├── syn/                       # DC 入口、导出、可选 report_power
-└── sta/                       # PT pre-layout 入口与报告
+├── README.md / Makefile       # 使用说明与 check/probe/synth/sta/clean 等入口
+├── 00_indata/
+│   ├── configs/              # design 与 site 配置；私有 site 不入库
+│   ├── filelists/core.f      # 引用 npc/vsrc 的 SV 源闭包
+│   ├── constraints/core.sdc  # clocks / IO / reset
+│   └── DB/STD_NEW/           # 用户拷入的工艺 DB，不入库
+├── 01_common/                # driver、共享 Tcl、manifest/报告检查
+├── 02_syn/                   # DC probe / 综合
+├── 03_sta/                   # PT pre-layout 分析
+├── 04_tests/                 # 本地 mock / 契约检查
+└── build/<RUN_ID>/           # 每次 run 的快照和产物
 ```
 
-[S2](2-flow.md) 已创建最小执行入口、数值约束与本地测试；[flow README](../../../../npc/flow/README.md) 是实际使用入口。本地 mock 检查不代表真实工具已跑通。运行目录为服务器可配置的 `<RUN_ROOT>/<run_id>/`，内含 `inputs/ logs/ reports/ outputs/ manifest.json`；本地临时输出可用 `npc/build/flow/`。每次运行独立，禁止默认复用旧网表；输入 hash 不匹配即失败。PDK/库相关配置保留参考脚本中的服务器路径，不为本地可运行而改写；设计源文件与运行目录适配 NPC，集中配置。若以后公开脚本，再单独处理路径脱敏。
+[S2](2-flow.md) 已创建最小执行入口、数值约束与本地测试；[flow README](../../../../npc/flow/README.md) 是实际使用入口。本地 mock 检查不代表真实工具已跑通。运行目录为服务器可配置的 `<RUN_ROOT>/<run_id>/`，内含 `inputs/ logs/ reports/ outputs/ manifest.json`；默认产物目录为 `npc/flow/build/`。每次运行独立，禁止默认复用旧网表；输入 hash 不匹配即失败。按 2026-10-17 的目录约定，DB 默认放在 `00_indata/DB/STD_NEW/`，也支持外部服务器绝对路径；本地检查仍不要求 PDK 存在。`clean RUN_ID=...` 可显式删除一个 run 后重用 ID，其他 run 和输入不受影响。若以后公开脚本，再单独处理路径脱敏。
 
 manifest 至少含 RTL commit/dirty patch、filelist/define/参数、top/观察端口策略、脚本/SDC/库 hash、工具版本、PVT/Vt、互连/时钟假设、命令、退出码、日志路径、网表 hash；附带功耗增加活动假设及其来源；没有 workload/窗口/活动映射结果。工艺数据只存服务器，文档保存必要的可共享标识。
 

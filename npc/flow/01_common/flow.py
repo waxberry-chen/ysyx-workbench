@@ -19,6 +19,9 @@ import sys
 FLOW = Path(__file__).resolve().parents[1]
 NPC = FLOW.parent
 REPO = NPC.parent
+# Only maintained inputs/scripts enter snapshots; never recurse into build or PDK payloads.
+SOURCE_DIRS = ('00_indata/configs', '00_indata/constraints', '00_indata/filelists',
+               '01_common', '02_syn', '03_sta', '04_tests')
 CFG_KEYS = set('top filelist sdc defines period input_min input_max output_min output_max reset_min reset_max uncertainty_setup uncertainty_hold clock_transition input_transition output_load source_latency_min source_latency_max max_cores power_enable power_toggle power_probability'.split())
 SITE_KEYS = set('dc_shell pt_shell target_db library_name operating_condition corner vt time_unit capacitance_unit area_unit wire_load_model library_reviewed'.split())
 
@@ -63,7 +66,7 @@ def tcl_word(value):
 def load_config(config, site):
     for p in (config, site):
         require(Path(p).is_file(), f'Missing configuration: {p}')
-    proc = subprocess.run(['tclsh', str(FLOW / 'common/config_dump.tcl'), str(config), str(site)], capture_output=True, text=True)
+    proc = subprocess.run(['tclsh', str(FLOW / '01_common/config_dump.tcl'), str(config), str(site)], capture_output=True, text=True)
     require(proc.returncode == 0, f'Configuration Tcl failed: {proc.stderr}')
     data = {'cfg': {}, 'site': {}}
     for line in proc.stdout.splitlines():
@@ -127,7 +130,11 @@ def source_inputs(cfg):
                 closure.add(path)
                 pending.append(path)
     files = closure | {filelist, sdc}
-    files |= {p for p in FLOW.rglob('*') if p.is_file() and (p.suffix in ('.tcl', '.sdc', '.py', '.f') or p.name == 'Makefile') and '__pycache__' not in p.parts and not p.name.endswith('.local.tcl')}
+    files.add(FLOW/'Makefile')
+    for folder in SOURCE_DIRS:
+        files |= {p for p in (FLOW/folder).rglob('*') if p.is_file()
+                  and p.suffix in ('.tcl', '.sdc', '.py', '.f')
+                  and '__pycache__' not in p.parts and not p.name.endswith('.local.tcl')}
     return sources, files
 
 
@@ -160,7 +167,7 @@ def local_check(config, site):
     data, sources, files = preflight(config, site)
     # Tcl's parser checks balanced syntax; the SDC mock verifies all port budgets.
     script = 'foreach p $argv {set f [open $p]; set s [read $f]; close $f; if {![info complete $s]} {error "Incomplete Tcl: $p"}}'
-    proc = subprocess.run(['tclsh', str(FLOW / 'tests/sdc_check.tcl'), str(config), str(NPC / data['cfg']['sdc']), str(NPC / 'vsrc/top/ysyx_core_axi4lite.sv')], text=True, capture_output=True)
+    proc = subprocess.run(['tclsh', str(FLOW / '04_tests/sdc_check.tcl'), str(config), str(NPC / data['cfg']['sdc']), str(NPC / 'vsrc/top/ysyx_core_axi4lite.sv')], text=True, capture_output=True)
     require(proc.returncode == 0, proc.stdout + proc.stderr)
     # stdin-mode Tcl otherwise may print errors and still exit 0; explicit catch/exit.
     code = 'set argv [list '+ ' '.join(tcl_word(p) for p in sorted(files) if p.suffix in ('.tcl', '.sdc')) + ']\nif {[catch {'+script+'} m]} {puts stderr $m; exit 1}\n'
@@ -177,7 +184,7 @@ def create_run(data, sources, files, config, site_path, run_root, run_id):
     run_id = run_id or datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S.%fZ')
     require(re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]*', run_id), 'Invalid run ID')
     run = Path(run_root).resolve() / run_id
-    require(not run.exists(), f'Run already exists; choose a new RUN_ID: {run}')
+    require(not run.exists(), f'Run already exists; clean this RUN_ID explicitly or choose a new one: {run}')
     run.mkdir(parents=True)
     for folder in ('inputs', 'logs', 'reports', 'outputs', 'work', 'launch'):
         (run / folder).mkdir()
@@ -225,6 +232,29 @@ def create_run(data, sources, files, config, site_path, run_root, run_id):
     return run
 
 
+def clean_run(run_root, run_id):
+    """显式删除一个已识别的 run；不加载 site，也不要求失败快照 hash 完整。"""
+    require(run_id and re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]*', run_id),
+            'clean requires one valid RUN_ID (no paths or wildcards)')
+    run = Path(run_root).resolve()/run_id
+    require(not run.is_symlink(), f'Refusing to clean a symlink: {run}')
+    if not run.exists():
+        print(f'CLEAN_SKIP: run does not exist: {run}')
+        return
+    manifest = run/'manifest.json'
+    require(manifest.is_file() and not manifest.is_symlink(), f'Refusing to clean an unrecognized directory: {run}')
+    m = json.loads(manifest.read_text())
+    require(isinstance(m, dict) and m.get('schema') == 1 and m.get('run') == str(run),
+            'Refusing to clean a wrong/moved run manifest')
+    stages = m.get('stages')
+    require(isinstance(stages, dict) and all(isinstance(s, dict) for s in stages.values()), 'Invalid run stages')
+    require(all(s.get('status') != 'RUNNING' for s in stages.values()),
+            'Refusing to clean a RUNNING stage; stop/reconcile the tool process first')
+    # rmtree does not follow child symlinks. Inputs (including DB) outside this run survive.
+    shutil.rmtree(run)
+    print(f'CLEANED: {run}')
+
+
 # 核对输入和已完成阶段的产物是否仍与 manifest 一致，拒绝“名字一样就复用”。
 # 内部输入使用 run 相对路径，外部库/工具使用绝对路径；run 不允许被静默搬迁。
 # hash 用于实验追溯和意外修改检测，不是防恶意篡改的签名。
@@ -242,7 +272,7 @@ def verify(run):
     return m
 
 
-# sta/run.tcl 输出简单 TSV，避免从人读的长路径报告里猜测数值。
+# 03_sta/run.tcl 输出简单 TSV，避免从人读的长路径报告里猜测数值。
 # WNS/TNS 是负裕量指标，零代表未收集到违例；不是时序覆盖已完整的证据。
 def parse_metrics(path):
     values = dict(line.split('\t') for line in path.read_text().splitlines())
@@ -317,14 +347,14 @@ def inspect_stage(run, stage):
 def execute(run, stage):
     m = verify(run)
     # runner 本身也属于实验输入。即便只修改注释，hash 也会变化；继续旧 run 时
-    # 应调用其 inputs/npc/flow/common/flow.py，而不是悄悄套用当前工作区版本。
-    require(sha(Path(__file__)) == sha(run/'inputs/npc/flow/common/flow.py'), 'Runner changed; invoke the archived runner for this run')
+    # 应调用其 inputs/npc/flow/01_common/flow.py，而不是悄悄套用当前工作区版本。
+    require(sha(Path(__file__)) == sha(run/'inputs/npc/flow/01_common/flow.py'), 'Runner changed; invoke the archived runner for this run')
     require(stage not in m['stages'], f'Stage already attempted: {stage}; use a new run')
     if stage == 'sta':
         require(m['stages'].get('syn', {}).get('status') == 'COMPLETE', 'STA requires successful synthesis from this run')
         inspect_stage(run, 'syn')
     snapshot = run/'inputs/npc/flow'
-    entry = snapshot/('sta/run.tcl' if stage == 'sta' else 'syn/probe.tcl' if stage == 'probe' else 'syn/run.tcl')
+    entry = snapshot/('03_sta/run.tcl' if stage == 'sta' else '02_syn/probe.tcl' if stage == 'probe' else '02_syn/run.tcl')
     tool = m['config']['site']['pt_shell' if stage == 'sta' else 'dc_shell']
     # PT -no_init 跳过安装/用户/当前目录的 setup（PT UG PDF 52）。
     # DC 仍可能加载安装/用户 setup，因此在 create_run 中记录已发现的依赖。
@@ -362,14 +392,18 @@ def execute(run, stage):
 # 返回码表示编排/产物检查结果；负 slack 可以正常归档，评价看 TIMING_FAIL 字段。
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action', choices=['check', 'preflight', 'probe', 'synth', 'sta', 'all', 'inspect'])
-    parser.add_argument('--config', type=Path, default=FLOW/'configs/npc_core.tcl')
-    parser.add_argument('--site', type=Path, default=FLOW/'configs/site.example.tcl')
-    parser.add_argument('--run-root', type=Path, default=NPC/'build/flow')
+    parser.add_argument('action', choices=['check', 'preflight', 'probe', 'synth', 'sta', 'all', 'inspect', 'clean'])
+    parser.add_argument('--config', type=Path, default=FLOW/'00_indata/configs/npc_core.tcl')
+    parser.add_argument('--site', type=Path, default=FLOW/'00_indata/configs/site.example.tcl')
+    parser.add_argument('--run-root', type=Path, default=FLOW/'build')
     parser.add_argument('--run-id')
     parser.add_argument('--run', type=Path)
     args = parser.parse_args(argv)
     try:
+        if args.action == 'clean':
+            require(args.run is None, 'clean uses RUN_ID and RUN_ROOT, not RUN')
+            clean_run(args.run_root, args.run_id)
+            return 0
         if args.action in ('sta', 'inspect'):
             require(args.run is not None, '--run is required')
             run = args.run.resolve()

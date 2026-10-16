@@ -2,7 +2,7 @@
 # 本轮是 pre-layout、单角、ideal-clock 基线；不是布局布线后的 sign-off。
 # library/units/WLM 报告用于核对模型，timing/coverage 用于核对路径及检查是否完整。
 if {[catch {
-    source [file join $::env(NPC_FLOW_SNAPSHOT) common setup.tcl]
+    source [file join $::env(NPC_FLOW_SNAPSHOT) 01_common setup.tcl]
     libraries
     library_reports
     # 阶段 1：只读本 run 的综合网表。PT 根据库中的单元时序模型构建分析图，

@@ -6,13 +6,14 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 # 测试阅读顺序：setUp 创建临时假库/工具 → new_run 冻结输入 → syn 执行假工具。
 # 普通用例检查 Python 的失败处理；test_real_tcl_wiring_with_mock_commands 则进一步
-# 执行真实 Tcl 脚本，用 tests/eda_mock.tcl 提供命令替身。两者均不调用实际 EDA。
+# 执行真实 Tcl 脚本，用 04_tests/eda_mock.tcl 提供命令替身。两者均不调用实际 EDA。
 # 所有产物位于临时目录，MOCK 标识用于避免与真实 PPA 证据混淆。
 FLOW = Path(__file__).resolve().parents[1]
-spec = importlib.util.spec_from_file_location('npc_flow', FLOW/'common/flow.py')
+spec = importlib.util.spec_from_file_location('npc_flow', FLOW/'01_common/flow.py')
 f = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(f)
 
@@ -49,14 +50,14 @@ class FlowTests(unittest.TestCase):
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name)
         self.config = self.root/'design.tcl'
-        self.config.write_text((FLOW/'configs/npc_core.tcl').read_text())
+        self.config.write_text((FLOW/'00_indata/configs/npc_core.tcl').read_text())
         self.db = self.root/'library with spaces.db'
         self.db.write_text('MOCK NOT A LIBRARY')
         self.tool = self.root/'fake tool'
         self.tool.write_text(FAKE)
         self.tool.chmod(0o755)
         self.site = self.root/'site.tcl'
-        self.site.write_text((FLOW/'configs/site.example.tcl').read_text()+f'''
+        self.site.write_text((FLOW/'00_indata/configs/site.example.tcl').read_text()+f'''
 dict set site target_db {f.tcl_word(self.db)}
 dict set site dc_shell {f.tcl_word(self.tool)}
 dict set site pt_shell {f.tcl_word(self.tool)}
@@ -84,6 +85,65 @@ dict set site library_reviewed 1
     def test_local_contract(self):
         f.local_check(self.config, self.site)
 
+    def test_snapshot_excludes_build_and_pdk(self):
+        layout = self.root/'flow'
+        for name in ['Makefile', '01_common/setup.tcl', 'build/old/inputs/run.tcl',
+                     '00_indata/DB/vendor.tcl', '00_indata/configs/site.local.tcl']:
+            p = layout/name
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.write_text('MOCK')
+        cfg = f.load_config(self.config, self.site)['cfg']
+        with patch.object(f, 'FLOW', layout):
+            _, files = f.source_inputs(cfg)
+        self.assertIn(layout/'01_common/setup.tcl', files)
+        self.assertNotIn(layout/'build/old/inputs/run.tcl', files)
+        self.assertNotIn(layout/'00_indata/DB/vendor.tcl', files)
+        self.assertNotIn(layout/'00_indata/configs/site.local.tcl', files)
+
+    def test_clean_failed_run_and_reuse_id(self):
+        sibling = self.new_run('keep')
+        self.tool.write_text(FAKE+'\nprint("Error: injected")\n')
+        run = self.new_run('retry')
+        with self.assertRaises(f.FlowError):
+            f.execute(run, 'probe')
+        # Make target must not depend on valid site/tool paths and must preserve other inputs/runs.
+        p = subprocess.run(['make', '-C', str(FLOW), 'clean', f'RUN_ROOT={run.parent}',
+                            'RUN_ID=retry', 'SITE=missing.tcl'], capture_output=True, text=True)
+        self.assertEqual(p.returncode, 0, p.stdout+p.stderr)
+        self.assertFalse(run.exists())
+        self.assertTrue(sibling.exists())
+        self.assertTrue(self.db.exists())
+        self.tool.write_text(FAKE)
+        again = self.new_run('retry')
+        f.execute(again, 'probe')
+
+    def test_clean_rejects_unsafe_targets(self):
+        root = self.root/'runs'
+        for name in [None, '', '.', '..', '../escape', '/tmp', '*']:
+            with self.subTest(name=name), self.assertRaises(f.FlowError):
+                f.clean_run(root, name)
+        run = self.new_run()
+        alias = root/'alias'
+        alias.symlink_to(run, target_is_directory=True)
+        with self.assertRaisesRegex(f.FlowError, 'symlink'):
+            f.clean_run(root, 'alias')
+        unknown = root/'unknown'
+        unknown.mkdir()
+        with self.assertRaisesRegex(f.FlowError, 'unrecognized'):
+            f.clean_run(root, 'unknown')
+        m = json.loads((run/'manifest.json').read_text())
+        m['stages']['probe'] = {'status': 'RUNNING'}
+        f.save(run/'manifest.json', m)
+        with self.assertRaisesRegex(f.FlowError, 'RUNNING'):
+            f.clean_run(root, 'test')
+        m['stages'] = {}
+        m['run'] = '/different/run'
+        f.save(run/'manifest.json', m)
+        with self.assertRaisesRegex(f.FlowError, 'wrong/moved'):
+            f.clean_run(root, 'test')
+        self.assertTrue(run.exists())
+        f.clean_run(root, 'absent')  # A missing valid ID is an idempotent no-op.
+
     def test_missing_variable(self):
         self.append_cfg('dict unset cfg period')
         with self.assertRaisesRegex(f.FlowError, 'missing='):
@@ -95,12 +155,12 @@ dict set site library_reviewed 1
             f.preflight(self.config, self.site)
 
     def test_missing_sdc(self):
-        self.append_cfg('dict set cfg sdc flow/constraints/missing.sdc')
+        self.append_cfg('dict set cfg sdc flow/00_indata/constraints/missing.sdc')
         with self.assertRaisesRegex(f.FlowError, 'Missing input'):
             f.preflight(self.config, self.site)
 
     def test_missing_filelist(self):
-        self.append_cfg('dict set cfg filelist flow/filelists/missing.f')
+        self.append_cfg('dict set cfg filelist flow/00_indata/filelists/missing.f')
         with self.assertRaisesRegex(f.FlowError, 'Missing input'):
             f.preflight(self.config, self.site)
 
@@ -176,7 +236,7 @@ dict set site library_reviewed 1
 
     def test_changed_snapshot(self):
         run = self.new_run()
-        (run/'inputs/npc/flow/constraints/core.sdc').write_text('corrupt')
+        (run/'inputs/npc/flow/00_indata/constraints/core.sdc').write_text('corrupt')
         with self.assertRaisesRegex(f.FlowError, 'hash mismatch'):
             f.execute(run, 'syn')
 
@@ -257,14 +317,14 @@ dict set site library_reviewed 1
 
     def test_sdc_missing_output_min(self):
         broken = self.root/'broken.sdc'
-        broken.write_text('\n'.join(line for line in (FLOW/'constraints/core.sdc').read_text().splitlines() if not line.startswith('set_output_delay -clock core_clk -min')))
-        p = subprocess.run(['tclsh', str(FLOW/'tests/sdc_check.tcl'), str(self.config), str(broken), str(f.NPC/'vsrc/top/ysyx_core_axi4lite.sv')], capture_output=True, text=True)
+        broken.write_text('\n'.join(line for line in (FLOW/'00_indata/constraints/core.sdc').read_text().splitlines() if not line.startswith('set_output_delay -clock core_clk -min')))
+        p = subprocess.run(['tclsh', str(FLOW/'04_tests/sdc_check.tcl'), str(self.config), str(broken), str(f.NPC/'vsrc/top/ysyx_core_axi4lite.sv')], capture_output=True, text=True)
         self.assertNotEqual(p.returncode, 0)
         self.assertIn('Missing set_output_delay:-min', p.stderr)
 
     def test_real_tcl_wiring_with_mock_commands(self):
         self.append_cfg('dict set cfg power_enable 1')
-        self.tool.write_text("#!/usr/bin/env python3\nimport os,sys\nfrom pathlib import Path\nmock=Path(os.environ['NPC_FLOW_SNAPSHOT'])/'tests/eda_mock.tcl'\nos.execvp('tclsh',['tclsh',str(mock),sys.argv[-1]])\n")
+        self.tool.write_text("#!/usr/bin/env python3\nimport os,sys\nfrom pathlib import Path\nmock=Path(os.environ['NPC_FLOW_SNAPSHOT'])/'04_tests/eda_mock.tcl'\nos.execvp('tclsh',['tclsh',str(mock),sys.argv[-1]])\n")
         probe = self.new_run('probe')
         f.execute(probe, 'probe')
         run = self.syn()
