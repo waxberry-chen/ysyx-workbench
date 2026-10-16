@@ -1,0 +1,3029 @@
+ 
+****************************************
+Report : reference
+Design : ysyx_core_axi4lite
+Version: V-2023.12-SP5
+Date   : Sat Oct 17 00:37:37 2026
+****************************************
+
+Attributes:
+    b - black box (unknown)
+   bo - allows boundary optimization
+    d - dont_touch
+   mo - map_only
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    s - synthetic operator
+    u - contains unmapped logic
+
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+BUFFD2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+CKND0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+CKND2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+TIEHBWP12T40P140   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+TIELBWP12T40P140   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+ysyx_axi4lite_arbiter           606.647992       1    606.647992  h, n
+ysyx_core                     34471.583857       1  34471.583857  h, n
+-----------------------------------------------------------------------------
+Total 7 references                                  35080.415848
+
+****************************************
+Design: ysyx_axi4lite_arbiter 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      10      6.720000  
+AN3D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       3      2.520000  
+AN4D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+AO22D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000      68     68.544001  
+AOI21D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       3      2.016000  
+AOI22D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      73     61.319998  
+AOI211D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+AOI222D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       1      1.344000  
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      98     49.392001  
+CKND2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      45     22.680000  
+DFCNQD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.024000     116    350.783992  n
+IND4D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+INR2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+INR3D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       3      2.520000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000      24      8.064000  
+MOAI22D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       7      7.056000  
+ND3D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       2      1.344000  
+NR2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       6      3.024000  
+NR3D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       8      5.376000  
+OAI21D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       3      2.016000  
+OAI22D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       7      5.880000  
+OAI211D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+OR3D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+-----------------------------------------------------------------------------
+Total 23 references                                   606.647992
+
+****************************************
+Design: ysyx_core 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       2      3.024000  
+BUFFD2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+BUFFD3BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+BUFFXD8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.184000       1      2.184000  
+CKBD2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+CKBD4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       1      1.176000  
+CKND0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000      10      3.360000  
+CKND1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000      14      4.704000  
+CKND6BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       1      1.176000  
+CKXOR2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      10     13.440000  
+IND2D4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.848000       1      1.848000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000      26      8.736000  
+INVD3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+MOAI22D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000      64     64.512001  
+ND2OPTFAD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.848000       2      3.696000  
+OA21XD8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.696000       1      3.696000  
+OR3D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       6      5.040000  
+OR4D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       2      2.016000  
+TIEHBWP12T40P140   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+TIELBWP12T40P140   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+ysyx_csr                        773.975989       1    773.975989  h, n
+ysyx_exu                      23467.751964       1  23467.751964  h, n
+ysyx_gen_imm                     38.303999       1     38.303999  h
+ysyx_gnrl_dfflrs_32_80000000    139.439998       1    139.439998  h, n
+ysyx_idu                         73.079999       1     73.079999  h
+ysyx_ifu_80000000_2            1038.408003       1   1038.408003  h, n
+ysyx_ifu_axi4lite_adapter       292.655996       1    292.655996  h, n
+ysyx_lsu                        465.191992       1    465.191992  h, n
+ysyx_lsu_axi4lite_adapter       591.527994       1    591.527994  h, n
+ysyx_opbuf                     1344.335983       1   1344.335983  h, n
+ysyx_regfile                   6124.775939       1   6124.775939  h, n
+-----------------------------------------------------------------------------
+Total 31 references                                 34471.583857
+
+****************************************
+Design: ysyx_csr 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AOI22D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      64     53.759998  
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      15      7.560000  
+BUFFD3BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+CKBD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+CKBD3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+CKND0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       2      0.672000  
+CKND2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+CKND2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      35     17.640000  
+CKND6BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       1      1.176000  
+CKND8BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       1      1.512000  
+IND2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       2      1.344000  
+IND3D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+INR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+INR3D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       9      3.024000  
+IOA21D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+IOA21D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+MUX2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000      92    108.192000  
+MUX2ND0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+NR3D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       2      1.344000  
+NR4D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+OAI32D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+OR2D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+OR3D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       3      2.520000  
+OR4D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       2      2.016000  
+ysyx_gnrl_dfflr_DW32_0          140.447998       1    140.447998  h, n
+ysyx_gnrl_dfflr_DW32_1          140.951998       1    140.951998  h, n
+ysyx_gnrl_dfflr_DW32_2          140.111998       1    140.111998  h, n
+ysyx_gnrl_dfflr_DW32_3          139.607998       1    139.607998  h, n
+-----------------------------------------------------------------------------
+Total 29 references                                   773.975989
+
+****************************************
+Design: ysyx_gnrl_dfflr_DW32_0 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       5      2.520000  
+BUFFD3BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+BUFFD6BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       1      1.512000  
+CKMUX2D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       2      2.352000  
+DFCNQD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.024000      32     96.767998  n
+MUX2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000      23     27.048000  
+MUX2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       7      9.408000  
+-----------------------------------------------------------------------------
+Total 7 references                                    140.447998
+
+****************************************
+Design: ysyx_gnrl_dfflr_DW32_1 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       6      3.024000  
+BUFFD12BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000       1      2.856000  
+CKBD2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+DFCNQD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.024000      32     96.767998  n
+MUX2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000      32     37.632000  
+-----------------------------------------------------------------------------
+Total 5 references                                    140.951998
+
+****************************************
+Design: ysyx_gnrl_dfflr_DW32_2 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+BUFFD0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       6      3.024000  
+BUFFD6BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       1      1.512000  
+CKBD2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+DFCNQD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.024000      32     96.767998  n
+MUX2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000      32     37.632000  
+-----------------------------------------------------------------------------
+Total 6 references                                    140.111998
+
+****************************************
+Design: ysyx_gnrl_dfflr_DW32_3 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       6      3.024000  
+BUFFD2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+CKBD6BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       1      1.512000  
+DFCNQD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.024000      32     96.767998  n
+MUX2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000      32     37.632000  
+-----------------------------------------------------------------------------
+Total 5 references                                    139.607998
+
+****************************************
+Design: ysyx_exu 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       7      4.704000  
+AN2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+AN2D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+AN2D4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       3      4.536000  
+AN3D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+AN4D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+AO221D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       5      6.720000  
+AO221D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      28     37.631999  
+BUFFD0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000     206    103.824002  
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      74     37.296001  
+BUFFD3BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+BUFFD4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       2      2.352000  
+BUFFD6BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       1      1.512000  
+BUFFXD3BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+BUFFXD8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.184000       1      2.184000  
+CKAN2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       2      1.344000  
+CKAN2D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      25     20.999999  
+CKBD2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       4      2.688000  
+CKBD3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       3      2.520000  
+CKBD6BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       2      3.024000  
+CKMUX2D4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.352000       1      2.352000  
+CKND0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       6      2.016000  
+CKND1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+CKND2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       3      1.512000  
+CKND2D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+CKND4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+CKND6BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       1      1.176000  
+CKXOR2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       1      1.344000  
+DFCND1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.360000       1      3.360000  n
+IND3D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+IND3D4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.688000       1      2.688000  
+IND4D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+INR2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+INR2D4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.848000       1      1.848000  
+INR4D2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.360000       1      3.360000  
+INVD0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       3      1.008000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000      77     25.872000  
+INVD1P25BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       2      1.008000  
+INVD2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      57     28.728000  
+INVD3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+INVD4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       9      7.560000  
+INVD6BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       2      2.352000  
+IOA21D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+IOA21D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+MOAI22D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000      17     17.136000  
+MOAI22D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000      16     16.128000  
+MUX2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000      25     29.400000  
+MUX2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       2      2.688000  
+MUX2D2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       3      4.536000  
+MUX2ND0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000      28     28.224000  
+MUX2OPTD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       1      1.512000  
+MUX2OPTD12BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  7.560000       2     15.120000  
+ND2OPTPAD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       2      3.024000  
+ND3OPTPAD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.016000       1      2.016000  
+NR2OPTPAD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+NR3D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+OAI21D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+OAI21OPTREPBD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.848000       1      1.848000  
+OAI21OPTREPBD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.528000       1      3.528000  
+OAI22D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+OAI22D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      31     26.039999  
+OAI22OPTPBD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       1      1.344000  
+OAI22OPTPBD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       1      2.520000  
+OAI31D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+OAI31D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       1      1.512000  
+OR2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+OR2D4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       2      3.024000  
+OR3D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+TIEHBWP12T40P140   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+TIELBWP12T40P140   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+ysyx_alu                      22706.207966       1  22706.207966  h
+ysyx_branch                     124.823999       1    124.823999  h
+ysyx_exu_DW01_add_0              59.639999       1     59.639999  h
+ysyx_gnrl_data_mux_DW32_N4       78.624000       1     78.624000  h
+-----------------------------------------------------------------------------
+Total 74 references                                 23467.751964
+
+****************************************
+Design: ysyx_alu 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      11      7.392000  
+AN4D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+AO21D4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.848000       2      3.696000  
+AO22D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       4      4.032000  
+AO22D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       1      1.176000  
+AO211D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       3      3.024000  
+AO221D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      49     65.855999  
+AO221D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      33     44.351999  
+AO221D4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.688000       2      5.376000  
+AO222D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       2      3.024000  
+AOI21D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+AOI22D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+AOI211D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+AOI221D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       7      7.056000  
+AOI221D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000      86     86.688001  
+AOI221D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.016000       3      6.048000  
+AOI221XD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.864000       1      3.864000  
+AOI222D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       1      1.344000  
+BUFFD0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      12      6.048000  
+BUFFD2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+BUFFD4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       8      9.408000  
+BUFFD6BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000      12     18.144000  
+BUFFD8BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.016000       1      2.016000  
+CKAN2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+CKBD6BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       6      9.072000  
+CKBD12BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000       1      2.856000  
+CKND0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       3      1.008000  
+CKND2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       2      1.008000  
+CKND2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      10      5.040000  
+CKND3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+CKND4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+CKND6BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       8      9.408000  
+CKND8BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       1      1.512000  
+CKND12BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.184000       1      2.184000  
+DCCKBD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.352000       1      2.352000  
+IAO21D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       4      3.360000  
+IIND4D4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.864000       3     11.592000  
+IINR4D4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  6.720000       1      6.720000  
+IND2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+IND4D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       2      2.016000  
+IND4D4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.528000      17     59.976002  
+INR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       2      1.344000  
+INR2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+INVD0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       5      1.680000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000     150     50.399999  
+INVD1P25BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+INVD2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      11      5.544000  
+INVD3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       3      2.016000  
+INVD4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+INVD6BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       2      2.352000  
+INVD8BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       1      1.512000  
+IOA21D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      60     50.399998  
+IOA21D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       1      1.176000  
+MAOI22D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+MAOI22D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       1      1.344000  
+MOAI22D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000      75     75.600001  
+MOAI22D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      16     21.504000  
+MUX2ND0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+ND3D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       2      1.344000  
+ND4D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       5      4.200000  
+ND4D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      13     10.920000  
+NR2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       3      1.512000  
+NR3D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       7      4.704000  
+NR4D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      12     10.080000  
+NR4D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       3      4.536000  
+OA31D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+OA221D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      28     37.631999  
+OAI21D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+OAI21D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+OAI22D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+OAI31D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+OAI221D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       1      1.176000  
+OR2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       2      1.344000  
+OR3D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       4      3.360000  
+OR3D4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.848000       1      1.848000  
+OR4D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+OR4D4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.184000       1      2.184000  
+TIEHBWP12T40P140   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+TIELBWP12T40P140   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+ysyx_alu_DW01_add_0_DW01_add_1
+                                 90.215998       1     90.215998  h
+ysyx_alu_DW01_ash_0_DW01_ash_2
+                                174.552000       1    174.552000  h
+ysyx_alu_DW01_sub_0             100.967998       1    100.967998  h
+ysyx_alu_DW01_sub_1             100.967998       1    100.967998  h
+ysyx_alu_DW02_mult_0           3500.279956       1   3500.279956  h
+ysyx_alu_DW02_mult_1           3499.607957       1   3499.607957  h
+ysyx_alu_DW_div_tc_3           4049.136015       1   4049.136015  h
+ysyx_alu_DW_div_tc_J4_0        4062.576015       1   4062.576015  h
+ysyx_alu_DW_div_uns_0          3042.816017       1   3042.816017  h
+ysyx_alu_DW_div_uns_1          3024.168015       1   3024.168015  h
+ysyx_alu_DW_rash_0_DW_rash_1    176.231999       1    176.231999  h
+ysyx_alu_DW_rash_1_DW_rash_2    168.671999       1    168.671999  h
+-----------------------------------------------------------------------------
+Total 92 references                                 22706.207966
+
+****************************************
+Design: ysyx_alu_DW01_add_0_DW01_add_1 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+FA1D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000       2      5.712000  r
+FA1D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000      28     79.967999  r
+XOR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       1      1.344000  
+XOR3D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       1      2.520000  
+-----------------------------------------------------------------------------
+Total 5 references                                     90.215998
+
+****************************************
+Design: ysyx_alu_DW01_ash_0_DW01_ash_2 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       7      4.704000  
+BUFFD0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       3      1.512000  
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       3      1.512000  
+CKND2D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       8      4.032000  
+INR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       8      5.376000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000      13      4.368000  
+MUX2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000     113    132.888000  
+MUX2ND0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000      16     16.128000  
+NR2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       8      4.032000  
+-----------------------------------------------------------------------------
+Total 9 references                                    174.552000
+
+****************************************
+Design: ysyx_alu_DW01_sub_0 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+CKND0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       2      0.672000  
+FA1D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000      30     85.679998  r
+INVD0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       3      1.008000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000      27      9.072000  
+OR2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+XNR2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       1      1.344000  
+XOR3D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       1      2.520000  
+-----------------------------------------------------------------------------
+Total 7 references                                    100.967998
+
+****************************************
+Design: ysyx_alu_DW01_sub_1 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+CKND0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       2      0.672000  
+FA1D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000       1      2.856000  r
+FA1D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000      29     82.823998  r
+INVD0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       3      1.008000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000      27      9.072000  
+OR2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+XNR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       1      1.344000  
+XOR3D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       1      2.520000  
+-----------------------------------------------------------------------------
+Total 8 references                                    100.967998
+
+****************************************
+Design: ysyx_alu_DW02_mult_0 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      30     20.160000  
+AN3D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+BUFFD0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      52     26.208000  
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       2      1.008000  
+CKBD0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       2      1.008000  
+CKND0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+FA1D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000     932   2661.791950  r
+INVD0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       3      1.008000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000     123     41.327999  
+NR2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000    1021    514.584008  
+NR2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      31     15.624000  
+TIELBWP12T40P140   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+XOR2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      61     81.983999  
+ysyx_alu_DW01_add_1_DW01_add_4
+                                134.063999       1    134.063999  h
+-----------------------------------------------------------------------------
+Total 14 references                                  3500.279956
+
+****************************************
+Design: ysyx_alu_DW01_add_1_DW01_add_4 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       9      6.048000  
+AO22D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+AOI21D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      15     10.080000  
+AOI221D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+CKND2D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      21     10.584000  
+CKXOR2D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      19     25.536000  
+IAO21D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+IND2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       5      3.360000  
+INR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      11      7.392000  
+INR4D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000      16      5.376000  
+NR2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      44     22.176000  
+NR4D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+OA21D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       4      3.360000  
+OA21D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+OAI21D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      19     12.768000  
+OR2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+OR4D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+XNR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      10     13.440000  
+XOR3D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       2      5.040000  
+-----------------------------------------------------------------------------
+Total 20 references                                   134.063999
+
+****************************************
+Design: ysyx_alu_DW02_mult_1 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      30     20.160000  
+BUFFD0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      36     18.144000  
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+FA1D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000     930   2656.079950  r
+INVD0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       3      1.008000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000     127     42.671999  
+NR2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000    1024    516.096008  
+NR2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      32     16.128000  
+TIELBWP12T40P140   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+XOR2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      62     83.327999  
+ysyx_alu_DW01_add_2_DW01_add_5
+                                145.151999       1    145.151999  h
+-----------------------------------------------------------------------------
+Total 11 references                                  3499.607957
+
+****************************************
+Design: ysyx_alu_DW01_add_2_DW01_add_5 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       9      6.048000  
+AN2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+AO22D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+AOI21D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      15     10.080000  
+AOI221D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      31     15.624000  
+CKND2D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      20     10.080000  
+CKXOR2D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      18     24.192000  
+IAO21D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+IND2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       4      2.688000  
+INR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      11      7.392000  
+INR4D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000      16      5.376000  
+NR2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      43     21.672000  
+NR4D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+OA21D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+OA21D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+OAI21D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      19     12.768000  
+OR2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+OR2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+OR4D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+XNR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      10     13.440000  
+XOR2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       1      1.344000  
+XOR3D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       1      2.520000  
+-----------------------------------------------------------------------------
+Total 24 references                                   145.151999
+
+****************************************
+Design: ysyx_alu_DW_div_tc_3 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       3      2.016000  
+AN2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+AN2D4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000      14     21.168000  
+AOI21D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+BUFFD0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       7      3.528000  
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       8      4.032000  
+BUFFD2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+BUFFD3BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+BUFFD4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       1      1.176000  
+BUFFD6BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       7     10.584000  
+BUFFD8BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.016000       5     10.080000  
+BUFFD12BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000       6     17.136000  
+BUFFD16BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.696000       2      7.392000  
+BUFFXD3BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+BUFFXD8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.184000       2      4.368000  
+BUFFXD12BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.192000       2      6.384000  
+BUFFXD16BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  4.200000       1      4.200000  
+CKAN2D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       2      1.344000  
+CKAN2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+CKAN2D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       9      7.560000  
+CKAN2D4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       7      8.232000  
+CKBD3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       4      3.360000  
+CKBD4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       1      1.176000  
+CKBD6BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       1      1.512000  
+CKBD12BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000       1      2.856000  
+CKMUX2D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       6      7.056000  
+CKMUX2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      15     20.160000  
+CKMUX2D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000      23     34.775999  
+CKMUX2D4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.352000       6     14.112000  
+CKMUX2D8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.360000       2      6.720000  
+CKND0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000      48     16.128000  
+CKND1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000     184     61.823999  
+CKND2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      18      9.072000  
+CKND2D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+CKND2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      29     14.616000  
+CKND2D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      58     48.719998  
+CKND2D3BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000      25     29.400000  
+CKND2D4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000      10     15.120000  
+CKND2D8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000       1      2.856000  
+CKND3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       3      2.016000  
+CKND4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       7      5.880000  
+CKND8BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       1      1.512000  
+CKND16BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000       1      2.856000  
+CKXOR2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      19     25.536000  
+CKXOR2D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       2      3.024000  
+DCCKBD8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  4.032000       1      4.032000  
+DCCKBD12BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  5.712000       1      5.712000  
+DCCKND8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.024000       1      3.024000  
+FA1D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000       7     19.992000  r
+FA1D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000      25     71.399999  r
+FA1D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.192000      18     57.455998  r
+FA1D4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  4.872000       4     19.488001  r
+FA1OPTCD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.360000       2      6.720000  r
+FA1OPTCD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  4.032000     401   1616.832026  r
+HA1D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.184000       1      2.184000  r
+HA1D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       1      2.520000  r
+HA1D4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.864000      38    146.832003  r
+IND2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       2      1.344000  
+IND2D2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       5      5.040000  
+INR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+INR2D2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       9      9.072000  
+INR2D4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.848000      15     27.720001  
+INR3D4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.688000       1      2.688000  
+INVD0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000      10      3.360000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000     546    183.455998  
+INVD1P25BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       3      1.512000  
+INVD1P75BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       6      3.024000  
+INVD2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000     155     78.120001  
+INVD3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      12      8.064000  
+INVD4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      17     14.280000  
+INVD6BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       8      9.408000  
+INVD8BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       1      1.512000  
+INVD18BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.192000       4     12.768000  
+MUX2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000     364    428.064000  
+MUX2D2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000      11     16.632000  
+MUX2D4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.352000       8     18.816000  
+MUX2ND0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000      37     37.296001  
+MUX2ND2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.848000       1      1.848000  
+MUX2ND4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.688000       2      5.376000  
+MUX2OPTD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.024000       5     15.120000  
+MUX2OPTD6BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  4.032000      17     68.544001  
+ND2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       6      3.024000  
+ND2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      20     10.080000  
+ND2D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      20     16.799999  
+ND2D3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       5      5.880000  
+ND2OPTFAD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.848000      20     36.960001  
+ND2OPTFAD6BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       5     12.600000  
+ND2OPTFAD8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.528000       1      3.528000  
+ND2OPTPAD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      21     17.639999  
+ND2OPTPAD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000      38     57.455999  
+ND2OPTPAD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000       9     25.704000  
+ND3D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000      42     49.392000  
+ND3D4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.352000       1      2.352000  
+ND3OPTFAD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       3      7.560000  
+ND3OPTPAD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.016000      24     48.384001  
+ND3OPTPAD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.360000       1      3.360000  
+NR2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+NR2D3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       1      1.176000  
+NR2OPTPAD8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  4.200000       1      4.200000  
+OR2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+OR2D4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       1      1.512000  
+XNR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      15     20.160000  
+XNR2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       2      2.688000  
+XNR2D2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       4      6.048000  
+XNR2D4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.688000       1      2.688000  
+XNR2D16BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  5.376000       4     21.504000  
+XNR2OPTND2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.184000       2      4.368000  
+XNR2OPTND6BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  5.208000       4     20.832001  
+XNR2OPTND8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  6.384000       8     51.071999  
+XNR3D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000      52    131.039999  
+XNR3D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       1      2.520000  
+XOR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      51     68.543999  
+XOR2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      10     13.440000  
+XOR2D2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       3      4.536000  
+XOR2OPTND2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.184000       5     10.920000  
+XOR2OPTND6BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  5.208000       2     10.416000  
+XOR3D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       6     15.120000  
+-----------------------------------------------------------------------------
+Total 117 references                                 4049.136015
+
+****************************************
+Design: ysyx_alu_DW_div_tc_J4_0 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       4      2.688000  
+AN2D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+AN2D4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000      24     36.287999  
+AN2D8BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       3      7.560000  
+BUFFD0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       4      2.016000  
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       4      2.016000  
+BUFFD2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       2      1.344000  
+BUFFD3BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+BUFFD4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       5      5.880000  
+BUFFD6BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       6      9.072000  
+BUFFD8BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.016000       7     14.112000  
+BUFFD12BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000       3      8.568000  
+BUFFD16BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.696000       1      3.696000  
+BUFFXD3BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       3      3.024000  
+BUFFXD6BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.680000       2      3.360000  
+BUFFXD8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.184000       1      2.184000  
+BUFFXD12BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.192000       2      6.384000  
+CKAN2D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+CKAN2D4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       7      8.232000  
+CKAN2D16BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  4.536000       2      9.072000  
+CKBD2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+CKBD3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+CKBD6BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       1      1.512000  
+CKBD12BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000       1      2.856000  
+CKBD16BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.696000       1      3.696000  
+CKMUX2D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       9     10.584000  
+CKMUX2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      28     37.631999  
+CKMUX2D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000      18     27.215999  
+CKMUX2D4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.352000       8     18.816000  
+CKMUX2D8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.360000       3     10.080000  
+CKND0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000      43     14.448000  
+CKND1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000     189     63.503999  
+CKND2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      50     25.200000  
+CKND2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      32     16.128000  
+CKND2D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      62     52.079998  
+CKND2D3BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000      28     32.928000  
+CKND2D4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000      12     18.144000  
+CKND2D8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000       3      8.568000  
+CKND3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       4      2.688000  
+CKND4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+CKND6BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       2      2.352000  
+CKND8BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       1      1.512000  
+CKND16BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000       2      5.712000  
+CKXOR2D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       1      1.344000  
+CKXOR2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       4      5.376000  
+DCCKND4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.680000       1      1.680000  
+FA1D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000      10     28.559999  r
+FA1D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000      23     65.687999  r
+FA1D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.192000      14     44.687999  r
+FA1D4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  4.872000       3     14.616001  r
+FA1OPTCD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.360000       2      6.720000  r
+FA1OPTCD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  4.032000     413   1665.216027  r
+HA1D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.184000       2      4.368000  r
+HA1D4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.864000      44    170.016004  r
+IND2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+IND2D2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       4      4.032000  
+IND2D4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.848000       1      1.848000  
+INR2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+INR2D2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       6      6.048000  
+INR2D4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.848000      12     22.176001  
+INR2D8BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.528000       1      3.528000  
+INVD0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       4      1.344000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000     577    193.871997  
+INVD1P25BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       8      4.032000  
+INVD1P75BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       9      4.536000  
+INVD2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      82     41.328001  
+INVD3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      20     13.440000  
+INVD4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      18     15.120000  
+INVD12BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.184000       1      2.184000  
+INVD18BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.192000       4     12.768000  
+IOA21D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+MUX2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000     386    453.936000  
+MUX2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       6      8.064000  
+MUX2D2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000      11     16.632000  
+MUX2D4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.352000       7     16.464000  
+MUX2ND0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000      42     42.336001  
+MUX2ND2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.848000       3      5.544000  
+MUX2ND4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.688000       6     16.128000  
+MUX2OPTD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       1      1.512000  
+MUX2OPTD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.024000       1      3.024000  
+MUX2OPTD6BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  4.032000      13     52.416001  
+ND2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       5      2.520000  
+ND2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      26     13.104000  
+ND2D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      19     15.960000  
+ND2D3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       5      5.880000  
+ND2OPTFAD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.848000      11     20.328001  
+ND2OPTFAD6BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       1      2.520000  
+ND2OPTFAD8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.528000       2      7.056000  
+ND2OPTPAD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      24     20.159999  
+ND2OPTPAD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000      40     60.479999  
+ND2OPTPAD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000       5     14.280000  
+ND2OPTPAD6BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.696000       1      3.696000  
+ND3D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000      42     49.392000  
+ND3D3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.680000       4      6.720000  
+ND3OPTFAD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       5     12.600000  
+ND3OPTPAD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.016000      11     22.176000  
+NR2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       2      1.008000  
+NR2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+NR2OPTFAD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.848000       1      1.848000  
+NR2OPTPAD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+NR2OPTPAD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       1      1.176000  
+OR2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       2      1.344000  
+OR2D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       3      2.520000  
+OR2D4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       4      6.048000  
+XNR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      23     30.912000  
+XNR2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      11     14.784000  
+XNR2D2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       8     12.096000  
+XNR2D4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.688000       1      2.688000  
+XNR2D8BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.360000       5     16.799999  
+XNR2D16BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  5.376000       3     16.128000  
+XNR2OPTND4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  4.032000       1      4.032000  
+XNR2OPTND6BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  5.208000       4     20.832001  
+XNR2OPTND8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  6.384000       3     19.151999  
+XNR3D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000      50    125.999999  
+XNR3D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       1      2.520000  
+XOR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      41     55.103999  
+XOR2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       6      8.064000  
+XOR2D2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       2      3.024000  
+XOR2OPTND6BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  5.208000       2     10.416000  
+XOR3D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       3      7.560000  
+-----------------------------------------------------------------------------
+Total 120 references                                 4062.576015
+
+****************************************
+Design: ysyx_alu_DW_div_uns_0 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+AN2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+AN2D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+AN2D4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000      11     16.632000  
+AN2D8BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       4     10.080000  
+AN3D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+AN3D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+AN3D4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.848000       5      9.240000  
+AN3XD16BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  7.056000       3     21.168001  
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      15      7.560000  
+BUFFD2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       3      2.016000  
+BUFFD4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       4      4.704000  
+BUFFD6BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       1      1.512000  
+BUFFD12BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000       9     25.704000  
+BUFFXD6BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.680000       1      1.680000  
+BUFFXD8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.184000       3      6.552000  
+CKAN2D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       3      2.016000  
+CKAN2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+CKAN2D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       4      3.360000  
+CKAN2D4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       4      4.704000  
+CKAN2D16BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  4.536000       3     13.607999  
+CKBD2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       2      1.344000  
+CKMUX2D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000     318    373.968000  
+CKMUX2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      15     20.160000  
+CKMUX2D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000      47     71.063998  
+CKMUX2D8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.360000      11     36.959999  
+CKND0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       5      1.680000  
+CKND2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       2      1.008000  
+CKND2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      35     17.640000  
+CKND2D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      27     22.679999  
+CKND2D3BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       8      9.408000  
+CKND2D4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       1      1.512000  
+CKND4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+CKND6BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       4      4.704000  
+CKND8BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       1      1.512000  
+CKND12BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.184000       1      2.184000  
+CKXOR2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       3      4.032000  
+DCCKND4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.680000       2      3.360000  
+FA1D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000       2      5.712000  r
+FA1D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000       9     25.704000  r
+FA1D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.192000      16     51.071999  r
+FA1D4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  4.872000       9     43.848002  r
+FA1OPTCD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.360000      18     60.479998  r
+FA1OPTCD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  4.032000     408   1645.056026  r
+INR2D4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.848000       8     14.784000  
+INR3D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+INR3D4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.688000       1      2.688000  
+INVD0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       4      1.344000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000      15      5.040000  
+INVD1P25BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+INVD1P75BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+INVD2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       4      2.016000  
+INVD2P3BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+INVD3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+INVD4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       4      3.360000  
+INVD6BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       4      4.704000  
+INVD8BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       2      3.024000  
+INVD12BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.184000       6     13.104000  
+MUX2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000     103    121.128000  
+MUX2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       3      4.032000  
+MUX2D2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000      10     15.120000  
+MUX2D4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.352000       2      4.704000  
+MUX2OPTD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       4      6.048000  
+MUX2OPTD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.024000       6     18.144000  
+MUX2OPTD6BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  4.032000       8     32.256001  
+ND2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       5      2.520000  
+ND2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      12      6.048000  
+ND2D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       4      3.360000  
+ND2OPTFAD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.848000       2      3.696000  
+ND2OPTPAD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      12     10.080000  
+ND2OPTPAD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       8     12.096000  
+ND3D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000      32     37.632000  
+ND3OPTFAD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       1      2.520000  
+ND3OPTPAD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.016000       3      6.048000  
+NR2OPTFAD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.848000       2      3.696000  
+NR2OPTPAD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       1      1.176000  
+NR3D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+NR3D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       1      1.176000  
+NR3D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.352000       1      2.352000  
+NR3OPTFAD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       1      2.520000  
+OR2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      29     19.488000  
+OR2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       3      2.016000  
+TIEHBWP12T40P140   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+XNR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      30     40.319999  
+XOR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       1      1.344000  
+XOR2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       8     10.752000  
+XOR3D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000      28     70.559999  
+XOR3D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       2      5.040000  
+-----------------------------------------------------------------------------
+Total 88 references                                  3042.816017
+
+****************************************
+Design: ysyx_alu_DW_div_uns_1 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       2      1.344000  
+AN2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+AN2D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+AN2D4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       8     12.096000  
+AN2D8BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       1      2.520000  
+AN3D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+AN3D4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.848000       9     16.632000  
+AN4D4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.184000       1      2.184000  
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      14      7.056000  
+BUFFD2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       6      4.032000  
+BUFFD3BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+BUFFD4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       1      1.176000  
+BUFFD6BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       3      4.536000  
+BUFFD8BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.016000       1      2.016000  
+BUFFD12BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000       8     22.848000  
+BUFFXD8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.184000       3      6.552000  
+BUFFXD16BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  4.200000       1      4.200000  
+CKAN2D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       3      2.016000  
+CKAN2D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      10      8.400000  
+CKAN2D4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       1      1.176000  
+CKAN2D16BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  4.536000       3     13.607999  
+CKBD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+CKBD2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+CKMUX2D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000     261    306.936000  
+CKMUX2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       6      8.064000  
+CKMUX2D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000      43     65.015998  
+CKMUX2D4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.352000       4      9.408000  
+CKMUX2D8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.360000      18     60.479998  
+CKND0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       8      2.688000  
+CKND1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       4      1.344000  
+CKND2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       2      1.008000  
+CKND2D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+CKND2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      29     14.616000  
+CKND2D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      25     20.999999  
+CKND2D3BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       7      8.232000  
+CKND2D8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000       1      2.856000  
+CKND3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       2      1.344000  
+CKND4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       4      3.360000  
+CKND6BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       6      7.056000  
+CKND8BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       2      3.024000  
+CKND12BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.184000       1      2.184000  
+CKXOR2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       1      1.344000  
+FA1D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000       2      5.712000  r
+FA1D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000      20     57.119999  r
+FA1D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.192000      18     57.455998  r
+FA1D4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  4.872000       7     34.104002  r
+FA1OPTCD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.360000      12     40.319999  r
+FA1OPTCD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  4.032000     398   1604.736026  r
+IND3D4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.688000       1      2.688000  
+IND3D8BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  4.872000       1      4.872000  
+INR2D4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.848000       3      5.544000  
+INVD0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       2      0.672000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000      17      5.712000  
+INVD1P25BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+INVD2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       4      2.016000  
+INVD2P3BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+INVD3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       2      1.344000  
+INVD4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       7      5.880000  
+INVD6BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       8      9.408000  
+INVD8BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       5      7.560000  
+INVD9BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.680000       2      3.360000  
+INVD12BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.184000       2      4.368000  
+INVD15BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.688000       1      2.688000  
+INVD18BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.192000       3      9.576000  
+MUX2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000     116    136.416000  
+MUX2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      15     20.160000  
+MUX2D2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       6      9.072000  
+MUX2D4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.352000       1      2.352000  
+MUX2ND0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+MUX2OPTD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       1      1.512000  
+MUX2OPTD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.024000       8     24.191999  
+MUX2OPTD6BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  4.032000      14     56.448001  
+ND2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       9      4.536000  
+ND2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      31     15.624000  
+ND2D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       7      5.880000  
+ND2D3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       1      1.176000  
+ND2OPTD6BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.184000       1      2.184000  
+ND2OPTFAD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.848000       1      1.848000  
+ND2OPTPAD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      17     14.280000  
+ND2OPTPAD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       5      7.560000  
+ND3D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       2      1.344000  
+ND3D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000      28     32.928000  
+ND3D3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.680000       3      5.040000  
+ND3OPTFAD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       3      7.560000  
+ND3OPTPAD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.016000       5     10.080000  
+NR2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+NR2OPTPAD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       1      1.176000  
+NR3D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       2      1.344000  
+NR3OPTFAD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       1      2.520000  
+NR3OPTPAD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.184000       2      4.368000  
+OR2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      29     19.488000  
+OR2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+TIEHBWP12T40P140   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+XNR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      28     37.631999  
+XNR2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       1      1.344000  
+XOR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       1      1.344000  
+XOR2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       4      5.376000  
+XOR3D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000      31     78.119999  
+XOR3D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       2      5.040000  
+-----------------------------------------------------------------------------
+Total 99 references                                  3024.168015
+
+****************************************
+Design: ysyx_alu_DW_rash_0_DW_rash_1 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       2      1.344000  
+AO22D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       3      3.024000  
+AOI21D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+AOI22D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      29     24.359999  
+AOI221D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000      12     12.096000  
+AOI222D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      12     16.128000  
+BUFFD0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      24     12.096000  
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       6      3.024000  
+CKND0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+CKND2D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       5      2.520000  
+CKND2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       4      2.016000  
+INR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+INVD0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000      56     18.816000  
+MUX2ND0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+NR2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+NR2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       3      1.512000  
+OA21D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       4      3.360000  
+OA211D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       4      4.032000  
+OA221D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       4      5.376000  
+OA222D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       4      6.048000  
+OAI21D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      15     10.080000  
+OAI22D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       4      3.360000  
+OAI221D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000      37     43.512000  
+-----------------------------------------------------------------------------
+Total 24 references                                   176.231999
+
+****************************************
+Design: ysyx_alu_DW_rash_1_DW_rash_2 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+AO22D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+AO221D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       2      2.688000  
+AO222D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       1      1.512000  
+AOI22D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      30     25.199999  
+AOI32D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+AOI221D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       6      6.048000  
+AOI222D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      17     22.848000  
+BUFFD0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      21     10.584000  
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       5      2.520000  
+CKND0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       2      0.672000  
+CKND2D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       5      2.520000  
+CKND2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       2      1.008000  
+INR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       2      1.344000  
+INVD0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000      58     19.488000  
+MOAI22D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       3      3.024000  
+MUX2ND0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+NR2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      17      8.568000  
+NR2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       3      1.512000  
+NR3D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+OA221D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       4      5.376000  
+OA222D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       3      4.536000  
+OAI22D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       3      2.520000  
+OAI211D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+OAI221D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000      35     41.160000  
+-----------------------------------------------------------------------------
+Total 26 references                                   168.671999
+
+****************************************
+Design: ysyx_branch 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AO22D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+AO221D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      14     18.816000  
+AOI22D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+AOI32D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+AOI221D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+CKND0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000      31     10.416000  
+IAO21D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+IND2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+INR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+INR2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       3      1.008000  
+OA221D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      14     18.816000  
+OAI22D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+OAI22D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+TIELBWP12T40P140   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+ysyx_branch_DW01_cmp6_0_DW01_cmp6_2
+                                 65.352000       1     65.352000  h
+-----------------------------------------------------------------------------
+Total 16 references                                   124.823999
+
+****************************************
+Design: ysyx_branch_DW01_cmp6_0_DW01_cmp6_2 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AOI32D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+AOI221D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000      14     14.112000  
+CKND0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000      33     11.088000  
+CKND2D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       3      1.512000  
+IND2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+INR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       2      1.344000  
+INR4D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       2      2.016000  
+ND4D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+NR2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      25     12.600000  
+NR3D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      12      8.064000  
+NR4D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       3      2.520000  
+OAI22D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+OAI222D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       1      1.344000  
+OR2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       4      2.688000  
+OR4D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       3      3.024000  
+-----------------------------------------------------------------------------
+Total 15 references                                    65.352000
+
+****************************************
+Design: ysyx_exu_DW01_add_0 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      27     18.144000  
+BUFFD0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       2      1.008000  
+CKND0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       2      0.672000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+NR2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+XOR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      29     38.975999  
+-----------------------------------------------------------------------------
+Total 6 references                                     59.639999
+
+****************************************
+Design: ysyx_gnrl_data_mux_DW32_N4 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       4      2.688000  
+AO22D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000      32     32.256001  
+AO221D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       5      6.720000  
+AO221D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      27     36.288000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       2      0.672000  
+-----------------------------------------------------------------------------
+Total 5 references                                     78.624000
+
+****************************************
+Design: ysyx_gen_imm 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+CKAN2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       6      4.032000  
+CKND0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       7      2.352000  
+CKND1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+CKND2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+INVD0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+IOA21D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      21     17.639999  
+MOAI22D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       4      4.032000  
+MUX2ND0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+ND2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       3      1.512000  
+ND2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+OAI32D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+OAI222D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       1      1.344000  
+OR3D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       3      2.520000  
+-----------------------------------------------------------------------------
+Total 15 references                                    38.303999
+
+****************************************
+Design: ysyx_gnrl_dfflrs_32_80000000 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+BUFFD0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       9      4.536000  
+CKMUX2D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000      13     15.288000  
+DFCNQD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.024000      31     93.743998  n
+DFSNQD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.024000       1      3.024000  n
+MUX2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000      19     22.344000  
+-----------------------------------------------------------------------------
+Total 6 references                                    139.439998
+
+****************************************
+Design: ysyx_idu 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+AN3D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+BUFFD0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       9      4.536000  
+CKAN2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      13      8.736000  
+CKAN2D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+CKND0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000      10      3.360000  
+CKND1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000      32     10.752000  
+CKND2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       2      1.008000  
+CKND2D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+IND2D2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       2      2.016000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       4      1.344000  
+INVD1P75BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       2      1.008000  
+INVD3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+IOA21D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       5      4.200000  
+ND2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       4      2.016000  
+ND2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       2      1.008000  
+ND3D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+ND3D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       1      1.176000  
+NR3D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       5      3.360000  
+NR3OPTPAD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       1      1.344000  
+NR4D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+OR2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+OR3D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      15     12.600000  
+OR4D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       6      6.048000  
+TIEHBWP12T40P140   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+XNR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       1      1.344000  
+-----------------------------------------------------------------------------
+Total 26 references                                    73.079999
+
+****************************************
+Design: ysyx_ifu_80000000_2 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+AN3D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+AO222D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000      32     48.383999  
+AOI211D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+BUFFXD8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.184000       2      4.368000  
+CKAN2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+CKAN2D8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.848000       1      1.848000  
+CKND1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+CKND2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       3      1.512000  
+CKND16BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000       1      2.856000  
+DFCNQD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.024000      64    193.535995  n
+DFSNQD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.024000       2      6.048000  n
+IND2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+INR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+INVD0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       2      0.672000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       5      1.680000  
+INVD1P25BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+INVD2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+INVD6BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       1      1.176000  
+MUX2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000      32     37.632000  
+MUX2ND0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       2      2.016000  
+ND2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+OAI22D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+OAI31D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+TIEHBWP12T40P140   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+TIELBWP12T40P140   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+ysyx_gnrl_fifo_DW65_DEPTH2      604.800011       1    604.800011  h, n
+ysyx_ifu_80000000_2_DW01_add_0_DW01_add_2
+                                 59.639999       1     59.639999  h
+ysyx_ifu_80000000_2_DW01_add_1_DW01_add_3
+                                 63.671999       1     63.671999  h
+-----------------------------------------------------------------------------
+Total 29 references                                  1038.408003
+
+****************************************
+Design: ysyx_gnrl_fifo_DW65_DEPTH2 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       4      2.688000  
+AOI21OPTREPBD6BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  5.208000       1      5.208000  
+BUFFD0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       2      1.008000  
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       2      1.008000  
+BUFFD4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       2      2.352000  
+BUFFXD3BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+BUFFXD6BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.680000       1      1.680000  
+BUFFXD8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.184000       1      2.184000  
+CKAN2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+CKBD3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+CKND2D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+CKND2D3BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       1      1.176000  
+CKND16BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000       1      2.856000  
+CKXOR2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       3      4.032000  
+DCCKBD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.352000       3      7.056000  
+DFCNQD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.024000       4     12.096000  n
+EDFD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.696000     130    480.480013  n
+INVD0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       7      2.352000  
+MUX2ND0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+ND2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+NR3OPTD12BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  6.384000       1      6.384000  
+OA31D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+OAI22D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      16     13.440000  
+OAI22D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      45     37.799999  
+OAI22D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       2      3.024000  
+OAI22D8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.856000       3      8.568000  
+OR3D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+XNR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       1      1.344000  
+-----------------------------------------------------------------------------
+Total 29 references                                   604.800011
+
+****************************************
+Design: ysyx_ifu_80000000_2_DW01_add_0_DW01_add_2 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      27     18.144000  
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       2      1.008000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       3      1.008000  
+NR2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+XOR2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      29     38.975999  
+-----------------------------------------------------------------------------
+Total 5 references                                     59.639999
+
+****************************************
+Design: ysyx_ifu_80000000_2_DW01_add_1_DW01_add_3 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       6      4.032000  
+AN2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       5      3.360000  
+BUFFD0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       2      1.008000  
+CKAN2D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+CKAN2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      21     14.112000  
+CKND0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+CKND1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+CKXOR2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       1      1.344000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+NR2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+XOR2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      27     36.288000  
+XOR2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       1      1.344000  
+-----------------------------------------------------------------------------
+Total 12 references                                    63.671999
+
+****************************************
+Design: ysyx_ifu_axi4lite_adapter 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+AO22D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000      32     32.256001  
+AOI22D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       7      3.528000  
+CKBD3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+CKND1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       3      1.008000  
+CKND2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       2      1.008000  
+CKXOR2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       1      1.344000  
+DCCKND4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.680000       1      1.680000  
+DFCNQD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.024000      67    202.607995  n
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       7      2.352000  
+IOA21D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+MUX2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000      32     37.632000  
+ND3D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+NR3D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       4      2.688000  
+OAI21D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+TIEHBWP12T40P140   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+TIELBWP12T40P140   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+XNR2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       1      1.344000  
+-----------------------------------------------------------------------------
+Total 19 references                                   292.655996
+
+****************************************
+Design: ysyx_lsu 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       5      3.360000  
+AN2D4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       1      1.512000  
+AN3D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+AO22D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000      10     10.080000  
+AO31D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+AO221D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000      24     32.256000  
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      18      9.072000  
+CKAN2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+CKBD3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       3      2.520000  
+CKND1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+CKND2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       3      1.512000  
+CKXOR2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       1      1.344000  
+DFCNQD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.024000     103    311.471993  n
+IND2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       9      3.024000  
+IOA21D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+MUX2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000      68     79.968000  
+MUX2ND0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+ND2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+NR3D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+OR3D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+-----------------------------------------------------------------------------
+Total 21 references                                   465.191992
+
+****************************************
+Design: ysyx_lsu_axi4lite_adapter 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       3      2.016000  
+AO22D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000      99     99.792002  
+AOI21D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       7      4.704000  
+AOI22D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       8      6.720000  
+AOI211D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+AOI221D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      42     21.168000  
+CKND1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000      10      3.360000  
+CKND2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      17      8.568000  
+DFCNQD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.024000     104    314.495993  n
+INR2D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      11      7.392000  
+INR3D1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000      58     19.488000  
+MOAI22D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       3      3.024000  
+MUX2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000      40     47.040000  
+ND3D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       2      1.344000  
+NR2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      27     13.608000  
+NR3D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       3      2.016000  
+OAI21D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       2      1.344000  
+OAI22D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      10      8.400000  
+OAI32D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+OAI211D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       3      2.520000  
+OAI221D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       8      9.408000  
+OAI222D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000       8     10.752000  
+TIEHBWP12T40P140   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+TIELBWP12T40P140   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+-----------------------------------------------------------------------------
+Total 26 references                                   591.527994
+
+****************************************
+Design: ysyx_opbuf 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+ysyx_gnrl_rv_reg_DW277         1343.831983       1   1343.831983  h, n
+-----------------------------------------------------------------------------
+Total 2 references                                   1344.335983
+
+****************************************
+Design: ysyx_gnrl_rv_reg_DW277 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       1      0.672000  
+BUFFD0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      52     26.208000  
+BUFFD4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       1      1.176000  
+BUFFD16BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.696000       1      3.696000  
+BUFFXD3BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+BUFFXD8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.184000       1      2.184000  
+CKBD2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       3      2.016000  
+CKBD3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+CKMUX2D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000      31     36.456000  
+CKND0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       1      0.336000  
+CKND2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+DCCKBD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.352000       1      2.352000  
+DFCNOPTMAD8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                 10.416000       1     10.416000  n
+DFCNQD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.024000     253    765.071982  n
+DFCNQD2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.528000       3     10.584000  n
+DFCNQD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.864000       2      7.728000  n
+DFCNQOPTMAD8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  9.408000      13    122.304000  n
+DFCNQOPTSADD8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  9.408000       6     56.448000  n
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       4      1.344000  
+IOA21D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+MUX2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000     245    288.120000  
+MUX2D2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       1      1.512000  
+ND2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       1      0.504000  
+OAI21OPTPBD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+-----------------------------------------------------------------------------
+Total 25 references                                  1343.831983
+
+****************************************
+Design: ysyx_regfile 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AN2D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      16     10.752000  
+AN2D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      15     10.080000  
+AN2D2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       9      7.560000  
+AN2D4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       2      3.024000  
+AN2D8BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.520000       1      2.520000  
+AN2D16BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  4.536000       1      4.536000  
+AO22D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000     576    580.608009  
+AO221D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.344000     384    516.095993  
+BUFFD0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      10      5.040000  
+BUFFD1BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000     146     73.584001  
+BUFFD2BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       4      2.688000  
+BUFFD4BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000      17     19.992000  
+BUFFD6BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       2      3.024000  
+BUFFXD3BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000       1      1.008000  
+BUFFXD8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.184000      54    117.936001  
+CKAN2D0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       3      2.016000  
+CKAN2D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      66     44.351999  
+CKAN2D2BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       7      5.880000  
+CKAN2D4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000      32     37.632000  
+CKAN2D8BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.848000       8     14.784000  
+CKBD2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       3      2.016000  
+CKBD3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       4      3.360000  
+CKBD4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000       2      2.352000  
+CKBD6BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.512000       1      1.512000  
+CKND0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000       6      2.016000  
+CKND2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       4      2.016000  
+CKND3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       3      2.016000  
+CKND4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       2      1.680000  
+DCCKBD4BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  2.352000       1      2.352000  
+DFCNQD1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  3.024000     992   2999.807930  n
+INVD1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.336000     999    335.663995  
+INVD1P75BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000      21     10.584000  
+INVD2BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.504000       2      1.008000  
+INVD3BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000       7      4.704000  
+IOA21D1BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      64     53.759998  
+MUX2D0BWP12T40P140 tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.176000      64     75.264000  
+MUX2ND0BWP12T40P140
+                   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.008000     992    999.936016  
+NR3D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.672000      74     49.727999  
+NR4D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      64     53.759998  
+OR3D0BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000       1      0.840000  
+OR3D1BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  0.840000      66     55.439998  
+OR3D4BWP12T40P140  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                  1.848000       1      1.848000  
+-----------------------------------------------------------------------------
+Total 42 references                                  6124.775939
+1

@@ -1,0 +1,1241 @@
+Info: [VCS_SAVE_RESTORE_INFO] ASLR (Address Space Layout Randomization) is detected on the machine. To enable $save functionality, ASLR will be switched off and simv re-executed.
+Please use '-no_save' simv switch to avoid this.
+
+                           Design Compiler Graphical 
+                                 DC Ultra (TM)
+                                  DFTMAX (TM)
+                              Power Compiler (TM)
+                                 DesignWare (R)
+                                 DC Expert (TM)
+                               Design Vision (TM)
+                               HDL Compiler (TM)
+                               VHDL Compiler (TM)
+                                  DFT Compiler
+                               Design Compiler(R)
+
+               Version V-2023.12-SP5 for linux64 - Jul 16, 2024 
+
+                    Copyright (c) 1988 - 2024 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+   or distribution of this software is strictly prohibited.  Licensed Products
+     communicate with Synopsys servers for the purpose of providing software
+    updates, detecting software piracy and verifying that customers are using
+    Licensed Products in conformity with the applicable License Key for such
+  Licensed Products. Synopsys will use information gathered in connection with
+    this process to deliver software updates and pursue software pirates and
+                                   infringers.
+
+ Inclusivity & Diversity - Visit SolvNetPlus to read the "Synopsys Statement on
+            Inclusivity and Diversity" (Refer to article 000036315 at
+                        https://solvnetplus.synopsys.com)
+Initializing...
+Initializing gui preferences from file  /home/cym/.synopsys_dc_gui/preferences.tcl
+Current time:       Sat Oct 17 00:29:57 2026
+Hostname:           rack-01
+CPU Model:          AMD EPYC 9654 96-Core Processor
+CPU Details:        Cores = 1 : Sockets = 1 : Cache Size = 1024 KB : Freq = 2.40 GHz
+OS:                 Linux 4.18.0-553.109.1.el8_10.x86_64
+RAM:                1510 GB (Free 1140 GB)
+Swap:                 3 GB (Free   3 GB)
+Work Filesystem:    /home mounted to /dev/mapper/rl_rack--01-home
+Tmp Filesystem:     / mounted to /dev/mapper/rl_rack--01-root
+Work Disk:          1786 GB (Free 1518 GB)
+Tmp Disk:            69 GB (Free  28 GB)
+
+CPU Load: 479%, Ram Free: 1140 GB, Swap Free: 3 GB, Work Disk Free: 1518 GB, Tmp Disk Free: 28 GB
+# DC 综合入口：冻结的 SV RTL + 工艺库 + SDC → 标准单元网表/设计数据库/报告。
+# 普通非物理综合不会给出布局、时钟树或布线结果；脚本可运行也不等于时序达标。
+# 组织方式参考 ref-flow 的分阶段脚本；这里将库配置移到展开/link 之前。
+if {[catch {
+    source [file join $::env(NPC_FLOW_SNAPSHOT) 01_common setup.tcl]
+    if {[shell_is_in_topographical_mode]} {error "Baseline requires wire-load DC, not TOPO"}
+    # 阶段 1：库/工作目录准备。WORK 保存 analyze 中间数据，每个 run 独立。
+    libraries
+    library_reports
+    define_design_lib WORK -path [file join $run work]
+    # Library setup precedes analyze/elaborate/link. All sources are SV.
+    # 阶段 2：analyze 检查 SV 并产生 HDL 中间表示；elaborate 根据 top、参数和
+    # generate 展开层次，形成工艺无关逻辑；此时还没有完成标准单元映射。
+    # current_design 指定随后命令作用的设计；link 把实例引用连接到模块/库定义。
+    # 依据：DC P-2019.03 正文 6-4 / PDF 154。
+    require_true [analyze -format sverilog -define [dict get $cfg defines] $rtl_sources] "analyze failed"
+    elaborate $top
+    current_design $top
+    require_true [link] "link failed"
+    # check_design 找结构问题；它不证明功能等价，也不证明所有路径满足时序。
+    # redirect 将工具报告写入文件，同时保留命令返回值供 require_true 检查。
+    redirect -file [file join $reports check_design_pre.rpt] {set ok [check_design]}
+    require_true $ok "pre-compile check_design failed"
+    # 阶段 3：施加环境与约束。DC 需要知道时钟和外部预算才能按目标优化。
+    environment
+    source [file join $npc_root [dict get $cfg sdc]]
+    # 处理一个 net 连多个端口、常量直接连端口等情况，改善导出网表的连接形式；
+    # -buffer_constants 允许为常量连接插入缓冲逻辑，不是打开 clock gating。
+    set_fix_multiple_port_nets -all -buffer_constants
+    # Ordinary compile avoids an implicit Ultra/Graphical/clock-gating dependency.
+    # No gate_clock, scan, UPF, datapath gating, incremental or physical options.
+    # 阶段 4：compile 优化逻辑并映射到 target_library 的具体单元。
+    # map_effort 是映射优化努力等级，不是目标频率；目标周期由 SDC 给出。
+    require_true [compile -map_effort medium] "compile failed"
+    # 将层次内名字规范成 Verilog 可导出的形式，不改变要实现的逻辑功能。
+    change_names -rules verilog -hierarchy
+    redirect -file [file join $reports check_design_post.rpt] {set ok [check_design]}
+    require_true $ok "post-compile check_design failed"
+    # 只检查叶级单元是否仍未映射；层次容器本身不应被误当作待映射逻辑。
+    # 本设计预期只有边沿触发的寄存器；发现 level-sensitive latch 则停止。
+    set unmapped [get_cells -hierarchical -filter {is_hierarchical == false && is_unmapped == true}]
+    if {[sizeof_collection $unmapped] != 0} {error "Unmapped cells remain"}
+    if {[sizeof_collection [all_registers -level_sensitive]] != 0} {error "Unexpected latches in mapped design"}
+    # 阶段 5：固定交付物。core.v 是单元实例/连线，供 PT 读取；core.ddc 是
+    # DC 的设计数据库，保留工具设计信息，不能与输入的工艺 .db 混淆。
+    # dc.sdc 保存 DC 当前约束作核对；PT 实际重放的是同一份原始设计 SDC。
+    write -format verilog -hierarchy -output [file join $outputs core.v]
+    write -format ddc -hierarchy -output [file join $outputs core.ddc]
+    write_sdc [file join $outputs dc.sdc]
+    # 阶段 6：报告解释。area 是映射单元面积，非 floorplan/die 面积；
+    # QoR（Quality of Results）汇总优化结果；resources/reference 帮助确认
+    # 乘除法等结构实际映射成了什么；design 报告用于核对环境/WLM。
+    redirect -file [file join $reports area.rpt] {report_area -hierarchy}
+    redirect -file [file join $reports qor.rpt] {report_qor}
+    redirect -file [file join $reports resources.rpt] {report_resources -hierarchy}
+    redirect -file [file join $reports references.rpt] {report_reference -hierarchy}
+    redirect -file [file join $reports design.rpt] {report_design}
+    # check_timing 查约束/分析完整性；constraint 列违例；report_timing 展示路径。
+    # max 关注晚到数据（通常为 setup/recovery），min 关注早到数据（hold/removal）；
+    # -max_paths 20 仅限制报告展示数量，不等于整个设计只分析 20 条路径。
+    redirect -file [file join $reports check_timing.rpt] {check_timing}
+    redirect -file [file join $reports constraints.rpt] {report_constraint -all_violators -nosplit}
+    redirect -file [file join $reports timing_max.rpt] {report_timing -delay_type max -max_paths 20 -nosplit}
+    redirect -file [file join $reports timing_min.rpt] {report_timing -delay_type min -max_paths 20 -nosplit}
+    # Power never changes the saved timing design. Its diagnostics are isolated.
+    # 阶段 7（可选）：时序产物导出后才估算功耗，不把活动假设用于本轮优化。
+    # -base_clock 将 toggle rate 关联到 core_clk 周期；时钟每周期翻转两次，
+    # reset 假定不激活，其余输入只给统计活动，内部活动仍有默认/传播成分。
+    # BEGIN/END 供 driver 区分可选功耗诊断；没有异常也只能标为待审查。
+    # 普通 DC 的具体活动/报告选项仍须查服务器帮助；User Guide 中的 Graphical
+    # 示例不是本模式已验证的依据，详见 M4/2-flow.md §6。
+    set power_status "NOT_EVALUATED: disabled"
+    if {[dict get $cfg power_enable]} {
+        puts "NPC_OPTIONAL_POWER_BEGIN"
+        set power_error [catch {
+            redirect -file [file join $reports power_attempt.rpt] {
+                set_switching_activity -base_clock core_clk -toggle_rate [dict get $cfg power_toggle] \
+                    -static_probability [dict get $cfg power_probability] $data_inputs
+                set_switching_activity -base_clock core_clk -toggle_rate 2.0 -static_probability 0.5 [get_ports clk]
+                set_switching_activity -base_clock core_clk -toggle_rate 0.0 -static_probability 1.0 [get_ports rst_n]
+                report_switching_activity
+                report_power
+                report_power -hierarchy
+            }
+        } power_message]
+        if {$power_error} {set power_status "NOT_EVALUATED: $power_message"} else {
+            set power_status "REVIEW_REQUIRED: assumed input activity; internal default/propagated activity; no workload"
+        }
+        puts "NPC_OPTIONAL_POWER_END"
+    }
+    set f [open [file join $reports power_status.txt] w]; puts $f $power_status; close $f
+    complete
+} message]} {puts stderr "NPC_FLOW_ERROR: $message"; exit 1}
+Loading db file '/home/cym/prj/ysyx-workbench/npc/flow/00_indata/DB/STD_NEW/tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.db'
+Information: Using CCS timing libraries. (TIM-024)
+Loading db file '/15T/tools/synopsys/syn/V-2023.12-SP5/libraries/syn/standard.sldb'
+Loading db file '/15T/tools/synopsys/syn/V-2023.12-SP5/libraries/syn/gtech.db'
+  Loading link library 'tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs'
+  Loading link library 'gtech'
+Loading db file '/home/cym/prj/ysyx-workbench/npc/flow/00_indata/DB/STD_NEW/tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.db'
+Warning: Overwriting design file '/home/cym/prj/ysyx-workbench/npc/flow/00_indata/DB/STD_NEW/tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.db'. (DDB-24)
+Loaded 0 designs.
+Running PRESTO HDLC
+Compiling source file ./vsrc/gnrl/ysyx_gnrl_primitive.sv
+Opening include file ./vsrc/gnrl/ysyx_global.sv
+Compiling source file ./vsrc/core/ysyx_alu.sv
+Compiling source file ./vsrc/core/ysyx_branch.sv
+Compiling source file ./vsrc/core/ysyx_gen_imm.sv
+Compiling source file ./vsrc/core/ysyx_idu.sv
+Compiling source file ./vsrc/core/ysyx_regfile.sv
+Compiling source file ./vsrc/core/ysyx_csr.sv
+Compiling source file ./vsrc/core/ysyx_ifu.sv
+Compiling source file ./vsrc/core/ysyx_opbuf.sv
+Compiling source file ./vsrc/core/ysyx_exu.sv
+Compiling source file ./vsrc/core/ysyx_lsu.sv
+Compiling source file ./vsrc/bus/ysyx_ifu_axi4lite_adapter.sv
+Compiling source file ./vsrc/bus/ysyx_lsu_axi4lite_adapter.sv
+Compiling source file ./vsrc/core/ysyx_core.sv
+Compiling source file ./vsrc/bus/ysyx_axi4lite_arbiter.sv
+Compiling source file ./vsrc/top/ysyx_core_axi4lite.sv
+Presto compilation completed successfully.
+Running PRESTO HDLC
+Presto compilation completed successfully. (ysyx_core_axi4lite)
+Elaborated 1 design.
+Current design is now 'ysyx_core_axi4lite'.
+Information: Building the design 'ysyx_core'. (HDL-193)
+Presto compilation completed successfully. (ysyx_core)
+Information: Building the design 'ysyx_axi4lite_arbiter'. (HDL-193)
+
+Statistics for case statements in always block at line 112 in file
+	'./vsrc/bus/ysyx_axi4lite_arbiter.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|           129            |    auto/auto     |
+===============================================
+
+Inferred memory devices in process
+	in routine ysyx_axi4lite_arbiter line 112 in file
+		'./vsrc/bus/ysyx_axi4lite_arbiter.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|     resp_q_reg      | Flip-flop |   2   |  Y  | N  | Y  | N  | N  | N  | N  |
+|     state_q_reg     | Flip-flop |   4   |  Y  | N  | Y  | N  | N  | N  | N  |
+|     owner_q_reg     | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|     write_q_reg     | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|  prefer_lsu_q_reg   | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|    aw_have_q_reg    | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|    w_have_q_reg     | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|    aw_sent_q_reg    | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|    w_sent_q_reg     | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|     addr_q_reg      | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|     prot_q_reg      | Flip-flop |   3   |  Y  | N  | Y  | N  | N  | N  | N  |
+|     wdata_q_reg     | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|     strb_q_reg      | Flip-flop |   4   |  Y  | N  | Y  | N  | N  | N  | N  |
+|     rdata_q_reg     | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (ysyx_axi4lite_arbiter)
+Information: Building the design 'ysyx_gnrl_dfflrs' instantiated from design 'ysyx_core' with
+	the parameters "DW=32,RST=32'h80000000". (HDL-193)
+
+Inferred memory devices in process
+	in routine ysyx_gnrl_dfflrs_32_80000000 line 137 in file
+		'./vsrc/gnrl/ysyx_gnrl_primitive.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|     qout_r_reg      | Flip-flop |   1   |  N  | N  | N  | Y  | N  | N  | N  |
+|     qout_r_reg      | Flip-flop |  31   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (ysyx_gnrl_dfflrs_32_80000000)
+Information: Building the design 'ysyx_ifu' instantiated from design 'ysyx_core' with
+	the parameters "PC_RST=32'h80000000,IFQ_DEPTH=2". (HDL-193)
+
+Statistics for case statements in always block at line 85 in file
+	'./vsrc/core/ysyx_ifu.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            97            |    auto/auto     |
+===============================================
+
+Inferred memory devices in process
+	in routine ysyx_ifu_80000000_2 line 85 in file
+		'./vsrc/core/ysyx_ifu.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|  request_pc_q_reg   | Flip-flop |   1   |  N  | N  | N  | Y  | N  | N  | N  |
+|  request_pc_q_reg   | Flip-flop |  31   |  Y  | N  | Y  | N  | N  | N  | N  |
+|     state_q_reg     | Flip-flop |   2   |  Y  | N  | Y  | N  | N  | N  | N  |
+|   fetch_pc_q_reg    | Flip-flop |   1   |  N  | N  | N  | Y  | N  | N  | N  |
+|   fetch_pc_q_reg    | Flip-flop |  31   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (ysyx_ifu_80000000_2)
+Information: Building the design 'ysyx_idu'. (HDL-193)
+Presto compilation completed successfully. (ysyx_idu)
+Information: Building the design 'ysyx_gen_imm'. (HDL-193)
+
+Statistics for case statements in always block at line 18 in file
+	'./vsrc/core/ysyx_gen_imm.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            19            |    auto/auto     |
+===============================================
+Presto compilation completed successfully. (ysyx_gen_imm)
+Information: Building the design 'ysyx_regfile'. (HDL-193)
+
+Inferred memory devices in process
+	in routine ysyx_regfile line 24 in file
+		'./vsrc/core/ysyx_regfile.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|    reg_file_reg     | Flip-flop | 1024  |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Statistics for MUX_OPs
+======================================================
+| block name/line  | Inputs | Outputs | # sel inputs |
+======================================================
+| ysyx_regfile/33  |   32   |   32    |      5       |
+| ysyx_regfile/34  |   32   |   32    |      5       |
+======================================================
+Presto compilation completed successfully. (ysyx_regfile)
+Information: Building the design 'ysyx_opbuf'. (HDL-193)
+Presto compilation completed successfully. (ysyx_opbuf)
+Information: Building the design 'ysyx_exu'. (HDL-193)
+
+Inferred memory devices in process
+	in routine ysyx_exu line 207 in file
+		'./vsrc/core/ysyx_exu.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|   mem_wait_q_reg    | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (ysyx_exu)
+Information: Building the design 'ysyx_csr'. (HDL-193)
+Presto compilation completed successfully. (ysyx_csr)
+Information: Building the design 'ysyx_lsu'. (HDL-193)
+Warning:  ./vsrc/core/ysyx_lsu.sv:124: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+
+Statistics for case statements in always block at line 72 in file
+	'./vsrc/core/ysyx_lsu.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            82            |    auto/auto     |
+|           105            |    auto/auto     |
+===============================================
+
+Inferred memory devices in process
+	in routine ysyx_lsu line 72 in file
+		'./vsrc/core/ysyx_lsu.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+| response_error_reg  | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|      state_reg      | Flip-flop |   2   |  Y  | N  | Y  | N  | N  | N  | N  |
+|   req_write_q_reg   | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|   req_addr_q_reg    | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|   req_type_q_reg    | Flip-flop |   3   |  Y  | N  | Y  | N  | N  | N  | N  |
+|   req_wdata_q_reg   | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|  response_data_reg  | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (ysyx_lsu)
+Information: Building the design 'ysyx_ifu_axi4lite_adapter'. (HDL-193)
+Warning:  ./vsrc/bus/ysyx_ifu_axi4lite_adapter.sv:97: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+
+Statistics for case statements in always block at line 64 in file
+	'./vsrc/bus/ysyx_ifu_axi4lite_adapter.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            71            |    auto/auto     |
+===============================================
+
+Inferred memory devices in process
+	in routine ysyx_ifu_axi4lite_adapter line 64 in file
+		'./vsrc/bus/ysyx_ifu_axi4lite_adapter.sv'.
+================================================================================
+|    Register Name     |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+================================================================================
+| response_error_q_reg | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|     state_q_reg      | Flip-flop |   2   |  Y  | N  | Y  | N  | N  | N  | N  |
+|  request_addr_q_reg  | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+| response_data_q_reg  | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+================================================================================
+Presto compilation completed successfully. (ysyx_ifu_axi4lite_adapter)
+Information: Building the design 'ysyx_lsu_axi4lite_adapter'. (HDL-193)
+
+Statistics for case statements in always block at line 79 in file
+	'./vsrc/bus/ysyx_lsu_axi4lite_adapter.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            80            |    auto/auto     |
+===============================================
+
+Statistics for case statements in always block at line 122 in file
+	'./vsrc/bus/ysyx_lsu_axi4lite_adapter.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|           133            |    auto/auto     |
+===============================================
+
+Inferred memory devices in process
+	in routine ysyx_lsu_axi4lite_adapter line 122 in file
+		'./vsrc/bus/ysyx_lsu_axi4lite_adapter.sv'.
+================================================================================
+|    Register Name     |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+================================================================================
+| response_error_q_reg | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|     state_q_reg      | Flip-flop |   3   |  Y  | N  | Y  | N  | N  | N  | N  |
+|  request_addr_q_reg  | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|  request_size_q_reg  | Flip-flop |   2   |  Y  | N  | Y  | N  | N  | N  | N  |
+| request_wdata_q_reg  | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|   aw_pending_q_reg   | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|   w_pending_q_reg    | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+| response_data_q_reg  | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+================================================================================
+Presto compilation completed successfully. (ysyx_lsu_axi4lite_adapter)
+Information: Building the design 'ysyx_gnrl_fifo' instantiated from design 'ysyx_ifu_80000000_2' with
+	the parameters "DW=65,DEPTH=2". (HDL-193)
+
+Statistics for case statements in always block at line 327 in file
+	'./vsrc/gnrl/ysyx_gnrl_primitive.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|           355            |    auto/auto     |
+===============================================
+
+Inferred memory devices in process
+	in routine ysyx_gnrl_fifo_DW65_DEPTH2 line 327 in file
+		'./vsrc/gnrl/ysyx_gnrl_primitive.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|     count_q_reg     | Flip-flop |   2   |  Y  | N  | Y  | N  | N  | N  | N  |
+|     storage_reg     | Flip-flop |  130  |  Y  | N  | N  | N  | N  | N  | N  |
+|   read_ptr_q_reg    | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|   write_ptr_q_reg   | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (ysyx_gnrl_fifo_DW65_DEPTH2)
+Information: Building the design 'ysyx_gnrl_rv_reg' instantiated from design 'ysyx_opbuf' with
+	the parameters "DW=277". (HDL-193)
+
+Inferred memory devices in process
+	in routine ysyx_gnrl_rv_reg_DW277 line 271 in file
+		'./vsrc/gnrl/ysyx_gnrl_primitive.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|     valid_q_reg     | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|     data_q_reg      | Flip-flop |  277  |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (ysyx_gnrl_rv_reg_DW277)
+Information: Building the design 'ysyx_alu'. (HDL-193)
+Warning:  ./vsrc/core/ysyx_alu.sv:30: signed to unsigned assignment occurs. (VER-318)
+Warning:  ./vsrc/core/ysyx_alu.sv:40: signed to unsigned assignment occurs. (VER-318)
+Warning:  ./vsrc/core/ysyx_alu.sv:64: signed to unsigned assignment occurs. (VER-318)
+Warning:  ./vsrc/core/ysyx_alu.sv:80: signed to unsigned assignment occurs. (VER-318)
+
+Statistics for case statements in always block at line 11 in file
+	'./vsrc/core/ysyx_alu.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            14            |    auto/auto     |
+===============================================
+Presto compilation completed successfully. (ysyx_alu)
+Information: Building the design 'ysyx_branch'. (HDL-193)
+
+Statistics for case statements in always block at line 17 in file
+	'./vsrc/core/ysyx_branch.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            18            |    auto/auto     |
+===============================================
+Presto compilation completed successfully. (ysyx_branch)
+Information: Building the design 'ysyx_gnrl_data_mux' instantiated from design 'ysyx_exu' with
+	the parameters "DW=32,N=4". (HDL-193)
+Presto compilation completed successfully. (ysyx_gnrl_data_mux_DW32_N4)
+Information: Building the design 'ysyx_gnrl_dfflr' instantiated from design 'ysyx_csr' with
+	the parameters "32". (HDL-193)
+
+Inferred memory devices in process
+	in routine ysyx_gnrl_dfflr_DW32 line 94 in file
+		'./vsrc/gnrl/ysyx_gnrl_primitive.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|     qout_r_reg      | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (ysyx_gnrl_dfflr_DW32)
+Current design is 'ysyx_core_axi4lite'.
+
+  Linking design 'ysyx_core_axi4lite'
+  Using the following designs and libraries:
+  --------------------------------------------------------------------------
+  * (20 designs)              /home/cym/prj/ysyx-workbench/npc/flow/build/core-tt-10ns-split/inputs/npc/ysyx_core_axi4lite.db, etc
+  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs (library) /home/cym/prj/ysyx-workbench/npc/flow/00_indata/DB/STD_NEW/tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.db
+
+Using operating conditions 'tt0p9v25c' found in library 'tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs'.
+CPU Load: 1%, Ram Free: 1139 GB, Swap Free: 3 GB, Work Disk Free: 1518 GB, Tmp Disk Free: 28 GB
+Information: Evaluating DesignWare library utilization. (UISN-27)
+
+============================================================================
+| DesignWare Building Block Library  |         Version         | Available |
+============================================================================
+| Basic DW Building Blocks           | V-2023.12-DWBB_202312.5 |     *     |
+| Licensed DW Building Blocks        |                         |           |
+============================================================================
+
+====================================================================================================
+| Flow Information                                                                                 |
+----------------------------------------------------------------------------------------------------
+| Flow         | Design Compiler                                                                   |
+====================================================================================================
+| Design Information                                      | Value                                  |
+====================================================================================================
+| Number of Scenarios                                     | 0                                      |
+| Leaf Cell Count                                         | 3805                                   |
+| Number of User Hierarchies                              | 22                                     |
+| Sequential Cell Count                                   | 2053                                   |
+| Macro Count                                             | 0                                      |
+| Number of Power Domains                                 | 0                                      |
+| Number of Path Groups                                   | 2                                      |
+| Number of VT Class                                      | 0                                      |
+| Number of Clocks                                        | 1                                      |
+| Number of Dont Touch Cells                              | 330                                    |
+| Number of Dont Touch Nets                               | 0                                      |
+| Number of Size Only Cells                               | 0                                      |
+| Design with UPF Data                                    | false                                  |
+----------------------------------------------------------------------------------------------------
+| Variables                                               | Value                                  |
+----------------------------------------------------------------------------------------------------
+| set_fix_multiple_port_nets                              | -all -buffer_constants                 |
+====================================================================================================
+
+Information: There are 691 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+
+
+  Beginning Pass 1 Mapping
+  ------------------------
+  Processing 'ysyx_axi4lite_arbiter'
+  Processing 'ysyx_lsu_axi4lite_adapter'
+  Processing 'ysyx_ifu_axi4lite_adapter'
+  Processing 'ysyx_lsu'
+  Processing 'ysyx_gnrl_dfflr_DW32_0'
+  Processing 'ysyx_csr'
+  Processing 'ysyx_gnrl_data_mux_DW32_N4'
+  Processing 'ysyx_branch'
+  Processing 'ysyx_alu'
+  Processing 'ysyx_exu'
+  Processing 'ysyx_gnrl_rv_reg_DW277'
+  Processing 'ysyx_opbuf'
+  Processing 'ysyx_regfile'
+Information: The register 'reg_file_reg[0][31]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][30]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][29]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][28]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][27]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][26]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][25]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][24]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][23]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][22]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][21]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][20]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][19]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][18]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][17]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][16]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][15]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][14]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][13]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][12]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][11]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][10]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][9]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][8]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][7]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][6]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][5]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][4]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][3]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][2]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][1]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][0]' is a constant and will be removed. (OPT-1206)
+  Processing 'ysyx_gen_imm'
+  Processing 'ysyx_idu'
+  Processing 'ysyx_gnrl_fifo_DW65_DEPTH2'
+  Processing 'ysyx_ifu_80000000_2'
+  Processing 'ysyx_gnrl_dfflrs_32_80000000'
+  Processing 'ysyx_core'
+  Processing 'ysyx_core_axi4lite'
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+
+  Beginning Implementation Selection
+  ----------------------------------
+  Processing 'ysyx_core_DW01_cmp6_0'
+  Processing 'ysyx_core_DW01_cmp6_1'
+  Processing 'ysyx_lsu_axi4lite_adapter_DW01_ash_0_DW01_ash_1'
+  Processing 'ysyx_lsu_axi4lite_adapter_DW_rash_0'
+  Processing 'ysyx_exu_DW01_add_0'
+  Processing 'ysyx_branch_DW01_cmp2_0'
+  Processing 'ysyx_branch_DW01_cmp6_0_DW01_cmp6_2'
+  Allocating blocks in 'DW_div_uns_a_width32_b_width32'
+  Processing 'ysyx_alu_DW_div_uns_0'
+  Allocating blocks in 'DW_div_tc_a_width32_b_width32'
+  Processing 'ysyx_alu_DW_div_tc_0'
+  Processing 'ysyx_alu_DW_div_uns_1'
+  Processing 'ysyx_alu_DW_div_tc_1'
+  Processing 'ysyx_alu_DW01_sub_0'
+  Processing 'ysyx_alu_DW_rash_0_DW_rash_1'
+  Processing 'ysyx_alu_DW_rash_1_DW_rash_2'
+  Processing 'ysyx_alu_DW01_cmp2_0_DW01_cmp2_1'
+  Processing 'ysyx_alu_DW01_cmp2_1_DW01_cmp2_2'
+  Processing 'ysyx_alu_DW01_ash_0_DW01_ash_2'
+  Processing 'ysyx_alu_DW01_sub_1'
+  Processing 'ysyx_alu_DW01_add_0_DW01_add_1'
+  Processing 'ysyx_alu_DW01_cmp2_2_DW01_cmp2_3'
+  Processing 'ysyx_ifu_80000000_2_DW01_add_0_DW01_add_2'
+  Processing 'ysyx_ifu_80000000_2_DW01_add_1_DW01_add_3'
+  Allocating blocks in 'DW02_mult_A_width32_B_width32'
+  Building model 'DW01_MUX'
+  Processing 'DW01_MUX'
+  Building model 'DW01_mmux_width2'
+  Processing 'DW01_mmux_width2'
+  Building model 'DW01_mmux_width3'
+  Processing 'DW01_mmux_width3'
+  Building model 'DW01_mmux_width4'
+  Processing 'DW01_mmux_width4'
+  Building model 'DW01_mmux_width5'
+  Processing 'DW01_mmux_width5'
+  Building model 'DW01_add_width62' (cla)
+  Processing 'DW01_add_width62'
+  Building model 'DW02_mult_A_width32_B_width32' (csa)
+  Processing 'DW02_mult_A_width32_B_width32'
+  Processing 'ysyx_alu_DW02_mult_0'
+  Processing 'ysyx_alu_DW01_add_1_DW01_add_4'
+  Processing 'ysyx_alu_DW02_mult_1'
+  Processing 'ysyx_alu_DW01_add_2_DW01_add_5'
+
+  Beginning Mapping Optimizations  (Medium effort)
+  -------------------------------
+Memory usage for J1 task 1864 Mbytes -- main task 1864 Mbytes.
+Memory usage for J2 task 1864 Mbytes -- main task 1864 Mbytes.
+Memory usage for J3 task 1864 Mbytes -- main task 1864 Mbytes.
+  Allocating blocks in 'DW_div_tc_a_width32_b_width32'
+Memory usage for J4 task 1864 Mbytes -- main task 1864 Mbytes.
+  Allocating blocks in 'DW_div_tc_a_width32_b_width32'
+Memory usage for J5 task 1864 Mbytes -- main task 1864 Mbytes.
+Memory usage for J6 task 1864 Mbytes -- main task 1864 Mbytes.
+  Mapping Optimization (Phase 1)
+  Allocating blocks in 'DW_div_tc_a_width32_b_width32'
+Memory usage for J7 task 1864 Mbytes -- main task 1864 Mbytes.
+Memory usage for J8 task 1864 Mbytes -- main task 1864 Mbytes.
+Memory usage for J9 task 1864 Mbytes -- main task 1864 Mbytes.
+  Mapping Optimization (Phase 2)
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:38   50747.1     15.96   25466.5    4546.4                          
+    0:00:38   50747.1     15.96   25466.5    4546.4                          
+    0:00:39   51858.9     15.94   25423.5    3338.9                          
+    0:00:41   54207.7     15.14   23346.4     161.9                          
+    0:01:02   58584.6      9.42   13668.2       0.0                          
+    0:01:03   58519.9      9.44   13669.1       0.0                          
+    0:01:03   58519.9      9.44   13669.1       0.0                          
+    0:01:03   58526.5      9.42   13668.2       0.0                          
+    0:01:03   58526.5      9.42   13668.2       0.0                          
+    0:01:08   31198.9     13.42   20678.5       0.0                          
+    0:01:10   31474.3     13.47   20513.7       0.0                          
+    0:01:11   31447.1     13.08   19871.3       0.0                          
+    0:01:11   31448.9     13.06   19886.1       0.0                          
+    0:01:12   31458.7     12.99   19857.7       0.0                          
+    0:01:12   31458.3     13.03   19883.2       0.0                          
+    0:01:13   31458.7     12.99   19853.7       0.0                          
+    0:01:13   31459.3     13.03   19884.2       0.0                          
+    0:01:14   31458.3     12.99   19856.4       0.0                          
+    0:01:14   31460.9     13.03   19883.0       0.0                          
+    0:01:14   31460.9     13.03   19883.0       0.0                          
+    0:01:14   31224.3     13.03   19863.2       0.0                          
+    0:01:14   31224.3     13.03   19863.2       0.0                          
+    0:01:14   31224.3     13.03   19863.2       0.0                          
+    0:01:14   31224.3     13.03   19863.2       0.0                          
+    0:01:14   31224.3     13.03   19863.2       0.0                          
+    0:01:15   31257.4     12.76   19750.4       1.2 commit_is_mmio           
+    0:01:16   31299.4     12.58   19474.7       6.0 commit_is_mmio           
+    0:01:17   31338.4     12.44   19270.1       6.0 commit_is_mmio           
+    0:01:18   31374.0     12.35   19083.0       6.0 commit_is_mmio           
+    0:01:18   31420.2     12.22   18841.6      10.7 commit_is_mmio           
+    0:01:19   31466.6     12.12   18706.0      15.4 commit_redirect_reason[0]
+    0:01:20   31510.6     12.05   18575.1      20.1 commit_redirect_reason[0]
+    0:01:21   31694.0     11.88   18266.4      20.1 commit_is_mmio           
+    0:01:23   31848.3     11.80   18081.5      55.6 commit_redirect_reason[0]
+    0:01:24   31965.9     11.63   17828.3      73.7 commit_redirect_reason[0]
+    0:01:26   32116.7     11.41   17449.1     101.7 commit_is_mmio           
+    0:01:27   32187.8     11.35   17269.5     101.7 commit_exception         
+    0:01:29   32329.8     11.09   16861.9     120.9 commit_redirect_reason[0]
+    0:01:30   32399.5     10.98   16662.2     126.5 commit_redirect_reason[0]
+    0:01:30   32397.8     10.96   16631.5     126.5 commit_redirect_reason[0]
+    0:01:31   32407.9     10.95   16515.6     129.0 commit_redirect_reason[0]
+    0:01:31   32512.0     10.83   16392.6     132.0 commit_redirect_reason[0]
+    0:01:33   32576.5     10.72   16204.4     132.0 commit_is_mmio           
+    0:01:34   32622.9     10.63   16040.0     153.6 commit_redirect_reason[0]
+    0:01:35   32747.4     10.46   15726.1      77.9 commit_redirect_reason[0]
+    0:01:37   32865.3     10.21   15234.6     123.4 commit_is_mmio           
+    0:01:38   32892.2     10.21   15235.3      86.0 commit_is_mmio           
+    0:01:39   33000.1     10.07   15019.8     111.1 commit_is_mmio           
+    0:01:40   33204.4      9.76   14405.3     153.0 commit_is_mmio           
+    0:01:43   33311.5      9.56   14092.2     169.2 commit_redirect_reason[0]
+    0:01:44   33360.3      9.49   13999.4     150.8 commit_redirect_reason[1]
+    0:01:45   33410.5      9.45   13894.8     139.0 commit_is_mmio           
+    0:01:45   33415.5      9.43   13876.0     139.0 commit_is_mmio           
+    0:01:46   33414.0      9.42   13868.9     141.0 commit_redirect_reason[1]
+    0:01:47   33466.1      9.40   13820.1     143.5 commit_is_mmio           
+    0:01:47   33485.3      9.34   13719.9     143.3 commit_redirect_reason[0]
+    0:01:48   33528.6      9.31   13607.9     143.3 commit_is_mmio           
+    0:01:49   33597.0      9.22   13505.2     150.7 commit_redirect_reason[0]
+    0:01:50   33611.8      9.19   13431.1     147.4 commit_redirect_reason[0]
+    0:01:51   33665.2      9.11   13314.5     156.3 commit_redirect_reason[0]
+    0:01:53   33740.1      8.99   13104.0     161.0 commit_redirect_reason[0]
+    0:01:55   33800.1      8.90   12949.4     179.3 commit_redirect_reason[0]
+    0:01:55   33827.6      8.88   12903.3     179.3 commit_redirect_reason[0]
+    0:01:56   33865.3      8.82   12801.7     202.9 commit_is_mmio           
+    0:01:57   33885.1      8.80   12738.9     202.9 commit_is_mmio           
+    0:01:58   33935.7      8.75   12644.3     240.5 commit_redirect_reason[0]
+    0:01:59   33956.7      8.71   12589.3     279.3 commit_redirect_reason[0]
+    0:01:59   33951.6      8.70   12589.2     279.3                          
+
+
+
+  Beginning Delay Optimization Phase
+  ----------------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:01:59   33951.6      8.70   12589.2     279.3                          
+    0:01:59   33951.6      8.70   12589.2     279.3                          
+    0:01:59   33951.6      8.70   12589.2     279.3                          
+    0:02:00   33982.0      8.69   12520.9     291.6 commit_is_mmio           
+    0:02:01   34005.6      8.64   12469.6     293.0 commit_is_mmio           
+    0:02:01   34041.7      8.64   12469.3     293.0 commit_is_mmio           
+    0:02:02   34064.7      8.60   12322.5     275.8 commit_redirect_reason[0]
+    0:02:03   34070.2      8.56   12320.9     272.8 commit_is_mmio           
+    0:02:03   34067.0      8.56   12320.9     272.8 commit_is_mmio           
+    0:02:04   34084.5      8.55   12320.7     272.8 commit_is_mmio           
+    0:02:04   34102.5      8.55   12301.0     283.4 commit_redirect_reason[0]
+    0:02:04   34110.9      8.54   12300.8     283.4 commit_is_mmio           
+    0:02:05   34120.6      8.53   12260.1     283.4 commit_redirect_reason[0]
+    0:02:06   34135.2      8.50   12212.4     294.2 commit_redirect_reason[0]
+    0:02:06   34152.4      8.49   12177.8     294.2 commit_redirect_reason[0]
+    0:02:07   34160.4      8.47   12164.8     283.2 commit_redirect_reason[0]
+    0:02:08   34166.5      8.46   12151.3     263.4 commit_redirect_reason[0]
+    0:02:08   34181.3      8.45   12089.2     261.2 commit_is_mmio           
+    0:02:09   34187.3      8.43   12088.9     261.2 commit_is_mmio           
+    0:02:09   34204.5      8.43   12088.7     263.4 commit_is_mmio           
+    0:02:10   34210.7      8.42   12032.9     263.4 commit_is_mmio           
+    0:02:10   34221.8      8.40   12050.4     252.4 commit_is_mmio           
+    0:02:11   34246.5      8.39   11989.2     268.3 commit_is_mmio           
+    0:02:12   34259.7      8.35   11957.0     198.0 commit_is_mmio           
+    0:02:12   34271.0      8.34   11919.4     198.0 commit_is_mmio           
+    0:02:13   34288.3      8.32   11886.6     200.8 commit_redirect_reason[0]
+    0:02:14   34285.6      8.31   11886.4     200.8 commit_is_mmio           
+    0:02:15   34286.6      8.31   11873.4     200.8 commit_is_mmio           
+    0:02:15   34297.2      8.31   11871.2     200.8 commit_redirect_reason[0]
+    0:02:16   34321.7      8.29   11832.8     200.8 commit_is_mmio           
+    0:02:17   34324.4      8.28   11832.7     202.3 commit_is_mmio           
+    0:02:17   34323.1      8.28   11828.1     202.3 commit_is_mmio           
+    0:02:17   34332.5      8.28   11817.6     207.1 commit_redirect_reason[0]
+    0:02:18   34332.5      8.27   11786.3     207.3 commit_is_mmio           
+    0:02:18   34336.7      8.26   11786.0     207.3 commit_is_mmio           
+    0:02:19   34335.3      8.25   11768.7     207.3 commit_is_mmio           
+    0:02:20   34359.0      8.25   11768.6     207.3 commit_is_mmio           
+    0:02:20   34358.0      8.25   11768.5     207.3 commit_is_mmio           
+    0:02:21   34356.2      8.24   11755.3     207.3 commit_redirect_reason[0]
+    0:02:21   34398.0      8.23   11717.5     207.3 commit_is_mmio           
+    0:02:22   34413.3      8.21   11686.4     214.5 commit_is_mmio           
+    0:02:22   34415.8      8.20   11684.3     214.5 commit_redirect_reason[0]
+    0:02:23   34414.5      8.20   11683.9     214.5 commit_redirect_reason[0]
+    0:02:24   34432.8      8.19   11669.6     214.5 commit_redirect_reason[0]
+    0:02:25   34443.2      8.19   11655.1     208.3 commit_is_mmio           
+    0:02:26   34444.7      8.18   11637.6     208.3 commit_redirect_reason[0]
+    0:02:26   34445.4      8.17   11629.4     208.3 commit_redirect_reason[0]
+    0:02:27   34453.6      8.16   11617.3     208.3 commit_is_mmio           
+    0:02:27   34462.8      8.16   11599.6     208.3 commit_is_mmio           
+    0:02:28   34466.0      8.15   11599.5     208.3 commit_is_mmio           
+    0:02:41   34466.9      8.15   11598.2     208.3 commit_redirect_reason[0]
+    0:02:43   34465.9      8.15   11598.2     208.3 commit_redirect_reason[0]
+    0:02:47   34465.2      8.15   11598.2     208.3 commit_redirect_reason[0]
+    0:03:12   34465.2      8.15   11598.2     208.3                          
+    0:03:13   34465.2      8.15   11598.1     208.3                          
+    0:03:14   34442.2      8.15   11619.2     404.3                          
+    0:03:14   34442.2      8.15   11619.2     404.3                          
+
+
+  Beginning Design Rule Fixing  (max_transition)  (max_capacitance)
+  ----------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:03:14   34442.2      8.15   11619.2     404.3                          
+    0:03:14   34448.9      8.15   11519.5       0.0 commit_is_mmio           
+    0:03:15   34461.0      8.15   11519.0       0.0 commit_is_mmio           
+    0:03:15   34460.2      8.14   11518.6       0.0 commit_is_mmio           
+    0:03:15   34460.5      8.14   11518.6       0.0 commit_is_mmio           
+    0:03:16   34464.2      8.14   11518.1       0.0 commit_is_mmio           
+    0:03:16   34476.0      8.13   11518.7       0.0 commit_is_mmio           
+    0:03:16   34480.0      8.12   11518.2       0.0 commit_is_mmio           
+    0:03:17   34483.3      8.11   11507.2       0.0 commit_is_mmio           
+    0:03:18   34494.8      8.09   11463.4       3.8 commit_redirect_reason[0]
+    0:03:18   34492.8      8.08   11463.1       3.8 commit_is_mmio           
+    0:03:19   34492.8      8.08   11463.0       3.8 commit_is_mmio           
+    0:03:19   34491.9      8.07   11451.2       3.8 commit_redirect_reason[0]
+    0:03:20   34494.6      8.06   11436.3       3.8 commit_is_mmio           
+    0:03:20   34500.0      8.06   11425.0       3.8 commit_is_mmio           
+    0:03:21   34510.1      8.05   11407.8       3.8 commit_is_mmio           
+    0:03:21   34510.9      8.05   11384.4       3.8 commit_redirect_reason[0]
+    0:03:22   34511.9      8.04   11384.3       3.8 commit_is_mmio           
+    0:03:22   34511.1      8.04   11384.3       3.8 commit_is_mmio           
+    0:03:23   34511.1      8.04   11384.3       3.8 commit_is_mmio           
+    0:03:23   34516.4      8.04   11384.2       3.8 commit_is_mmio           
+    0:03:23   34519.1      8.04   11384.2       3.8 commit_is_mmio           
+    0:03:24   34518.5      8.04   11382.9       3.8 commit_redirect_reason[0]
+    0:03:24   34521.5      8.03   11370.6       3.8 commit_is_mmio           
+    0:03:24   34525.8      8.03   11370.6       3.8 commit_is_mmio           
+    0:03:25   34529.5      8.02   11360.4       3.8 commit_is_mmio           
+    0:03:26   34557.1      8.02   11338.2       3.8 commit_redirect_reason[0]
+    0:03:26   34561.5      8.01   11338.2       3.8 commit_is_mmio           
+    0:03:27   34567.2      8.01   11338.4       3.8 commit_is_mmio           
+    0:03:27   34564.7      8.01   11337.2       3.8 commit_is_mmio           
+    0:03:28   34562.3      8.01   11333.5       3.8 commit_redirect_reason[0]
+    0:03:28   34568.0      8.00   11318.1       3.8 commit_is_mmio           
+    0:03:29   34573.6      8.00   11313.7       3.8 commit_is_mmio           
+    0:03:29   34573.9      8.00   11313.7       3.8 commit_is_mmio           
+    0:03:29   34580.3      7.99   11306.9       3.8 commit_is_mmio           
+    0:03:30   34576.6      7.99   11303.1       3.8 commit_is_mmio           
+    0:03:30   34575.7      7.98   11293.9       3.8 commit_is_mmio           
+    0:03:31   34584.8      7.98   11274.0       3.8 commit_is_mmio           
+    0:03:32   34590.0      7.97   11251.4       3.8 commit_is_mmio           
+    0:03:32   34594.2      7.97   11251.4       3.8 commit_is_mmio           
+    0:03:32   34598.8      7.97   11251.4       3.8 commit_is_mmio           
+    0:03:32   34601.1      7.97   11251.3       3.8 commit_is_mmio           
+    0:03:33   34603.8      7.96   11250.4       3.8 commit_is_mmio           
+    0:03:34   34614.7      7.96   11208.4       3.8 commit_is_mmio           
+    0:03:34   34616.7      7.96   11208.3       3.8 commit_is_mmio           
+    0:03:34   34622.4      7.95   11207.8       3.8 commit_is_mmio           
+    0:03:35   34641.9      7.94   11207.4       3.8 commit_redirect_reason[0]
+    0:03:36   34645.1      7.93   11194.8       3.8 commit_is_mmio           
+    0:03:36   34652.0      7.93   11170.7       3.8 commit_is_mmio           
+    0:03:37   34657.9      7.92   11170.4       3.8 commit_is_mmio           
+    0:03:37   34668.3      7.91   11169.9       3.8 commit_is_mmio           
+    0:03:38   34669.8      7.90   11151.3       3.8 commit_is_mmio           
+    0:03:38   34673.7      7.90   11139.8       3.8 commit_redirect_reason[0]
+    0:03:39   34673.7      7.90   11139.7       3.8 commit_is_mmio           
+    0:03:39   34678.7      7.90   11139.7       3.8 commit_is_mmio           
+    0:03:39   34688.3      7.90   11125.7       3.8 commit_redirect_reason[0]
+    0:03:40   34700.9      7.89   11119.6       3.8 commit_redirect_reason[0]
+    0:03:40   34701.1      7.88   11112.6       3.8 commit_is_mmio           
+    0:03:41   34700.2      7.88   11112.6       3.8 commit_is_mmio           
+    0:03:41   34700.6      7.88   11096.1       3.8 commit_is_mmio           
+    0:03:42   34695.7      7.87   11086.0       3.8 commit_is_mmio           
+    0:03:42   34705.9      7.87   11085.6       3.8 commit_is_mmio           
+    0:03:43   34717.4      7.87   11073.4       3.8 commit_redirect_reason[0]
+    0:03:43   34722.4      7.86   11073.4       3.8 commit_is_mmio           
+    0:03:43   34722.9      7.86   11073.2       3.8 commit_is_mmio           
+    0:03:44   34739.7      7.86   11066.7       3.8 commit_redirect_reason[0]
+    0:03:45   34741.4      7.85   11058.3       3.8 commit_is_mmio           
+    0:03:45   34748.1      7.85   11058.3       3.8 commit_is_mmio           
+    0:03:46   34750.5      7.85   11055.6       3.8 commit_redirect_reason[0]
+    0:03:46   34748.3      7.84   11048.0       3.8 commit_is_mmio           
+    0:03:47   34744.6      7.84   11037.7       3.8 commit_is_mmio           
+    0:03:48   34753.5      7.84   11035.1       3.8 commit_is_mmio           
+    0:03:48   34757.5      7.84   11036.8       3.8 commit_is_mmio           
+    0:03:49   34758.4      7.84   11036.8       3.8 commit_is_mmio           
+    0:03:49   34770.1      7.83   10999.9       3.8 commit_is_mmio           
+    0:03:50   34774.5      7.82   10999.4       3.8 commit_is_mmio           
+    0:03:51   34777.2      7.82   10989.9       3.8 commit_is_mmio           
+    0:03:51   34781.2      7.81   10975.4       3.8 commit_redirect_reason[0]
+    0:03:52   34783.1      7.81   10961.9       3.8 commit_redirect_reason[0]
+    0:03:58   34781.4      7.80   10959.4       0.0 core/u_exu/u_alu/rem_80/net70758
+    0:03:58   34780.4      7.80   10955.5       0.0 commit_is_mmio           
+    0:03:59   34780.5      7.80   10955.5       0.0 commit_is_mmio           
+    0:03:59   34796.5      7.79   10952.3       0.0 commit_is_mmio           
+    0:04:00   34794.0      7.79   10944.6       0.0 commit_is_mmio           
+    0:04:00   34794.1      7.79   10944.6       0.0 commit_is_mmio           
+    0:04:01   34792.0      7.79   10944.6       0.0 commit_is_mmio           
+    0:04:02   34791.0      7.78   10935.7       0.0 commit_is_mmio           
+    0:04:02   34797.7      7.78   10932.4       0.0 commit_redirect_reason[0]
+    0:04:03   34794.5      7.78   10932.3       0.0 commit_is_mmio           
+    0:04:03   34805.1      7.78   10892.3       0.0 commit_is_mmio           
+    0:04:04   34801.9      7.77   10892.0       0.0 commit_is_mmio           
+    0:04:04   34804.1      7.77   10891.6       0.0 commit_is_mmio           
+    0:04:05   34811.6      7.76   10891.5       0.0 commit_is_mmio           
+    0:04:05   34823.4      7.75   10885.9       0.0 commit_is_mmio           
+    0:04:06   34827.7      7.74   10862.8       0.0 commit_redirect_reason[0]
+    0:04:07   34827.7      7.74   10862.1       0.0 commit_is_mmio           
+    0:04:07   34827.2      7.74   10862.1       0.0 commit_is_mmio           
+    0:04:08   34829.4      7.74   10861.8       0.0 commit_is_mmio           
+    0:04:08   34828.4      7.74   10861.8       0.0 commit_is_mmio           
+    0:04:08   34848.4      7.74   10858.3       0.0 commit_is_mmio           
+    0:04:09   34872.1      7.73   10831.6       0.0 commit_redirect_reason[0]
+    0:04:10   34878.5      7.72   10830.2       0.0 commit_is_mmio           
+    0:04:11   34875.5      7.72   10821.5       0.0 commit_redirect_reason[0]
+    0:04:11   34880.2      7.72   10821.6       0.0 commit_is_mmio           
+    0:04:12   34885.9      7.71   10806.2       0.0 commit_is_mmio           
+    0:04:12   34886.7      7.71   10795.1       0.0 commit_is_mmio           
+    0:04:13   34883.0      7.71   10794.9       0.0 commit_is_mmio           
+    0:04:13   34888.7      7.70   10795.0       0.0 commit_redirect_reason[0]
+    0:04:13   34894.3      7.70   10795.0       0.0 commit_is_mmio           
+    0:04:14   34893.8      7.70   10788.6       0.0 commit_is_mmio           
+    0:04:14   34893.3      7.70   10788.6       0.0 commit_is_mmio           
+    0:04:14   34889.6      7.69   10784.5       0.0 commit_is_mmio           
+    0:04:15   34893.8      7.69   10769.6       0.0 commit_is_mmio           
+    0:04:15   34896.6      7.69   10769.5       0.0 commit_is_mmio           
+    0:04:16   34910.1      7.68   10761.5       0.0 commit_redirect_reason[0]
+    0:04:16   34910.9      7.68   10761.5       0.0 commit_is_mmio           
+    0:04:16   34908.0      7.68   10761.5       0.0 commit_is_mmio           
+    0:04:17   34919.6      7.68   10756.1       0.0 commit_is_mmio           
+    0:04:18   34917.1      7.68   10756.1       0.0 commit_is_mmio           
+    0:04:18   34918.0      7.68   10755.5       0.0 commit_is_mmio           
+    0:04:18   34917.3      7.68   10754.4       0.0 commit_redirect_reason[0]
+    0:04:19   34916.4      7.68   10754.4       0.0 commit_is_mmio           
+    0:04:20   34917.5      7.67   10746.3       0.0 commit_redirect_reason[0]
+    0:04:20   34918.8      7.67   10746.3       0.0 commit_is_mmio           
+    0:04:21   34925.9      7.67   10712.0       0.0 commit_is_mmio           
+    0:04:22   34935.8      7.66   10711.7       0.0 commit_is_mmio           
+    0:04:22   34940.6      7.66   10716.1       0.0 commit_redirect_reason[0]
+    0:04:23   34939.3      7.65   10716.1       0.0 commit_is_mmio           
+    0:04:23   34941.6      7.65   10695.4       0.0 commit_is_mmio           
+    0:04:23   34939.1      7.65   10695.3       0.0 commit_is_mmio           
+    0:04:24   34941.3      7.65   10695.2       0.0 commit_is_mmio           
+    0:04:24   34941.6      7.65   10695.2       0.0 commit_is_mmio           
+    0:04:24   34941.1      7.64   10695.2       0.0 commit_is_mmio           
+    0:04:25   34941.8      7.64   10689.7       0.0 commit_redirect_reason[0]
+    0:04:25   34941.0      7.64   10675.4       0.0 commit_is_mmio           
+    0:04:26   34939.5      7.64   10675.3       0.0 commit_is_mmio           
+    0:04:26   34936.8      7.64   10673.0       0.0 commit_redirect_reason[0]
+    0:04:27   34936.9      7.64   10673.0       0.0 commit_is_mmio           
+    0:04:27   34938.1      7.63   10672.9       0.0 commit_is_mmio           
+    0:04:28   34944.8      7.62   10658.8       0.0 commit_redirect_reason[0]
+    0:04:28   34950.9      7.62   10647.3       0.0 commit_is_mmio           
+    0:04:29   34961.0      7.61   10624.5       0.0 commit_is_mmio           
+    0:04:30   34969.5      7.61   10620.4       0.0 commit_redirect_reason[0]
+    0:04:30   34970.9      7.61   10617.1       0.0 commit_redirect_reason[0]
+    0:04:31   34974.6      7.60   10616.9       0.0 commit_is_mmio           
+    0:04:31   34973.7      7.60   10614.5       0.0 commit_redirect_reason[0]
+    0:04:32   34976.6      7.60   10606.3       0.0 commit_redirect_reason[0]
+    0:04:32   34977.4      7.60   10605.6       0.0 commit_is_mmio           
+    0:04:33   34981.5      7.59   10599.6       0.0 commit_redirect_reason[0]
+    0:04:34   34976.4      7.59   10595.9       0.0 commit_redirect_reason[0]
+    0:04:34   34979.3      7.59   10588.1       0.0 commit_redirect_reason[0]
+    0:04:34   34980.1      7.59   10588.0       0.0 commit_is_mmio           
+    0:04:35   34981.0      7.58   10584.2       0.0 commit_redirect_reason[0]
+    0:04:36   34988.2      7.58   10567.8       0.0 commit_is_mmio           
+    0:04:36   34988.0      7.58   10559.6       0.0 commit_is_mmio           
+    0:04:36   34986.0      7.58   10559.6       0.0 commit_is_mmio           
+    0:04:37   34985.0      7.57   10559.6       0.0 commit_is_mmio           
+    0:04:38   34984.5      7.57   10556.6       0.0 commit_is_mmio           
+    0:04:44   34984.8      7.57   10556.7       0.0 commit_is_mmio           
+    0:04:44   34987.5      7.57   10553.2       0.0 commit_is_mmio           
+    0:04:45   35001.1      7.56   10540.8       0.0 commit_is_mmio           
+    0:04:45   35005.3      7.56   10535.2       0.0 commit_is_mmio           
+    0:04:45   35016.1      7.55   10534.8       0.0 commit_is_mmio           
+    0:04:45   35018.6      7.55   10531.4       0.0 commit_is_mmio           
+    0:04:45   35022.6      7.55   10527.5       0.0 commit_redirect_reason[0]
+    0:04:46   35026.5      7.55   10521.8       0.0 commit_is_mmio           
+    0:04:46   35031.0      7.55   10515.8       0.0 commit_redirect_reason[0]
+    0:04:46   35034.0      7.54   10509.2       0.0 commit_redirect_reason[0]
+    0:04:46   35039.1      7.54   10508.5       0.0 commit_is_mmio           
+    0:04:46   35046.1      7.54   10503.8       0.0 commit_is_mmio           
+    0:04:47   35046.8      7.53   10499.6       0.0 commit_is_mmio           
+    0:04:47   35051.0      7.53   10489.1       0.0 commit_is_mmio           
+    0:04:47   35052.7      7.53   10489.1       0.0 commit_is_mmio           
+    0:04:47   35055.4      7.53   10489.0       0.0 commit_is_mmio           
+    0:04:47   35059.6      7.53   10483.5       0.0 commit_redirect_reason[0]
+    0:04:48   35058.7      7.53   10483.2       0.0 commit_redirect_reason[0]
+    0:04:48   35063.6      7.52   10472.0       0.0 commit_is_mmio           
+    0:04:48   35066.5      7.52   10467.5       0.0 commit_redirect_reason[0]
+    0:04:48   35077.9      7.52   10465.3       0.0 commit_is_mmio           
+    0:04:49   35081.4      7.51   10462.2       0.0 commit_is_mmio           
+    0:04:49   35099.7      7.51   10444.5       0.0 commit_is_mmio           
+    0:04:49   35103.9      7.51   10435.3       0.0 commit_is_mmio           
+    0:04:49   35106.0      7.50   10435.2       0.0 commit_is_mmio           
+    0:04:49   35111.7      7.50   10422.6       0.0 commit_is_mmio           
+    0:04:50   35119.7      7.50   10422.5       0.0 commit_is_mmio           
+    0:04:50   35125.6      7.49   10416.4       0.0 commit_is_mmio           
+    0:04:50   35129.8      7.49   10414.9       0.0 commit_is_mmio           
+    0:04:51   35131.2      7.49   10410.3       0.0 commit_is_mmio           
+    0:04:51   35132.2      7.49   10410.2       0.0 commit_redirect_reason[0]
+    0:04:51   35132.0      7.48   10409.5       0.0 commit_redirect_reason[0]
+    0:04:51   35136.0      7.48   10405.9       0.0 commit_is_mmio           
+    0:04:52   35139.0      7.48   10402.3       0.0 commit_is_mmio           
+    0:04:52   35145.9      7.48   10395.7       0.0 commit_is_mmio           
+    0:04:52   35150.8      7.48   10391.4       0.0 commit_is_mmio           
+    0:04:52   35155.2      7.47   10389.8       0.0 commit_is_mmio           
+    0:04:52   35155.2      7.47   10386.3       0.0 commit_is_mmio           
+    0:04:53   35158.7      7.47   10381.6       0.0 commit_is_mmio           
+    0:04:53   35159.0      7.47   10377.9       0.0 commit_is_mmio           
+    0:04:53   35161.1      7.47   10377.6       0.0 commit_is_mmio           
+    0:04:53   35159.2      7.47   10367.4       0.0 commit_is_mmio           
+    0:04:55   35159.2      7.47   10367.2       0.0 commit_redirect_reason[0]
+    0:04:59   35157.4      7.47   10367.2       0.0 commit_redirect_reason[0]
+    0:05:04   35157.7      7.47   10367.0       0.0 commit_redirect_reason[0]
+    0:05:06   35156.2      7.47   10367.0       0.0 commit_redirect_reason[0]
+    0:05:17   35155.5      7.47   10372.6       0.0 commit_redirect_reason[0]
+    0:05:31   35153.8      7.47   10372.6       0.0                          
+    0:05:37   35153.7      7.47   10372.2       0.0                          
+    0:05:37   35153.0      7.47   10372.2       0.0                          
+    0:05:38   35154.0      7.47   10372.2       0.0                          
+    0:05:39   35152.7      7.47   10372.2       0.0                          
+    0:05:39   35151.3      7.47   10372.2       0.0                          
+    0:05:40   35150.6      7.47   10372.2       0.0                          
+    0:05:40   35152.7      7.47   10372.2       0.0                          
+    0:05:40   35152.8      7.47   10368.6       0.0                          
+    0:05:41   35156.2      7.46   10364.7       0.0                          
+    0:05:41   35156.0      7.46   10364.2       0.0                          
+    0:05:41   35154.7      7.46   10357.3       0.0                          
+    0:05:42   35157.9      7.46   10354.8       0.0                          
+    0:05:42   35161.6      7.46   10338.0       0.0                          
+    0:05:43   35160.2      7.46   10338.0       0.0                          
+    0:05:43   35156.9      7.46   10338.0       0.0                          
+    0:05:44   35154.8      7.46   10338.0       0.0                          
+    0:05:44   35151.6      7.46   10338.0       0.0                          
+    0:05:46   35142.1      7.46   10337.8       0.0                          
+    0:05:46   35140.4      7.46   10337.4       0.0                          
+    0:05:46   35174.8      7.46   10335.5       0.0                          
+    0:05:48   35188.6      7.46   10335.2       0.0                          
+    0:05:49   35190.3      7.46   10335.1       0.0                          
+    0:05:49   35186.6      7.46   10326.1       0.0                          
+    0:05:49   35232.0      7.46   10286.0       0.0                          
+    0:05:49   35240.4      7.46   10284.0       0.0                          
+    0:05:49   35254.3      7.46   10283.5       0.0                          
+    0:05:49   35250.4      7.46   10276.5       0.0                          
+
+
+  Beginning Area-Recovery Phase  (cleanup)
+  -----------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:05:49   35250.4      7.46   10276.5       0.0                          
+    0:05:49   35250.4      7.46   10276.5       0.0                          
+    0:05:51   35103.6      7.46   10288.6       0.0                          
+    0:05:51   35067.6      7.46   10288.4       0.0                          
+    0:05:51   35040.9      7.46   10288.1       0.0                          
+    0:05:51   35014.7      7.48   10337.3       0.0                          
+    0:05:51   34991.5      7.49   10337.0       0.0                          
+    0:05:52   34982.1      7.49   10337.0       0.0                          
+    0:05:52   34978.3      7.49   10337.0       0.0                          
+    0:05:52   34978.3      7.49   10337.0       0.0                          
+    0:05:52   34978.3      7.49   10337.0       0.0                          
+    0:05:53   34819.0      7.51   10382.0       0.0                          
+    0:05:53   34761.9      7.59   10398.9       0.0                          
+    0:05:53   34734.8      7.60   10402.7       0.0                          
+    0:05:53   34731.3      7.60   10402.8       0.0                          
+    0:05:53   34731.3      7.60   10402.8       0.0                          
+    0:05:53   34731.3      7.60   10402.8       0.0                          
+    0:05:53   34731.3      7.60   10402.8       0.0                          
+    0:05:53   34731.3      7.60   10402.8       0.0                          
+    0:05:54   34751.1      7.55   10398.7       0.0 commit_is_mmio           
+    0:05:54   34778.9      7.50   10363.2       0.0 commit_is_mmio           
+    0:05:55   34777.2      7.50   10358.6       0.0 commit_redirect_reason[0]
+    0:05:55   34785.7      7.50   10358.5       0.0 commit_is_mmio           
+    0:05:56   34784.9      7.49   10353.5       0.0 commit_is_mmio           
+    0:05:56   34785.4      7.49   10353.5       0.0 commit_is_mmio           
+    0:05:57   34790.6      7.49   10341.1       0.0 commit_redirect_reason[0]
+    0:05:58   34791.0      7.49   10339.4       0.0 commit_redirect_reason[0]
+    0:05:58   34795.2      7.48   10323.7       0.0 commit_is_mmio           
+    0:05:59   34799.5      7.47   10319.7       0.0 commit_is_mmio           
+    0:06:03   34797.7      7.47   10318.6       0.0                          
+    0:06:03   34797.8      7.47   10318.0       0.0                          
+    0:06:03   34797.5      7.47   10316.4       0.0                          
+    0:06:03   34796.2      7.47   10316.4       0.0                          
+    0:06:04   34792.6      7.47   10316.3       0.0                          
+    0:06:04   34788.4      7.47   10316.2       0.0                          
+    0:06:04   34797.3      7.47   10307.2       0.0                          
+    0:06:04   34887.7      7.47   10281.4       0.0                          
+    0:06:04   34886.7      7.47   10281.4       0.0                          
+    0:06:04   34880.5      7.47   10281.4       0.0                          
+    0:06:04   34877.6      7.47   10281.3       0.0                          
+    0:06:04   34872.9      7.47   10281.3       0.0                          
+    0:06:05   34870.2      7.47   10281.3       0.0                          
+    0:06:05   34865.9      7.47   10281.3       0.0                          
+    0:06:05   34865.5      7.47   10281.3       0.0                          
+    0:06:05   34864.5      7.47   10279.7       0.0                          
+    0:06:05   34862.5      7.47   10267.8       0.0                          
+    0:06:05   34857.3      7.47   10258.8       0.0                          
+    0:06:05   34858.2      7.47   10230.5       0.0                          
+    0:06:05   34856.8      7.47   10230.4       0.0                          
+    0:06:06   34858.2      7.47   10229.8       0.0                          
+    0:06:06   34860.0      7.47   10229.7       0.0                          
+    0:06:06   34861.2      7.47   10229.7       0.0                          
+    0:06:06   34861.5      7.46   10229.6       0.0                          
+    0:06:06   34861.8      7.46   10229.5       0.0                          
+    0:06:06   34863.0      7.46   10229.3       0.0                          
+    0:06:07   34868.7      7.45   10229.0       0.0                          
+    0:06:07   34868.9      7.45   10228.8       0.0                          
+    0:06:07   34868.1      7.45   10228.8       0.0                          
+    0:06:07   34868.1      7.45   10228.8       0.0                          
+    0:06:08   34874.3      7.44   10224.7       0.0                          
+    0:06:08   34875.6      7.44   10224.1       0.0                          
+    0:06:08   34876.0      7.44   10224.1       0.0                          
+    0:06:08   34880.8      7.44   10224.1       0.0                          
+    0:06:09   34880.3      7.44   10224.1       0.0                          
+    0:06:09   34884.5      7.43   10215.3       0.0                          
+    0:06:09   34886.5      7.43   10210.6       0.0                          
+    0:06:10   34886.5      7.43   10210.5       0.0                          
+    0:06:10   34887.2      7.43   10210.5       0.0                          
+    0:06:10   34890.7      7.43   10197.4       0.0                          
+    0:06:10   34891.2      7.43   10197.4       0.0                          
+    0:06:11   34890.9      7.43   10197.4       0.0                          
+    0:06:11   34890.7      7.42   10195.2       0.0                          
+    0:06:11   34890.7      7.42   10191.1       0.0                          
+    0:06:11   34889.7      7.42   10191.1       0.0                          
+    0:06:11   34892.9      7.42   10191.1       0.0                          
+    0:06:12   34893.1      7.42   10191.1       0.0                          
+    0:06:12   34902.5      7.42   10189.4       0.0                          
+    0:06:12   34905.9      7.42   10180.6       0.0                          
+    0:06:12   34907.7      7.42   10180.5       0.0                          
+    0:06:12   34907.0      7.42   10180.5       0.0                          
+    0:06:12   34905.9      7.41   10177.7       0.0                          
+    0:06:13   34906.0      7.41   10172.8       0.0                          
+    0:06:13   34909.4      7.41   10169.1       0.0                          
+    0:06:13   34921.7      7.41   10159.5       0.0                          
+    0:06:14   34923.8      7.40   10159.5       0.0                          
+    0:06:14   34925.4      7.40   10159.4       0.0                          
+    0:06:14   34931.1      7.40   10158.0       0.0                          
+    0:06:15   34931.6      7.40   10158.0       0.0                          
+    0:06:15   34931.1      7.40   10149.7       0.0                          
+    0:06:15   34930.9      7.40   10146.3       0.0                          
+    0:06:16   34936.8      7.40   10127.3       0.0                          
+    0:06:16   34938.5      7.40   10120.1       0.0                          
+    0:06:16   34937.4      7.40   10119.9       0.0                          
+    0:06:17   34939.5      7.40   10115.0       0.0                          
+    0:06:17   34939.8      7.40   10096.5       0.0                          
+    0:06:17   34945.8      7.40   10092.9       0.0                          
+    0:06:18   34946.5      7.40   10092.3       0.0                          
+    0:06:18   34949.0      7.40   10082.8       0.0                          
+    0:06:19   34944.8      7.40   10077.0       0.0                          
+    0:06:19   34943.7      7.40   10074.4       0.0                          
+    0:06:19   34943.8      7.40   10071.3       0.0                          
+    0:06:20   34945.3      7.40   10058.0       0.0                          
+    0:06:21   34950.7      7.40   10056.7       0.0                          
+    0:06:21   34951.1      7.40   10054.1       0.0                          
+    0:06:21   34950.2      7.40   10051.5       0.0                          
+    0:06:22   34952.4      7.40   10041.7       0.0                          
+    0:06:22   34952.9      7.40   10031.6       0.0                          
+    0:06:23   34955.4      7.40   10009.3       0.0                          
+    0:06:24   34960.5      7.40   10010.3       0.0                          
+    0:06:25   34954.8      7.40    9994.7       0.0                          
+    0:06:26   34955.1      7.40    9990.8       0.0                          
+    0:06:26   34955.1      7.40    9990.9       0.0                          
+    0:06:26   34955.1      7.40    9990.9       0.0                          
+    0:06:27   34953.4      7.40    9990.9       0.0                          
+    0:06:27   34952.2      7.40    9990.8       0.0                          
+    0:06:27   34950.9      7.40    9990.6       0.0                          
+    0:06:28   34951.4      7.40    9990.5       0.0                          
+    0:06:28   34951.6      7.40    9990.5       0.0                          
+    0:06:28   34951.1      7.40    9990.5       0.0                          
+    0:06:28   34956.8      7.40    9990.3       0.0                          
+    0:06:29   34958.4      7.40    9990.3       0.0                          
+    0:06:29   34959.5      7.40    9989.9       0.0                          
+    0:06:30   34967.0      7.40    9989.8       0.0                          
+    0:06:31   34969.0      7.40    9989.7       0.0                          
+    0:06:32   34970.0      7.40    9989.6       0.0 commit_is_mmio           
+    0:06:32   34981.6      7.40    9988.6       0.0 commit_is_mmio           
+    0:06:33   34989.7      7.39    9987.9       0.0 commit_is_mmio           
+    0:06:33   34987.8      7.39    9987.8       0.0 commit_is_mmio           
+    0:06:34   34997.9      7.39    9986.9       0.0 commit_is_mmio           
+    0:06:34   35002.5      7.38    9985.6       0.0 commit_is_mmio           
+    0:06:34   35001.3      7.38    9985.4       0.0 commit_is_mmio           
+    0:06:35   35004.5      7.38    9985.2       0.0 commit_is_mmio           
+    0:06:35   35007.3      7.38    9985.0       0.0 commit_is_mmio           
+    0:06:36   35008.0      7.38    9985.0       0.0 commit_is_mmio           
+    0:06:36   35006.8      7.38    9984.9       0.0 commit_is_mmio           
+    0:06:36   35006.2      7.38    9984.7       0.0 commit_is_mmio           
+    0:06:37   35004.6      7.38    9984.6       0.0 commit_is_mmio           
+    0:06:37   35005.8      7.38    9984.5       0.0 commit_is_mmio           
+    0:06:37   35008.0      7.38    9984.1       0.0 commit_is_mmio           
+    0:06:38   35010.0      7.37    9983.8       0.0 commit_is_mmio           
+    0:06:38   35010.2      7.37    9983.6       0.0 commit_is_mmio           
+    0:06:39   35013.2      7.37    9983.6       0.0 commit_is_mmio           
+    0:06:39   35012.5      7.37    9983.5       0.0 commit_is_mmio           
+    0:06:40   35010.7      7.37    9982.8       0.0 commit_is_mmio           
+    0:06:40   35007.3      7.37    9982.8       0.0 commit_is_mmio           
+    0:06:40   35005.7      7.37    9982.8       0.0 commit_is_mmio           
+    0:06:41   35004.5      7.37    9982.7       0.0 commit_is_mmio           
+    0:06:41   35008.2      7.36    9982.4       0.0 commit_is_mmio           
+    0:06:41   35007.2      7.36    9982.4       0.0 commit_is_mmio           
+    0:06:41   35006.3      7.36    9982.4       0.0 commit_is_mmio           
+    0:06:42   35006.2      7.36    9982.4       0.0 commit_is_mmio           
+    0:06:42   35005.8      7.36    9982.2       0.0 commit_is_mmio           
+    0:06:43   35005.3      7.36    9982.2       0.0 commit_is_mmio           
+    0:06:44   35005.7      7.36    9982.2       0.0 commit_is_mmio           
+    0:06:44   35002.8      7.36    9982.1       0.0 commit_is_mmio           
+    0:06:45   35003.3      7.36    9981.2       0.0 commit_is_mmio           
+    0:06:45   35004.1      7.36    9981.2       0.0 commit_is_mmio           
+    0:06:45   35004.3      7.36    9981.2       0.0 commit_is_mmio           
+    0:06:47   35004.1      7.36    9981.2       0.0 commit_is_mmio           
+    0:06:49   35002.6      7.36    9981.2       0.0 commit_is_mmio           
+    0:06:49   34999.9      7.36    9981.2       0.0 commit_is_mmio           
+    0:06:51   34998.4      7.36    9981.2       0.0 commit_is_mmio           
+    0:06:51   34998.8      7.36    9981.2       0.0 commit_is_mmio           
+    0:06:52   34996.4      7.36    9981.2       0.0 commit_is_mmio           
+    0:06:52   34995.7      7.36    9981.2       0.0 commit_is_mmio           
+    0:06:52   34994.4      7.36   10001.1       0.0 commit_is_mmio           
+    0:06:54   34994.7      7.36   10001.0       0.0 commit_is_mmio           
+    0:06:54   35006.8      7.34   10000.0       0.0 commit_is_mmio           
+    0:06:54   35013.6      7.34    9999.8       0.0 commit_is_mmio           
+    0:06:54   35017.4      7.34    9999.8       0.0 commit_is_mmio           
+    0:06:54   35017.6      7.34    9999.7       0.0 commit_is_mmio           
+    0:06:54   35017.9      7.33    9999.5       0.0 commit_is_mmio           
+    0:06:55   35018.1      7.33    9999.4       0.0 commit_is_mmio           
+    0:06:55   35018.4      7.33    9999.3       0.0 commit_is_mmio           
+    0:06:55   35019.6      7.33    9999.2       0.0 commit_is_mmio           
+    0:06:55   35019.9      7.33    9999.1       0.0 commit_is_mmio           
+    0:06:55   35023.3      7.32    9999.1       0.0 commit_is_mmio           
+    0:06:55   35023.5      7.32    9999.0       0.0 commit_is_mmio           
+    0:06:55   35030.5      7.32    9998.9       0.0 commit_is_mmio           
+    0:06:56   35033.7      7.32    9998.8       0.0 commit_is_mmio           
+    0:06:56   35035.1      7.31    9998.8       0.0 commit_is_mmio           
+    0:06:56   35035.4      7.31    9998.8       0.0 commit_is_mmio           
+    0:06:56   35037.9      7.31    9987.8       0.0 commit_redirect_reason[0]
+    0:06:57   35043.0      7.31    9987.8       0.0 commit_is_mmio           
+    0:06:57   35052.5      7.31    9972.2       0.0 commit_is_mmio           
+    0:06:57   35065.1      7.30    9971.6       0.0 commit_redirect_reason[0]
+    0:06:57   35072.0      7.30    9969.3       0.0 commit_is_mmio           
+    0:06:58   35080.1      7.29    9961.3       0.0 commit_is_mmio           
+    0:06:58   35079.4      7.29    9958.1       0.0 commit_is_mmio           
+    0:07:00   35079.9      7.29    9958.1       0.0 commit_is_mmio           
+    0:07:01   35080.2      7.29    9958.1       0.0 commit_is_mmio           
+    0:07:02   35080.2      7.29    9958.1       0.0 commit_is_mmio           
+    0:07:02   35080.4      7.29    9958.1       0.0 commit_is_mmio           
+    0:07:10   35080.8      7.29    9958.1       0.0                          
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+Warning: Design 'ysyx_core_axi4lite' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+     Net 'core/u_csr/gen_csr[1].csr_dfflr/clk': 2021 load(s), 1 driver(s)
+CPU Load: 1%, Ram Free: 1145 GB, Swap Free: 3 GB, Work Disk Free: 1518 GB, Tmp Disk Free: 28 GB
+Information: Total number of MV cells in the design.
+----------------------------------------------------------------------------------------------------
+ MV Cells                                           Total Number                                   
+----------------------------------------------------------------------------------------------------
+ Level Shifter:                                     0                                             
+ Enable Level Shifter:                              0                                             
+ Isolation Cell:                                    0                                             
+ Retention Cell:                                    0                                             
+ Retention Clamp Cell:                              0                                             
+ Switch Cell:                                       0                                             
+ Always-On Cell:                                    0                                             
+ Repeater Cell:                                     0                                             
+
+----------------------------------------------------------------------------------------------------
+Unmapped MV Cells 
+----------------------------------------------------------------------------------------------------
+0 Isolation Cells are unmapped 
+0 Retention Clamp Cells are unmapped 
+----------------------------------------------------------------------------------------------------
+Warning: The specified replacement character (_) is conflicting with the specified allowed or restricted character.   (UCN-4)
+Writing verilog file '/home/cym/prj/ysyx-workbench/npc/flow/build/core-tt-10ns-split/outputs/core.v'.
+Writing ddc file '/home/cym/prj/ysyx-workbench/npc/flow/build/core-tt-10ns-split/outputs/core.ddc'.
+exit 0
+
+Memory usage for this session 1864 Mbytes.
+Memory usage for this session including child processes 2436 Mbytes.
+CPU usage for this session 1049 seconds ( 0.29 hours ).
+Elapsed time for this session 473 seconds ( 0.13 hours ).
+
+Thank you...

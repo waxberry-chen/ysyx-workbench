@@ -1,0 +1,123 @@
+{
+  "source_run": "npc/flow/build/core-tt-10ns-split",
+  "archive_date": "2026-10-17",
+  "git_head": "04397db2a95077de0ec4ae47dad1cd5e575a153a",
+  "classification": "first-synthesis; DC timing fail; not formal S3 baseline",
+  "files": {
+    "reports/area.rpt": {
+      "source": "reports/syn/area.rpt",
+      "sha256": "238f790c1e2540e0399469cd5fdb90025ac031691fc85d5145b4a513373c0051",
+      "bytes": 6457
+    },
+    "reports/qor.rpt": {
+      "source": "reports/syn/qor.rpt",
+      "sha256": "62fceccf244a2760d498726bdfd4ea5706feecbe25d860868986ac45c534aeaf",
+      "bytes": 2419
+    },
+    "reports/resources.rpt": {
+      "source": "reports/syn/resources.rpt",
+      "sha256": "890b7f3a58fdcb881d1c2fbc78e8759fa02aff525f56f4e02528401d65db8b21",
+      "bytes": 19489
+    },
+    "reports/references.rpt": {
+      "source": "reports/syn/references.rpt",
+      "sha256": "a8c5d0a325fd4b9b9d07d2bbbb85e6987d4c0324fba6643d230b8f00470870da",
+      "bytes": 167790
+    },
+    "reports/timing_max.rpt": {
+      "source": "reports/syn/timing_max.rpt",
+      "sha256": "3525fa9e7114aae6395d8c60427192e386528948aa5e6bfcc4fa6774ad9548cf",
+      "bytes": 1441541
+    },
+    "reports/timing_min.rpt": {
+      "source": "reports/syn/timing_min.rpt",
+      "sha256": "b36782bd50a3a330d38f29ad12f25ea60a7feb3664fd68884ac16616dd3dc39c",
+      "bytes": 49245
+    },
+    "reports/constraints.rpt": {
+      "source": "reports/syn/constraints.rpt",
+      "sha256": "f15540dfb91e317fe9742be2b08b5a8e8170fe16b14a0ba08268a450b357627a",
+      "bytes": 150044
+    },
+    "reports/check_design_pre.rpt": {
+      "source": "reports/syn/check_design_pre.rpt",
+      "sha256": "2181551dc61e37f3fd8f36615ad65ec3aa599e4fc6806da2c52ef69772874000",
+      "bytes": 88842
+    },
+    "reports/check_design_post.rpt": {
+      "source": "reports/syn/check_design_post.rpt",
+      "sha256": "2cde2b9be8ceca5c4129761c4c3b2e71985dedb503cb4e3eb017f2120c1bdab8",
+      "bytes": 129899
+    },
+    "reports/check_timing.rpt": {
+      "source": "reports/syn/check_timing.rpt",
+      "sha256": "94bf7675a38cf2f7e109edbc8dc51e1112bf6d2b3427362c2e14197d434eaf38",
+      "bytes": 304
+    },
+    "reports/design.rpt": {
+      "source": "reports/syn/design.rpt",
+      "sha256": "cc202107d432476a246a9f38d8bdf3032ac7e536eef4a5367e9fe2a2f5094010",
+      "bytes": 1829
+    },
+    "reports/version.rpt": {
+      "source": "reports/syn/version.rpt",
+      "sha256": "a9ae53b7befd951ea229317e14b61dcc3d6aa386a2e8e9e28967812b26b84288",
+      "bytes": 14
+    },
+    "reports/power_status.txt": {
+      "source": "reports/syn/power_status.txt",
+      "sha256": "f81febf00488729ee9a772bbfe522514961d35cfb2f551030749a48d4daf9cf7",
+      "bytes": 24
+    },
+    "logs/syn.log": {
+      "source": "logs/syn.log",
+      "sha256": "23be0d85f57d769ac175100e07d1c68eb4873a629426d2dbb1d040774413f6cf",
+      "bytes": 84869
+    },
+    "provenance/manifest.json": {
+      "source": "manifest.json",
+      "sha256": "a6fca036dd866db35c629ccbb04352fa2ed0c2e435d1f324aa397ddbf3368a89",
+      "bytes": 235352
+    },
+    "provenance/dirty.patch": {
+      "source": "inputs/dirty.patch",
+      "sha256": "c11814428a80e20809e04978b536317e286a967e13058760a713dd7df4fcc178",
+      "bytes": 14784
+    },
+    "provenance/git-status.txt": {
+      "source": "inputs/git-status.txt",
+      "sha256": "69f8d4e07ace0897e07a238d0591e4a3196298b286212a703a318423dd4f5219",
+      "bytes": 1135
+    },
+    "provenance/design-config.tcl": {
+      "source": "inputs/design-config.tcl",
+      "sha256": "27c6447b50e4dd72a62a06edc118c95eed39f11aad73ed916c8e716c17cb3a18",
+      "bytes": 1982
+    },
+    "provenance/site-config.tcl": {
+      "source": "inputs/site-config.tcl",
+      "sha256": "2f2dbbd23a9bb9a9d425d69a1d17bcc2ae4dd7cc54175cfcdda611aee051b676",
+      "bytes": 2239
+    },
+    "provenance/run.tcl": {
+      "source": "inputs/run.tcl",
+      "sha256": "97c27cb2dc19a3d1bf99d1dfd7c2c1f6c0987144452c05c00acc77eb04e4da8f",
+      "bytes": 1622
+    },
+    "provenance/core.sdc": {
+      "source": "inputs/npc/flow/00_indata/constraints/core.sdc",
+      "sha256": "b900c5fd7ea216aeba10cfcead433ae24ff6b6f726d41ae055d0f35eb2f9a4ef",
+      "bytes": 3698
+    },
+    "provenance/core.f": {
+      "source": "inputs/npc/flow/00_indata/filelists/core.f",
+      "sha256": "78eb35ab7614d72a663fe17f8bb6cec175ae20b66b352ef0d3f84106b46b018d",
+      "bytes": 462
+    },
+    "provenance/dc.sdc": {
+      "source": "outputs/dc.sdc",
+      "sha256": "861c6667fb05d1af15b9845fde1e078d35aa76222c1e43ba42c31d69903b7d45",
+      "bytes": 65548
+    }
+  }
+}

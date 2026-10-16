@@ -84,3 +84,16 @@
 - 新增 `make -C npc/flow clean RUN_ID=...`，只删指定 run，可清理失败产物后复用 ID，不依赖 SITE/EDA 可用性；拒绝空 ID、路径穿越、run 符号链接、无效 manifest 和 RUNNING 阶段。自定义/旧 RUN_ROOT 必须显式指定，清理会删除该 run 的诊断证据。
 - 快照改为枚举维护的脚本/输入目录，排除 build 与工艺数据，避免迁入 flow 后递归归档旧 run。新增失败 run 清理/重跑、删除边界和快照排除回归。
 - `make -C npc/flow check test`：33 项通过；`make -C npc synthesis-scope-check`：四种宏配置全部通过。未运行真实 DC/PT，服务器需迁移私有 site 和 DB 路径后继续；没有本地实施阻塞。
+
+## 2026-10-17：归档首次综合，增加正式基线准备审查
+
+- 用户要求将 `core-tt-10ns-split` 作为“首次综合”而非正式 S3 基线。新增 `synthesis-results/` 索引与 `01-first-synthesis/`，保存总结、23 份原始报告/日志/追溯文件和逐文件 SHA-256；归档前核对原 run 全部输入和 synthesis 产物 hash。
+- 记录 cell area 35080.415848（library_area）、setup −7.29 ns、hold 约 −0.03 ns、组合 div/rem 面积占比 40.4%、观察路径及内部端点违例；PT/功耗仍未评估。保留 dirty patch，明确 HEAD 加未提交修改才是本次输入。
+- 更新 plan/test-plan/README/roadmap：先审查观察接口、算术实现和约束，整理源版本与回归，再建立正式 DC/PT 基线。28 nm/数百 MHz 不作为无依据的通过保证，不通过删除慢路径或松约束掩盖失败；增加相关面试 Q&A。
+- 本轮仅文档与结果归档，未修改 RTL/flow 或原 run，未执行新的 EDA/功能测试；核查归档内容、hash、链接与 diff。
+
+## 2026-10-17：首次综合编号与 DC 兼容处理补记
+
+- 跟随用户将结果目录改名为 `01-first-synthesis`，同步结果标题、索引和 M4/roadmap/Q&A 的全部引用；原始报告、配置、manifest 和 archive hash 保持不变。
+- 用户确认本次 DC 在保留 `default_nettype none` / `default_nettype wire` 指令时会报错，移除后才综合成功。首次综合总结明确该处理属于实际输入的一部分，并区分用户确认的运行事实、已有 dirty patch 和尚未归档的失败日志/错误码。
+- 正式基线准备增加对应失败证据、长期兼容方案及隐式网络/lint 与功能回归要求；不将本次现象推广为所有 DC 版本的限制。本轮仅更新文档。

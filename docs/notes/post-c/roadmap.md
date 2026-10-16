@@ -1,6 +1,6 @@
 # Post-C Roadmap：从弹性 RV32E Core 到可展示的 SoC/RTL 项目
 
-> 规划更新：2026-10-16；M4 S2 本地实现/验证已完成，下一步服务器 S3；M4 初始输入基线：`0fe53bf`（M3 功能/协议仿真验收后）
+> 规划更新：2026-10-17；M4 首次 DC 综合已归档，当前进行正式 S3 基线前的实现/约束审查；M4 初始输入基线：`0fe53bf`（M3 功能/协议仿真验收后）
 >
 > 求职方向优先级：SoC/RTL Design > Design Verification > Physical Design  
 > 本文用于决定 post-C 阶段的投入顺序。具体接口、地址映射和考核要求仍以开始该阶段时的最新版官方讲义与上游仓库为准。
@@ -271,6 +271,8 @@ interconnect system-level test plan 合并实施。
 2026-10-16：**[S1 本地出口通过](4-pre-soc-signoff/1-synthesis-scope.md)**：冻结 16 源文件与观察端口范围，隔离 DPI/SVA，GPR 改为显式复位并硬连 x0；两种宏配置的状态定向、B1 signoff、M2 定向和 legacy trace 通过。下一步 **S2 构建 NPC 最小 DC/PT flow 与数值 SDC**；没有新增 S1 阻塞，仍未运行 EDA。
 
 2026-10-16：**[S2 本地实现/验证完成](4-pre-soc-signoff/2-flow.md)**：最小 DC/PT 入口、10 ns 试探约束、独立 run/输入快照/hash、失败传播与报告检查已建立，28 项本地测试通过。下一步服务器 S3 先 probe 核对库和工具，再综合/STA；未运行真实 EDA，没有新增面积/时序结果。
+
+2026-10-17：**[首次综合已归档](4-pre-soc-signoff/synthesis-results/01-first-synthesis/README.md)**：DC 完成，10 ns setup/hold 失败，PT 未执行。先审查观察接口、长组合乘除法与约束，整理源版本和功能回归，再建立正式 S3 DC/PT 基线；当前结果仅作为首次诊断实验。所有需长期保留的综合实验加入[结果索引](4-pre-soc-signoff/synthesis-results/README.md)，保留失败证据和原始报告。频率目标需结合微架构与模型论证，不由工艺节点单独决定。
 
 这个里程碑防止“B1 仿真能跑，但接 SoC 时同时暴露协议、时序、复位和构建问题”。先建立最小实现基线，工作量取决于现有 RTL、工艺库和可复用 flow；不在取得工具与输入前承诺全部检查已可运行。
 
@@ -568,8 +570,8 @@ docs/notes/
 
 ## 9. 最近三个行动
 
-1. 在服务器配置 M4 site 并执行 probe，核对单 RVT/TT 候选库的内部名、operating condition、ns/pF/area 单位和实际 WLM，以及 DC/PT 版本/license；保留 PDK 原路径，不要求本地补库；
-2. 用 S2 入口和全新 run 推进服务器 S3，完成真实工具兼容性、综合/约束检查，取得首次面积/时序；功耗仅附带 DC 假设活动粗估，原 S4/S5 延后。在服务器运行前标记待验，不阻塞无依赖的本地工作；
+1. 依据首次综合审查 M4 的观察/功能输出契约、组合 M 实现和地址/异常共用路径，确定正式 scope、算术延迟及约束目标；整理服务器 dirty 修改，完成受影响的功能/lint 回归；
+2. 每次改进独立综合并归档原始报告，先关闭明显实现/评估问题，再新建 run 完成 DC/PT 的 setup/hold/DRV 与 coverage 审查，建立正式 S3 基线；功耗仍为可选粗估，S4/S5 延后；
 3. 提前核对并固定 ysyxSoC revision 与接口契约，特别是窄 MMIO 读的地址/size 语义；当前 Lite adapter 已对齐地址，不能假设最外层固定 SIZE wrapper 能恢复这些信息。明确边界后再按 M5 实施集成。
 
 在这三项完成前，不启动 GShare、经典五级流水重写、D-cache 或大规模外设扩展。

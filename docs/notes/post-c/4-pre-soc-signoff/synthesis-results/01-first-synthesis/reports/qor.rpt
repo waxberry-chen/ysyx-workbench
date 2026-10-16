@@ -1,0 +1,83 @@
+ 
+****************************************
+Report : qor
+Design : ysyx_core_axi4lite
+Version: V-2023.12-SP5
+Date   : Sat Oct 17 00:37:37 2026
+****************************************
+
+
+  Timing Path Group 'core_clk'
+  -----------------------------------
+  Levels of Logic:             705.00
+  Critical Path Length:         15.09
+  Critical Path Slack:          -7.29
+  Critical Path Clk Period:     10.00
+  Total Negative Slack:      -9958.09
+  No. of Violating Paths:     1807.00
+  Worst Hold Violation:         -0.03
+  Total Hold Violation:         -0.24
+  No. of Hold Violations:       19.00
+  -----------------------------------
+
+
+  Cell Count
+  -----------------------------------
+  Hierarchical Cell Count:         40
+  Hierarchical Port Count:       6949
+  Leaf Cell Count:              23835
+  Buf/Inv Cell Count:            5693
+  Buf Cell Count:                1276
+  Inv Cell Count:                4417
+  CT Buf/Inv Cell Count:            0
+  Combinational Cell Count:     21814
+  Sequential Cell Count:         2021
+  Macro Count:                      0
+  -----------------------------------
+
+
+  Area
+  -----------------------------------
+  Combinational Area:    28749.335966
+  Noncombinational Area:  6331.079882
+  Buf/Inv Area:           2765.279987
+  Total Buffer Area:          1005.65
+  Total Inverter Area:        1759.63
+  Macro/Black Box Area:      0.000000
+  Net Area:                  0.000000
+  -----------------------------------
+  Cell Area:             35080.415848
+  Design Area:           35080.415848
+
+
+  Design Rules
+  -----------------------------------
+  Total Number of Nets:         27707
+  Nets With Violations:             0
+  Max Trans Violations:             0
+  Max Cap Violations:               0
+  -----------------------------------
+
+
+  Hostname: rack-01
+
+  Compile CPU Statistics
+  -----------------------------------------
+  Resource Sharing:                    9.44
+  Logic Optimization:                 96.32
+  Mapping Optimization:              910.09
+  -----------------------------------------
+  Overall Compile Time:             1019.01
+  Overall Compile Wall Clock Time:   430.53
+
+  --------------------------------------------------------------------
+
+  Design  WNS: 7.29  TNS: 9958.09  Number of Violating Paths: 1807
+
+
+  Design (Hold)  WNS: 0.03  TNS: 0.24  Number of Violating Paths: 19
+
+  --------------------------------------------------------------------
+
+
+1

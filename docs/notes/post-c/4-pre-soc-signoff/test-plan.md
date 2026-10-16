@@ -1,6 +1,6 @@
 # M4 验收矩阵
 
-2026-10-16：**S1 本地出口通过**，证据见 [综合范围与回归](1-synthesis-scope.md)。I02 的 filelist/预处理与 I03 的 lint 部分通过，DC analyze/elaborate/link/check_design 仍待 S3；I04 的静态/reset 定向和 I05 的本轮功能回归通过。I01/I06–I08/I12 待验，I09/I10 延后，I11 未评估。S2 的配置/失败注入、SDC 对象检查及实际 Tcl 的 mock 编排共 28 项测试通过，见 [S2](2-flow.md)；I01 仅本地路径/失败机制部分已验，真实工具启动、库属性与 license 仍待服务器。DC/PT 入口已实现，PDK 路径保留服务器配置。
+2026-10-17：S1 本地验证与 S2 flow 已完成；[01 首次综合](synthesis-results/01-first-synthesis/README.md) 提供真实 DC 证据。I01 的 DC 启动/读库已验证，PT 待验；I02 已执行分析/展开/link/映射，I03 的告警审查未关闭；I07 已有面积/资源报告，但本实验不作为正式 S3 基线。I06 尚缺 PT coverage，I08 未执行，DC 已显示 setup/hold FAIL；I11 关闭，I09/I10 延后，I12 仅完成首次结果归档。最终源版本仍需整理并补充相应 I05 回归。正式 S3 基线还需通过 [准备审查](plan.md#正式-s3-基线前的准备审查)。
 
 | ID | 验证内容 | 通过条件 / 证据 | 阶段 |
 | --- | --- | --- | --- |

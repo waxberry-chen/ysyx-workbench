@@ -1,0 +1,496 @@
+diff --git a/npc/flow/00_indata/configs/site.example.tcl b/npc/flow/00_indata/configs/site.example.tcl
+index a9bb43b..dd685fd 100644
+--- a/npc/flow/00_indata/configs/site.example.tcl
++++ b/npc/flow/00_indata/configs/site.example.tcl
+@@ -13,11 +13,11 @@
+ # Copy to site.local.tcl on the server. External absolute DB paths are also supported.
+ # One RVT/TT candidate, not the original mixed RVT/LVT/HVT + SRAM glob.
+ set site [dict create \
+-    dc_shell /15T/tools/synopsys/syn/O-2018.06-SP1/bin/dc_shell \
++    dc_shell dc_shell \
+     pt_shell pt_shell \
+-    target_db [file normalize [file join [file dirname [info script]] .. DB STD_NEW tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.db]] \
++    target_db /home/cym/prj/ysyx-workbench/npc/flow/00_indata/DB/STD_NEW/tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.db \
+     library_name tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs \
+-    operating_condition {} corner TT_0p9V_25C vt RVT \
++    operating_condition {tt0p9v25c} corner TT_0p9V_25C vt RVT \
+     time_unit ns capacitance_unit pf area_unit library_area \
+     wire_load_model library_default library_reviewed 0]
+ # First run `make probe SITE=... RUN_ID=lib-probe` to inspect report_lib.
+diff --git a/npc/tests/axi4lite_delay_shim.sv b/npc/tests/axi4lite_delay_shim.sv
+index 1934d70..b69da9d 100644
+--- a/npc/tests/axi4lite_delay_shim.sv
++++ b/npc/tests/axi4lite_delay_shim.sv
+@@ -1,4 +1,4 @@
+-`default_nettype none
++
+ module axi_delay_channel #(parameter integer WIDTH=32) (
+  input wire clk, rst_n, accept_enable,
+  input wire [7:0] delay_cycles,
+@@ -92,4 +92,4 @@ module axi4lite_delay_shim (
+  .out_valid(s_axi_bvalid), .out_ready(s_axi_bready), .out_data({s_axi_bresp})
+  );
+ endmodule
+-`default_nettype wire
++
+diff --git a/npc/tests/axi4lite_fabric_test_top.sv b/npc/tests/axi4lite_fabric_test_top.sv
+index 2a027e8..4aff692 100644
+--- a/npc/tests/axi4lite_fabric_test_top.sv
++++ b/npc/tests/axi4lite_fabric_test_top.sv
+@@ -1,4 +1,4 @@
+-`default_nettype none
++
+ module axi4lite_fabric_test_top #(parameter logic [31:0] SRAM_BYTES=32'd12288) (
+  input wire clk,rst_n,
+  input wire [4:0] sim_accept,
+@@ -363,4 +363,4 @@ for(genvar i=0;i<4;i=i+1) begin : observe
+     assign tap_rdata[i] = x_rdata[i];
+ end
+ endmodule
+-`default_nettype wire
++
+diff --git a/npc/tests/axi4lite_redirect_test_top.sv b/npc/tests/axi4lite_redirect_test_top.sv
+index cad06fa..016220c 100644
+--- a/npc/tests/axi4lite_redirect_test_top.sv
++++ b/npc/tests/axi4lite_redirect_test_top.sv
+@@ -1,4 +1,4 @@
+-`default_nettype none
++
+ module axi4lite_redirect_test_top (
+  input wire clk,rst_n,redirect_valid,
+  input wire [31:0] redirect_target,
+@@ -159,4 +159,4 @@ assign tap_ifu_arready=ifu_axi_arready;
+ assign tap_ifu_rvalid=ifu_axi_rvalid;
+ assign tap_ifu_rready=ifu_axi_rready;
+ endmodule
+-`default_nettype wire
++
+diff --git a/npc/tests/axi4lite_slaves_test_top.sv b/npc/tests/axi4lite_slaves_test_top.sv
+index 3650632..5e36429 100644
+--- a/npc/tests/axi4lite_slaves_test_top.sv
++++ b/npc/tests/axi4lite_slaves_test_top.sv
+@@ -1,4 +1,4 @@
+-`default_nettype none
++
+ module axi4lite_slaves_test_top #(parameter logic [31:0] SRAM_BYTES = 32'h00100000) (
+     input wire clk,
+     input wire rst_n,
+@@ -113,4 +113,4 @@ ysyx_axi4lite_clint clint (
+     .s_axi_bresp(s_axi_bresp_ports[2])
+ );
+ endmodule
+-`default_nettype wire
++
+diff --git a/npc/tests/axi4lite_xbar_test_top.sv b/npc/tests/axi4lite_xbar_test_top.sv
+index 7b81863..47db82b 100644
+--- a/npc/tests/axi4lite_xbar_test_top.sv
++++ b/npc/tests/axi4lite_xbar_test_top.sv
+@@ -1,4 +1,4 @@
+-`default_nettype none
++
+ module axi4lite_xbar_test_top #(parameter logic [31:0] SRAM_BYTES = 32'h00100000) (
+     input wire clk,
+     input wire rst_n,
+@@ -169,4 +169,4 @@ ysyx_axi4lite_decerr error_sink (
+     .s_axi_bready(m_axi_bready[3] && real_decerr),
+     .s_axi_bresp(e_bresp));
+ endmodule
+-`default_nettype wire
++
+diff --git a/npc/tests/ysyx_exu_tb.sv b/npc/tests/ysyx_exu_tb.sv
+index 7de3a27..f2869cd 100644
+--- a/npc/tests/ysyx_exu_tb.sv
++++ b/npc/tests/ysyx_exu_tb.sv
+@@ -1,5 +1,5 @@
+ `timescale 1ns/1ps
+-`default_nettype none
++
+ 
+ module ysyx_exu_tb;
+ 
+@@ -394,4 +394,4 @@ end
+ 
+ endmodule
+ 
+-`default_nettype wire
++
+diff --git a/npc/tests/ysyx_gnrl_buffer_tb.sv b/npc/tests/ysyx_gnrl_buffer_tb.sv
+index 27286e5..e23cf69 100644
+--- a/npc/tests/ysyx_gnrl_buffer_tb.sv
++++ b/npc/tests/ysyx_gnrl_buffer_tb.sv
+@@ -1,5 +1,5 @@
+ `timescale 1ns/1ps
+-`default_nettype none
++
+ 
+ module ysyx_gnrl_buffer_tb;
+ 
+@@ -169,4 +169,4 @@ end
+ 
+ endmodule
+ 
+-`default_nettype wire
++
+diff --git a/npc/tests/ysyx_ifu_axi4lite_adapter_integ_tb.sv b/npc/tests/ysyx_ifu_axi4lite_adapter_integ_tb.sv
+index 1da6eb6..c053a0a 100644
+--- a/npc/tests/ysyx_ifu_axi4lite_adapter_integ_tb.sv
++++ b/npc/tests/ysyx_ifu_axi4lite_adapter_integ_tb.sv
+@@ -1,5 +1,5 @@
+ `timescale 1ns/1ps
+-`default_nettype none
++
+ 
+ module ysyx_ifu_axi4lite_adapter_integ_tb;
+ 
+@@ -258,4 +258,4 @@ end
+ 
+ endmodule
+ 
+-`default_nettype wire
++
+diff --git a/npc/tests/ysyx_ifu_axi4lite_adapter_tb.sv b/npc/tests/ysyx_ifu_axi4lite_adapter_tb.sv
+index 8428e42..2745b41 100644
+--- a/npc/tests/ysyx_ifu_axi4lite_adapter_tb.sv
++++ b/npc/tests/ysyx_ifu_axi4lite_adapter_tb.sv
+@@ -1,5 +1,5 @@
+ `timescale 1ns/1ps
+-`default_nettype none
++
+ 
+ module ysyx_ifu_axi4lite_adapter_tb;
+ 
+@@ -195,4 +195,4 @@ end
+ 
+ endmodule
+ 
+-`default_nettype wire
++
+diff --git a/npc/tests/ysyx_ifu_tb.sv b/npc/tests/ysyx_ifu_tb.sv
+index f5f8203..5195ae5 100644
+--- a/npc/tests/ysyx_ifu_tb.sv
++++ b/npc/tests/ysyx_ifu_tb.sv
+@@ -1,5 +1,5 @@
+ `timescale 1ns/1ps
+-`default_nettype none
++
+ 
+ module ysyx_ifu_tb;
+ 
+@@ -237,4 +237,4 @@ end
+ 
+ endmodule
+ 
+-`default_nettype wire
++
+diff --git a/npc/tests/ysyx_lsu_axi4lite_adapter_tb.sv b/npc/tests/ysyx_lsu_axi4lite_adapter_tb.sv
+index 840f94d..dab54c5 100644
+--- a/npc/tests/ysyx_lsu_axi4lite_adapter_tb.sv
++++ b/npc/tests/ysyx_lsu_axi4lite_adapter_tb.sv
+@@ -1,5 +1,5 @@
+ `timescale 1ns/1ps
+-`default_nettype none
++
+ 
+ module ysyx_lsu_axi4lite_adapter_tb;
+ 
+@@ -314,4 +314,4 @@ end
+ 
+ endmodule
+ 
+-`default_nettype wire
++
+diff --git a/npc/tests/ysyx_lsu_tb.sv b/npc/tests/ysyx_lsu_tb.sv
+index d443a66..6597607 100644
+--- a/npc/tests/ysyx_lsu_tb.sv
++++ b/npc/tests/ysyx_lsu_tb.sv
+@@ -1,5 +1,5 @@
+ `timescale 1ns/1ps
+-`default_nettype none
++
+ 
+ module ysyx_lsu_tb;
+ 
+@@ -186,4 +186,4 @@ end
+ 
+ endmodule
+ 
+-`default_nettype wire
++
+diff --git a/npc/vsrc/bus/ysyx_axi4lite_arbiter.sv b/npc/vsrc/bus/ysyx_axi4lite_arbiter.sv
+index becf731..f66aaa4 100644
+--- a/npc/vsrc/bus/ysyx_axi4lite_arbiter.sv
++++ b/npc/vsrc/bus/ysyx_axi4lite_arbiter.sv
+@@ -1,4 +1,4 @@
+-`default_nettype none
++
+ 
+ // IFU read-only + LSU read/write -> one AXI4-Lite master.
+ // One service slot, including the buffered upstream response. A grant is
+@@ -214,4 +214,4 @@ a01_lsu_b_holding: assert property (@(posedge clk) disable iff (!rst_n)
+     lsu_axi_bvalid && !lsu_axi_bready |=> lsu_axi_bvalid && $stable(lsu_axi_bresp));
+ `endif
+ endmodule
+-`default_nettype wire
++
+diff --git a/npc/vsrc/bus/ysyx_axi4lite_decerr.sv b/npc/vsrc/bus/ysyx_axi4lite_decerr.sv
+index ef98250..4f05404 100644
+--- a/npc/vsrc/bus/ysyx_axi4lite_decerr.sv
++++ b/npc/vsrc/bus/ysyx_axi4lite_decerr.sv
+@@ -1,4 +1,4 @@
+-`default_nettype none
++
+ 
+ // Terminate any address with DECERR. No memory or device side effects.
+ module ysyx_axi4lite_decerr (
+@@ -72,4 +72,4 @@ a01_b_holding: assert property (@(posedge clk) disable iff (!rst_n)
+     s_axi_bvalid && !s_axi_bready |=> s_axi_bvalid && $stable(s_axi_bresp));
+ `endif
+ endmodule
+-`default_nettype wire
++
+diff --git a/npc/vsrc/bus/ysyx_axi4lite_slave_frontend.sv b/npc/vsrc/bus/ysyx_axi4lite_slave_frontend.sv
+index b32b542..b319974 100644
+--- a/npc/vsrc/bus/ysyx_axi4lite_slave_frontend.sv
++++ b/npc/vsrc/bus/ysyx_axi4lite_slave_frontend.sv
+@@ -1,4 +1,4 @@
+-`default_nettype none
++
+ 
+ // One transaction at a time. Backend read samples on AR acceptance; write
+ // executes for one cycle after both AW/W slots have been captured.
+@@ -108,4 +108,4 @@ a01_b_holding: assert property (@(posedge clk) disable iff (!rst_n)
+     s_axi_bvalid && !s_axi_bready |=> s_axi_bvalid && $stable(s_axi_bresp));
+ `endif
+ endmodule
+-`default_nettype wire
++
+diff --git a/npc/vsrc/bus/ysyx_axi4lite_xbar.sv b/npc/vsrc/bus/ysyx_axi4lite_xbar.sv
+index 97ba5f1..22b7746 100644
+--- a/npc/vsrc/bus/ysyx_axi4lite_xbar.sv
++++ b/npc/vsrc/bus/ysyx_axi4lite_xbar.sv
+@@ -1,4 +1,4 @@
+-`default_nettype none
++
+ 
+ // Registered single-transaction router. Port order: SRAM, UART, CLINT, DECERR.
+ module ysyx_axi4lite_xbar #(parameter logic [31:0] SRAM_BYTES = 32'h00100000) (
+@@ -178,4 +178,4 @@ a01_b_holding: assert property (@(posedge clk) disable iff (!rst_n)
+     s_axi_bvalid && !s_axi_bready |=> s_axi_bvalid && $stable(s_axi_bresp));
+ `endif
+ endmodule
+-`default_nettype wire
++
+diff --git a/npc/vsrc/bus/ysyx_ifu_axi4lite_adapter.sv b/npc/vsrc/bus/ysyx_ifu_axi4lite_adapter.sv
+index 88152d6..0d5d288 100644
+--- a/npc/vsrc/bus/ysyx_ifu_axi4lite_adapter.sv
++++ b/npc/vsrc/bus/ysyx_ifu_axi4lite_adapter.sv
+@@ -1,4 +1,4 @@
+-`default_nettype none
++
+ 
+ // Fully-registered, single-outstanding instruction AXI4-Lite adapter.
+ //
+@@ -138,4 +138,4 @@ assert property (p_single_outstanding_blocks_local_request);
+ 
+ endmodule
+ 
+-`default_nettype wire
++
+diff --git a/npc/vsrc/bus/ysyx_lsu_axi4lite_adapter.sv b/npc/vsrc/bus/ysyx_lsu_axi4lite_adapter.sv
+index 958e046..f258405 100644
+--- a/npc/vsrc/bus/ysyx_lsu_axi4lite_adapter.sv
++++ b/npc/vsrc/bus/ysyx_lsu_axi4lite_adapter.sv
+@@ -1,4 +1,4 @@
+-`default_nettype none
++
+ 
+ // Fully-registered, single-outstanding load/store AXI4-Lite adapter.
+ //
+@@ -256,4 +256,4 @@ assert property (p_single_outstanding_blocks_local_request);
+ 
+ endmodule
+ 
+-`default_nettype wire
++
+diff --git a/npc/vsrc/core/ysyx_core.sv b/npc/vsrc/core/ysyx_core.sv
+index 1aa4f3b..84dae4c 100644
+--- a/npc/vsrc/core/ysyx_core.sv
++++ b/npc/vsrc/core/ysyx_core.sv
+@@ -1,4 +1,4 @@
+-`default_nettype none
++
+ 
+ module ysyx_core #(
+     parameter PC_RST    = 32'h8000_0000,
+@@ -606,4 +606,4 @@ assert property (p_exception_redirects_without_normal_writeback);
+ 
+ endmodule
+ 
+-`default_nettype wire
++
+diff --git a/npc/vsrc/core/ysyx_csr.sv b/npc/vsrc/core/ysyx_csr.sv
+index 526d4b2..17827e8 100644
+--- a/npc/vsrc/core/ysyx_csr.sv
++++ b/npc/vsrc/core/ysyx_csr.sv
+@@ -31,7 +31,8 @@ wire [4-1:0] csr_idx_we;
+ wire [32-1:0] csr_d [4-1:0];
+ // output pack
+ wire [32-1:0] csr_q [4-1:0];
+-
++// csrs
++wire [32-1:0] csr_mstatus,csr_mtvec,csr_mepc,csr_mcause;
+ 
+ assign csr_idx[0] = (csr_addr == 12'h300);  // mstatus
+ assign csr_idx[1] = (csr_addr == 12'h305);
+@@ -60,7 +61,6 @@ generate
+ endgenerate
+ 
+ // csr unpack
+-wire [32-1:0] csr_mstatus,csr_mtvec,csr_mepc,csr_mcause;
+ assign csr_mstatus  = csr_q[0];
+ assign csr_mtvec    = csr_q[1];
+ assign csr_mepc     = csr_q[2];
+diff --git a/npc/vsrc/core/ysyx_exu.sv b/npc/vsrc/core/ysyx_exu.sv
+index 2f0a8cb..578ac5e 100644
+--- a/npc/vsrc/core/ysyx_exu.sv
++++ b/npc/vsrc/core/ysyx_exu.sv
+@@ -1,4 +1,4 @@
+-`default_nettype none
++
+ 
+ // In-order single-issue execution unit.
+ //
+@@ -278,4 +278,4 @@ assert property (p_memory_error_raises_access_fault);
+ 
+ endmodule
+ 
+-`default_nettype wire
++
+diff --git a/npc/vsrc/core/ysyx_ifu.sv b/npc/vsrc/core/ysyx_ifu.sv
+index c342fbc..fe07699 100644
+--- a/npc/vsrc/core/ysyx_ifu.sv
++++ b/npc/vsrc/core/ysyx_ifu.sv
+@@ -1,4 +1,4 @@
+-`default_nettype none
++
+ 
+ // Single-outstanding instruction fetch unit with a small elastic queue.
+ //
+@@ -154,4 +154,4 @@ assert property (p_dropped_response_never_enters_ifq);
+ 
+ endmodule
+ 
+-`default_nettype wire
++
+diff --git a/npc/vsrc/core/ysyx_lsu.sv b/npc/vsrc/core/ysyx_lsu.sv
+index 4101cb8..d4da692 100644
+--- a/npc/vsrc/core/ysyx_lsu.sv
++++ b/npc/vsrc/core/ysyx_lsu.sv
+@@ -1,4 +1,4 @@
+-`default_nettype none
++
+ 
+ // Single-outstanding load/store unit.
+ //
+@@ -154,4 +154,4 @@ assert property (p_external_response_requires_outstanding);
+ 
+ endmodule
+ 
+-`default_nettype wire
++
+diff --git a/npc/vsrc/core/ysyx_opbuf.sv b/npc/vsrc/core/ysyx_opbuf.sv
+index fc6d4cd..6cb8842 100644
+--- a/npc/vsrc/core/ysyx_opbuf.sv
++++ b/npc/vsrc/core/ysyx_opbuf.sv
+@@ -1,4 +1,4 @@
+-`default_nettype none
++
+ 
+ // One-entry decoded instruction context buffer.
+ //
+@@ -114,4 +114,4 @@ ysyx_gnrl_rv_reg #(
+ 
+ endmodule
+ 
+-`default_nettype wire
++
+diff --git a/npc/vsrc/periph/ysyx_axi4lite_clint.sv b/npc/vsrc/periph/ysyx_axi4lite_clint.sv
+index 8567a70..ba33b05 100644
+--- a/npc/vsrc/periph/ysyx_axi4lite_clint.sv
++++ b/npc/vsrc/periph/ysyx_axi4lite_clint.sv
+@@ -1,4 +1,4 @@
+-`default_nettype none
++
+ module ysyx_axi4lite_clint (
+     input wire clk,
+     input wire rst_n,
+@@ -81,4 +81,4 @@ a06_read_error_zero: assert property (@(posedge clk) disable iff (!rst_n)
+ `endif
+ 
+ endmodule
+-`default_nettype wire
++
+diff --git a/npc/vsrc/periph/ysyx_axi4lite_sram.sv b/npc/vsrc/periph/ysyx_axi4lite_sram.sv
+index e817887..f9fa722 100644
+--- a/npc/vsrc/periph/ysyx_axi4lite_sram.sv
++++ b/npc/vsrc/periph/ysyx_axi4lite_sram.sv
+@@ -1,4 +1,4 @@
+-`default_nettype none
++
+ module ysyx_axi4lite_sram #(parameter logic [31:0] SRAM_BYTES = 32'h00100000) (
+     input wire clk,
+     input wire rst_n,
+@@ -100,4 +100,4 @@ a07_index_in_range: assert property (@(posedge clk) disable iff (!rst_n)
+ `endif
+ 
+ endmodule
+-`default_nettype wire
++
+diff --git a/npc/vsrc/periph/ysyx_axi4lite_uart.sv b/npc/vsrc/periph/ysyx_axi4lite_uart.sv
+index 0a0fcdb..9df21b9 100644
+--- a/npc/vsrc/periph/ysyx_axi4lite_uart.sv
++++ b/npc/vsrc/periph/ysyx_axi4lite_uart.sv
+@@ -1,4 +1,4 @@
+-`default_nettype none
++
+ module ysyx_axi4lite_uart (
+     input wire clk,
+     input wire rst_n,
+@@ -86,4 +86,4 @@ a09_tx_payload: assert property (@(posedge clk) disable iff (!rst_n)
+ `endif
+ 
+ endmodule
+-`default_nettype wire
++
+diff --git a/npc/vsrc/top/ysyx_b1_top.sv b/npc/vsrc/top/ysyx_b1_top.sv
+index df1c719..7ae47d6 100644
+--- a/npc/vsrc/top/ysyx_b1_top.sv
++++ b/npc/vsrc/top/ysyx_b1_top.sv
+@@ -1,4 +1,4 @@
+-`default_nettype none
++
+ // B1 route indices: 0 SRAM, 1 UART, 2 CLINT, 3 default DECERR.
+ // The host may preload SRAM during initial reset and consume UART TX events;
+ // all running CPU transactions and device side effects are handled by RTL.
+@@ -304,4 +304,4 @@ for(genvar i=0;i<4;i=i+1) begin : observe
+     assign monitor_bresp[i*2 +: 2] = x_bresp[i];
+ end
+ endmodule
+-`default_nettype wire
++
+diff --git a/npc/vsrc/top/ysyx_core_axi4lite.sv b/npc/vsrc/top/ysyx_core_axi4lite.sv
+index e35d5b5..4c53d81 100644
+--- a/npc/vsrc/top/ysyx_core_axi4lite.sv
++++ b/npc/vsrc/top/ysyx_core_axi4lite.sv
+@@ -1,4 +1,4 @@
+-`default_nettype none
++
+ // Preserve the Core's two adapters; export the arbiter's single master port.
+ // monitor_bus bits [0:13]: IF ARV/ARR/RV/RR, LSU ARV/ARR/RV/RR,
+ // LSU AWV/AWR/WV/WR/BV/BR. These are passive harness observations.
+@@ -160,4 +160,4 @@ ysyx_axi4lite_arbiter arbiter (
+     .m_axi_bresp(m_axi_bresp)
+ );
+ endmodule
+-`default_nettype wire
++
