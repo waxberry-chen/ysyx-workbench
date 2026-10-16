@@ -1,6 +1,6 @@
 # M4 设计与验收计划
 
-> 2026-10-16；状态：S0 本地初读与 S1 源码边界/复位/回归已完成，当前下一步 S2；S3/S6 待实施；原 S4/S5 延后，不作为本轮出口。
+> 2026-10-16；状态：S0/S1 与 S2 本地 flow 实现/验证已完成，当前下一步服务器 S3；S6 待实施；原 S4/S5 延后，不作为本轮出口。
 > 初始规划输入 HEAD：`0fe53bfcdbb1193b94415a9bb8382bcd7d71b4cf`；S1 输入 HEAD 与修改/验证记录见 [S1 综合范围](1-synthesis-scope.md)。ref-flow 保持原样。
 > 配套：[手册检索入口](manual-index.md)、[参考审查](0-ref-flow-review.md)、[缺失 flow 脚本说明](missing-inputs.md)、[流程图与输入输出](0-flow-map.md)、[验收矩阵](test-plan.md)、[总路线](../roadmap.md)。
 
@@ -12,7 +12,7 @@
 
 选择该范围的原因：它具有实际的单 master 边界，能复用 M3 行为契约，同时不会把 1 MiB 仿真 SRAM 阵列综合成大规模触发器而掩盖 core 成本。B1 整体的宏映射是后续独立任务；当前 SRAM 为组合数组读、按 byte 写，要核对宏的读延迟、端口、mask 和容量后才能替换，提供若干旧 C906 SRAM `.db` 不等于完成映射。小容量触发器 SRAM 实验如需运行必须独立命名，不能冒充默认 1 MiB 系统。
 
-冻结初始策略：单时钟、单电源、无新增 gated clock、非 topographical DC；优先从可用 TT 库中选择一个明确的 Vt 家族。参考配置列出了 TT 0.9 V / 25°C，工艺库已在服务器并保留原路径；NPC 具体选择仍是候选，不能先声明 NPC 已选定该工艺/PVT。频率、I/O 预算、load/drive 和 uncertainty 在 S1/S2 明确接口假设，服务器执行前核对库单位，不照搬 C906 的目标和 margin。跨 corner sign-off 不属于单 corner 基线结论。
+冻结初始策略：单时钟、单电源、无新增 gated clock、非 topographical DC；优先从可用 TT 库中选择一个明确的 Vt 家族。参考配置列出了 TT 0.9 V / 25°C，工艺库已在服务器并保留原路径；NPC 具体选择仍是候选，不能先声明 NPC 已选定该工艺/PVT。S2 已选单 RVT/TT 候选路径，并冻结 10 ns 试探周期及数值 I/O/load/slew/uncertainty，见 [数值约束](2-flow.md#2-数值-sdc-与适用边界)。服务器执行前仍需 probe 核对库单位、operating condition 和实际模型；不照搬 C906 的目标和 margin。跨 corner sign-off 不属于单 corner 基线结论。
 
 查阅 DC/PT 命令与约束时遵循 [手册检索约定](manual-index.md#5-后续搭建-flow-的查阅约定)：先检索本地分页缓存，再按页阅读相关小节；记录手册版本、正文页及 PDF 页，适用模式与服务器工具版本分别核对。查询工具会校验 PDF/缓存 hash，手册更换后需重建并复核索引。
 
@@ -61,7 +61,7 @@ DC/PT 必须记录互连模型：若库具备并采用 wire-load，写明具体�
 
 方法依据：[Synopsys 对活动假设、默认标注与综合后功耗差异的说明](https://www.synopsys.com/articles/understanding-power-profile.html)。采用本方案的目的为低成本提供附带参考，精度边界由活动与模型决定，不由报告命令名称决定。
 
-## 5. 脚本目录与运行产物（S1 已建 README/filelist，EDA 入口待 S2）
+## 5. 脚本目录与运行产物（S2 已实现，本地验证通过）
 
 ```text
 npc/flow/
@@ -77,7 +77,7 @@ npc/flow/
 └── sta/                       # PT pre-layout 入口与报告
 ```
 
-只在实现相应步骤时创建脚本，避免空文件被当成可用 flow。运行目录为服务器可配置的 `<RUN_ROOT>/<run_id>/`，内含 `inputs/ logs/ reports/ outputs/ manifest.json`；本地临时输出可用 `npc/build/flow/`。每次运行独立，禁止默认复用旧网表；输入 hash 不匹配即失败。PDK/库相关配置保留参考脚本中的服务器路径，不为本地可运行而改写；设计源文件与运行目录适配 NPC，集中配置。若以后公开脚本，再单独处理路径脱敏。
+[S2](2-flow.md) 已创建最小执行入口、数值约束与本地测试；[flow README](../../../../npc/flow/README.md) 是实际使用入口。本地 mock 检查不代表真实工具已跑通。运行目录为服务器可配置的 `<RUN_ROOT>/<run_id>/`，内含 `inputs/ logs/ reports/ outputs/ manifest.json`；本地临时输出可用 `npc/build/flow/`。每次运行独立，禁止默认复用旧网表；输入 hash 不匹配即失败。PDK/库相关配置保留参考脚本中的服务器路径，不为本地可运行而改写；设计源文件与运行目录适配 NPC，集中配置。若以后公开脚本，再单独处理路径脱敏。
 
 manifest 至少含 RTL commit/dirty patch、filelist/define/参数、top/观察端口策略、脚本/SDC/库 hash、工具版本、PVT/Vt、互连/时钟假设、命令、退出码、日志路径、网表 hash；附带功耗增加活动假设及其来源；没有 workload/窗口/活动映射结果。工艺数据只存服务器，文档保存必要的可共享标识。
 

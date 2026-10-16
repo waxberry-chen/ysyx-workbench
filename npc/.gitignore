@@ -21,3 +21,9 @@
 **/build/
 
 /ref-flow
+
+# Maintained NPC EDA flow (private site configs stay local).
+!/flow/**/*.py
+!/flow/**/*.tcl
+!/flow/**/*.sdc
+/flow/configs/*.local.tcl

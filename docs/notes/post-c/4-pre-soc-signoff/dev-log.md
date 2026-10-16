@@ -48,3 +48,17 @@
 - B1 signoff（53 系统 + 23 closure、必测覆盖）、M2 定向与 legacy add trace 均通过；trace hash 与原基线相同。保存本地 `artifacts/m4-s1-20261016/` 证据。
 - 新增 [S1 设计与验收记录](1-synthesis-scope.md)、34 端口 [预算接口 CSV](s1-port-budget.csv)，同步入口/计划/验收矩阵/roadmap/Q&A。未修改 ref-flow 或 PDK 路径，未执行 DC/PT，不声称四值或综合网表验证通过。
 - 当前无 S1 未解决阻塞；下一步 S2 构建 DC/PT 脚本、数值约束和 preflight/manifest。S3 才取得首次面积与时序结果。
+
+## 2026-10-16：S2 最小 NPC flow 本地实现与验证
+
+- 输入 HEAD `235f60619d2ae32a57ee2520cfd76f1a6a9f326f`，开始时工作区干净；只新增 flow/测试与更新文档/忽略规则，未改 RTL、ref-flow 或 PDK 路径。
+- 建立 config/site、DC probe/synth、PT STA、共享约束、Python launcher/preflight/manifest/报告检查。冻结 10 ns 试探目标及数值接口假设，候选库为单 RVT/TT；正式运行前必须确认库内部名称、条件和单位。
+- 独立 run、源码与脚本快照、库/工具/产物 hash；拒绝复用旧网表、覆盖已尝试阶段及忽略工具错误。输出 COMPLETE 与 TIMING_FAIL/REVIEW_REQUIRED 分开，零 WNS 不自动视为 signoff PASS。
+- 本地 `make -C npc/flow check test`：28 项通过，包括失败注入、SDC 完整性和真实 Tcl 的 mock 命令执行；含 endpoint 去重和可选功耗失败不阻塞主流程。
+- 设计/手册依据和服务器步骤见 [2-flow.md](2-flow.md)。证据归档 `artifacts/m4-s2-20261016/`。没有 EDA 或新 RTL 仿真结果；本地 S2 无阻塞，下一步服务器 S3。
+
+## 2026-10-16：补充 S2 新手向脚本注释
+
+- 为 Makefile、配置、Python driver、共享 Tcl、probe/DC/PT/SDC 和测试入口补充中文注释；从输入输出、命令作用和设计理由解释各步骤，新增 [阅读顺序](../../../../npc/flow/README.md#新手阅读顺序)。
+- 对照本地 DC/PT User Guide 与 ref-flow 的阶段注释，解释库角色、展开/link/映射、ideal clock/WLM、I/O min/max（含 output min 的符号）、reset recovery/removal、WNS/TNS 与 coverage。注释附相关手册版本及 PDF 页码，不将参考工程的 margin/derate 搬到 NPC。
+- 与修改前快照比较，13 个脚本的 Python 可执行 token 或 Tcl/Make 非注释行完全一致；`make -C npc/flow check test` 的 28 项检查通过。只增加注释和导航，没有改变参数/执行行为或新增 EDA 结果；原 S2 归档保留为当时快照。

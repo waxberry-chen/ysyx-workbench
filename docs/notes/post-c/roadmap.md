@@ -1,6 +1,6 @@
 # Post-C Roadmap：从弹性 RV32E Core 到可展示的 SoC/RTL 项目
 
-> 规划更新：2026-10-16；M4 S1 已完成，下一步 S2；M4 初始输入基线：`0fe53bf`（M3 功能/协议仿真验收后）
+> 规划更新：2026-10-16；M4 S2 本地实现/验证已完成，下一步服务器 S3；M4 初始输入基线：`0fe53bf`（M3 功能/协议仿真验收后）
 >
 > 求职方向优先级：SoC/RTL Design > Design Verification > Physical Design  
 > 本文用于决定 post-C 阶段的投入顺序。具体接口、地址映射和考核要求仍以开始该阶段时的最新版官方讲义与上游仓库为准。
@@ -269,6 +269,8 @@ interconnect system-level test plan 合并实施。
 2026-10-15：已建立 [M4 S0–S6 计划](4-pre-soc-signoff/plan.md)及目录，完成 `npc/ref-flow` 的[本地初读](4-pre-soc-signoff/0-ref-flow-review.md)。先学习裁剪，再构建 `npc/flow/`；本次尚未修改源码或运行 EDA。首次以 `ysyx_core_axi4lite`（Core + adapters + Arbiter）评估，S3 取得面积/时序，可附带 DC `report_power` 假设活动粗估；原 S4 四值/网表和 S5 workload/PTPX 延后；不代表含 SRAM/外设的完整 SoC PPA。S0 的[流程图与逐级输入输出](4-pre-soc-signoff/0-flow-map.md)区分工艺库与 design；[缺失脚本清单](4-pre-soc-signoff/missing-inputs.md)仅核查 flow 脚本/编排配置。PDK 已在服务器，保留原路径；本地只做 flow 蒸馏，不复现旧工程。
 
 2026-10-16：**[S1 本地出口通过](4-pre-soc-signoff/1-synthesis-scope.md)**：冻结 16 源文件与观察端口范围，隔离 DPI/SVA，GPR 改为显式复位并硬连 x0；两种宏配置的状态定向、B1 signoff、M2 定向和 legacy trace 通过。下一步 **S2 构建 NPC 最小 DC/PT flow 与数值 SDC**；没有新增 S1 阻塞，仍未运行 EDA。
+
+2026-10-16：**[S2 本地实现/验证完成](4-pre-soc-signoff/2-flow.md)**：最小 DC/PT 入口、10 ns 试探约束、独立 run/输入快照/hash、失败传播与报告检查已建立，28 项本地测试通过。下一步服务器 S3 先 probe 核对库和工具，再综合/STA；未运行真实 EDA，没有新增面积/时序结果。
 
 这个里程碑防止“B1 仿真能跑，但接 SoC 时同时暴露协议、时序、复位和构建问题”。先建立最小实现基线，工作量取决于现有 RTL、工艺库和可复用 flow；不在取得工具与输入前承诺全部检查已可运行。
 
@@ -566,8 +568,8 @@ docs/notes/
 
 ## 9. 最近三个行动
 
-1. 推进 M4 S2：基于 S1 的 top/filelist/宏与端口预算接口，创建最小 DC/PT 入口、数值 SDC、preflight/manifest 和失败检查；保留服务器 PDK 路径，不以本地补库或复现旧工程为前置条件；
-2. 在 S2 入口与服务器检查就绪后推进 S3，取得首次面积/时序；功耗仅附带 DC 假设活动粗估，原 S4/S5 延后。在服务器运行前标记待验，不阻塞无依赖的本地工作；
+1. 在服务器配置 M4 site 并执行 probe，核对单 RVT/TT 候选库的内部名、operating condition、ns/pF/area 单位和实际 WLM，以及 DC/PT 版本/license；保留 PDK 原路径，不要求本地补库；
+2. 用 S2 入口和全新 run 推进服务器 S3，完成真实工具兼容性、综合/约束检查，取得首次面积/时序；功耗仅附带 DC 假设活动粗估，原 S4/S5 延后。在服务器运行前标记待验，不阻塞无依赖的本地工作；
 3. 提前核对并固定 ysyxSoC revision 与接口契约，特别是窄 MMIO 读的地址/size 语义；当前 Lite adapter 已对齐地址，不能假设最外层固定 SIZE wrapper 能恢复这些信息。明确边界后再按 M5 实施集成。
 
 在这三项完成前，不启动 GShare、经典五级流水重写、D-cache 或大规模外设扩展。
