@@ -24,7 +24,13 @@ proc redirect {flag path body} {
 proc set_app_var {name value} {set ::$name $value}
 proc shell_is_in_topographical_mode {} {return false}
 proc sizeof_collection {value} {return [llength $value]}
-proc get_libs {args} {return [list [dict get $::site library_name]]}
+proc get_libs {args} {
+    set libs [list [dict get $::site library_name]]
+    if {[lindex $args end] eq "*" && $::env(NPC_STAGE) ne "sta"} {
+        lappend libs gtech standard.sldb
+    }
+    return $libs
+}
 proc get_object_name {value} {return $value}
 proc foreach_in_collection {var values body} {
     foreach value $values {uplevel 1 [list set $var $value]; uplevel 1 $body}
@@ -61,14 +67,34 @@ proc write {args} {
     close $f
 }
 proc write_sdc {path} {set f [open $path w]; puts $f "MOCK EXPORTED SDC"; close $f}
-proc version {} {puts "MOCK TOOL, NOT EDA"}
+# DC 2023 的实际 probe 没有 version 命令；不要用虚构的 mock 命令掩盖此错误。
+proc get_app_var {name} {
+    if {$name eq "sh_product_version"} {return "MOCK-VERSION-NOT-EDA"}
+    error "Unknown mock application variable $name"
+}
+proc report_lib {name} {
+    if {[file extension $name] eq ".sldb"} {
+        # 模拟 UIL-29：写 Error 并返回 0，不抛 Tcl 异常，要求 driver 检查报告。
+        puts "Error: The '$name' library is a synthetic library. Use report_synlib. (UIL-29)"
+        return 0
+    }
+    puts "MOCK technology library $name"
+    return 1
+}
+proc report_synlib {name} {
+    if {$::env(NPC_STAGE) eq "sta" || $name ne "standard.sldb"} {
+        error "Unexpected synthetic library report $name"
+    }
+    puts "MOCK synthetic library $name"
+    return 1
+}
 proc report_area {args} {puts "Total cell area: 12.5"}
 proc report_analysis_coverage {args} {puts "All Checks 10 8 (80%) 2 (20%) 0 (0%)"}
 proc check_design {} {puts "MOCK check_design"; return 1}
 foreach command {set_host_options define_design_lib elaborate current_design link link_design set_operating_conditions set_wire_load_mode set_wire_load_model set_fix_multiple_port_nets compile change_names update_timing create_clock set_clock_uncertainty set_clock_transition set_clock_latency set_input_delay set_input_transition set_output_delay set_load} {
     proc $command {args} {return 1}
 }
-foreach command {report_lib report_qor report_resources report_reference report_design check_timing report_constraint report_timing report_units report_wire_load} {
+foreach command {report_qor report_resources report_reference report_design check_timing report_constraint report_timing report_units report_wire_load} {
     proc $command {args} "puts {MOCK $command}; return 1"
 }
 # Intentional unavailable optional feature. The A/timing flow must still complete.

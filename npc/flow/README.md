@@ -58,6 +58,15 @@ candidate rather than a mixed-Vt/SRAM glob. Set executable paths to the installe
 versions if needed. `probe` needs only DC and the DB; it writes version/library
 reports without synthesizing. Inspect `npc/build/flow/lib-probe/reports/probe/`.
 
+Version reporting reads `get_app_var sh_product_version`; DC V-2023.12-SP5
+rejected the earlier `version` command. Library reports use `report_lib` for
+technology libraries (including `gtech`) and `report_synlib` for DC's loaded
+`.sldb` libraries (currently `standard.sldb`). These are different library types,
+so replacing every `report_lib` with `report_synlib` would be incorrect.
+An error inside `redirect` can appear in the report even if DC exits 0 and writes
+`complete.txt`; inspect the reports as well as the log. The driver rejects these
+errors. After syncing a script fix, rerun probe with a new `RUN_ID`.
+
 Update `site.local.tcl` with the actual `library_name`, `operating_condition`,
 PVT/Vt and `area_unit`. Verify **ns** time and **pF** capacitance units against the
 library; other units require explicit conversion of the design constraints.

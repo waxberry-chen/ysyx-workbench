@@ -15,7 +15,9 @@ file mkdir $reports $outputs
 # 所有 RTL/include 路径从快照中的 npc/ 解析，而不是从服务器原工作区解析。
 cd $npc_root
 set_host_options -max_cores [dict get $cfg max_cores]
-redirect -file [file join $reports version.rpt] {version}
+# DC V-2023.12-SP5 实测没有 version 命令；读取 shell 的产品版本变量。
+# get_app_var 返回字符串，必须显式 puts 才能写进 redirect 的报告。
+redirect -file [file join $reports version.rpt] {puts [get_app_var sh_product_version]}
 # 部分 EDA 命令失败时返回 0，不一定抛出 Tcl 异常；把布尔失败转换为 error。
 # 此函数只用于已约定返回布尔值的命令；driver 还会检查日志中的 Error。
 proc require_true {value message} {
@@ -48,7 +50,15 @@ proc library_reports {} {
     global reports
     foreach_in_collection lib [get_libs *] {
         set name [get_object_name $lib]
-        redirect -file [file join $reports "library_${name}.rpt"] {report_lib $name}
+        # 当前 DC 的 synthetic_library 只配置 standard.sldb，get_libs * 也会列出它。
+        # .sldb 描述算术等综合运算；工艺 .db/gtech 则使用 report_lib。
+        # DC P-2019.03 PDF 429 示例：report_synlib standard.sldb。
+        # 不能把所有库都改成 report_synlib；PT 不配置 synthetic_library。
+        if {$::stage ne "sta" && [file extension $name] eq ".sldb"} {
+            redirect -file [file join $reports "library_${name}.rpt"] {report_synlib $name}
+        } else {
+            redirect -file [file join $reports "library_${name}.rpt"] {report_lib $name}
+        }
     }
 }
 # 3. link 后设置工作条件和互连估算；DC 与 PT 共用此过程，减少假设漂移。

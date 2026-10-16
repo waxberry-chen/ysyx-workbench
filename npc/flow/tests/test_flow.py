@@ -265,13 +265,38 @@ dict set site library_reviewed 1
     def test_real_tcl_wiring_with_mock_commands(self):
         self.append_cfg('dict set cfg power_enable 1')
         self.tool.write_text("#!/usr/bin/env python3\nimport os,sys\nfrom pathlib import Path\nmock=Path(os.environ['NPC_FLOW_SNAPSHOT'])/'tests/eda_mock.tcl'\nos.execvp('tclsh',['tclsh',str(mock),sys.argv[-1]])\n")
+        probe = self.new_run('probe')
+        f.execute(probe, 'probe')
         run = self.syn()
         f.execute(run, 'sta')
+        for current, stage in [(probe, 'probe'), (run, 'syn'), (run, 'sta')]:
+            reports = current/'reports'/stage
+            self.assertIn('MOCK-VERSION-NOT-EDA', (reports/'version.rpt').read_text())
+            if stage != 'sta':
+                self.assertIn('MOCK synthetic library standard.sldb', (reports/'library_standard.sldb.rpt').read_text())
+                self.assertIn('MOCK technology library gtech', (reports/'library_gtech.rpt').read_text())
+            else:
+                self.assertFalse((reports/'library_standard.sldb.rpt').exists())
         result = f.inspect_stage(run, 'sta')
         self.assertEqual(result['timing']['max']['violating_endpoints'], 1)
         self.assertEqual(result['timing']['max']['tns'], -1.0)
         self.assertEqual(result['signoff'], 'TIMING_FAIL')
         self.assertIn('NOT_EVALUATED', f.inspect_stage(run, 'syn')['power'])
+
+    def test_probe_report_errors_despite_successful_exit(self):
+        # 真实 DC 可能退出 0 且写 complete.txt，但 redirect 内的报告仍含 Error。
+        for filename, diagnostic in [
+            ('version.rpt', "Error: unknown command 'version' (CMD-005)"),
+            ('library_standard.sldb.rpt', 'Error: Use the report_synlib command. (UIL-29)'),
+        ]:
+            with self.subTest(report=filename):
+                self.tool.write_text(FAKE + f"\n(r/{filename!r}).write_text({diagnostic!r})\n")
+                run = self.new_run(filename)
+                with self.assertRaisesRegex(f.FlowError, 'Tool/structural error'):
+                    f.execute(run, 'probe')
+                stage = json.loads((run/'manifest.json').read_text())['stages']['probe']
+                self.assertEqual(stage['exit_code'], 0)
+                self.assertEqual(stage['status'], 'FAILED')
 
     def test_tcl_path_quoting(self):
         literal = 'space $env(HOME) [error bad] " \\ end'

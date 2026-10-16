@@ -68,3 +68,11 @@
 - 用户报告服务器 probe 退出 1，日志为 `The  script is not supported.`。发现 preflight 用 `Path.resolve()` 改写可执行路径，会丢失依赖调用名分派的 launcher 入口；是否为服务器此次故障的确切原因，仍需核对失败 manifest 的 `stages.probe.argv[0]` 与服务器工具链接。
 - 增加共享 launcher 的受控模拟回归，要求以 `dc_shell`/`pt_shell` 名称调用；旧实现 probe 失败。改为仅用 `os.path.abspath()` 绝对化路径，保留符号链接入口，同时继续对目标文件内容求 hash。
 - 修复后 `make -C npc/flow check test` 共 29 项通过，覆盖 probe/synth/STA 的工具分派。没有执行真实 EDA；服务器同步修复后须用新 run ID 重试，旧失败快照保持原样。
+
+## 2026-10-16：根据服务器 probe 报告修正版本与库报告命令
+
+- 读取用户带回的 `npc/build/flow/lib-probe/`：DC 启动 banner 为 V-2023.12-SP5，工艺库成功载入；`version.rpt` 含 CMD-005（未知 `version`），`library_standard.sldb.rpt` 含 UIL-29（synthetic library 应使用 `report_synlib`）。该 run 虽退出 0 且写完成标记，仍不是成功 probe；报告中的 Error 必须判失败。
+- 共享初始化改为 `puts [get_app_var sh_product_version]`；DC 枚举到的 `.sldb` 用 `report_synlib`，工艺库/gtech 继续用 `report_lib`，PT 不走 synthetic 分支。`report_synlib standard.sldb` 依据 DC P-2019.03 PDF 429；新命令仍待服务器实际重跑验证。
+- 本次工艺报告确认内部名 `tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs`，条件名 `tt0p9v25c`，P/V/T 为 1.00/0.90 V/25 °C，单位 ns/pF，并包含 `ZeroWireload` 模型。模型存在不等于后续 design 已选中它；未据此自动修改 site 审核标记或宣称完成时序评估。
+- 原 mock 虚构了 `version` 命令，且没有枚举 `standard.sldb`，因此未覆盖这两个真实兼容问题。收紧 mock 后旧脚本失败；修复后 probe/synth/STA 控制流通过，并增加“退出 0、完成标记存在、错误只在报告中”的拒绝回归。
+- `make -C npc/flow check test` 共 30 项通过。未修改旧 run 快照/报告，未执行新的真实 DC/PT；服务器同步后使用新 run ID 验证。
