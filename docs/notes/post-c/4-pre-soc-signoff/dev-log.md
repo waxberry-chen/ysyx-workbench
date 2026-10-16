@@ -62,3 +62,9 @@
 - 为 Makefile、配置、Python driver、共享 Tcl、probe/DC/PT/SDC 和测试入口补充中文注释；从输入输出、命令作用和设计理由解释各步骤，新增 [阅读顺序](../../../../npc/flow/README.md#新手阅读顺序)。
 - 对照本地 DC/PT User Guide 与 ref-flow 的阶段注释，解释库角色、展开/link/映射、ideal clock/WLM、I/O min/max（含 output min 的符号）、reset recovery/removal、WNS/TNS 与 coverage。注释附相关手册版本及 PDF 页码，不将参考工程的 margin/derate 搬到 NPC。
 - 与修改前快照比较，13 个脚本的 Python 可执行 token 或 Tcl/Make 非注释行完全一致；`make -C npc/flow check test` 的 28 项检查通过。只增加注释和导航，没有改变参数/执行行为或新增 EDA 结果；原 S2 归档保留为当时快照。
+
+## 2026-10-16：修正 EDA 工具符号链接入口
+
+- 用户报告服务器 probe 退出 1，日志为 `The  script is not supported.`。发现 preflight 用 `Path.resolve()` 改写可执行路径，会丢失依赖调用名分派的 launcher 入口；是否为服务器此次故障的确切原因，仍需核对失败 manifest 的 `stages.probe.argv[0]` 与服务器工具链接。
+- 增加共享 launcher 的受控模拟回归，要求以 `dc_shell`/`pt_shell` 名称调用；旧实现 probe 失败。改为仅用 `os.path.abspath()` 绝对化路径，保留符号链接入口，同时继续对目标文件内容求 hash。
+- 修复后 `make -C npc/flow check test` 共 29 项通过，覆盖 probe/synth/STA 的工具分派。没有执行真实 EDA；服务器同步修复后须用新 run ID 重试，旧失败快照保持原样。

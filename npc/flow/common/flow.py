@@ -146,7 +146,11 @@ def preflight(config, site_path, server=False, probe=False):
         for name in (['dc_shell'] if probe else ['dc_shell', 'pt_shell']):
             path = shutil.which(site[name])
             require(path, f'Server executable unavailable: {site[name]}')
-            site[name] = str(Path(path).resolve())
+            # 保留 dc_shell/pt_shell 的调用名：它们可能是公共 launcher 的符号链接，
+            # launcher 可用 $0/argv[0] 分派产品。resolve() 会丢失该入口名。
+            # 只转换为绝对路径，避免后续切换 cwd 使相对路径失效；文件 hash 仍会
+            # 通过符号链接读取真实目标内容，所以保留入口不会取消输入内容校验。
+            site[name] = os.path.abspath(path)
     return data, sources, files
 
 

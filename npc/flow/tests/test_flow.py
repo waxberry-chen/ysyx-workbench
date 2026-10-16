@@ -141,6 +141,29 @@ dict set site library_reviewed 1
         with self.assertRaisesRegex(f.FlowError, 'executable unavailable'):
             f.preflight(self.config, self.site, server=True)
 
+    def test_tool_symlink_dispatch(self):
+        # A shared launcher can select the product from its invocation name.
+        # Resolving dc_shell/pt_shell to the target before exec loses that name.
+        self.tool.write_text(FAKE.replace(
+            'import os\nfrom pathlib import Path\n',
+            'import os,sys\nfrom pathlib import Path\n'
+            'expected = "pt_shell" if os.environ["NPC_STAGE"] == "sta" else "dc_shell"\n'
+            'if Path(sys.argv[0]).name != expected:\n'
+            ' print("Error: The  script is not supported.")\n'
+            ' raise SystemExit(1)\n'))
+        for name in ['dc_shell', 'pt_shell']:
+            link = self.root/name
+            link.symlink_to(self.tool)
+            self.append_site(f'dict set site {name} {f.tcl_word(link)}')
+        run = self.new_run()
+        for stage in ['probe', 'syn', 'sta']:
+            f.execute(run, stage)
+        manifest = f.verify(run)
+        for stage, name in [('probe', 'dc_shell'), ('syn', 'dc_shell'), ('sta', 'pt_shell')]:
+            self.assertEqual(manifest['stages'][stage]['argv'][0], str(self.root/name))
+        # The invocation path is preserved, but hashing still reads target bytes.
+        self.assertEqual(manifest['external_inputs'][str(self.root/'dc_shell')], f.sha(self.tool))
+
     def test_duplicate_run(self):
         self.new_run()
         with self.assertRaisesRegex(f.FlowError, 'Run already exists'):

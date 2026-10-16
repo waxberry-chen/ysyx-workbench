@@ -84,6 +84,14 @@ so relative include paths continue to work. Do not move a live run: its absolute
 path is part of the manifest. If the driver changes, invoke the archived
 `inputs/npc/flow/common/flow.py` against the original run.
 
+If startup reports `The  script is not supported.`, inspect
+`manifest.json → stages.probe.argv[0]` and the tool symlink. Some launchers dispatch
+by the invocation name (`dc_shell`/`pt_shell`); replacing that symlink with its
+resolved target can break startup before the probe Tcl runs. The driver preserves
+the invocation path while making it absolute; hashes still read the target's
+contents. After updating an older driver, retry with a new `RUN_ID`, since failed
+runs retain their original inputs and cannot be overwritten.
+
 ## Constraints and models
 
 `configs/npc_core.tcl` freezes an **exploratory** 10 ns target (100 MHz), not a
