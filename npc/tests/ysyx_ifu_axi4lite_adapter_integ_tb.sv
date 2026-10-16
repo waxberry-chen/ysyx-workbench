@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-`default_nettype none
+
 
 module ysyx_ifu_axi4lite_adapter_integ_tb;
 
@@ -258,4 +258,4 @@ end
 
 endmodule
 
-`default_nettype wire
+

@@ -1,4 +1,4 @@
-`default_nettype none
+
 module ysyx_axi4lite_clint (
     input wire clk,
     input wire rst_n,
@@ -81,4 +81,4 @@ a06_read_error_zero: assert property (@(posedge clk) disable iff (!rst_n)
 `endif
 
 endmodule
-`default_nettype wire
+

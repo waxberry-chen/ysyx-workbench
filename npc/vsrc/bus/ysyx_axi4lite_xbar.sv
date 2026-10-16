@@ -1,4 +1,4 @@
-`default_nettype none
+
 
 // Registered single-transaction router. Port order: SRAM, UART, CLINT, DECERR.
 module ysyx_axi4lite_xbar #(parameter logic [31:0] SRAM_BYTES = 32'h00100000) (
@@ -178,4 +178,4 @@ a01_b_holding: assert property (@(posedge clk) disable iff (!rst_n)
     s_axi_bvalid && !s_axi_bready |=> s_axi_bvalid && $stable(s_axi_bresp));
 `endif
 endmodule
-`default_nettype wire
+

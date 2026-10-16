@@ -1,4 +1,4 @@
-`default_nettype none
+
 
 // IFU read-only + LSU read/write -> one AXI4-Lite master.
 // One service slot, including the buffered upstream response. A grant is
@@ -214,4 +214,4 @@ a01_lsu_b_holding: assert property (@(posedge clk) disable iff (!rst_n)
     lsu_axi_bvalid && !lsu_axi_bready |=> lsu_axi_bvalid && $stable(lsu_axi_bresp));
 `endif
 endmodule
-`default_nettype wire
+

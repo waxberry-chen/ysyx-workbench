@@ -1,4 +1,4 @@
-`default_nettype none
+
 module axi4lite_redirect_test_top (
  input wire clk,rst_n,redirect_valid,
  input wire [31:0] redirect_target,
@@ -159,4 +159,4 @@ assign tap_ifu_arready=ifu_axi_arready;
 assign tap_ifu_rvalid=ifu_axi_rvalid;
 assign tap_ifu_rready=ifu_axi_rready;
 endmodule
-`default_nettype wire
+

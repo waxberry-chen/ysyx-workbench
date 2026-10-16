@@ -31,7 +31,8 @@ wire [4-1:0] csr_idx_we;
 wire [32-1:0] csr_d [4-1:0];
 // output pack
 wire [32-1:0] csr_q [4-1:0];
-
+// csrs
+wire [32-1:0] csr_mstatus,csr_mtvec,csr_mepc,csr_mcause;
 
 assign csr_idx[0] = (csr_addr == 12'h300);  // mstatus
 assign csr_idx[1] = (csr_addr == 12'h305);
@@ -60,7 +61,6 @@ generate
 endgenerate
 
 // csr unpack
-wire [32-1:0] csr_mstatus,csr_mtvec,csr_mepc,csr_mcause;
 assign csr_mstatus  = csr_q[0];
 assign csr_mtvec    = csr_q[1];
 assign csr_mepc     = csr_q[2];

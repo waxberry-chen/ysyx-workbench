@@ -13,11 +13,11 @@
 # Copy to site.local.tcl on the server. External absolute DB paths are also supported.
 # One RVT/TT candidate, not the original mixed RVT/LVT/HVT + SRAM glob.
 set site [dict create \
-    dc_shell /15T/tools/synopsys/syn/O-2018.06-SP1/bin/dc_shell \
+    dc_shell dc_shell \
     pt_shell pt_shell \
-    target_db [file normalize [file join [file dirname [info script]] .. DB STD_NEW tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.db]] \
+    target_db /home/cym/prj/ysyx-workbench/npc/flow/00_indata/DB/STD_NEW/tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.db \
     library_name tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs \
-    operating_condition {} corner TT_0p9V_25C vt RVT \
+    operating_condition {tt0p9v25c} corner TT_0p9V_25C vt RVT \
     time_unit ns capacitance_unit pf area_unit library_area \
     wire_load_model library_default library_reviewed 0]
 # First run `make probe SITE=... RUN_ID=lib-probe` to inspect report_lib.

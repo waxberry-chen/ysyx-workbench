@@ -1,4 +1,4 @@
-`default_nettype none
+
 
 // One-entry decoded instruction context buffer.
 //
@@ -114,4 +114,4 @@ ysyx_gnrl_rv_reg #(
 
 endmodule
 
-`default_nettype wire
+

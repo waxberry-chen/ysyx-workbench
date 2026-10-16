@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-`default_nettype none
+
 
 module ysyx_exu_tb;
 
@@ -394,4 +394,4 @@ end
 
 endmodule
 
-`default_nettype wire
+

@@ -1,4 +1,4 @@
-`default_nettype none
+
 
 // Single-outstanding load/store unit.
 //
@@ -154,4 +154,4 @@ assert property (p_external_response_requires_outstanding);
 
 endmodule
 
-`default_nettype wire
+

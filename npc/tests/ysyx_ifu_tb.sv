@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-`default_nettype none
+
 
 module ysyx_ifu_tb;
 
@@ -237,4 +237,4 @@ end
 
 endmodule
 
-`default_nettype wire
+

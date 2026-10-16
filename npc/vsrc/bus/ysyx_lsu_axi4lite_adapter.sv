@@ -1,4 +1,4 @@
-`default_nettype none
+
 
 // Fully-registered, single-outstanding load/store AXI4-Lite adapter.
 //
@@ -256,4 +256,4 @@ assert property (p_single_outstanding_blocks_local_request);
 
 endmodule
 
-`default_nettype wire
+

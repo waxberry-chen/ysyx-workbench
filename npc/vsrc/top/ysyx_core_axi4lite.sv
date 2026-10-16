@@ -1,4 +1,4 @@
-`default_nettype none
+
 // Preserve the Core's two adapters; export the arbiter's single master port.
 // monitor_bus bits [0:13]: IF ARV/ARR/RV/RR, LSU ARV/ARR/RV/RR,
 // LSU AWV/AWR/WV/WR/BV/BR. These are passive harness observations.
@@ -160,4 +160,4 @@ ysyx_axi4lite_arbiter arbiter (
     .m_axi_bresp(m_axi_bresp)
 );
 endmodule
-`default_nettype wire
+

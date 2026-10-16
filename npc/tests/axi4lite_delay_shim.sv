@@ -1,4 +1,4 @@
-`default_nettype none
+
 module axi_delay_channel #(parameter integer WIDTH=32) (
  input wire clk, rst_n, accept_enable,
  input wire [7:0] delay_cycles,
@@ -92,4 +92,4 @@ module axi4lite_delay_shim (
  .out_valid(s_axi_bvalid), .out_ready(s_axi_bready), .out_data({s_axi_bresp})
  );
 endmodule
-`default_nettype wire
+

@@ -1,4 +1,4 @@
-`default_nettype none
+
 
 // Terminate any address with DECERR. No memory or device side effects.
 module ysyx_axi4lite_decerr (
@@ -72,4 +72,4 @@ a01_b_holding: assert property (@(posedge clk) disable iff (!rst_n)
     s_axi_bvalid && !s_axi_bready |=> s_axi_bvalid && $stable(s_axi_bresp));
 `endif
 endmodule
-`default_nettype wire
+

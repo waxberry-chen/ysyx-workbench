@@ -1,4 +1,4 @@
-`default_nettype none
+
 // B1 route indices: 0 SRAM, 1 UART, 2 CLINT, 3 default DECERR.
 // The host may preload SRAM during initial reset and consume UART TX events;
 // all running CPU transactions and device side effects are handled by RTL.
@@ -304,4 +304,4 @@ for(genvar i=0;i<4;i=i+1) begin : observe
     assign monitor_bresp[i*2 +: 2] = x_bresp[i];
 end
 endmodule
-`default_nettype wire
+

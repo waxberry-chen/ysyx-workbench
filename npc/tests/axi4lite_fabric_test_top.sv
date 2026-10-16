@@ -1,4 +1,4 @@
-`default_nettype none
+
 module axi4lite_fabric_test_top #(parameter logic [31:0] SRAM_BYTES=32'd12288) (
  input wire clk,rst_n,
  input wire [4:0] sim_accept,
@@ -363,4 +363,4 @@ for(genvar i=0;i<4;i=i+1) begin : observe
     assign tap_rdata[i] = x_rdata[i];
 end
 endmodule
-`default_nettype wire
+

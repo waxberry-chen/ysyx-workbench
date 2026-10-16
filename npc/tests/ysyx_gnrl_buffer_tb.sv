@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-`default_nettype none
+
 
 module ysyx_gnrl_buffer_tb;
 
@@ -169,4 +169,4 @@ end
 
 endmodule
 
-`default_nettype wire
+

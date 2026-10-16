@@ -1,4 +1,4 @@
-`default_nettype none
+
 module axi4lite_xbar_test_top #(parameter logic [31:0] SRAM_BYTES = 32'h00100000) (
     input wire clk,
     input wire rst_n,
@@ -169,4 +169,4 @@ ysyx_axi4lite_decerr error_sink (
     .s_axi_bready(m_axi_bready[3] && real_decerr),
     .s_axi_bresp(e_bresp));
 endmodule
-`default_nettype wire
+

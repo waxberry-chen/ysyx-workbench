@@ -1,4 +1,4 @@
-`default_nettype none
+
 module ysyx_axi4lite_sram #(parameter logic [31:0] SRAM_BYTES = 32'h00100000) (
     input wire clk,
     input wire rst_n,
@@ -100,4 +100,4 @@ a07_index_in_range: assert property (@(posedge clk) disable iff (!rst_n)
 `endif
 
 endmodule
-`default_nettype wire
+

@@ -1,4 +1,4 @@
-`default_nettype none
+
 module ysyx_axi4lite_uart (
     input wire clk,
     input wire rst_n,
@@ -86,4 +86,4 @@ a09_tx_payload: assert property (@(posedge clk) disable iff (!rst_n)
 `endif
 
 endmodule
-`default_nettype wire
+

@@ -1,4 +1,4 @@
-`default_nettype none
+
 
 // In-order single-issue execution unit.
 //
@@ -278,4 +278,4 @@ assert property (p_memory_error_raises_access_fault);
 
 endmodule
 
-`default_nettype wire
+

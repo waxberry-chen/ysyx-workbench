@@ -1,4 +1,4 @@
-`default_nettype none
+
 module axi4lite_slaves_test_top #(parameter logic [31:0] SRAM_BYTES = 32'h00100000) (
     input wire clk,
     input wire rst_n,
@@ -113,4 +113,4 @@ ysyx_axi4lite_clint clint (
     .s_axi_bresp(s_axi_bresp_ports[2])
 );
 endmodule
-`default_nettype wire
+

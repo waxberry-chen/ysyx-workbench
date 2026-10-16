@@ -1,4 +1,4 @@
-`default_nettype none
+
 
 // Single-outstanding instruction fetch unit with a small elastic queue.
 //
@@ -154,4 +154,4 @@ assert property (p_dropped_response_never_enters_ifq);
 
 endmodule
 
-`default_nettype wire
+

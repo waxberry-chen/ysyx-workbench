@@ -1,4 +1,4 @@
-`default_nettype none
+
 
 // One transaction at a time. Backend read samples on AR acceptance; write
 // executes for one cycle after both AW/W slots have been captured.
@@ -108,4 +108,4 @@ a01_b_holding: assert property (@(posedge clk) disable iff (!rst_n)
     s_axi_bvalid && !s_axi_bready |=> s_axi_bvalid && $stable(s_axi_bresp));
 `endif
 endmodule
-`default_nettype wire
+

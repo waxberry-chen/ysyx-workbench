@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-`default_nettype none
+
 
 module ysyx_lsu_axi4lite_adapter_tb;
 
@@ -314,4 +314,4 @@ end
 
 endmodule
 
-`default_nettype wire
+

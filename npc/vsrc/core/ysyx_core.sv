@@ -1,4 +1,4 @@
-`default_nettype none
+
 
 module ysyx_core #(
     parameter PC_RST    = 32'h8000_0000,
@@ -606,4 +606,4 @@ assert property (p_exception_redirects_without_normal_writeback);
 
 endmodule
 
-`default_nettype wire
+
