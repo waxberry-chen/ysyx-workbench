@@ -17,7 +17,11 @@ module ysyx_csr (
 );
 
 // DPI-C for CSRs
+`ifndef SYNTHESIS
+`ifdef NPC_SIM_DPI
 import "DPI-C" function void set_csr_ptr(input logic [32-1:0] r1 [], input logic [32-1:0] r2 [],input logic [32-1:0] r3 [],input logic [32-1:0] r4 []);
+`endif
+`endif
 
 // one-hot addr->idx
 wire [4-1:0] csr_idx;
@@ -62,12 +66,16 @@ assign csr_mtvec    = csr_q[1];
 assign csr_mepc     = csr_q[2];
 assign csr_mcause   = csr_q[3];
 
+`ifndef SYNTHESIS
+`ifdef NPC_SIM_DPI
 initial begin
     set_csr_ptr(csr_mstatus, csr_mtvec, csr_mepc, csr_mcause);
 end
+`endif
+`endif
 
-assign csr_rdata = (csr_idx[3])?csr_q[3]:(csr_idx[2])?csr_q[2]:(csr_idx[1])?csr_q[1]:csr_q[0];  // default mstatus, combo
-assign trap_target = csr_q[1];
-assign mret_target = csr_q[2];
+assign csr_rdata = (csr_idx[3])?csr_mcause:(csr_idx[2])?csr_mepc:(csr_idx[1])?csr_mtvec:csr_mstatus;  // default mstatus, combo
+assign trap_target = csr_mtvec;
+assign mret_target = csr_mepc;
 
 endmodule

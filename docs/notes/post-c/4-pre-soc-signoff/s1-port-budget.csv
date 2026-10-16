@@ -1,0 +1,35 @@
+port,direction,width,group,timing_budget,electrical_budget,status
+clk,input,1,clock,period; uncertainty_setup/hold; source_latency_min/max,clock_transition,S1 interface frozen; numeric values/units in S2
+rst_n,input,1,reset,external_synchronous_release; recovery/removal; combinational_output_paths,input_transition_or_driving_cell,S1 interface frozen; numeric values/units in S2
+commit_pc,output,32,observation,output_delay_min/max relative to clk,output_load,S1 interface frozen; numeric values/units in S2
+commit_inst,output,32,observation,output_delay_min/max relative to clk,output_load,S1 interface frozen; numeric values/units in S2
+commit_valid,output,1,observation,output_delay_min/max relative to clk,output_load,S1 interface frozen; numeric values/units in S2
+commit_is_mmio,output,1,observation,output_delay_min/max relative to clk,output_load,S1 interface frozen; numeric values/units in S2
+commit_exception,output,1,observation,output_delay_min/max relative to clk,output_load,S1 interface frozen; numeric values/units in S2
+commit_exception_cause,output,32,observation,output_delay_min/max relative to clk,output_load,S1 interface frozen; numeric values/units in S2
+commit_redirect_valid,output,1,observation,output_delay_min/max relative to clk,output_load,S1 interface frozen; numeric values/units in S2
+commit_redirect_reason,output,2,observation,output_delay_min/max relative to clk,output_load,S1 interface frozen; numeric values/units in S2
+commit_mem_valid,output,1,observation,output_delay_min/max relative to clk,output_load,S1 interface frozen; numeric values/units in S2
+commit_mem_write,output,1,observation,output_delay_min/max relative to clk,output_load,S1 interface frozen; numeric values/units in S2
+commit_mem_addr,output,32,observation,output_delay_min/max relative to clk,output_load,S1 interface frozen; numeric values/units in S2
+commit_mem_error,output,1,observation,output_delay_min/max relative to clk,output_load,S1 interface frozen; numeric values/units in S2
+m_axi_arvalid,output,1,axi,output_delay_min/max relative to clk,output_load,S1 interface frozen; numeric values/units in S2
+m_axi_arready,input,1,axi,input_delay_min/max relative to clk,input_transition_or_driving_cell,S1 interface frozen; numeric values/units in S2
+m_axi_araddr,output,32,axi,output_delay_min/max relative to clk,output_load,S1 interface frozen; numeric values/units in S2
+m_axi_arprot,output,3,axi,output_delay_min/max relative to clk,output_load,S1 interface frozen; numeric values/units in S2
+m_axi_rvalid,input,1,axi,input_delay_min/max relative to clk,input_transition_or_driving_cell,S1 interface frozen; numeric values/units in S2
+m_axi_rready,output,1,axi,output_delay_min/max relative to clk,output_load,S1 interface frozen; numeric values/units in S2
+m_axi_rdata,input,32,axi,input_delay_min/max relative to clk,input_transition_or_driving_cell,S1 interface frozen; numeric values/units in S2
+m_axi_rresp,input,2,axi,input_delay_min/max relative to clk,input_transition_or_driving_cell,S1 interface frozen; numeric values/units in S2
+m_axi_awvalid,output,1,axi,output_delay_min/max relative to clk,output_load,S1 interface frozen; numeric values/units in S2
+m_axi_awready,input,1,axi,input_delay_min/max relative to clk,input_transition_or_driving_cell,S1 interface frozen; numeric values/units in S2
+m_axi_awaddr,output,32,axi,output_delay_min/max relative to clk,output_load,S1 interface frozen; numeric values/units in S2
+m_axi_awprot,output,3,axi,output_delay_min/max relative to clk,output_load,S1 interface frozen; numeric values/units in S2
+m_axi_wvalid,output,1,axi,output_delay_min/max relative to clk,output_load,S1 interface frozen; numeric values/units in S2
+m_axi_wready,input,1,axi,input_delay_min/max relative to clk,input_transition_or_driving_cell,S1 interface frozen; numeric values/units in S2
+m_axi_wdata,output,32,axi,output_delay_min/max relative to clk,output_load,S1 interface frozen; numeric values/units in S2
+m_axi_wstrb,output,4,axi,output_delay_min/max relative to clk,output_load,S1 interface frozen; numeric values/units in S2
+m_axi_bvalid,input,1,axi,input_delay_min/max relative to clk,input_transition_or_driving_cell,S1 interface frozen; numeric values/units in S2
+m_axi_bready,output,1,axi,output_delay_min/max relative to clk,output_load,S1 interface frozen; numeric values/units in S2
+m_axi_bresp,input,2,axi,input_delay_min/max relative to clk,input_transition_or_driving_cell,S1 interface frozen; numeric values/units in S2
+monitor_bus,output,14,observation,output_delay_min/max relative to clk,output_load,S1 interface frozen; numeric values/units in S2

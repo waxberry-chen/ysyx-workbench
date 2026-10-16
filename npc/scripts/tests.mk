@@ -430,3 +430,20 @@ b1-signoff:
 .PHONY: b1-coverage-check
 b1-coverage-check:
 	python3 $(NPC_HOME)/tests/b1_coverage_check.py
+
+.PHONY: synthesis-scope-check architectural-state-test
+synthesis-scope-check:
+	python3 $(NPC_HOME)/tests/synthesis_scope_check.py
+
+# Run identical reset/state checks with simulation and implementation defines.
+architectural-state-test:
+	@set -e; for profile in simulation synthesis; do \
+	 defs=''; if [ "$$profile" = synthesis ]; then defs='-DSYNTHESIS -DNPC_SIM_DPI'; fi; \
+	 verilator --binary --timing --assert --sv -Wall -Wno-TIMESCALEMOD \
+	  $$defs --top-module ysyx_architectural_state_tb \
+	  --Mdir $(NPC_HOME)/build/m4-s1/state-$$profile \
+	  $(NPC_HOME)/vsrc/gnrl/ysyx_gnrl_primitive.sv \
+	  $(VSRC_DIR)/ysyx_regfile.sv $(VSRC_DIR)/ysyx_csr.sv \
+	  $(NPC_HOME)/tests/ysyx_architectural_state_tb.sv; \
+	 $(NPC_HOME)/build/m4-s1/state-$$profile/Vysyx_architectural_state_tb; \
+	done

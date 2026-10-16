@@ -128,6 +128,7 @@ end
 
 // Interface invariants. NPC and the standalone LSU test enable them with
 // --assert; they also remain useful to other simulators.
+`ifndef SYNTHESIS
 property p_request_stable_when_stalled;
     @(posedge clk) disable iff (!rst_n)
         dmem_req_valid && !dmem_req_ready
@@ -148,6 +149,8 @@ property p_external_response_requires_outstanding;
         dmem_rsp_valid |-> state == WAIT;
 endproperty
 assert property (p_external_response_requires_outstanding);
+
+`endif
 
 endmodule
 

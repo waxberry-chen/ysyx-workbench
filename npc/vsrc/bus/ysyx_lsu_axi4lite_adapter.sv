@@ -189,6 +189,7 @@ always @(posedge clk or negedge rst_n) begin
     end
 end
 
+`ifndef SYNTHESIS
 property p_aligned_local_request;
     @(posedge clk) disable iff (!rst_n)
         dmem_req_valid |-> local_request_aligned;
@@ -250,6 +251,8 @@ property p_single_outstanding_blocks_local_request;
         state_q != IDLE |-> !dmem_req_ready;
 endproperty
 assert property (p_single_outstanding_blocks_local_request);
+
+`endif
 
 endmodule
 

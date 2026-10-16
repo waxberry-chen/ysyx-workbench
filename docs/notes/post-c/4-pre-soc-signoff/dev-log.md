@@ -39,3 +39,12 @@
 - 为 M4 的库配置、SV/link、SDC、wire load、综合/面积、STA coverage 和附带功耗建立实际页码入口；强调 DC 功耗命中的 TOPO 上下文不应套用到普通综合。
 - README/plan/参考审查/roadmap 接入检索入口。后续先读本地小节，记录版本与页码，再按服务器工具帮助核对选项；未执行任何 EDA 流程。
 - 检查：两本缓存 hash/分页数通过，命令搜索与按页读取通过；文档链接、索引页码及缓存忽略状态已核对。
+
+## 2026-10-16：S1 综合范围与复位语义完成
+
+- 输入 HEAD `1ccf39d22f0107fbb5eb2a5327fe304942376d3e`，开始时工作区干净。创建 `npc/flow/README.md`、16 项 `filelists/core.f`，保留观察输出、32 项 GPR 与现有组合 M 运算。
+- `NPC_SIM_DPI` 控制 GPR/CSR 指针导出；正常 harness 显式启用，`SYNTHESIS` 优先关闭 DPI/SVA。GPR 增加硬件异步复位、x0 双读口固定零；CSR alias 用于实际读口消除冗余告警。
+- 新增源闭包/宏矩阵/lint 检查与 GPR/CSR 状态定向。首次构建因 ccache 临时目录受沙箱限制失败，获准后正常完成；测试开发时修正了连续 trap 后 MIE/MPIE 状态的预期/前置设置，最终两种配置均通过。
+- B1 signoff（53 系统 + 23 closure、必测覆盖）、M2 定向与 legacy add trace 均通过；trace hash 与原基线相同。保存本地 `artifacts/m4-s1-20261016/` 证据。
+- 新增 [S1 设计与验收记录](1-synthesis-scope.md)、34 端口 [预算接口 CSV](s1-port-budget.csv)，同步入口/计划/验收矩阵/roadmap/Q&A。未修改 ref-flow 或 PDK 路径，未执行 DC/PT，不声称四值或综合网表验证通过。
+- 当前无 S1 未解决阻塞；下一步 S2 构建 DC/PT 脚本、数值约束和 preflight/manifest。S3 才取得首次面积与时序结果。

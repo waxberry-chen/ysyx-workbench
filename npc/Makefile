@@ -60,6 +60,7 @@ VFLAGS = $(PLATFORM_VFLAGS) -CFLAGS "$(PLATFORM_CFLAGS)" --trace --cc -stats --e
 						-F $(VSRC_PATH) \
 						-Mdir $(OBJ_DIR) \
 						-DDIFF \
+						-DNPC_SIM_DPI \
 						--no-timing \
 						--top-module $(TOP_MODULE) \
 						-Wno-fatal \

@@ -14,6 +14,7 @@
 !/tests/b1_closure_test.py
 !/tests/b1_coverage_check.py
 !/tests/b1_waveforms.py
+!/tests/synthesis_scope_check.py
 !*.f
 !.gitignore
 !README.md

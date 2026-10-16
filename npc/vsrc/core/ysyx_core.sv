@@ -260,6 +260,7 @@ assign dec_rd_idx  = if_ctx_inst[11:7];
 
 ysyx_regfile u_gpr (
     .clk   (clk),
+    .rst_n (rst_n),
     .rf_rs1(dec_rs1_idx),
     .rf_rs2(dec_rs2_idx),
     .rf_rd (gpr_write_idx),
@@ -538,6 +539,7 @@ assign putchar = commit_valid && commit_mem_write && !commit_mem_error &&
 assign c       = commit_mem_wdata[7:0];
 `endif
 
+`ifndef SYNTHESIS
 property p_commit_context_matches_architectural_pc;
     @(posedge clk) disable iff (!rst_n)
         commit_valid |-> exu_commit_pc == commit_pc;
@@ -599,6 +601,8 @@ property p_exception_redirects_without_normal_writeback;
                               !exu_mret_commit;
 endproperty
 assert property (p_exception_redirects_without_normal_writeback);
+
+`endif
 
 endmodule
 

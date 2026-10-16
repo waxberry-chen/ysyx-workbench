@@ -215,6 +215,7 @@ always @(posedge clk or negedge rst_n) begin
     end
 end
 
+`ifndef SYNTHESIS
 property p_memory_commit_requires_lsu_response;
     @(posedge clk) disable iff (!rst_n)
         commit_mem_valid && !data_misaligned_exception
@@ -272,6 +273,8 @@ property p_memory_error_raises_access_fault;
              (op_is_store ? 32'd7 : 32'd5));
 endproperty
 assert property (p_memory_error_raises_access_fault);
+
+`endif
 
 endmodule
 

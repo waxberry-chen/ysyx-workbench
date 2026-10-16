@@ -99,6 +99,7 @@ always @(posedge clk or negedge rst_n) begin
     end
 end
 
+`ifndef SYNTHESIS
 property p_aligned_local_request;
     @(posedge clk) disable iff (!rst_n)
         imem_req_valid |-> imem_req_addr[1:0] == 2'b00;
@@ -132,6 +133,8 @@ property p_single_outstanding_blocks_local_request;
         state_q != IDLE |-> !imem_req_ready;
 endproperty
 assert property (p_single_outstanding_blocks_local_request);
+
+`endif
 
 endmodule
 

@@ -1,7 +1,7 @@
 # M4 设计与验收计划
 
-> 2026-10-15；状态：规划完成，S0 本地初读及流程图/输入输出梳理已完成，后续继续蒸馏；当前必做 S1–S3/S6 未开始；原 S4/S5 延后，不作为本轮出口。
-> 输入 HEAD：`0fe53bfcdbb1193b94415a9bb8382bcd7d71b4cf`。本次不修改 RTL、构建源码或 ref-flow。
+> 2026-10-16；状态：S0 本地初读与 S1 源码边界/复位/回归已完成，当前下一步 S2；S3/S6 待实施；原 S4/S5 延后，不作为本轮出口。
+> 初始规划输入 HEAD：`0fe53bfcdbb1193b94415a9bb8382bcd7d71b4cf`；S1 输入 HEAD 与修改/验证记录见 [S1 综合范围](1-synthesis-scope.md)。ref-flow 保持原样。
 > 配套：[手册检索入口](manual-index.md)、[参考审查](0-ref-flow-review.md)、[缺失 flow 脚本说明](missing-inputs.md)、[流程图与输入输出](0-flow-map.md)、[验收矩阵](test-plan.md)、[总路线](../roadmap.md)。
 
 ## 1. 目标和评估范围
@@ -18,14 +18,14 @@
 
 ## 2. 先修清楚的 RTL 与环境边界
 
-已确认的源码问题（实施留到 S1）：
+以下为 S0 发现的问题，现已在 [S1](1-synthesis-scope.md) 落实修复与审查：GPR/CSR DPI 与 SVA 隔离、GPR 硬件复位、独立 filelist、reset/端口预算接口和回归已完成。下列保留原问题背景：
 
 - `ysyx_regfile.sv` 和 `ysyx_csr.sv` 无条件导入 DPI 并在 `initial` 中调用；不能只给 DC 定义 `SYNTHESIS` 就宣称已去除 DPI。
 - regfile 用 `initial` 清零所有 32 项，读 x0 也来自数组。需要保证 x0 在硬件上恒零，其他 GPR 的上电值与 reset 策略明确；评估保留硬件复位还是由启动代码初始化的成本与软件依赖。不得简单包掉整个 `initial` 后忽略 x0/X 问题。
 - `filelist-b1.f` 包含不在首个 top 层次中的旧 DPI RAM、B1 slaves 等；新建明确的 synthesis filelist，审查 SV 依赖、宏定义及 include，而不是直接复用 Verilator 的整套选项。
 - 当前有 `posedge clk or negedge rst_n`，这里的 negedge 是异步复位，并非下降沿功能时钟。逐个检查 control/valid/owner reset，未复位数据必须被有效位屏蔽；单时钟不等于无需 RDC 审查。
 
-本地只做 flow 蒸馏、文档和脚本静态检查，不复现运行 ref-flow，也不以本地库文件或 EDA 工具存在性作为出口。PDK 相关文件已在服务器，保留现有脚本路径；后续 NPC 实现与服务器执行按 S1–S3/S6 推进，运行时再记录版本/license/输入检查结果。
+本地进行 flow 蒸馏、源码修改、静态检查与可用 RTL 回归，不复现运行 ref-flow，也不以本地库文件或 EDA 工具存在性作为出口。PDK 相关文件已在服务器，保留现有脚本路径；后续 NPC 实现与服务器执行按 S1–S3/S6 推进，运行时再记录版本/license/输入检查结果。
 
 ## 3. 实施顺序与出口
 
@@ -61,7 +61,7 @@ DC/PT 必须记录互连模型：若库具备并采用 wire-load，写明具体�
 
 方法依据：[Synopsys 对活动假设、默认标注与综合后功耗差异的说明](https://www.synopsys.com/articles/understanding-power-profile.html)。采用本方案的目的为低成本提供附带参考，精度边界由活动与模型决定，不由报告命令名称决定。
 
-## 5. 脚本目录与运行产物（计划，尚未创建可执行入口）
+## 5. 脚本目录与运行产物（S1 已建 README/filelist，EDA 入口待 S2）
 
 ```text
 npc/flow/

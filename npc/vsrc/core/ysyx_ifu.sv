@@ -118,6 +118,7 @@ always @(posedge clk or negedge rst_n) begin
     end
 end
 
+`ifndef SYNTHESIS
 property p_request_stable_when_stalled;
     @(posedge clk) disable iff (!rst_n)
         imem_req_valid && !imem_req_ready
@@ -148,6 +149,8 @@ property p_dropped_response_never_enters_ifq;
         state_q == DROP && imem_rsp_valid |-> !ifq_in_valid;
 endproperty
 assert property (p_dropped_response_never_enters_ifq);
+
+`endif
 
 endmodule
 
