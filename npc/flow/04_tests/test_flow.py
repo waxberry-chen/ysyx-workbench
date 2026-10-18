@@ -324,6 +324,26 @@ dict set site library_reviewed 1
         self.assertNotEqual(p.returncode, 0)
         self.assertIn('Missing set_output_delay:-min', p.stderr)
 
+    def test_reset_exception_cannot_hide_data_paths(self):
+        sdc = (FLOW/'00_indata/constraints/core.sdc').read_text()
+        exception = 'set_false_path -from [get_ports rst_n]'
+        mutations = [
+            (sdc.replace(exception, ''), 'Missing set_false_path'),
+            (sdc.replace(exception, 'set_false_path -from [all_inputs]'), 'Only -from rst_n'),
+            (sdc.replace(exception, 'set_false_path -from [get_ports m_axi_arready]'), 'Only -from rst_n'),
+            (sdc + '\nset_input_delay -clock core_clk -min 0.2 [get_ports rst_n]\n', 'Reset delay must remain unspecified'),
+        ]
+        for text, diagnostic in mutations:
+            with self.subTest(diagnostic=diagnostic):
+                broken = self.root/'broken-reset.sdc'
+                broken.write_text(text)
+                p = subprocess.run(['tclsh', str(FLOW/'04_tests/sdc_check.tcl'),
+                                    str(self.config), str(broken),
+                                    str(f.NPC/'vsrc/top/ysyx_core_axi4lite.sv')],
+                                   capture_output=True, text=True)
+                self.assertNotEqual(p.returncode, 0)
+                self.assertIn(diagnostic, p.stderr)
+
     def test_real_tcl_wiring_with_mock_commands(self):
         self.append_cfg('dict set cfg power_enable 1')
         self.tool.write_text("#!/usr/bin/env python3\nimport os,sys\nfrom pathlib import Path\nmock=Path(os.environ['NPC_FLOW_SNAPSHOT'])/'04_tests/eda_mock.tcl'\nos.execvp('tclsh',['tclsh',str(mock),sys.argv[-1]])\n")

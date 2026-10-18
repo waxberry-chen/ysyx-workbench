@@ -1,5 +1,5 @@
 # 阅读测试时注意：这里以 Tcl list 模拟 EDA collection，只检查当前 top 的命名端口。
-# record 记录“哪类约束作用于哪个对象”，末尾验证每个非时钟输入/输出是否有完整预算。
+# record 记录约束对象；数据 I/O 预算完整，reset 只允许精确的早期评估例外。
 # 未实现的 SDC 命令会直接报错，不使用万能 unknown 空操作来假装工具支持。
 # 这能发现漏约束写法，但不能验证综合网表上的端点、库单位或真实 timing coverage。
 # Local SDC object/budget contract test. This is not a timing engine.
@@ -44,10 +44,23 @@ if {[catch {
     foreach command {set_clock_uncertainty set_clock_transition set_clock_latency set_input_delay set_input_transition set_output_delay set_load} {
         proc $command {args} "record $command {*}\$args"
     }
+    proc set_false_path {args} {
+        if {$args ne [list -from rst_n]} {error "Only -from rst_n may be excluded"}
+        record set_false_path {*}$args
+    }
     source [lindex $argv 1]
     if {$clock_count != 1} {error "Expected one clock"}
     foreach p $inputs {
         if {$p eq "clk"} {continue}
+        if {$p eq "rst_n"} {
+            foreach mode {-min -max} {
+                if {[dict exists $assigned "set_input_delay:$mode:$p"]} {error "Reset delay must remain unspecified"}
+            }
+            foreach command {set_false_path: set_input_transition:} {
+                if {![dict exists $assigned "$command:$p"]} {error "Missing $command for $p"}
+            }
+            continue
+        }
         foreach command {set_input_delay:-min set_input_delay:-max set_input_transition:} {
             if {![dict exists $assigned "$command:$p"]} {error "Missing $command for $p"}
         }
@@ -60,5 +73,5 @@ if {[catch {
     foreach command {set_clock_uncertainty:-setup set_clock_uncertainty:-hold set_clock_transition: set_clock_latency:-min set_clock_latency:-max} {
         if {![dict exists $assigned "$command:core_clk"]} {error "Missing $command"}
     }
-    puts "SDC_CONTRACT_PASS: 1 clock, 9 non-clock inputs, 24 outputs; reset delays retained; no exceptions"
+    puts "SDC_CONTRACT_PASS: 1 clock, 8 data inputs, 24 outputs; only rst_n false path; reset timing deferred"
 } message]} {puts stderr $message; exit 1}

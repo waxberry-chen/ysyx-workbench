@@ -7,8 +7,10 @@
 # period=5 ns 是本轮 200 MHz 候选目标，不是已实现的 Fmax。
 # 02 实验最差 Reg2Out 到达约 2.27 ns，加 output_max=2 ns 和 setup uncertainty=0.2 ns，
 # 同一网表该路径的周期需求约 4.47 ns；5 ns 留约 0.53 ns，需重新综合/PT 验证。
-# 不随频率缩短 I/O/reset 预算；历史 10 ns 实验使用各自冻结配置。
-# input/output/reset min/max：外部接口的早/晚时序预算，不是工具测出的内部延迟。
+# 不随频率缩短数据 I/O 预算；历史实验使用各自冻结配置。
+# input/output min/max：外部接口的早/晚时序预算，不是工具测出的内部延迟。
+# reset 时序暂不评估：SDC 仅对 rst_n 设置 false path，移除旧 reset_min/reset_max 假设。
+# 实际复位源、脉宽和释放模型留待 SoC/reset 设计明确后填写，见 M4/reset-timing-todo.md。
 # uncertainty_setup/hold：建立/保持检查分别预留的时钟裕量。
 # clock/input_transition：时钟/数据边沿的变化时间（slew），不是时钟周期。
 # output_load=0.01 pF：每个输出的外部电容假设，观察端口也计入。
@@ -21,7 +23,7 @@
 set cfg [dict create \
     top ysyx_core_axi4lite filelist flow/00_indata/filelists/core.f sdc flow/00_indata/constraints/core.sdc \
     defines SYNTHESIS period 5.0 input_min 0.2 input_max 2.0 \
-    output_min 0.2 output_max 2.0 reset_min 0.2 reset_max 2.0 \
+    output_min 0.2 output_max 2.0 \
     uncertainty_setup 0.2 uncertainty_hold 0.05 clock_transition 0.1 \
     input_transition 0.1 output_load 0.01 source_latency_min 0.0 source_latency_max 0.0 \
     max_cores 4 power_enable 0 power_toggle 0.1 power_probability 0.5]

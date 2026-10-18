@@ -1,6 +1,7 @@
 # SDC（Synopsys Design Constraints）规定分析边界；不是描述硬件连接的 RTL。
 # 此文件由 DC/PT 在设计已 link 后 source，cfg 来自运行快照，不在此处改配置值。
-# Shared by DC and PT. Never case-analyze reset for timing: retain recovery/removal.
+# Shared by DC and PT. Early core-only evaluation excludes paths launched by rst_n.
+# Reset pulse width/release sign-off is deferred; see M4/reset-timing-todo.md.
 # cfg is frozen by the launcher; reviewed library units are ns and pF.
 # 1. 创建逻辑时钟对象：clk 是 RTL 端口，core_clk 是 STA 中使用的时钟名。
 # period 从 cfg 读取每周期预算；当前默认 5 ns（200 MHz）是待验证的候选目标。
@@ -16,17 +17,17 @@ set_clock_latency -source -min [dict get $cfg source_latency_min] [get_clocks co
 set_clock_latency -source -max [dict get $cfg source_latency_max] [get_clocks core_clk]
 # 3. Input delay：外部发起端到当前输入端口的早/晚到达预算，相对 core_clk。
 # max 参与 setup 等晚到检查，min 参与 hold 等早到检查；不能只给 max。
-# clk 不当作普通数据输入；rst_n 分开写，便于审查复位释放假设。
+# clk 不当作普通数据输入；rst_n 使用下面明确限定对象的早期评估例外。
 # all_inputs/get_ports 返回工具 collection；remove_from_collection 做对象差集。
 set data_inputs [remove_from_collection [all_inputs] [get_ports {clk rst_n}]]
 set_input_delay -clock core_clk -min [dict get $cfg input_min] $data_inputs
 set_input_delay -clock core_clk -max [dict get $cfg input_max] $data_inputs
-# External reset release is assumed synchronous. Assertion is asynchronous.
-# 异步复位的“释放”仍需避开时钟采样窗口（recovery/removal 类似 setup/hold）。
-# 输入 delay 描述外部同步释放假设，不会在 RTL 中自动插入 reset synchronizer。
-# 不把 reset 整体设 false path，也不通过 case analysis 抹掉其时序路径。
-set_input_delay -clock core_clk -min [dict get $cfg reset_min] [get_ports rst_n]
-set_input_delay -clock core_clk -max [dict get $cfg reset_max] [get_ports rst_n]
+# 2026-10-18：当前没有实际 SoC/reset 源和 IO 时序，按用户决定参考 C906 reset 例外。
+# 仅排除 rst_n 发起的路径，包括 recovery/removal 和 reset→D/输出路径；不是所有输入。
+# 这不证明复位脉宽满足，也不保证 coverage 中的脉宽 untested 消失；保留原始报告。
+# 不再填写虚拟 reset release min/max；以后明确 reset 机制后重新建模并撤销此例外。
+# 不对 rst_n 做 case analysis：保留 RTL reset 功能和逻辑，不将其常量化。
+set_false_path -from [get_ports rst_n]
 # 数据/reset 输入使用指定 slew 代替猜测一个外部 driving cell；clock 的 slew 单独设置。
 set_input_transition [dict get $cfg input_transition] [remove_from_collection [all_inputs] [get_ports clk]]
 # 4. Output delay：当前输出之后留给外部接收端的时序预算，不是本模块的门延迟。
@@ -39,4 +40,4 @@ set_output_delay -clock core_clk -min [dict get $cfg output_min] [all_outputs]
 set_output_delay -clock core_clk -max [dict get $cfg output_max] [all_outputs]
 # 外部负载电容会影响驱动单元延迟与尺寸选择；0.01 pF = 10 fF，需先确认库单位。
 set_load [dict get $cfg output_load] [all_outputs]
-# Clocks remain ideal; no false/multicycle paths, SPEF or propagated clocks.
+# Clocks remain ideal; only the rst_n exception above, no multicycle/SPEF/propagated clocks.

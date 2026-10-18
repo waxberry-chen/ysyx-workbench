@@ -22,7 +22,7 @@ REPO = NPC.parent
 # Only maintained inputs/scripts enter snapshots; never recurse into build or PDK payloads.
 SOURCE_DIRS = ('00_indata/configs', '00_indata/constraints', '00_indata/filelists',
                '01_common', '02_syn', '03_sta', '04_tests')
-CFG_KEYS = set('top filelist sdc defines period input_min input_max output_min output_max reset_min reset_max uncertainty_setup uncertainty_hold clock_transition input_transition output_load source_latency_min source_latency_max max_cores power_enable power_toggle power_probability'.split())
+CFG_KEYS = set('top filelist sdc defines period input_min input_max output_min output_max uncertainty_setup uncertainty_hold clock_transition input_transition output_load source_latency_min source_latency_max max_cores power_enable power_toggle power_probability'.split())
 SITE_KEYS = set('dc_shell pt_shell target_db library_name operating_condition corner vt time_unit capacitance_unit area_unit wire_load_model library_reviewed'.split())
 
 
@@ -86,7 +86,7 @@ def load_config(config, site):
             raise FlowError(f'{key} must be numeric') from error
         require(math.isfinite(number) and number >= 0, f'Invalid nonnegative value: {key}')
     require(float(cfg['period']) > 0 and float(cfg['output_load']) > 0, 'Period/load must be positive')
-    for kind in ['input', 'output', 'reset']:
+    for kind in ['input', 'output']:
         require(float(cfg[kind+'_min']) <= float(cfg[kind+'_max']) < float(cfg['period']), f'Invalid {kind} delay budget')
     require(float(cfg['source_latency_min']) <= float(cfg['source_latency_max']), 'Invalid source latency')
     require(cfg['power_enable'] in ('0', '1') and 0 <= float(cfg['power_probability']) <= 1, 'Invalid power activity')

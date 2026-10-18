@@ -42,7 +42,7 @@ flow 的配置和外部输入统一放在 `00_indata`；RTL 的唯一维护位�
 | 1 | [Makefile](Makefile) | 哪些入口在本地检查，哪些会启动服务器 EDA？新 run 与已有 RUN 怎样区分？ |
 | 2 | [设计配置](00_indata/configs/npc_core.tcl)、[site 配置](00_indata/configs/site.example.tcl) | 什么是 top、PVT/Vt、周期、slew/load？哪些数值是假设，哪些必须读库确认？ |
 | 3 | [共享初始化](01_common/setup.tcl) | target/link/synthetic 库各做什么？`.db` 与 WLM 如何参与分析？ |
-| 4 | [SDC](00_indata/constraints/core.sdc) | 时钟和 I/O min/max 怎样定义时序预算？为什么 reset 不能直接全设 false path？ |
+| 4 | [SDC](00_indata/constraints/core.sdc) | 时钟和 I/O min/max 怎样定义时序预算？早期 reset 例外排除了哪些检查、何时撤销？ |
 | 5 | [DC 综合](02_syn/run.tcl) | analyze、elaborate、link、compile 分别完成什么？`.v`、`.ddc`、`.sdc` 各交给谁？ |
 | 6 | [PT 分析](03_sta/run.tcl) | setup/hold、arrival/required time、slack、WNS/TNS、coverage 怎样解读？ |
 | 7 | [Python driver](01_common/flow.py) | 快照/hash 如何防止误用旧结果？为什么进程退出 0 还不够？ |
@@ -153,7 +153,7 @@ failed run before retrying; existing runs retain their original inputs.
 
 ## Constraints and models
 
-`00_indata/configs/npc_core.tcl` freezes an **exploratory** 10 ns target (100 MHz), not a
+`00_indata/configs/npc_core.tcl` freezes a **pre-layout candidate** 5 ns target (200 MHz), not a
 measured operating frequency. Inputs and outputs have 0.2/2.0 ns min/max delay;
 setup/hold uncertainty is 0.2/0.05 ns; clock/input transition 0.1 ns; output load
 0.01 pF; source latency min/max 0 ns. All observation outputs are included.
@@ -161,11 +161,16 @@ These are explicit initial interface assumptions, not extracted from a board or
 SoC. S3 may produce a negative-slack baseline; frequency exploration is a separate
 configuration/run with the other assumptions held fixed.
 
-Reset is asynchronous assert, externally synchronized deassert. Its release has
-0.2/2.0 ns input delay, retaining recovery/removal and combinational reset-to-output
-paths. No reset false path, case analysis, multicycle, propagated clock or derate
-is inserted. This top has no internal reset synchronizer. The timing clock stays
-ideal; uncertainty does not model CTS.
+For early core-only evaluation, `set_false_path -from [get_ports rst_n]` defers
+reset timing until the actual SoC/reset source and IO contract are defined. The old
+`reset_min/reset_max` configuration keys and reset input delays are removed; update
+custom design configs accordingly. Recovery/removal and reset-to-data/output paths
+are excluded. This does not prove pulse-width safety or guarantee that untested
+checks disappear. Keep coverage and all diagnostic reports for review.
+No reset case analysis, RTL reset removal or internal synchronizer is added.
+The timing clock stays ideal; uncertainty does not model CTS. See the explicit
+[reset TODO and scope](../../docs/notes/post-c/4-pre-soc-signoff/reset-timing-todo.md).
+Historical runs retain their frozen configurations; use a new RUN_ID.
 
 The single selected library is shared by DC and PT. Automatic area-based wire
 load selection is disabled and mode is `top`. `wire_load_model=library_default`
@@ -177,6 +182,11 @@ zero RC or of a particular WLM name. No SPEF or C906 wire model is substituted.
 
 DC uses ordinary `compile -map_effort medium`, without `compile_ultra`, gating,
 scan, UPF, physical optimization or additional DesignWare Foundation libraries.
+The next S3 diagnostic run removes the explicit
+`set_fix_multiple_port_nets -all -buffer_constants` request to investigate the
+66 unloaded EXU buffers in experiment 03. Feedthrough assigns may remain;
+ordinary timing-driven buffering is still allowed. Electrical checks stay enabled.
+See [the next-run procedure and acceptance checks](../../docs/notes/post-c/4-pre-soc-signoff/s3-buffer-check.md).
 The built-in standard synthetic library supports HDL operators. Server mapping
 and resource reports must confirm that the large arithmetic really maps.
 PT reads `outputs/core.v` and replays the **same frozen design SDC/config** as DC;
@@ -191,6 +201,9 @@ DC-specific environment commands from that export.
 `constraints.rpt` 改为 **`checks/constraint_violations.rpt`**：它来自
 `report_constraint -all_violators`，列出当前生效约束下的时序及电气违例，
 不是约束定义或完整约束清单。设计约束本身见冻结输入 `inputs/` 和导出 `outputs/dc.sdc`。
+
+实际例子：`core-tt-10ns-rv32e-nom` 的 PT 旧版 `constraints.rpt` 有 66 条
+`min_capacitance` 电气违例，因此完整报告不应命名为 `timing_violations.rpt`。
 
 | 分类 | 文件 | 阶段与用途 |
 | --- | --- | --- |
@@ -220,7 +233,7 @@ PT 从 `checks/` 与 `timing/metrics_*.tsv` 开始。报告存在或 WNS=0 均�
 PT 多路径默认只列负 slack，全部满足时报告为空；现已在全局/四类
 代表路径查询中加入 `-slack_lesser_than 1.0e30`，包含正常正裕量路径。该阈值只筛选
 报告，不修改 SDC；WNS/TNS 查询仍只枚举负 slack。DC/PT 的 timing/constraint 报告
-使用 6 位小数。改动已通过本地 mock，待服务器新 run 验证；命令依据见
+使用 6 位小数。改动已通过本地 mock，并在服务器 `core-tt-5ns-baseline` 中生成完整报告；命令依据见
 [S3 重跑说明](../../docs/notes/post-c/4-pre-soc-signoff/s3-rerun.md)。
 
 `checks/high_fanout.rpt` 用 `all_high_fanout -nets` 按 DC 实际阈值查询整个层次，

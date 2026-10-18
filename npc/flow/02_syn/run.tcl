@@ -24,9 +24,13 @@ if {[catch {
     # 阶段 3：施加环境与约束。DC 需要知道时钟和外部预算才能按目标优化。
     environment
     source [file join $npc_root [dict get $cfg sdc]]
-    # 处理一个 net 连多个端口、常量直接连端口等情况，改善导出网表的连接形式；
-    # -buffer_constants 允许为常量连接插入缓冲逻辑，不是打开 clock gating。
-    set_fix_multiple_port_nets -all -buffer_constants
+    # 03 的无负载 EXU buffer 与 input→output 直通连接重合；本轮撤去原来的
+    # set_fix_multiple_port_nets -all -buffer_constants，检验强制端口隔离是否留下冗余单元。
+    # DC 默认可用 assign 表示直通/多端口网络，PT 可读该网表；module 边界不必插 buffer。
+    # 依据：DC P-2019.03 正文 11-32–11-33。仍允许 compile 为真实时序/负载需求插 buffer。
+    # 不手工删除 U4 等实例、不伪造内部负载，也不放宽库电容限制；结果必须由新 PT 验证。
+    # 后端接入若要求修复此类连接，再单独选择重连/缓冲策略并重跑，而非提前强制补 buffer。
+    puts "NPC_SYN_POLICY: no explicit multiple-port-net repair; feedthrough assigns allowed"
     # Ordinary compile avoids an implicit Ultra/Graphical/clock-gating dependency.
     # No gate_clock, scan, UPF, datapath gating, incremental or physical options.
     # 阶段 4：compile 优化逻辑并映射到 target_library 的具体单元。
