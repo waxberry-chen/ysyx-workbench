@@ -1,6 +1,6 @@
 # M4 面试 Q&A
 
-2026-10-18：以下包含规划、S1/S2/S2.5 取舍与首次 DC 实测。首次综合未达 10 ns，PT 和正式 S3 基线仍待完成；各问题分别注明证据边界。按有价值的进展更新，不要求每次推进新增问题。
+2026-10-18：以下包含规划、S1/S2/S2.5 取舍与 01–04 综合实验。04 已建立 TT / 200 MHz 下的 S3 core pre-layout 基线，DC/PT 无约束违例；reset 时序暂缓，S6 最终复现/交接待完成。各问题分别注明证据边界，按有价值的进展更新，不要求每次推进新增问题。
 
 ## 1. 为什么不把参考 flow 整体复制后只改 top 名？
 
@@ -46,7 +46,7 @@ Makefile 的依赖只说明先运行哪个阶段，真正的数据契约要看�
 
 ## 8. 综合配置能通过 lint，是否说明已经可综合且得到 RV32E 面积？
 
-还不能。S1 确认的是源闭包、宏隔离、reset 契约与相关功能回归，首次 DC 已完成 analyze/elaborate/link 和映射，但这属于额外的实测证据，不能由 lint 推导。首次综合的实现保留 32 项 GPR 和组合 M 运算（S2.5 已移除 M 并缩为 16 项，尚无对应 DC 实测）；软件用 RV32E 编译并不会把这些硬件自动裁掉。报告必须写实际 top、参数、观察端口和硬件范围，不能根据软件 ARCH 命名芯片面积。
+还不能。S1 确认的是源闭包、宏隔离、reset 契约与相关功能回归，首次 DC 已完成 analyze/elaborate/link 和映射，但这属于额外的实测证据，不能由 lint 推导。首次综合的实现保留 32 项 GPR 和组合 M 运算（S2.5 已移除 M 并缩为 16 项，02/03 已取得对应 DC/PT 实测）；软件用 RV32E 编译并不会把这些硬件自动裁掉。报告必须写实际 top、参数、观察端口和硬件范围，不能根据软件 ARCH 命名芯片面积。
 
 ## 9. flow 返回 0 就代表 timing PASS 吗？
 
@@ -85,3 +85,78 @@ NPC 的软件目标是 RV32E、ABI 为 ilp32e，AM 链接软件乘除辅助例�
 不能单独证明。当前异常由 DUT 的 cause 注入参考端；漏报或错报可能让参考沿着 DUT 的错误决定执行。因此增加独立掩码表 oracle 和带 `.word` 的自检查程序：handler 检查 cause/EPC/mstatus，返回后检查寄存器和内存，外部再核对精确 trap 地址及 LSU 请求总数。两个平台各验证 97 个预期非法 trap，取指错误优先级和失效上下文另由 EXU 定向测试覆盖。
 
 追问：CSR 合规只是“非法时禁止访问 CSR”吗？不是。非法指令仍必须更新 trap CSR；要禁止的是原指令的普通写入。合法指令还需区分 RW/RS/RC、寄存器/立即数、零源写抑制及 WARL；六条操作通过不代表整个特权架构已实现。[CSR 边界与测试](../2.5-isa-contract.md#2-csr-与-trap-契约)
+
+## 16. WNS/TNS 都为零，为什么还不能宣布 STA 基线通过？
+
+本 flow 的 WNS 是最坏负裕量，无违例时归零，不反映实际剩余正裕量。还要看电气约束、分析覆盖率和禁用时序弧。02 实验的 setup/hold 都通过，但有 66 条最小电容违例、5516 项异步控制引脚脉宽检查未测试，以及 PTE-003 待定位。
+
+追问：`check_timing succeeded` 与 coverage 的 `no_clock` 冲突吗？不冲突。本次未测试项是 CDN/SDN 的低脉宽检查，不是数据寄存器全部缺时钟；recovery/removal 通过也不能证明复位有效脉宽足够。[02 实验](../synthesis-results/02-rv32e-no-m/README.md)
+
+## 17. 为什么 report_timing 指定多条路径，却一条都没有？
+
+本次 PT 在 `-max_paths > 1` 时默认只报告负 slack，全部满足便输出空报告。审阅关键路径需要显式纳入正 slack；计算 WNS/TNS 时则应继续只枚举负 slack 端点。必须核对报告头部实际筛选条件，不能把“没有打印路径”当作“设计没有关键路径”。依据：PT User Guide L-2016.06，正文 17-5 / PDF 637，与本次 PT T-2022.03-SP5 输出一致。
+
+## 18. 高扇出告警是否意味着时钟时序失败？
+
+先定位对象。03 的 `all_high_fanout` 和连接报告确认只有 clk 超过阈值 1000，负载 1509；当前使用 ideal clock，未建立物理时钟树。高扇出近似下打印的聚合电容不能直接当作实际时钟树电容，数量大也不自动意味着 setup/hold 失败。应分别看数据路径、时钟模型和后续 CTS 的负载/延迟，而不是调高阈值隐藏告警。[03 高扇出证据](../synthesis-results/03-200mhz-candidate/README.md#3-高扇出与-pte-003-已有明确对象)
+
+## 19. PTE-003 是否证明有组合环？最小电容违例能用 false path 解决吗？
+
+PTE-003 的通用消息同时提及 loop 与常量传播，必须查 `report_disable_timing`。03 的打印记录只有 `p`/`C`，没有 `l/L`，因此不能据此声称工具发现了组合环。与此同时，CONSTRAINT_FAIL 来自另一份报告中的 66 条最小电容违例：EXU 无负载 buffer 的实际电容打印为零，库要求约 0.410 fF。
+
+这些 buffer 驱动未使用的子模块输出或被对齐逻辑舍弃的位；应检查连接及无用逻辑清理，不能用 false path 或虚构负载代替电气问题修复。setup/hold 满足与这些问题并不矛盾。[03 电气与覆盖率证据](../synthesis-results/03-200mhz-candidate/README.md#4-constraint_fail-的原因与剩余审查)
+
+## 20. 为什么后来允许对 rst_n 设置 false path？
+
+这是用户明确选择的早期评估边界：当前没有真实 SoC/reset 源和 IO 时序，暂缓 reset 时序验收，保留 core 数据时序评估。它不是因为脉宽已被证明满足，也不是“出现 untested 就可以设 false path”。仅排除 rst_n 发起路径，包含 recovery/removal 与 reset→D/输出；旧 release delay 移除，RTL reset 功能不变。
+
+脉宽 untested 可能仍存在，继续保存原始 coverage；明确归属 reset 的项登记 deferred，其他缺口不自动豁免。实际 reset 机制明确后撤销/缩小例外并补建模和验证。[范围及恢复条件](../reset-timing-todo.md)
+
+## 21. 模块 input 直通 output 必须插 buffer 吗？接到顶层会变成无驱动吗？
+
+不必。`assign commit_pc = op_pc;` 描述的是连接，模块边界本身不需要硬件实现。综合网表可以保留直通连接，以 `assign` 表达。当前 flow 显式使用 `set_fix_multiple_port_nets -all -buffer_constants`，会处理包括 input→output 直通（feedthrough）和多输出共网在内的连接，插入 buffer 是其处理方式之一；工具也可能为时序或负载要求插 buffer。因此不能理解成“只要经过模块端口就必须插 buffer”。依据：DC P-2019.03，正文 11-32–11-33。
+
+追问：不插 buffer，就没有无负载问题了吗？要区分连接状态和多余单元：
+
+```text
+寄存器 Q ─┬─→ 功能逻辑
+          └─→ buffer → 未使用的 EXU 输出
+```
+
+这里 buffer 有输入驱动，但输出无消费者。若无用 buffer 和观察分支被清理，便不再有这个悬空单元输出接受最小电容检查；这不意味着凭空增加了负载。若未使用端口仍保留，也可能继续有结构提示。其他驱动端是否满足电气约束仍需重新检查。
+
+| 概念 | 含义 |
+| --- | --- |
+| 无驱动 | 网络没有有效信号来源 |
+| 无负载 | 有信号来源，但没有消费者或建模负载 |
+| 直通连接 | 中间没有逻辑单元，驱动通过连线传递 |
+| 顶层输出 | 设计边界，外部接收负载通常通过 SDC 建模 |
+
+如果连接是 `寄存器 Q → EXU 输出 → core 输出 → 顶层观察输出`，信号仍由寄存器 Q 驱动，不会因为跨层或没有 buffer 就变成无驱动。当前 SDC 的 `set_load 0.01 [all_outputs]` 为顶层输出设置了 0.01 pF 外部负载；实际驱动单元需承担这条连接上的负载。
+
+03 的 64 位观察输出没有被父层继续使用，另外 2 位 `trap_epc[1:0]` 被 CSR 对齐逻辑舍弃。尤其顶层 `commit_pc` 由 architectural PC 寄存器驱动，并非 EXU 的同名输出直通上去。多端口网络修复是排查 buffer 来源的方向，尚未通过对照综合证明它就是全部 66 个无负载 buffer 的根因；后续应检查网表及 PT，不靠虚构负载或硬编码实例名删除单元。[03 实验证据](../synthesis-results/03-200mhz-candidate/README.md#4-constraint_fail-的原因与剩余审查)、[层次与引脚阅读方法](../../../knowledge-notes/netlist-and-timing-report-navigation.md)
+
+
+## 22. 综合脚本设置约束没有报错，为什么结果仍可能不变？
+
+命令执行、属性存在、优化采用目标、最终满足目标是不同层次的证据。首先核对冻结脚本/log，随后检查约束施加的对象、当前 design 和综合策略，再在 compile 前后读取属性并查看导出 SDC/报告，最后看网表和 PT 实际结果。
+
+本工程曾对子 design `ysyx_lsu` 设置 0.075 pF 最大电容，随后从顶层 compile；log 打印成功，但导出 SDC 没有该约束，PT 的 LSU 使能网络违例不变。DC 手册 P-2019.03 10-8–10-9、10-12 说明，顶层约束驱动层次综合，子 design 约束不在顶层 compile 后保留。修正为顶层目标并增加前后属性读回，但作用域扩大至全 core，需重新比较面积和时序。
+
+本地 mock 可以检查作用域选择、命令顺序和失败处理，却不能证明真实 DC 的层次优化语义。若属性读回正常，仍需通过约束报告和 PT 判断是否达标。[本次失败与修正记录](../s3-capacitance-check.md#6-局部裕量未生效与顶层作用域修正)
+
+
+## 23. max_fanout 32 会让综合器给时钟插缓冲吗？
+
+普通数据网络与时钟网络应采用不同策略。当前在 DC 顶层设置 `set_max_fanout 32`，同时用 `set_auto_disable_drc_nets -on_clock_network true` 显式禁止时钟网络 DRC 修复；clock 时序继续采用共享 SDC 的 ideal 模型，真实时钟树留待 CTS。
+
+ideal/propagated clock 是时序分析模型，DRC 修复开关是综合优化策略，二者不能混为一谈。DC 手册 P-2019.03 8-13–8-14 说明，切换 clock DRC 修复不会自动改变 ideal timing；推荐 `-on_clock_network` 覆盖完整时钟网络。当前在 compile 前后读取 fanout 约束；clk 源网络保护属性在服务器 DC 上不可查询，因此只记录 UNAVAILABLE，需检查实际网表/连接，不能据此断言保护失效或已经生效。后续若加入 clock gating/mux，要重新审查整条树。
+
+32 是库 fanout_load 之和，不一定等于 32 个输入 pin；其通过也不保证 max-capacitance 或 slew 通过。reset false path 不代表 reset 网络免于 fanout/电容修复，其他高扇出控制网络仍可能因这个全局目标增加缓冲。当前 [C906 公共 SDC](../../../../../npc/ref-flow/00_indata/SDC/C906_TOP.sdc) 也设置 32；数值借鉴仍须用本工程的库和 PT 结果验证。[当前实验](../s3-capacitance-check.md#7-改用-max_fanout-32-并排除时钟-drc-修复)
+
+
+## 24. coverage 只有 53% met，为什么这次仍能建立基线？
+
+看每一项为何未测试，以及基线到底承诺什么。04 的 9450 untested 已逐条分类：9426 是明确排除的 reset 脉宽/释放时序，24 是 mtvec[1:0] 固定为零后不可能激活的条件检查；其他 10730 项 met，0 violated。不能把所有 untested 一概叫 reset waiver，也不能因百分比低就推断有一半功能数据路径缺约束。
+
+本轮只接受 TT、ideal clock、ZeroWireload 下的 core 面积/数据时序基线，并未接受真实 reset 或物理 sign-off。工具的 REVIEW_REQUIRED 保留，人工审查与其分开记录。后续若出现不同的 untested 对象/原因必须重新审查，不能沿用一个总数豁免。[04 coverage 和告警审查](../synthesis-results/04-200mhz-baseline/README.md#4-9450-项-untested-的逐类处置)
