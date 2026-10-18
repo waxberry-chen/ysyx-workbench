@@ -56,7 +56,25 @@ if {$::env(NPC_STAGE) eq "sta"} {
 }
 proc get_cells {args} {
     if {[lindex $args 0] eq "-of_objects"} {return [file dirname [lindex $args 1]]}
+    if {[lindex $args end] eq {full_name == core/u_lsu}} {
+        if {[info exists ::env(NPC_MOCK_NO_LSU)]} {return {}}
+        return core/u_lsu
+    }
     return {}
+}
+proc get_designs {name} {
+    if {$name ne "ysyx_lsu"} {error "Unexpected design lookup: $name"}
+    return $name
+}
+proc set_max_capacitance {value objects} {
+    if {$::env(NPC_STAGE) ne "syn" || $objects ne "ysyx_lsu" || $value != 0.075} {
+        error "Capacitance margin must be local to LSU synthesis"
+    }
+    set ::mock_lsu_margin_applied 1
+}
+proc compile {args} {
+    if {![info exists ::mock_lsu_margin_applied]} {error "Missing LSU margin before compile"}
+    return 1
 }
 proc all_registers {args} {
     if {[lindex $args 0] eq "-level_sensitive"} {return {}}
@@ -98,6 +116,7 @@ proc get_attribute {args} {
     if {$name eq "endpoint"} {return same_endpoint}
     if {$name eq "direction"} {if {[file tail $object] in {E I}} {return in} else {return out}}
     if {$name eq "ref_name"} {
+        if {$object eq "core/u_lsu"} {return ysyx_lsu}
         if {$object eq $::cap_driver} {return INVD1}
         if {$object eq $::cap_buffer} {return BUFFD1}
         return EDFCNQD1
@@ -146,7 +165,7 @@ proc set_false_path {args} {
 }
 # 本次诊断不执行 set_fix_multiple_port_nets；不提供该命令的无操作替身，
 # 防止真实 Tcl 在测试中悄悄恢复强制 buffer 策略。是否消除电气违例需真实 EDA 验证。
-foreach command {set_host_options define_design_lib elaborate current_design link link_design set_operating_conditions set_wire_load_mode set_wire_load_model compile change_names update_timing create_clock set_clock_uncertainty set_clock_transition set_clock_latency set_input_delay set_input_transition set_output_delay set_load} {
+foreach command {set_host_options define_design_lib elaborate current_design link link_design set_operating_conditions set_wire_load_mode set_wire_load_model change_names update_timing create_clock set_clock_uncertainty set_clock_transition set_clock_latency set_input_delay set_input_transition set_output_delay set_load} {
     proc $command {args} {return 1}
 }
 foreach command {report_qor report_resources report_reference report_design check_timing report_disable_timing report_units report_wire_load} {
@@ -160,6 +179,10 @@ proc all_high_fanout {args} {
 }
 proc report_net {args} {
     if {[dict exists $::cap_connections [lindex $args end]]} {
+        if {[lrange $args 0 end-1] eq {-max_capacitance} && $::env(NPC_STAGE) eq "syn"} {
+            puts "MOCK DC capacitance constraint Required Actual Slack"
+            return
+        }
         if {[lrange $args 0 end-1] ne {-connections -verbose}} {error "Missing capacitance connection details"}
         if {[info exists ::env(NPC_MOCK_CAP_REPORT_ERROR)]} {error "Injected capacitance report failure"}
         puts "MOCK capacitance net [lindex $args end]; stage $::env(NPC_STAGE)"

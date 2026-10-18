@@ -25,6 +25,21 @@ if {[catch {
     # 阶段 3：施加环境与约束。DC 需要知道时钟和外部预算才能按目标优化。
     environment
     source [file join $npc_root [dict get $cfg sdc]]
+    # LSU 综合裕量：上轮 req_fire 分支驱动 54 个 E pin + 一个 buffer 输入，
+    # PT 负载 0.088724 pF 超过 INVD1 的 0.084770 pF 库上限，DC 却未报违例。
+    # 先采用 0.075 pF 的局部优化目标，促使 compile 分组/缓冲真实负载。
+    # 此值比上述库上限低约 11.5%，是本轮实验裕量，不是新的工艺规则。
+    # 对象是 LSU 的 design（全部内部网络），不是 instance，也不是仅一条 E net。
+    # 在映射前按 RTL 层次定位，避免绑定会随综合变化的 U13/n3；找不到则停止。
+    # 依据：DC P-2019.03 正文 8-8：set_max_capacitance 可施加到 design，
+    # 与库限制并存时取更严格者。单位由 flow preflight 要求为 pF。
+    set lsu_cell [get_cells -hierarchical -filter {full_name == core/u_lsu}]
+    if {[sizeof_collection $lsu_cell] != 1} {error "Expected exactly one core/u_lsu for capacitance margin"}
+    set lsu_design [get_designs [get_attribute $lsu_cell ref_name]]
+    if {[sizeof_collection $lsu_design] != 1} {error "Cannot resolve LSU design for capacitance margin"}
+    set_max_capacitance 0.075 $lsu_design
+    puts "NPC_SYN_POLICY: LSU design [get_object_name $lsu_design] max_capacitance=0.075 pF (synthesis margin)"
+    # PT 重放原始 SDC，仍按库规则验收；此局部优化目标留在 DC 导出约束/数据库中。
     # 03 的无负载 EXU buffer 与 input→output 直通连接重合；本轮撤去原来的
     # set_fix_multiple_port_nets -all -buffer_constants，检验强制端口隔离是否留下冗余单元。
     # DC 默认可用 assign 表示直通/多端口网络，PT 可读该网表；module 边界不必插 buffer。

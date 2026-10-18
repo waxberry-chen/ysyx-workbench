@@ -386,6 +386,17 @@ dict set site library_reviewed 1
             model = 'true' if stage == 'sta' else 'UNAVAILABLE'
             self.assertIn(f'report_capacitance_use_ccs_receiver_model: {model}', capacitance)
         self.assertIn('total_ccs_capacitance_max_rise: 0.088724', capacitance)
+        syn_cap = (run/'reports/syn/checks/lsu_enable_capacitance.rpt').read_text()
+        self.assertEqual(syn_cap.count('MOCK DC capacitance constraint Required Actual Slack'), 2)
+        self.assertNotIn('MOCK DC capacitance constraint', capacitance)
+
+    def test_lsu_margin_missing_scope_stops_synthesis(self):
+        self.tool.write_text("#!/usr/bin/env python3\nimport os,sys\nfrom pathlib import Path\nos.environ['NPC_MOCK_NO_LSU']='1'\nmock=Path(os.environ['NPC_FLOW_SNAPSHOT'])/'04_tests/eda_mock.tcl'\nos.execvp('tclsh',['tclsh',str(mock),sys.argv[-1]])\n")
+        run = self.new_run()
+        with self.assertRaises(f.FlowError):
+            f.execute(run, 'syn')
+        self.assertIn('Expected exactly one core/u_lsu', (run/'logs/syn.log').read_text())
+        self.assertFalse((run/'outputs/core.v').exists())
 
     def test_capacitance_mapping_without_enable_pins_is_explicit(self):
         self.tool.write_text("#!/usr/bin/env python3\nimport os,sys\nfrom pathlib import Path\nos.environ['NPC_MOCK_NO_ENABLE_PINS']='1'\nmock=Path(os.environ['NPC_FLOW_SNAPSHOT'])/'04_tests/eda_mock.tcl'\nos.execvp('tclsh',['tclsh',str(mock),sys.argv[-1]])\n")

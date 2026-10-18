@@ -55,6 +55,9 @@ proc report_lsu_enable_capacitance {} {
                 set net [dict get $nets_by_name $name]
                 puts "NET: $name"
                 report_net -connections -verbose $net
+                # DC 的普通 report_net 电容与 DRC 计算口径可能不同；直接保存
+                # Required/Actual/Slack。依据 DC P-2019.03 正文 8-9。
+                if {$stage eq "syn"} {report_net -max_capacitance $net}
                 cap_attributes $net {wire_capacitance_min wire_capacitance_max total_capacitance_min total_capacitance_max}
                 set drivers 0
                 set loads 0
