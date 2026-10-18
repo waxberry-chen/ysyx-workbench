@@ -1,0 +1,378 @@
+****************************************
+Report : timing
+	-path_type full
+	-delay_type max
+	-slack_lesser_than 1000000015047466219876688855040.000000
+	-max_paths 10
+	-sort_by slack
+Design : ysyx_core_axi4lite
+Version: T-2022.03-SP5
+Date   : Sun Oct 18 23:52:11 2026
+****************************************
+
+Warning: There are 2 invalid end points for constrained paths. (UITE-416)
+
+  Startpoint: m_axi_rvalid
+               (input port clocked by core_clk)
+  Endpoint: arbiter/state_q_reg_3_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                          Incr       Path
+  -------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                 0.000000   0.000000
+  clock network delay (ideal)                                0.000000   0.000000
+  input external delay                                       2.000000   2.000000 f
+  m_axi_rvalid (in)                                          0.000000   2.000000 f
+  arbiter/U101/ZN (CKND2D1BWP12T40P140)                      0.030362   2.030362 r
+  arbiter/U100/Z (BUFFD1BWP12T40P140)                        0.021935   2.052297 r
+  arbiter/U43/Z (BUFFD1BWP12T40P140)                         0.027907   2.080204 r
+  arbiter/U19/ZN (INVD1BWP12T40P140)                         0.042630   2.122834 f
+  arbiter/U98/ZN (AOI211D1BWP12T40P140)                      0.032752   2.155586 r
+  arbiter/U96/ZN (IND4D1BWP12T40P140)                        0.053853   2.209440 f
+  arbiter/U42/ZN (OAI22D1BWP12T40P140)                       0.031121   2.240561 r
+  arbiter/state_q_reg_3_/D (DFCNQD1BWP12T40P140)             0.000000   2.240561 r
+  data arrival time                                                     2.240561
+
+  clock core_clk (rise edge)                                 5.000000   5.000000
+  clock network delay (ideal)                                0.000000   5.000000
+  clock reconvergence pessimism                              0.000000   5.000000
+  clock uncertainty                                          -0.200000  4.800000
+  arbiter/state_q_reg_3_/CP (DFCNQD1BWP12T40P140)                       4.800000 r
+  library setup time                                         -0.015196  4.784803
+  data required time                                                    4.784803
+  -------------------------------------------------------------------------------------
+  data required time                                                    4.784803
+  data arrival time                                                     -2.240561
+  -------------------------------------------------------------------------------------
+  slack (MET)                                                           2.544242
+
+
+  Startpoint: m_axi_rvalid
+               (input port clocked by core_clk)
+  Endpoint: arbiter/state_q_reg_0_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                          Incr       Path
+  -------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                 0.000000   0.000000
+  clock network delay (ideal)                                0.000000   0.000000
+  input external delay                                       2.000000   2.000000 f
+  m_axi_rvalid (in)                                          0.000000   2.000000 f
+  arbiter/U101/ZN (CKND2D1BWP12T40P140)                      0.030362   2.030362 r
+  arbiter/U100/Z (BUFFD1BWP12T40P140)                        0.021935   2.052297 r
+  arbiter/U43/Z (BUFFD1BWP12T40P140)                         0.027907   2.080204 r
+  arbiter/U19/ZN (INVD1BWP12T40P140)                         0.042630   2.122834 f
+  arbiter/U98/ZN (AOI211D1BWP12T40P140)                      0.032752   2.155586 r
+  arbiter/U96/ZN (IND4D1BWP12T40P140)                        0.053853   2.209440 f
+  arbiter/U41/ZN (INVD1BWP12T40P140)                         0.029487   2.238927 r
+  arbiter/U44/ZN (OAI22D1BWP12T40P140)                       0.023062   2.261990 f
+  arbiter/state_q_reg_0_/D (DFCNQD1BWP12T40P140)             0.000000   2.261990 f
+  data arrival time                                                     2.261990
+
+  clock core_clk (rise edge)                                 5.000000   5.000000
+  clock network delay (ideal)                                0.000000   5.000000
+  clock reconvergence pessimism                              0.000000   5.000000
+  clock uncertainty                                          -0.200000  4.800000
+  arbiter/state_q_reg_0_/CP (DFCNQD1BWP12T40P140)                       4.800000 r
+  library setup time                                         0.011562   4.811563
+  data required time                                                    4.811563
+  -------------------------------------------------------------------------------------
+  data required time                                                    4.811563
+  data arrival time                                                     -2.261990
+  -------------------------------------------------------------------------------------
+  slack (MET)                                                           2.549573
+
+
+  Startpoint: m_axi_rvalid
+               (input port clocked by core_clk)
+  Endpoint: arbiter/state_q_reg_1_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                          Incr       Path
+  -------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                 0.000000   0.000000
+  clock network delay (ideal)                                0.000000   0.000000
+  input external delay                                       2.000000   2.000000 f
+  m_axi_rvalid (in)                                          0.000000   2.000000 f
+  arbiter/U101/ZN (CKND2D1BWP12T40P140)                      0.030362   2.030362 r
+  arbiter/U100/Z (BUFFD1BWP12T40P140)                        0.021935   2.052297 r
+  arbiter/U43/Z (BUFFD1BWP12T40P140)                         0.027907   2.080204 r
+  arbiter/U19/ZN (INVD1BWP12T40P140)                         0.042630   2.122834 f
+  arbiter/U98/ZN (AOI211D1BWP12T40P140)                      0.032752   2.155586 r
+  arbiter/U96/ZN (IND4D1BWP12T40P140)                        0.053853   2.209440 f
+  arbiter/U41/ZN (INVD1BWP12T40P140)                         0.029487   2.238927 r
+  arbiter/U50/ZN (OAI22D1BWP12T40P140)                       0.023062   2.261990 f
+  arbiter/state_q_reg_1_/D (DFCNQD1BWP12T40P140)             0.000000   2.261990 f
+  data arrival time                                                     2.261990
+
+  clock core_clk (rise edge)                                 5.000000   5.000000
+  clock network delay (ideal)                                0.000000   5.000000
+  clock reconvergence pessimism                              0.000000   5.000000
+  clock uncertainty                                          -0.200000  4.800000
+  arbiter/state_q_reg_1_/CP (DFCNQD1BWP12T40P140)                       4.800000 r
+  library setup time                                         0.011562   4.811563
+  data required time                                                    4.811563
+  -------------------------------------------------------------------------------------
+  data required time                                                    4.811563
+  data arrival time                                                     -2.261990
+  -------------------------------------------------------------------------------------
+  slack (MET)                                                           2.549573
+
+
+  Startpoint: m_axi_rvalid
+               (input port clocked by core_clk)
+  Endpoint: arbiter/state_q_reg_2_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                          Incr       Path
+  -------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                 0.000000   0.000000
+  clock network delay (ideal)                                0.000000   0.000000
+  input external delay                                       2.000000   2.000000 f
+  m_axi_rvalid (in)                                          0.000000   2.000000 f
+  arbiter/U101/ZN (CKND2D1BWP12T40P140)                      0.030362   2.030362 r
+  arbiter/U100/Z (BUFFD1BWP12T40P140)                        0.021935   2.052297 r
+  arbiter/U43/Z (BUFFD1BWP12T40P140)                         0.027907   2.080204 r
+  arbiter/U19/ZN (INVD1BWP12T40P140)                         0.042630   2.122834 f
+  arbiter/U98/ZN (AOI211D1BWP12T40P140)                      0.032752   2.155586 r
+  arbiter/U96/ZN (IND4D1BWP12T40P140)                        0.053853   2.209440 f
+  arbiter/U41/ZN (INVD1BWP12T40P140)                         0.029487   2.238927 r
+  arbiter/U46/ZN (OAI22D1BWP12T40P140)                       0.023062   2.261990 f
+  arbiter/state_q_reg_2_/D (DFCNQD1BWP12T40P140)             0.000000   2.261990 f
+  data arrival time                                                     2.261990
+
+  clock core_clk (rise edge)                                 5.000000   5.000000
+  clock network delay (ideal)                                0.000000   5.000000
+  clock reconvergence pessimism                              0.000000   5.000000
+  clock uncertainty                                          -0.200000  4.800000
+  arbiter/state_q_reg_2_/CP (DFCNQD1BWP12T40P140)                       4.800000 r
+  library setup time                                         0.011562   4.811563
+  data required time                                                    4.811563
+  -------------------------------------------------------------------------------------
+  data required time                                                    4.811563
+  data arrival time                                                     -2.261990
+  -------------------------------------------------------------------------------------
+  slack (MET)                                                           2.549573
+
+
+  Startpoint: m_axi_rvalid
+               (input port clocked by core_clk)
+  Endpoint: arbiter/resp_q_reg_0_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                         Incr       Path
+  ------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                0.000000   0.000000
+  clock network delay (ideal)                               0.000000   0.000000
+  input external delay                                      2.000000   2.000000 f
+  m_axi_rvalid (in)                                         0.000000   2.000000 f
+  arbiter/U101/ZN (CKND2D1BWP12T40P140)                     0.030362   2.030362 r
+  arbiter/U100/Z (BUFFD1BWP12T40P140)                       0.021935   2.052297 r
+  arbiter/U43/Z (BUFFD1BWP12T40P140)                        0.027907   2.080204 r
+  arbiter/U19/ZN (INVD1BWP12T40P140)                        0.042630   2.122834 f
+  arbiter/U104/ZN (AOI21D1BWP12T40P140)                     0.038327   2.161160 r
+  arbiter/U162/ZN (MOAI22D1BWP12T40P140)                    0.030049   2.191209 r
+  arbiter/resp_q_reg_0_/D (DFCNQD1BWP12T40P140)             0.000000   2.191209 r
+  data arrival time                                                    2.191209
+
+  clock core_clk (rise edge)                                5.000000   5.000000
+  clock network delay (ideal)                               0.000000   5.000000
+  clock reconvergence pessimism                             0.000000   5.000000
+  clock uncertainty                                         -0.200000  4.800000
+  arbiter/resp_q_reg_0_/CP (DFCNQD1BWP12T40P140)                       4.800000 r
+  library setup time                                        -0.013183  4.786818
+  data required time                                                   4.786818
+  ------------------------------------------------------------------------------------
+  data required time                                                   4.786818
+  data arrival time                                                    -2.191209
+  ------------------------------------------------------------------------------------
+  slack (MET)                                                          2.595608
+
+
+  Startpoint: m_axi_rvalid
+               (input port clocked by core_clk)
+  Endpoint: arbiter/resp_q_reg_1_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                         Incr       Path
+  ------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                0.000000   0.000000
+  clock network delay (ideal)                               0.000000   0.000000
+  input external delay                                      2.000000   2.000000 f
+  m_axi_rvalid (in)                                         0.000000   2.000000 f
+  arbiter/U101/ZN (CKND2D1BWP12T40P140)                     0.030362   2.030362 r
+  arbiter/U100/Z (BUFFD1BWP12T40P140)                       0.021935   2.052297 r
+  arbiter/U43/Z (BUFFD1BWP12T40P140)                        0.027907   2.080204 r
+  arbiter/U19/ZN (INVD1BWP12T40P140)                        0.042630   2.122834 f
+  arbiter/U104/ZN (AOI21D1BWP12T40P140)                     0.038327   2.161160 r
+  arbiter/U160/ZN (MOAI22D1BWP12T40P140)                    0.030049   2.191209 r
+  arbiter/resp_q_reg_1_/D (DFCNQD1BWP12T40P140)             0.000000   2.191209 r
+  data arrival time                                                    2.191209
+
+  clock core_clk (rise edge)                                5.000000   5.000000
+  clock network delay (ideal)                               0.000000   5.000000
+  clock reconvergence pessimism                             0.000000   5.000000
+  clock uncertainty                                         -0.200000  4.800000
+  arbiter/resp_q_reg_1_/CP (DFCNQD1BWP12T40P140)                       4.800000 r
+  library setup time                                        -0.013183  4.786818
+  data required time                                                   4.786818
+  ------------------------------------------------------------------------------------
+  data required time                                                   4.786818
+  data arrival time                                                    -2.191209
+  ------------------------------------------------------------------------------------
+  slack (MET)                                                          2.595608
+
+
+  Startpoint: m_axi_rvalid
+               (input port clocked by core_clk)
+  Endpoint: arbiter/rdata_q_reg_24_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                           Incr       Path
+  --------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                  0.000000   0.000000
+  clock network delay (ideal)                                 0.000000   0.000000
+  input external delay                                        2.000000   2.000000 r
+  m_axi_rvalid (in)                                           0.000000   2.000000 r
+  arbiter/U101/ZN (CKND2D1BWP12T40P140)                       0.022189   2.022189 f
+  arbiter/U100/Z (BUFFD1BWP12T40P140)                         0.022216   2.044404 f
+  arbiter/U43/Z (BUFFD1BWP12T40P140)                          0.029515   2.073919 f
+  arbiter/U19/ZN (INVD1BWP12T40P140)                          0.042314   2.116233 r
+  arbiter/U115/Z (AO22D0BWP12T40P140)                         0.034665   2.150899 r
+  arbiter/rdata_q_reg_24_/D (DFCNQD1BWP12T40P140)             0.000000   2.150899 r
+  data arrival time                                                      2.150899
+
+  clock core_clk (rise edge)                                  5.000000   5.000000
+  clock network delay (ideal)                                 0.000000   5.000000
+  clock reconvergence pessimism                               0.000000   5.000000
+  clock uncertainty                                           -0.200000  4.800000
+  arbiter/rdata_q_reg_24_/CP (DFCNQD1BWP12T40P140)                       4.800000 r
+  library setup time                                          -0.012701  4.787299
+  data required time                                                     4.787299
+  --------------------------------------------------------------------------------------
+  data required time                                                     4.787299
+  data arrival time                                                      -2.150899
+  --------------------------------------------------------------------------------------
+  slack (MET)                                                            2.636400
+
+
+  Startpoint: m_axi_rvalid
+               (input port clocked by core_clk)
+  Endpoint: arbiter/rdata_q_reg_25_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                           Incr       Path
+  --------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                  0.000000   0.000000
+  clock network delay (ideal)                                 0.000000   0.000000
+  input external delay                                        2.000000   2.000000 r
+  m_axi_rvalid (in)                                           0.000000   2.000000 r
+  arbiter/U101/ZN (CKND2D1BWP12T40P140)                       0.022189   2.022189 f
+  arbiter/U100/Z (BUFFD1BWP12T40P140)                         0.022216   2.044404 f
+  arbiter/U43/Z (BUFFD1BWP12T40P140)                          0.029515   2.073919 f
+  arbiter/U19/ZN (INVD1BWP12T40P140)                          0.042314   2.116233 r
+  arbiter/U116/Z (AO22D0BWP12T40P140)                         0.034665   2.150899 r
+  arbiter/rdata_q_reg_25_/D (DFCNQD1BWP12T40P140)             0.000000   2.150899 r
+  data arrival time                                                      2.150899
+
+  clock core_clk (rise edge)                                  5.000000   5.000000
+  clock network delay (ideal)                                 0.000000   5.000000
+  clock reconvergence pessimism                               0.000000   5.000000
+  clock uncertainty                                           -0.200000  4.800000
+  arbiter/rdata_q_reg_25_/CP (DFCNQD1BWP12T40P140)                       4.800000 r
+  library setup time                                          -0.012701  4.787299
+  data required time                                                     4.787299
+  --------------------------------------------------------------------------------------
+  data required time                                                     4.787299
+  data arrival time                                                      -2.150899
+  --------------------------------------------------------------------------------------
+  slack (MET)                                                            2.636400
+
+
+  Startpoint: m_axi_rvalid
+               (input port clocked by core_clk)
+  Endpoint: arbiter/rdata_q_reg_26_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                           Incr       Path
+  --------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                  0.000000   0.000000
+  clock network delay (ideal)                                 0.000000   0.000000
+  input external delay                                        2.000000   2.000000 r
+  m_axi_rvalid (in)                                           0.000000   2.000000 r
+  arbiter/U101/ZN (CKND2D1BWP12T40P140)                       0.022189   2.022189 f
+  arbiter/U100/Z (BUFFD1BWP12T40P140)                         0.022216   2.044404 f
+  arbiter/U43/Z (BUFFD1BWP12T40P140)                          0.029515   2.073919 f
+  arbiter/U19/ZN (INVD1BWP12T40P140)                          0.042314   2.116233 r
+  arbiter/U117/Z (AO22D0BWP12T40P140)                         0.034665   2.150899 r
+  arbiter/rdata_q_reg_26_/D (DFCNQD1BWP12T40P140)             0.000000   2.150899 r
+  data arrival time                                                      2.150899
+
+  clock core_clk (rise edge)                                  5.000000   5.000000
+  clock network delay (ideal)                                 0.000000   5.000000
+  clock reconvergence pessimism                               0.000000   5.000000
+  clock uncertainty                                           -0.200000  4.800000
+  arbiter/rdata_q_reg_26_/CP (DFCNQD1BWP12T40P140)                       4.800000 r
+  library setup time                                          -0.012701  4.787299
+  data required time                                                     4.787299
+  --------------------------------------------------------------------------------------
+  data required time                                                     4.787299
+  data arrival time                                                      -2.150899
+  --------------------------------------------------------------------------------------
+  slack (MET)                                                            2.636400
+
+
+  Startpoint: m_axi_rvalid
+               (input port clocked by core_clk)
+  Endpoint: arbiter/rdata_q_reg_27_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                           Incr       Path
+  --------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                  0.000000   0.000000
+  clock network delay (ideal)                                 0.000000   0.000000
+  input external delay                                        2.000000   2.000000 r
+  m_axi_rvalid (in)                                           0.000000   2.000000 r
+  arbiter/U101/ZN (CKND2D1BWP12T40P140)                       0.022189   2.022189 f
+  arbiter/U100/Z (BUFFD1BWP12T40P140)                         0.022216   2.044404 f
+  arbiter/U43/Z (BUFFD1BWP12T40P140)                          0.029515   2.073919 f
+  arbiter/U19/ZN (INVD1BWP12T40P140)                          0.042314   2.116233 r
+  arbiter/U118/Z (AO22D0BWP12T40P140)                         0.034665   2.150899 r
+  arbiter/rdata_q_reg_27_/D (DFCNQD1BWP12T40P140)             0.000000   2.150899 r
+  data arrival time                                                      2.150899
+
+  clock core_clk (rise edge)                                  5.000000   5.000000
+  clock network delay (ideal)                                 0.000000   5.000000
+  clock reconvergence pessimism                               0.000000   5.000000
+  clock uncertainty                                           -0.200000  4.800000
+  arbiter/rdata_q_reg_27_/CP (DFCNQD1BWP12T40P140)                       4.800000 r
+  library setup time                                          -0.012701  4.787299
+  data required time                                                     4.787299
+  --------------------------------------------------------------------------------------
+  data required time                                                     4.787299
+  data arrival time                                                      -2.150899
+  --------------------------------------------------------------------------------------
+  slack (MET)                                                            2.636400
+
+
+1

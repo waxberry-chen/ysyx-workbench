@@ -1,0 +1,56 @@
+****************************************
+Report : design
+Design : ysyx_core_axi4lite
+Version: T-2022.03-SP5
+Date   : Sun Oct 18 23:52:11 2026
+****************************************
+
+Design Attribute                         Value
+---------------------------------------------------------------------------
+Operating Conditions:
+  analysis_type                          on_chip_variation
+  operating_condition_min_name           tt0p9v25c
+  process_min                            1
+  temperature_min                        25
+  voltage_min                            0.9
+  tree_type_min                          balanced_case
+
+  operating_condition_max_name           tt0p9v25c
+  process_max                            1
+  temperature_max                        25
+  voltage_max                            0.9
+  tree_type_max                          balanced_case
+
+Wire Load:                               (use report_wire_load for more information)
+  wire_load_mode                         top
+  wire_load_model_max                    ZeroWireload
+  wire_load_model_library_max            tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+  wire_load_selection_type_max           library default
+  wire_load_model_min                    ZeroWireload
+  wire_load_model_library_min            tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+  wire_load_selection_type_min           library default
+  wire_load_selection_group_max          WireAreaForZero
+  wire_load_selection_group_min          WireAreaForZero
+  wire_load_min_block_size               0
+
+Design Rules:
+  max_capacitance                        --
+  min_capacitance                        --
+  max_fanout                             --
+  max_transition                         --
+  static_integrity                       --
+  dynamic_integrity                      --
+  max_area                               --
+
+Timing Ranges:
+  early_factor                           --
+  late_factor                            --
+
+Pin Input Delays:
+None specified.
+
+Pin Output Delays:
+None specified.
+Fast Analysis:                           disabled
+
+1

@@ -1,6 +1,8 @@
 # M4 验收矩阵
 
-2026-10-17：S1 本地验证与 S2 flow 已完成；[01 首次综合](synthesis-results/01-first-synthesis/README.md) 提供真实 DC 证据。I01 的 DC 启动/读库已验证，PT 待验；I02 已执行分析/展开/link/映射，I03 的告警审查未关闭；I07 已有面积/资源报告，但本实验不作为正式 S3 基线。I06 尚缺 PT coverage，I08 未执行，DC 已显示 setup/hold FAIL；I11 关闭，I09/I10 延后，I12 仅完成首次结果归档。2026-10-18 的 [S2.5](2.5-isa-contract.md) 已补充 I04/I05/I13 本地回归；正式 run 仍需保存最终源版本。正式 S3 基线还需通过 [准备审查](plan.md#正式-s3-基线前的准备审查)。
+2026-10-18：[04 基线](synthesis-results/04-200mhz-baseline/README.md)已完成当前范围的 I01/I02/I03/I06/I07/I08 审查。DC/PT 无约束违例，PT setup/hold slack +0.596843/+0.008754 ns；coverage 的 9450 untested 分为 9426 reset deferred 和 24 个 mtvec[1:0] 常量条件禁用，未留下未解释的功能端点。I04/I05/I13 沿用 S2.5 同版本 RTL 证据（本次 17 份 RTL hash 相同），未声称重跑。I11 未评估；I09/I10 延后。I12 已保存 04 的 51 份原始归档，S6 最终复现/交接仍待完成。详见 [S3 结果](3-synthesis-sta.md)。
+
+后续 run 的 I04/I06/I08 范围更新：按用户决定，reset 时序作为 [明确的 deferred 项](reset-timing-todo.md)，不将脉宽或 recovery/removal 声称为 PASS。审核 false path 只匹配 rst_n，数据预算和其他检查完整；实际库脉宽/释放约束留待 reset 机制明确后补齐。03 的历史 coverage 数值保留，下一轮必须核对真实覆盖变化。
 
 | ID | 验证内容 | 通过条件 / 证据 | 阶段 |
 | --- | --- | --- | --- |

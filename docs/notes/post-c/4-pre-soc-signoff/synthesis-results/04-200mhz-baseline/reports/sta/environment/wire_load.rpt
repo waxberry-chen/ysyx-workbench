@@ -1,0 +1,21 @@
+****************************************
+Report : wire_load
+Design : ysyx_core_axi4lite
+Version: T-2022.03-SP5
+Date   : Sun Oct 18 23:52:11 2026
+****************************************
+
+Wire Loading Model Mode: top
+
+Cell               Design       Cond  Wire_model  Library       Selection_type
+--------------------------------------------------------------------------------
+                   ysyx_core_axi4lite
+                                min   ZeroWireload
+                                                  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                                                library default
+                   ysyx_core_axi4lite
+                                max   ZeroWireload
+                                                  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+                                                                library default
+
+1

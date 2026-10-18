@@ -1,0 +1,1191 @@
+****************************************
+Report : timing
+	-path_type full
+	-delay_type max
+	-slack_lesser_than 1000000015047466219876688855040.000000
+	-max_paths 10
+	-sort_by slack
+Design : ysyx_core_axi4lite
+Version: T-2022.03-SP5
+Date   : Sun Oct 18 23:52:11 2026
+****************************************
+
+Warning: There are 2 invalid end points for constrained paths. (UITE-416)
+
+  Startpoint: core/u_opbuf/u_context_reg/data_q_reg_145_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_opbuf/u_context_reg/data_q_reg_210_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                               Incr       Path
+  ----------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                      0.000000   0.000000
+  clock network delay (ideal)                                                     0.000000   0.000000
+  core/u_opbuf/u_context_reg/data_q_reg_145_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  core/u_opbuf/u_context_reg/data_q_reg_145_/Q (DFCNQD1BWP12T40P140)              0.087066   0.087066 f
+  core/u_exu/U64/ZN (INVD1BWP12T40P140)                                           0.019582   0.106648 r
+  core/u_exu/U30/Z (BUFFD1BWP12T40P140)                                           0.017108   0.123756 r
+  core/u_exu/U10/ZN (INVD1BWP12T40P140)                                           0.040676   0.164431 f
+  core/u_exu/U63/Z (AO22D0BWP12T40P140)                                           0.042264   0.206696 f
+  core/u_exu/u_alu/U261/Z (BUFFD1BWP12T40P140)                                    0.089863   0.296558 f
+  core/u_exu/u_alu/U315/ZN (IND2D0BWP12T40P140)                                   0.035844   0.332402 r
+  core/u_exu/u_alu/U316/ZN (IAO21D0BWP12T40P140)                                  0.026703   0.359105 r
+  core/u_exu/u_alu/U317/Z (AO221D0BWP12T40P140)                                   0.032906   0.392012 r
+  core/u_exu/u_alu/U318/Z (OA221D0BWP12T40P140)                                   0.050152   0.442164 r
+  core/u_exu/u_alu/U319/Z (AO221D0BWP12T40P140)                                   0.026626   0.468789 r
+  core/u_exu/u_alu/U320/Z (OA221D0BWP12T40P140)                                   0.050169   0.518959 r
+  core/u_exu/u_alu/U321/Z (AO221D0BWP12T40P140)                                   0.026639   0.545597 r
+  core/u_exu/u_alu/U322/Z (OA221D0BWP12T40P140)                                   0.050165   0.595762 r
+  core/u_exu/u_alu/U323/Z (AO221D0BWP12T40P140)                                   0.026635   0.622397 r
+  core/u_exu/u_alu/U324/Z (OA221D0BWP12T40P140)                                   0.050165   0.672562 r
+  core/u_exu/u_alu/U325/Z (AO221D0BWP12T40P140)                                   0.026635   0.699197 r
+  core/u_exu/u_alu/U326/Z (OA221D0BWP12T40P140)                                   0.050170   0.749367 r
+  core/u_exu/u_alu/U327/Z (AO221D0BWP12T40P140)                                   0.026630   0.775997 r
+  core/u_exu/u_alu/U328/Z (OA221D0BWP12T40P140)                                   0.050165   0.826162 r
+  core/u_exu/u_alu/U329/Z (AO221D0BWP12T40P140)                                   0.026635   0.852797 r
+  core/u_exu/u_alu/U330/Z (OA221D0BWP12T40P140)                                   0.050165   0.902962 r
+  core/u_exu/u_alu/U331/Z (AO221D0BWP12T40P140)                                   0.026635   0.929597 r
+  core/u_exu/u_alu/U332/Z (OA221D0BWP12T40P140)                                   0.050165   0.979762 r
+  core/u_exu/u_alu/U333/Z (AO221D0BWP12T40P140)                                   0.026635   1.006397 r
+  core/u_exu/u_alu/U334/Z (OA221D0BWP12T40P140)                                   0.050168   1.056564 r
+  core/u_exu/u_alu/U335/Z (AO221D0BWP12T40P140)                                   0.026637   1.083201 r
+  core/u_exu/u_alu/U336/Z (OA221D0BWP12T40P140)                                   0.050173   1.133375 r
+  core/u_exu/u_alu/U337/Z (AO221D0BWP12T40P140)                                   0.026643   1.160017 r
+  core/u_exu/u_alu/U338/Z (OA221D0BWP12T40P140)                                   0.050165   1.210182 r
+  core/u_exu/u_alu/U339/Z (AO221D0BWP12T40P140)                                   0.026635   1.236817 r
+  core/u_exu/u_alu/U340/Z (OA221D0BWP12T40P140)                                   0.050165   1.286982 r
+  core/u_exu/u_alu/U341/Z (AO221D0BWP12T40P140)                                   0.026635   1.313617 r
+  core/u_exu/u_alu/U342/Z (OA221D0BWP12T40P140)                                   0.050165   1.363782 r
+  core/u_exu/u_alu/U343/Z (AO221D0BWP12T40P140)                                   0.026635   1.390417 r
+  core/u_exu/u_alu/U344/Z (OA221D0BWP12T40P140)                                   0.049842   1.440259 r
+  core/u_exu/u_alu/U345/ZN (AOI221D0BWP12T40P140)                                 0.013021   1.453281 f
+  core/u_exu/u_alu/U346/ZN (IAO21D0BWP12T40P140)                                  0.019289   1.472569 r
+  core/u_exu/u_alu/U347/ZN (OAI22D0BWP12T40P140)                                  0.025526   1.498096 f
+  core/u_exu/u_alu/U260/ZN (AOI22D1BWP12T40P140)                                  0.023749   1.521845 r
+  core/u_exu/u_alu/U257/ZN (OAI33D1BWP12T40P140)                                  0.027762   1.549607 f
+  core/u_exu/u_alu/U43/ZN (AOI221D1BWP12T40P140)                                  0.033099   1.582705 r
+  core/u_exu/u_alu/U40/ZN (ND3D1BWP12T40P140)                                     0.094627   1.677333 f
+  core/u_exu/U7/ZN (NR2D1BWP12T40P140)                                            0.027870   1.705203 r
+  core/u_exu/U60/ZN (OAI33D1BWP12T40P140)                                         0.027525   1.732728 f
+  core/u_exu/U59/ZN (CKND2D1BWP12T40P140)                                         0.023618   1.756347 r
+  core/u_exu/U29/ZN (CKND2D1BWP12T40P140)                                         0.020343   1.776690 f
+  core/u_exu/U58/ZN (NR2D1BWP12T40P140)                                           0.018577   1.795267 r
+  core/u_exu/U31/Z (BUFFD1BWP12T40P140)                                           0.057438   1.852705 r
+  core/u_exu/U27/ZN (CKND2D1BWP12T40P140)                                         0.093963   1.946668 f
+  core/u_exu/U26/Z (BUFFD1BWP12T40P140)                                           0.058999   2.005667 f
+  core/u_exu/U57/ZN (NR2D1BWP12T40P140)                                           0.025102   2.030769 r
+  core/u_exu/U56/ZN (INR3D1BWP12T40P140)                                          0.041013   2.071783 r
+  core/u_exu/U28/Z (BUFFD1BWP12T40P140)                                           0.030501   2.102283 r
+  core/u_exu/U6/ZN (NR2D1BWP12T40P140)                                            0.011816   2.114100 f
+  core/U10/Z (BUFFD1BWP12T40P140)                                                 0.036579   2.150678 f
+  core/u_ifu/U11/Z (BUFFD1BWP12T40P140)                                           0.025290   2.175969 f
+  core/u_ifu/U8/Z (BUFFD1BWP12T40P140)                                            0.072403   2.248371 f
+  core/u_ifu/u_ifq/U30/ZN (AOI21D1BWP12T40P140)                                   0.046254   2.294625 r
+  core/u_ifu/u_ifq/U44/ZN (IND2D1BWP12T40P140)                                    0.028927   2.323552 f
+  core/u_ifu/u_ifq/U31/Z (BUFFD1BWP12T40P140)                                     0.022644   2.346195 f
+  core/u_ifu/u_ifq/U10/Z (BUFFD1BWP12T40P140)                                     0.036122   2.382317 f
+  core/u_ifu/u_ifq/U45/ZN (OAI22D1BWP12T40P140)                                   0.033480   2.415797 r
+  core/u_ifu/add_83/U2/Z (AN2D1BWP12T40P140)                                      0.029561   2.445358 r
+  core/u_ifu/add_83/U3/Z (AN2D1BWP12T40P140)                                      0.022839   2.468197 r
+  core/u_ifu/add_83/U4/Z (AN2D1BWP12T40P140)                                      0.022815   2.491012 r
+  core/u_ifu/add_83/U5/Z (AN2D1BWP12T40P140)                                      0.022815   2.513827 r
+  core/u_ifu/add_83/U6/Z (AN2D1BWP12T40P140)                                      0.022815   2.536642 r
+  core/u_ifu/add_83/U7/Z (AN2D1BWP12T40P140)                                      0.022815   2.559456 r
+  core/u_ifu/add_83/U8/Z (AN2D1BWP12T40P140)                                      0.022815   2.582271 r
+  core/u_ifu/add_83/U9/Z (AN2D1BWP12T40P140)                                      0.022815   2.605086 r
+  core/u_ifu/add_83/U10/Z (AN2D1BWP12T40P140)                                     0.022815   2.627900 r
+  core/u_ifu/add_83/U11/Z (AN2D1BWP12T40P140)                                     0.022815   2.650715 r
+  core/u_ifu/add_83/U12/Z (AN2D1BWP12T40P140)                                     0.022815   2.673530 r
+  core/u_ifu/add_83/U13/Z (AN2D1BWP12T40P140)                                     0.022815   2.696344 r
+  core/u_ifu/add_83/U14/Z (AN2D1BWP12T40P140)                                     0.022815   2.719159 r
+  core/u_ifu/add_83/U15/Z (AN2D1BWP12T40P140)                                     0.022815   2.741974 r
+  core/u_ifu/add_83/U16/Z (AN2D1BWP12T40P140)                                     0.022815   2.764789 r
+  core/u_ifu/add_83/U17/Z (AN2D1BWP12T40P140)                                     0.022815   2.787603 r
+  core/u_ifu/add_83/U18/Z (AN2D1BWP12T40P140)                                     0.022815   2.810418 r
+  core/u_ifu/add_83/U19/Z (AN2D1BWP12T40P140)                                     0.022815   2.833233 r
+  core/u_ifu/add_83/U20/Z (AN2D1BWP12T40P140)                                     0.022815   2.856048 r
+  core/u_ifu/add_83/U21/Z (AN2D1BWP12T40P140)                                     0.022815   2.878862 r
+  core/u_ifu/add_83/U22/Z (AN2D1BWP12T40P140)                                     0.022815   2.901677 r
+  core/u_ifu/add_83/U23/Z (AN2D1BWP12T40P140)                                     0.022815   2.924492 r
+  core/u_ifu/add_83/U24/Z (AN2D1BWP12T40P140)                                     0.022815   2.947306 r
+  core/u_ifu/add_83/U25/Z (AN2D1BWP12T40P140)                                     0.022815   2.970121 r
+  core/u_ifu/add_83/U26/Z (AN2D1BWP12T40P140)                                     0.022815   2.992936 r
+  core/u_ifu/add_83/U27/Z (AN2D1BWP12T40P140)                                     0.022815   3.015751 r
+  core/u_ifu/add_83/U28/Z (AN2D1BWP12T40P140)                                     0.022674   3.038425 r
+  core/u_ifu/add_83/U1/ZN (INVD1BWP12T40P140)                                     0.008326   3.046751 f
+  core/u_ifu/add_83/U30/ZN (NR2D1BWP12T40P140)                                    0.010236   3.056987 r
+  core/u_ifu/add_83/U29/Z (XOR2D1BWP12T40P140)                                    0.027427   3.084414 r
+  core/u_opbuf/u_context_reg/U93/Z (AO22D0BWP12T40P140)                           0.024770   3.109185 r
+  core/u_opbuf/u_context_reg/data_q_reg_210_/D (DFCNQD1BWP12T40P140)              0.000000   3.109185 r
+  data arrival time                                                                          3.109185
+
+  clock core_clk (rise edge)                                                      5.000000   5.000000
+  clock network delay (ideal)                                                     0.000000   5.000000
+  clock reconvergence pessimism                                                   0.000000   5.000000
+  clock uncertainty                                                               -0.200000  4.800000
+  core/u_opbuf/u_context_reg/data_q_reg_210_/CP (DFCNQD1BWP12T40P140)                        4.800000 r
+  library setup time                                                              -0.012274  4.787726
+  data required time                                                                         4.787726
+  ----------------------------------------------------------------------------------------------------------
+  data required time                                                                         4.787726
+  data arrival time                                                                          -3.109185
+  ----------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                1.678541
+
+
+  Startpoint: core/u_opbuf/u_context_reg/data_q_reg_145_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_opbuf/u_context_reg/data_q_reg_209_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                               Incr       Path
+  ----------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                      0.000000   0.000000
+  clock network delay (ideal)                                                     0.000000   0.000000
+  core/u_opbuf/u_context_reg/data_q_reg_145_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  core/u_opbuf/u_context_reg/data_q_reg_145_/Q (DFCNQD1BWP12T40P140)              0.087066   0.087066 f
+  core/u_exu/U64/ZN (INVD1BWP12T40P140)                                           0.019582   0.106648 r
+  core/u_exu/U30/Z (BUFFD1BWP12T40P140)                                           0.017108   0.123756 r
+  core/u_exu/U10/ZN (INVD1BWP12T40P140)                                           0.040676   0.164431 f
+  core/u_exu/U63/Z (AO22D0BWP12T40P140)                                           0.042264   0.206696 f
+  core/u_exu/u_alu/U261/Z (BUFFD1BWP12T40P140)                                    0.089863   0.296558 f
+  core/u_exu/u_alu/U315/ZN (IND2D0BWP12T40P140)                                   0.035844   0.332402 r
+  core/u_exu/u_alu/U316/ZN (IAO21D0BWP12T40P140)                                  0.026703   0.359105 r
+  core/u_exu/u_alu/U317/Z (AO221D0BWP12T40P140)                                   0.032906   0.392012 r
+  core/u_exu/u_alu/U318/Z (OA221D0BWP12T40P140)                                   0.050152   0.442164 r
+  core/u_exu/u_alu/U319/Z (AO221D0BWP12T40P140)                                   0.026626   0.468789 r
+  core/u_exu/u_alu/U320/Z (OA221D0BWP12T40P140)                                   0.050169   0.518959 r
+  core/u_exu/u_alu/U321/Z (AO221D0BWP12T40P140)                                   0.026639   0.545597 r
+  core/u_exu/u_alu/U322/Z (OA221D0BWP12T40P140)                                   0.050165   0.595762 r
+  core/u_exu/u_alu/U323/Z (AO221D0BWP12T40P140)                                   0.026635   0.622397 r
+  core/u_exu/u_alu/U324/Z (OA221D0BWP12T40P140)                                   0.050165   0.672562 r
+  core/u_exu/u_alu/U325/Z (AO221D0BWP12T40P140)                                   0.026635   0.699197 r
+  core/u_exu/u_alu/U326/Z (OA221D0BWP12T40P140)                                   0.050170   0.749367 r
+  core/u_exu/u_alu/U327/Z (AO221D0BWP12T40P140)                                   0.026630   0.775997 r
+  core/u_exu/u_alu/U328/Z (OA221D0BWP12T40P140)                                   0.050165   0.826162 r
+  core/u_exu/u_alu/U329/Z (AO221D0BWP12T40P140)                                   0.026635   0.852797 r
+  core/u_exu/u_alu/U330/Z (OA221D0BWP12T40P140)                                   0.050165   0.902962 r
+  core/u_exu/u_alu/U331/Z (AO221D0BWP12T40P140)                                   0.026635   0.929597 r
+  core/u_exu/u_alu/U332/Z (OA221D0BWP12T40P140)                                   0.050165   0.979762 r
+  core/u_exu/u_alu/U333/Z (AO221D0BWP12T40P140)                                   0.026635   1.006397 r
+  core/u_exu/u_alu/U334/Z (OA221D0BWP12T40P140)                                   0.050168   1.056564 r
+  core/u_exu/u_alu/U335/Z (AO221D0BWP12T40P140)                                   0.026637   1.083201 r
+  core/u_exu/u_alu/U336/Z (OA221D0BWP12T40P140)                                   0.050173   1.133375 r
+  core/u_exu/u_alu/U337/Z (AO221D0BWP12T40P140)                                   0.026643   1.160017 r
+  core/u_exu/u_alu/U338/Z (OA221D0BWP12T40P140)                                   0.050165   1.210182 r
+  core/u_exu/u_alu/U339/Z (AO221D0BWP12T40P140)                                   0.026635   1.236817 r
+  core/u_exu/u_alu/U340/Z (OA221D0BWP12T40P140)                                   0.050165   1.286982 r
+  core/u_exu/u_alu/U341/Z (AO221D0BWP12T40P140)                                   0.026635   1.313617 r
+  core/u_exu/u_alu/U342/Z (OA221D0BWP12T40P140)                                   0.050165   1.363782 r
+  core/u_exu/u_alu/U343/Z (AO221D0BWP12T40P140)                                   0.026635   1.390417 r
+  core/u_exu/u_alu/U344/Z (OA221D0BWP12T40P140)                                   0.049842   1.440259 r
+  core/u_exu/u_alu/U345/ZN (AOI221D0BWP12T40P140)                                 0.013021   1.453281 f
+  core/u_exu/u_alu/U346/ZN (IAO21D0BWP12T40P140)                                  0.019289   1.472569 r
+  core/u_exu/u_alu/U347/ZN (OAI22D0BWP12T40P140)                                  0.025526   1.498096 f
+  core/u_exu/u_alu/U260/ZN (AOI22D1BWP12T40P140)                                  0.023749   1.521845 r
+  core/u_exu/u_alu/U257/ZN (OAI33D1BWP12T40P140)                                  0.027762   1.549607 f
+  core/u_exu/u_alu/U43/ZN (AOI221D1BWP12T40P140)                                  0.033099   1.582705 r
+  core/u_exu/u_alu/U40/ZN (ND3D1BWP12T40P140)                                     0.094627   1.677333 f
+  core/u_exu/U7/ZN (NR2D1BWP12T40P140)                                            0.027870   1.705203 r
+  core/u_exu/U60/ZN (OAI33D1BWP12T40P140)                                         0.027525   1.732728 f
+  core/u_exu/U59/ZN (CKND2D1BWP12T40P140)                                         0.023618   1.756347 r
+  core/u_exu/U29/ZN (CKND2D1BWP12T40P140)                                         0.020343   1.776690 f
+  core/u_exu/U58/ZN (NR2D1BWP12T40P140)                                           0.018577   1.795267 r
+  core/u_exu/U31/Z (BUFFD1BWP12T40P140)                                           0.057438   1.852705 r
+  core/u_exu/U27/ZN (CKND2D1BWP12T40P140)                                         0.093963   1.946668 f
+  core/u_exu/U26/Z (BUFFD1BWP12T40P140)                                           0.058999   2.005667 f
+  core/u_exu/U57/ZN (NR2D1BWP12T40P140)                                           0.025102   2.030769 r
+  core/u_exu/U56/ZN (INR3D1BWP12T40P140)                                          0.041013   2.071783 r
+  core/u_exu/U28/Z (BUFFD1BWP12T40P140)                                           0.030501   2.102283 r
+  core/u_exu/U6/ZN (NR2D1BWP12T40P140)                                            0.011816   2.114100 f
+  core/U10/Z (BUFFD1BWP12T40P140)                                                 0.036579   2.150678 f
+  core/u_ifu/U11/Z (BUFFD1BWP12T40P140)                                           0.025290   2.175969 f
+  core/u_ifu/U8/Z (BUFFD1BWP12T40P140)                                            0.072403   2.248371 f
+  core/u_ifu/u_ifq/U30/ZN (AOI21D1BWP12T40P140)                                   0.046254   2.294625 r
+  core/u_ifu/u_ifq/U44/ZN (IND2D1BWP12T40P140)                                    0.028927   2.323552 f
+  core/u_ifu/u_ifq/U31/Z (BUFFD1BWP12T40P140)                                     0.022644   2.346195 f
+  core/u_ifu/u_ifq/U10/Z (BUFFD1BWP12T40P140)                                     0.036122   2.382317 f
+  core/u_ifu/u_ifq/U45/ZN (OAI22D1BWP12T40P140)                                   0.033480   2.415797 r
+  core/u_ifu/add_83/U2/Z (AN2D1BWP12T40P140)                                      0.029561   2.445358 r
+  core/u_ifu/add_83/U3/Z (AN2D1BWP12T40P140)                                      0.022839   2.468197 r
+  core/u_ifu/add_83/U4/Z (AN2D1BWP12T40P140)                                      0.022815   2.491012 r
+  core/u_ifu/add_83/U5/Z (AN2D1BWP12T40P140)                                      0.022815   2.513827 r
+  core/u_ifu/add_83/U6/Z (AN2D1BWP12T40P140)                                      0.022815   2.536642 r
+  core/u_ifu/add_83/U7/Z (AN2D1BWP12T40P140)                                      0.022815   2.559456 r
+  core/u_ifu/add_83/U8/Z (AN2D1BWP12T40P140)                                      0.022815   2.582271 r
+  core/u_ifu/add_83/U9/Z (AN2D1BWP12T40P140)                                      0.022815   2.605086 r
+  core/u_ifu/add_83/U10/Z (AN2D1BWP12T40P140)                                     0.022815   2.627900 r
+  core/u_ifu/add_83/U11/Z (AN2D1BWP12T40P140)                                     0.022815   2.650715 r
+  core/u_ifu/add_83/U12/Z (AN2D1BWP12T40P140)                                     0.022815   2.673530 r
+  core/u_ifu/add_83/U13/Z (AN2D1BWP12T40P140)                                     0.022815   2.696344 r
+  core/u_ifu/add_83/U14/Z (AN2D1BWP12T40P140)                                     0.022815   2.719159 r
+  core/u_ifu/add_83/U15/Z (AN2D1BWP12T40P140)                                     0.022815   2.741974 r
+  core/u_ifu/add_83/U16/Z (AN2D1BWP12T40P140)                                     0.022815   2.764789 r
+  core/u_ifu/add_83/U17/Z (AN2D1BWP12T40P140)                                     0.022815   2.787603 r
+  core/u_ifu/add_83/U18/Z (AN2D1BWP12T40P140)                                     0.022815   2.810418 r
+  core/u_ifu/add_83/U19/Z (AN2D1BWP12T40P140)                                     0.022815   2.833233 r
+  core/u_ifu/add_83/U20/Z (AN2D1BWP12T40P140)                                     0.022815   2.856048 r
+  core/u_ifu/add_83/U21/Z (AN2D1BWP12T40P140)                                     0.022815   2.878862 r
+  core/u_ifu/add_83/U22/Z (AN2D1BWP12T40P140)                                     0.022815   2.901677 r
+  core/u_ifu/add_83/U23/Z (AN2D1BWP12T40P140)                                     0.022815   2.924492 r
+  core/u_ifu/add_83/U24/Z (AN2D1BWP12T40P140)                                     0.022815   2.947306 r
+  core/u_ifu/add_83/U25/Z (AN2D1BWP12T40P140)                                     0.022815   2.970121 r
+  core/u_ifu/add_83/U26/Z (AN2D1BWP12T40P140)                                     0.022815   2.992936 r
+  core/u_ifu/add_83/U27/Z (AN2D1BWP12T40P140)                                     0.022815   3.015751 r
+  core/u_ifu/add_83/U28/Z (AN2D1BWP12T40P140)                                     0.022674   3.038425 r
+  core/u_ifu/add_83/U32/Z (XOR2D1BWP12T40P140)                                    0.027470   3.065895 r
+  core/u_opbuf/u_context_reg/U94/Z (AO22D0BWP12T40P140)                           0.024771   3.090666 r
+  core/u_opbuf/u_context_reg/data_q_reg_209_/D (DFCNQD1BWP12T40P140)              0.000000   3.090666 r
+  data arrival time                                                                          3.090666
+
+  clock core_clk (rise edge)                                                      5.000000   5.000000
+  clock network delay (ideal)                                                     0.000000   5.000000
+  clock reconvergence pessimism                                                   0.000000   5.000000
+  clock uncertainty                                                               -0.200000  4.800000
+  core/u_opbuf/u_context_reg/data_q_reg_209_/CP (DFCNQD1BWP12T40P140)                        4.800000 r
+  library setup time                                                              -0.012274  4.787726
+  data required time                                                                         4.787726
+  ----------------------------------------------------------------------------------------------------------
+  data required time                                                                         4.787726
+  data arrival time                                                                          -3.090666
+  ----------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                1.697060
+
+
+  Startpoint: core/u_opbuf/u_context_reg/data_q_reg_145_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_opbuf/u_context_reg/data_q_reg_208_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                               Incr       Path
+  ----------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                      0.000000   0.000000
+  clock network delay (ideal)                                                     0.000000   0.000000
+  core/u_opbuf/u_context_reg/data_q_reg_145_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  core/u_opbuf/u_context_reg/data_q_reg_145_/Q (DFCNQD1BWP12T40P140)              0.087066   0.087066 f
+  core/u_exu/U64/ZN (INVD1BWP12T40P140)                                           0.019582   0.106648 r
+  core/u_exu/U30/Z (BUFFD1BWP12T40P140)                                           0.017108   0.123756 r
+  core/u_exu/U10/ZN (INVD1BWP12T40P140)                                           0.040676   0.164431 f
+  core/u_exu/U63/Z (AO22D0BWP12T40P140)                                           0.042264   0.206696 f
+  core/u_exu/u_alu/U261/Z (BUFFD1BWP12T40P140)                                    0.089863   0.296558 f
+  core/u_exu/u_alu/U315/ZN (IND2D0BWP12T40P140)                                   0.035844   0.332402 r
+  core/u_exu/u_alu/U316/ZN (IAO21D0BWP12T40P140)                                  0.026703   0.359105 r
+  core/u_exu/u_alu/U317/Z (AO221D0BWP12T40P140)                                   0.032906   0.392012 r
+  core/u_exu/u_alu/U318/Z (OA221D0BWP12T40P140)                                   0.050152   0.442164 r
+  core/u_exu/u_alu/U319/Z (AO221D0BWP12T40P140)                                   0.026626   0.468789 r
+  core/u_exu/u_alu/U320/Z (OA221D0BWP12T40P140)                                   0.050169   0.518959 r
+  core/u_exu/u_alu/U321/Z (AO221D0BWP12T40P140)                                   0.026639   0.545597 r
+  core/u_exu/u_alu/U322/Z (OA221D0BWP12T40P140)                                   0.050165   0.595762 r
+  core/u_exu/u_alu/U323/Z (AO221D0BWP12T40P140)                                   0.026635   0.622397 r
+  core/u_exu/u_alu/U324/Z (OA221D0BWP12T40P140)                                   0.050165   0.672562 r
+  core/u_exu/u_alu/U325/Z (AO221D0BWP12T40P140)                                   0.026635   0.699197 r
+  core/u_exu/u_alu/U326/Z (OA221D0BWP12T40P140)                                   0.050170   0.749367 r
+  core/u_exu/u_alu/U327/Z (AO221D0BWP12T40P140)                                   0.026630   0.775997 r
+  core/u_exu/u_alu/U328/Z (OA221D0BWP12T40P140)                                   0.050165   0.826162 r
+  core/u_exu/u_alu/U329/Z (AO221D0BWP12T40P140)                                   0.026635   0.852797 r
+  core/u_exu/u_alu/U330/Z (OA221D0BWP12T40P140)                                   0.050165   0.902962 r
+  core/u_exu/u_alu/U331/Z (AO221D0BWP12T40P140)                                   0.026635   0.929597 r
+  core/u_exu/u_alu/U332/Z (OA221D0BWP12T40P140)                                   0.050165   0.979762 r
+  core/u_exu/u_alu/U333/Z (AO221D0BWP12T40P140)                                   0.026635   1.006397 r
+  core/u_exu/u_alu/U334/Z (OA221D0BWP12T40P140)                                   0.050168   1.056564 r
+  core/u_exu/u_alu/U335/Z (AO221D0BWP12T40P140)                                   0.026637   1.083201 r
+  core/u_exu/u_alu/U336/Z (OA221D0BWP12T40P140)                                   0.050173   1.133375 r
+  core/u_exu/u_alu/U337/Z (AO221D0BWP12T40P140)                                   0.026643   1.160017 r
+  core/u_exu/u_alu/U338/Z (OA221D0BWP12T40P140)                                   0.050165   1.210182 r
+  core/u_exu/u_alu/U339/Z (AO221D0BWP12T40P140)                                   0.026635   1.236817 r
+  core/u_exu/u_alu/U340/Z (OA221D0BWP12T40P140)                                   0.050165   1.286982 r
+  core/u_exu/u_alu/U341/Z (AO221D0BWP12T40P140)                                   0.026635   1.313617 r
+  core/u_exu/u_alu/U342/Z (OA221D0BWP12T40P140)                                   0.050165   1.363782 r
+  core/u_exu/u_alu/U343/Z (AO221D0BWP12T40P140)                                   0.026635   1.390417 r
+  core/u_exu/u_alu/U344/Z (OA221D0BWP12T40P140)                                   0.049842   1.440259 r
+  core/u_exu/u_alu/U345/ZN (AOI221D0BWP12T40P140)                                 0.013021   1.453281 f
+  core/u_exu/u_alu/U346/ZN (IAO21D0BWP12T40P140)                                  0.019289   1.472569 r
+  core/u_exu/u_alu/U347/ZN (OAI22D0BWP12T40P140)                                  0.025526   1.498096 f
+  core/u_exu/u_alu/U260/ZN (AOI22D1BWP12T40P140)                                  0.023749   1.521845 r
+  core/u_exu/u_alu/U257/ZN (OAI33D1BWP12T40P140)                                  0.027762   1.549607 f
+  core/u_exu/u_alu/U43/ZN (AOI221D1BWP12T40P140)                                  0.033099   1.582705 r
+  core/u_exu/u_alu/U40/ZN (ND3D1BWP12T40P140)                                     0.094627   1.677333 f
+  core/u_exu/U7/ZN (NR2D1BWP12T40P140)                                            0.027870   1.705203 r
+  core/u_exu/U60/ZN (OAI33D1BWP12T40P140)                                         0.027525   1.732728 f
+  core/u_exu/U59/ZN (CKND2D1BWP12T40P140)                                         0.023618   1.756347 r
+  core/u_exu/U29/ZN (CKND2D1BWP12T40P140)                                         0.020343   1.776690 f
+  core/u_exu/U58/ZN (NR2D1BWP12T40P140)                                           0.018577   1.795267 r
+  core/u_exu/U31/Z (BUFFD1BWP12T40P140)                                           0.057438   1.852705 r
+  core/u_exu/U27/ZN (CKND2D1BWP12T40P140)                                         0.093963   1.946668 f
+  core/u_exu/U26/Z (BUFFD1BWP12T40P140)                                           0.058999   2.005667 f
+  core/u_exu/U57/ZN (NR2D1BWP12T40P140)                                           0.025102   2.030769 r
+  core/u_exu/U56/ZN (INR3D1BWP12T40P140)                                          0.041013   2.071783 r
+  core/u_exu/U28/Z (BUFFD1BWP12T40P140)                                           0.030501   2.102283 r
+  core/u_exu/U6/ZN (NR2D1BWP12T40P140)                                            0.011816   2.114100 f
+  core/U10/Z (BUFFD1BWP12T40P140)                                                 0.036579   2.150678 f
+  core/u_ifu/U11/Z (BUFFD1BWP12T40P140)                                           0.025290   2.175969 f
+  core/u_ifu/U8/Z (BUFFD1BWP12T40P140)                                            0.072403   2.248371 f
+  core/u_ifu/u_ifq/U30/ZN (AOI21D1BWP12T40P140)                                   0.046254   2.294625 r
+  core/u_ifu/u_ifq/U44/ZN (IND2D1BWP12T40P140)                                    0.028927   2.323552 f
+  core/u_ifu/u_ifq/U31/Z (BUFFD1BWP12T40P140)                                     0.022644   2.346195 f
+  core/u_ifu/u_ifq/U10/Z (BUFFD1BWP12T40P140)                                     0.036122   2.382317 f
+  core/u_ifu/u_ifq/U45/ZN (OAI22D1BWP12T40P140)                                   0.033480   2.415797 r
+  core/u_ifu/add_83/U2/Z (AN2D1BWP12T40P140)                                      0.029561   2.445358 r
+  core/u_ifu/add_83/U3/Z (AN2D1BWP12T40P140)                                      0.022839   2.468197 r
+  core/u_ifu/add_83/U4/Z (AN2D1BWP12T40P140)                                      0.022815   2.491012 r
+  core/u_ifu/add_83/U5/Z (AN2D1BWP12T40P140)                                      0.022815   2.513827 r
+  core/u_ifu/add_83/U6/Z (AN2D1BWP12T40P140)                                      0.022815   2.536642 r
+  core/u_ifu/add_83/U7/Z (AN2D1BWP12T40P140)                                      0.022815   2.559456 r
+  core/u_ifu/add_83/U8/Z (AN2D1BWP12T40P140)                                      0.022815   2.582271 r
+  core/u_ifu/add_83/U9/Z (AN2D1BWP12T40P140)                                      0.022815   2.605086 r
+  core/u_ifu/add_83/U10/Z (AN2D1BWP12T40P140)                                     0.022815   2.627900 r
+  core/u_ifu/add_83/U11/Z (AN2D1BWP12T40P140)                                     0.022815   2.650715 r
+  core/u_ifu/add_83/U12/Z (AN2D1BWP12T40P140)                                     0.022815   2.673530 r
+  core/u_ifu/add_83/U13/Z (AN2D1BWP12T40P140)                                     0.022815   2.696344 r
+  core/u_ifu/add_83/U14/Z (AN2D1BWP12T40P140)                                     0.022815   2.719159 r
+  core/u_ifu/add_83/U15/Z (AN2D1BWP12T40P140)                                     0.022815   2.741974 r
+  core/u_ifu/add_83/U16/Z (AN2D1BWP12T40P140)                                     0.022815   2.764789 r
+  core/u_ifu/add_83/U17/Z (AN2D1BWP12T40P140)                                     0.022815   2.787603 r
+  core/u_ifu/add_83/U18/Z (AN2D1BWP12T40P140)                                     0.022815   2.810418 r
+  core/u_ifu/add_83/U19/Z (AN2D1BWP12T40P140)                                     0.022815   2.833233 r
+  core/u_ifu/add_83/U20/Z (AN2D1BWP12T40P140)                                     0.022815   2.856048 r
+  core/u_ifu/add_83/U21/Z (AN2D1BWP12T40P140)                                     0.022815   2.878862 r
+  core/u_ifu/add_83/U22/Z (AN2D1BWP12T40P140)                                     0.022815   2.901677 r
+  core/u_ifu/add_83/U23/Z (AN2D1BWP12T40P140)                                     0.022815   2.924492 r
+  core/u_ifu/add_83/U24/Z (AN2D1BWP12T40P140)                                     0.022815   2.947306 r
+  core/u_ifu/add_83/U25/Z (AN2D1BWP12T40P140)                                     0.022815   2.970121 r
+  core/u_ifu/add_83/U26/Z (AN2D1BWP12T40P140)                                     0.022815   2.992936 r
+  core/u_ifu/add_83/U27/Z (AN2D1BWP12T40P140)                                     0.022815   3.015751 r
+  core/u_ifu/add_83/U33/Z (XOR2D1BWP12T40P140)                                    0.027528   3.043278 r
+  core/u_opbuf/u_context_reg/U95/Z (AO22D0BWP12T40P140)                           0.024771   3.068050 r
+  core/u_opbuf/u_context_reg/data_q_reg_208_/D (DFCNQD1BWP12T40P140)              0.000000   3.068050 r
+  data arrival time                                                                          3.068050
+
+  clock core_clk (rise edge)                                                      5.000000   5.000000
+  clock network delay (ideal)                                                     0.000000   5.000000
+  clock reconvergence pessimism                                                   0.000000   5.000000
+  clock uncertainty                                                               -0.200000  4.800000
+  core/u_opbuf/u_context_reg/data_q_reg_208_/CP (DFCNQD1BWP12T40P140)                        4.800000 r
+  library setup time                                                              -0.012274  4.787726
+  data required time                                                                         4.787726
+  ----------------------------------------------------------------------------------------------------------
+  data required time                                                                         4.787726
+  data arrival time                                                                          -3.068050
+  ----------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                1.719676
+
+
+  Startpoint: core/u_opbuf/u_context_reg/data_q_reg_145_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_opbuf/u_context_reg/data_q_reg_207_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                               Incr       Path
+  ----------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                      0.000000   0.000000
+  clock network delay (ideal)                                                     0.000000   0.000000
+  core/u_opbuf/u_context_reg/data_q_reg_145_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  core/u_opbuf/u_context_reg/data_q_reg_145_/Q (DFCNQD1BWP12T40P140)              0.087066   0.087066 f
+  core/u_exu/U64/ZN (INVD1BWP12T40P140)                                           0.019582   0.106648 r
+  core/u_exu/U30/Z (BUFFD1BWP12T40P140)                                           0.017108   0.123756 r
+  core/u_exu/U10/ZN (INVD1BWP12T40P140)                                           0.040676   0.164431 f
+  core/u_exu/U63/Z (AO22D0BWP12T40P140)                                           0.042264   0.206696 f
+  core/u_exu/u_alu/U261/Z (BUFFD1BWP12T40P140)                                    0.089863   0.296558 f
+  core/u_exu/u_alu/U315/ZN (IND2D0BWP12T40P140)                                   0.035844   0.332402 r
+  core/u_exu/u_alu/U316/ZN (IAO21D0BWP12T40P140)                                  0.026703   0.359105 r
+  core/u_exu/u_alu/U317/Z (AO221D0BWP12T40P140)                                   0.032906   0.392012 r
+  core/u_exu/u_alu/U318/Z (OA221D0BWP12T40P140)                                   0.050152   0.442164 r
+  core/u_exu/u_alu/U319/Z (AO221D0BWP12T40P140)                                   0.026626   0.468789 r
+  core/u_exu/u_alu/U320/Z (OA221D0BWP12T40P140)                                   0.050169   0.518959 r
+  core/u_exu/u_alu/U321/Z (AO221D0BWP12T40P140)                                   0.026639   0.545597 r
+  core/u_exu/u_alu/U322/Z (OA221D0BWP12T40P140)                                   0.050165   0.595762 r
+  core/u_exu/u_alu/U323/Z (AO221D0BWP12T40P140)                                   0.026635   0.622397 r
+  core/u_exu/u_alu/U324/Z (OA221D0BWP12T40P140)                                   0.050165   0.672562 r
+  core/u_exu/u_alu/U325/Z (AO221D0BWP12T40P140)                                   0.026635   0.699197 r
+  core/u_exu/u_alu/U326/Z (OA221D0BWP12T40P140)                                   0.050170   0.749367 r
+  core/u_exu/u_alu/U327/Z (AO221D0BWP12T40P140)                                   0.026630   0.775997 r
+  core/u_exu/u_alu/U328/Z (OA221D0BWP12T40P140)                                   0.050165   0.826162 r
+  core/u_exu/u_alu/U329/Z (AO221D0BWP12T40P140)                                   0.026635   0.852797 r
+  core/u_exu/u_alu/U330/Z (OA221D0BWP12T40P140)                                   0.050165   0.902962 r
+  core/u_exu/u_alu/U331/Z (AO221D0BWP12T40P140)                                   0.026635   0.929597 r
+  core/u_exu/u_alu/U332/Z (OA221D0BWP12T40P140)                                   0.050165   0.979762 r
+  core/u_exu/u_alu/U333/Z (AO221D0BWP12T40P140)                                   0.026635   1.006397 r
+  core/u_exu/u_alu/U334/Z (OA221D0BWP12T40P140)                                   0.050168   1.056564 r
+  core/u_exu/u_alu/U335/Z (AO221D0BWP12T40P140)                                   0.026637   1.083201 r
+  core/u_exu/u_alu/U336/Z (OA221D0BWP12T40P140)                                   0.050173   1.133375 r
+  core/u_exu/u_alu/U337/Z (AO221D0BWP12T40P140)                                   0.026643   1.160017 r
+  core/u_exu/u_alu/U338/Z (OA221D0BWP12T40P140)                                   0.050165   1.210182 r
+  core/u_exu/u_alu/U339/Z (AO221D0BWP12T40P140)                                   0.026635   1.236817 r
+  core/u_exu/u_alu/U340/Z (OA221D0BWP12T40P140)                                   0.050165   1.286982 r
+  core/u_exu/u_alu/U341/Z (AO221D0BWP12T40P140)                                   0.026635   1.313617 r
+  core/u_exu/u_alu/U342/Z (OA221D0BWP12T40P140)                                   0.050165   1.363782 r
+  core/u_exu/u_alu/U343/Z (AO221D0BWP12T40P140)                                   0.026635   1.390417 r
+  core/u_exu/u_alu/U344/Z (OA221D0BWP12T40P140)                                   0.049842   1.440259 r
+  core/u_exu/u_alu/U345/ZN (AOI221D0BWP12T40P140)                                 0.013021   1.453281 f
+  core/u_exu/u_alu/U346/ZN (IAO21D0BWP12T40P140)                                  0.019289   1.472569 r
+  core/u_exu/u_alu/U347/ZN (OAI22D0BWP12T40P140)                                  0.025526   1.498096 f
+  core/u_exu/u_alu/U260/ZN (AOI22D1BWP12T40P140)                                  0.023749   1.521845 r
+  core/u_exu/u_alu/U257/ZN (OAI33D1BWP12T40P140)                                  0.027762   1.549607 f
+  core/u_exu/u_alu/U43/ZN (AOI221D1BWP12T40P140)                                  0.033099   1.582705 r
+  core/u_exu/u_alu/U40/ZN (ND3D1BWP12T40P140)                                     0.094627   1.677333 f
+  core/u_exu/U7/ZN (NR2D1BWP12T40P140)                                            0.027870   1.705203 r
+  core/u_exu/U60/ZN (OAI33D1BWP12T40P140)                                         0.027525   1.732728 f
+  core/u_exu/U59/ZN (CKND2D1BWP12T40P140)                                         0.023618   1.756347 r
+  core/u_exu/U29/ZN (CKND2D1BWP12T40P140)                                         0.020343   1.776690 f
+  core/u_exu/U58/ZN (NR2D1BWP12T40P140)                                           0.018577   1.795267 r
+  core/u_exu/U31/Z (BUFFD1BWP12T40P140)                                           0.057438   1.852705 r
+  core/u_exu/U27/ZN (CKND2D1BWP12T40P140)                                         0.093963   1.946668 f
+  core/u_exu/U26/Z (BUFFD1BWP12T40P140)                                           0.058999   2.005667 f
+  core/u_exu/U57/ZN (NR2D1BWP12T40P140)                                           0.025102   2.030769 r
+  core/u_exu/U56/ZN (INR3D1BWP12T40P140)                                          0.041013   2.071783 r
+  core/u_exu/U28/Z (BUFFD1BWP12T40P140)                                           0.030501   2.102283 r
+  core/u_exu/U6/ZN (NR2D1BWP12T40P140)                                            0.011816   2.114100 f
+  core/U10/Z (BUFFD1BWP12T40P140)                                                 0.036579   2.150678 f
+  core/u_ifu/U11/Z (BUFFD1BWP12T40P140)                                           0.025290   2.175969 f
+  core/u_ifu/U8/Z (BUFFD1BWP12T40P140)                                            0.072403   2.248371 f
+  core/u_ifu/u_ifq/U30/ZN (AOI21D1BWP12T40P140)                                   0.046254   2.294625 r
+  core/u_ifu/u_ifq/U44/ZN (IND2D1BWP12T40P140)                                    0.028927   2.323552 f
+  core/u_ifu/u_ifq/U31/Z (BUFFD1BWP12T40P140)                                     0.022644   2.346195 f
+  core/u_ifu/u_ifq/U10/Z (BUFFD1BWP12T40P140)                                     0.036122   2.382317 f
+  core/u_ifu/u_ifq/U45/ZN (OAI22D1BWP12T40P140)                                   0.033480   2.415797 r
+  core/u_ifu/add_83/U2/Z (AN2D1BWP12T40P140)                                      0.029561   2.445358 r
+  core/u_ifu/add_83/U3/Z (AN2D1BWP12T40P140)                                      0.022839   2.468197 r
+  core/u_ifu/add_83/U4/Z (AN2D1BWP12T40P140)                                      0.022815   2.491012 r
+  core/u_ifu/add_83/U5/Z (AN2D1BWP12T40P140)                                      0.022815   2.513827 r
+  core/u_ifu/add_83/U6/Z (AN2D1BWP12T40P140)                                      0.022815   2.536642 r
+  core/u_ifu/add_83/U7/Z (AN2D1BWP12T40P140)                                      0.022815   2.559456 r
+  core/u_ifu/add_83/U8/Z (AN2D1BWP12T40P140)                                      0.022815   2.582271 r
+  core/u_ifu/add_83/U9/Z (AN2D1BWP12T40P140)                                      0.022815   2.605086 r
+  core/u_ifu/add_83/U10/Z (AN2D1BWP12T40P140)                                     0.022815   2.627900 r
+  core/u_ifu/add_83/U11/Z (AN2D1BWP12T40P140)                                     0.022815   2.650715 r
+  core/u_ifu/add_83/U12/Z (AN2D1BWP12T40P140)                                     0.022815   2.673530 r
+  core/u_ifu/add_83/U13/Z (AN2D1BWP12T40P140)                                     0.022815   2.696345 r
+  core/u_ifu/add_83/U14/Z (AN2D1BWP12T40P140)                                     0.022815   2.719159 r
+  core/u_ifu/add_83/U15/Z (AN2D1BWP12T40P140)                                     0.022815   2.741974 r
+  core/u_ifu/add_83/U16/Z (AN2D1BWP12T40P140)                                     0.022815   2.764789 r
+  core/u_ifu/add_83/U17/Z (AN2D1BWP12T40P140)                                     0.022815   2.787603 r
+  core/u_ifu/add_83/U18/Z (AN2D1BWP12T40P140)                                     0.022815   2.810418 r
+  core/u_ifu/add_83/U19/Z (AN2D1BWP12T40P140)                                     0.022815   2.833233 r
+  core/u_ifu/add_83/U20/Z (AN2D1BWP12T40P140)                                     0.022815   2.856048 r
+  core/u_ifu/add_83/U21/Z (AN2D1BWP12T40P140)                                     0.022815   2.878862 r
+  core/u_ifu/add_83/U22/Z (AN2D1BWP12T40P140)                                     0.022815   2.901677 r
+  core/u_ifu/add_83/U23/Z (AN2D1BWP12T40P140)                                     0.022815   2.924492 r
+  core/u_ifu/add_83/U24/Z (AN2D1BWP12T40P140)                                     0.022815   2.947306 r
+  core/u_ifu/add_83/U25/Z (AN2D1BWP12T40P140)                                     0.022815   2.970121 r
+  core/u_ifu/add_83/U26/Z (AN2D1BWP12T40P140)                                     0.022815   2.992936 r
+  core/u_ifu/add_83/U34/Z (XOR2D1BWP12T40P140)                                    0.027528   3.020463 r
+  core/u_opbuf/u_context_reg/U96/Z (AO22D0BWP12T40P140)                           0.024771   3.045235 r
+  core/u_opbuf/u_context_reg/data_q_reg_207_/D (DFCNQD1BWP12T40P140)              0.000000   3.045235 r
+  data arrival time                                                                          3.045235
+
+  clock core_clk (rise edge)                                                      5.000000   5.000000
+  clock network delay (ideal)                                                     0.000000   5.000000
+  clock reconvergence pessimism                                                   0.000000   5.000000
+  clock uncertainty                                                               -0.200000  4.800000
+  core/u_opbuf/u_context_reg/data_q_reg_207_/CP (DFCNQD1BWP12T40P140)                        4.800000 r
+  library setup time                                                              -0.012274  4.787726
+  data required time                                                                         4.787726
+  ----------------------------------------------------------------------------------------------------------
+  data required time                                                                         4.787726
+  data arrival time                                                                          -3.045235
+  ----------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                1.742491
+
+
+  Startpoint: core/u_opbuf/u_context_reg/data_q_reg_145_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_opbuf/u_context_reg/data_q_reg_206_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                               Incr       Path
+  ----------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                      0.000000   0.000000
+  clock network delay (ideal)                                                     0.000000   0.000000
+  core/u_opbuf/u_context_reg/data_q_reg_145_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  core/u_opbuf/u_context_reg/data_q_reg_145_/Q (DFCNQD1BWP12T40P140)              0.087066   0.087066 f
+  core/u_exu/U64/ZN (INVD1BWP12T40P140)                                           0.019582   0.106648 r
+  core/u_exu/U30/Z (BUFFD1BWP12T40P140)                                           0.017108   0.123756 r
+  core/u_exu/U10/ZN (INVD1BWP12T40P140)                                           0.040676   0.164431 f
+  core/u_exu/U63/Z (AO22D0BWP12T40P140)                                           0.042264   0.206696 f
+  core/u_exu/u_alu/U261/Z (BUFFD1BWP12T40P140)                                    0.089863   0.296558 f
+  core/u_exu/u_alu/U315/ZN (IND2D0BWP12T40P140)                                   0.035844   0.332402 r
+  core/u_exu/u_alu/U316/ZN (IAO21D0BWP12T40P140)                                  0.026703   0.359105 r
+  core/u_exu/u_alu/U317/Z (AO221D0BWP12T40P140)                                   0.032906   0.392012 r
+  core/u_exu/u_alu/U318/Z (OA221D0BWP12T40P140)                                   0.050152   0.442164 r
+  core/u_exu/u_alu/U319/Z (AO221D0BWP12T40P140)                                   0.026626   0.468789 r
+  core/u_exu/u_alu/U320/Z (OA221D0BWP12T40P140)                                   0.050169   0.518959 r
+  core/u_exu/u_alu/U321/Z (AO221D0BWP12T40P140)                                   0.026639   0.545597 r
+  core/u_exu/u_alu/U322/Z (OA221D0BWP12T40P140)                                   0.050165   0.595762 r
+  core/u_exu/u_alu/U323/Z (AO221D0BWP12T40P140)                                   0.026635   0.622397 r
+  core/u_exu/u_alu/U324/Z (OA221D0BWP12T40P140)                                   0.050165   0.672562 r
+  core/u_exu/u_alu/U325/Z (AO221D0BWP12T40P140)                                   0.026635   0.699197 r
+  core/u_exu/u_alu/U326/Z (OA221D0BWP12T40P140)                                   0.050170   0.749367 r
+  core/u_exu/u_alu/U327/Z (AO221D0BWP12T40P140)                                   0.026630   0.775997 r
+  core/u_exu/u_alu/U328/Z (OA221D0BWP12T40P140)                                   0.050165   0.826162 r
+  core/u_exu/u_alu/U329/Z (AO221D0BWP12T40P140)                                   0.026635   0.852797 r
+  core/u_exu/u_alu/U330/Z (OA221D0BWP12T40P140)                                   0.050165   0.902962 r
+  core/u_exu/u_alu/U331/Z (AO221D0BWP12T40P140)                                   0.026635   0.929597 r
+  core/u_exu/u_alu/U332/Z (OA221D0BWP12T40P140)                                   0.050165   0.979762 r
+  core/u_exu/u_alu/U333/Z (AO221D0BWP12T40P140)                                   0.026635   1.006397 r
+  core/u_exu/u_alu/U334/Z (OA221D0BWP12T40P140)                                   0.050168   1.056564 r
+  core/u_exu/u_alu/U335/Z (AO221D0BWP12T40P140)                                   0.026637   1.083201 r
+  core/u_exu/u_alu/U336/Z (OA221D0BWP12T40P140)                                   0.050173   1.133375 r
+  core/u_exu/u_alu/U337/Z (AO221D0BWP12T40P140)                                   0.026643   1.160017 r
+  core/u_exu/u_alu/U338/Z (OA221D0BWP12T40P140)                                   0.050165   1.210182 r
+  core/u_exu/u_alu/U339/Z (AO221D0BWP12T40P140)                                   0.026635   1.236817 r
+  core/u_exu/u_alu/U340/Z (OA221D0BWP12T40P140)                                   0.050165   1.286982 r
+  core/u_exu/u_alu/U341/Z (AO221D0BWP12T40P140)                                   0.026635   1.313617 r
+  core/u_exu/u_alu/U342/Z (OA221D0BWP12T40P140)                                   0.050165   1.363782 r
+  core/u_exu/u_alu/U343/Z (AO221D0BWP12T40P140)                                   0.026635   1.390417 r
+  core/u_exu/u_alu/U344/Z (OA221D0BWP12T40P140)                                   0.049842   1.440259 r
+  core/u_exu/u_alu/U345/ZN (AOI221D0BWP12T40P140)                                 0.013021   1.453281 f
+  core/u_exu/u_alu/U346/ZN (IAO21D0BWP12T40P140)                                  0.019289   1.472569 r
+  core/u_exu/u_alu/U347/ZN (OAI22D0BWP12T40P140)                                  0.025526   1.498096 f
+  core/u_exu/u_alu/U260/ZN (AOI22D1BWP12T40P140)                                  0.023749   1.521845 r
+  core/u_exu/u_alu/U257/ZN (OAI33D1BWP12T40P140)                                  0.027762   1.549607 f
+  core/u_exu/u_alu/U43/ZN (AOI221D1BWP12T40P140)                                  0.033099   1.582705 r
+  core/u_exu/u_alu/U40/ZN (ND3D1BWP12T40P140)                                     0.094627   1.677333 f
+  core/u_exu/U7/ZN (NR2D1BWP12T40P140)                                            0.027870   1.705203 r
+  core/u_exu/U60/ZN (OAI33D1BWP12T40P140)                                         0.027525   1.732728 f
+  core/u_exu/U59/ZN (CKND2D1BWP12T40P140)                                         0.023618   1.756347 r
+  core/u_exu/U29/ZN (CKND2D1BWP12T40P140)                                         0.020343   1.776690 f
+  core/u_exu/U58/ZN (NR2D1BWP12T40P140)                                           0.018577   1.795267 r
+  core/u_exu/U31/Z (BUFFD1BWP12T40P140)                                           0.057438   1.852705 r
+  core/u_exu/U27/ZN (CKND2D1BWP12T40P140)                                         0.093963   1.946668 f
+  core/u_exu/U26/Z (BUFFD1BWP12T40P140)                                           0.058999   2.005667 f
+  core/u_exu/U57/ZN (NR2D1BWP12T40P140)                                           0.025102   2.030769 r
+  core/u_exu/U56/ZN (INR3D1BWP12T40P140)                                          0.041013   2.071783 r
+  core/u_exu/U28/Z (BUFFD1BWP12T40P140)                                           0.030501   2.102283 r
+  core/u_exu/U6/ZN (NR2D1BWP12T40P140)                                            0.011816   2.114100 f
+  core/U10/Z (BUFFD1BWP12T40P140)                                                 0.036579   2.150678 f
+  core/u_ifu/U11/Z (BUFFD1BWP12T40P140)                                           0.025290   2.175969 f
+  core/u_ifu/U8/Z (BUFFD1BWP12T40P140)                                            0.072403   2.248371 f
+  core/u_ifu/u_ifq/U30/ZN (AOI21D1BWP12T40P140)                                   0.046254   2.294625 r
+  core/u_ifu/u_ifq/U44/ZN (IND2D1BWP12T40P140)                                    0.028927   2.323552 f
+  core/u_ifu/u_ifq/U31/Z (BUFFD1BWP12T40P140)                                     0.022644   2.346195 f
+  core/u_ifu/u_ifq/U10/Z (BUFFD1BWP12T40P140)                                     0.036122   2.382317 f
+  core/u_ifu/u_ifq/U45/ZN (OAI22D1BWP12T40P140)                                   0.033480   2.415797 r
+  core/u_ifu/add_83/U2/Z (AN2D1BWP12T40P140)                                      0.029561   2.445358 r
+  core/u_ifu/add_83/U3/Z (AN2D1BWP12T40P140)                                      0.022839   2.468197 r
+  core/u_ifu/add_83/U4/Z (AN2D1BWP12T40P140)                                      0.022815   2.491012 r
+  core/u_ifu/add_83/U5/Z (AN2D1BWP12T40P140)                                      0.022815   2.513827 r
+  core/u_ifu/add_83/U6/Z (AN2D1BWP12T40P140)                                      0.022815   2.536642 r
+  core/u_ifu/add_83/U7/Z (AN2D1BWP12T40P140)                                      0.022815   2.559456 r
+  core/u_ifu/add_83/U8/Z (AN2D1BWP12T40P140)                                      0.022815   2.582271 r
+  core/u_ifu/add_83/U9/Z (AN2D1BWP12T40P140)                                      0.022815   2.605086 r
+  core/u_ifu/add_83/U10/Z (AN2D1BWP12T40P140)                                     0.022815   2.627900 r
+  core/u_ifu/add_83/U11/Z (AN2D1BWP12T40P140)                                     0.022815   2.650715 r
+  core/u_ifu/add_83/U12/Z (AN2D1BWP12T40P140)                                     0.022815   2.673530 r
+  core/u_ifu/add_83/U13/Z (AN2D1BWP12T40P140)                                     0.022815   2.696345 r
+  core/u_ifu/add_83/U14/Z (AN2D1BWP12T40P140)                                     0.022815   2.719159 r
+  core/u_ifu/add_83/U15/Z (AN2D1BWP12T40P140)                                     0.022815   2.741974 r
+  core/u_ifu/add_83/U16/Z (AN2D1BWP12T40P140)                                     0.022815   2.764789 r
+  core/u_ifu/add_83/U17/Z (AN2D1BWP12T40P140)                                     0.022815   2.787603 r
+  core/u_ifu/add_83/U18/Z (AN2D1BWP12T40P140)                                     0.022815   2.810418 r
+  core/u_ifu/add_83/U19/Z (AN2D1BWP12T40P140)                                     0.022815   2.833233 r
+  core/u_ifu/add_83/U20/Z (AN2D1BWP12T40P140)                                     0.022815   2.856048 r
+  core/u_ifu/add_83/U21/Z (AN2D1BWP12T40P140)                                     0.022815   2.878862 r
+  core/u_ifu/add_83/U22/Z (AN2D1BWP12T40P140)                                     0.022815   2.901677 r
+  core/u_ifu/add_83/U23/Z (AN2D1BWP12T40P140)                                     0.022815   2.924492 r
+  core/u_ifu/add_83/U24/Z (AN2D1BWP12T40P140)                                     0.022815   2.947306 r
+  core/u_ifu/add_83/U25/Z (AN2D1BWP12T40P140)                                     0.022815   2.970121 r
+  core/u_ifu/add_83/U35/Z (XOR2D1BWP12T40P140)                                    0.027528   2.997649 r
+  core/u_opbuf/u_context_reg/U97/Z (AO22D0BWP12T40P140)                           0.024771   3.022420 r
+  core/u_opbuf/u_context_reg/data_q_reg_206_/D (DFCNQD1BWP12T40P140)              0.000000   3.022420 r
+  data arrival time                                                                          3.022420
+
+  clock core_clk (rise edge)                                                      5.000000   5.000000
+  clock network delay (ideal)                                                     0.000000   5.000000
+  clock reconvergence pessimism                                                   0.000000   5.000000
+  clock uncertainty                                                               -0.200000  4.800000
+  core/u_opbuf/u_context_reg/data_q_reg_206_/CP (DFCNQD1BWP12T40P140)                        4.800000 r
+  library setup time                                                              -0.012274  4.787726
+  data required time                                                                         4.787726
+  ----------------------------------------------------------------------------------------------------------
+  data required time                                                                         4.787726
+  data arrival time                                                                          -3.022420
+  ----------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                1.765306
+
+
+  Startpoint: core/u_opbuf/u_context_reg/data_q_reg_145_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_opbuf/u_context_reg/data_q_reg_205_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                               Incr       Path
+  ----------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                      0.000000   0.000000
+  clock network delay (ideal)                                                     0.000000   0.000000
+  core/u_opbuf/u_context_reg/data_q_reg_145_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  core/u_opbuf/u_context_reg/data_q_reg_145_/Q (DFCNQD1BWP12T40P140)              0.087066   0.087066 f
+  core/u_exu/U64/ZN (INVD1BWP12T40P140)                                           0.019582   0.106648 r
+  core/u_exu/U30/Z (BUFFD1BWP12T40P140)                                           0.017108   0.123756 r
+  core/u_exu/U10/ZN (INVD1BWP12T40P140)                                           0.040676   0.164431 f
+  core/u_exu/U63/Z (AO22D0BWP12T40P140)                                           0.042264   0.206696 f
+  core/u_exu/u_alu/U261/Z (BUFFD1BWP12T40P140)                                    0.089863   0.296558 f
+  core/u_exu/u_alu/U315/ZN (IND2D0BWP12T40P140)                                   0.035844   0.332402 r
+  core/u_exu/u_alu/U316/ZN (IAO21D0BWP12T40P140)                                  0.026703   0.359105 r
+  core/u_exu/u_alu/U317/Z (AO221D0BWP12T40P140)                                   0.032906   0.392012 r
+  core/u_exu/u_alu/U318/Z (OA221D0BWP12T40P140)                                   0.050152   0.442164 r
+  core/u_exu/u_alu/U319/Z (AO221D0BWP12T40P140)                                   0.026626   0.468789 r
+  core/u_exu/u_alu/U320/Z (OA221D0BWP12T40P140)                                   0.050169   0.518959 r
+  core/u_exu/u_alu/U321/Z (AO221D0BWP12T40P140)                                   0.026639   0.545597 r
+  core/u_exu/u_alu/U322/Z (OA221D0BWP12T40P140)                                   0.050165   0.595762 r
+  core/u_exu/u_alu/U323/Z (AO221D0BWP12T40P140)                                   0.026635   0.622397 r
+  core/u_exu/u_alu/U324/Z (OA221D0BWP12T40P140)                                   0.050165   0.672562 r
+  core/u_exu/u_alu/U325/Z (AO221D0BWP12T40P140)                                   0.026635   0.699197 r
+  core/u_exu/u_alu/U326/Z (OA221D0BWP12T40P140)                                   0.050169   0.749367 r
+  core/u_exu/u_alu/U327/Z (AO221D0BWP12T40P140)                                   0.026630   0.775997 r
+  core/u_exu/u_alu/U328/Z (OA221D0BWP12T40P140)                                   0.050165   0.826162 r
+  core/u_exu/u_alu/U329/Z (AO221D0BWP12T40P140)                                   0.026635   0.852797 r
+  core/u_exu/u_alu/U330/Z (OA221D0BWP12T40P140)                                   0.050165   0.902962 r
+  core/u_exu/u_alu/U331/Z (AO221D0BWP12T40P140)                                   0.026635   0.929597 r
+  core/u_exu/u_alu/U332/Z (OA221D0BWP12T40P140)                                   0.050165   0.979762 r
+  core/u_exu/u_alu/U333/Z (AO221D0BWP12T40P140)                                   0.026635   1.006396 r
+  core/u_exu/u_alu/U334/Z (OA221D0BWP12T40P140)                                   0.050168   1.056564 r
+  core/u_exu/u_alu/U335/Z (AO221D0BWP12T40P140)                                   0.026637   1.083201 r
+  core/u_exu/u_alu/U336/Z (OA221D0BWP12T40P140)                                   0.050173   1.133374 r
+  core/u_exu/u_alu/U337/Z (AO221D0BWP12T40P140)                                   0.026643   1.160017 r
+  core/u_exu/u_alu/U338/Z (OA221D0BWP12T40P140)                                   0.050165   1.210182 r
+  core/u_exu/u_alu/U339/Z (AO221D0BWP12T40P140)                                   0.026635   1.236817 r
+  core/u_exu/u_alu/U340/Z (OA221D0BWP12T40P140)                                   0.050165   1.286982 r
+  core/u_exu/u_alu/U341/Z (AO221D0BWP12T40P140)                                   0.026635   1.313617 r
+  core/u_exu/u_alu/U342/Z (OA221D0BWP12T40P140)                                   0.050165   1.363782 r
+  core/u_exu/u_alu/U343/Z (AO221D0BWP12T40P140)                                   0.026635   1.390417 r
+  core/u_exu/u_alu/U344/Z (OA221D0BWP12T40P140)                                   0.049842   1.440259 r
+  core/u_exu/u_alu/U345/ZN (AOI221D0BWP12T40P140)                                 0.013021   1.453281 f
+  core/u_exu/u_alu/U346/ZN (IAO21D0BWP12T40P140)                                  0.019289   1.472569 r
+  core/u_exu/u_alu/U347/ZN (OAI22D0BWP12T40P140)                                  0.025526   1.498096 f
+  core/u_exu/u_alu/U260/ZN (AOI22D1BWP12T40P140)                                  0.023749   1.521845 r
+  core/u_exu/u_alu/U257/ZN (OAI33D1BWP12T40P140)                                  0.027762   1.549606 f
+  core/u_exu/u_alu/U43/ZN (AOI221D1BWP12T40P140)                                  0.033099   1.582705 r
+  core/u_exu/u_alu/U40/ZN (ND3D1BWP12T40P140)                                     0.094627   1.677333 f
+  core/u_exu/U7/ZN (NR2D1BWP12T40P140)                                            0.027870   1.705203 r
+  core/u_exu/U60/ZN (OAI33D1BWP12T40P140)                                         0.027525   1.732728 f
+  core/u_exu/U59/ZN (CKND2D1BWP12T40P140)                                         0.023618   1.756347 r
+  core/u_exu/U29/ZN (CKND2D1BWP12T40P140)                                         0.020343   1.776690 f
+  core/u_exu/U58/ZN (NR2D1BWP12T40P140)                                           0.018577   1.795267 r
+  core/u_exu/U31/Z (BUFFD1BWP12T40P140)                                           0.057438   1.852705 r
+  core/u_exu/U27/ZN (CKND2D1BWP12T40P140)                                         0.093963   1.946668 f
+  core/u_exu/U26/Z (BUFFD1BWP12T40P140)                                           0.058999   2.005667 f
+  core/u_exu/U57/ZN (NR2D1BWP12T40P140)                                           0.025102   2.030769 r
+  core/u_exu/U56/ZN (INR3D1BWP12T40P140)                                          0.041013   2.071783 r
+  core/u_exu/U28/Z (BUFFD1BWP12T40P140)                                           0.030501   2.102283 r
+  core/u_exu/U6/ZN (NR2D1BWP12T40P140)                                            0.011816   2.114100 f
+  core/U10/Z (BUFFD1BWP12T40P140)                                                 0.036579   2.150678 f
+  core/u_ifu/U11/Z (BUFFD1BWP12T40P140)                                           0.025290   2.175969 f
+  core/u_ifu/U8/Z (BUFFD1BWP12T40P140)                                            0.072402   2.248371 f
+  core/u_ifu/u_ifq/U30/ZN (AOI21D1BWP12T40P140)                                   0.046254   2.294625 r
+  core/u_ifu/u_ifq/U44/ZN (IND2D1BWP12T40P140)                                    0.028927   2.323552 f
+  core/u_ifu/u_ifq/U31/Z (BUFFD1BWP12T40P140)                                     0.022644   2.346195 f
+  core/u_ifu/u_ifq/U10/Z (BUFFD1BWP12T40P140)                                     0.036122   2.382317 f
+  core/u_ifu/u_ifq/U45/ZN (OAI22D1BWP12T40P140)                                   0.033480   2.415797 r
+  core/u_ifu/add_83/U2/Z (AN2D1BWP12T40P140)                                      0.029561   2.445358 r
+  core/u_ifu/add_83/U3/Z (AN2D1BWP12T40P140)                                      0.022839   2.468197 r
+  core/u_ifu/add_83/U4/Z (AN2D1BWP12T40P140)                                      0.022815   2.491012 r
+  core/u_ifu/add_83/U5/Z (AN2D1BWP12T40P140)                                      0.022815   2.513827 r
+  core/u_ifu/add_83/U6/Z (AN2D1BWP12T40P140)                                      0.022815   2.536642 r
+  core/u_ifu/add_83/U7/Z (AN2D1BWP12T40P140)                                      0.022815   2.559456 r
+  core/u_ifu/add_83/U8/Z (AN2D1BWP12T40P140)                                      0.022815   2.582271 r
+  core/u_ifu/add_83/U9/Z (AN2D1BWP12T40P140)                                      0.022815   2.605086 r
+  core/u_ifu/add_83/U10/Z (AN2D1BWP12T40P140)                                     0.022815   2.627900 r
+  core/u_ifu/add_83/U11/Z (AN2D1BWP12T40P140)                                     0.022815   2.650715 r
+  core/u_ifu/add_83/U12/Z (AN2D1BWP12T40P140)                                     0.022815   2.673530 r
+  core/u_ifu/add_83/U13/Z (AN2D1BWP12T40P140)                                     0.022815   2.696345 r
+  core/u_ifu/add_83/U14/Z (AN2D1BWP12T40P140)                                     0.022815   2.719159 r
+  core/u_ifu/add_83/U15/Z (AN2D1BWP12T40P140)                                     0.022815   2.741974 r
+  core/u_ifu/add_83/U16/Z (AN2D1BWP12T40P140)                                     0.022815   2.764789 r
+  core/u_ifu/add_83/U17/Z (AN2D1BWP12T40P140)                                     0.022815   2.787603 r
+  core/u_ifu/add_83/U18/Z (AN2D1BWP12T40P140)                                     0.022815   2.810418 r
+  core/u_ifu/add_83/U19/Z (AN2D1BWP12T40P140)                                     0.022815   2.833233 r
+  core/u_ifu/add_83/U20/Z (AN2D1BWP12T40P140)                                     0.022815   2.856048 r
+  core/u_ifu/add_83/U21/Z (AN2D1BWP12T40P140)                                     0.022815   2.878862 r
+  core/u_ifu/add_83/U22/Z (AN2D1BWP12T40P140)                                     0.022815   2.901677 r
+  core/u_ifu/add_83/U23/Z (AN2D1BWP12T40P140)                                     0.022815   2.924492 r
+  core/u_ifu/add_83/U24/Z (AN2D1BWP12T40P140)                                     0.022815   2.947306 r
+  core/u_ifu/add_83/U36/Z (XOR2D1BWP12T40P140)                                    0.027528   2.974834 r
+  core/u_opbuf/u_context_reg/U98/Z (AO22D0BWP12T40P140)                           0.024771   2.999605 r
+  core/u_opbuf/u_context_reg/data_q_reg_205_/D (DFCNQD1BWP12T40P140)              0.000000   2.999605 r
+  data arrival time                                                                          2.999605
+
+  clock core_clk (rise edge)                                                      5.000000   5.000000
+  clock network delay (ideal)                                                     0.000000   5.000000
+  clock reconvergence pessimism                                                   0.000000   5.000000
+  clock uncertainty                                                               -0.200000  4.800000
+  core/u_opbuf/u_context_reg/data_q_reg_205_/CP (DFCNQD1BWP12T40P140)                        4.800000 r
+  library setup time                                                              -0.012274  4.787726
+  data required time                                                                         4.787726
+  ----------------------------------------------------------------------------------------------------------
+  data required time                                                                         4.787726
+  data arrival time                                                                          -2.999605
+  ----------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                1.788121
+
+
+  Startpoint: core/u_opbuf/u_context_reg/data_q_reg_145_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_opbuf/u_context_reg/data_q_reg_204_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                               Incr       Path
+  ----------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                      0.000000   0.000000
+  clock network delay (ideal)                                                     0.000000   0.000000
+  core/u_opbuf/u_context_reg/data_q_reg_145_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  core/u_opbuf/u_context_reg/data_q_reg_145_/Q (DFCNQD1BWP12T40P140)              0.087066   0.087066 f
+  core/u_exu/U64/ZN (INVD1BWP12T40P140)                                           0.019582   0.106648 r
+  core/u_exu/U30/Z (BUFFD1BWP12T40P140)                                           0.017108   0.123756 r
+  core/u_exu/U10/ZN (INVD1BWP12T40P140)                                           0.040676   0.164431 f
+  core/u_exu/U63/Z (AO22D0BWP12T40P140)                                           0.042264   0.206696 f
+  core/u_exu/u_alu/U261/Z (BUFFD1BWP12T40P140)                                    0.089863   0.296558 f
+  core/u_exu/u_alu/U315/ZN (IND2D0BWP12T40P140)                                   0.035844   0.332402 r
+  core/u_exu/u_alu/U316/ZN (IAO21D0BWP12T40P140)                                  0.026703   0.359105 r
+  core/u_exu/u_alu/U317/Z (AO221D0BWP12T40P140)                                   0.032906   0.392012 r
+  core/u_exu/u_alu/U318/Z (OA221D0BWP12T40P140)                                   0.050152   0.442164 r
+  core/u_exu/u_alu/U319/Z (AO221D0BWP12T40P140)                                   0.026626   0.468789 r
+  core/u_exu/u_alu/U320/Z (OA221D0BWP12T40P140)                                   0.050169   0.518959 r
+  core/u_exu/u_alu/U321/Z (AO221D0BWP12T40P140)                                   0.026639   0.545597 r
+  core/u_exu/u_alu/U322/Z (OA221D0BWP12T40P140)                                   0.050165   0.595762 r
+  core/u_exu/u_alu/U323/Z (AO221D0BWP12T40P140)                                   0.026635   0.622397 r
+  core/u_exu/u_alu/U324/Z (OA221D0BWP12T40P140)                                   0.050165   0.672562 r
+  core/u_exu/u_alu/U325/Z (AO221D0BWP12T40P140)                                   0.026635   0.699197 r
+  core/u_exu/u_alu/U326/Z (OA221D0BWP12T40P140)                                   0.050169   0.749367 r
+  core/u_exu/u_alu/U327/Z (AO221D0BWP12T40P140)                                   0.026630   0.775997 r
+  core/u_exu/u_alu/U328/Z (OA221D0BWP12T40P140)                                   0.050165   0.826162 r
+  core/u_exu/u_alu/U329/Z (AO221D0BWP12T40P140)                                   0.026635   0.852797 r
+  core/u_exu/u_alu/U330/Z (OA221D0BWP12T40P140)                                   0.050165   0.902962 r
+  core/u_exu/u_alu/U331/Z (AO221D0BWP12T40P140)                                   0.026635   0.929597 r
+  core/u_exu/u_alu/U332/Z (OA221D0BWP12T40P140)                                   0.050165   0.979762 r
+  core/u_exu/u_alu/U333/Z (AO221D0BWP12T40P140)                                   0.026635   1.006396 r
+  core/u_exu/u_alu/U334/Z (OA221D0BWP12T40P140)                                   0.050168   1.056564 r
+  core/u_exu/u_alu/U335/Z (AO221D0BWP12T40P140)                                   0.026637   1.083201 r
+  core/u_exu/u_alu/U336/Z (OA221D0BWP12T40P140)                                   0.050173   1.133374 r
+  core/u_exu/u_alu/U337/Z (AO221D0BWP12T40P140)                                   0.026643   1.160017 r
+  core/u_exu/u_alu/U338/Z (OA221D0BWP12T40P140)                                   0.050165   1.210182 r
+  core/u_exu/u_alu/U339/Z (AO221D0BWP12T40P140)                                   0.026635   1.236817 r
+  core/u_exu/u_alu/U340/Z (OA221D0BWP12T40P140)                                   0.050165   1.286982 r
+  core/u_exu/u_alu/U341/Z (AO221D0BWP12T40P140)                                   0.026635   1.313617 r
+  core/u_exu/u_alu/U342/Z (OA221D0BWP12T40P140)                                   0.050165   1.363782 r
+  core/u_exu/u_alu/U343/Z (AO221D0BWP12T40P140)                                   0.026635   1.390417 r
+  core/u_exu/u_alu/U344/Z (OA221D0BWP12T40P140)                                   0.049842   1.440259 r
+  core/u_exu/u_alu/U345/ZN (AOI221D0BWP12T40P140)                                 0.013021   1.453281 f
+  core/u_exu/u_alu/U346/ZN (IAO21D0BWP12T40P140)                                  0.019289   1.472569 r
+  core/u_exu/u_alu/U347/ZN (OAI22D0BWP12T40P140)                                  0.025526   1.498096 f
+  core/u_exu/u_alu/U260/ZN (AOI22D1BWP12T40P140)                                  0.023749   1.521845 r
+  core/u_exu/u_alu/U257/ZN (OAI33D1BWP12T40P140)                                  0.027762   1.549606 f
+  core/u_exu/u_alu/U43/ZN (AOI221D1BWP12T40P140)                                  0.033099   1.582705 r
+  core/u_exu/u_alu/U40/ZN (ND3D1BWP12T40P140)                                     0.094627   1.677333 f
+  core/u_exu/U7/ZN (NR2D1BWP12T40P140)                                            0.027870   1.705203 r
+  core/u_exu/U60/ZN (OAI33D1BWP12T40P140)                                         0.027525   1.732728 f
+  core/u_exu/U59/ZN (CKND2D1BWP12T40P140)                                         0.023618   1.756347 r
+  core/u_exu/U29/ZN (CKND2D1BWP12T40P140)                                         0.020343   1.776690 f
+  core/u_exu/U58/ZN (NR2D1BWP12T40P140)                                           0.018577   1.795267 r
+  core/u_exu/U31/Z (BUFFD1BWP12T40P140)                                           0.057438   1.852705 r
+  core/u_exu/U27/ZN (CKND2D1BWP12T40P140)                                         0.093963   1.946668 f
+  core/u_exu/U26/Z (BUFFD1BWP12T40P140)                                           0.058999   2.005667 f
+  core/u_exu/U57/ZN (NR2D1BWP12T40P140)                                           0.025102   2.030769 r
+  core/u_exu/U56/ZN (INR3D1BWP12T40P140)                                          0.041013   2.071783 r
+  core/u_exu/U28/Z (BUFFD1BWP12T40P140)                                           0.030501   2.102283 r
+  core/u_exu/U6/ZN (NR2D1BWP12T40P140)                                            0.011816   2.114100 f
+  core/U10/Z (BUFFD1BWP12T40P140)                                                 0.036579   2.150678 f
+  core/u_ifu/U11/Z (BUFFD1BWP12T40P140)                                           0.025290   2.175969 f
+  core/u_ifu/U8/Z (BUFFD1BWP12T40P140)                                            0.072402   2.248371 f
+  core/u_ifu/u_ifq/U30/ZN (AOI21D1BWP12T40P140)                                   0.046254   2.294625 r
+  core/u_ifu/u_ifq/U44/ZN (IND2D1BWP12T40P140)                                    0.028927   2.323552 f
+  core/u_ifu/u_ifq/U31/Z (BUFFD1BWP12T40P140)                                     0.022644   2.346195 f
+  core/u_ifu/u_ifq/U10/Z (BUFFD1BWP12T40P140)                                     0.036122   2.382317 f
+  core/u_ifu/u_ifq/U45/ZN (OAI22D1BWP12T40P140)                                   0.033480   2.415797 r
+  core/u_ifu/add_83/U2/Z (AN2D1BWP12T40P140)                                      0.029561   2.445358 r
+  core/u_ifu/add_83/U3/Z (AN2D1BWP12T40P140)                                      0.022839   2.468197 r
+  core/u_ifu/add_83/U4/Z (AN2D1BWP12T40P140)                                      0.022815   2.491012 r
+  core/u_ifu/add_83/U5/Z (AN2D1BWP12T40P140)                                      0.022815   2.513827 r
+  core/u_ifu/add_83/U6/Z (AN2D1BWP12T40P140)                                      0.022815   2.536642 r
+  core/u_ifu/add_83/U7/Z (AN2D1BWP12T40P140)                                      0.022815   2.559456 r
+  core/u_ifu/add_83/U8/Z (AN2D1BWP12T40P140)                                      0.022815   2.582271 r
+  core/u_ifu/add_83/U9/Z (AN2D1BWP12T40P140)                                      0.022815   2.605086 r
+  core/u_ifu/add_83/U10/Z (AN2D1BWP12T40P140)                                     0.022815   2.627900 r
+  core/u_ifu/add_83/U11/Z (AN2D1BWP12T40P140)                                     0.022815   2.650715 r
+  core/u_ifu/add_83/U12/Z (AN2D1BWP12T40P140)                                     0.022815   2.673530 r
+  core/u_ifu/add_83/U13/Z (AN2D1BWP12T40P140)                                     0.022815   2.696345 r
+  core/u_ifu/add_83/U14/Z (AN2D1BWP12T40P140)                                     0.022815   2.719159 r
+  core/u_ifu/add_83/U15/Z (AN2D1BWP12T40P140)                                     0.022815   2.741974 r
+  core/u_ifu/add_83/U16/Z (AN2D1BWP12T40P140)                                     0.022815   2.764789 r
+  core/u_ifu/add_83/U17/Z (AN2D1BWP12T40P140)                                     0.022815   2.787603 r
+  core/u_ifu/add_83/U18/Z (AN2D1BWP12T40P140)                                     0.022815   2.810418 r
+  core/u_ifu/add_83/U19/Z (AN2D1BWP12T40P140)                                     0.022815   2.833233 r
+  core/u_ifu/add_83/U20/Z (AN2D1BWP12T40P140)                                     0.022815   2.856048 r
+  core/u_ifu/add_83/U21/Z (AN2D1BWP12T40P140)                                     0.022815   2.878862 r
+  core/u_ifu/add_83/U22/Z (AN2D1BWP12T40P140)                                     0.022815   2.901677 r
+  core/u_ifu/add_83/U23/Z (AN2D1BWP12T40P140)                                     0.022815   2.924492 r
+  core/u_ifu/add_83/U37/Z (XOR2D1BWP12T40P140)                                    0.027528   2.952019 r
+  core/u_opbuf/u_context_reg/U99/Z (AO22D0BWP12T40P140)                           0.024771   2.976791 r
+  core/u_opbuf/u_context_reg/data_q_reg_204_/D (DFCNQD1BWP12T40P140)              0.000000   2.976791 r
+  data arrival time                                                                          2.976791
+
+  clock core_clk (rise edge)                                                      5.000000   5.000000
+  clock network delay (ideal)                                                     0.000000   5.000000
+  clock reconvergence pessimism                                                   0.000000   5.000000
+  clock uncertainty                                                               -0.200000  4.800000
+  core/u_opbuf/u_context_reg/data_q_reg_204_/CP (DFCNQD1BWP12T40P140)                        4.800000 r
+  library setup time                                                              -0.012274  4.787726
+  data required time                                                                         4.787726
+  ----------------------------------------------------------------------------------------------------------
+  data required time                                                                         4.787726
+  data arrival time                                                                          -2.976791
+  ----------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                1.810935
+
+
+  Startpoint: core/u_opbuf/u_context_reg/data_q_reg_145_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_opbuf/u_context_reg/data_q_reg_203_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                               Incr       Path
+  ----------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                      0.000000   0.000000
+  clock network delay (ideal)                                                     0.000000   0.000000
+  core/u_opbuf/u_context_reg/data_q_reg_145_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  core/u_opbuf/u_context_reg/data_q_reg_145_/Q (DFCNQD1BWP12T40P140)              0.087066   0.087066 f
+  core/u_exu/U64/ZN (INVD1BWP12T40P140)                                           0.019582   0.106648 r
+  core/u_exu/U30/Z (BUFFD1BWP12T40P140)                                           0.017108   0.123756 r
+  core/u_exu/U10/ZN (INVD1BWP12T40P140)                                           0.040676   0.164431 f
+  core/u_exu/U63/Z (AO22D0BWP12T40P140)                                           0.042264   0.206696 f
+  core/u_exu/u_alu/U261/Z (BUFFD1BWP12T40P140)                                    0.089863   0.296558 f
+  core/u_exu/u_alu/U315/ZN (IND2D0BWP12T40P140)                                   0.035844   0.332402 r
+  core/u_exu/u_alu/U316/ZN (IAO21D0BWP12T40P140)                                  0.026703   0.359105 r
+  core/u_exu/u_alu/U317/Z (AO221D0BWP12T40P140)                                   0.032906   0.392012 r
+  core/u_exu/u_alu/U318/Z (OA221D0BWP12T40P140)                                   0.050152   0.442164 r
+  core/u_exu/u_alu/U319/Z (AO221D0BWP12T40P140)                                   0.026626   0.468789 r
+  core/u_exu/u_alu/U320/Z (OA221D0BWP12T40P140)                                   0.050169   0.518959 r
+  core/u_exu/u_alu/U321/Z (AO221D0BWP12T40P140)                                   0.026639   0.545597 r
+  core/u_exu/u_alu/U322/Z (OA221D0BWP12T40P140)                                   0.050165   0.595762 r
+  core/u_exu/u_alu/U323/Z (AO221D0BWP12T40P140)                                   0.026635   0.622397 r
+  core/u_exu/u_alu/U324/Z (OA221D0BWP12T40P140)                                   0.050165   0.672562 r
+  core/u_exu/u_alu/U325/Z (AO221D0BWP12T40P140)                                   0.026635   0.699197 r
+  core/u_exu/u_alu/U326/Z (OA221D0BWP12T40P140)                                   0.050169   0.749367 r
+  core/u_exu/u_alu/U327/Z (AO221D0BWP12T40P140)                                   0.026630   0.775997 r
+  core/u_exu/u_alu/U328/Z (OA221D0BWP12T40P140)                                   0.050165   0.826162 r
+  core/u_exu/u_alu/U329/Z (AO221D0BWP12T40P140)                                   0.026635   0.852797 r
+  core/u_exu/u_alu/U330/Z (OA221D0BWP12T40P140)                                   0.050165   0.902962 r
+  core/u_exu/u_alu/U331/Z (AO221D0BWP12T40P140)                                   0.026635   0.929597 r
+  core/u_exu/u_alu/U332/Z (OA221D0BWP12T40P140)                                   0.050165   0.979762 r
+  core/u_exu/u_alu/U333/Z (AO221D0BWP12T40P140)                                   0.026635   1.006396 r
+  core/u_exu/u_alu/U334/Z (OA221D0BWP12T40P140)                                   0.050168   1.056564 r
+  core/u_exu/u_alu/U335/Z (AO221D0BWP12T40P140)                                   0.026637   1.083201 r
+  core/u_exu/u_alu/U336/Z (OA221D0BWP12T40P140)                                   0.050173   1.133374 r
+  core/u_exu/u_alu/U337/Z (AO221D0BWP12T40P140)                                   0.026643   1.160017 r
+  core/u_exu/u_alu/U338/Z (OA221D0BWP12T40P140)                                   0.050165   1.210182 r
+  core/u_exu/u_alu/U339/Z (AO221D0BWP12T40P140)                                   0.026635   1.236817 r
+  core/u_exu/u_alu/U340/Z (OA221D0BWP12T40P140)                                   0.050165   1.286982 r
+  core/u_exu/u_alu/U341/Z (AO221D0BWP12T40P140)                                   0.026635   1.313617 r
+  core/u_exu/u_alu/U342/Z (OA221D0BWP12T40P140)                                   0.050165   1.363782 r
+  core/u_exu/u_alu/U343/Z (AO221D0BWP12T40P140)                                   0.026635   1.390417 r
+  core/u_exu/u_alu/U344/Z (OA221D0BWP12T40P140)                                   0.049842   1.440259 r
+  core/u_exu/u_alu/U345/ZN (AOI221D0BWP12T40P140)                                 0.013021   1.453281 f
+  core/u_exu/u_alu/U346/ZN (IAO21D0BWP12T40P140)                                  0.019289   1.472569 r
+  core/u_exu/u_alu/U347/ZN (OAI22D0BWP12T40P140)                                  0.025526   1.498096 f
+  core/u_exu/u_alu/U260/ZN (AOI22D1BWP12T40P140)                                  0.023749   1.521845 r
+  core/u_exu/u_alu/U257/ZN (OAI33D1BWP12T40P140)                                  0.027762   1.549606 f
+  core/u_exu/u_alu/U43/ZN (AOI221D1BWP12T40P140)                                  0.033099   1.582705 r
+  core/u_exu/u_alu/U40/ZN (ND3D1BWP12T40P140)                                     0.094627   1.677333 f
+  core/u_exu/U7/ZN (NR2D1BWP12T40P140)                                            0.027870   1.705203 r
+  core/u_exu/U60/ZN (OAI33D1BWP12T40P140)                                         0.027525   1.732728 f
+  core/u_exu/U59/ZN (CKND2D1BWP12T40P140)                                         0.023618   1.756347 r
+  core/u_exu/U29/ZN (CKND2D1BWP12T40P140)                                         0.020343   1.776690 f
+  core/u_exu/U58/ZN (NR2D1BWP12T40P140)                                           0.018577   1.795267 r
+  core/u_exu/U31/Z (BUFFD1BWP12T40P140)                                           0.057438   1.852705 r
+  core/u_exu/U27/ZN (CKND2D1BWP12T40P140)                                         0.093963   1.946668 f
+  core/u_exu/U26/Z (BUFFD1BWP12T40P140)                                           0.058999   2.005667 f
+  core/u_exu/U57/ZN (NR2D1BWP12T40P140)                                           0.025102   2.030769 r
+  core/u_exu/U56/ZN (INR3D1BWP12T40P140)                                          0.041013   2.071783 r
+  core/u_exu/U28/Z (BUFFD1BWP12T40P140)                                           0.030501   2.102283 r
+  core/u_exu/U6/ZN (NR2D1BWP12T40P140)                                            0.011816   2.114100 f
+  core/U10/Z (BUFFD1BWP12T40P140)                                                 0.036579   2.150678 f
+  core/u_ifu/U11/Z (BUFFD1BWP12T40P140)                                           0.025290   2.175968 f
+  core/u_ifu/U8/Z (BUFFD1BWP12T40P140)                                            0.072403   2.248371 f
+  core/u_ifu/u_ifq/U30/ZN (AOI21D1BWP12T40P140)                                   0.046254   2.294625 r
+  core/u_ifu/u_ifq/U44/ZN (IND2D1BWP12T40P140)                                    0.028927   2.323552 f
+  core/u_ifu/u_ifq/U31/Z (BUFFD1BWP12T40P140)                                     0.022644   2.346195 f
+  core/u_ifu/u_ifq/U10/Z (BUFFD1BWP12T40P140)                                     0.036122   2.382317 f
+  core/u_ifu/u_ifq/U45/ZN (OAI22D1BWP12T40P140)                                   0.033480   2.415797 r
+  core/u_ifu/add_83/U2/Z (AN2D1BWP12T40P140)                                      0.029561   2.445358 r
+  core/u_ifu/add_83/U3/Z (AN2D1BWP12T40P140)                                      0.022839   2.468197 r
+  core/u_ifu/add_83/U4/Z (AN2D1BWP12T40P140)                                      0.022815   2.491012 r
+  core/u_ifu/add_83/U5/Z (AN2D1BWP12T40P140)                                      0.022815   2.513827 r
+  core/u_ifu/add_83/U6/Z (AN2D1BWP12T40P140)                                      0.022815   2.536642 r
+  core/u_ifu/add_83/U7/Z (AN2D1BWP12T40P140)                                      0.022815   2.559456 r
+  core/u_ifu/add_83/U8/Z (AN2D1BWP12T40P140)                                      0.022815   2.582271 r
+  core/u_ifu/add_83/U9/Z (AN2D1BWP12T40P140)                                      0.022815   2.605086 r
+  core/u_ifu/add_83/U10/Z (AN2D1BWP12T40P140)                                     0.022815   2.627900 r
+  core/u_ifu/add_83/U11/Z (AN2D1BWP12T40P140)                                     0.022815   2.650715 r
+  core/u_ifu/add_83/U12/Z (AN2D1BWP12T40P140)                                     0.022815   2.673530 r
+  core/u_ifu/add_83/U13/Z (AN2D1BWP12T40P140)                                     0.022815   2.696345 r
+  core/u_ifu/add_83/U14/Z (AN2D1BWP12T40P140)                                     0.022815   2.719159 r
+  core/u_ifu/add_83/U15/Z (AN2D1BWP12T40P140)                                     0.022815   2.741974 r
+  core/u_ifu/add_83/U16/Z (AN2D1BWP12T40P140)                                     0.022815   2.764789 r
+  core/u_ifu/add_83/U17/Z (AN2D1BWP12T40P140)                                     0.022815   2.787603 r
+  core/u_ifu/add_83/U18/Z (AN2D1BWP12T40P140)                                     0.022815   2.810418 r
+  core/u_ifu/add_83/U19/Z (AN2D1BWP12T40P140)                                     0.022815   2.833233 r
+  core/u_ifu/add_83/U20/Z (AN2D1BWP12T40P140)                                     0.022815   2.856047 r
+  core/u_ifu/add_83/U21/Z (AN2D1BWP12T40P140)                                     0.022815   2.878862 r
+  core/u_ifu/add_83/U22/Z (AN2D1BWP12T40P140)                                     0.022815   2.901677 r
+  core/u_ifu/add_83/U38/Z (XOR2D1BWP12T40P140)                                    0.027528   2.929204 r
+  core/u_opbuf/u_context_reg/U100/Z (AO22D0BWP12T40P140)                          0.024771   2.953976 r
+  core/u_opbuf/u_context_reg/data_q_reg_203_/D (DFCNQD1BWP12T40P140)              0.000000   2.953976 r
+  data arrival time                                                                          2.953976
+
+  clock core_clk (rise edge)                                                      5.000000   5.000000
+  clock network delay (ideal)                                                     0.000000   5.000000
+  clock reconvergence pessimism                                                   0.000000   5.000000
+  clock uncertainty                                                               -0.200000  4.800000
+  core/u_opbuf/u_context_reg/data_q_reg_203_/CP (DFCNQD1BWP12T40P140)                        4.800000 r
+  library setup time                                                              -0.012274  4.787726
+  data required time                                                                         4.787726
+  ----------------------------------------------------------------------------------------------------------
+  data required time                                                                         4.787726
+  data arrival time                                                                          -2.953976
+  ----------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                1.833750
+
+
+  Startpoint: core/u_opbuf/u_context_reg/data_q_reg_145_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_opbuf/u_context_reg/data_q_reg_202_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                               Incr       Path
+  ----------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                      0.000000   0.000000
+  clock network delay (ideal)                                                     0.000000   0.000000
+  core/u_opbuf/u_context_reg/data_q_reg_145_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  core/u_opbuf/u_context_reg/data_q_reg_145_/Q (DFCNQD1BWP12T40P140)              0.087066   0.087066 f
+  core/u_exu/U64/ZN (INVD1BWP12T40P140)                                           0.019582   0.106648 r
+  core/u_exu/U30/Z (BUFFD1BWP12T40P140)                                           0.017108   0.123756 r
+  core/u_exu/U10/ZN (INVD1BWP12T40P140)                                           0.040676   0.164431 f
+  core/u_exu/U63/Z (AO22D0BWP12T40P140)                                           0.042264   0.206696 f
+  core/u_exu/u_alu/U261/Z (BUFFD1BWP12T40P140)                                    0.089863   0.296558 f
+  core/u_exu/u_alu/U315/ZN (IND2D0BWP12T40P140)                                   0.035844   0.332402 r
+  core/u_exu/u_alu/U316/ZN (IAO21D0BWP12T40P140)                                  0.026703   0.359105 r
+  core/u_exu/u_alu/U317/Z (AO221D0BWP12T40P140)                                   0.032906   0.392012 r
+  core/u_exu/u_alu/U318/Z (OA221D0BWP12T40P140)                                   0.050152   0.442164 r
+  core/u_exu/u_alu/U319/Z (AO221D0BWP12T40P140)                                   0.026626   0.468789 r
+  core/u_exu/u_alu/U320/Z (OA221D0BWP12T40P140)                                   0.050169   0.518959 r
+  core/u_exu/u_alu/U321/Z (AO221D0BWP12T40P140)                                   0.026639   0.545597 r
+  core/u_exu/u_alu/U322/Z (OA221D0BWP12T40P140)                                   0.050165   0.595762 r
+  core/u_exu/u_alu/U323/Z (AO221D0BWP12T40P140)                                   0.026635   0.622397 r
+  core/u_exu/u_alu/U324/Z (OA221D0BWP12T40P140)                                   0.050165   0.672562 r
+  core/u_exu/u_alu/U325/Z (AO221D0BWP12T40P140)                                   0.026635   0.699197 r
+  core/u_exu/u_alu/U326/Z (OA221D0BWP12T40P140)                                   0.050169   0.749367 r
+  core/u_exu/u_alu/U327/Z (AO221D0BWP12T40P140)                                   0.026630   0.775997 r
+  core/u_exu/u_alu/U328/Z (OA221D0BWP12T40P140)                                   0.050165   0.826162 r
+  core/u_exu/u_alu/U329/Z (AO221D0BWP12T40P140)                                   0.026635   0.852797 r
+  core/u_exu/u_alu/U330/Z (OA221D0BWP12T40P140)                                   0.050165   0.902962 r
+  core/u_exu/u_alu/U331/Z (AO221D0BWP12T40P140)                                   0.026635   0.929597 r
+  core/u_exu/u_alu/U332/Z (OA221D0BWP12T40P140)                                   0.050165   0.979762 r
+  core/u_exu/u_alu/U333/Z (AO221D0BWP12T40P140)                                   0.026635   1.006396 r
+  core/u_exu/u_alu/U334/Z (OA221D0BWP12T40P140)                                   0.050168   1.056564 r
+  core/u_exu/u_alu/U335/Z (AO221D0BWP12T40P140)                                   0.026637   1.083201 r
+  core/u_exu/u_alu/U336/Z (OA221D0BWP12T40P140)                                   0.050173   1.133374 r
+  core/u_exu/u_alu/U337/Z (AO221D0BWP12T40P140)                                   0.026643   1.160017 r
+  core/u_exu/u_alu/U338/Z (OA221D0BWP12T40P140)                                   0.050165   1.210182 r
+  core/u_exu/u_alu/U339/Z (AO221D0BWP12T40P140)                                   0.026635   1.236817 r
+  core/u_exu/u_alu/U340/Z (OA221D0BWP12T40P140)                                   0.050165   1.286982 r
+  core/u_exu/u_alu/U341/Z (AO221D0BWP12T40P140)                                   0.026635   1.313617 r
+  core/u_exu/u_alu/U342/Z (OA221D0BWP12T40P140)                                   0.050165   1.363782 r
+  core/u_exu/u_alu/U343/Z (AO221D0BWP12T40P140)                                   0.026635   1.390417 r
+  core/u_exu/u_alu/U344/Z (OA221D0BWP12T40P140)                                   0.049842   1.440259 r
+  core/u_exu/u_alu/U345/ZN (AOI221D0BWP12T40P140)                                 0.013021   1.453281 f
+  core/u_exu/u_alu/U346/ZN (IAO21D0BWP12T40P140)                                  0.019289   1.472569 r
+  core/u_exu/u_alu/U347/ZN (OAI22D0BWP12T40P140)                                  0.025526   1.498096 f
+  core/u_exu/u_alu/U260/ZN (AOI22D1BWP12T40P140)                                  0.023749   1.521845 r
+  core/u_exu/u_alu/U257/ZN (OAI33D1BWP12T40P140)                                  0.027762   1.549606 f
+  core/u_exu/u_alu/U43/ZN (AOI221D1BWP12T40P140)                                  0.033099   1.582705 r
+  core/u_exu/u_alu/U40/ZN (ND3D1BWP12T40P140)                                     0.094627   1.677333 f
+  core/u_exu/U7/ZN (NR2D1BWP12T40P140)                                            0.027870   1.705203 r
+  core/u_exu/U60/ZN (OAI33D1BWP12T40P140)                                         0.027525   1.732728 f
+  core/u_exu/U59/ZN (CKND2D1BWP12T40P140)                                         0.023618   1.756347 r
+  core/u_exu/U29/ZN (CKND2D1BWP12T40P140)                                         0.020343   1.776690 f
+  core/u_exu/U58/ZN (NR2D1BWP12T40P140)                                           0.018577   1.795267 r
+  core/u_exu/U31/Z (BUFFD1BWP12T40P140)                                           0.057438   1.852705 r
+  core/u_exu/U27/ZN (CKND2D1BWP12T40P140)                                         0.093963   1.946668 f
+  core/u_exu/U26/Z (BUFFD1BWP12T40P140)                                           0.058999   2.005667 f
+  core/u_exu/U57/ZN (NR2D1BWP12T40P140)                                           0.025102   2.030769 r
+  core/u_exu/U56/ZN (INR3D1BWP12T40P140)                                          0.041013   2.071783 r
+  core/u_exu/U28/Z (BUFFD1BWP12T40P140)                                           0.030501   2.102283 r
+  core/u_exu/U6/ZN (NR2D1BWP12T40P140)                                            0.011816   2.114100 f
+  core/U10/Z (BUFFD1BWP12T40P140)                                                 0.036579   2.150678 f
+  core/u_ifu/U11/Z (BUFFD1BWP12T40P140)                                           0.025290   2.175968 f
+  core/u_ifu/U8/Z (BUFFD1BWP12T40P140)                                            0.072403   2.248371 f
+  core/u_ifu/u_ifq/U30/ZN (AOI21D1BWP12T40P140)                                   0.046254   2.294625 r
+  core/u_ifu/u_ifq/U44/ZN (IND2D1BWP12T40P140)                                    0.028927   2.323552 f
+  core/u_ifu/u_ifq/U31/Z (BUFFD1BWP12T40P140)                                     0.022644   2.346195 f
+  core/u_ifu/u_ifq/U10/Z (BUFFD1BWP12T40P140)                                     0.036122   2.382317 f
+  core/u_ifu/u_ifq/U45/ZN (OAI22D1BWP12T40P140)                                   0.033480   2.415797 r
+  core/u_ifu/add_83/U2/Z (AN2D1BWP12T40P140)                                      0.029561   2.445358 r
+  core/u_ifu/add_83/U3/Z (AN2D1BWP12T40P140)                                      0.022839   2.468197 r
+  core/u_ifu/add_83/U4/Z (AN2D1BWP12T40P140)                                      0.022815   2.491012 r
+  core/u_ifu/add_83/U5/Z (AN2D1BWP12T40P140)                                      0.022815   2.513827 r
+  core/u_ifu/add_83/U6/Z (AN2D1BWP12T40P140)                                      0.022815   2.536641 r
+  core/u_ifu/add_83/U7/Z (AN2D1BWP12T40P140)                                      0.022815   2.559456 r
+  core/u_ifu/add_83/U8/Z (AN2D1BWP12T40P140)                                      0.022815   2.582271 r
+  core/u_ifu/add_83/U9/Z (AN2D1BWP12T40P140)                                      0.022815   2.605086 r
+  core/u_ifu/add_83/U10/Z (AN2D1BWP12T40P140)                                     0.022815   2.627900 r
+  core/u_ifu/add_83/U11/Z (AN2D1BWP12T40P140)                                     0.022815   2.650715 r
+  core/u_ifu/add_83/U12/Z (AN2D1BWP12T40P140)                                     0.022815   2.673530 r
+  core/u_ifu/add_83/U13/Z (AN2D1BWP12T40P140)                                     0.022815   2.696344 r
+  core/u_ifu/add_83/U14/Z (AN2D1BWP12T40P140)                                     0.022815   2.719159 r
+  core/u_ifu/add_83/U15/Z (AN2D1BWP12T40P140)                                     0.022815   2.741974 r
+  core/u_ifu/add_83/U16/Z (AN2D1BWP12T40P140)                                     0.022815   2.764789 r
+  core/u_ifu/add_83/U17/Z (AN2D1BWP12T40P140)                                     0.022815   2.787603 r
+  core/u_ifu/add_83/U18/Z (AN2D1BWP12T40P140)                                     0.022815   2.810418 r
+  core/u_ifu/add_83/U19/Z (AN2D1BWP12T40P140)                                     0.022815   2.833233 r
+  core/u_ifu/add_83/U20/Z (AN2D1BWP12T40P140)                                     0.022815   2.856047 r
+  core/u_ifu/add_83/U21/Z (AN2D1BWP12T40P140)                                     0.022815   2.878862 r
+  core/u_ifu/add_83/U39/Z (XOR2D1BWP12T40P140)                                    0.027528   2.906390 r
+  core/u_opbuf/u_context_reg/U101/Z (AO22D0BWP12T40P140)                          0.024771   2.931161 r
+  core/u_opbuf/u_context_reg/data_q_reg_202_/D (DFCNQD1BWP12T40P140)              0.000000   2.931161 r
+  data arrival time                                                                          2.931161
+
+  clock core_clk (rise edge)                                                      5.000000   5.000000
+  clock network delay (ideal)                                                     0.000000   5.000000
+  clock reconvergence pessimism                                                   0.000000   5.000000
+  clock uncertainty                                                               -0.200000  4.800000
+  core/u_opbuf/u_context_reg/data_q_reg_202_/CP (DFCNQD1BWP12T40P140)                        4.800000 r
+  library setup time                                                              -0.012274  4.787726
+  data required time                                                                         4.787726
+  ----------------------------------------------------------------------------------------------------------
+  data required time                                                                         4.787726
+  data arrival time                                                                          -2.931161
+  ----------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                1.856565
+
+
+  Startpoint: core/u_opbuf/u_context_reg/data_q_reg_145_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_opbuf/u_context_reg/data_q_reg_201_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                               Incr       Path
+  ----------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                      0.000000   0.000000
+  clock network delay (ideal)                                                     0.000000   0.000000
+  core/u_opbuf/u_context_reg/data_q_reg_145_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  core/u_opbuf/u_context_reg/data_q_reg_145_/Q (DFCNQD1BWP12T40P140)              0.087066   0.087066 f
+  core/u_exu/U64/ZN (INVD1BWP12T40P140)                                           0.019582   0.106648 r
+  core/u_exu/U30/Z (BUFFD1BWP12T40P140)                                           0.017108   0.123756 r
+  core/u_exu/U10/ZN (INVD1BWP12T40P140)                                           0.040676   0.164431 f
+  core/u_exu/U63/Z (AO22D0BWP12T40P140)                                           0.042264   0.206696 f
+  core/u_exu/u_alu/U261/Z (BUFFD1BWP12T40P140)                                    0.089863   0.296558 f
+  core/u_exu/u_alu/U315/ZN (IND2D0BWP12T40P140)                                   0.035844   0.332402 r
+  core/u_exu/u_alu/U316/ZN (IAO21D0BWP12T40P140)                                  0.026703   0.359105 r
+  core/u_exu/u_alu/U317/Z (AO221D0BWP12T40P140)                                   0.032906   0.392012 r
+  core/u_exu/u_alu/U318/Z (OA221D0BWP12T40P140)                                   0.050152   0.442164 r
+  core/u_exu/u_alu/U319/Z (AO221D0BWP12T40P140)                                   0.026626   0.468789 r
+  core/u_exu/u_alu/U320/Z (OA221D0BWP12T40P140)                                   0.050169   0.518959 r
+  core/u_exu/u_alu/U321/Z (AO221D0BWP12T40P140)                                   0.026639   0.545597 r
+  core/u_exu/u_alu/U322/Z (OA221D0BWP12T40P140)                                   0.050165   0.595762 r
+  core/u_exu/u_alu/U323/Z (AO221D0BWP12T40P140)                                   0.026635   0.622397 r
+  core/u_exu/u_alu/U324/Z (OA221D0BWP12T40P140)                                   0.050165   0.672562 r
+  core/u_exu/u_alu/U325/Z (AO221D0BWP12T40P140)                                   0.026635   0.699197 r
+  core/u_exu/u_alu/U326/Z (OA221D0BWP12T40P140)                                   0.050169   0.749367 r
+  core/u_exu/u_alu/U327/Z (AO221D0BWP12T40P140)                                   0.026630   0.775997 r
+  core/u_exu/u_alu/U328/Z (OA221D0BWP12T40P140)                                   0.050165   0.826162 r
+  core/u_exu/u_alu/U329/Z (AO221D0BWP12T40P140)                                   0.026635   0.852797 r
+  core/u_exu/u_alu/U330/Z (OA221D0BWP12T40P140)                                   0.050165   0.902962 r
+  core/u_exu/u_alu/U331/Z (AO221D0BWP12T40P140)                                   0.026635   0.929597 r
+  core/u_exu/u_alu/U332/Z (OA221D0BWP12T40P140)                                   0.050165   0.979762 r
+  core/u_exu/u_alu/U333/Z (AO221D0BWP12T40P140)                                   0.026635   1.006396 r
+  core/u_exu/u_alu/U334/Z (OA221D0BWP12T40P140)                                   0.050168   1.056564 r
+  core/u_exu/u_alu/U335/Z (AO221D0BWP12T40P140)                                   0.026637   1.083201 r
+  core/u_exu/u_alu/U336/Z (OA221D0BWP12T40P140)                                   0.050173   1.133374 r
+  core/u_exu/u_alu/U337/Z (AO221D0BWP12T40P140)                                   0.026643   1.160017 r
+  core/u_exu/u_alu/U338/Z (OA221D0BWP12T40P140)                                   0.050165   1.210182 r
+  core/u_exu/u_alu/U339/Z (AO221D0BWP12T40P140)                                   0.026635   1.236817 r
+  core/u_exu/u_alu/U340/Z (OA221D0BWP12T40P140)                                   0.050165   1.286982 r
+  core/u_exu/u_alu/U341/Z (AO221D0BWP12T40P140)                                   0.026635   1.313617 r
+  core/u_exu/u_alu/U342/Z (OA221D0BWP12T40P140)                                   0.050165   1.363782 r
+  core/u_exu/u_alu/U343/Z (AO221D0BWP12T40P140)                                   0.026635   1.390417 r
+  core/u_exu/u_alu/U344/Z (OA221D0BWP12T40P140)                                   0.049842   1.440259 r
+  core/u_exu/u_alu/U345/ZN (AOI221D0BWP12T40P140)                                 0.013021   1.453281 f
+  core/u_exu/u_alu/U346/ZN (IAO21D0BWP12T40P140)                                  0.019289   1.472569 r
+  core/u_exu/u_alu/U347/ZN (OAI22D0BWP12T40P140)                                  0.025526   1.498096 f
+  core/u_exu/u_alu/U260/ZN (AOI22D1BWP12T40P140)                                  0.023749   1.521845 r
+  core/u_exu/u_alu/U257/ZN (OAI33D1BWP12T40P140)                                  0.027762   1.549606 f
+  core/u_exu/u_alu/U43/ZN (AOI221D1BWP12T40P140)                                  0.033099   1.582705 r
+  core/u_exu/u_alu/U40/ZN (ND3D1BWP12T40P140)                                     0.094627   1.677333 f
+  core/u_exu/U7/ZN (NR2D1BWP12T40P140)                                            0.027870   1.705203 r
+  core/u_exu/U60/ZN (OAI33D1BWP12T40P140)                                         0.027525   1.732728 f
+  core/u_exu/U59/ZN (CKND2D1BWP12T40P140)                                         0.023618   1.756347 r
+  core/u_exu/U29/ZN (CKND2D1BWP12T40P140)                                         0.020343   1.776690 f
+  core/u_exu/U58/ZN (NR2D1BWP12T40P140)                                           0.018577   1.795267 r
+  core/u_exu/U31/Z (BUFFD1BWP12T40P140)                                           0.057438   1.852705 r
+  core/u_exu/U27/ZN (CKND2D1BWP12T40P140)                                         0.093963   1.946668 f
+  core/u_exu/U26/Z (BUFFD1BWP12T40P140)                                           0.058999   2.005667 f
+  core/u_exu/U57/ZN (NR2D1BWP12T40P140)                                           0.025102   2.030769 r
+  core/u_exu/U56/ZN (INR3D1BWP12T40P140)                                          0.041013   2.071782 r
+  core/u_exu/U28/Z (BUFFD1BWP12T40P140)                                           0.030501   2.102283 r
+  core/u_exu/U6/ZN (NR2D1BWP12T40P140)                                            0.011816   2.114099 f
+  core/U10/Z (BUFFD1BWP12T40P140)                                                 0.036579   2.150678 f
+  core/u_ifu/U11/Z (BUFFD1BWP12T40P140)                                           0.025290   2.175968 f
+  core/u_ifu/U8/Z (BUFFD1BWP12T40P140)                                            0.072403   2.248371 f
+  core/u_ifu/u_ifq/U30/ZN (AOI21D1BWP12T40P140)                                   0.046254   2.294625 r
+  core/u_ifu/u_ifq/U44/ZN (IND2D1BWP12T40P140)                                    0.028927   2.323552 f
+  core/u_ifu/u_ifq/U31/Z (BUFFD1BWP12T40P140)                                     0.022644   2.346195 f
+  core/u_ifu/u_ifq/U10/Z (BUFFD1BWP12T40P140)                                     0.036122   2.382317 f
+  core/u_ifu/u_ifq/U45/ZN (OAI22D1BWP12T40P140)                                   0.033480   2.415797 r
+  core/u_ifu/add_83/U2/Z (AN2D1BWP12T40P140)                                      0.029561   2.445358 r
+  core/u_ifu/add_83/U3/Z (AN2D1BWP12T40P140)                                      0.022839   2.468197 r
+  core/u_ifu/add_83/U4/Z (AN2D1BWP12T40P140)                                      0.022815   2.491012 r
+  core/u_ifu/add_83/U5/Z (AN2D1BWP12T40P140)                                      0.022815   2.513827 r
+  core/u_ifu/add_83/U6/Z (AN2D1BWP12T40P140)                                      0.022815   2.536641 r
+  core/u_ifu/add_83/U7/Z (AN2D1BWP12T40P140)                                      0.022815   2.559456 r
+  core/u_ifu/add_83/U8/Z (AN2D1BWP12T40P140)                                      0.022815   2.582271 r
+  core/u_ifu/add_83/U9/Z (AN2D1BWP12T40P140)                                      0.022815   2.605086 r
+  core/u_ifu/add_83/U10/Z (AN2D1BWP12T40P140)                                     0.022815   2.627900 r
+  core/u_ifu/add_83/U11/Z (AN2D1BWP12T40P140)                                     0.022815   2.650715 r
+  core/u_ifu/add_83/U12/Z (AN2D1BWP12T40P140)                                     0.022815   2.673530 r
+  core/u_ifu/add_83/U13/Z (AN2D1BWP12T40P140)                                     0.022815   2.696344 r
+  core/u_ifu/add_83/U14/Z (AN2D1BWP12T40P140)                                     0.022815   2.719159 r
+  core/u_ifu/add_83/U15/Z (AN2D1BWP12T40P140)                                     0.022815   2.741974 r
+  core/u_ifu/add_83/U16/Z (AN2D1BWP12T40P140)                                     0.022815   2.764789 r
+  core/u_ifu/add_83/U17/Z (AN2D1BWP12T40P140)                                     0.022815   2.787603 r
+  core/u_ifu/add_83/U18/Z (AN2D1BWP12T40P140)                                     0.022815   2.810418 r
+  core/u_ifu/add_83/U19/Z (AN2D1BWP12T40P140)                                     0.022815   2.833233 r
+  core/u_ifu/add_83/U20/Z (AN2D1BWP12T40P140)                                     0.022815   2.856047 r
+  core/u_ifu/add_83/U40/Z (XOR2D1BWP12T40P140)                                    0.027528   2.883575 r
+  core/u_opbuf/u_context_reg/U102/Z (AO22D0BWP12T40P140)                          0.024771   2.908346 r
+  core/u_opbuf/u_context_reg/data_q_reg_201_/D (DFCNQD1BWP12T40P140)              0.000000   2.908346 r
+  data arrival time                                                                          2.908346
+
+  clock core_clk (rise edge)                                                      5.000000   5.000000
+  clock network delay (ideal)                                                     0.000000   5.000000
+  clock reconvergence pessimism                                                   0.000000   5.000000
+  clock uncertainty                                                               -0.200000  4.800000
+  core/u_opbuf/u_context_reg/data_q_reg_201_/CP (DFCNQD1BWP12T40P140)                        4.800000 r
+  library setup time                                                              -0.012274  4.787726
+  data required time                                                                         4.787726
+  ----------------------------------------------------------------------------------------------------------
+  data required time                                                                         4.787726
+  data arrival time                                                                          -2.908346
+  ----------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                1.879380
+
+
+1

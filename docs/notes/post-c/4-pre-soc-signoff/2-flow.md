@@ -39,7 +39,7 @@ flowchart LR
 
 ## 2. 数值 SDC 与适用边界
 
-2026-10-18 更新：下表保留 S2 初始 10 ns 假设；当前配置已将周期改为 **5 ns / 200 MHz**，其余数值不变。该目标根据 02 实验的 2.27 ns Reg2Out 到达时间、2.0 ns 输出预算及 0.2 ns uncertainty 选择，待服务器重新综合/PT 验证；推算和命令见 [S3 重跑说明](s3-rerun.md#3-同步与执行)。
+2026-10-18 更新：下表保留 S2 初始 10 ns 假设；当前配置已将周期改为 **5 ns / 200 MHz**；03 已完成该周期的真实 DC/PT。随后按用户决定移除 reset release delay 并新增精确 reset false path，见 [reset TODO](reset-timing-todo.md)，其余数据接口数值不变。该目标根据 02 实验的 2.27 ns Reg2Out 到达时间、2.0 ns 输出预算及 0.2 ns uncertainty 选择，新 reset 评估范围已在 [04 基线](synthesis-results/04-200mhz-baseline/README.md)中完成分类审查；推算和命令见 [S3 重跑说明](s3-rerun.md#3-同步与执行)。
 
 | 参数 | 初值 | 理由 / 限制 |
 | --- | --- | --- |
@@ -51,9 +51,9 @@ flowchart LR
 | output load | 0.01 pF | 10 fF 初始接口假设，含观察端口；先核对库单位 |
 | source latency min/max | 0 / 0 ns | 单 ideal clock、无外部插入延迟估计 |
 
-34 个命名端口全部进入对象检查，9 个非时钟输入（含 reset）和 24 个输出都有双边 delay 与相应 slew/load。SDC 未添加 false/multicycle path 或 reset case analysis，避免无依据地删除路径。功能 STA 中仍可分析 reset release，功耗的 reset 静态活动是假设标注，不是时序 case analysis。
+当前 34 个命名端口全部进入对象检查：8 个数据输入和 24 个输出保留双边 delay 与相应 slew/load，rst_n 保留 slew，仅使用 `set_false_path -from [get_ports rst_n]` 暂缓其时序验收。原表的 reset release delay 为历史假设，不再生效。没有 multicycle 或 reset case analysis；功耗的 reset 静态活动仍只是活动假设。
 
-[S1 逐端口表](s1-port-budget.csv)仍是对象契约；数值以配置与 SDC 为准。库单位目前只支持经核对的 ns/pF，其他单位必须显式换算再修改配置，不能只改标签。cell area 单位由 `report_lib`/服务器说明确认，不默认称 µm²。
+[S1 逐端口表](s1-port-budget.csv)保留原始对象/预算意图；其中 reset timing 项已由上述早期例外替代，当前数值与范围以配置、SDC 和 reset TODO 为准。库单位目前只支持经核对的 ns/pF，其他单位必须显式换算再修改配置，不能只改标签。cell area 单位由 `report_lib`/服务器说明确认，不默认称 µm²。
 
 PT 使用同一冻结的设计 SDC，而不直接 source DC 导出的环境约束；`dc.sdc` 同时导出、hash，并在 S3 交叉检查。这样避免 DC 特有环境设置混入 PT，也不依赖原 C906 SDC。DC 若改变端口命名或裁剪了常量端口，必须从实际工具报告核对覆盖，不能只用本地端口计数断言综合网表 coverage 完整。
 
@@ -115,10 +115,10 @@ make -C npc/flow check test
 
 ## 7. 下一步与阻塞
 
-**无本地 S2 未解决阻塞**。下一步为服务器 S3：
+**无本地 S2 未解决阻塞**。以下为 S2 交接时的服务器 S3 操作步骤；当前已完成，结果见 [S3 基线](3-synthesis-sta.md)，下一步为 S6 最终复现/交接：
 
 1. 同步已提交版本与候选 site，配置真实 DC/PT 路径，执行 probe，核对库属性/单位/PVT/模型并填写 operating condition。
 2. 运行 preflight，再用全新 run 执行 synth/sta；记录版本/license 和真实命令兼容性，处理所有结构与约束问题。
-3. 根据真实报告保存面积、时序/coverage、warning 处置及关键路径分析；目标不满足可保留 FAIL 基线。功耗按需开启，不作为必做出口。
+3. 根据真实报告保存面积、时序/coverage、warning 处置及关键路径分析；目标不满足时保留 FAIL 实验记录，不自动认定为正式基线。功耗按需开启，不作为必做出口。
 
-服务器步骤尚未执行，不能提前标记 I01 全通过或 I06–I08 有测量结果。
+服务器实测与 I01/I06–I08 的当前验收状态见[验收矩阵](test-plan.md)；不将原 S2 本地 mock 验证等同于这些实测证据。

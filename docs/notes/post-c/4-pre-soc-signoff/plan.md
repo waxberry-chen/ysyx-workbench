@@ -1,6 +1,6 @@
 # M4 设计与验收计划
 
-> 2026-10-18；状态：S0/S1、S2 已完成；首次 DC 综合已归档，S2.5 ISA 范围与异常语义收敛已完成本地验收，下一步为正式 S3 基线前的准备审查。PT/正式基线/S6 待实施；原 S4/S5 延后。
+> 2026-10-18；状态：S0/S1、S2 与 S2.5 完成；[S3 范围内基线成立](3-synthesis-sta.md)，04 在 TT / 200 MHz 下 DC/PT 无违例，reset deferred 与常量条件禁用已分类。S6 最终复现/交接待完成；原 S4/S5 延后。
 > 初始规划输入 HEAD：`0fe53bfcdbb1193b94415a9bb8382bcd7d71b4cf`；S1 输入 HEAD 与修改/验证记录见 [S1 综合范围](1-synthesis-scope.md)。ref-flow 保持原样。
 > 配套：[手册检索入口](manual-index.md)、[参考审查](0-ref-flow-review.md)、[缺失 flow 脚本说明](missing-inputs.md)、[流程图与输入输出](0-flow-map.md)、[验收矩阵](test-plan.md)、[总路线](../roadmap.md)。
 
@@ -35,7 +35,7 @@
 | S1 可综合与上电语义 | 去除实现路径 DPI 依赖；明确 x0/GPR/reset 语义；独立 filelist；审查 latch/环/位宽/未驱动/隐式初始化；形成 SDC 端口预算表 | lint 与受影响定向/系统回归通过；DIFF/harness 路径仍可运行；新增初始化策略有说明；四值动态验证延后，不能把两值回归写成 X 验证 |
 | S2 最小 NPC flow | 创建 `00_indata`、`01_common`、`02_syn`、`03_sta` 入口所需文件；库先于 elaborate/link；实现 preflight、失败退出、每次独立 run、manifest 与报告检查 | 缺文件/缺变量/错误 top 能提前失败；本地静态检查与后续服务器 preflight/工具语法检查分开记；工艺库路径显式配置，design 路径适配 NPC，无隐式 fallback |
 | S2.5 ISA 范围与异常语义收敛（本地验收完成） | 移除 M；GPR 收敛到 RV32E 的 16 项；明确合法编码与 CSR 支持范围，补齐非法指令检测和精确异常；同步 harness/DiffTest 与测试 | 按下表分项实施和回归；无 M 的仿真/综合行为一致，高寄存器编码不发生别名访问；合法/非法指令及 CSR 语义有独立预期测试；最终源版本与 ISA 清单固定后进入 S3 |
-| S3 综合与 STA 基线 | DC 分析/展开/映射，导出网表/SDC/DDC；PT 读同一网表和库，ideal clock，无 SPEF；报告 max/min、约束覆盖、area/关键路径 | **正式面积与时序基线**；先完成 S2.5 并通过下述基线准备审查；link 无未解析引用，无非预期 latch/环/未约束功能端点；WNS/TNS 如实记录，未达标实验先归档为诊断结果，不自动提升为正式基线或 timing PASS |
+| S3 综合与 STA 基线（本轮范围已验收） | DC 分析/展开/映射，导出网表/SDC/DDC；PT 读同一网表和库，ideal clock，无 SPEF；报告 max/min、约束覆盖、area/关键路径 | **正式面积与时序基线**；先完成 S2.5 并通过下述基线准备审查；link 无未解析引用，无非预期 latch/环/未约束功能端点；WNS/TNS 如实记录，未达标实验先归档为诊断结果，不自动提升为正式基线或 timing PASS |
 | S4 四值与网表 smoke（延后） | 原计划保留为后续验证方向，本轮不搭建四值/门级仿真环境 | 不作为本轮 DC/PT 基线出口；未执行状态明确保留，不能声称网表等价或 X 验证通过 |
 | S5 活动与 PTPX（延后） | 本轮不生成功耗专用 VCD/SAIF、不建 PTPX flow；DC 简要估算并入 S3 | 不作为本轮出口；后续有具体低功耗优化问题时再启动 |
 | S6 基线归档 | 固化相关 RTL 回归、synth/STA 入口，复查 warning/waiver，归档 manifest、报告、指标、Q&A | 面积/时序基线可复现；DC 功耗为附带估算，可标记不支持/未评估；不要求完成原 S4/S5 |
@@ -69,24 +69,30 @@
 
 ### 正式 S3 基线前的准备审查
 
+2026-10-18 更新：下述准备项已按 [04 审查](synthesis-results/04-200mhz-baseline/README.md)在当前 core 范围关闭；setup/hold/电气规则通过，9426 reset deferred 与 24 常量条件禁用均已解释。以下 01–03 的问题和数值保留作历史过程，当前基线以 [S3 报告](3-synthesis-sta.md)为准。
+
+当前 reset 出口已调整：03 的脉宽未测试属于历史事实，下一轮将按 [明确的 reset 范围例外](reset-timing-todo.md) 登记 deferred，并核对真实报告；实际 reset 脉宽/释放机制在 SoC 机制明确后落实，不要求本轮填写虚构数值。以下历史实验结果保留。
+
 [01 首次综合](synthesis-results/01-first-synthesis/README.md) 已验证真实 DC 路径并暴露组合除余和观察接口问题；它是独立的首次综合记录，不能用后续正式基线覆盖。当前先处理以下事项：
 
-诊断增强已完成本地实施：DC 高扇出连接报告、PT 正 slack 路径和禁用弧、报告精度及电气违例评价，39 项本地测试通过。服务器由用户手动同步和执行；命令、提交建议及验收顺序见 [S3 重跑说明](s3-rerun.md)。上述真实设计问题仍待新报告审查，不能由脚本测试通过代替关闭。
+2026-10-18：[02 RV32E / 无 M](synthesis-results/02-rv32e-no-m/README.md) 已验证 S2.5 后的 DC/PT 执行，面积和长组合路径明显改善。[03 200 MHz 候选](synthesis-results/03-200mhz-candidate/README.md) 补齐正 slack 四类路径、六位精度和禁用弧明细：高扇出为 clk（1509 个负载），禁用弧无 loop-breaking 标记。当前优先处理 66 个无负载 EXU buffer 的 min-capacitance，并明确 5516 项异步控制脉宽未测试项的验证边界，完成其他结构告警审查；不能将 WNS=0 直接提升为正式基线通过。
 
-本轮 S3 候选目标更新为 **200 MHz / 5 ns**，保持 I/O/reset 预算不变。02 实验的最差 Reg2Out 在原网表下需要约 `2.27 + 2.0 + 0.2 = 4.47 ns`，5 ns 预计留约 0.53 ns；300 MHz 则预计为负裕量，暂不作为本轮基线目标。该估计需用新综合及 PT 验证，不作为测得的 Fmax。
+诊断增强已通过 39 项本地测试及 03 的真实 DC/PT 执行。服务器由用户手动同步和执行；命令、提交建议及验收顺序见 [S3 重跑说明](s3-rerun.md)。脚本运行成功不代替电气与覆盖率问题关闭。
+
+本轮 S3 候选目标为 **200 MHz / 5 ns**，保持 I/O/reset 预算不变。02 实验预测最差 Reg2Out 约 +0.53 ns，03 的 PT 实测为 +0.531597 ns；内部 Reg2Reg 为 +1.600592 ns，最差 hold 为 +0.013534 ns。300 MHz 暂不作为本轮基线目标；这些数字不代表 post-route 或全 PVT 的 Fmax。
 
 1. 明确 core 功能/观察边界、输出采样与有效条件，冻结正式 scope 和 SDC；观察端口裁剪或时序改变必须独立命名，不能对照不同范围直接宣称优化收益。
 2. 按 S2.5 移除 M 并收敛 RV32E/CSR 行为，再审查剩余 ALU、地址/异常共用路径。当前不新增多周期 M 单元，也不扩展为 cache 或整核流水线重写；后续若重新引入 M，单独记录频率、面积及 CPI/吞吐代价。
 3. 整理实际源版本（本次服务器需移除 `` `default_nettype none `` / `` `default_nettype wire `` 才能综合，详见首次综合记录），补齐失败证据与长期兼容方案，并完成隐式网络检查和受影响的功能回归；分类处理结构、signed/width 与约束告警。无依据不得添加 false path/multicycle 或隐藏慢端点。
 4. 在测量前明确目标频率及接口预算，以新 run 完成 DC/PT 四类路径、setup/hold/DRV 和 coverage 审查，再冻结正式基线。数百 MHz 是待论证的目标，不是由 28 nm 节点自动保证的验收值；功耗未评估不阻塞本轮面积/时序基线，也不能声称完整 PPA 正常。
 
-旧网表的 PT 可用于诊断，后续每次改动按[结果索引](synthesis-results/README.md)归档。未达标数据保留；目标或 scope 调整需写明理由并重新测量。当前实现/模型问题尚未关闭，不因工具返回 COMPLETE 即进入正式基线归档。
+旧网表的 PT 可用于诊断，后续每次改动按[结果索引](synthesis-results/README.md)归档。未达标数据保留；目标或 scope 调整需写明理由并重新测量。01–03 当时的实现/模型问题未关闭，不能因 COMPLETE 升为基线；04 经显式审查后单独记录为正式基线。
 
 ## 4. SDC 与结果契约
 
 以 `clk` 创建唯一功能时钟，列出所有 AXI 输入/输出及 commit/monitor 观察输出。输入 delay 需有 max/min，输出 delay、驱动或 slew、负载均有单位和依据；不得用遗漏约束让路径消失。报告 Reg2Reg/In2Reg/Reg2Out/In2Out，确认实际端点数与预期一致。
 
-`rst_n` 的异步 assertion、外部同步 deassertion 假设和 recovery/removal 检查需分开记录。不能复制 `set_false_path -from [all_inputs]` 或无理由屏蔽整个 reset 网络；确需例外时写精确对象、设计原因和替代验证。没有功能依据就不添加 multicycle/false path。无布局时使用 ideal clock，明确 clock uncertainty、latency 和 transition 的假设。
+2026-10-18 用户决定：当前缺少实际 SoC/reset/IO 机制，早期 core 评估仅设置 `set_false_path -from [get_ports rst_n]`，移除原 reset release min/max 假设，暂缓 recovery/removal、reset→数据/输出路径及脉宽验收。范围、报告解释、未来撤销条件和验证 TODO 见 [reset 时序 TODO](reset-timing-todo.md)。这是本轮范围排除，不是 reset 时序通过；不得扩成所有输入或自动忽略其他 untested。数据 I/O 预算、原始 coverage 和约束报告继续保留。无布局时使用 ideal clock，明确 clock uncertainty、latency 和 transition 的假设。
 
 DC/PT 必须记录互连模型：若库具备并采用 wire-load，写明具体名称和设置；若 PT 使用零线延迟/仅引脚负载等模型，明确偏乐观的边界，并解释两工具模型差异。没有 SPEF 不应伪造输入或使用 C906 寄生参数。单个 target 的 WNS 不能直接包装为测得 Fmax；如需频率探索，固定其余配置，保存每个点的重综合/STA 结果，区分约束目标与通过的探索点。
 

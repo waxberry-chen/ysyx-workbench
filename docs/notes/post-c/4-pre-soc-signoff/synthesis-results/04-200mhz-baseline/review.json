@@ -1,0 +1,69 @@
+{
+  "description": "Derived review, not a tool report",
+  "coverage_untested": [
+    {
+      "type": "hold",
+      "reason": "constant_disabled",
+      "count": 4
+    },
+    {
+      "type": "min_pulse_width",
+      "reason": "constant_disabled",
+      "count": 12
+    },
+    {
+      "type": "min_pulse_width",
+      "reason": "no_clock",
+      "count": 6672
+    },
+    {
+      "type": "recovery",
+      "reason": "constant_disabled",
+      "count": 2
+    },
+    {
+      "type": "recovery",
+      "reason": "no_startpoint_clock",
+      "count": 1377
+    },
+    {
+      "type": "removal",
+      "reason": "constant_disabled",
+      "count": 2
+    },
+    {
+      "type": "removal",
+      "reason": "no_startpoint_clock",
+      "count": 1377
+    },
+    {
+      "type": "setup",
+      "reason": "constant_disabled",
+      "count": 4
+    }
+  ],
+  "constant_disabled_pins": [
+    "core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_0_/CDN(low)",
+    "core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_0_/CDN(rise)",
+    "core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_0_/CP(high)",
+    "core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_0_/CP(low)",
+    "core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_0_/D",
+    "core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_0_/E",
+    "core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_1_/CDN(low)",
+    "core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_1_/CDN(rise)",
+    "core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_1_/CP(high)",
+    "core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_1_/CP(low)",
+    "core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_1_/D",
+    "core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_1_/E"
+  ],
+  "clock_direct_load_count": 1509,
+  "clock_direct_load_pin": "CP",
+  "rtl_input_count": 17,
+  "rtl_matches_03_and_local": true,
+  "verified_hash_counts": {
+    "inputs": 37,
+    "syn": 23,
+    "sta": 25
+  },
+  "s3_disposition": "Accepted within documented scope; original tool REVIEW_REQUIRED retained"
+}

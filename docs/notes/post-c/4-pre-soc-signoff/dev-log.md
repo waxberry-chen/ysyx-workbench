@@ -112,6 +112,14 @@
 - 同步 DC/PT/probe、必需报告检查、指标读取及测试；manifest 递归记录嵌套报告，继续校验失败阶段和可选功耗诊断。`inspect` 与 STA 一样要求 runner 匹配冻结版本，避免新解析器误读旧布局；旧 run 与首次综合归档不修改，使用其归档 runner。
 - `make -C npc/flow check test`：36 项通过，含真实 Tcl + mock 命令衔接、嵌套文件 hash/篡改检测、嵌套报告缺失/错误、旧 runner 保护。仅调整输出组织，不新增时序检查或修改 SDC/RTL；未运行真实 DC/PT，无新增阻塞。
 
+## 2026-10-18：审阅并归档 02 RV32E / 无 M 的 DC/PT
+
+- 审阅服务器拷回的 `core-tt-10ns-rv32e-nom`，按原字节归档 46 份报告/日志/追溯文件至 [02 实验](synthesis-results/02-rv32e-no-m/README.md)。原 run 的 36 项输入、21 项 syn 与 23 项 sta 产物 hash 全部匹配；17 份 RTL 快照与本地一致。
+- 面积 9511.319905 library_area，比首次下降 72.9%；DC setup slack +5.53 ns，PT max/min WNS/TNS 为零。属于减少 GPR/删除 M 后的范围收敛，仍非同 ISA 优化对比。
+- PT `constraints.rpt` 实际包含 66 条 min-capacitance，故新 flow 保留 `checks/constraint_violations.rpt` 命名。定位到 EXU buffer，其中 64 个子模块观察输出未使用。
+- 正式基线尚受以下审查项阻塞：PT 多路径报告默认仅列负 slack，缺少正裕量路径；5516 项异步控制脉宽检查未测试；PTE-003 禁用弧原因与电气违例仍需服务器补报告。已查 PT 手册 PDF 637 确认多路径筛选默认行为，记录下一步，不修改旧报告。
+- 本次仅更新审阅归档和文档/QA；没有修改 RTL、SDC 或 EDA 执行脚本，没有重跑 DC/PT。
+
 ## 2026-10-18：补齐 S3 候选重跑诊断
 
 - 原 run 的 TIM-134 没有网络名称；新增 DC `checks/high_fanout.rpt`，记录实际工具阈值、层次网络名和连接明细，不预设 clk 为原因。综合后对象若与中间态不同，需结合日志解释。
@@ -125,3 +133,60 @@
 - 根据最新 02 实验最差 Reg2Out 路径，到达 2.27 ns 加输出预算 2.0 ns、setup uncertainty 0.2 ns，原网表的该路径需要约 4.47 ns。选择 5 ns / 200 MHz，估计该路径裕量约 +0.53 ns；300 MHz 估计约 −1.14 ns，留待后续探索。
 - `npc_core.tcl` 的 period 从 10.0 改为 5.0；I/O/reset min/max、uncertainty、slew、load、RTL、WLM 和综合策略不变。同步默认运行示例和 S3 候选 run 名称，保留历史 10 ns 实验快照。
 - 这是待服务器重综合/PT 验证的目标，不是达到 200 MHz 或测得 Fmax 的声明；不代替 hold、电气约束、复位脉宽和禁用弧审查。
+
+## 2026-10-18：审阅并归档 03 200 MHz 候选
+
+- 用户拷回 `core-tt-5ns-baseline`；核验 36 项输入、22 项 syn 与 24 项 sta 产物 hash，17 份 RTL 快照与本地及 02 一致。按原字节归档 48 份报告/日志/追溯文件至 [03 实验](synthesis-results/03-200mhz-candidate/README.md)。
+- 200 MHz 下 PT setup/hold slack 为 +0.531597/+0.013534 ns；内部 Reg2Reg 为 +1.600592 ns，经 ALU/redirect、IFQ 和 PC+4 回到 opbuf。面积仍为 9511.319905 library_area；没有新增架构优化或功耗评估。
+- 新增报告真实执行成功：高扇出对象确认为 clk、1509 个负载；禁用弧 269 条 p、105 条 C，无 l/L loop-breaking 标记；正 slack 四类路径齐全。
+- CONSTRAINT_FAIL 来自 66 个无负载 EXU buffer 的最小电容违例（required 0.410 fF）；64 个驱动未使用的子模块观察输出，2 个驱动 CSR 舍弃的 trap_epc 对齐位。5516 项复位/置位脉宽未测试项与 02 一致。
+- 下一步处理无负载 buffer、完成结构告警及 reset 脉宽验证边界审查，再冻结正式 S3。本次只更新归档/文档/QA，没有修改 RTL、约束、执行脚本或重跑 EDA；原 run 和历史归档不变。
+
+## 2026-10-18：按早期评估范围暂缓 reset 时序验收
+
+- 用户明确要求参考 C906 的 reset false path；当前缺少实际 SoC/reset 源和 IO 时序，不继续填假设 release delay。SDC 仅增加 `set_false_path -from [get_ports rst_n]`，删除 reset input delay 及配置中的 reset_min/reset_max。RTL reset 功能、数据接口预算与其余时序设置不变。
+- 新 run 不再声明 recovery/removal、reset→D/输出和脉宽已验证；coverage/untested 原样保留，例外不保证脉宽 untested 消失，也不自动豁免其他检查。66 条最小电容违例未处理。
+- 新增 [reset TODO](reset-timing-todo.md)，记录机制明确后的脉宽/释放建模、例外撤销、验证与新 run 要求；同步计划、端口预算说明、flow 使用说明和知识笔记。01–03 归档保持不变。
+- `make -C npc/flow check test`：40 项本地测试通过；新增负向测试拒绝例外遗漏、扩大到数据/所有输入和旧 reset 延迟回流。未执行真实 DC/PT，服务器由用户同步后以新 RUN_ID 运行。
+
+## 2026-10-18：补充 LSU 使能网络电容对照诊断
+
+- `core-tt-5ns-no-port-buffers` 的 PT 不再报告 66 条 min-capacitance，但 U13/ZN 驱动 54 个请求寄存器 E pin 和一个 buffer 输入，实际 0.088724 pF 超过 0.084770 pF；DC 同次无违例。未据此修改状态机或断言 CCS 是唯一原因。
+- 新增 DC/PT 共用 `01_common/capacitance.tcl` 和必需报告 `checks/lsu_enable_capacitance.rpt`，由请求寄存器 E pin 追踪网络和分支，记录连接、reference、可用库/设计 pin 电容属性和模型设置；不硬编码 U13/n3。缺失属性与无匹配对象明确标记。
+- `make -C npc/flow check test`：42 项通过，覆盖两分支/去重/改名、无 E pin、缺失属性、核心报告失败和必需产物检查。没有改 RTL/约束/综合策略或执行新 DC/PT。服务器运行说明见 [电容对照诊断](s3-capacitance-check.md)。
+
+## 2026-10-18：LSU 最大电容局部修复实验待服务器验证
+
+- 新返回的同名 run 确认 DC/PT 的连接、网络 min/max 电容、驱动库上限及 CCS 报告开关一致，但 DC 无违例、PT 一条 max-capacitance。标量与 rise 输入电容之差是检查口径的候选解释，尚未证明。
+- 在 DC compile 前按 `core/u_lsu` 解析 design，施加 0.075 pF 最大电容目标，为已知负载差异留裕量；作用于 LSU 内部全部网络。目标缺失则停止，不绑定 U13/n3，不修改 RTL、库限制或 PT 验收口径。增加 DC `report_net -max_capacitance` 继续记录约束计算值。
+- `make -C npc/flow check test`：43 项通过，覆盖局部作用域、compile 前施加、错误层次拒绝及 DC 专用报告。`git diff --check` 通过。实际负载分组、面积及时序变化需服务器新 run `core-tt-5ns-lsu-cap-margin` 验证，S3 仍未关闭；详见 [实验依据和验收](s3-capacitance-check.md#5-诊断返回与局部修复实验)。
+
+
+## 2026-10-18：修正综合裕量的层次作用域
+
+- 新返回 run（HEAD `e3ea746a`）确实执行了 LSU design 的 0.075 pF 赋值，但导出 SDC 没有保留约束，负载/违例/面积/最差时序未改善。对照 DC 手册 10-8–10-9、10-12，确认上一版没有正确处理 top-down compile 的子 design 约束语义。
+- 改为对综合顶层设置 0.075 pF，并在 compile 前后读回实际属性；缺失/变化立即失败。明确覆盖全 core，可能影响 LSU 之外的面积与时序，PT 仍使用原 SDC/库验收。
+- 纠正 `report_net -max_capacitance` 的解释：服务器 2023 版实际输出 Load/LoadUR 等列，没有旧手册中的 Required/Actual/Slack。未据此宣称查明 DRC 内部算法。
+- 本地 43 项测试通过，包括 compile 后约束丢失的失败注入；真实优化效果仍待 `core-tt-5ns-top-cap-margin`，S3 未关闭。详见 [失败原因与修正](s3-capacitance-check.md#6-局部裕量未生效与顶层作用域修正)。
+
+
+## 2026-10-18：改用 fanout 32 并保护时钟网络
+
+- 核对 C906 公共 SDC 的 `MAX_FANOUT=32` 和综合入口的 ideal clock network 设置；按用户决定，以顶层 `max_fanout 32` 替代尚待服务器验证的顶层 0.075 pF 方案。
+- DC 显式 `set_auto_disable_drc_nets -on_clock_network true`，沿用共享 SDC 的 ideal clock 时序；compile 前后核对顶层 fanout 和 clk 源网络 DRC 保护属性。reset/data 不新增 DRC 例外，库电容限制保留。
+- 电容诊断增加库默认及各 pin 的 fanout_load，避免把 32 误读为固定 pin 个数。43 项本地测试通过，包含丢失 fanout/时钟保护的失败注入。效果待 `core-tt-5ns-fanout32` 服务器结果，S3 未关闭。[策略与验收](s3-capacitance-check.md#7-改用-max_fanout-32-并排除时钟-drc-修复)
+
+
+## 2026-10-18：修正 clock DRC 属性不可查询导致的误阻塞
+
+- 服务器 UID-101 表明 net `clk` 不暴露 `auto_disable_drc_nets`；此前将查询失败当作设置失败，是诊断脚本兼容问题。保留 clock DRC 命令和 fanout 32，将该属性改为 quiet 可选查询、缺失明确写 UNAVAILABLE，不能当作保护已通过。
+- 命令失败、max_fanout 丢失、可读保护属性为 false 仍停止；默认 mock 改为复现服务器不可查询，而非假定返回 true。44 项本地检查通过，实际效果待新服务器 run。见 [兼容修正与边界](s3-capacitance-check.md#8-修正-clock-drc-属性查询的版本兼容问题)。
+
+
+## 2026-10-18：验收并归档 S3 范围内基线
+
+- 最新同名 run HEAD `9e449fac`，dirty 仅 Makefile SITE 默认值；37 输入、23 DC、25 PT 产物 hash 全部一致，17 份 RTL 与 03/本地相同。工具完成，DC/PT 均无约束违例；area 9242.855942，setup/hold +0.596843/+0.008754 ns。
+- fanout 32 将 LSU 68 个 E pin 分为 25/25/18，PT 最大分支电容 0.0405621 pF，低于新驱动库上限 0.045377 pF。clk 直接驱动 1509 个 CP，与时序单元数一致；没有因该目标生成 clock buffer tree。
+- 完整解析 coverage：9426 reset deferred + 24 mtvec[1:0] 常量条件禁用 = 9450 untested；其他检查 10730 met、0 violated。结构告警按连接分类，禁用弧只有 p/C，无 l/L。UITE-416 与两个常量 D 端的对应关系标为交叉证据推断，不冒充工具逐名证明。
+- 新增 [04 原始归档](synthesis-results/04-200mhz-baseline/README.md)（51 文件、原字节/hash）及 [S3 结果](3-synthesis-sta.md)，更新计划/矩阵/路线/展示入口。工具 REVIEW_REQUIRED 不改写；人工接受当前 TT、ideal clock、ZeroWireload、reset deferred 的 core 基线，S6 最终复现/交接待完成。
+- 本次未改 RTL/SDC/flow，未运行新 EDA 或重复功能测试；功能版本证据沿用 S2.5，不把 gate-level/formal/功耗/物理 sign-off 计入通过。

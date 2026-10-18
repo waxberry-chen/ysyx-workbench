@@ -53,7 +53,7 @@
 | 两个 adapter | 状态回 IDLE；payload/response/error 清零，LSU AW/W pending 清零 |
 | Arbiter | 状态回 IDLE；owner/write/preference、AW/W 收集/发送位、payload/response 清零；外部握手输出受 reset 屏蔽 |
 
-层次内时序逻辑使用同一个 `clk`，未发现功能性 CDC 或新增 gated/generated clock。`negedge rst_n` 是复位事件，不能算第二个功能时钟。外部负责异步 assertion、相对 `clk` 安全同步 deassertion；本 top 未加入 reset synchronizer。释放假设和 recovery/removal 必须在后续 STA 中落实；两值仿真不能证明亚稳态、RDC 或 X 安全。
+层次内时序逻辑使用同一个 `clk`，未发现功能性 CDC 或新增 gated/generated clock。`negedge rst_n` 是复位事件，不能算第二个功能时钟。外部负责异步 assertion、相对 `clk` 安全同步 deassertion；本 top 未加入 reset synchronizer。这是 S1 的设计意图；后续早期 STA 已按用户决定将实际释放/脉宽建模暂缓，见 [reset TODO](reset-timing-todo.md)。实际 SoC/reset 集成时仍需落实；两值仿真不能证明亚稳态、RDC 或 X 安全。
 
 ## 4. SDC 端口需求与预算接口
 

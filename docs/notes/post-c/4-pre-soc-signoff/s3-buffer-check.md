@@ -2,6 +2,8 @@
 
 2026-10-18。用户手动 commit、同步服务器并执行。本次脚本准备已完成，**不预先宣称 66 条最小电容违例已修复**；真实结果需新 DC/PT run 验证。
 
+后续实测更新：`core-tt-5ns-no-port-buffers` 的 66 条 min-capacitance 不再出现，但 PT 有 1 条 LSU 使能驱动的 max-capacitance，DC 未报告对应违例。下一步只补充 [DC/PT 电容对照诊断](s3-capacitance-check.md)，先核对负载与模型差异，不改变状态机或放宽约束。
+
 ## 1. 这次改了什么
 
 DC 仍使用普通 `compile -map_effort medium`，撤去原来的：

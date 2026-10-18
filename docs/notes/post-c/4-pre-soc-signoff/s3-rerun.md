@@ -2,6 +2,10 @@
 
 2026-10-18。服务器同步和 DC/PT 执行由用户手动完成。本地诊断增强已完成，`make -C npc/flow check test` 的 39 项测试通过；它验证编排、解析和真实 Tcl 的 mock 衔接，不替代服务器 EDA 命令兼容性验证。新 run 先称“基线候选”，检查项关闭后才冻结为正式 S3 基线。
 
+2026-10-18 更新：用户已完成 `core-tt-5ns-baseline` 的真实 DC/PT，[03 实验](synthesis-results/03-200mhz-candidate/README.md) 已归档。新增报告均生成，200 MHz setup/hold 满足；66 条最小电容违例与复位脉宽/结构审查仍待处理。下文命令继续作为后续独立 run 的操作模板。
+
+后续配置更新：当前 SDC 仅对 rst_n 设置 false path，旧 reset_min/reset_max 已从配置移除。使用新 RUN_ID（如 `core-tt-5ns-reset-deferred`），按 [reset TODO](reset-timing-todo.md) 审查 coverage 的变化；不预期 5516 项必然消失，也不将 reset 路径减少算作优化。此次没有处理 66 条最小电容违例。
+
 ## 1. 本次新增诊断
 
 | 文件（相对 run） | 用途 |
@@ -12,7 +16,7 @@
 | `reports/sta/timing/timing_{max,min}.rpt` 及四类路径 | 显式纳入正 slack，6 位小数；不再因全部满足而默认输出空报告 |
 | `manifest.json` 中各阶段 `result` | 新增 `reported_constraint_violation_rows`；有打印违例行则记 `CONSTRAINT_FAIL`，时序失败仍优先记 `TIMING_FAIL` |
 
-高扇出使用 `all_high_fanout -nets`，由工具变量决定阈值，查询整个层次；随后 `report_net -connections -verbose` 保存对象细节。不指定 `-through_buf_inv`，不改阈值、不将 clock/reset 设为 ideal 来消除告警。依据：[Synopsys Synthesis Commands，all_high_fanout](https://users.ece.utexas.edu/~mcdermot/vlsi1/VLSI2_SP_2017/synopsys/doc/Design_Compiler/syn_commands.pdf)。User Guide 未提供完整命令选项，新增命令仍需在服务器 DC V-2023.12-SP5 上验证。
+高扇出使用 `all_high_fanout -nets`，由工具变量决定阈值，查询整个层次；随后 `report_net -connections -verbose` 保存对象细节。不指定 `-through_buf_inv`，不改阈值、不将 clock/reset 设为 ideal 来消除告警。依据：[Synopsys Synthesis Commands，all_high_fanout](https://users.ece.utexas.edu/~mcdermot/vlsi1/VLSI2_SP_2017/synopsys/doc/Design_Compiler/syn_commands.pdf)。User Guide 未提供完整命令选项，新增命令已在 03 的服务器 DC V-2023.12-SP5 上执行并生成完整报告。
 
 报告是综合后状态；TIM-134 若来自优化中间状态，不能保证最终仍有同一对象。若它是时钟，结合 ideal-clock 假设和后续 CTS 处理；若是 reset/enable/普通数据，继续分析真实负载与分发结构。数量大不自动表示时序违例。
 

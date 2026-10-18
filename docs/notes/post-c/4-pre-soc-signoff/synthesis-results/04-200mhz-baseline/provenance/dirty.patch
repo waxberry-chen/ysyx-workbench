@@ -1,0 +1,13 @@
+diff --git a/npc/flow/Makefile b/npc/flow/Makefile
+index 119d44d..8b4ee44 100644
+--- a/npc/flow/Makefile
++++ b/npc/flow/Makefile
+@@ -4,7 +4,7 @@
+ PYTHON ?= python3
+ # CONFIG 是设计假设，SITE 是服务器的工具/工艺库配置；两者分开才能换机器而不改变设计目标。
+ CONFIG ?= 00_indata/configs/npc_core.tcl
+-SITE ?= 00_indata/configs/site.example.tcl
++SITE ?= 00_indata/configs/site.local.tcl
+ # RUN_ROOT/RUN_ID 用于新建运行；RUN 用于继续同一次运行的 STA 或检查其结果。
+ # make -C npc/flow 会把工作目录切到本文件所在目录，下面的相对路径据此解析。
+ RUN_ROOT ?= build

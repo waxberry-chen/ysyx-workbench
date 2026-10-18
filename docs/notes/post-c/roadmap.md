@@ -1,6 +1,6 @@
 # Post-C Roadmap：从弹性 RV32E Core 到可展示的 SoC/RTL 项目
 
-> 规划更新：2026-10-18；M4 S2.5 ISA 收敛已完成本地验收，当前进行正式 S3 基线前的接口/约束审查；M4 初始输入基线：`0fe53bf`（M3 功能/协议仿真验收后）
+> 规划更新：2026-10-18；M4 S2.5 ISA 收敛已完成本地验收，当前已建立 S3 范围内面积/时序基线，下一步 S6 最终复现/交接；M4 初始输入基线：`0fe53bf`（M3 功能/协议仿真验收后）
 >
 > 求职方向优先级：SoC/RTL Design > Design Verification > Physical Design  
 > 本文用于决定 post-C 阶段的投入顺序。具体接口、地址映射和考核要求仍以开始该阶段时的最新版官方讲义与上游仓库为准。
@@ -274,7 +274,15 @@ interconnect system-level test plan 合并实施。
 
 2026-10-17：**[首次综合已归档](4-pre-soc-signoff/synthesis-results/01-first-synthesis/README.md)**：DC 完成，10 ns setup/hold 失败，PT 未执行。先审查观察接口、长组合乘除法与约束，整理源版本和功能回归，再建立正式 S3 DC/PT 基线；当前结果仅作为首次诊断实验。所有需长期保留的综合实验加入[结果索引](4-pre-soc-signoff/synthesis-results/README.md)，保留失败证据和原始报告。频率目标需结合微架构与模型论证，不由工艺节点单独决定。
 
-2026-10-18：**[S2.5 本地验收完成](4-pre-soc-signoff/2.5-isa-contract.md)**：移除 M、GPR 缩至 16 项，增加非法编码 cause 2 和明确的四 CSR 契约；独立译码/双平台异常程序、B1 signoff 与 legacy 影响检查通过。当前无新增阻塞；首次综合原样保留，无新的 DC/PT 结果，下一步审查观察接口与约束后建立新 run。
+2026-10-18：**[S2.5 本地验收完成](4-pre-soc-signoff/2.5-isa-contract.md)**：移除 M、GPR 缩至 16 项，增加非法编码 cause 2 和明确的四 CSR 契约；独立译码/双平台异常程序、B1 signoff 与 legacy 影响检查通过。
+
+2026-10-18：**[02 RV32E / 无 M 的 DC/PT 已归档](4-pre-soc-signoff/synthesis-results/02-rv32e-no-m/README.md)**：10 ns 无 setup/hold 违例，面积 9511.319905 library_area；仍有 66 条 min-capacitance 违例、5516 项复位/置位脉宽检查未测试，PT 正 slack 路径和禁用弧明细需补充。以上审查项关闭前不建立正式 S3 基线；历史 01 记录不变。
+
+2026-10-18：**[03 200 MHz 候选已归档](4-pre-soc-signoff/synthesis-results/03-200mhz-candidate/README.md)**：5 ns 下 PT setup/hold slack +0.531597/+0.013534 ns、面积仍为 9511.319905 library_area。诊断增强已完成真实执行，确认高扇出 clk（1509 个负载）、禁用弧无 loop-breaking 标记。当前优先处理 66 个无负载 EXU buffer 的最小电容违例、复位脉宽覆盖及结构审查，尚不冻结正式 S3 基线。
+
+2026-10-18 后续范围决定：按用户要求，早期 core 评估暂缓 reset 时序，对 rst_n 设置精确 false path，删除虚拟 release delay；脉宽/实际释放机制见 [reset TODO](4-pre-soc-signoff/reset-timing-todo.md)。历史 03 不改写，后续继续审查真实 coverage，电容违例与其他结构问题仍需处理。
+
+2026-10-18：**[S3 core pre-layout 基线成立](4-pre-soc-signoff/3-synthesis-sta.md)**；[04](4-pre-soc-signoff/synthesis-results/04-200mhz-baseline/README.md) 在 TT / 200 MHz 下 DC/PT 无约束违例，面积 9242.855942 library_area，PT setup/hold +0.596843/+0.008754 ns。9426 reset deferred 与 24 常量条件禁用已分类，结构告警经审查；保留观察端口、ideal clock 和 ZeroWireload 边界，不外推物理或全 PVT sign-off。下一步 S6，M4 总验收尚未宣布完成。
 
 这个里程碑防止“B1 仿真能跑，但接 SoC 时同时暴露协议、时序、复位和构建问题”。先建立最小实现基线，工作量取决于现有 RTL、工艺库和可复用 flow；不在取得工具与输入前承诺全部检查已可运行。
 
@@ -572,8 +580,8 @@ docs/notes/
 
 ## 9. 最近三个行动
 
-1. 依据首次综合审查 M4 的观察/功能输出契约、S2.5 后剩余的地址/异常共用路径，确定正式 scope 与约束目标；整理服务器 dirty 修改，完成受影响的功能/lint 回归；
-2. 每次改进独立综合并归档原始报告，先关闭明显实现/评估问题，再新建 run 完成 DC/PT 的 setup/hold/DRV 与 coverage 审查，建立正式 S3 基线；功耗仍为可选粗估，S4/S5 延后；
+1. 以 [04 S3 基线](4-pre-soc-signoff/synthesis-results/04-200mhz-baseline/README.md)为依据完成 S6 最终复现/交接：固定源版本、site/工具/库与约束，核对干净运行目录重建步骤、原始报告和验收结论；
+2. 整理 M4 总验收与展示材料，保留 TT、ideal clock、ZeroWireload 和 reset deferred 边界；后续改进使用独立 run 与 04 对比，功耗仍为可选粗估，S4/S5 延后；
 3. 提前核对并固定 ysyxSoC revision 与接口契约，特别是窄 MMIO 读的地址/size 语义；当前 Lite adapter 已对齐地址，不能假设最外层固定 SIZE wrapper 能恢复这些信息。明确边界后再按 M5 实施集成。
 
 在这三项完成前，不启动 GShare、经典五级流水重写、D-cache 或大规模外设扩展。
