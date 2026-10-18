@@ -29,14 +29,14 @@ report('environment/version.rpt','MOCK TOOL - NOT EDA\\n')
 report('environment/library_mock.rpt','MOCK LIBRARY\\n')
 report('complete.txt','NPC_FLOW_COMPLETE '+stage+'\\n')
 if stage=='syn':
- for name in ['summary/qor','checks/check_design_pre','checks/check_design_post','checks/check_timing','checks/constraint_violations','timing/timing_max','timing/timing_min','environment/design','area/references','area/resources']:
+ for name in ['summary/qor','checks/check_design_pre','checks/check_design_post','checks/check_timing','checks/constraint_violations','checks/high_fanout','timing/timing_max','timing/timing_min','environment/design','area/references','area/resources']:
   report(name+'.rpt')
  report('area/area.rpt','Total cell area: 12.5\\n')
  report('power/power_status.txt','NOT_EVALUATED: disabled\\n')
  for name,content in [('core.v','module ysyx_core_axi4lite(); endmodule'),('core.ddc','MOCK DDC'),('dc.sdc','MOCK SDC')]:
   (run/'outputs'/name).write_text(content)
 if stage=='sta':
- for name in ['environment/units','environment/design','environment/wire_load','checks/check_timing','checks/coverage_untested','checks/constraint_violations','timing/timing_max','timing/timing_min']:
+ for name in ['environment/units','environment/design','environment/wire_load','checks/check_timing','checks/coverage_untested','checks/constraint_violations','checks/disable_timing','timing/timing_max','timing/timing_min']:
   report(name+'.rpt')
  report('checks/coverage.rpt','All Checks 10 10 (100%) 0 (0%) 0 (0%)\\n')
  for delay in ['max','min']:
@@ -344,6 +344,45 @@ dict set site library_reviewed 1
         self.assertEqual(result['timing']['max']['tns'], -1.0)
         self.assertEqual(result['signoff'], 'TIMING_FAIL')
         self.assertIn('NOT_EVALUATED', f.inspect_stage(run, 'syn')['power'])
+        fanout = (run/'reports/syn/checks/high_fanout.rpt').read_text()
+        self.assertIn('high_fanout_net_threshold: 1000', fanout)
+        self.assertIn('high_fanout_net: core/reset_tree_n', fanout)
+        self.assertIn('driver reset_buffer/Z; loads 1379', fanout)
+        for report in (run/'reports/sta/timing').glob('*.rpt'):
+            self.assertIn('slack (MET) 5.530000', report.read_text())
+
+    def test_empty_high_fanout_is_valid(self):
+        self.tool.write_text("#!/usr/bin/env python3\nimport os,sys\nfrom pathlib import Path\nos.environ['NPC_MOCK_NO_HIGH_FANOUT']='1'\nmock=Path(os.environ['NPC_FLOW_SNAPSHOT'])/'04_tests/eda_mock.tcl'\nos.execvp('tclsh',['tclsh',str(mock),sys.argv[-1]])\n")
+        run = self.syn()
+        report = (run/'reports/syn/checks/high_fanout.rpt').read_text()
+        self.assertIn('high_fanout_net_count: 0', report)
+        self.assertIn('No nets exceed', report)
+
+    def test_electrical_violations_fail_despite_zero_wns(self):
+        run = self.syn()
+        f.execute(run, 'sta')
+        for stage in ['syn', 'sta']:
+            (run/f'reports/{stage}/checks/constraint_violations.rpt').write_text(
+                'min_capacitance\nU4/Z 0.00 0.00 0.00 (VIOLATED: increase significant digits)\n'
+                'U5/Z 0.0001 0.0 -0.0001 (VIOLATED)\n')
+            result = f.inspect_stage(run, stage)
+            self.assertEqual(result['reported_constraint_violation_rows'], 2)
+            self.assertEqual(result['signoff'], 'CONSTRAINT_FAIL')
+        self.assertEqual(result['timing']['max']['wns'], 0)
+
+    def test_diagnostic_reports_are_required(self):
+        run = self.syn()
+        f.execute(run, 'sta')
+        for stage, name in [('syn', 'high_fanout'), ('sta', 'disable_timing')]:
+            path = run/f'reports/{stage}/checks/{name}.rpt'
+            original = path.read_text()
+            path.write_text('Error: diagnostic command failed\n')
+            with self.assertRaisesRegex(f.FlowError, 'Tool/structural error'):
+                f.inspect_stage(run, stage)
+            path.unlink()
+            with self.assertRaisesRegex(f.FlowError, 'Missing/empty'):
+                f.inspect_stage(run, stage)
+            path.write_text(original)
 
     def test_probe_report_errors_despite_successful_exit(self):
         # 真实 DC 可能退出 0 且写 complete.txt，但 redirect 内的报告仍含 Error。

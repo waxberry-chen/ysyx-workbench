@@ -291,9 +291,11 @@ def inspect_stage(run, stage):
     required = ['environment/version.rpt', 'complete.txt']
     if stage == 'syn':
         required += ['area/area.rpt', 'summary/qor.rpt', 'checks/check_design_pre.rpt', 'checks/check_design_post.rpt', 'checks/check_timing.rpt', 'checks/constraint_violations.rpt', 'timing/timing_max.rpt', 'timing/timing_min.rpt', 'environment/design.rpt', 'area/references.rpt', 'area/resources.rpt', 'power/power_status.txt']
+        required += ['checks/high_fanout.rpt']
     elif stage == 'sta':
         required += ['environment/units.rpt', 'environment/design.rpt', 'environment/wire_load.rpt', 'checks/check_timing.rpt', 'checks/coverage.rpt', 'checks/coverage_untested.rpt', 'checks/constraint_violations.rpt', 'timing/timing_max.rpt', 'timing/timing_min.rpt', 'timing/metrics_max.tsv', 'timing/metrics_min.tsv']
         required += [f'timing/{group}_{delay}.rpt' for group in ['Reg2Reg', 'In2Reg', 'Reg2Out', 'In2Out'] for delay in ['max', 'min']]
+        required += ['checks/disable_timing.rpt']
     required_paths = [report/name for name in required]
     libs = list((report/'environment').glob('library_*.rpt'))
     require(libs, 'Missing library reports')
@@ -316,6 +318,14 @@ def inspect_stage(run, stage):
     # 收集 warning 给 S3 人工处置，而不是只看 WNS。untested 检查可能来自常量、
     # 缺时钟或例外，必须结合 coverage_untested/check_timing 说明其合理性。
     result = {'execution': 'COMPLETE', 'signoff': 'REVIEW_REQUIRED', 'warnings': sorted(set(re.findall(r'(?m)^\s*Warning:.*$', text)))}
+    if stage in ('syn', 'sta'):
+        # 原始报告中的违例行数，包含电气和时序约束，不能当作去重 timing 端点数。
+        # 兼容 (VIOLATED) 与 (VIOLATED: increase significant digits)。
+        # 零行仍需人工核对报告/覆盖率，不据此自动宣告约束 PASS。
+        violations = (report/'checks/constraint_violations.rpt').read_text()
+        result['reported_constraint_violation_rows'] = len(re.findall(r'\(VIOLATED\b', violations))
+        if result['reported_constraint_violation_rows']:
+            result['signoff'] = 'CONSTRAINT_FAIL'
     if stage == 'syn':
         # 提取的是映射 cell area；其单位来自库，不是芯片/die 面积。
         # 正面积与合法 top 只是必要条件，不能替代资源保留和电路功能审查。

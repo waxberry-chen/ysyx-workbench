@@ -8,6 +8,7 @@
 - [S2 最小 flow 与服务器交接](2-flow.md)：运行入口、数值 SDC、输入/产物追溯、失败处理和本地 mock 验证边界；[报告分类与阅读顺序](../../../../npc/flow/README.md#报告目录与阅读顺序)。
 - [S2.5 ISA/CSR 契约与验收](2.5-isa-contract.md)：移除 M、16 项 GPR、非法指令精确异常、CSR 与跨层适配。
 - [计划与分步出口](plan.md)：当前链 S0 → S1 → S2 → S2.5 → S3 → S6；S3 取得面积/时序，可附带 DC 功耗粗估；原 S4/S5 延后。
+- [S3 基线候选重跑](s3-rerun.md)：诊断增强、建议提交拆分、用户手动同步/执行命令及报告审查顺序；新增诊断已完成本地验证，待服务器实测。
 - [ref-flow 流程图与逐级输入输出](0-flow-map.md)：执行依赖、实际数据流，以及工艺库/design/flow 分类。
 - [ref-flow 学习与裁剪](0-ref-flow-review.md)：实际入口、可复用组织方式和迁移问题。
 - [缺失 flow 脚本说明](missing-inputs.md)、[脚本清单 CSV](missing-files.csv)：只核查未拷贝的 flow 脚本/编排配置，不含 PDK、工具或 design 数据。

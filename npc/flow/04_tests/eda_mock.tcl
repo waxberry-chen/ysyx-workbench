@@ -55,7 +55,12 @@ proc get_pins {args} {return {pin1 pin2 pin3}}
 proc remove_from_collection {from remove} {
     set result {}; foreach item $from {if {$item ni $remove} {lappend result $item}}; return $result
 }
-proc get_timing_paths {args} {return {path1 path2}}
+proc get_timing_paths {args} {
+    # 代表路径可以包含正 slack，但 WNS/TNS 查询必须继续严格筛选负 slack。
+    set pos [lsearch -exact $args -slack_lesser_than]
+    if {$pos < 0 || [lindex $args [expr {$pos+1}]] != 0.0} {error "Metrics must enumerate negative slack only"}
+    return {path1 path2}
+}
 proc get_attribute {object name} {
     if {$name eq "slack"} {if {$object eq "path1"} {return -1.0} else {return -0.5}}
     if {$name eq "endpoint"} {return same_endpoint}
@@ -70,6 +75,7 @@ proc write_sdc {path} {set f [open $path w]; puts $f "MOCK EXPORTED SDC"; close 
 # DC 2023 的实际 probe 没有 version 命令；不要用虚构的 mock 命令掩盖此错误。
 proc get_app_var {name} {
     if {$name eq "sh_product_version"} {return "MOCK-VERSION-NOT-EDA"}
+    if {$name eq "high_fanout_net_threshold"} {return 1000}
     error "Unknown mock application variable $name"
 }
 proc report_lib {name} {
@@ -94,8 +100,31 @@ proc check_design {} {puts "MOCK check_design"; return 1}
 foreach command {set_host_options define_design_lib elaborate current_design link link_design set_operating_conditions set_wire_load_mode set_wire_load_model set_fix_multiple_port_nets compile change_names update_timing create_clock set_clock_uncertainty set_clock_transition set_clock_latency set_input_delay set_input_transition set_output_delay set_load} {
     proc $command {args} {return 1}
 }
-foreach command {report_qor report_resources report_reference report_design check_timing report_constraint report_timing report_units report_wire_load} {
+foreach command {report_qor report_resources report_reference report_design check_timing report_disable_timing report_units report_wire_load} {
     proc $command {args} "puts {MOCK $command}; return 1"
+}
+proc all_high_fanout {args} {
+    if {$args ne "-nets"} {error "Use tool threshold without overriding it"}
+    if {[info exists ::env(NPC_MOCK_NO_HIGH_FANOUT)]} {return {}}
+    # Deliberately not clk: catches accidental hard-coded clock-only reporting.
+    return {core/reset_tree_n}
+}
+proc report_net {args} {
+    if {$args ne "-connections -verbose core/reset_tree_n"} {error "Missing high-fanout connection detail"}
+    puts "MOCK net core/reset_tree_n; driver reset_buffer/Z; loads 1379"
+}
+proc report_constraint {args} {
+    if {[lsearch -exact $args -significant_digits] < 0} {error "Missing violation report precision"}
+    puts "MOCK report_constraint"
+}
+proc report_timing {args} {
+    if {$::env(NPC_STAGE) eq "sta"} {
+        set pos [lsearch -exact $args -slack_lesser_than]
+        if {$pos < 0 || [lindex $args [expr {$pos+1}]] <= 5.53} {
+            error "Positive-slack representative paths would be omitted"
+        }
+        puts "MOCK positive path: slack (MET) 5.530000"
+    } else {puts "MOCK report_timing"}
 }
 # Intentional unavailable optional feature. The A/timing flow must still complete.
 proc set_switching_activity {args} {puts "Error: MOCK unavailable power feature"; error "MOCK unavailable power feature"}

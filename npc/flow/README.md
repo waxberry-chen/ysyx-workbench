@@ -194,6 +194,8 @@ DC-specific environment commands from that export.
 | `environment/` | `design.rpt`；PT 另有 `units.rpt`、`wire_load.rpt` | 核对设计环境、单位与互连模型 |
 | `summary/` | `qor.rpt` | DC：整体 QoR 快速概览 |
 | `checks/` | `check_design_pre.rpt`、`check_design_post.rpt` | DC：综合前后结构检查 |
+| `checks/` | `high_fanout.rpt` | DC：工具高扇出阈值、网络名称和连接明细 |
+| `checks/` | `disable_timing.rpt` | PT：禁用时序弧，供定位 PTE-003 原因 |
 | `checks/` | `check_timing.rpt`、`constraint_violations.rpt` | DC/PT：分析完整性检查与违例列表 |
 | `checks/` | `coverage.rpt`、`coverage_untested.rpt` | PT：met/violated/untested 及未测试原因 |
 | `timing/` | `timing_max.rpt`、`timing_min.rpt` | DC/PT：max/min 代表路径，max_paths=20 |
@@ -211,6 +213,17 @@ PT 则为同一 run 的 `reports/sta/checks/constraint_violations.rpt`。
 随后进入 `timing/` 解释具体路径；需要定位面积或核对模型时分别查看 `area/`、`environment/`。
 PT 从 `checks/` 与 `timing/metrics_*.tsv` 开始。报告存在或 WNS=0 均不能代替 coverage 审查。
 
+PT 多路径默认只列负 slack，全部满足时报告为空；现已在全局/四类
+代表路径查询中加入 `-slack_lesser_than 1.0e30`，包含正常正裕量路径。该阈值只筛选
+报告，不修改 SDC；WNS/TNS 查询仍只枚举负 slack。DC/PT 的 timing/constraint 报告
+使用 6 位小数。改动已通过本地 mock，待服务器新 run 验证；命令依据见
+[S3 重跑说明](../../docs/notes/post-c/4-pre-soc-signoff/s3-rerun.md)。
+
+`checks/high_fanout.rpt` 用 `all_high_fanout -nets` 按 DC 实际阈值查询整个层次，
+逐个调用 `report_net -connections -verbose`。它是综合后快照，不保证保留优化中间态
+曾出现的每个高扇出网；不穿透 buffer/inverter 合并扇出，也不把 clk/reset 预先豁免。
+完整服务器交接及基线候选审查见 [S3 重跑说明](../../docs/notes/post-c/4-pre-soc-signoff/s3-rerun.md)。
+
 **旧 run 不迁移、不重命名。** 首次综合归档继续使用原来的扁平目录。目录属于 run 的冻结契约；
 更新 flow 后，以新 RUN_ID 生成分类报告。检查旧 run 或继续其 STA 时使用该 run 自带的 runner：
 
@@ -221,8 +234,8 @@ python3 npc/flow/build/<RUN_ID>/inputs/npc/flow/01_common/flow.py \
 ```
 
 检查器与 manifest 递归记录分类目录内的产物，包括失败阶段和可选功耗的诊断文件；
-子目录中的报告被修改也会触发 hash 校验失败。本次只调整报告组织与命名，不新增检查命令，
-不改变综合、时序约束、路径数量或评估范围。
+子目录中的报告被修改也会触发 hash 校验失败。报告分类本身只调整组织与命名；
+后续诊断增强见上文，不改变综合策略、SDC 或评估范围。
 
 ## Evidence and failure semantics
 
@@ -247,7 +260,11 @@ diagnostics and worst-negative-slack/TNS/violating-endpoint metrics. TNS dedupli
 endpoints and refuses a truncated path collection. WNS is clamped to 0 when no
 negative paths exist; it is not the best achievable period.
 
-Execution can be `COMPLETE` while assessment is `TIMING_FAIL` or `REVIEW_REQUIRED`.
+Execution can be `COMPLETE` while assessment is `TIMING_FAIL`, `CONSTRAINT_FAIL`
+or `REVIEW_REQUIRED`. `reported_constraint_violation_rows` counts printed
+`(VIOLATED...)` rows, including electrical constraints; it is not a deduplicated
+timing-endpoint count. A nonzero count yields `CONSTRAINT_FAIL` unless timing
+failure already takes priority. Zero rows never imply automatic constraint PASS.
 A negative baseline is retained for analysis, not discarded or called timing PASS.
 Unknown coverage format, missing outputs and tool errors fail execution. Warnings,
 untested checks (including constants), loops, disabled/unconstrained paths, clock

@@ -30,11 +30,18 @@ if {[catch {
     redirect -file [file join $reports checks check_timing.rpt] {check_timing -verbose}
     redirect -file [file join $reports checks coverage.rpt] {report_analysis_coverage}
     redirect -file [file join $reports checks coverage_untested.rpt] {report_analysis_coverage -status_details {untested}}
-    redirect -file [file join $reports checks constraint_violations.rpt] {report_constraint -all_violators -nosplit}
+    # PTE-003 可能来自常量传播，也可能来自环；保留被禁用弧的对象/原因供审查。
+    redirect -file [file join $reports checks disable_timing.rpt] {report_disable_timing}
+    # 小电容/小 slack 在两位小数下可能打印成 0.00，但依然是违例。
+    redirect -file [file join $reports checks constraint_violations.rpt] {report_constraint -all_violators -significant_digits 6 -nosplit}
     # 阶段 4：max/min 分别保存晚到/早到分析；全局报告包含实际可分析的 check。
     # 先输出代表路径供人阅读，再独立提取全部负 slack 端点，避免只用前 20 条算 TNS。
     foreach delay {max min} {
-        redirect -file [file join $reports timing timing_${delay}.rpt] {report_timing -delay_type $delay -max_paths 20 -nosplit}
+        # PT 的 -max_paths > 1 默认只列负 slack（UG PDF 637）。显式使用很大的
+        # 有限阈值纳入正常正裕量路径；这只是报告筛选，不放宽任何时序约束。
+        redirect -file [file join $reports timing timing_${delay}.rpt] {
+            report_timing -delay_type $delay -slack_lesser_than 1.0e30 -max_paths 20 -significant_digits 6 -nosplit
+        }
         # One worst path per endpoint; bounded to a count above all pins + ports.
         set limit [expr {[sizeof_collection [get_pins -hierarchical *]] + [sizeof_collection [all_outputs]] + 1}]
         set paths [get_timing_paths -delay_type $delay -slack_lesser_than 0.0 -nworst 1 -max_paths $limit]
@@ -72,7 +79,7 @@ if {[catch {
                 In2Reg $external_inputs [all_registers -data_pins] \
                 Reg2Out [all_registers -clock_pins] [all_outputs] In2Out $external_inputs [all_outputs]] {
             redirect -file [file join $reports timing ${group}_${delay}.rpt] {
-                report_timing -from $from -to $to -delay_type $delay -max_paths 10 -nosplit
+                report_timing -from $from -to $to -delay_type $delay -slack_lesser_than 1.0e30 -max_paths 10 -significant_digits 6 -nosplit
             }
         }
     }

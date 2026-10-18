@@ -55,13 +55,29 @@ if {[catch {
     redirect -file [file join $reports area resources.rpt] {report_resources -hierarchy}
     redirect -file [file join $reports area references.rpt] {report_reference -hierarchy}
     redirect -file [file join $reports environment design.rpt] {report_design}
+    # TIM-134 只报告数量，不说明网络名称。按工具实际阈值查询整个层次，
+    # 同时保存连接明细；不先假定它是 clk，也不修改阈值来隐藏 warning。
+    # 这里数的是直接连接的 fanout，不穿透 buffer/inverter 合并整棵树。
+    redirect -file [file join $reports checks high_fanout.rpt] {
+        puts "high_fanout_net_threshold: [get_app_var high_fanout_net_threshold]"
+        set high_fanout_nets [all_high_fanout -nets]
+        puts "high_fanout_net_count: [sizeof_collection $high_fanout_nets]"
+        if {[sizeof_collection $high_fanout_nets] == 0} {
+            puts "No nets exceed the tool high-fanout threshold."
+        } else {
+            foreach_in_collection net $high_fanout_nets {
+                puts "high_fanout_net: [get_object_name $net]"
+                report_net -connections -verbose $net
+            }
+        }
+    }
     # check_timing 查约束/分析完整性；constraint 列违例；report_timing 展示路径。
     # max 关注晚到数据（通常为 setup/recovery），min 关注早到数据（hold/removal）；
     # -max_paths 20 仅限制报告展示数量，不等于整个设计只分析 20 条路径。
     redirect -file [file join $reports checks check_timing.rpt] {check_timing}
-    redirect -file [file join $reports checks constraint_violations.rpt] {report_constraint -all_violators -nosplit}
-    redirect -file [file join $reports timing timing_max.rpt] {report_timing -delay_type max -max_paths 20 -nosplit}
-    redirect -file [file join $reports timing timing_min.rpt] {report_timing -delay_type min -max_paths 20 -nosplit}
+    redirect -file [file join $reports checks constraint_violations.rpt] {report_constraint -all_violators -significant_digits 6 -nosplit}
+    redirect -file [file join $reports timing timing_max.rpt] {report_timing -delay_type max -max_paths 20 -significant_digits 6 -nosplit}
+    redirect -file [file join $reports timing timing_min.rpt] {report_timing -delay_type min -max_paths 20 -significant_digits 6 -nosplit}
     # Power never changes the saved timing design. Its diagnostics are isolated.
     # 阶段 7（可选）：时序产物导出后才估算功耗，不把活动假设用于本轮优化。
     # -base_clock 将 toggle rate 关联到 core_clk 周期；时钟每周期翻转两次，

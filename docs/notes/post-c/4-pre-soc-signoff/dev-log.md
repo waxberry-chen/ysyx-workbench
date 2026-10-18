@@ -111,3 +111,11 @@
 - 用户指出报告混放不易查找；新 run 按 environment、summary、checks、timing、area、power 分类，probe 只输出 environment。将 `constraints.rpt` 明确命名为 `checks/constraint_violations.rpt`，区别于输入约束和导出 SDC。
 - 同步 DC/PT/probe、必需报告检查、指标读取及测试；manifest 递归记录嵌套报告，继续校验失败阶段和可选功耗诊断。`inspect` 与 STA 一样要求 runner 匹配冻结版本，避免新解析器误读旧布局；旧 run 与首次综合归档不修改，使用其归档 runner。
 - `make -C npc/flow check test`：36 项通过，含真实 Tcl + mock 命令衔接、嵌套文件 hash/篡改检测、嵌套报告缺失/错误、旧 runner 保护。仅调整输出组织，不新增时序检查或修改 SDC/RTL；未运行真实 DC/PT，无新增阻塞。
+
+## 2026-10-18：补齐 S3 候选重跑诊断
+
+- 原 run 的 TIM-134 没有网络名称；新增 DC `checks/high_fanout.rpt`，记录实际工具阈值、层次网络名和连接明细，不预设 clk 为原因。综合后对象若与中间态不同，需结合日志解释。
+- 修复 PT 多路径默认仅报告负 slack，代表路径显式纳入正裕量，负 slack 指标查询不变；新增 PT `checks/disable_timing.rpt`，DC/PT timing/constraint 报告改为 6 位小数。
+- driver 将新报告纳入必需检查/hash，统计原始约束违例行数；即使 WNS=0，有电气违例仍记 `CONSTRAINT_FAIL`，时序失败优先记 `TIMING_FAIL`，没有自动 PASS。
+- `make -C npc/flow check test`：39 项通过，覆盖非时钟高扇出对象/无对象、连接明细、正裕量路径与负 slack 指标查询区分、电气违例及新增报告缺失/错误。实际工具兼容性待服务器验证；没有修改 RTL、SDC、WLM 或历史 run。
+- 用户确认自行同步和运行服务器；已提供 [提交拆分与运行说明](s3-rerun.md)。诊断增强尚待服务器同步及真实 DC/PT 验证；新 run 先作为 S3 候选，审查关闭后再冻结正式基线。
