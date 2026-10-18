@@ -1,0 +1,337 @@
+****************************************
+Report : timing
+	-path_type full
+	-delay_type min
+	-slack_lesser_than 1000000015047466219876688855040.000000
+	-max_paths 10
+	-sort_by slack
+Design : ysyx_core_axi4lite
+Version: T-2022.03-SP5
+Date   : Sun Oct 18 17:31:38 2026
+****************************************
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: monitor_bus[5]
+               (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                               Incr       Path
+  --------------------------------------------------------------------------
+  clock core_clk (rise edge)                      0.000000   0.000000
+  clock network delay (ideal)                     0.000000   0.000000
+  input external delay                            0.200000   0.200000 f
+  rst_n (in)                                      0.000000   0.200000 f
+  arbiter/U80/Z (BUFFD1BWP12T40P140)              0.032026   0.232026 f
+  arbiter/U39/ZN (INVD1BWP12T40P140)              0.011411   0.243437 r
+  arbiter/U18/Z (BUFFD1BWP12T40P140)              0.021350   0.264787 r
+  arbiter/U40/ZN (INR3D1BWP12T40P140)             0.033038   0.297825 f
+  monitor_bus[5] (out)                            0.000000   0.297825 f
+  data arrival time                                          0.297825
+
+  clock core_clk (rise edge)                      0.000000   0.000000
+  clock network delay (ideal)                     0.000000   0.000000
+  clock reconvergence pessimism                   0.000000   0.000000
+  clock uncertainty                               0.050000   0.050000
+  output external delay                           -0.200000  -0.150000
+  data required time                                         -0.150000
+  --------------------------------------------------------------------------
+  data required time                                         -0.150000
+  data arrival time                                          -0.297825
+  --------------------------------------------------------------------------
+  slack (MET)                                                0.447825
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: monitor_bus[1]
+               (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                               Incr       Path
+  --------------------------------------------------------------------------
+  clock core_clk (rise edge)                      0.000000   0.000000
+  clock network delay (ideal)                     0.000000   0.000000
+  input external delay                            0.200000   0.200000 f
+  rst_n (in)                                      0.000000   0.200000 f
+  arbiter/U80/Z (BUFFD1BWP12T40P140)              0.032026   0.232026 f
+  arbiter/U39/ZN (INVD1BWP12T40P140)              0.011411   0.243437 r
+  arbiter/U18/Z (BUFFD1BWP12T40P140)              0.021350   0.264787 r
+  arbiter/U86/ZN (INR3D1BWP12T40P140)             0.033335   0.298121 f
+  monitor_bus[1] (out)                            0.000000   0.298121 f
+  data arrival time                                          0.298121
+
+  clock core_clk (rise edge)                      0.000000   0.000000
+  clock network delay (ideal)                     0.000000   0.000000
+  clock reconvergence pessimism                   0.000000   0.000000
+  clock uncertainty                               0.050000   0.050000
+  output external delay                           -0.200000  -0.150000
+  data required time                                         -0.150000
+  --------------------------------------------------------------------------
+  data required time                                         -0.150000
+  data arrival time                                          -0.298121
+  --------------------------------------------------------------------------
+  slack (MET)                                                0.448121
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: m_axi_bready
+               (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                              Incr       Path
+  -------------------------------------------------------------------------
+  clock core_clk (rise edge)                     0.000000   0.000000
+  clock network delay (ideal)                    0.000000   0.000000
+  input external delay                           0.200000   0.200000 f
+  rst_n (in)                                     0.000000   0.200000 f
+  arbiter/U80/Z (BUFFD1BWP12T40P140)             0.032026   0.232026 f
+  arbiter/U39/ZN (INVD1BWP12T40P140)             0.011411   0.243437 r
+  arbiter/U18/Z (BUFFD1BWP12T40P140)             0.021350   0.264787 r
+  arbiter/U41/ZN (NR2D1BWP12T40P140)             0.033576   0.298363 f
+  m_axi_bready (out)                             0.000000   0.298363 f
+  data arrival time                                         0.298363
+
+  clock core_clk (rise edge)                     0.000000   0.000000
+  clock network delay (ideal)                    0.000000   0.000000
+  clock reconvergence pessimism                  0.000000   0.000000
+  clock uncertainty                              0.050000   0.050000
+  output external delay                          -0.200000  -0.150000
+  data required time                                        -0.150000
+  -------------------------------------------------------------------------
+  data required time                                        -0.150000
+  data arrival time                                         -0.298363
+  -------------------------------------------------------------------------
+  slack (MET)                                               0.448363
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: m_axi_wvalid
+               (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                              Incr       Path
+  -------------------------------------------------------------------------
+  clock core_clk (rise edge)                     0.000000   0.000000
+  clock network delay (ideal)                    0.000000   0.000000
+  input external delay                           0.200000   0.200000 f
+  rst_n (in)                                     0.000000   0.200000 f
+  arbiter/U80/Z (BUFFD1BWP12T40P140)             0.032026   0.232026 f
+  arbiter/U39/ZN (INVD1BWP12T40P140)             0.011411   0.243437 r
+  arbiter/U18/Z (BUFFD1BWP12T40P140)             0.021350   0.264787 r
+  arbiter/U87/ZN (NR3D0BWP12T40P140)             0.047653   0.312440 f
+  m_axi_wvalid (out)                             0.000000   0.312440 f
+  data arrival time                                         0.312440
+
+  clock core_clk (rise edge)                     0.000000   0.000000
+  clock network delay (ideal)                    0.000000   0.000000
+  clock reconvergence pessimism                  0.000000   0.000000
+  clock uncertainty                              0.050000   0.050000
+  output external delay                          -0.200000  -0.150000
+  data required time                                        -0.150000
+  -------------------------------------------------------------------------
+  data required time                                        -0.150000
+  data arrival time                                         -0.312440
+  -------------------------------------------------------------------------
+  slack (MET)                                               0.462440
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: m_axi_awvalid
+               (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                              Incr       Path
+  -------------------------------------------------------------------------
+  clock core_clk (rise edge)                     0.000000   0.000000
+  clock network delay (ideal)                    0.000000   0.000000
+  input external delay                           0.200000   0.200000 f
+  rst_n (in)                                     0.000000   0.200000 f
+  arbiter/U80/Z (BUFFD1BWP12T40P140)             0.032026   0.232026 f
+  arbiter/U39/ZN (INVD1BWP12T40P140)             0.011411   0.243437 r
+  arbiter/U18/Z (BUFFD1BWP12T40P140)             0.021350   0.264787 r
+  arbiter/U88/ZN (NR3D0BWP12T40P140)             0.048130   0.312917 f
+  m_axi_awvalid (out)                            0.000000   0.312917 f
+  data arrival time                                         0.312917
+
+  clock core_clk (rise edge)                     0.000000   0.000000
+  clock network delay (ideal)                    0.000000   0.000000
+  clock reconvergence pessimism                  0.000000   0.000000
+  clock uncertainty                              0.050000   0.050000
+  output external delay                          -0.200000  -0.150000
+  data required time                                        -0.150000
+  -------------------------------------------------------------------------
+  data required time                                        -0.150000
+  data arrival time                                         -0.312917
+  -------------------------------------------------------------------------
+  slack (MET)                                               0.462917
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: monitor_bus[11]
+               (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                              Incr       Path
+  -------------------------------------------------------------------------
+  clock core_clk (rise edge)                     0.000000   0.000000
+  clock network delay (ideal)                    0.000000   0.000000
+  input external delay                           0.200000   0.200000 f
+  rst_n (in)                                     0.000000   0.200000 f
+  arbiter/U80/Z (BUFFD1BWP12T40P140)             0.032026   0.232026 f
+  arbiter/U39/ZN (INVD1BWP12T40P140)             0.011411   0.243437 r
+  arbiter/U18/Z (BUFFD1BWP12T40P140)             0.021350   0.264787 r
+  arbiter/U85/ZN (NR3D0BWP12T40P140)             0.052014   0.316800 f
+  monitor_bus[11] (out)                          0.000000   0.316800 f
+  data arrival time                                         0.316800
+
+  clock core_clk (rise edge)                     0.000000   0.000000
+  clock network delay (ideal)                    0.000000   0.000000
+  clock reconvergence pessimism                  0.000000   0.000000
+  clock uncertainty                              0.050000   0.050000
+  output external delay                          -0.200000  -0.150000
+  data required time                                        -0.150000
+  -------------------------------------------------------------------------
+  data required time                                        -0.150000
+  data arrival time                                         -0.316800
+  -------------------------------------------------------------------------
+  slack (MET)                                               0.466800
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: monitor_bus[9]
+               (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                              Incr       Path
+  -------------------------------------------------------------------------
+  clock core_clk (rise edge)                     0.000000   0.000000
+  clock network delay (ideal)                    0.000000   0.000000
+  input external delay                           0.200000   0.200000 f
+  rst_n (in)                                     0.000000   0.200000 f
+  arbiter/U80/Z (BUFFD1BWP12T40P140)             0.032026   0.232026 f
+  arbiter/U39/ZN (INVD1BWP12T40P140)             0.011411   0.243437 r
+  arbiter/U18/Z (BUFFD1BWP12T40P140)             0.021350   0.264787 r
+  arbiter/U84/ZN (NR3D0BWP12T40P140)             0.053308   0.318095 f
+  monitor_bus[9] (out)                           0.000000   0.318095 f
+  data arrival time                                         0.318095
+
+  clock core_clk (rise edge)                     0.000000   0.000000
+  clock network delay (ideal)                    0.000000   0.000000
+  clock reconvergence pessimism                  0.000000   0.000000
+  clock uncertainty                              0.050000   0.050000
+  output external delay                          -0.200000  -0.150000
+  data required time                                        -0.150000
+  -------------------------------------------------------------------------
+  data required time                                        -0.150000
+  data arrival time                                         -0.318095
+  -------------------------------------------------------------------------
+  slack (MET)                                               0.468095
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: m_axi_rready
+               (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                              Incr       Path
+  -------------------------------------------------------------------------
+  clock core_clk (rise edge)                     0.000000   0.000000
+  clock network delay (ideal)                    0.000000   0.000000
+  input external delay                           0.200000   0.200000 r
+  rst_n (in)                                     0.000000   0.200000 r
+  arbiter/U80/Z (BUFFD1BWP12T40P140)             0.030529   0.230529 r
+  arbiter/U36/ZN (INVD1BWP12T40P140)             0.011677   0.242206 f
+  arbiter/U16/Z (BUFFD1BWP12T40P140)             0.017040   0.259246 f
+  arbiter/U3/ZN (INVD1BWP12T40P140)              0.036668   0.295914 r
+  arbiter/U38/Z (AN2D1BWP12T40P140)              0.048525   0.344440 r
+  m_axi_rready (out)                             0.000000   0.344440 r
+  data arrival time                                         0.344440
+
+  clock core_clk (rise edge)                     0.000000   0.000000
+  clock network delay (ideal)                    0.000000   0.000000
+  clock reconvergence pessimism                  0.000000   0.000000
+  clock uncertainty                              0.050000   0.050000
+  output external delay                          -0.200000  -0.150000
+  data required time                                        -0.150000
+  -------------------------------------------------------------------------
+  data required time                                        -0.150000
+  data arrival time                                         -0.344440
+  -------------------------------------------------------------------------
+  slack (MET)                                               0.494440
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: m_axi_arvalid
+               (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                              Incr       Path
+  -------------------------------------------------------------------------
+  clock core_clk (rise edge)                     0.000000   0.000000
+  clock network delay (ideal)                    0.000000   0.000000
+  input external delay                           0.200000   0.200000 r
+  rst_n (in)                                     0.000000   0.200000 r
+  arbiter/U80/Z (BUFFD1BWP12T40P140)             0.030529   0.230529 r
+  arbiter/U36/ZN (INVD1BWP12T40P140)             0.011677   0.242206 f
+  arbiter/U16/Z (BUFFD1BWP12T40P140)             0.017040   0.259246 f
+  arbiter/U3/ZN (INVD1BWP12T40P140)              0.036668   0.295914 r
+  arbiter/U17/Z (AN2D1BWP12T40P140)              0.048833   0.344747 r
+  m_axi_arvalid (out)                            0.000000   0.344747 r
+  data arrival time                                         0.344747
+
+  clock core_clk (rise edge)                     0.000000   0.000000
+  clock network delay (ideal)                    0.000000   0.000000
+  clock reconvergence pessimism                  0.000000   0.000000
+  clock uncertainty                              0.050000   0.050000
+  output external delay                          -0.200000  -0.150000
+  data required time                                        -0.150000
+  -------------------------------------------------------------------------
+  data required time                                        -0.150000
+  data arrival time                                         -0.344747
+  -------------------------------------------------------------------------
+  slack (MET)                                               0.494747
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: monitor_bus[12]
+               (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                              Incr       Path
+  -------------------------------------------------------------------------
+  clock core_clk (rise edge)                     0.000000   0.000000
+  clock network delay (ideal)                    0.000000   0.000000
+  input external delay                           0.200000   0.200000 f
+  rst_n (in)                                     0.000000   0.200000 f
+  arbiter/U80/Z (BUFFD1BWP12T40P140)             0.032026   0.232026 f
+  arbiter/U36/ZN (INVD1BWP12T40P140)             0.011411   0.243437 r
+  arbiter/U16/Z (BUFFD1BWP12T40P140)             0.016892   0.260329 r
+  arbiter/U3/ZN (INVD1BWP12T40P140)              0.038360   0.298689 f
+  arbiter/U237/Z (AN4D1BWP12T40P140)             0.050957   0.349645 f
+  monitor_bus[12] (out)                          0.000000   0.349645 f
+  data arrival time                                         0.349645
+
+  clock core_clk (rise edge)                     0.000000   0.000000
+  clock network delay (ideal)                    0.000000   0.000000
+  clock reconvergence pessimism                  0.000000   0.000000
+  clock uncertainty                              0.050000   0.050000
+  output external delay                          -0.200000  -0.150000
+  data required time                                        -0.150000
+  -------------------------------------------------------------------------
+  data required time                                        -0.150000
+  data arrival time                                         -0.349645
+  -------------------------------------------------------------------------
+  slack (MET)                                               0.499645
+
+
+1

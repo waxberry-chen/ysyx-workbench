@@ -1,0 +1,294 @@
+ 
+****************************************
+Report : resources
+Design : ysyx_core_axi4lite
+Version: V-2023.12-SP5
+Date   : Sun Oct 18 15:01:10 2026
+****************************************
+
+
+No resource sharing information to report.
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_axi4lite_arbiter
+****************************************
+
+No implementations to report
+ 
+****************************************
+Design : ysyx_core
+****************************************
+Resource Sharing Report for design ysyx_core in file ./vsrc/core/ysyx_core.sv
+
+===============================================================================
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
+===============================================================================
+| r59      | DW01_cmp6    | width=5    |               | eq_276_2             |
+| r61      | DW01_cmp6    | width=5    |               | eq_280_2             |
+===============================================================================
+
+
+No implementations to report
+ 
+****************************************
+Design : ysyx_lsu_axi4lite_adapter
+****************************************
+Resource Sharing Report for design ysyx_lsu_axi4lite_adapter in file
+        ./vsrc/bus/ysyx_lsu_axi4lite_adapter.sv
+
+===============================================================================
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
+===============================================================================
+| r69      | DW_rash      | A_width=32 |               | srl_77               |
+|          |              | SH_width=5 |               |                      |
+| r71      | DW01_ash     | A_width=32 |               | sll_110              |
+|          |              | SH_width=5 |               |                      |
+| r73      | DW01_ash     | A_width=4  |               | sll_111              |
+|          |              | SH_width=2 |               |                      |
+===============================================================================
+
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_ifu_axi4lite_adapter
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_lsu
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_csr
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_gnrl_dfflrs_DW32_312242
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_gnrl_dfflrs_DW32_197242
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_gnrl_dfflrs_DW32_393242
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_gnrl_dfflrs_DW32_856242
+****************************************
+
+No implementations to report
+ 
+****************************************
+Design : ysyx_exu
+****************************************
+Resource Sharing Report for design ysyx_exu in file ./vsrc/core/ysyx_exu.sv
+
+===============================================================================
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
+===============================================================================
+| r60      | DW01_add     | width=32   |               | add_126              |
+===============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| add_126            | DW01_add         | rpl                |                |
+===============================================================================
+
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_gnrl_data_mux_DW32_N4
+****************************************
+
+No implementations to report
+ 
+****************************************
+Design : ysyx_branch
+****************************************
+Resource Sharing Report for design ysyx_branch in file
+        ./vsrc/core/ysyx_branch.sv
+
+===============================================================================
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
+===============================================================================
+| r62      | DW01_cmp6    | width=32   |               | eq_20 gte_30 lt_28   |
+|          |              |            |               | ne_22                |
+| r63      | DW01_cmp2    | width=32   |               | gte_26 lt_24         |
+===============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| r62                | DW01_cmp6        | rpl                |                |
+===============================================================================
+
+ 
+****************************************
+Design : ysyx_alu
+****************************************
+Resource Sharing Report for design ysyx_alu in file ./vsrc/core/ysyx_alu.sv
+
+===============================================================================
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
+===============================================================================
+| r72      | DW01_add     | width=32   |               | add_14               |
+| r74      | DW01_sub     | width=32   |               | sub_16               |
+| r76      | DW01_ash     | A_width=32 |               | sll_18               |
+|          |              | SH_width=5 |               |                      |
+| r78      | DW01_cmp2    | width=32   |               | lt_20                |
+| r80      | DW01_cmp2    | width=32   |               | lt_22                |
+| r82      | DW_rash      | A_width=32 |               | srl_26               |
+|          |              | SH_width=5 |               |                      |
+| r84      | DW_rash      | A_width=32 |               | sra_28               |
+|          |              | SH_width=5 |               |                      |
+===============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| add_14             | DW01_add         | rpl                |                |
+| sub_16             | DW01_sub         | rpl                |                |
+| sll_18             | DW01_ash         | mx2                |                |
+| srl_26             | DW_rash          | mx2                |                |
+| sra_28             | DW_rash          | mx2                |                |
+===============================================================================
+
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_opbuf
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_gnrl_rv_reg_DW277
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_regfile
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_gen_imm
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_idu
+****************************************
+
+No implementations to report
+ 
+****************************************
+Design : ysyx_ifu_80000000_2
+****************************************
+Resource Sharing Report for design ysyx_ifu_80000000_2 in file
+        ./vsrc/core/ysyx_ifu.sv
+
+===============================================================================
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
+===============================================================================
+| r64      | DW01_add     | width=32   |               | add_83               |
+| r66      | DW01_add     | width=32   |               | add_101              |
+===============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| add_83             | DW01_add         | rpl                |                |
+| add_101            | DW01_add         | rpl                |                |
+===============================================================================
+
+ 
+****************************************
+Design : ysyx_gnrl_fifo_DW65_DEPTH2
+****************************************
+Resource Sharing Report for design ysyx_gnrl_fifo_DW65_DEPTH2 in file
+        ./vsrc/gnrl/ysyx_gnrl_primitive.sv
+
+===============================================================================
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
+===============================================================================
+| r132     | DW01_inc     | width=2    |               | add_356              |
+| r134     | DW01_dec     | width=2    |               | sub_357              |
+===============================================================================
+
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_gnrl_dfflrs_32_80000000
+****************************************
+
+No implementations to report
+1

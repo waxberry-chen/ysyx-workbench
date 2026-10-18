@@ -1,0 +1,88 @@
+****************************************
+Report : constraint
+	-all_violators
+	-path slack_only
+Design : ysyx_core_axi4lite
+Version: T-2022.03-SP5
+Date   : Sun Oct 18 17:31:38 2026
+****************************************
+
+
+
+
+
+
+   min_capacitance
+
+                             Required        Actual
+   Pin                      Capacitance    Capacitance       Slack
+   -----------------------------------------------------------------
+   core/u_exu/U4/Z          0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U5/Z          0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U6/Z          0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U7/Z          0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U8/Z          0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U9/Z          0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U10/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U11/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U12/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U13/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U14/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U15/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U16/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U17/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U18/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U19/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U20/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U21/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U22/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U23/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U24/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U25/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U26/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U27/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U28/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U29/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U30/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U31/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U32/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U33/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U34/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U35/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U36/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U38/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U39/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U40/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U41/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U42/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U43/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U44/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U45/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U46/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U47/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U48/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U49/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U50/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U51/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U52/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U53/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U54/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U55/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U56/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U57/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U58/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U59/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U60/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U61/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U62/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U63/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U64/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U65/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U66/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U67/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U68/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U69/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+   core/u_exu/U70/Z         0.000410       0.000000       -0.000410 (VIOLATED)
+
+
+1

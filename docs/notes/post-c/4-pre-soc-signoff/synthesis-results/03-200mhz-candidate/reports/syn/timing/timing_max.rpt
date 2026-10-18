@@ -1,0 +1,1026 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 20
+Design : ysyx_core_axi4lite
+Version: V-2023.12-SP5
+Date   : Sun Oct 18 17:30:26 2026
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: tt0p9v25c   Library: tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+Wire Load Model Mode: top
+
+  Startpoint: core/u_opbuf/u_context_reg/data_q_reg_145_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: commit_redirect_reason[0]
+            (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_core_axi4lite ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                    Incr       Path
+  -------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                           0.000000   0.000000
+  clock network delay (ideal)                                          0.000000   0.000000
+  core/u_opbuf/u_context_reg/data_q_reg_145_/CP (DFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  core/u_opbuf/u_context_reg/data_q_reg_145_/Q (DFCNQD1BWP12T40P140)   0.073610   0.073610 f
+  core/u_opbuf/u_context_reg/out_data[145] (ysyx_gnrl_rv_reg_DW277)    0.000000   0.073610 f
+  core/u_opbuf/out_alu_rhs_imm (ysyx_opbuf)                            0.000000   0.073610 f
+  core/U53/Z (BUFFD1BWP12T40P140)                                      0.031440   0.105050 f
+  core/u_exu/op_alu_rhs_imm (ysyx_exu)                                 0.000000   0.105050 f
+  core/u_exu/U132/ZN (INVD1BWP12T40P140)                               0.020496   0.125546 r
+  core/u_exu/U96/Z (BUFFD1BWP12T40P140)                                0.017250   0.142796 r
+  core/u_exu/U76/ZN (INVD1BWP12T40P140)                                0.037684   0.180479 f
+  core/u_exu/U131/Z (AO22D0BWP12T40P140)                               0.040932   0.221412 f
+  core/u_exu/u_alu/alu_src1[0] (ysyx_alu)                              0.000000   0.221412 f
+  core/u_exu/u_alu/U262/Z (BUFFD1BWP12T40P140)                         0.125414   0.346826 f
+  core/u_exu/u_alu/U316/ZN (IND2D0BWP12T40P140)                        0.043032   0.389858 r
+  core/u_exu/u_alu/U317/ZN (IAO21D0BWP12T40P140)                       0.028025   0.417883 r
+  core/u_exu/u_alu/U318/Z (AO221D0BWP12T40P140)                        0.035195   0.453078 r
+  core/u_exu/u_alu/U319/Z (OA221D0BWP12T40P140)                        0.050142   0.503220 r
+  core/u_exu/u_alu/U320/Z (AO221D0BWP12T40P140)                        0.026621   0.529841 r
+  core/u_exu/u_alu/U321/Z (OA221D0BWP12T40P140)                        0.050159   0.580000 r
+  core/u_exu/u_alu/U322/Z (AO221D0BWP12T40P140)                        0.026633   0.606633 r
+  core/u_exu/u_alu/U323/Z (OA221D0BWP12T40P140)                        0.050155   0.656788 r
+  core/u_exu/u_alu/U324/Z (AO221D0BWP12T40P140)                        0.026628   0.683416 r
+  core/u_exu/u_alu/U325/Z (OA221D0BWP12T40P140)                        0.050155   0.733571 r
+  core/u_exu/u_alu/U326/Z (AO221D0BWP12T40P140)                        0.026629   0.760200 r
+  core/u_exu/u_alu/U327/Z (OA221D0BWP12T40P140)                        0.050160   0.810360 r
+  core/u_exu/u_alu/U328/Z (AO221D0BWP12T40P140)                        0.026624   0.836984 r
+  core/u_exu/u_alu/U329/Z (OA221D0BWP12T40P140)                        0.050155   0.887139 r
+  core/u_exu/u_alu/U330/Z (AO221D0BWP12T40P140)                        0.026628   0.913767 r
+  core/u_exu/u_alu/U331/Z (OA221D0BWP12T40P140)                        0.050155   0.963922 r
+  core/u_exu/u_alu/U332/Z (AO221D0BWP12T40P140)                        0.026629   0.990551 r
+  core/u_exu/u_alu/U333/Z (OA221D0BWP12T40P140)                        0.050155   1.040705 r
+  core/u_exu/u_alu/U334/Z (AO221D0BWP12T40P140)                        0.026628   1.067334 r
+  core/u_exu/u_alu/U335/Z (OA221D0BWP12T40P140)                        0.050157   1.117491 r
+  core/u_exu/u_alu/U336/Z (AO221D0BWP12T40P140)                        0.026631   1.144122 r
+  core/u_exu/u_alu/U337/Z (OA221D0BWP12T40P140)                        0.050163   1.194286 r
+  core/u_exu/u_alu/U338/Z (AO221D0BWP12T40P140)                        0.026637   1.220922 r
+  core/u_exu/u_alu/U339/Z (OA221D0BWP12T40P140)                        0.050155   1.271077 r
+  core/u_exu/u_alu/U340/Z (AO221D0BWP12T40P140)                        0.026628   1.297706 r
+  core/u_exu/u_alu/U341/Z (OA221D0BWP12T40P140)                        0.050155   1.347861 r
+  core/u_exu/u_alu/U342/Z (AO221D0BWP12T40P140)                        0.026628   1.374489 r
+  core/u_exu/u_alu/U343/Z (OA221D0BWP12T40P140)                        0.050155   1.424644 r
+  core/u_exu/u_alu/U344/Z (AO221D0BWP12T40P140)                        0.026628   1.451273 r
+  core/u_exu/u_alu/U345/Z (OA221D0BWP12T40P140)                        0.049832   1.501105 r
+  core/u_exu/u_alu/U346/ZN (AOI221D0BWP12T40P140)                      0.013019   1.514124 f
+  core/u_exu/u_alu/U347/ZN (IAO21D0BWP12T40P140)                       0.019293   1.533417 r
+  core/u_exu/u_alu/U348/ZN (OAI22D0BWP12T40P140)                       0.025512   1.558929 f
+  core/u_exu/u_alu/U261/ZN (AOI22D1BWP12T40P140)                       0.023356   1.582286 r
+  core/u_exu/u_alu/U258/ZN (OAI33D1BWP12T40P140)                       0.027760   1.610046 f
+  core/u_exu/u_alu/U43/ZN (AOI221D1BWP12T40P140)                       0.035048   1.645094 r
+  core/u_exu/u_alu/U40/ZN (ND3D1BWP12T40P140)                          0.097035   1.742129 f
+  core/u_exu/u_alu/alu_res[0] (ysyx_alu)                               0.000000   1.742129 f
+  core/u_exu/U75/ZN (NR2D1BWP12T40P140)                                0.027972   1.770101 r
+  core/u_exu/U127/ZN (OAI33D1BWP12T40P140)                             0.027553   1.797654 f
+  core/u_exu/U126/ZN (CKND2D1BWP12T40P140)                             0.023628   1.821282 r
+  core/u_exu/U95/ZN (CKND2D1BWP12T40P140)                              0.020337   1.841619 f
+  core/u_exu/U130/ZN (NR2D1BWP12T40P140)                               0.018587   1.860207 r
+  core/u_exu/U97/Z (BUFFD1BWP12T40P140)                                0.057443   1.917650 r
+  core/u_exu/U93/ZN (CKND2D1BWP12T40P140)                              0.093958   2.011609 f
+  core/u_exu/U92/Z (BUFFD1BWP12T40P140)                                0.058994   2.070603 f
+  core/u_exu/U125/ZN (NR2D1BWP12T40P140)                               0.025104   2.095707 r
+  core/u_exu/U124/ZN (INR3D1BWP12T40P140)                              0.041006   2.136713 r
+  core/u_exu/U94/Z (BUFFD1BWP12T40P140)                                0.030501   2.167213 r
+  core/u_exu/U73/ZN (NR2D1BWP12T40P140)                                0.011819   2.179033 f
+  core/u_exu/redirect_valid (ysyx_exu)                                 0.000000   2.179033 f
+  core/U24/Z (BUFFD1BWP12T40P140)                                      0.036587   2.215620 f
+  core/U23/ZN (IAO21D1BWP12T40P140)                                    0.052491   2.268111 f
+  core/commit_redirect_reason[0] (ysyx_core)                           0.000000   2.268111 f
+  commit_redirect_reason[0] (out)                                      0.000000   2.268111 f
+  data arrival time                                                               2.268111
+
+  clock core_clk (rise edge)                                           5.000000   5.000000
+  clock network delay (ideal)                                          0.000000   5.000000
+  clock uncertainty                                                    -0.200000  4.800000
+  output external delay                                                -2.000000  2.800000
+  data required time                                                              2.800000
+  -------------------------------------------------------------------------------------------
+  data required time                                                              2.800000
+  data arrival time                                                               -2.268111
+  -------------------------------------------------------------------------------------------
+  slack (MET)                                                                     0.531889
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: monitor_bus[0]
+            (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_core_axi4lite ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                      Incr       Path
+  ---------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                             0.000000   0.000000
+  clock network delay (ideal)                                            0.000000   0.000000
+  input external delay                                                   2.000000   2.000000 f
+  rst_n (in)                                                             0.000000   2.000000 f
+  core/rst_n (ysyx_core)                                                 0.000000   2.000000 f
+  core/U52/ZN (INVD1BWP12T40P140)                                        0.019956   2.019956 r
+  core/U51/ZN (INVD1BWP12T40P140)                                        0.068676   2.088632 f
+  core/u_ifu_axi4lite_adapter/rst_n (ysyx_ifu_axi4lite_adapter)          0.000000   2.088632 f
+  core/u_ifu_axi4lite_adapter/U20/Z (BUFFD1BWP12T40P140)                 0.029827   2.118459 f
+  core/u_ifu_axi4lite_adapter/U17/ZN (INVD1BWP12T40P140)                 0.012810   2.131269 r
+  core/u_ifu_axi4lite_adapter/U9/Z (BUFFD1BWP12T40P140)                  0.019083   2.150352 r
+  core/u_ifu_axi4lite_adapter/U8/ZN (INVD1BWP12T40P140)                  0.037754   2.188106 f
+  core/u_ifu_axi4lite_adapter/U26/Z (AN3D1BWP12T40P140)                  0.054136   2.242242 f
+  core/u_ifu_axi4lite_adapter/m_axi_arvalid (ysyx_ifu_axi4lite_adapter)  0.000000   2.242242 f
+  core/ifu_axi_arvalid (ysyx_core)                                       0.000000   2.242242 f
+  monitor_bus[0] (out)                                                   0.000000   2.242242 f
+  data arrival time                                                                 2.242242
+
+  clock core_clk (rise edge)                                             5.000000   5.000000
+  clock network delay (ideal)                                            0.000000   5.000000
+  clock uncertainty                                                      -0.200000  4.800000
+  output external delay                                                  -2.000000  2.800000
+  data required time                                                                2.800000
+  ---------------------------------------------------------------------------------------------
+  data required time                                                                2.800000
+  data arrival time                                                                 -2.242242
+  ---------------------------------------------------------------------------------------------
+  slack (MET)                                                                       0.557759
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: monitor_bus[10]
+            (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_core_axi4lite ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                     Incr       Path
+  --------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                            0.000000   0.000000
+  clock network delay (ideal)                                           0.000000   0.000000
+  input external delay                                                  2.000000   2.000000 r
+  rst_n (in)                                                            0.000000   2.000000 r
+  core/rst_n (ysyx_core)                                                0.000000   2.000000 r
+  core/U52/ZN (INVD1BWP12T40P140)                                       0.019232   2.019232 f
+  core/U51/ZN (INVD1BWP12T40P140)                                       0.060299   2.079531 r
+  core/u_lsu_axi4lite_adapter/rst_n (ysyx_lsu_axi4lite_adapter)         0.000000   2.079531 r
+  core/u_lsu_axi4lite_adapter/U45/Z (BUFFD1BWP12T40P140)                0.029639   2.109170 r
+  core/u_lsu_axi4lite_adapter/U33/ZN (INVD1BWP12T40P140)                0.011570   2.120740 f
+  core/u_lsu_axi4lite_adapter/U24/Z (BUFFD1BWP12T40P140)                0.020830   2.141570 f
+  core/u_lsu_axi4lite_adapter/U47/ZN (NR2D1BWP12T40P140)                0.019208   2.160779 r
+  core/u_lsu_axi4lite_adapter/U46/ZN (INR2D1BWP12T40P140)               0.059458   2.220236 r
+  core/u_lsu_axi4lite_adapter/m_axi_wvalid (ysyx_lsu_axi4lite_adapter)  0.000000   2.220236 r
+  core/lsu_axi_wvalid (ysyx_core)                                       0.000000   2.220236 r
+  monitor_bus[10] (out)                                                 0.000000   2.220236 r
+  data arrival time                                                                2.220236
+
+  clock core_clk (rise edge)                                            5.000000   5.000000
+  clock network delay (ideal)                                           0.000000   5.000000
+  clock uncertainty                                                     -0.200000  4.800000
+  output external delay                                                 -2.000000  2.800000
+  data required time                                                               2.800000
+  --------------------------------------------------------------------------------------------
+  data required time                                                               2.800000
+  data arrival time                                                                -2.220236
+  --------------------------------------------------------------------------------------------
+  slack (MET)                                                                      0.579764
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: monitor_bus[8]
+            (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_core_axi4lite ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                      Incr       Path
+  ---------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                             0.000000   0.000000
+  clock network delay (ideal)                                            0.000000   0.000000
+  input external delay                                                   2.000000   2.000000 r
+  rst_n (in)                                                             0.000000   2.000000 r
+  core/rst_n (ysyx_core)                                                 0.000000   2.000000 r
+  core/U52/ZN (INVD1BWP12T40P140)                                        0.019232   2.019232 f
+  core/U51/ZN (INVD1BWP12T40P140)                                        0.060299   2.079531 r
+  core/u_lsu_axi4lite_adapter/rst_n (ysyx_lsu_axi4lite_adapter)          0.000000   2.079531 r
+  core/u_lsu_axi4lite_adapter/U45/Z (BUFFD1BWP12T40P140)                 0.029639   2.109170 r
+  core/u_lsu_axi4lite_adapter/U33/ZN (INVD1BWP12T40P140)                 0.011570   2.120740 f
+  core/u_lsu_axi4lite_adapter/U24/Z (BUFFD1BWP12T40P140)                 0.020830   2.141570 f
+  core/u_lsu_axi4lite_adapter/U47/ZN (NR2D1BWP12T40P140)                 0.019208   2.160779 r
+  core/u_lsu_axi4lite_adapter/U48/ZN (INR2D1BWP12T40P140)                0.059337   2.220116 r
+  core/u_lsu_axi4lite_adapter/m_axi_awvalid (ysyx_lsu_axi4lite_adapter)  0.000000   2.220116 r
+  core/lsu_axi_awvalid (ysyx_core)                                       0.000000   2.220116 r
+  monitor_bus[8] (out)                                                   0.000000   2.220116 r
+  data arrival time                                                                 2.220116
+
+  clock core_clk (rise edge)                                             5.000000   5.000000
+  clock network delay (ideal)                                            0.000000   5.000000
+  clock uncertainty                                                      -0.200000  4.800000
+  output external delay                                                  -2.000000  2.800000
+  data required time                                                                2.800000
+  ---------------------------------------------------------------------------------------------
+  data required time                                                                2.800000
+  data arrival time                                                                 -2.220116
+  ---------------------------------------------------------------------------------------------
+  slack (MET)                                                                       0.579885
+
+
+  Startpoint: core/u_opbuf/u_context_reg/data_q_reg_145_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: commit_redirect_valid
+            (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_core_axi4lite ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                    Incr       Path
+  -------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                           0.000000   0.000000
+  clock network delay (ideal)                                          0.000000   0.000000
+  core/u_opbuf/u_context_reg/data_q_reg_145_/CP (DFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  core/u_opbuf/u_context_reg/data_q_reg_145_/Q (DFCNQD1BWP12T40P140)   0.073610   0.073610 f
+  core/u_opbuf/u_context_reg/out_data[145] (ysyx_gnrl_rv_reg_DW277)    0.000000   0.073610 f
+  core/u_opbuf/out_alu_rhs_imm (ysyx_opbuf)                            0.000000   0.073610 f
+  core/U53/Z (BUFFD1BWP12T40P140)                                      0.031440   0.105050 f
+  core/u_exu/op_alu_rhs_imm (ysyx_exu)                                 0.000000   0.105050 f
+  core/u_exu/U132/ZN (INVD1BWP12T40P140)                               0.020496   0.125546 r
+  core/u_exu/U96/Z (BUFFD1BWP12T40P140)                                0.017250   0.142796 r
+  core/u_exu/U76/ZN (INVD1BWP12T40P140)                                0.037684   0.180479 f
+  core/u_exu/U131/Z (AO22D0BWP12T40P140)                               0.040932   0.221412 f
+  core/u_exu/u_alu/alu_src1[0] (ysyx_alu)                              0.000000   0.221412 f
+  core/u_exu/u_alu/U262/Z (BUFFD1BWP12T40P140)                         0.125414   0.346826 f
+  core/u_exu/u_alu/U316/ZN (IND2D0BWP12T40P140)                        0.043032   0.389858 r
+  core/u_exu/u_alu/U317/ZN (IAO21D0BWP12T40P140)                       0.028025   0.417883 r
+  core/u_exu/u_alu/U318/Z (AO221D0BWP12T40P140)                        0.035195   0.453078 r
+  core/u_exu/u_alu/U319/Z (OA221D0BWP12T40P140)                        0.050142   0.503220 r
+  core/u_exu/u_alu/U320/Z (AO221D0BWP12T40P140)                        0.026621   0.529841 r
+  core/u_exu/u_alu/U321/Z (OA221D0BWP12T40P140)                        0.050159   0.580000 r
+  core/u_exu/u_alu/U322/Z (AO221D0BWP12T40P140)                        0.026633   0.606633 r
+  core/u_exu/u_alu/U323/Z (OA221D0BWP12T40P140)                        0.050155   0.656788 r
+  core/u_exu/u_alu/U324/Z (AO221D0BWP12T40P140)                        0.026628   0.683416 r
+  core/u_exu/u_alu/U325/Z (OA221D0BWP12T40P140)                        0.050155   0.733571 r
+  core/u_exu/u_alu/U326/Z (AO221D0BWP12T40P140)                        0.026629   0.760200 r
+  core/u_exu/u_alu/U327/Z (OA221D0BWP12T40P140)                        0.050160   0.810360 r
+  core/u_exu/u_alu/U328/Z (AO221D0BWP12T40P140)                        0.026624   0.836984 r
+  core/u_exu/u_alu/U329/Z (OA221D0BWP12T40P140)                        0.050155   0.887139 r
+  core/u_exu/u_alu/U330/Z (AO221D0BWP12T40P140)                        0.026628   0.913767 r
+  core/u_exu/u_alu/U331/Z (OA221D0BWP12T40P140)                        0.050155   0.963922 r
+  core/u_exu/u_alu/U332/Z (AO221D0BWP12T40P140)                        0.026629   0.990551 r
+  core/u_exu/u_alu/U333/Z (OA221D0BWP12T40P140)                        0.050155   1.040705 r
+  core/u_exu/u_alu/U334/Z (AO221D0BWP12T40P140)                        0.026628   1.067334 r
+  core/u_exu/u_alu/U335/Z (OA221D0BWP12T40P140)                        0.050157   1.117491 r
+  core/u_exu/u_alu/U336/Z (AO221D0BWP12T40P140)                        0.026631   1.144122 r
+  core/u_exu/u_alu/U337/Z (OA221D0BWP12T40P140)                        0.050163   1.194286 r
+  core/u_exu/u_alu/U338/Z (AO221D0BWP12T40P140)                        0.026637   1.220922 r
+  core/u_exu/u_alu/U339/Z (OA221D0BWP12T40P140)                        0.050155   1.271077 r
+  core/u_exu/u_alu/U340/Z (AO221D0BWP12T40P140)                        0.026628   1.297706 r
+  core/u_exu/u_alu/U341/Z (OA221D0BWP12T40P140)                        0.050155   1.347861 r
+  core/u_exu/u_alu/U342/Z (AO221D0BWP12T40P140)                        0.026628   1.374489 r
+  core/u_exu/u_alu/U343/Z (OA221D0BWP12T40P140)                        0.050155   1.424644 r
+  core/u_exu/u_alu/U344/Z (AO221D0BWP12T40P140)                        0.026628   1.451273 r
+  core/u_exu/u_alu/U345/Z (OA221D0BWP12T40P140)                        0.049832   1.501105 r
+  core/u_exu/u_alu/U346/ZN (AOI221D0BWP12T40P140)                      0.013019   1.514124 f
+  core/u_exu/u_alu/U347/ZN (IAO21D0BWP12T40P140)                       0.019293   1.533417 r
+  core/u_exu/u_alu/U348/ZN (OAI22D0BWP12T40P140)                       0.025512   1.558929 f
+  core/u_exu/u_alu/U261/ZN (AOI22D1BWP12T40P140)                       0.023356   1.582286 r
+  core/u_exu/u_alu/U258/ZN (OAI33D1BWP12T40P140)                       0.027760   1.610046 f
+  core/u_exu/u_alu/U43/ZN (AOI221D1BWP12T40P140)                       0.035048   1.645094 r
+  core/u_exu/u_alu/U40/ZN (ND3D1BWP12T40P140)                          0.097035   1.742129 f
+  core/u_exu/u_alu/alu_res[0] (ysyx_alu)                               0.000000   1.742129 f
+  core/u_exu/U75/ZN (NR2D1BWP12T40P140)                                0.027972   1.770101 r
+  core/u_exu/U127/ZN (OAI33D1BWP12T40P140)                             0.027553   1.797654 f
+  core/u_exu/U126/ZN (CKND2D1BWP12T40P140)                             0.023628   1.821282 r
+  core/u_exu/U95/ZN (CKND2D1BWP12T40P140)                              0.020337   1.841619 f
+  core/u_exu/U130/ZN (NR2D1BWP12T40P140)                               0.018587   1.860207 r
+  core/u_exu/U97/Z (BUFFD1BWP12T40P140)                                0.057443   1.917650 r
+  core/u_exu/U93/ZN (CKND2D1BWP12T40P140)                              0.093958   2.011609 f
+  core/u_exu/U92/Z (BUFFD1BWP12T40P140)                                0.058994   2.070603 f
+  core/u_exu/U125/ZN (NR2D1BWP12T40P140)                               0.025104   2.095707 r
+  core/u_exu/U124/ZN (INR3D1BWP12T40P140)                              0.041006   2.136713 r
+  core/u_exu/U94/Z (BUFFD1BWP12T40P140)                                0.030501   2.167213 r
+  core/u_exu/U73/ZN (NR2D1BWP12T40P140)                                0.011819   2.179033 f
+  core/u_exu/redirect_valid (ysyx_exu)                                 0.000000   2.179033 f
+  core/U24/Z (BUFFD1BWP12T40P140)                                      0.036587   2.215620 f
+  core/commit_redirect_valid (ysyx_core)                               0.000000   2.215620 f
+  commit_redirect_valid (out)                                          0.000000   2.215620 f
+  data arrival time                                                               2.215620
+
+  clock core_clk (rise edge)                                           5.000000   5.000000
+  clock network delay (ideal)                                          0.000000   5.000000
+  clock uncertainty                                                    -0.200000  4.800000
+  output external delay                                                -2.000000  2.800000
+  data required time                                                              2.800000
+  -------------------------------------------------------------------------------------------
+  data required time                                                              2.800000
+  data arrival time                                                               -2.215620
+  -------------------------------------------------------------------------------------------
+  slack (MET)                                                                     0.584380
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: monitor_bus[4]
+            (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_core_axi4lite ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                      Incr       Path
+  ---------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                             0.000000   0.000000
+  clock network delay (ideal)                                            0.000000   0.000000
+  input external delay                                                   2.000000   2.000000 f
+  rst_n (in)                                                             0.000000   2.000000 f
+  core/rst_n (ysyx_core)                                                 0.000000   2.000000 f
+  core/U52/ZN (INVD1BWP12T40P140)                                        0.019956   2.019956 r
+  core/U51/ZN (INVD1BWP12T40P140)                                        0.068676   2.088632 f
+  core/u_lsu_axi4lite_adapter/rst_n (ysyx_lsu_axi4lite_adapter)          0.000000   2.088632 f
+  core/u_lsu_axi4lite_adapter/U45/Z (BUFFD1BWP12T40P140)                 0.032327   2.120959 f
+  core/u_lsu_axi4lite_adapter/U33/ZN (INVD1BWP12T40P140)                 0.011436   2.132396 r
+  core/u_lsu_axi4lite_adapter/U24/Z (BUFFD1BWP12T40P140)                 0.019958   2.152354 r
+  core/u_lsu_axi4lite_adapter/U44/ZN (NR2D1BWP12T40P140)                 0.016583   2.168937 f
+  core/u_lsu_axi4lite_adapter/U42/Z (AN2D1BWP12T40P140)                  0.044558   2.213495 f
+  core/u_lsu_axi4lite_adapter/m_axi_arvalid (ysyx_lsu_axi4lite_adapter)  0.000000   2.213495 f
+  core/lsu_axi_arvalid (ysyx_core)                                       0.000000   2.213495 f
+  monitor_bus[4] (out)                                                   0.000000   2.213495 f
+  data arrival time                                                                 2.213495
+
+  clock core_clk (rise edge)                                             5.000000   5.000000
+  clock network delay (ideal)                                            0.000000   5.000000
+  clock uncertainty                                                      -0.200000  4.800000
+  output external delay                                                  -2.000000  2.800000
+  data required time                                                                2.800000
+  ---------------------------------------------------------------------------------------------
+  data required time                                                                2.800000
+  data arrival time                                                                 -2.213495
+  ---------------------------------------------------------------------------------------------
+  slack (MET)                                                                       0.586505
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: monitor_bus[3]
+            (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_core_axi4lite ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                     Incr       Path
+  --------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                            0.000000   0.000000
+  clock network delay (ideal)                                           0.000000   0.000000
+  input external delay                                                  2.000000   2.000000 r
+  rst_n (in)                                                            0.000000   2.000000 r
+  core/rst_n (ysyx_core)                                                0.000000   2.000000 r
+  core/U52/ZN (INVD1BWP12T40P140)                                       0.019232   2.019232 f
+  core/U51/ZN (INVD1BWP12T40P140)                                       0.060299   2.079531 r
+  core/u_ifu_axi4lite_adapter/rst_n (ysyx_ifu_axi4lite_adapter)         0.000000   2.079531 r
+  core/u_ifu_axi4lite_adapter/U20/Z (BUFFD1BWP12T40P140)                0.027407   2.106938 r
+  core/u_ifu_axi4lite_adapter/U17/ZN (INVD1BWP12T40P140)                0.013200   2.120138 f
+  core/u_ifu_axi4lite_adapter/U9/Z (BUFFD1BWP12T40P140)                 0.019274   2.139412 f
+  core/u_ifu_axi4lite_adapter/U27/ZN (NR3D0BWP12T40P140)                0.060462   2.199875 r
+  core/u_ifu_axi4lite_adapter/m_axi_rready (ysyx_ifu_axi4lite_adapter)  0.000000   2.199875 r
+  core/ifu_axi_rready (ysyx_core)                                       0.000000   2.199875 r
+  monitor_bus[3] (out)                                                  0.000000   2.199875 r
+  data arrival time                                                                2.199875
+
+  clock core_clk (rise edge)                                            5.000000   5.000000
+  clock network delay (ideal)                                           0.000000   5.000000
+  clock uncertainty                                                     -0.200000  4.800000
+  output external delay                                                 -2.000000  2.800000
+  data required time                                                               2.800000
+  --------------------------------------------------------------------------------------------
+  data required time                                                               2.800000
+  data arrival time                                                                -2.199875
+  --------------------------------------------------------------------------------------------
+  slack (MET)                                                                      0.600126
+
+
+  Startpoint: core/u_opbuf/u_context_reg/data_q_reg_145_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: commit_redirect_reason[1]
+            (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_core_axi4lite ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                    Incr       Path
+  -------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                           0.000000   0.000000
+  clock network delay (ideal)                                          0.000000   0.000000
+  core/u_opbuf/u_context_reg/data_q_reg_145_/CP (DFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  core/u_opbuf/u_context_reg/data_q_reg_145_/Q (DFCNQD1BWP12T40P140)   0.073610   0.073610 f
+  core/u_opbuf/u_context_reg/out_data[145] (ysyx_gnrl_rv_reg_DW277)    0.000000   0.073610 f
+  core/u_opbuf/out_alu_rhs_imm (ysyx_opbuf)                            0.000000   0.073610 f
+  core/U53/Z (BUFFD1BWP12T40P140)                                      0.031440   0.105050 f
+  core/u_exu/op_alu_rhs_imm (ysyx_exu)                                 0.000000   0.105050 f
+  core/u_exu/U132/ZN (INVD1BWP12T40P140)                               0.020496   0.125546 r
+  core/u_exu/U96/Z (BUFFD1BWP12T40P140)                                0.017250   0.142796 r
+  core/u_exu/U76/ZN (INVD1BWP12T40P140)                                0.037684   0.180479 f
+  core/u_exu/U131/Z (AO22D0BWP12T40P140)                               0.040932   0.221412 f
+  core/u_exu/u_alu/alu_src1[0] (ysyx_alu)                              0.000000   0.221412 f
+  core/u_exu/u_alu/U262/Z (BUFFD1BWP12T40P140)                         0.125414   0.346826 f
+  core/u_exu/u_alu/U316/ZN (IND2D0BWP12T40P140)                        0.043032   0.389858 r
+  core/u_exu/u_alu/U317/ZN (IAO21D0BWP12T40P140)                       0.028025   0.417883 r
+  core/u_exu/u_alu/U318/Z (AO221D0BWP12T40P140)                        0.035195   0.453078 r
+  core/u_exu/u_alu/U319/Z (OA221D0BWP12T40P140)                        0.050142   0.503220 r
+  core/u_exu/u_alu/U320/Z (AO221D0BWP12T40P140)                        0.026621   0.529841 r
+  core/u_exu/u_alu/U321/Z (OA221D0BWP12T40P140)                        0.050159   0.580000 r
+  core/u_exu/u_alu/U322/Z (AO221D0BWP12T40P140)                        0.026633   0.606633 r
+  core/u_exu/u_alu/U323/Z (OA221D0BWP12T40P140)                        0.050155   0.656788 r
+  core/u_exu/u_alu/U324/Z (AO221D0BWP12T40P140)                        0.026628   0.683416 r
+  core/u_exu/u_alu/U325/Z (OA221D0BWP12T40P140)                        0.050155   0.733571 r
+  core/u_exu/u_alu/U326/Z (AO221D0BWP12T40P140)                        0.026629   0.760200 r
+  core/u_exu/u_alu/U327/Z (OA221D0BWP12T40P140)                        0.050160   0.810360 r
+  core/u_exu/u_alu/U328/Z (AO221D0BWP12T40P140)                        0.026624   0.836984 r
+  core/u_exu/u_alu/U329/Z (OA221D0BWP12T40P140)                        0.050155   0.887139 r
+  core/u_exu/u_alu/U330/Z (AO221D0BWP12T40P140)                        0.026628   0.913767 r
+  core/u_exu/u_alu/U331/Z (OA221D0BWP12T40P140)                        0.050155   0.963922 r
+  core/u_exu/u_alu/U332/Z (AO221D0BWP12T40P140)                        0.026629   0.990551 r
+  core/u_exu/u_alu/U333/Z (OA221D0BWP12T40P140)                        0.050155   1.040705 r
+  core/u_exu/u_alu/U334/Z (AO221D0BWP12T40P140)                        0.026628   1.067334 r
+  core/u_exu/u_alu/U335/Z (OA221D0BWP12T40P140)                        0.050157   1.117491 r
+  core/u_exu/u_alu/U336/Z (AO221D0BWP12T40P140)                        0.026631   1.144122 r
+  core/u_exu/u_alu/U337/Z (OA221D0BWP12T40P140)                        0.050163   1.194286 r
+  core/u_exu/u_alu/U338/Z (AO221D0BWP12T40P140)                        0.026637   1.220922 r
+  core/u_exu/u_alu/U339/Z (OA221D0BWP12T40P140)                        0.050155   1.271077 r
+  core/u_exu/u_alu/U340/Z (AO221D0BWP12T40P140)                        0.026628   1.297706 r
+  core/u_exu/u_alu/U341/Z (OA221D0BWP12T40P140)                        0.050155   1.347861 r
+  core/u_exu/u_alu/U342/Z (AO221D0BWP12T40P140)                        0.026628   1.374489 r
+  core/u_exu/u_alu/U343/Z (OA221D0BWP12T40P140)                        0.050155   1.424644 r
+  core/u_exu/u_alu/U344/Z (AO221D0BWP12T40P140)                        0.026628   1.451273 r
+  core/u_exu/u_alu/U345/Z (OA221D0BWP12T40P140)                        0.049832   1.501105 r
+  core/u_exu/u_alu/U346/ZN (AOI221D0BWP12T40P140)                      0.013019   1.514124 f
+  core/u_exu/u_alu/U347/ZN (IAO21D0BWP12T40P140)                       0.019293   1.533417 r
+  core/u_exu/u_alu/U348/ZN (OAI22D0BWP12T40P140)                       0.025512   1.558929 f
+  core/u_exu/u_alu/U261/ZN (AOI22D1BWP12T40P140)                       0.023356   1.582286 r
+  core/u_exu/u_alu/U258/ZN (OAI33D1BWP12T40P140)                       0.027760   1.610046 f
+  core/u_exu/u_alu/U43/ZN (AOI221D1BWP12T40P140)                       0.035048   1.645094 r
+  core/u_exu/u_alu/U40/ZN (ND3D1BWP12T40P140)                          0.097035   1.742129 f
+  core/u_exu/u_alu/alu_res[0] (ysyx_alu)                               0.000000   1.742129 f
+  core/u_exu/U75/ZN (NR2D1BWP12T40P140)                                0.027972   1.770101 r
+  core/u_exu/U127/ZN (OAI33D1BWP12T40P140)                             0.027553   1.797654 f
+  core/u_exu/U126/ZN (CKND2D1BWP12T40P140)                             0.023628   1.821282 r
+  core/u_exu/U95/ZN (CKND2D1BWP12T40P140)                              0.020337   1.841619 f
+  core/u_exu/U130/ZN (NR2D1BWP12T40P140)                               0.018587   1.860207 r
+  core/u_exu/U97/Z (BUFFD1BWP12T40P140)                                0.057443   1.917650 r
+  core/u_exu/U93/ZN (CKND2D1BWP12T40P140)                              0.093958   2.011609 f
+  core/u_exu/U92/Z (BUFFD1BWP12T40P140)                                0.058994   2.070603 f
+  core/u_exu/U72/ZN (INVD1BWP12T40P140)                                0.025213   2.095815 r
+  core/u_exu/U78/ZN (NR2D1BWP12T40P140)                                0.012046   2.107862 f
+  core/u_exu/U77/Z (BUFFD1BWP12T40P140)                                0.039301   2.147163 f
+  core/u_exu/commit_exception (ysyx_exu)                               0.000000   2.147163 f
+  core/U25/Z (OR2D1BWP12T40P140)                                       0.048543   2.195706 f
+  core/commit_redirect_reason[1] (ysyx_core)                           0.000000   2.195706 f
+  commit_redirect_reason[1] (out)                                      0.000000   2.195706 f
+  data arrival time                                                               2.195706
+
+  clock core_clk (rise edge)                                           5.000000   5.000000
+  clock network delay (ideal)                                          0.000000   5.000000
+  clock uncertainty                                                    -0.200000  4.800000
+  output external delay                                                -2.000000  2.800000
+  data required time                                                              2.800000
+  -------------------------------------------------------------------------------------------
+  data required time                                                              2.800000
+  data arrival time                                                               -2.195706
+  -------------------------------------------------------------------------------------------
+  slack (MET)                                                                     0.604294
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: monitor_bus[7]
+            (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_core_axi4lite ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                     Incr       Path
+  --------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                            0.000000   0.000000
+  clock network delay (ideal)                                           0.000000   0.000000
+  input external delay                                                  2.000000   2.000000 r
+  rst_n (in)                                                            0.000000   2.000000 r
+  core/rst_n (ysyx_core)                                                0.000000   2.000000 r
+  core/U52/ZN (INVD1BWP12T40P140)                                       0.019232   2.019232 f
+  core/U51/ZN (INVD1BWP12T40P140)                                       0.060299   2.079531 r
+  core/u_lsu_axi4lite_adapter/rst_n (ysyx_lsu_axi4lite_adapter)         0.000000   2.079531 r
+  core/u_lsu_axi4lite_adapter/U45/Z (BUFFD1BWP12T40P140)                0.029639   2.109170 r
+  core/u_lsu_axi4lite_adapter/U33/ZN (INVD1BWP12T40P140)                0.011570   2.120740 f
+  core/u_lsu_axi4lite_adapter/U24/Z (BUFFD1BWP12T40P140)                0.020830   2.141570 f
+  core/u_lsu_axi4lite_adapter/U49/ZN (NR2D1BWP12T40P140)                0.049713   2.191283 r
+  core/u_lsu_axi4lite_adapter/m_axi_rready (ysyx_lsu_axi4lite_adapter)  0.000000   2.191283 r
+  core/lsu_axi_rready (ysyx_core)                                       0.000000   2.191283 r
+  monitor_bus[7] (out)                                                  0.000000   2.191283 r
+  data arrival time                                                                2.191283
+
+  clock core_clk (rise edge)                                            5.000000   5.000000
+  clock network delay (ideal)                                           0.000000   5.000000
+  clock uncertainty                                                     -0.200000  4.800000
+  output external delay                                                 -2.000000  2.800000
+  data required time                                                               2.800000
+  --------------------------------------------------------------------------------------------
+  data required time                                                               2.800000
+  data arrival time                                                                -2.191283
+  --------------------------------------------------------------------------------------------
+  slack (MET)                                                                      0.608717
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: monitor_bus[13]
+            (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_core_axi4lite ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                     Incr       Path
+  --------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                            0.000000   0.000000
+  clock network delay (ideal)                                           0.000000   0.000000
+  input external delay                                                  2.000000   2.000000 r
+  rst_n (in)                                                            0.000000   2.000000 r
+  core/rst_n (ysyx_core)                                                0.000000   2.000000 r
+  core/U52/ZN (INVD1BWP12T40P140)                                       0.019232   2.019232 f
+  core/U51/ZN (INVD1BWP12T40P140)                                       0.060299   2.079531 r
+  core/u_lsu_axi4lite_adapter/rst_n (ysyx_lsu_axi4lite_adapter)         0.000000   2.079531 r
+  core/u_lsu_axi4lite_adapter/U45/Z (BUFFD1BWP12T40P140)                0.029639   2.109170 r
+  core/u_lsu_axi4lite_adapter/U33/ZN (INVD1BWP12T40P140)                0.011570   2.120740 f
+  core/u_lsu_axi4lite_adapter/U24/Z (BUFFD1BWP12T40P140)                0.020830   2.141570 f
+  core/u_lsu_axi4lite_adapter/U34/ZN (NR2D1BWP12T40P140)                0.049679   2.191250 r
+  core/u_lsu_axi4lite_adapter/m_axi_bready (ysyx_lsu_axi4lite_adapter)  0.000000   2.191250 r
+  core/lsu_axi_bready (ysyx_core)                                       0.000000   2.191250 r
+  monitor_bus[13] (out)                                                 0.000000   2.191250 r
+  data arrival time                                                                2.191250
+
+  clock core_clk (rise edge)                                            5.000000   5.000000
+  clock network delay (ideal)                                           0.000000   5.000000
+  clock uncertainty                                                     -0.200000  4.800000
+  output external delay                                                 -2.000000  2.800000
+  data required time                                                               2.800000
+  --------------------------------------------------------------------------------------------
+  data required time                                                               2.800000
+  data arrival time                                                                -2.191250
+  --------------------------------------------------------------------------------------------
+  slack (MET)                                                                      0.608751
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: monitor_bus[6]
+            (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_core_axi4lite ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                               Incr       Path
+  ----------------------------------------------------------------------
+  clock core_clk (rise edge)                      0.000000   0.000000
+  clock network delay (ideal)                     0.000000   0.000000
+  input external delay                            2.000000   2.000000 r
+  rst_n (in)                                      0.000000   2.000000 r
+  arbiter/rst_n (ysyx_axi4lite_arbiter)           0.000000   2.000000 r
+  arbiter/U80/Z (BUFFD1BWP12T40P140)              0.030529   2.030529 r
+  arbiter/U36/ZN (INVD1BWP12T40P140)              0.011673   2.042203 f
+  arbiter/U16/Z (BUFFD1BWP12T40P140)              0.017044   2.059247 f
+  arbiter/U3/ZN (INVD1BWP12T40P140)               0.038017   2.097264 r
+  arbiter/U82/Z (AN3D1BWP12T40P140)               0.042199   2.139463 r
+  arbiter/U81/Z (AN2D1BWP12T40P140)               0.042607   2.182071 r
+  arbiter/lsu_axi_rvalid (ysyx_axi4lite_arbiter)  0.000000   2.182071 r
+  monitor_bus[6] (out)                            0.000000   2.182071 r
+  data arrival time                                          2.182071
+
+  clock core_clk (rise edge)                      5.000000   5.000000
+  clock network delay (ideal)                     0.000000   5.000000
+  clock uncertainty                               -0.200000  4.800000
+  output external delay                           -2.000000  2.800000
+  data required time                                         2.800000
+  ----------------------------------------------------------------------
+  data required time                                         2.800000
+  data arrival time                                          -2.182071
+  ----------------------------------------------------------------------
+  slack (MET)                                                0.617929
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: monitor_bus[2]
+            (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_core_axi4lite ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                               Incr       Path
+  ----------------------------------------------------------------------
+  clock core_clk (rise edge)                      0.000000   0.000000
+  clock network delay (ideal)                     0.000000   0.000000
+  input external delay                            2.000000   2.000000 r
+  rst_n (in)                                      0.000000   2.000000 r
+  arbiter/rst_n (ysyx_axi4lite_arbiter)           0.000000   2.000000 r
+  arbiter/U80/Z (BUFFD1BWP12T40P140)              0.030529   2.030529 r
+  arbiter/U36/ZN (INVD1BWP12T40P140)              0.011673   2.042203 f
+  arbiter/U16/Z (BUFFD1BWP12T40P140)              0.017044   2.059247 f
+  arbiter/U3/ZN (INVD1BWP12T40P140)               0.038017   2.097264 r
+  arbiter/U82/Z (AN3D1BWP12T40P140)               0.042199   2.139463 r
+  arbiter/U37/Z (AN2D1BWP12T40P140)               0.040999   2.180462 r
+  arbiter/ifu_axi_rvalid (ysyx_axi4lite_arbiter)  0.000000   2.180462 r
+  monitor_bus[2] (out)                            0.000000   2.180462 r
+  data arrival time                                          2.180462
+
+  clock core_clk (rise edge)                      5.000000   5.000000
+  clock network delay (ideal)                     0.000000   5.000000
+  clock uncertainty                               -0.200000  4.800000
+  output external delay                           -2.000000  2.800000
+  data required time                                         2.800000
+  ----------------------------------------------------------------------
+  data required time                                         2.800000
+  data arrival time                                          -2.180462
+  ----------------------------------------------------------------------
+  slack (MET)                                                0.619538
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: monitor_bus[12]
+            (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_core_axi4lite ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                               Incr       Path
+  ----------------------------------------------------------------------
+  clock core_clk (rise edge)                      0.000000   0.000000
+  clock network delay (ideal)                     0.000000   0.000000
+  input external delay                            2.000000   2.000000 r
+  rst_n (in)                                      0.000000   2.000000 r
+  arbiter/rst_n (ysyx_axi4lite_arbiter)           0.000000   2.000000 r
+  arbiter/U80/Z (BUFFD1BWP12T40P140)              0.030529   2.030529 r
+  arbiter/U36/ZN (INVD1BWP12T40P140)              0.011673   2.042203 f
+  arbiter/U16/Z (BUFFD1BWP12T40P140)              0.017044   2.059247 f
+  arbiter/U3/ZN (INVD1BWP12T40P140)               0.038017   2.097264 r
+  arbiter/U237/Z (AN4D1BWP12T40P140)              0.070082   2.167346 r
+  arbiter/lsu_axi_bvalid (ysyx_axi4lite_arbiter)  0.000000   2.167346 r
+  monitor_bus[12] (out)                           0.000000   2.167346 r
+  data arrival time                                          2.167346
+
+  clock core_clk (rise edge)                      5.000000   5.000000
+  clock network delay (ideal)                     0.000000   5.000000
+  clock uncertainty                               -0.200000  4.800000
+  output external delay                           -2.000000  2.800000
+  data required time                                         2.800000
+  ----------------------------------------------------------------------
+  data required time                                         2.800000
+  data arrival time                                          -2.167346
+  ----------------------------------------------------------------------
+  slack (MET)                                                0.632654
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: m_axi_arvalid
+            (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_core_axi4lite ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                              Incr       Path
+  ---------------------------------------------------------------------
+  clock core_clk (rise edge)                     0.000000   0.000000
+  clock network delay (ideal)                    0.000000   0.000000
+  input external delay                           2.000000   2.000000 f
+  rst_n (in)                                     0.000000   2.000000 f
+  arbiter/rst_n (ysyx_axi4lite_arbiter)          0.000000   2.000000 f
+  arbiter/U80/Z (BUFFD1BWP12T40P140)             0.032026   2.032026 f
+  arbiter/U36/ZN (INVD1BWP12T40P140)             0.011412   2.043437 r
+  arbiter/U16/Z (BUFFD1BWP12T40P140)             0.016906   2.060344 r
+  arbiter/U3/ZN (INVD1BWP12T40P140)              0.044914   2.105258 f
+  arbiter/U17/Z (AN2D1BWP12T40P140)              0.048979   2.154238 f
+  arbiter/m_axi_arvalid (ysyx_axi4lite_arbiter)  0.000000   2.154238 f
+  m_axi_arvalid (out)                            0.000000   2.154238 f
+  data arrival time                                         2.154238
+
+  clock core_clk (rise edge)                     5.000000   5.000000
+  clock network delay (ideal)                    0.000000   5.000000
+  clock uncertainty                              -0.200000  4.800000
+  output external delay                          -2.000000  2.800000
+  data required time                                        2.800000
+  ---------------------------------------------------------------------
+  data required time                                        2.800000
+  data arrival time                                         -2.154238
+  ---------------------------------------------------------------------
+  slack (MET)                                               0.645763
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: m_axi_rready
+            (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_core_axi4lite ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                             Incr       Path
+  --------------------------------------------------------------------
+  clock core_clk (rise edge)                    0.000000   0.000000
+  clock network delay (ideal)                   0.000000   0.000000
+  input external delay                          2.000000   2.000000 f
+  rst_n (in)                                    0.000000   2.000000 f
+  arbiter/rst_n (ysyx_axi4lite_arbiter)         0.000000   2.000000 f
+  arbiter/U80/Z (BUFFD1BWP12T40P140)            0.032026   2.032026 f
+  arbiter/U36/ZN (INVD1BWP12T40P140)            0.011412   2.043437 r
+  arbiter/U16/Z (BUFFD1BWP12T40P140)            0.016906   2.060344 r
+  arbiter/U3/ZN (INVD1BWP12T40P140)             0.044914   2.105258 f
+  arbiter/U38/Z (AN2D1BWP12T40P140)             0.048792   2.154050 f
+  arbiter/m_axi_rready (ysyx_axi4lite_arbiter)  0.000000   2.154050 f
+  m_axi_rready (out)                            0.000000   2.154050 f
+  data arrival time                                        2.154050
+
+  clock core_clk (rise edge)                    5.000000   5.000000
+  clock network delay (ideal)                   0.000000   5.000000
+  clock uncertainty                             -0.200000  4.800000
+  output external delay                         -2.000000  2.800000
+  data required time                                       2.800000
+  --------------------------------------------------------------------
+  data required time                                       2.800000
+  data arrival time                                        -2.154050
+  --------------------------------------------------------------------
+  slack (MET)                                              0.645950
+
+
+  Startpoint: core/u_opbuf/u_context_reg/data_q_reg_145_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: commit_exception
+            (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_core_axi4lite ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                    Incr       Path
+  -------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                           0.000000   0.000000
+  clock network delay (ideal)                                          0.000000   0.000000
+  core/u_opbuf/u_context_reg/data_q_reg_145_/CP (DFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  core/u_opbuf/u_context_reg/data_q_reg_145_/Q (DFCNQD1BWP12T40P140)   0.073610   0.073610 f
+  core/u_opbuf/u_context_reg/out_data[145] (ysyx_gnrl_rv_reg_DW277)    0.000000   0.073610 f
+  core/u_opbuf/out_alu_rhs_imm (ysyx_opbuf)                            0.000000   0.073610 f
+  core/U53/Z (BUFFD1BWP12T40P140)                                      0.031440   0.105050 f
+  core/u_exu/op_alu_rhs_imm (ysyx_exu)                                 0.000000   0.105050 f
+  core/u_exu/U132/ZN (INVD1BWP12T40P140)                               0.020496   0.125546 r
+  core/u_exu/U96/Z (BUFFD1BWP12T40P140)                                0.017250   0.142796 r
+  core/u_exu/U76/ZN (INVD1BWP12T40P140)                                0.037684   0.180479 f
+  core/u_exu/U131/Z (AO22D0BWP12T40P140)                               0.040932   0.221412 f
+  core/u_exu/u_alu/alu_src1[0] (ysyx_alu)                              0.000000   0.221412 f
+  core/u_exu/u_alu/U262/Z (BUFFD1BWP12T40P140)                         0.125414   0.346826 f
+  core/u_exu/u_alu/U316/ZN (IND2D0BWP12T40P140)                        0.043032   0.389858 r
+  core/u_exu/u_alu/U317/ZN (IAO21D0BWP12T40P140)                       0.028025   0.417883 r
+  core/u_exu/u_alu/U318/Z (AO221D0BWP12T40P140)                        0.035195   0.453078 r
+  core/u_exu/u_alu/U319/Z (OA221D0BWP12T40P140)                        0.050142   0.503220 r
+  core/u_exu/u_alu/U320/Z (AO221D0BWP12T40P140)                        0.026621   0.529841 r
+  core/u_exu/u_alu/U321/Z (OA221D0BWP12T40P140)                        0.050159   0.580000 r
+  core/u_exu/u_alu/U322/Z (AO221D0BWP12T40P140)                        0.026633   0.606633 r
+  core/u_exu/u_alu/U323/Z (OA221D0BWP12T40P140)                        0.050155   0.656788 r
+  core/u_exu/u_alu/U324/Z (AO221D0BWP12T40P140)                        0.026628   0.683416 r
+  core/u_exu/u_alu/U325/Z (OA221D0BWP12T40P140)                        0.050155   0.733571 r
+  core/u_exu/u_alu/U326/Z (AO221D0BWP12T40P140)                        0.026629   0.760200 r
+  core/u_exu/u_alu/U327/Z (OA221D0BWP12T40P140)                        0.050160   0.810360 r
+  core/u_exu/u_alu/U328/Z (AO221D0BWP12T40P140)                        0.026624   0.836984 r
+  core/u_exu/u_alu/U329/Z (OA221D0BWP12T40P140)                        0.050155   0.887139 r
+  core/u_exu/u_alu/U330/Z (AO221D0BWP12T40P140)                        0.026628   0.913767 r
+  core/u_exu/u_alu/U331/Z (OA221D0BWP12T40P140)                        0.050155   0.963922 r
+  core/u_exu/u_alu/U332/Z (AO221D0BWP12T40P140)                        0.026629   0.990551 r
+  core/u_exu/u_alu/U333/Z (OA221D0BWP12T40P140)                        0.050155   1.040705 r
+  core/u_exu/u_alu/U334/Z (AO221D0BWP12T40P140)                        0.026628   1.067334 r
+  core/u_exu/u_alu/U335/Z (OA221D0BWP12T40P140)                        0.050157   1.117491 r
+  core/u_exu/u_alu/U336/Z (AO221D0BWP12T40P140)                        0.026631   1.144122 r
+  core/u_exu/u_alu/U337/Z (OA221D0BWP12T40P140)                        0.050163   1.194286 r
+  core/u_exu/u_alu/U338/Z (AO221D0BWP12T40P140)                        0.026637   1.220922 r
+  core/u_exu/u_alu/U339/Z (OA221D0BWP12T40P140)                        0.050155   1.271077 r
+  core/u_exu/u_alu/U340/Z (AO221D0BWP12T40P140)                        0.026628   1.297706 r
+  core/u_exu/u_alu/U341/Z (OA221D0BWP12T40P140)                        0.050155   1.347861 r
+  core/u_exu/u_alu/U342/Z (AO221D0BWP12T40P140)                        0.026628   1.374489 r
+  core/u_exu/u_alu/U343/Z (OA221D0BWP12T40P140)                        0.050155   1.424644 r
+  core/u_exu/u_alu/U344/Z (AO221D0BWP12T40P140)                        0.026628   1.451273 r
+  core/u_exu/u_alu/U345/Z (OA221D0BWP12T40P140)                        0.049832   1.501105 r
+  core/u_exu/u_alu/U346/ZN (AOI221D0BWP12T40P140)                      0.013019   1.514124 f
+  core/u_exu/u_alu/U347/ZN (IAO21D0BWP12T40P140)                       0.019293   1.533417 r
+  core/u_exu/u_alu/U348/ZN (OAI22D0BWP12T40P140)                       0.025512   1.558929 f
+  core/u_exu/u_alu/U261/ZN (AOI22D1BWP12T40P140)                       0.023356   1.582286 r
+  core/u_exu/u_alu/U258/ZN (OAI33D1BWP12T40P140)                       0.027760   1.610046 f
+  core/u_exu/u_alu/U43/ZN (AOI221D1BWP12T40P140)                       0.035048   1.645094 r
+  core/u_exu/u_alu/U40/ZN (ND3D1BWP12T40P140)                          0.097035   1.742129 f
+  core/u_exu/u_alu/alu_res[0] (ysyx_alu)                               0.000000   1.742129 f
+  core/u_exu/U75/ZN (NR2D1BWP12T40P140)                                0.027972   1.770101 r
+  core/u_exu/U127/ZN (OAI33D1BWP12T40P140)                             0.027553   1.797654 f
+  core/u_exu/U126/ZN (CKND2D1BWP12T40P140)                             0.023628   1.821282 r
+  core/u_exu/U95/ZN (CKND2D1BWP12T40P140)                              0.020337   1.841619 f
+  core/u_exu/U130/ZN (NR2D1BWP12T40P140)                               0.018587   1.860207 r
+  core/u_exu/U97/Z (BUFFD1BWP12T40P140)                                0.057443   1.917650 r
+  core/u_exu/U93/ZN (CKND2D1BWP12T40P140)                              0.093958   2.011609 f
+  core/u_exu/U92/Z (BUFFD1BWP12T40P140)                                0.058994   2.070603 f
+  core/u_exu/U72/ZN (INVD1BWP12T40P140)                                0.025213   2.095815 r
+  core/u_exu/U78/ZN (NR2D1BWP12T40P140)                                0.012046   2.107862 f
+  core/u_exu/U77/Z (BUFFD1BWP12T40P140)                                0.039301   2.147163 f
+  core/u_exu/commit_exception (ysyx_exu)                               0.000000   2.147163 f
+  core/commit_exception (ysyx_core)                                    0.000000   2.147163 f
+  commit_exception (out)                                               0.000000   2.147163 f
+  data arrival time                                                               2.147163
+
+  clock core_clk (rise edge)                                           5.000000   5.000000
+  clock network delay (ideal)                                          0.000000   5.000000
+  clock uncertainty                                                    -0.200000  4.800000
+  output external delay                                                -2.000000  2.800000
+  data required time                                                              2.800000
+  -------------------------------------------------------------------------------------------
+  data required time                                                              2.800000
+  data arrival time                                                               -2.147163
+  -------------------------------------------------------------------------------------------
+  slack (MET)                                                                     0.652838
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: monitor_bus[9]
+            (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_core_axi4lite ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                Incr       Path
+  -----------------------------------------------------------------------
+  clock core_clk (rise edge)                       0.000000   0.000000
+  clock network delay (ideal)                      0.000000   0.000000
+  input external delay                             2.000000   2.000000 r
+  rst_n (in)                                       0.000000   2.000000 r
+  arbiter/rst_n (ysyx_axi4lite_arbiter)            0.000000   2.000000 r
+  arbiter/U80/Z (BUFFD1BWP12T40P140)               0.030529   2.030529 r
+  arbiter/U39/ZN (INVD1BWP12T40P140)               0.011673   2.042203 f
+  arbiter/U18/Z (BUFFD1BWP12T40P140)               0.024512   2.066715 f
+  arbiter/U84/ZN (NR3D0BWP12T40P140)               0.068705   2.135420 r
+  arbiter/lsu_axi_awready (ysyx_axi4lite_arbiter)  0.000000   2.135420 r
+  monitor_bus[9] (out)                             0.000000   2.135420 r
+  data arrival time                                           2.135420
+
+  clock core_clk (rise edge)                       5.000000   5.000000
+  clock network delay (ideal)                      0.000000   5.000000
+  clock uncertainty                                -0.200000  4.800000
+  output external delay                            -2.000000  2.800000
+  data required time                                          2.800000
+  -----------------------------------------------------------------------
+  data required time                                          2.800000
+  data arrival time                                           -2.135420
+  -----------------------------------------------------------------------
+  slack (MET)                                                 0.664580
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: monitor_bus[11]
+            (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_core_axi4lite ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                               Incr       Path
+  ----------------------------------------------------------------------
+  clock core_clk (rise edge)                      0.000000   0.000000
+  clock network delay (ideal)                     0.000000   0.000000
+  input external delay                            2.000000   2.000000 r
+  rst_n (in)                                      0.000000   2.000000 r
+  arbiter/rst_n (ysyx_axi4lite_arbiter)           0.000000   2.000000 r
+  arbiter/U80/Z (BUFFD1BWP12T40P140)              0.030529   2.030529 r
+  arbiter/U39/ZN (INVD1BWP12T40P140)              0.011673   2.042203 f
+  arbiter/U18/Z (BUFFD1BWP12T40P140)              0.024512   2.066715 f
+  arbiter/U85/ZN (NR3D0BWP12T40P140)              0.068149   2.134864 r
+  arbiter/lsu_axi_wready (ysyx_axi4lite_arbiter)  0.000000   2.134864 r
+  monitor_bus[11] (out)                           0.000000   2.134864 r
+  data arrival time                                          2.134864
+
+  clock core_clk (rise edge)                      5.000000   5.000000
+  clock network delay (ideal)                     0.000000   5.000000
+  clock uncertainty                               -0.200000  4.800000
+  output external delay                           -2.000000  2.800000
+  data required time                                         2.800000
+  ----------------------------------------------------------------------
+  data required time                                         2.800000
+  data arrival time                                          -2.134864
+  ----------------------------------------------------------------------
+  slack (MET)                                                0.665136
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: monitor_bus[1]
+            (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_core_axi4lite ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                Incr       Path
+  -----------------------------------------------------------------------
+  clock core_clk (rise edge)                       0.000000   0.000000
+  clock network delay (ideal)                      0.000000   0.000000
+  input external delay                             2.000000   2.000000 r
+  rst_n (in)                                       0.000000   2.000000 r
+  arbiter/rst_n (ysyx_axi4lite_arbiter)            0.000000   2.000000 r
+  arbiter/U80/Z (BUFFD1BWP12T40P140)               0.030529   2.030529 r
+  arbiter/U39/ZN (INVD1BWP12T40P140)               0.011673   2.042203 f
+  arbiter/U18/Z (BUFFD1BWP12T40P140)               0.024512   2.066715 f
+  arbiter/U86/ZN (INR3D1BWP12T40P140)              0.065814   2.132529 r
+  arbiter/ifu_axi_arready (ysyx_axi4lite_arbiter)  0.000000   2.132529 r
+  monitor_bus[1] (out)                             0.000000   2.132529 r
+  data arrival time                                           2.132529
+
+  clock core_clk (rise edge)                       5.000000   5.000000
+  clock network delay (ideal)                      0.000000   5.000000
+  clock uncertainty                                -0.200000  4.800000
+  output external delay                            -2.000000  2.800000
+  data required time                                          2.800000
+  -----------------------------------------------------------------------
+  data required time                                          2.800000
+  data arrival time                                           -2.132529
+  -----------------------------------------------------------------------
+  slack (MET)                                                 0.667471
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: monitor_bus[5]
+            (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_core_axi4lite ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                Incr       Path
+  -----------------------------------------------------------------------
+  clock core_clk (rise edge)                       0.000000   0.000000
+  clock network delay (ideal)                      0.000000   0.000000
+  input external delay                             2.000000   2.000000 r
+  rst_n (in)                                       0.000000   2.000000 r
+  arbiter/rst_n (ysyx_axi4lite_arbiter)            0.000000   2.000000 r
+  arbiter/U80/Z (BUFFD1BWP12T40P140)               0.030529   2.030529 r
+  arbiter/U39/ZN (INVD1BWP12T40P140)               0.011673   2.042203 f
+  arbiter/U18/Z (BUFFD1BWP12T40P140)               0.024512   2.066715 f
+  arbiter/U40/ZN (INR3D1BWP12T40P140)              0.065317   2.132032 r
+  arbiter/lsu_axi_arready (ysyx_axi4lite_arbiter)  0.000000   2.132032 r
+  monitor_bus[5] (out)                             0.000000   2.132032 r
+  data arrival time                                           2.132032
+
+  clock core_clk (rise edge)                       5.000000   5.000000
+  clock network delay (ideal)                      0.000000   5.000000
+  clock uncertainty                                -0.200000  4.800000
+  output external delay                            -2.000000  2.800000
+  data required time                                          2.800000
+  -----------------------------------------------------------------------
+  data required time                                          2.800000
+  data arrival time                                           -2.132032
+  -----------------------------------------------------------------------
+  slack (MET)                                                 0.667968
+
+
+1

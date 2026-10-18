@@ -1,0 +1,304 @@
+****************************************
+Report : timing
+	-path_type full
+	-delay_type min
+	-slack_lesser_than 1000000015047466219876688855040.000000
+	-max_paths 10
+	-sort_by slack
+Design : ysyx_core_axi4lite
+Version: T-2022.03-SP5
+Date   : Sun Oct 18 17:31:38 2026
+****************************************
+
+
+  Startpoint: core/u_arch_pc/qout_r_reg_31_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: commit_pc[31]
+               (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                  Incr       Path
+  ---------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  core/u_arch_pc/qout_r_reg_31_/CP (DFSNQD2BWP12T40P140)             0.000000   0.000000 r
+  core/u_arch_pc/qout_r_reg_31_/Q (DFSNQD2BWP12T40P140)              0.072797   0.072797 r
+  commit_pc[31] (out)                                                0.000000   0.072797 r
+  data arrival time                                                             0.072797
+
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  clock reconvergence pessimism                                      0.000000   0.000000
+  clock uncertainty                                                  0.050000   0.050000
+  output external delay                                              -0.200000  -0.150000
+  data required time                                                            -0.150000
+  ---------------------------------------------------------------------------------------------
+  data required time                                                            -0.150000
+  data arrival time                                                             -0.072797
+  ---------------------------------------------------------------------------------------------
+  slack (MET)                                                                   0.222797
+
+
+  Startpoint: core/u_arch_pc/qout_r_reg_30_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: commit_pc[30]
+               (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                  Incr       Path
+  ---------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  core/u_arch_pc/qout_r_reg_30_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  core/u_arch_pc/qout_r_reg_30_/Q (DFCNQD1BWP12T40P140)              0.085722   0.085722 r
+  commit_pc[30] (out)                                                0.000000   0.085722 r
+  data arrival time                                                             0.085722
+
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  clock reconvergence pessimism                                      0.000000   0.000000
+  clock uncertainty                                                  0.050000   0.050000
+  output external delay                                              -0.200000  -0.150000
+  data required time                                                            -0.150000
+  ---------------------------------------------------------------------------------------------
+  data required time                                                            -0.150000
+  data arrival time                                                             -0.085722
+  ---------------------------------------------------------------------------------------------
+  slack (MET)                                                                   0.235722
+
+
+  Startpoint: core/u_arch_pc/qout_r_reg_29_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: commit_pc[29]
+               (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                  Incr       Path
+  ---------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  core/u_arch_pc/qout_r_reg_29_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  core/u_arch_pc/qout_r_reg_29_/Q (DFCNQD1BWP12T40P140)              0.085722   0.085722 r
+  commit_pc[29] (out)                                                0.000000   0.085722 r
+  data arrival time                                                             0.085722
+
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  clock reconvergence pessimism                                      0.000000   0.000000
+  clock uncertainty                                                  0.050000   0.050000
+  output external delay                                              -0.200000  -0.150000
+  data required time                                                            -0.150000
+  ---------------------------------------------------------------------------------------------
+  data required time                                                            -0.150000
+  data arrival time                                                             -0.085722
+  ---------------------------------------------------------------------------------------------
+  slack (MET)                                                                   0.235722
+
+
+  Startpoint: core/u_arch_pc/qout_r_reg_28_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: commit_pc[28]
+               (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                  Incr       Path
+  ---------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  core/u_arch_pc/qout_r_reg_28_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  core/u_arch_pc/qout_r_reg_28_/Q (DFCNQD1BWP12T40P140)              0.085722   0.085722 r
+  commit_pc[28] (out)                                                0.000000   0.085722 r
+  data arrival time                                                             0.085722
+
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  clock reconvergence pessimism                                      0.000000   0.000000
+  clock uncertainty                                                  0.050000   0.050000
+  output external delay                                              -0.200000  -0.150000
+  data required time                                                            -0.150000
+  ---------------------------------------------------------------------------------------------
+  data required time                                                            -0.150000
+  data arrival time                                                             -0.085722
+  ---------------------------------------------------------------------------------------------
+  slack (MET)                                                                   0.235722
+
+
+  Startpoint: core/u_arch_pc/qout_r_reg_27_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: commit_pc[27]
+               (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                  Incr       Path
+  ---------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  core/u_arch_pc/qout_r_reg_27_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  core/u_arch_pc/qout_r_reg_27_/Q (DFCNQD1BWP12T40P140)              0.085722   0.085722 r
+  commit_pc[27] (out)                                                0.000000   0.085722 r
+  data arrival time                                                             0.085722
+
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  clock reconvergence pessimism                                      0.000000   0.000000
+  clock uncertainty                                                  0.050000   0.050000
+  output external delay                                              -0.200000  -0.150000
+  data required time                                                            -0.150000
+  ---------------------------------------------------------------------------------------------
+  data required time                                                            -0.150000
+  data arrival time                                                             -0.085722
+  ---------------------------------------------------------------------------------------------
+  slack (MET)                                                                   0.235722
+
+
+  Startpoint: core/u_arch_pc/qout_r_reg_26_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: commit_pc[26]
+               (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                  Incr       Path
+  ---------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  core/u_arch_pc/qout_r_reg_26_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  core/u_arch_pc/qout_r_reg_26_/Q (DFCNQD1BWP12T40P140)              0.085722   0.085722 r
+  commit_pc[26] (out)                                                0.000000   0.085722 r
+  data arrival time                                                             0.085722
+
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  clock reconvergence pessimism                                      0.000000   0.000000
+  clock uncertainty                                                  0.050000   0.050000
+  output external delay                                              -0.200000  -0.150000
+  data required time                                                            -0.150000
+  ---------------------------------------------------------------------------------------------
+  data required time                                                            -0.150000
+  data arrival time                                                             -0.085722
+  ---------------------------------------------------------------------------------------------
+  slack (MET)                                                                   0.235722
+
+
+  Startpoint: core/u_arch_pc/qout_r_reg_25_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: commit_pc[25]
+               (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                  Incr       Path
+  ---------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  core/u_arch_pc/qout_r_reg_25_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  core/u_arch_pc/qout_r_reg_25_/Q (DFCNQD1BWP12T40P140)              0.085722   0.085722 r
+  commit_pc[25] (out)                                                0.000000   0.085722 r
+  data arrival time                                                             0.085722
+
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  clock reconvergence pessimism                                      0.000000   0.000000
+  clock uncertainty                                                  0.050000   0.050000
+  output external delay                                              -0.200000  -0.150000
+  data required time                                                            -0.150000
+  ---------------------------------------------------------------------------------------------
+  data required time                                                            -0.150000
+  data arrival time                                                             -0.085722
+  ---------------------------------------------------------------------------------------------
+  slack (MET)                                                                   0.235722
+
+
+  Startpoint: core/u_arch_pc/qout_r_reg_24_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: commit_pc[24]
+               (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                  Incr       Path
+  ---------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  core/u_arch_pc/qout_r_reg_24_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  core/u_arch_pc/qout_r_reg_24_/Q (DFCNQD1BWP12T40P140)              0.085722   0.085722 r
+  commit_pc[24] (out)                                                0.000000   0.085722 r
+  data arrival time                                                             0.085722
+
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  clock reconvergence pessimism                                      0.000000   0.000000
+  clock uncertainty                                                  0.050000   0.050000
+  output external delay                                              -0.200000  -0.150000
+  data required time                                                            -0.150000
+  ---------------------------------------------------------------------------------------------
+  data required time                                                            -0.150000
+  data arrival time                                                             -0.085722
+  ---------------------------------------------------------------------------------------------
+  slack (MET)                                                                   0.235722
+
+
+  Startpoint: core/u_arch_pc/qout_r_reg_23_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: commit_pc[23]
+               (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                  Incr       Path
+  ---------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  core/u_arch_pc/qout_r_reg_23_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  core/u_arch_pc/qout_r_reg_23_/Q (DFCNQD1BWP12T40P140)              0.085722   0.085722 r
+  commit_pc[23] (out)                                                0.000000   0.085722 r
+  data arrival time                                                             0.085722
+
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  clock reconvergence pessimism                                      0.000000   0.000000
+  clock uncertainty                                                  0.050000   0.050000
+  output external delay                                              -0.200000  -0.150000
+  data required time                                                            -0.150000
+  ---------------------------------------------------------------------------------------------
+  data required time                                                            -0.150000
+  data arrival time                                                             -0.085722
+  ---------------------------------------------------------------------------------------------
+  slack (MET)                                                                   0.235722
+
+
+  Startpoint: core/u_arch_pc/qout_r_reg_22_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: commit_pc[22]
+               (output port clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                  Incr       Path
+  ---------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  core/u_arch_pc/qout_r_reg_22_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  core/u_arch_pc/qout_r_reg_22_/Q (DFCNQD1BWP12T40P140)              0.085722   0.085722 r
+  commit_pc[22] (out)                                                0.000000   0.085722 r
+  data arrival time                                                             0.085722
+
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  clock reconvergence pessimism                                      0.000000   0.000000
+  clock uncertainty                                                  0.050000   0.050000
+  output external delay                                              -0.200000  -0.150000
+  data required time                                                            -0.150000
+  ---------------------------------------------------------------------------------------------
+  data required time                                                            -0.150000
+  data arrival time                                                             -0.085722
+  ---------------------------------------------------------------------------------------------
+  slack (MET)                                                                   0.235722
+
+
+1

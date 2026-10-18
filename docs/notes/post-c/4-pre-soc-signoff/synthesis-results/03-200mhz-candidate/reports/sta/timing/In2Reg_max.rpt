@@ -1,0 +1,435 @@
+****************************************
+Report : timing
+	-path_type full
+	-delay_type max
+	-slack_lesser_than 1000000015047466219876688855040.000000
+	-max_paths 10
+	-sort_by slack
+Design : ysyx_core_axi4lite
+Version: T-2022.03-SP5
+Date   : Sun Oct 18 17:31:38 2026
+****************************************
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: core/u_lsu_axi4lite_adapter/state_q_reg_1_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                              Incr       Path
+  ---------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                     0.000000   0.000000
+  clock network delay (ideal)                                                    0.000000   0.000000
+  input external delay                                                           2.000000   2.000000 f
+  rst_n (in)                                                                     0.000000   2.000000 f
+  core/U52/ZN (INVD1BWP12T40P140)                                                0.019956   2.019956 r
+  core/U51/ZN (INVD1BWP12T40P140)                                                0.068698   2.088654 f
+  core/u_lsu_axi4lite_adapter/U45/Z (BUFFD1BWP12T40P140)                         0.032328   2.120982 f
+  core/u_lsu_axi4lite_adapter/U38/ZN (INVD1BWP12T40P140)                         0.011437   2.132419 r
+  core/u_lsu_axi4lite_adapter/U26/Z (BUFFD1BWP12T40P140)                         0.018600   2.151019 r
+  core/u_lsu_axi4lite_adapter/U16/ZN (INVD1BWP12T40P140)                         0.039799   2.190819 f
+  core/u_lsu_axi4lite_adapter/U37/Z (AN2D1BWP12T40P140)                          0.028371   2.219190 f
+  core/u_lsu_axi4lite_adapter/U53/ZN (CKND2D1BWP12T40P140)                       0.016887   2.236077 r
+  core/u_lsu_axi4lite_adapter/U25/Z (BUFFD1BWP12T40P140)                         0.038518   2.274595 r
+  core/u_lsu_axi4lite_adapter/U15/ZN (INVD1BWP12T40P140)                         0.126644   2.401238 f
+  core/u_lsu_axi4lite_adapter/U189/ZN (AOI211D1BWP12T40P140)                     0.052944   2.454183 r
+  core/u_lsu_axi4lite_adapter/U186/ZN (OAI211D1BWP12T40P140)                     0.042024   2.496207 f
+  core/u_lsu_axi4lite_adapter/U54/ZN (INVD1BWP12T40P140)                         0.023685   2.519892 r
+  core/u_lsu_axi4lite_adapter/U111/ZN (MOAI22D1BWP12T40P140)                     0.025498   2.545390 r
+  core/u_lsu_axi4lite_adapter/state_q_reg_1_/D (DFCNQD1BWP12T40P140)             0.000000   2.545390 r
+  data arrival time                                                                         2.545390
+
+  clock core_clk (rise edge)                                                     5.000000   5.000000
+  clock network delay (ideal)                                                    0.000000   5.000000
+  clock reconvergence pessimism                                                  0.000000   5.000000
+  clock uncertainty                                                              -0.200000  4.800000
+  core/u_lsu_axi4lite_adapter/state_q_reg_1_/CP (DFCNQD1BWP12T40P140)                       4.800000 r
+  library setup time                                                             -0.012146  4.787854
+  data required time                                                                        4.787854
+  ---------------------------------------------------------------------------------------------------------
+  data required time                                                                        4.787854
+  data arrival time                                                                         -2.545390
+  ---------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                               2.242464
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: core/u_lsu/response_data_reg_26_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                    Incr       Path
+  -----------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                           0.000000   0.000000
+  clock network delay (ideal)                                          0.000000   0.000000
+  input external delay                                                 2.000000   2.000000 r
+  rst_n (in)                                                           0.000000   2.000000 r
+  core/U52/ZN (INVD1BWP12T40P140)                                      0.019232   2.019232 f
+  core/U51/ZN (INVD1BWP12T40P140)                                      0.060281   2.079513 r
+  core/u_lsu_axi4lite_adapter/U45/Z (BUFFD1BWP12T40P140)               0.029642   2.109155 r
+  core/u_lsu_axi4lite_adapter/U33/ZN (INVD1BWP12T40P140)               0.011571   2.120726 f
+  core/u_lsu_axi4lite_adapter/U24/Z (BUFFD1BWP12T40P140)               0.020826   2.141551 f
+  core/u_lsu_axi4lite_adapter/U44/ZN (NR2D1BWP12T40P140)               0.022530   2.164081 r
+  core/u_lsu_axi4lite_adapter/U101/ZN (INR3D1BWP12T40P140)             0.030042   2.194123 r
+  core/u_lsu/U37/ZN (CKND2D1BWP12T40P140)                              0.114042   2.308165 f
+  core/u_lsu/U35/ZN (NR3D0BWP12T40P140)                                0.073645   2.381809 r
+  core/u_lsu/U38/Z (AN3D1BWP12T40P140)                                 0.057394   2.439204 r
+  core/u_lsu/U57/Z (AO31D1BWP12T40P140)                                0.027848   2.467052 r
+  core/u_lsu/U56/Z (BUFFD1BWP12T40P140)                                0.041055   2.508106 r
+  core/u_lsu/U50/Z (AO221D1BWP12T40P140)                               0.035841   2.543948 r
+  core/u_lsu/response_data_reg_26_/D (DFCNQD1BWP12T40P140)             0.000000   2.543948 r
+  data arrival time                                                               2.543948
+
+  clock core_clk (rise edge)                                           5.000000   5.000000
+  clock network delay (ideal)                                          0.000000   5.000000
+  clock reconvergence pessimism                                        0.000000   5.000000
+  clock uncertainty                                                    -0.200000  4.800000
+  core/u_lsu/response_data_reg_26_/CP (DFCNQD1BWP12T40P140)                       4.800000 r
+  library setup time                                                   -0.012493  4.787508
+  data required time                                                              4.787508
+  -----------------------------------------------------------------------------------------------
+  data required time                                                              4.787508
+  data arrival time                                                               -2.543948
+  -----------------------------------------------------------------------------------------------
+  slack (MET)                                                                     2.243560
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: core/u_lsu/response_data_reg_21_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                    Incr       Path
+  -----------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                           0.000000   0.000000
+  clock network delay (ideal)                                          0.000000   0.000000
+  input external delay                                                 2.000000   2.000000 r
+  rst_n (in)                                                           0.000000   2.000000 r
+  core/U52/ZN (INVD1BWP12T40P140)                                      0.019232   2.019232 f
+  core/U51/ZN (INVD1BWP12T40P140)                                      0.060281   2.079513 r
+  core/u_lsu_axi4lite_adapter/U45/Z (BUFFD1BWP12T40P140)               0.029642   2.109155 r
+  core/u_lsu_axi4lite_adapter/U33/ZN (INVD1BWP12T40P140)               0.011571   2.120726 f
+  core/u_lsu_axi4lite_adapter/U24/Z (BUFFD1BWP12T40P140)               0.020826   2.141551 f
+  core/u_lsu_axi4lite_adapter/U44/ZN (NR2D1BWP12T40P140)               0.022530   2.164081 r
+  core/u_lsu_axi4lite_adapter/U101/ZN (INR3D1BWP12T40P140)             0.030042   2.194123 r
+  core/u_lsu/U37/ZN (CKND2D1BWP12T40P140)                              0.114042   2.308165 f
+  core/u_lsu/U35/ZN (NR3D0BWP12T40P140)                                0.073645   2.381809 r
+  core/u_lsu/U38/Z (AN3D1BWP12T40P140)                                 0.057394   2.439204 r
+  core/u_lsu/U57/Z (AO31D1BWP12T40P140)                                0.027848   2.467052 r
+  core/u_lsu/U56/Z (BUFFD1BWP12T40P140)                                0.041055   2.508106 r
+  core/u_lsu/U45/Z (AO221D1BWP12T40P140)                               0.035841   2.543948 r
+  core/u_lsu/response_data_reg_21_/D (DFCNQD1BWP12T40P140)             0.000000   2.543948 r
+  data arrival time                                                               2.543948
+
+  clock core_clk (rise edge)                                           5.000000   5.000000
+  clock network delay (ideal)                                          0.000000   5.000000
+  clock reconvergence pessimism                                        0.000000   5.000000
+  clock uncertainty                                                    -0.200000  4.800000
+  core/u_lsu/response_data_reg_21_/CP (DFCNQD1BWP12T40P140)                       4.800000 r
+  library setup time                                                   -0.012493  4.787508
+  data required time                                                              4.787508
+  -----------------------------------------------------------------------------------------------
+  data required time                                                              4.787508
+  data arrival time                                                               -2.543948
+  -----------------------------------------------------------------------------------------------
+  slack (MET)                                                                     2.243560
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: core/u_lsu/response_data_reg_16_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                    Incr       Path
+  -----------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                           0.000000   0.000000
+  clock network delay (ideal)                                          0.000000   0.000000
+  input external delay                                                 2.000000   2.000000 r
+  rst_n (in)                                                           0.000000   2.000000 r
+  core/U52/ZN (INVD1BWP12T40P140)                                      0.019232   2.019232 f
+  core/U51/ZN (INVD1BWP12T40P140)                                      0.060281   2.079513 r
+  core/u_lsu_axi4lite_adapter/U45/Z (BUFFD1BWP12T40P140)               0.029642   2.109155 r
+  core/u_lsu_axi4lite_adapter/U33/ZN (INVD1BWP12T40P140)               0.011571   2.120726 f
+  core/u_lsu_axi4lite_adapter/U24/Z (BUFFD1BWP12T40P140)               0.020826   2.141551 f
+  core/u_lsu_axi4lite_adapter/U44/ZN (NR2D1BWP12T40P140)               0.022530   2.164081 r
+  core/u_lsu_axi4lite_adapter/U101/ZN (INR3D1BWP12T40P140)             0.030042   2.194123 r
+  core/u_lsu/U37/ZN (CKND2D1BWP12T40P140)                              0.114042   2.308165 f
+  core/u_lsu/U35/ZN (NR3D0BWP12T40P140)                                0.073645   2.381809 r
+  core/u_lsu/U38/Z (AN3D1BWP12T40P140)                                 0.057394   2.439204 r
+  core/u_lsu/U57/Z (AO31D1BWP12T40P140)                                0.027848   2.467052 r
+  core/u_lsu/U56/Z (BUFFD1BWP12T40P140)                                0.041055   2.508106 r
+  core/u_lsu/U40/Z (AO221D1BWP12T40P140)                               0.035841   2.543948 r
+  core/u_lsu/response_data_reg_16_/D (DFCNQD1BWP12T40P140)             0.000000   2.543948 r
+  data arrival time                                                               2.543948
+
+  clock core_clk (rise edge)                                           5.000000   5.000000
+  clock network delay (ideal)                                          0.000000   5.000000
+  clock reconvergence pessimism                                        0.000000   5.000000
+  clock uncertainty                                                    -0.200000  4.800000
+  core/u_lsu/response_data_reg_16_/CP (DFCNQD1BWP12T40P140)                       4.800000 r
+  library setup time                                                   -0.012493  4.787508
+  data required time                                                              4.787508
+  -----------------------------------------------------------------------------------------------
+  data required time                                                              4.787508
+  data arrival time                                                               -2.543948
+  -----------------------------------------------------------------------------------------------
+  slack (MET)                                                                     2.243560
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: core/u_lsu/response_data_reg_27_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                    Incr       Path
+  -----------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                           0.000000   0.000000
+  clock network delay (ideal)                                          0.000000   0.000000
+  input external delay                                                 2.000000   2.000000 r
+  rst_n (in)                                                           0.000000   2.000000 r
+  core/U52/ZN (INVD1BWP12T40P140)                                      0.019232   2.019232 f
+  core/U51/ZN (INVD1BWP12T40P140)                                      0.060281   2.079513 r
+  core/u_lsu_axi4lite_adapter/U45/Z (BUFFD1BWP12T40P140)               0.029642   2.109155 r
+  core/u_lsu_axi4lite_adapter/U33/ZN (INVD1BWP12T40P140)               0.011571   2.120726 f
+  core/u_lsu_axi4lite_adapter/U24/Z (BUFFD1BWP12T40P140)               0.020826   2.141551 f
+  core/u_lsu_axi4lite_adapter/U44/ZN (NR2D1BWP12T40P140)               0.022530   2.164081 r
+  core/u_lsu_axi4lite_adapter/U101/ZN (INR3D1BWP12T40P140)             0.030042   2.194123 r
+  core/u_lsu/U37/ZN (CKND2D1BWP12T40P140)                              0.114042   2.308165 f
+  core/u_lsu/U35/ZN (NR3D0BWP12T40P140)                                0.073645   2.381809 r
+  core/u_lsu/U38/Z (AN3D1BWP12T40P140)                                 0.057394   2.439204 r
+  core/u_lsu/U57/Z (AO31D1BWP12T40P140)                                0.027848   2.467052 r
+  core/u_lsu/U56/Z (BUFFD1BWP12T40P140)                                0.041055   2.508106 r
+  core/u_lsu/U51/Z (AO221D1BWP12T40P140)                               0.035841   2.543948 r
+  core/u_lsu/response_data_reg_27_/D (DFCNQD1BWP12T40P140)             0.000000   2.543948 r
+  data arrival time                                                               2.543948
+
+  clock core_clk (rise edge)                                           5.000000   5.000000
+  clock network delay (ideal)                                          0.000000   5.000000
+  clock reconvergence pessimism                                        0.000000   5.000000
+  clock uncertainty                                                    -0.200000  4.800000
+  core/u_lsu/response_data_reg_27_/CP (DFCNQD1BWP12T40P140)                       4.800000 r
+  library setup time                                                   -0.012493  4.787508
+  data required time                                                              4.787508
+  -----------------------------------------------------------------------------------------------
+  data required time                                                              4.787508
+  data arrival time                                                               -2.543948
+  -----------------------------------------------------------------------------------------------
+  slack (MET)                                                                     2.243560
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: core/u_lsu/response_data_reg_22_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                    Incr       Path
+  -----------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                           0.000000   0.000000
+  clock network delay (ideal)                                          0.000000   0.000000
+  input external delay                                                 2.000000   2.000000 r
+  rst_n (in)                                                           0.000000   2.000000 r
+  core/U52/ZN (INVD1BWP12T40P140)                                      0.019232   2.019232 f
+  core/U51/ZN (INVD1BWP12T40P140)                                      0.060281   2.079513 r
+  core/u_lsu_axi4lite_adapter/U45/Z (BUFFD1BWP12T40P140)               0.029642   2.109155 r
+  core/u_lsu_axi4lite_adapter/U33/ZN (INVD1BWP12T40P140)               0.011571   2.120726 f
+  core/u_lsu_axi4lite_adapter/U24/Z (BUFFD1BWP12T40P140)               0.020826   2.141551 f
+  core/u_lsu_axi4lite_adapter/U44/ZN (NR2D1BWP12T40P140)               0.022530   2.164081 r
+  core/u_lsu_axi4lite_adapter/U101/ZN (INR3D1BWP12T40P140)             0.030042   2.194123 r
+  core/u_lsu/U37/ZN (CKND2D1BWP12T40P140)                              0.114042   2.308165 f
+  core/u_lsu/U35/ZN (NR3D0BWP12T40P140)                                0.073645   2.381809 r
+  core/u_lsu/U38/Z (AN3D1BWP12T40P140)                                 0.057394   2.439204 r
+  core/u_lsu/U57/Z (AO31D1BWP12T40P140)                                0.027848   2.467052 r
+  core/u_lsu/U56/Z (BUFFD1BWP12T40P140)                                0.041055   2.508106 r
+  core/u_lsu/U46/Z (AO221D1BWP12T40P140)                               0.035841   2.543948 r
+  core/u_lsu/response_data_reg_22_/D (DFCNQD1BWP12T40P140)             0.000000   2.543948 r
+  data arrival time                                                               2.543948
+
+  clock core_clk (rise edge)                                           5.000000   5.000000
+  clock network delay (ideal)                                          0.000000   5.000000
+  clock reconvergence pessimism                                        0.000000   5.000000
+  clock uncertainty                                                    -0.200000  4.800000
+  core/u_lsu/response_data_reg_22_/CP (DFCNQD1BWP12T40P140)                       4.800000 r
+  library setup time                                                   -0.012493  4.787508
+  data required time                                                              4.787508
+  -----------------------------------------------------------------------------------------------
+  data required time                                                              4.787508
+  data arrival time                                                               -2.543948
+  -----------------------------------------------------------------------------------------------
+  slack (MET)                                                                     2.243560
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: core/u_lsu/response_data_reg_17_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                    Incr       Path
+  -----------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                           0.000000   0.000000
+  clock network delay (ideal)                                          0.000000   0.000000
+  input external delay                                                 2.000000   2.000000 r
+  rst_n (in)                                                           0.000000   2.000000 r
+  core/U52/ZN (INVD1BWP12T40P140)                                      0.019232   2.019232 f
+  core/U51/ZN (INVD1BWP12T40P140)                                      0.060281   2.079513 r
+  core/u_lsu_axi4lite_adapter/U45/Z (BUFFD1BWP12T40P140)               0.029642   2.109155 r
+  core/u_lsu_axi4lite_adapter/U33/ZN (INVD1BWP12T40P140)               0.011571   2.120726 f
+  core/u_lsu_axi4lite_adapter/U24/Z (BUFFD1BWP12T40P140)               0.020826   2.141551 f
+  core/u_lsu_axi4lite_adapter/U44/ZN (NR2D1BWP12T40P140)               0.022530   2.164081 r
+  core/u_lsu_axi4lite_adapter/U101/ZN (INR3D1BWP12T40P140)             0.030042   2.194123 r
+  core/u_lsu/U37/ZN (CKND2D1BWP12T40P140)                              0.114042   2.308165 f
+  core/u_lsu/U35/ZN (NR3D0BWP12T40P140)                                0.073645   2.381809 r
+  core/u_lsu/U38/Z (AN3D1BWP12T40P140)                                 0.057394   2.439204 r
+  core/u_lsu/U57/Z (AO31D1BWP12T40P140)                                0.027848   2.467052 r
+  core/u_lsu/U56/Z (BUFFD1BWP12T40P140)                                0.041055   2.508106 r
+  core/u_lsu/U41/Z (AO221D1BWP12T40P140)                               0.035841   2.543948 r
+  core/u_lsu/response_data_reg_17_/D (DFCNQD1BWP12T40P140)             0.000000   2.543948 r
+  data arrival time                                                               2.543948
+
+  clock core_clk (rise edge)                                           5.000000   5.000000
+  clock network delay (ideal)                                          0.000000   5.000000
+  clock reconvergence pessimism                                        0.000000   5.000000
+  clock uncertainty                                                    -0.200000  4.800000
+  core/u_lsu/response_data_reg_17_/CP (DFCNQD1BWP12T40P140)                       4.800000 r
+  library setup time                                                   -0.012493  4.787508
+  data required time                                                              4.787508
+  -----------------------------------------------------------------------------------------------
+  data required time                                                              4.787508
+  data arrival time                                                               -2.543948
+  -----------------------------------------------------------------------------------------------
+  slack (MET)                                                                     2.243560
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: core/u_lsu/response_data_reg_28_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                    Incr       Path
+  -----------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                           0.000000   0.000000
+  clock network delay (ideal)                                          0.000000   0.000000
+  input external delay                                                 2.000000   2.000000 r
+  rst_n (in)                                                           0.000000   2.000000 r
+  core/U52/ZN (INVD1BWP12T40P140)                                      0.019232   2.019232 f
+  core/U51/ZN (INVD1BWP12T40P140)                                      0.060281   2.079513 r
+  core/u_lsu_axi4lite_adapter/U45/Z (BUFFD1BWP12T40P140)               0.029642   2.109155 r
+  core/u_lsu_axi4lite_adapter/U33/ZN (INVD1BWP12T40P140)               0.011571   2.120726 f
+  core/u_lsu_axi4lite_adapter/U24/Z (BUFFD1BWP12T40P140)               0.020826   2.141551 f
+  core/u_lsu_axi4lite_adapter/U44/ZN (NR2D1BWP12T40P140)               0.022530   2.164081 r
+  core/u_lsu_axi4lite_adapter/U101/ZN (INR3D1BWP12T40P140)             0.030042   2.194123 r
+  core/u_lsu/U37/ZN (CKND2D1BWP12T40P140)                              0.114042   2.308165 f
+  core/u_lsu/U35/ZN (NR3D0BWP12T40P140)                                0.073645   2.381809 r
+  core/u_lsu/U38/Z (AN3D1BWP12T40P140)                                 0.057394   2.439204 r
+  core/u_lsu/U57/Z (AO31D1BWP12T40P140)                                0.027848   2.467052 r
+  core/u_lsu/U56/Z (BUFFD1BWP12T40P140)                                0.041055   2.508106 r
+  core/u_lsu/U52/Z (AO221D1BWP12T40P140)                               0.035841   2.543948 r
+  core/u_lsu/response_data_reg_28_/D (DFCNQD1BWP12T40P140)             0.000000   2.543948 r
+  data arrival time                                                               2.543948
+
+  clock core_clk (rise edge)                                           5.000000   5.000000
+  clock network delay (ideal)                                          0.000000   5.000000
+  clock reconvergence pessimism                                        0.000000   5.000000
+  clock uncertainty                                                    -0.200000  4.800000
+  core/u_lsu/response_data_reg_28_/CP (DFCNQD1BWP12T40P140)                       4.800000 r
+  library setup time                                                   -0.012493  4.787508
+  data required time                                                              4.787508
+  -----------------------------------------------------------------------------------------------
+  data required time                                                              4.787508
+  data arrival time                                                               -2.543948
+  -----------------------------------------------------------------------------------------------
+  slack (MET)                                                                     2.243560
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: core/u_lsu/response_data_reg_23_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                    Incr       Path
+  -----------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                           0.000000   0.000000
+  clock network delay (ideal)                                          0.000000   0.000000
+  input external delay                                                 2.000000   2.000000 r
+  rst_n (in)                                                           0.000000   2.000000 r
+  core/U52/ZN (INVD1BWP12T40P140)                                      0.019232   2.019232 f
+  core/U51/ZN (INVD1BWP12T40P140)                                      0.060281   2.079513 r
+  core/u_lsu_axi4lite_adapter/U45/Z (BUFFD1BWP12T40P140)               0.029642   2.109155 r
+  core/u_lsu_axi4lite_adapter/U33/ZN (INVD1BWP12T40P140)               0.011571   2.120726 f
+  core/u_lsu_axi4lite_adapter/U24/Z (BUFFD1BWP12T40P140)               0.020826   2.141551 f
+  core/u_lsu_axi4lite_adapter/U44/ZN (NR2D1BWP12T40P140)               0.022530   2.164081 r
+  core/u_lsu_axi4lite_adapter/U101/ZN (INR3D1BWP12T40P140)             0.030042   2.194123 r
+  core/u_lsu/U37/ZN (CKND2D1BWP12T40P140)                              0.114042   2.308165 f
+  core/u_lsu/U35/ZN (NR3D0BWP12T40P140)                                0.073645   2.381809 r
+  core/u_lsu/U38/Z (AN3D1BWP12T40P140)                                 0.057394   2.439204 r
+  core/u_lsu/U57/Z (AO31D1BWP12T40P140)                                0.027848   2.467052 r
+  core/u_lsu/U56/Z (BUFFD1BWP12T40P140)                                0.041055   2.508106 r
+  core/u_lsu/U47/Z (AO221D1BWP12T40P140)                               0.035841   2.543948 r
+  core/u_lsu/response_data_reg_23_/D (DFCNQD1BWP12T40P140)             0.000000   2.543948 r
+  data arrival time                                                               2.543948
+
+  clock core_clk (rise edge)                                           5.000000   5.000000
+  clock network delay (ideal)                                          0.000000   5.000000
+  clock reconvergence pessimism                                        0.000000   5.000000
+  clock uncertainty                                                    -0.200000  4.800000
+  core/u_lsu/response_data_reg_23_/CP (DFCNQD1BWP12T40P140)                       4.800000 r
+  library setup time                                                   -0.012493  4.787508
+  data required time                                                              4.787508
+  -----------------------------------------------------------------------------------------------
+  data required time                                                              4.787508
+  data arrival time                                                               -2.543948
+  -----------------------------------------------------------------------------------------------
+  slack (MET)                                                                     2.243560
+
+
+  Startpoint: rst_n (input port clocked by core_clk)
+  Endpoint: core/u_lsu/response_data_reg_18_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                    Incr       Path
+  -----------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                           0.000000   0.000000
+  clock network delay (ideal)                                          0.000000   0.000000
+  input external delay                                                 2.000000   2.000000 r
+  rst_n (in)                                                           0.000000   2.000000 r
+  core/U52/ZN (INVD1BWP12T40P140)                                      0.019232   2.019232 f
+  core/U51/ZN (INVD1BWP12T40P140)                                      0.060281   2.079513 r
+  core/u_lsu_axi4lite_adapter/U45/Z (BUFFD1BWP12T40P140)               0.029642   2.109155 r
+  core/u_lsu_axi4lite_adapter/U33/ZN (INVD1BWP12T40P140)               0.011571   2.120726 f
+  core/u_lsu_axi4lite_adapter/U24/Z (BUFFD1BWP12T40P140)               0.020826   2.141551 f
+  core/u_lsu_axi4lite_adapter/U44/ZN (NR2D1BWP12T40P140)               0.022530   2.164081 r
+  core/u_lsu_axi4lite_adapter/U101/ZN (INR3D1BWP12T40P140)             0.030042   2.194123 r
+  core/u_lsu/U37/ZN (CKND2D1BWP12T40P140)                              0.114042   2.308165 f
+  core/u_lsu/U35/ZN (NR3D0BWP12T40P140)                                0.073645   2.381809 r
+  core/u_lsu/U38/Z (AN3D1BWP12T40P140)                                 0.057394   2.439204 r
+  core/u_lsu/U57/Z (AO31D1BWP12T40P140)                                0.027848   2.467052 r
+  core/u_lsu/U56/Z (BUFFD1BWP12T40P140)                                0.041055   2.508106 r
+  core/u_lsu/U42/Z (AO221D1BWP12T40P140)                               0.035841   2.543948 r
+  core/u_lsu/response_data_reg_18_/D (DFCNQD1BWP12T40P140)             0.000000   2.543948 r
+  data arrival time                                                               2.543948
+
+  clock core_clk (rise edge)                                           5.000000   5.000000
+  clock network delay (ideal)                                          0.000000   5.000000
+  clock reconvergence pessimism                                        0.000000   5.000000
+  clock uncertainty                                                    -0.200000  4.800000
+  core/u_lsu/response_data_reg_18_/CP (DFCNQD1BWP12T40P140)                       4.800000 r
+  library setup time                                                   -0.012493  4.787508
+  data required time                                                              4.787508
+  -----------------------------------------------------------------------------------------------
+  data required time                                                              4.787508
+  data arrival time                                                               -2.543948
+  -----------------------------------------------------------------------------------------------
+  slack (MET)                                                                     2.243560
+
+
+1

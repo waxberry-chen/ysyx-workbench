@@ -1,0 +1,326 @@
+****************************************
+Report : timing
+	-path_type full
+	-delay_type min
+	-slack_lesser_than 1000000015047466219876688855040.000000
+	-max_paths 10
+	-sort_by slack
+Design : ysyx_core_axi4lite
+Version: T-2022.03-SP5
+Date   : Sun Oct 18 17:31:38 2026
+****************************************
+
+
+  Startpoint: m_axi_bresp[1]
+               (input port clocked by core_clk)
+  Endpoint: arbiter/resp_q_reg_1_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                         Incr       Path
+  ------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                0.000000   0.000000
+  clock network delay (ideal)                               0.000000   0.000000
+  input external delay                                      0.200000   0.200000 f
+  m_axi_bresp[1] (in)                                       0.000000   0.200000 f
+  arbiter/U256/ZN (AOI22D1BWP12T40P140)                     0.021276   0.221276 r
+  arbiter/U160/ZN (MOAI22D1BWP12T40P140)                    0.015460   0.236736 f
+  arbiter/resp_q_reg_1_/D (DFCNQD1BWP12T40P140)             0.000000   0.236736 f
+  data arrival time                                                    0.236736
+
+  clock core_clk (rise edge)                                0.000000   0.000000
+  clock network delay (ideal)                               0.000000   0.000000
+  clock reconvergence pessimism                             0.000000   0.000000
+  clock uncertainty                                         0.050000   0.050000
+  arbiter/resp_q_reg_1_/CP (DFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                         0.024533   0.074533
+  data required time                                                   0.074533
+  ------------------------------------------------------------------------------------
+  data required time                                                   0.074533
+  data arrival time                                                    -0.236736
+  ------------------------------------------------------------------------------------
+  slack (MET)                                                          0.162203
+
+
+  Startpoint: m_axi_bresp[0]
+               (input port clocked by core_clk)
+  Endpoint: arbiter/resp_q_reg_0_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                         Incr       Path
+  ------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                0.000000   0.000000
+  clock network delay (ideal)                               0.000000   0.000000
+  input external delay                                      0.200000   0.200000 f
+  m_axi_bresp[0] (in)                                       0.000000   0.200000 f
+  arbiter/U255/ZN (AOI22D1BWP12T40P140)                     0.021276   0.221276 r
+  arbiter/U162/ZN (MOAI22D1BWP12T40P140)                    0.015460   0.236736 f
+  arbiter/resp_q_reg_0_/D (DFCNQD1BWP12T40P140)             0.000000   0.236736 f
+  data arrival time                                                    0.236736
+
+  clock core_clk (rise edge)                                0.000000   0.000000
+  clock network delay (ideal)                               0.000000   0.000000
+  clock reconvergence pessimism                             0.000000   0.000000
+  clock uncertainty                                         0.050000   0.050000
+  arbiter/resp_q_reg_0_/CP (DFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                         0.024533   0.074533
+  data required time                                                   0.074533
+  ------------------------------------------------------------------------------------
+  data required time                                                   0.074533
+  data arrival time                                                    -0.236736
+  ------------------------------------------------------------------------------------
+  slack (MET)                                                          0.162203
+
+
+  Startpoint: m_axi_rdata[6]
+               (input port clocked by core_clk)
+  Endpoint: arbiter/rdata_q_reg_6_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                          Incr       Path
+  -------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                 0.000000   0.000000
+  clock network delay (ideal)                                0.000000   0.000000
+  input external delay                                       0.200000   0.200000 f
+  m_axi_rdata[6] (in)                                        0.000000   0.200000 f
+  arbiter/U314/Z (AO22D0BWP12T40P140)                        0.039171   0.239171 f
+  arbiter/rdata_q_reg_6_/D (DFCNQD1BWP12T40P140)             0.000000   0.239171 f
+  data arrival time                                                     0.239171
+
+  clock core_clk (rise edge)                                 0.000000   0.000000
+  clock network delay (ideal)                                0.000000   0.000000
+  clock reconvergence pessimism                              0.000000   0.000000
+  clock uncertainty                                          0.050000   0.050000
+  arbiter/rdata_q_reg_6_/CP (DFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                          0.024582   0.074582
+  data required time                                                    0.074582
+  -------------------------------------------------------------------------------------
+  data required time                                                    0.074582
+  data arrival time                                                     -0.239171
+  -------------------------------------------------------------------------------------
+  slack (MET)                                                           0.164589
+
+
+  Startpoint: m_axi_rdata[7]
+               (input port clocked by core_clk)
+  Endpoint: arbiter/rdata_q_reg_7_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                          Incr       Path
+  -------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                 0.000000   0.000000
+  clock network delay (ideal)                                0.000000   0.000000
+  input external delay                                       0.200000   0.200000 f
+  m_axi_rdata[7] (in)                                        0.000000   0.200000 f
+  arbiter/U315/Z (AO22D0BWP12T40P140)                        0.039171   0.239171 f
+  arbiter/rdata_q_reg_7_/D (DFCNQD1BWP12T40P140)             0.000000   0.239171 f
+  data arrival time                                                     0.239171
+
+  clock core_clk (rise edge)                                 0.000000   0.000000
+  clock network delay (ideal)                                0.000000   0.000000
+  clock reconvergence pessimism                              0.000000   0.000000
+  clock uncertainty                                          0.050000   0.050000
+  arbiter/rdata_q_reg_7_/CP (DFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                          0.024582   0.074582
+  data required time                                                    0.074582
+  -------------------------------------------------------------------------------------
+  data required time                                                    0.074582
+  data arrival time                                                     -0.239171
+  -------------------------------------------------------------------------------------
+  slack (MET)                                                           0.164589
+
+
+  Startpoint: m_axi_rdata[0]
+               (input port clocked by core_clk)
+  Endpoint: arbiter/rdata_q_reg_0_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                          Incr       Path
+  -------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                 0.000000   0.000000
+  clock network delay (ideal)                                0.000000   0.000000
+  input external delay                                       0.200000   0.200000 f
+  m_axi_rdata[0] (in)                                        0.000000   0.200000 f
+  arbiter/U302/Z (AO22D0BWP12T40P140)                        0.039171   0.239171 f
+  arbiter/rdata_q_reg_0_/D (DFCNQD1BWP12T40P140)             0.000000   0.239171 f
+  data arrival time                                                     0.239171
+
+  clock core_clk (rise edge)                                 0.000000   0.000000
+  clock network delay (ideal)                                0.000000   0.000000
+  clock reconvergence pessimism                              0.000000   0.000000
+  clock uncertainty                                          0.050000   0.050000
+  arbiter/rdata_q_reg_0_/CP (DFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                          0.024582   0.074582
+  data required time                                                    0.074582
+  -------------------------------------------------------------------------------------
+  data required time                                                    0.074582
+  data arrival time                                                     -0.239171
+  -------------------------------------------------------------------------------------
+  slack (MET)                                                           0.164589
+
+
+  Startpoint: m_axi_rdata[1]
+               (input port clocked by core_clk)
+  Endpoint: arbiter/rdata_q_reg_1_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                          Incr       Path
+  -------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                 0.000000   0.000000
+  clock network delay (ideal)                                0.000000   0.000000
+  input external delay                                       0.200000   0.200000 f
+  m_axi_rdata[1] (in)                                        0.000000   0.200000 f
+  arbiter/U303/Z (AO22D0BWP12T40P140)                        0.039171   0.239171 f
+  arbiter/rdata_q_reg_1_/D (DFCNQD1BWP12T40P140)             0.000000   0.239171 f
+  data arrival time                                                     0.239171
+
+  clock core_clk (rise edge)                                 0.000000   0.000000
+  clock network delay (ideal)                                0.000000   0.000000
+  clock reconvergence pessimism                              0.000000   0.000000
+  clock uncertainty                                          0.050000   0.050000
+  arbiter/rdata_q_reg_1_/CP (DFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                          0.024582   0.074582
+  data required time                                                    0.074582
+  -------------------------------------------------------------------------------------
+  data required time                                                    0.074582
+  data arrival time                                                     -0.239171
+  -------------------------------------------------------------------------------------
+  slack (MET)                                                           0.164589
+
+
+  Startpoint: m_axi_rdata[2]
+               (input port clocked by core_clk)
+  Endpoint: arbiter/rdata_q_reg_2_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                          Incr       Path
+  -------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                 0.000000   0.000000
+  clock network delay (ideal)                                0.000000   0.000000
+  input external delay                                       0.200000   0.200000 f
+  m_axi_rdata[2] (in)                                        0.000000   0.200000 f
+  arbiter/U304/Z (AO22D0BWP12T40P140)                        0.039171   0.239171 f
+  arbiter/rdata_q_reg_2_/D (DFCNQD1BWP12T40P140)             0.000000   0.239171 f
+  data arrival time                                                     0.239171
+
+  clock core_clk (rise edge)                                 0.000000   0.000000
+  clock network delay (ideal)                                0.000000   0.000000
+  clock reconvergence pessimism                              0.000000   0.000000
+  clock uncertainty                                          0.050000   0.050000
+  arbiter/rdata_q_reg_2_/CP (DFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                          0.024582   0.074582
+  data required time                                                    0.074582
+  -------------------------------------------------------------------------------------
+  data required time                                                    0.074582
+  data arrival time                                                     -0.239171
+  -------------------------------------------------------------------------------------
+  slack (MET)                                                           0.164589
+
+
+  Startpoint: m_axi_rdata[3]
+               (input port clocked by core_clk)
+  Endpoint: arbiter/rdata_q_reg_3_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                          Incr       Path
+  -------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                 0.000000   0.000000
+  clock network delay (ideal)                                0.000000   0.000000
+  input external delay                                       0.200000   0.200000 f
+  m_axi_rdata[3] (in)                                        0.000000   0.200000 f
+  arbiter/U305/Z (AO22D0BWP12T40P140)                        0.039171   0.239171 f
+  arbiter/rdata_q_reg_3_/D (DFCNQD1BWP12T40P140)             0.000000   0.239171 f
+  data arrival time                                                     0.239171
+
+  clock core_clk (rise edge)                                 0.000000   0.000000
+  clock network delay (ideal)                                0.000000   0.000000
+  clock reconvergence pessimism                              0.000000   0.000000
+  clock uncertainty                                          0.050000   0.050000
+  arbiter/rdata_q_reg_3_/CP (DFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                          0.024582   0.074582
+  data required time                                                    0.074582
+  -------------------------------------------------------------------------------------
+  data required time                                                    0.074582
+  data arrival time                                                     -0.239171
+  -------------------------------------------------------------------------------------
+  slack (MET)                                                           0.164589
+
+
+  Startpoint: m_axi_rdata[4]
+               (input port clocked by core_clk)
+  Endpoint: arbiter/rdata_q_reg_4_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                          Incr       Path
+  -------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                 0.000000   0.000000
+  clock network delay (ideal)                                0.000000   0.000000
+  input external delay                                       0.200000   0.200000 f
+  m_axi_rdata[4] (in)                                        0.000000   0.200000 f
+  arbiter/U306/Z (AO22D0BWP12T40P140)                        0.039171   0.239171 f
+  arbiter/rdata_q_reg_4_/D (DFCNQD1BWP12T40P140)             0.000000   0.239171 f
+  data arrival time                                                     0.239171
+
+  clock core_clk (rise edge)                                 0.000000   0.000000
+  clock network delay (ideal)                                0.000000   0.000000
+  clock reconvergence pessimism                              0.000000   0.000000
+  clock uncertainty                                          0.050000   0.050000
+  arbiter/rdata_q_reg_4_/CP (DFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                          0.024582   0.074582
+  data required time                                                    0.074582
+  -------------------------------------------------------------------------------------
+  data required time                                                    0.074582
+  data arrival time                                                     -0.239171
+  -------------------------------------------------------------------------------------
+  slack (MET)                                                           0.164589
+
+
+  Startpoint: m_axi_rdata[5]
+               (input port clocked by core_clk)
+  Endpoint: arbiter/rdata_q_reg_5_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                          Incr       Path
+  -------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                 0.000000   0.000000
+  clock network delay (ideal)                                0.000000   0.000000
+  input external delay                                       0.200000   0.200000 f
+  m_axi_rdata[5] (in)                                        0.000000   0.200000 f
+  arbiter/U307/Z (AO22D0BWP12T40P140)                        0.039171   0.239171 f
+  arbiter/rdata_q_reg_5_/D (DFCNQD1BWP12T40P140)             0.000000   0.239171 f
+  data arrival time                                                     0.239171
+
+  clock core_clk (rise edge)                                 0.000000   0.000000
+  clock network delay (ideal)                                0.000000   0.000000
+  clock reconvergence pessimism                              0.000000   0.000000
+  clock uncertainty                                          0.050000   0.050000
+  arbiter/rdata_q_reg_5_/CP (DFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                          0.024582   0.074582
+  data required time                                                    0.074582
+  -------------------------------------------------------------------------------------
+  data required time                                                    0.074582
+  data arrival time                                                     -0.239171
+  -------------------------------------------------------------------------------------
+  slack (MET)                                                           0.164589
+
+
+1

@@ -1,0 +1,76 @@
+ 
+****************************************
+Report : area
+Design : ysyx_core_axi4lite
+Version: V-2023.12-SP5
+Date   : Sun Oct 18 15:01:10 2026
+****************************************
+
+Information: Updating design information... (UID-85)
+Warning: Design 'ysyx_core_axi4lite' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+Library(s) Used:
+
+    tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs (File: /home/cym/prj/ysyx-workbench/npc/flow/00_indata/DB/STD_NEW/tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.db)
+
+Number of ports:                         5910
+Number of nets:                         13077
+Number of cells:                         7687
+Number of combinational cells:           6147
+Number of sequential cells:              1509
+Number of macros/black boxes:               0
+Number of buf/inv:                       1630
+Number of references:                       4
+
+Combinational area:               4991.784007
+Buf/Inv area:                      706.440005
+Noncombinational area:            4519.535898
+Macro/Black Box area:                0.000000
+Net Interconnect area:      undefined  (Wire load has zero net area)
+
+Total cell area:                  9511.319905
+Total area:                 undefined
+
+Hierarchical area distribution
+------------------------------
+
+                                  Global cell area          Local cell area
+                                  ------------------  ---------------------------- 
+Hierarchical cell                 Absolute   Percent  Combi-     Noncombi-  Black-
+                                  Total      Total    national   national   boxes   Design
+--------------------------------  ---------  -------  ---------  ---------  ------  -----------------------------------------
+ysyx_core_axi4lite                9511.3199    100.0     0.6720     0.0000  0.0000  ysyx_core_axi4lite
+arbiter                            607.3200      6.4   256.5360   350.7840  0.0000  ysyx_axi4lite_arbiter
+core                              8903.3279     93.6   105.8400     0.0000  0.0000  ysyx_core
+core/u_arch_pc                     134.4000      1.4    37.6320    96.7680  0.0000  ysyx_gnrl_dfflrs_32_80000000
+core/u_csr                         718.7040      7.6   181.1040     0.0000  0.0000  ysyx_csr
+core/u_csr/gen_csr_0__csr_dfflr    134.4000      1.4    37.6320    96.7680  0.0000  ysyx_gnrl_dfflrs_DW32_856242
+core/u_csr/gen_csr_1__csr_dfflr    134.4000      1.4    37.6320    96.7680  0.0000  ysyx_gnrl_dfflrs_DW32_393242
+core/u_csr/gen_csr_2__csr_dfflr    134.4000      1.4    37.6320    96.7680  0.0000  ysyx_gnrl_dfflrs_DW32_197242
+core/u_csr/gen_csr_3__csr_dfflr    134.4000      1.4    37.6320    96.7680  0.0000  ysyx_gnrl_dfflrs_DW32_312242
+core/u_decode_imm                   37.4640      0.4    37.4640     0.0000  0.0000  ysyx_gen_imm
+core/u_decoder                      92.2320      1.0    92.2320     0.0000  0.0000  ysyx_idu
+core/u_exu                        1636.1520     17.2   400.1760     3.0240  0.0000  ysyx_exu
+core/u_exu/add_126                  59.6400      0.6    59.6400     0.0000  0.0000  ysyx_exu_DW01_add_0
+core/u_exu/u_alu                   969.8640     10.2   292.3200     0.0000  0.0000  ysyx_alu
+core/u_exu/u_alu/add_14             90.2160      0.9    90.2160     0.0000  0.0000  ysyx_alu_DW01_add_0_DW01_add_1
+core/u_exu/u_alu/sll_18            170.0160      1.8   170.0160     0.0000  0.0000  ysyx_alu_DW01_ash_0_DW01_ash_2
+core/u_exu/u_alu/sra_28            162.2880      1.7   162.2880     0.0000  0.0000  ysyx_alu_DW_rash_0_DW_rash_1
+core/u_exu/u_alu/srl_26            154.0560      1.6   154.0560     0.0000  0.0000  ysyx_alu_DW_rash_1_DW_rash_2
+core/u_exu/u_alu/sub_16            100.9680      1.1   100.9680     0.0000  0.0000  ysyx_alu_DW01_sub_0
+core/u_exu/u_branch                124.8240      1.3    59.4720     0.0000  0.0000  ysyx_branch
+core/u_exu/u_branch/r62             65.3520      0.7    65.3520     0.0000  0.0000  ysyx_branch_DW01_cmp6_0_DW01_cmp6_2
+core/u_exu/u_wb_mux                 78.6240      0.8    78.6240     0.0000  0.0000  ysyx_gnrl_data_mux_DW32_N4
+core/u_gpr                        2687.8320     28.3  1236.3120  1451.5200  0.0000  ysyx_regfile
+core/u_ifu                         998.2560     10.5   100.1280   199.5840  0.0000  ysyx_ifu_80000000_2
+core/u_ifu/add_101                  59.6400      0.6    59.6400     0.0000  0.0000  ysyx_ifu_80000000_2_DW01_add_0_DW01_add_2
+core/u_ifu/add_83                   59.6400      0.6    59.6400     0.0000  0.0000  ysyx_ifu_80000000_2_DW01_add_1_DW01_add_3
+core/u_ifu/u_ifq                   579.2640      6.1   217.7280   361.5360  0.0000  ysyx_gnrl_fifo_DW65_DEPTH2
+core/u_ifu_axi4lite_adapter        285.2640      3.0    82.6560   202.6080  0.0000  ysyx_ifu_axi4lite_adapter
+core/u_lsu                         450.0720      4.7   138.6000   311.4720  0.0000  ysyx_lsu
+core/u_lsu_axi4lite_adapter        591.8640      6.2   277.3680   314.4960  0.0000  ysyx_lsu_axi4lite_adapter
+core/u_opbuf                      1165.2480     12.3     0.5040     0.0000  0.0000  ysyx_opbuf
+core/u_opbuf/u_context_reg        1164.7440     12.2   324.0720   840.6720  0.0000  ysyx_gnrl_rv_reg_DW277
+--------------------------------  ---------  -------  ---------  ---------  ------  -----------------------------------------
+Total                                                 4991.7840  4519.5359  0.0000
+
+1
