@@ -28,6 +28,8 @@ def report(name, text='MOCK REPORT\\n'):
 report('environment/version.rpt','MOCK TOOL - NOT EDA\\n')
 report('environment/library_mock.rpt','MOCK LIBRARY\\n')
 report('complete.txt','NPC_FLOW_COMPLETE '+stage+'\\n')
+if stage in ('syn', 'sta'):
+ report('checks/lsu_enable_capacitance.rpt','MOCK CAPACITANCE DIAGNOSTIC\\n')
 if stage=='syn':
  for name in ['summary/qor','checks/check_design_pre','checks/check_design_post','checks/check_timing','checks/constraint_violations','checks/high_fanout','timing/timing_max','timing/timing_min','environment/design','area/references','area/resources']:
   report(name+'.rpt')
@@ -370,6 +372,37 @@ dict set site library_reviewed 1
         self.assertIn('driver reset_buffer/Z; loads 1379', fanout)
         for report in (run/'reports/sta/timing').glob('*.rpt'):
             self.assertIn('slack (MET) 5.530000', report.read_text())
+        for stage in ['syn', 'sta']:
+            capacitance = (run/f'reports/{stage}/checks/lsu_enable_capacitance.rpt').read_text()
+            self.assertIn('enable_pin_count: 3', capacitance)
+            self.assertIn('enable_net_count: 2', capacitance)
+            self.assertEqual(capacitance.count('NET: core/u_lsu/enable_renamed_a'), 1)
+            self.assertIn('NET: core/u_lsu/enable_renamed_b', capacitance)
+            self.assertIn('direct_input_pin_count: 3', capacitance)
+            self.assertIn('reference=INVD1', capacitance)
+            self.assertIn('capacitance: 0.001', capacitance)
+            self.assertIn('max_capacitance: 0.084770', capacitance)
+            self.assertIn('min_capacitance: UNAVAILABLE', capacitance)
+            model = 'true' if stage == 'sta' else 'UNAVAILABLE'
+            self.assertIn(f'report_capacitance_use_ccs_receiver_model: {model}', capacitance)
+        self.assertIn('total_ccs_capacitance_max_rise: 0.088724', capacitance)
+
+    def test_capacitance_mapping_without_enable_pins_is_explicit(self):
+        self.tool.write_text("#!/usr/bin/env python3\nimport os,sys\nfrom pathlib import Path\nos.environ['NPC_MOCK_NO_ENABLE_PINS']='1'\nmock=Path(os.environ['NPC_FLOW_SNAPSHOT'])/'04_tests/eda_mock.tcl'\nos.execvp('tclsh',['tclsh',str(mock),sys.argv[-1]])\n")
+        run = self.syn()
+        f.execute(run, 'sta')
+        for stage in ['syn', 'sta']:
+            report = (run/f'reports/{stage}/checks/lsu_enable_capacitance.rpt').read_text()
+            self.assertIn('enable_pin_count: 0', report)
+            self.assertIn('NPC_CAP_NO_ENABLE_PINS', report)
+            self.assertNotIn('NET:', report)
+
+    def test_capacitance_core_report_failure_is_not_optional(self):
+        self.tool.write_text("#!/usr/bin/env python3\nimport os,sys\nfrom pathlib import Path\nos.environ['NPC_MOCK_CAP_REPORT_ERROR']='1'\nmock=Path(os.environ['NPC_FLOW_SNAPSHOT'])/'04_tests/eda_mock.tcl'\nos.execvp('tclsh',['tclsh',str(mock),sys.argv[-1]])\n")
+        run = self.new_run()
+        with self.assertRaises(f.FlowError):
+            f.execute(run, 'syn')
+        self.assertIn('Injected capacitance report failure', (run/'logs/syn.log').read_text())
 
     def test_empty_high_fanout_is_valid(self):
         self.tool.write_text("#!/usr/bin/env python3\nimport os,sys\nfrom pathlib import Path\nos.environ['NPC_MOCK_NO_HIGH_FANOUT']='1'\nmock=Path(os.environ['NPC_FLOW_SNAPSHOT'])/'04_tests/eda_mock.tcl'\nos.execvp('tclsh',['tclsh',str(mock),sys.argv[-1]])\n")
@@ -393,7 +426,8 @@ dict set site library_reviewed 1
     def test_diagnostic_reports_are_required(self):
         run = self.syn()
         f.execute(run, 'sta')
-        for stage, name in [('syn', 'high_fanout'), ('sta', 'disable_timing')]:
+        for stage, name in [('syn', 'high_fanout'), ('sta', 'disable_timing'),
+                            ('syn', 'lsu_enable_capacitance'), ('sta', 'lsu_enable_capacitance')]:
             path = run/f'reports/{stage}/checks/{name}.rpt'
             original = path.read_text()
             path.write_text('Error: diagnostic command failed\n')

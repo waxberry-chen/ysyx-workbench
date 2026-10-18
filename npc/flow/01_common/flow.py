@@ -296,6 +296,8 @@ def inspect_stage(run, stage):
         required += ['environment/units.rpt', 'environment/design.rpt', 'environment/wire_load.rpt', 'checks/check_timing.rpt', 'checks/coverage.rpt', 'checks/coverage_untested.rpt', 'checks/constraint_violations.rpt', 'timing/timing_max.rpt', 'timing/timing_min.rpt', 'timing/metrics_max.tsv', 'timing/metrics_min.tsv']
         required += [f'timing/{group}_{delay}.rpt' for group in ['Reg2Reg', 'In2Reg', 'Reg2Out', 'In2Out'] for delay in ['max', 'min']]
         required += ['checks/disable_timing.rpt']
+    if stage in ('syn', 'sta'):
+        required += ['checks/lsu_enable_capacitance.rpt']
     required_paths = [report/name for name in required]
     libs = list((report/'environment').glob('library_*.rpt'))
     require(libs, 'Missing library reports')

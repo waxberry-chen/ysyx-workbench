@@ -3,6 +3,7 @@
 # library/units/WLM 报告用于核对模型，timing/coverage 用于核对路径及检查是否完整。
 if {[catch {
     source [file join $::env(NPC_FLOW_SNAPSHOT) 01_common setup.tcl]
+    source [file join $::env(NPC_FLOW_SNAPSHOT) 01_common capacitance.tcl]
     libraries
     library_reports
     # 阶段 1：只读本 run 的综合网表。PT 根据库中的单元时序模型构建分析图，
@@ -34,6 +35,7 @@ if {[catch {
     redirect -file [file join $reports checks disable_timing.rpt] {report_disable_timing}
     # 小电容/小 slack 在两位小数下可能打印成 0.00，但依然是违例。
     redirect -file [file join $reports checks constraint_violations.rpt] {report_constraint -all_violators -significant_digits 6 -nosplit}
+    report_lsu_enable_capacitance
     # 阶段 4：max/min 分别保存晚到/早到分析；全局报告包含实际可分析的 check。
     # 先输出代表路径供人阅读，再独立提取全部负 slack 端点，避免只用前 20 条算 TNS。
     foreach delay {max min} {

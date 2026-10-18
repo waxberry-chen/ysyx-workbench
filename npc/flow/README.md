@@ -241,6 +241,12 @@ PT 多路径默认只列负 slack，全部满足时报告为空；现已在全�
 曾出现的每个高扇出网；不穿透 buffer/inverter 合并扇出，也不把 clk/reset 预先豁免。
 完整服务器交接及基线候选审查见 [S3 重跑说明](../../docs/notes/post-c/4-pre-soc-signoff/s3-rerun.md)。
 
+DC/PT 均新增 `checks/lsu_enable_capacitance.rpt`：从 LSU 请求寄存器 E 引脚反查
+实际网络，记录各使能分支的驱动/负载、原始 `report_net`、可用的库电容限制及
+CCS 属性。不绑定 U13/n3，不修改 RTL、SDC、映射策略或模型开关；缺失属性明确
+标为 UNAVAILABLE，无匹配 E 引脚时要求审查网表。该报告是必需产物并纳入 hash。
+具体字段、解释边界及新 run 命令见 [DC/PT 电容对照](../../docs/notes/post-c/4-pre-soc-signoff/s3-capacitance-check.md)。
+
 **旧 run 不迁移、不重命名。** 首次综合归档继续使用原来的扁平目录。目录属于 run 的冻结契约；
 更新 flow 后，以新 RUN_ID 生成分类报告。检查旧 run 或继续其 STA 时使用该 run 自带的 runner：
 

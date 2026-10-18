@@ -42,7 +42,22 @@ proc analyze {args} {
     return 1
 }
 proc read_verilog {path} {if {![file exists $path]} {error "Missing netlist"}}
-proc get_cells {args} {return {}}
+# Deliberately different names and two enable branches: discovery must not depend on U13/n3.
+set cap_a core/u_lsu/enable_renamed_a
+set cap_b core/u_lsu/enable_renamed_b
+set cap_driver core/u_lsu/renamed_driver
+set cap_buffer core/u_lsu/renamed_buffer
+set cap_enables {core/u_lsu/req_addr_q_reg_0_/E core/u_lsu/req_wdata_q_reg_1_/E core/u_lsu/req_type_q_reg_0_/E}
+set cap_connections [dict create $cap_a [concat [list $cap_driver/ZN] [lrange $cap_enables 0 1] [list $cap_buffer/I]] \
+    $cap_b [list $cap_buffer/Z [lindex $cap_enables 2]]]
+if {$::env(NPC_STAGE) eq "sta"} {
+    set report_capacitance_use_ccs_receiver_model true
+    set timing_max_capacitance_derate 1.0
+}
+proc get_cells {args} {
+    if {[lindex $args 0] eq "-of_objects"} {return [file dirname [lindex $args 1]]}
+    return {}
+}
 proc all_registers {args} {
     if {[lindex $args 0] eq "-level_sensitive"} {return {}}
     return reg_pin
@@ -51,7 +66,22 @@ proc get_ports {args} {return [lindex $args 0]}
 proc get_clocks {args} {return core_clk}
 proc all_inputs {} {return {clk rst_n data}}
 proc all_outputs {} {return result}
-proc get_pins {args} {return {pin1 pin2 pin3}}
+proc get_pins {args} {
+    if {[lindex $args 0] eq "-of_objects"} {return [dict get $::cap_connections [lindex $args 1]]}
+    if {[lsearch -exact $args -filter] >= 0} {
+        if {[lindex $args end] ne {full_name =~ core/u_lsu/req_*_q_reg*/E}} {error "Unexpected enable selection"}
+        if {[info exists ::env(NPC_MOCK_NO_ENABLE_PINS)]} {return {}}
+        return $::cap_enables
+    }
+    return {pin1 pin2 pin3}
+}
+proc get_nets {args} {
+    if {[lindex $args 0] ne "-of_objects"} {error "Enable nets must be discovered from pins"}
+    set pin [lindex $args 1]
+    dict for {net pins} $::cap_connections {if {$pin in $pins} {return $net}}
+    error "Unknown mock net for $pin"
+}
+proc get_lib_pins {args} {return [lindex $args end]}
 proc remove_from_collection {from remove} {
     set result {}; foreach item $from {if {$item ni $remove} {lappend result $item}}; return $result
 }
@@ -61,9 +91,21 @@ proc get_timing_paths {args} {
     if {$pos < 0 || [lindex $args [expr {$pos+1}]] != 0.0} {error "Metrics must enumerate negative slack only"}
     return {path1 path2}
 }
-proc get_attribute {object name} {
+proc get_attribute {args} {
+    set object [lindex $args end-1]
+    set name [lindex $args end]
     if {$name eq "slack"} {if {$object eq "path1"} {return -1.0} else {return -0.5}}
     if {$name eq "endpoint"} {return same_endpoint}
+    if {$name eq "direction"} {if {[file tail $object] in {E I}} {return in} else {return out}}
+    if {$name eq "ref_name"} {
+        if {$object eq $::cap_driver} {return INVD1}
+        if {$object eq $::cap_buffer} {return BUFFD1}
+        return EDFCNQD1
+    }
+    if {$name eq "max_capacitance" && [file tail $object] eq "ZN"} {return 0.084770}
+    if {$name eq "capacitance" && [string match */EDFCNQD1/E $object]} {return 0.001}
+    if {$name eq "total_ccs_capacitance_max_rise" && $::env(NPC_STAGE) eq "sta" && $object eq "$::cap_driver/ZN"} {return 0.088724}
+    # Most optional attributes are intentionally unavailable in this fixture.
     error "Unknown mock attribute $name"
 }
 proc write {args} {
@@ -76,6 +118,7 @@ proc write_sdc {path} {set f [open $path w]; puts $f "MOCK EXPORTED SDC"; close 
 proc get_app_var {name} {
     if {$name eq "sh_product_version"} {return "MOCK-VERSION-NOT-EDA"}
     if {$name eq "high_fanout_net_threshold"} {return 1000}
+    if {$name in {report_capacitance_use_ccs_receiver_model timing_max_capacitance_derate} && [info exists ::$name]} {return [set ::$name]}
     error "Unknown mock application variable $name"
 }
 proc report_lib {name} {
@@ -116,6 +159,12 @@ proc all_high_fanout {args} {
     return {core/reset_tree_n}
 }
 proc report_net {args} {
+    if {[dict exists $::cap_connections [lindex $args end]]} {
+        if {[lrange $args 0 end-1] ne {-connections -verbose}} {error "Missing capacitance connection details"}
+        if {[info exists ::env(NPC_MOCK_CAP_REPORT_ERROR)]} {error "Injected capacitance report failure"}
+        puts "MOCK capacitance net [lindex $args end]; stage $::env(NPC_STAGE)"
+        return
+    }
     if {$args ne "-connections -verbose core/reset_tree_n"} {error "Missing high-fanout connection detail"}
     puts "MOCK net core/reset_tree_n; driver reset_buffer/Z; loads 1379"
 }

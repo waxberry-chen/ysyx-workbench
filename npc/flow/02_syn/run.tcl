@@ -3,6 +3,7 @@
 # 组织方式参考 ref-flow 的分阶段脚本；这里将库配置移到展开/link 之前。
 if {[catch {
     source [file join $::env(NPC_FLOW_SNAPSHOT) 01_common setup.tcl]
+    source [file join $::env(NPC_FLOW_SNAPSHOT) 01_common capacitance.tcl]
     if {[shell_is_in_topographical_mode]} {error "Baseline requires wire-load DC, not TOPO"}
     # 阶段 1：库/工作目录准备。WORK 保存 analyze 中间数据，每个 run 独立。
     libraries
@@ -82,6 +83,7 @@ if {[catch {
     redirect -file [file join $reports checks constraint_violations.rpt] {report_constraint -all_violators -significant_digits 6 -nosplit}
     redirect -file [file join $reports timing timing_max.rpt] {report_timing -delay_type max -max_paths 20 -significant_digits 6 -nosplit}
     redirect -file [file join $reports timing timing_min.rpt] {report_timing -delay_type min -max_paths 20 -significant_digits 6 -nosplit}
+    report_lsu_enable_capacitance
     # Power never changes the saved timing design. Its diagnostics are isolated.
     # 阶段 7（可选）：时序产物导出后才估算功耗，不把活动假设用于本轮优化。
     # -base_clock 将 toggle rate 关联到 core_clk 周期；时钟每周期翻转两次，
