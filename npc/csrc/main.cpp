@@ -37,7 +37,6 @@ int main(int argc, char *argv[]) {
   printf(ANSI_FG_GREEN  "Loading img: %s\n" ANSI_NONE , sdb_args.img_file);
   uint64_t size = load_img(sdb_args.img_file); 
 
-  difftest_init_npc(sdb_args.diff_so_file, size, sdb_args.difftest_port);  // port unused for NEMU
 #ifndef NPC_B1
   init_device();
 #endif
@@ -52,6 +51,8 @@ int main(int argc, char *argv[]) {
     m_trace->open("waveform.fst");
   #endif
   reset(3);
+  // Copy actual post-reset architectural state, including M-only mstatus.MPP.
+  difftest_init_npc(sdb_args.diff_so_file, size, sdb_args.difftest_port);
 
   sdb_mainloop();
 

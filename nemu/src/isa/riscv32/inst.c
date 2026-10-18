@@ -67,9 +67,9 @@ word_t csr_read(word_t index) {
 
 void csr_write(word_t index, word_t wdata) {
   switch(index) {
-    case 0x300: cpu.csr.mstatus = wdata; return;
-    case 0x305: cpu.csr.mtvec   = wdata; return;
-    case 0x341: cpu.csr.mepc    = wdata; return;
+    case 0x300: cpu.csr.mstatus = (wdata & 0x88u) | 0x1800u; return;
+    case 0x305: cpu.csr.mtvec   = wdata & ~3u; return;
+    case 0x341: cpu.csr.mepc    = wdata & ~3u; return;
     case 0x342: cpu.csr.mcause  = wdata; return;
     default: assert(0);
   }
@@ -168,9 +168,15 @@ IFDEF(CONFIG_FTRACE, int rs1_for_jalr = BITS(INSTPAT_INST(s), 19, 15));
   INSTPAT("0000001 ????? ????? 110 ????? 01100 11", rem    , R, R(rd) = ((int)src1 % (int)src2));
   INSTPAT("0000001 ????? ????? 111 ????? 01100 11", remu   , R, R(rd) = (src1 % src2));
 
-  // priv
-  INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw  , I, if (rd != 0) {R(rd) = csr_read(imm);} csr_write(imm, src1));
-  INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs  , I, word_t old = csr_read(imm); if (rd != 0) {R(rd) = old;} csr_write(imm, old | src1););
+  // Same minimal M-only CSR bank as NPC. NEMU retains its own M extension.
+  // Immediate CSR operands are zimm, never register indices (also in RVE).
+  INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw  , I, if (rd) R(rd) = csr_read(imm); csr_write(imm, src1));
+  INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs  , I, word_t old = csr_read(imm); if (rd) R(rd) = old; if (BITS(s->isa.inst, 19, 15)) csr_write(imm, old | src1));
+  INSTPAT("??????? ????? ????? 011 ????? 11100 11", csrrc  , I, word_t old = csr_read(imm); if (rd) R(rd) = old; if (BITS(s->isa.inst, 19, 15)) csr_write(imm, old & ~src1));
+  INSTPAT("??????? ????? ????? 101 ????? 11100 11", csrrwi , N, word_t addr = BITS(s->isa.inst, 31, 20); if (rd) R(rd) = csr_read(addr); csr_write(addr, BITS(s->isa.inst, 19, 15)));
+  INSTPAT("??????? ????? ????? 110 ????? 11100 11", csrrsi , N, word_t addr = BITS(s->isa.inst, 31, 20), zimm = BITS(s->isa.inst, 19, 15), old = csr_read(addr); if (rd) R(rd) = old; if (zimm) csr_write(addr, old | zimm));
+  INSTPAT("??????? ????? ????? 111 ????? 11100 11", csrrci , N, word_t addr = BITS(s->isa.inst, 31, 20), zimm = BITS(s->isa.inst, 19, 15), old = csr_read(addr); if (rd) R(rd) = old; if (zimm) csr_write(addr, old & ~zimm));
+  INSTPAT("??????? ????? ????? 000 ????? 00011 11", fence  , N, (void)0);
 
   INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , N, s->dnpc = isa_raise_intr(11, s->pc); m_trap_update_mstatus(&cpu.csr.mstatus)); 
   INSTPAT("0011000 00010 00000 000 00000 11100 11", mret   , N, s->dnpc = cpu.csr.mepc; m_ret_update_mstatus(&cpu.csr.mstatus));

@@ -1,6 +1,6 @@
 # NPC：面向 SoC 集成的 RISC-V 处理器项目
 
-> 更新：2026-10-15；Core/adapters 验收基线：`5b6f29c`。此处是持续更新的展示入口，不是完整 SoC 或 tapeout sign-off 声明。
+> 更新：2026-10-18；Core/adapters 验收基线：`5b6f29c`。此处是持续更新的展示入口，不是完整 SoC 或 tapeout sign-off 声明。
 
 ## 项目简介
 
@@ -20,7 +20,7 @@ NPC 已从集中式多周期控制演进为单发射、顺序提交的弹性前�
 
 最近 M3 验收中，**34/34 CPU tests 通过，DiffTest 开启**；原 `unalign` 不符合本项目异常策略，另以 cause 4/6 定向用例验证。S5 重跑 53 个固定时序系统程序，另做 add/bubble-sort 各 10 个延迟 seed、2 次有限 RT-Thread 和空参数 hello。完整 fabric 有 10 seeds、每 seed 至少 1000 笔完成与 69 reset 场景；不能表述成所有 CPU 用例都做过十轮随机测试。配置、实际波形、覆盖及本地归档见[证据索引](evidence-index.md)。
 
-当前以 `riscv32e-npc` 为构建/workload 目标；RTL 仍有 32 项 GPR，尚未完成 RV32E 保留寄存器编码等合规收尾。尚无可对外引用的 DC/PrimeTime 面积与时序结果，也未完成 PnR。
+当前以 `riscv32e-npc` 为构建/workload 目标；[M4 S2.5](../post-c/4-pre-soc-signoff/2.5-isa-contract.md) 已移除 M、收敛为 16 项 GPR，补齐非法编码检测和限定的 CSR 契约，双平台回归通过；仍不声明完整 ISA/特权架构合规。已有[首次 DC 综合诊断记录](../post-c/4-pre-soc-signoff/synthesis-results/01-first-synthesis/README.md)，其输入为旧 32 GPR/M 配置、10 ns 未通过；新配置的正式 DC/PT 基线和 PnR 尚未完成。
 
 ## 阅读与展示材料
 

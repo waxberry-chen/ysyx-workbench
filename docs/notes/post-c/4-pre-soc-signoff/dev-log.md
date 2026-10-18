@@ -97,3 +97,11 @@
 - 跟随用户将结果目录改名为 `01-first-synthesis`，同步结果标题、索引和 M4/roadmap/Q&A 的全部引用；原始报告、配置、manifest 和 archive hash 保持不变。
 - 用户确认本次 DC 在保留 `default_nettype none` / `default_nettype wire` 指令时会报错，移除后才综合成功。首次综合总结明确该处理属于实际输入的一部分，并区分用户确认的运行事实、已有 dirty patch 和尚未归档的失败日志/错误码。
 - 正式基线准备增加对应失败证据、长期兼容方案及隐式网络/lint 与功能回归要求；不将本次现象推广为所有 DC 版本的限制。本轮仅更新文档。
+
+## 2026-10-18：S2.5 ISA/异常收敛与跨层验证
+
+- 移除八条 M 的 ALU 实现，精确检查合法 opcode/funct3/funct7；高 GPR、非法访存/SYSTEM、未实现 CSR 地址触发 cause 2，不发 LSU 请求/普通写回。GPR 缩为 16 项，保留显式 reset/x0，harness 按 16 项读取、32 槽参考 ABI 高半部补零。
+- 补齐六种 Zicsr，四 CSR 明确 M-only/WARL/Direct/IALIGN=32 契约；NEMU 同步合法操作而保留 M。修复 DiffTest 在 reset 前复制全零状态的问题，改为复制 post-reset 状态；CSR DPI 指针保持连接寄存器存储。
+- 新增 360,192 项独立译码检查、双平台各 97 个非法 trap 和合法 CSR 程序；状态两宏、EXU、四宏 scope 检查通过。B1 signoff 的 53 系统/23 closure/C01–C13 全通过；legacy M2 定向、34 CPU tests、trace 和 10 seeds 通过。
+- mstatus reset=0x1800 导致旧 trace hash 变化；逐条逆向还原 CSR 尾部后精确重现旧 hash，再更新当前 Makefile。历史验收和首次综合不改写。详细契约、测试命令、证据入口与限制见 [S2.5 报告](2.5-isa-contract.md)。
+- 无新增实施阻塞，未运行新 DC/PT。完整特权架构、硬件 EBREAK 和控制流目标未对齐异常仍是明确限制；下一步先完成正式 S3 的接口/约束准备审查。

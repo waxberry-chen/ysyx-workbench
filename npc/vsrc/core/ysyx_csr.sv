@@ -48,15 +48,20 @@ wire [32-1:0] mstatus_trap, mstatus_mret;
 assign mstatus_trap = {csr_mstatus[31:13], 2'b11, csr_mstatus[10:8], csr_mstatus[3], csr_mstatus[6:4], 1'b0, csr_mstatus[2:0]};
 assign mstatus_mret = {csr_mstatus[31:13], 2'b11, csr_mstatus[10:8], 1'b1, csr_mstatus[6:4], csr_mstatus[7], csr_mstatus[2:0]};
 
-assign csr_d[0] = trap_valid ? mstatus_trap : (mret_valid ? mstatus_mret : csr_wdata);
-assign csr_d[1] = csr_wdata;
-assign csr_d[2] = (trap_valid) ? trap_epc : csr_wdata;
+// Minimal M-only contract: MPP is hardwired to M; only MIE/MPIE are writable.
+// No interrupt delivery, other privilege modes, or extension status fields.
+wire [31:0] mstatus_write = (csr_wdata & 32'h00000088) | 32'h00001800;
+assign csr_d[0] = trap_valid ? mstatus_trap : (mret_valid ? mstatus_mret : mstatus_write);
+assign csr_d[1] = csr_wdata & 32'hfffffffc; // Direct mode only.
+assign csr_d[2] = ((trap_valid) ? trap_epc : csr_wdata) & 32'hfffffffc; // IALIGN=32.
 assign csr_d[3] = (trap_valid) ? trap_cause : csr_wdata;
 
 genvar i;
 generate
     for (i=0;i<4;i=i+1) begin:gen_csr
-        ysyx_gnrl_dfflr #(32) csr_dfflr (csr_idx_we[i], csr_d[i], csr_q[i], clk, rst_n);
+        // Keep exported CSR pointers backed by persistent register storage.
+        ysyx_gnrl_dfflrs #(32, (i == 0 ? 32'h1800 : 32'b0))
+            csr_dfflr (csr_idx_we[i], csr_d[i], csr_q[i], clk, rst_n);
     end
 endgenerate
 
@@ -74,7 +79,7 @@ end
 `endif
 `endif
 
-assign csr_rdata = (csr_idx[3])?csr_mcause:(csr_idx[2])?csr_mepc:(csr_idx[1])?csr_mtvec:csr_mstatus;  // default mstatus, combo
+assign csr_rdata = (csr_idx[3])?csr_mcause:(csr_idx[2])?csr_mepc:(csr_idx[1])?csr_mtvec:(csr_idx[0])?csr_mstatus:32'b0; // Unknown addresses never alias mstatus.
 assign trap_target = csr_mtvec;
 assign mret_target = csr_mepc;
 

@@ -103,7 +103,7 @@ wire        exception_valid;
 wire [31:0] exception_cause;
 
 assign op_is_mem = op_is_load | op_is_store;
-assign memory_operation = op_is_mem & (~op_fetch_error);
+assign memory_operation = op_is_mem & (~op_fetch_error) & (~op_trap_valid);
 
 assign alu_lhs = op_alu_lhs_pc ? op_pc : op_rs1_data;
 assign alu_rhs = op_alu_rhs_imm ? op_imm : op_rs2_data;
@@ -160,7 +160,7 @@ assign lsu_req_fire  = lsu_req_valid & lsu_req_ready;
 assign lsu_rsp_ready = op_valid & mem_wait_q;
 assign lsu_rsp_fire  = lsu_rsp_valid & lsu_rsp_ready;
 
-assign operation_complete = op_fetch_error | data_misaligned_exception |
+assign operation_complete = op_fetch_error | op_trap_valid | data_misaligned_exception |
                             (~op_is_mem) |
                             (mem_wait_q & lsu_rsp_valid);
 assign commit_valid = op_valid & operation_complete;
@@ -169,11 +169,11 @@ assign commit_pc    = op_pc;
 assign commit_inst  = op_inst;
 
 assign csr_addr  = op_csr_addr;
-assign csr_wdata = (op_inst[6:0] == 7'h73) ?
-                   ((op_inst[14:12] == 3'b010) ?
-                    (op_rs1_data | csr_rdata) :
-                   ((op_inst[14:12] == 3'b001) ? op_rs1_data : 32'b0)) :
-                   32'b0;
+// Register and immediate Zicsr forms share the same write operation.
+wire [31:0] csr_operand = op_inst[14] ? {27'b0, op_inst[19:15]} : op_rs1_data;
+assign csr_wdata = (op_inst[13:12] == 2'b01) ? csr_operand :
+                   (op_inst[13:12] == 2'b10) ? (csr_rdata | csr_operand) :
+                   (op_inst[13:12] == 2'b11) ? (csr_rdata & ~csr_operand) : 32'b0;
 assign csr_write_valid = commit_valid & op_csr_wen & (~exception_valid);
 assign trap_commit     = commit_valid & exception_valid;
 assign trap_epc        = op_pc;

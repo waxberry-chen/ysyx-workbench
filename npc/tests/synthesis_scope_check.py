@@ -47,7 +47,7 @@ manifest = {"top": "ysyx_core_axi4lite", "tool": run(["verilator", "--version"])
             "input_sha256": {p: sha(ROOT / p) for p in inputs}, "profiles": {}}
 manifest["scope"] = {"description": "Core + adapters + Arbiter, observation ports retained",
                      "parameter_overrides": {}, "core_defaults": {"PC_RST": "0x80000000", "IFQ_DEPTH": 2},
-                     "gpr_entries": 32, "m_arithmetic": "retained", "dc_checked": False}
+                     "gpr_entries": 16, "m_arithmetic": "removed", "dc_checked": False}
 profiles = {"synthesis": ["SYNTHESIS"],
             "synthesis_overrides_dpi": ["SYNTHESIS", "NPC_SIM_DPI", "DIFF"],
             "simulation_no_dpi": [], "simulation_dpi": ["NPC_SIM_DPI", "DIFF"]}

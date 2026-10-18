@@ -7,7 +7,8 @@ module ysyx_regfile (
 
         output  [31 : 0]    rf_rd0, rf_rd1
     );
-    reg [31 : 0]    reg_file    [0 : 31];
+    // Guard high indices even for unused decode fields; never alias x16 to x0.
+    reg [31 : 0]    reg_file    [0 : 15];
 
     // Host observation only. SYNTHESIS takes precedence over the DPI switch.
 `ifndef SYNTHESIS
@@ -23,14 +24,14 @@ module ysyx_regfile (
     // x0 has no write path; its constant storage entry also serves the DPI view.
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            for (integer i = 0; i < 32; i = i + 1)
+            for (integer i = 0; i < 16; i = i + 1)
                 reg_file[i] <= 32'b0;
-        end else if(rf_we && rf_rd != 5'H0) begin
-            reg_file[rf_rd] <= rf_wd;
+        end else if(rf_we && !rf_rd[4] && rf_rd != 5'H0) begin
+            reg_file[rf_rd[3:0]] <= rf_wd;
         end
     end
 
-    assign rf_rd0 = (rf_rs1 == 5'd0) ? 32'b0 : reg_file[rf_rs1];
-    assign rf_rd1 = (rf_rs2 == 5'd0) ? 32'b0 : reg_file[rf_rs2];
+    assign rf_rd0 = (rf_rs1 == 5'd0 || rf_rs1[4]) ? 32'b0 : reg_file[rf_rs1[3:0]];
+    assign rf_rd1 = (rf_rs2 == 5'd0 || rf_rs2[4]) ? 32'b0 : reg_file[rf_rs2[3:0]];
 
 endmodule

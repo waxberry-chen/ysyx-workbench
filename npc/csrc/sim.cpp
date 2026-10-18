@@ -41,7 +41,9 @@ static const char *csr_names[] = {"mstatus", "mtvec", "mepc",  "mcause"};
 // called in every sim cycle
 void set_state() {
   sim_cpu.pc = dut->commit_pc;
-  memcpy(&sim_cpu.gpr[0], cpu_gpr, 4 * 32);
+  // Keep the REF ABI at 32 slots, but never read beyond the 16-entry RTL array.
+  memset(sim_cpu.gpr, 0, sizeof(sim_cpu.gpr));
+  memcpy(sim_cpu.gpr, cpu_gpr, sizeof(word_t) * NPC_GPR_COUNT);
   sim_cpu.csr.mstatus = *cpu_csr[CSR_MSTATUS];
   sim_cpu.csr.mtvec   = *cpu_csr[CSR_MTVEC];
   sim_cpu.csr.mepc    = *cpu_csr[CSR_MEPC];
@@ -220,7 +222,7 @@ word_t isa_reg_str2val(const char *s, bool *success) {;
     *success = true;
     return dut->commit_pc;
   }
-  for(int i = 0; i < 32; i++){
+  for(int i = 0; i < NPC_GPR_COUNT; i++){
     if(!strcmp(s, regs[i])){
       *success = true;
       return cpu_gpr[i];
@@ -233,6 +235,7 @@ word_t isa_reg_str2val(const char *s, bool *success) {;
 /********** RTL Registers' Interface **********/
 // set cpu_gpr point to your cpu's gpr
 extern "C" void set_gpr_ptr(const svOpenArrayHandle r) {
+  assert(svSize(r, 1) == NPC_GPR_COUNT);
   cpu_gpr = (uint32_t *)(((VerilatedDpiOpenVar*)r)->datap());
 }
 // set the pointers pint to you cpu's csr
@@ -245,7 +248,7 @@ extern "C" void set_csr_ptr(const svOpenArrayHandle mstatus, const svOpenArrayHa
 /**********************************************/
 
 void isa_reg_display() {
-  for (int i = 0; i < 32; i++) {
+  for (int i = 0; i < NPC_GPR_COUNT; i++) {
     printf("gpr[%d](%s) = 0x%x\n", i, regs[i], cpu_gpr[i]);
   }
   for (int i = 0; i < NR_CSR; i++) {

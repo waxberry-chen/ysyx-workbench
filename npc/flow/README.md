@@ -1,15 +1,17 @@
 # NPC DC/PT baseline flow
 
 M4 S2 provides a small **wire-load DC → pre-layout PT** flow for
-`ysyx_core_axi4lite`: Core + IFU/LSU adapters + Arbiter. All commit/monitor ports,
-32 GPR entries and existing combinational M arithmetic remain in scope.
+`ysyx_core_axi4lite`: Core + IFU/LSU adapters + Arbiter. All commit/monitor ports remain in scope. M4 S2.5 reduces the register file to
+16 entries and removes M arithmetic; illegal encodings raise cause 2.
 No parameter overrides: `PC_RST=0x80000000`, `IFQ_DEPTH=2`.
 No B1 SRAM/peripherals, Xbar, memory compiler, PnR, SPEF, GLS or PTPX dependency.
 
 `00_indata/filelists/core.f` contains 16 ordered SystemVerilog sources, relative to **npc/**.
 The primitive also includes `vsrc/gnrl/ysyx_global.sv`. Implementation defines
 only `SYNTHESIS`; normal NPC simulation separately enables `NPC_SIM_DPI`.
-GPR x1–x31 reset to zero and x0 reads zero. See [S1](../../docs/notes/post-c/4-pre-soc-signoff/1-synthesis-scope.md).
+GPR x1–x15 reset to zero and x0 reads zero. See the current
+[ISA/CSR contract](../../docs/notes/post-c/4-pre-soc-signoff/2.5-isa-contract.md);
+S1 and first-synthesis reports describe the historical 32-entry/M implementation.
 
 ## 目录与输入
 

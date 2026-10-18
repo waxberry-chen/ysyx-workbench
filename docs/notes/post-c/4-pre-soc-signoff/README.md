@@ -1,12 +1,13 @@
 # M4：DC/PT 面积与时序基线
 
-2026-10-17：S0/S1 与 S2 flow 已完成，服务器首次 DC 综合已取得面积/时序报告，10 ns setup/hold 未满足。当前进入正式 S3 基线前的接口、算术实现与约束审查；PT 尚未执行，正式基线尚未建立。
+2026-10-18：S0/S1、S2 flow 与 S2.5 ISA 收敛已完成本地验收，服务器首次 DC 综合已取得面积/时序报告，10 ns setup/hold 未满足。当前进入正式 S3 基线前的接口、算术实现与约束审查；PT 尚未执行，正式基线尚未建立。
 
 - [综合结果记录](synthesis-results/README.md)：逐次保存实验；[01 首次综合](synthesis-results/01-first-synthesis/README.md) 含总结、关键原始报告与追溯信息，明确不作为正式 S3 基线。
 - [DC/PT 手册检索入口](manual-index.md)：本地缓存、命令搜索、按 PDF 页阅读及版本引用规则；使用 `manuals.py` 查询。
 - [S1 综合范围与验证](1-synthesis-scope.md)、[逐端口预算接口](s1-port-budget.csv)：独立 filelist、DPI/SVA 宏、GPR reset、审查与回归证据。
 - [S2 最小 flow 与服务器交接](2-flow.md)：运行入口、数值 SDC、输入/产物追溯、失败处理和本地 mock 验证边界。
-- [计划与分步出口](plan.md)：当前链 S0–S3 → S6；S3 取得面积/时序，可附带 DC 功耗粗估；原 S4/S5 延后。
+- [S2.5 ISA/CSR 契约与验收](2.5-isa-contract.md)：移除 M、16 项 GPR、非法指令精确异常、CSR 与跨层适配。
+- [计划与分步出口](plan.md)：当前链 S0 → S1 → S2 → S2.5 → S3 → S6；S3 取得面积/时序，可附带 DC 功耗粗估；原 S4/S5 延后。
 - [ref-flow 流程图与逐级输入输出](0-flow-map.md)：执行依赖、实际数据流，以及工艺库/design/flow 分类。
 - [ref-flow 学习与裁剪](0-ref-flow-review.md)：实际入口、可复用组织方式和迁移问题。
 - [缺失 flow 脚本说明](missing-inputs.md)、[脚本清单 CSV](missing-files.csv)：只核查未拷贝的 flow 脚本/编排配置，不含 PDK、工具或 design 数据。

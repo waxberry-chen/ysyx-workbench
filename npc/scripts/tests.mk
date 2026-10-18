@@ -22,7 +22,8 @@ AXI_AM_TEST_DIR := $(NPC_HOME)/../am-kernels/tests/am-tests
 AXI_CPU_TESTS := $(filter-out unalign,$(basename \
 	$(notdir $(wildcard $(AXI_CPU_TEST_DIR)/tests/*.c))))
 AXI_ADD_IMG := $(AXI_CPU_TEST_DIR)/build/add-riscv32e-npc.bin
-AXI_ARCH_TRACE_HASH := bbf8496edf2329d695eb4437641ced89bba9cf0b6006f1a0b5955c32941e9284
+# S2.5: M-only mstatus resets to 0x1800 (see 2.5-isa-contract.md for migration proof).
+AXI_ARCH_TRACE_HASH := d18898e78483a270397c27594904e2fd520d84b7dc7c7dbac9401790f6d34392
 
 DIRECTED_TEST_FLAGS := --binary --timing --assert --sv -Wall -Wno-fatal \
 	-Wno-BLKSEQ -Wno-SYNCASYNCNET -Wno-TIMESCALEMOD
@@ -447,3 +448,17 @@ architectural-state-test:
 	  $(NPC_HOME)/tests/ysyx_architectural_state_tb.sv; \
 	 $(NPC_HOME)/build/m4-s1/state-$$profile/Vysyx_architectural_state_tb; \
 	done
+
+# S2.5: independent decoder oracle plus precise-trap software (both platforms).
+.PHONY: idu-contract-test isa-contract-test
+idu-contract-test:
+	verilator --cc --exe --build --sv -Wall --top-module ysyx_idu \
+	 --Mdir $(NPC_HOME)/build/idu-contract-test \
+	 $(VSRC_DIR)/ysyx_idu.sv $(NPC_HOME)/tests/idu_contract_tb.cpp
+	$(NPC_HOME)/build/idu-contract-test/Vysyx_idu
+
+isa-contract-test: idu-contract-test architectural-state-test exu-test
+	$(MAKE) -C $(NEMU_HOME) git_commit=
+	$(MAKE) NPC_PLATFORM=legacy build
+	$(MAKE) NPC_PLATFORM=b1 build
+	python3 $(NPC_HOME)/tests/isa_contract_test.py

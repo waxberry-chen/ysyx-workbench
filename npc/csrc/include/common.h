@@ -32,6 +32,7 @@ typedef uint16_t ioaddr_t;
 /*****************
 *     GLOBAL     *
 ******************/
+#define NPC_GPR_COUNT 16
 extern uint32_t *cpu_gpr;
 
 enum {CSR_MSTATUS=0, CSR_MTVEC, CSR_MEPC, CSR_MCAUSE, NR_CSR};
@@ -45,7 +46,7 @@ typedef struct {
 } CSR;
 
 typedef struct {
-    word_t gpr[32];
+    word_t gpr[32]; // DiffTest ABI: NPC copies x0-x15 and pads x16-x31 with zero.
     word_t pc;
     CSR csr;
 } CPU_state;

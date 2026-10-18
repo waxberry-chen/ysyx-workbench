@@ -254,6 +254,22 @@ initial begin
           "trap did not redirect to mtvec");
     tick;
 
+    // Illegal decode must dominate stale memory/CSR controls and never wait.
+    clear_op;
+    op_valid = 1; op_trap_valid = 1; op_trap_cause = 2;
+    op_is_store = 1; op_gpr_wen = 1; op_csr_wen = 1;
+    op_rs1_data = 1; op_mem_type = 2;
+    settle;
+    check(commit_valid && trap_commit && trap_cause == 2 &&
+          !lsu_req_valid && !commit_mem_valid && !gpr_write_valid && !csr_write_valid,
+          "illegal instruction leaked a side effect or stalled");
+    op_fetch_error = 1; settle;
+    check(trap_cause == 1, "fetch error must precede illegal returned data");
+    op_valid = 0; settle;
+    check(!trap_commit && !redirect_valid && !commit_valid && !lsu_req_valid,
+          "invalid/killed context caused a trap");
+    tick;
+
     // MRET follows the same precise commit boundary and redirects to mepc.
     clear_op;
     set_pc(32'h8000_00e0);
