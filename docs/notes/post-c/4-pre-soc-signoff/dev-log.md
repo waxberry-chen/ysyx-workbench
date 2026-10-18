@@ -119,3 +119,9 @@
 - driver 将新报告纳入必需检查/hash，统计原始约束违例行数；即使 WNS=0，有电气违例仍记 `CONSTRAINT_FAIL`，时序失败优先记 `TIMING_FAIL`，没有自动 PASS。
 - `make -C npc/flow check test`：39 项通过，覆盖非时钟高扇出对象/无对象、连接明细、正裕量路径与负 slack 指标查询区分、电气违例及新增报告缺失/错误。实际工具兼容性待服务器验证；没有修改 RTL、SDC、WLM 或历史 run。
 - 用户确认自行同步和运行服务器；已提供 [提交拆分与运行说明](s3-rerun.md)。诊断增强尚待服务器同步及真实 DC/PT 验证；新 run 先作为 S3 候选，审查关闭后再冻结正式基线。
+
+## 2026-10-18：S3 候选频率设为 200 MHz
+
+- 根据最新 02 实验最差 Reg2Out 路径，到达 2.27 ns 加输出预算 2.0 ns、setup uncertainty 0.2 ns，原网表的该路径需要约 4.47 ns。选择 5 ns / 200 MHz，估计该路径裕量约 +0.53 ns；300 MHz 估计约 −1.14 ns，留待后续探索。
+- `npc_core.tcl` 的 period 从 10.0 改为 5.0；I/O/reset min/max、uncertainty、slew、load、RTL、WLM 和综合策略不变。同步默认运行示例和 S3 候选 run 名称，保留历史 10 ns 实验快照。
+- 这是待服务器重综合/PT 验证的目标，不是达到 200 MHz 或测得 Fmax 的声明；不代替 hold、电气约束、复位脉宽和禁用弧审查。

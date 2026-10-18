@@ -20,7 +20,7 @@ PT 代表路径用 `-slack_lesser_than 1.0e30`，WNS/TNS 查询继续用 `< 0`�
 
 ## 2. 建议提交拆分
 
-以下为提交组织；第 1 项已提交为 `9ef59f2`，第 2、3 项待提交：
+以下为提交组织；第 1 项已提交为 `9ef59f2`，第 2 项已提交为 `e0d6ad2`，第 3 项待提交。本次 200 MHz 配置调整是这两项脚本提交之后的独立改动。
 
 1. `refactor(flow): categorize reports and preserve run provenance`：报告分类、必需文件和递归 hash、旧 runner 保护、对应测试及目录说明。
 2. `fix(flow): expose fanout and complete STA diagnostics`：高扇出/禁用弧、正 slack 路径与精度、电气违例评价、对应测试和本交接说明。
@@ -30,6 +30,16 @@ PT 代表路径用 `-slack_lesser_than 1.0e30`，WNS/TNS 查询继续用 `< 0`�
 
 ## 3. 同步与执行
 
+本轮候选目标改为 **200 MHz / 5 ns**，保持其余约束和实现策略不变。依据 02 实验 DC 最差 Reg2Out 路径：`opbuf → ALU/redirect → commit_redirect_reason[0]`，到达约 2.27 ns，输出预算 2.0 ns，setup uncertainty 0.2 ns。
+
+```text
+该路径在原网表下的周期需求 ≈ 2.27 + 2.00 + 0.20 = 4.47 ns
+200 MHz / 5.000 ns：预计该路径 slack ≈ +0.53 ns
+300 MHz / 3.333 ns：预计该路径 slack ≈ −1.14 ns
+```
+
+约 224 MHz 只是该路径在现有预算下的零裕量推算，不是实测 core Fmax。新周期会改变 DC 优化结果，PT 还需补齐正裕量与四类路径；当前仍为 TT、ideal clock、ZeroWireload，不能外推 post-route。300 MHz 可留作后续激进目标，本轮先用 200 MHz 建立可审查候选。I/O/reset min/max 仍为 0.2/2.0 ns，不通过缩小外部预算来获得通过结果；hold、DRV、coverage 和禁用弧问题仍需独立关闭。
+
 本地提交完成后同步到服务器同一版本。保留服务器 `00_indata/configs/site.local.tcl`、DB 及旧 run；确认 DC/PT 路径和库路径仍正确，不覆盖私有环境配置。运行前检查 `git rev-parse HEAD` 和 `git status --short`，必要的本地修改应能解释；已有 runner 会保存 dirty patch/status。
 
 在工程根目录执行：
@@ -37,13 +47,13 @@ PT 代表路径用 `-slack_lesser_than 1.0e30`，WNS/TNS 查询继续用 `< 0`�
 ```bash
 make -C npc/flow check test
 make -C npc/flow preflight SITE=00_indata/configs/site.local.tcl
-make -C npc/flow all SITE=00_indata/configs/site.local.tcl RUN_ID=core-tt-10ns-s3-candidate-01
-make -C npc/flow inspect RUN=build/core-tt-10ns-s3-candidate-01
+make -C npc/flow all SITE=00_indata/configs/site.local.tcl RUN_ID=core-tt-200mhz-s3-candidate-01
+make -C npc/flow inspect RUN=build/core-tt-200mhz-s3-candidate-01
 ```
 
 `all` 顺序执行新的 synth + STA。若 RUN_ID 已使用，另取新 ID；不覆盖 01/02 实验。若改变脚本后继续检查旧 run，必须使用旧 run 自带 runner；新 run 的 `inspect` 只有在当前 runner 未变化时才可直接使用上述入口。
 
-不更改 RTL、SDC、WLM、功耗开关或综合策略来配合诊断重跑。工具错误或新增命令不兼容时保留日志并报告，不删除诊断命令后将缺失检查算作通过。
+本轮设计约束的数值变化只有 period 从 10 ns 改为 5 ns；不改 RTL、I/O/reset 预算、WLM、功耗开关或综合策略。工具错误或新增命令不兼容时保留日志并报告，不删除诊断命令后将缺失检查算作通过。
 
 ## 4. 返回结果的阅读顺序与出口
 

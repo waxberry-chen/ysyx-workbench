@@ -3,7 +3,7 @@
 # Shared by DC and PT. Never case-analyze reset for timing: retain recovery/removal.
 # cfg is frozen by the launcher; reviewed library units are ns and pF.
 # 1. 创建逻辑时钟对象：clk 是 RTL 端口，core_clk 是 STA 中使用的时钟名。
-# period 规定每个周期预算；本例 10 ns 仅是试探目标。
+# period 从 cfg 读取每周期预算；当前默认 5 ns（200 MHz）是待验证的候选目标。
 create_clock -name core_clk -period [dict get $cfg period] [get_ports clk]
 # 2. uncertainty 为建立/保持检查预留裕量；transition 是边沿变化时间。
 # 两者都不是为时钟增加一个周期，也不是实测的时钟树延迟。

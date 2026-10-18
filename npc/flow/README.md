@@ -99,12 +99,16 @@ NPC corner based only on a filename. Private `*.local.tcl` files are ignored.
 
 ```bash
 make -C npc/flow preflight SITE=00_indata/configs/site.local.tcl
-make -C npc/flow all SITE=00_indata/configs/site.local.tcl RUN_ID=core-tt-10ns
+make -C npc/flow all SITE=00_indata/configs/site.local.tcl RUN_ID=core-tt-200mhz
 # Or split DC and PT without regenerating inputs:
-make -C npc/flow synth SITE=00_indata/configs/site.local.tcl RUN_ID=core-tt-10ns-split
-make -C npc/flow sta RUN=build/core-tt-10ns-split
-make -C npc/flow inspect RUN=build/core-tt-10ns
+make -C npc/flow synth SITE=00_indata/configs/site.local.tcl RUN_ID=core-tt-200mhz-split
+make -C npc/flow sta RUN=build/core-tt-200mhz-split
+make -C npc/flow inspect RUN=build/core-tt-200mhz
 ```
+
+当前默认周期为 **5 ns / 200 MHz**，I/O/reset 的 0.2/2.0 ns 预算保持不变。
+这是依据 10 ns 实验最差路径选出的新综合目标，尚未取得该频率的 DC/PT 结果；
+推算与候选验收见 [S3 重跑说明](../../docs/notes/post-c/4-pre-soc-signoff/s3-rerun.md)。
 
 `preflight` checks paths/config/tool executability, not license checkout or Tcl
 command support. `probe`/`synth`/`all` always create a **new** run; existing IDs
