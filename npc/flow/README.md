@@ -79,7 +79,7 @@ The example selects one RVT/TT DB under `00_indata/DB/STD_NEW/`, resolving the
 path relative to the configuration file. External absolute DB paths also work.
 Set executable paths to the installed
 versions if needed. `probe` needs only DC and the DB; it writes version/library
-reports without synthesizing. Inspect `npc/flow/build/lib-probe/reports/probe/`.
+reports without synthesizing. Inspect `npc/flow/build/lib-probe/reports/probe/environment/`.
 
 Version reporting reads `get_app_var sh_product_version`; DC V-2023.12-SP5
 rejected the earlier `version` command. Library reports use `report_lib` for
@@ -114,7 +114,7 @@ resume or old-netlist fallback.
 Use `RUN_ROOT=/absolute/server/path` to place outputs elsewhere; `sta`/`inspect`
 then take that run's absolute path. Tcl execution uses the copied NPC source tree,
 so relative include paths continue to work. Do not move a live run: its absolute
-path is part of the manifest. If the driver changes, invoke the archived
+path is part of the manifest. If the driver changes, both `sta` and `inspect` require the archived
 `inputs/npc/flow/01_common/flow.py` against the original run (older snapshots use
 `inputs/npc/flow/common/flow.py`).
 
@@ -178,6 +178,51 @@ and resource reports must confirm that the large arithmetic really maps.
 PT reads `outputs/core.v` and replays the **same frozen design SDC/config** as DC;
 DC's exported `dc.sdc` is also retained/hashed for cross-checks. PT does not source
 DC-specific environment commands from that export.
+
+## 报告目录与阅读顺序
+
+2026-10-18 起，新 run 的报告按 `reports/<stage>/<category>/` 分类；stage 为
+`probe`、`syn`、`sta`。日志仍放在 `logs/`，网表/DDC/导出 SDC 仍放在 `outputs/`。
+
+`constraints.rpt` 改为 **`checks/constraint_violations.rpt`**：它来自
+`report_constraint -all_violators`，列出当前生效约束下的时序及电气违例，
+不是约束定义或完整约束清单。设计约束本身见冻结输入 `inputs/` 和导出 `outputs/dc.sdc`。
+
+| 分类 | 文件 | 阶段与用途 |
+| --- | --- | --- |
+| `environment/` | `version.rpt`、`library_*.rpt` | probe/DC/PT：工具版本、实际加载库 |
+| `environment/` | `design.rpt`；PT 另有 `units.rpt`、`wire_load.rpt` | 核对设计环境、单位与互连模型 |
+| `summary/` | `qor.rpt` | DC：整体 QoR 快速概览 |
+| `checks/` | `check_design_pre.rpt`、`check_design_post.rpt` | DC：综合前后结构检查 |
+| `checks/` | `check_timing.rpt`、`constraint_violations.rpt` | DC/PT：分析完整性检查与违例列表 |
+| `checks/` | `coverage.rpt`、`coverage_untested.rpt` | PT：met/violated/untested 及未测试原因 |
+| `timing/` | `timing_max.rpt`、`timing_min.rpt` | DC/PT：max/min 代表路径，max_paths=20 |
+| `timing/` | `Reg2Reg_{max,min}.rpt`、`In2Reg_{max,min}.rpt`、`Reg2Out_{max,min}.rpt`、`In2Out_{max,min}.rpt` | PT：四类边界路径，各 max_paths=10 |
+| `timing/` | `metrics_max.tsv`、`metrics_min.tsv` | PT：按违例端点去重的 WNS/TNS/数量，不从 Top-20 求和 |
+| `area/` | `area.rpt`、`resources.rpt`、`references.rpt` | DC：面积、运算资源、映射单元 |
+| `power/` | `power_status.txt`、可选 `power_attempt.rpt` | DC：是否评估及原始功耗尝试报告；默认关闭 |
+
+例如 DC 的违例文件为：
+`npc/flow/build/<RUN_ID>/reports/syn/checks/constraint_violations.rpt`。
+PT 则为同一 run 的 `reports/sta/checks/constraint_violations.rpt`。
+仅创建对应阶段需要的分类目录；`complete.txt` 是机器读取的完成标记，保留在阶段根目录。
+
+建议先读 DC 的 `summary/qor.rpt` 看概况，再读 `checks/` 确认有没有漏检、哪些检查失败，
+随后进入 `timing/` 解释具体路径；需要定位面积或核对模型时分别查看 `area/`、`environment/`。
+PT 从 `checks/` 与 `timing/metrics_*.tsv` 开始。报告存在或 WNS=0 均不能代替 coverage 审查。
+
+**旧 run 不迁移、不重命名。** 首次综合归档继续使用原来的扁平目录。目录属于 run 的冻结契约；
+更新 flow 后，以新 RUN_ID 生成分类报告。检查旧 run 或继续其 STA 时使用该 run 自带的 runner：
+
+```bash
+python3 npc/flow/build/<RUN_ID>/inputs/npc/flow/01_common/flow.py \
+  inspect --run npc/flow/build/<RUN_ID>
+# 继续旧 run 的 STA 时，将 inspect 替换为 sta。
+```
+
+检查器与 manifest 递归记录分类目录内的产物，包括失败阶段和可选功耗的诊断文件；
+子目录中的报告被修改也会触发 hash 校验失败。本次只调整报告组织与命名，不新增检查命令，
+不改变综合、时序约束、路径数量或评估范围。
 
 ## Evidence and failure semantics
 

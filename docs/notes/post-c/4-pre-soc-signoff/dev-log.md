@@ -105,3 +105,9 @@
 - 新增 360,192 项独立译码检查、双平台各 97 个非法 trap 和合法 CSR 程序；状态两宏、EXU、四宏 scope 检查通过。B1 signoff 的 53 系统/23 closure/C01–C13 全通过；legacy M2 定向、34 CPU tests、trace 和 10 seeds 通过。
 - mstatus reset=0x1800 导致旧 trace hash 变化；逐条逆向还原 CSR 尾部后精确重现旧 hash，再更新当前 Makefile。历史验收和首次综合不改写。详细契约、测试命令、证据入口与限制见 [S2.5 报告](2.5-isa-contract.md)。
 - 无新增实施阻塞，未运行新 DC/PT。完整特权架构、硬件 EBREAK 和控制流目标未对齐异常仍是明确限制；下一步先完成正式 S3 的接口/约束准备审查。
+
+## 2026-10-18：flow 报告按用途分类
+
+- 用户指出报告混放不易查找；新 run 按 environment、summary、checks、timing、area、power 分类，probe 只输出 environment。将 `constraints.rpt` 明确命名为 `checks/constraint_violations.rpt`，区别于输入约束和导出 SDC。
+- 同步 DC/PT/probe、必需报告检查、指标读取及测试；manifest 递归记录嵌套报告，继续校验失败阶段和可选功耗诊断。`inspect` 与 STA 一样要求 runner 匹配冻结版本，避免新解析器误读旧布局；旧 run 与首次综合归档不修改，使用其归档 runner。
+- `make -C npc/flow check test`：36 项通过，含真实 Tcl + mock 命令衔接、嵌套文件 hash/篡改检测、嵌套报告缺失/错误、旧 runner 保护。仅调整输出组织，不新增时序检查或修改 SDC/RTL；未运行真实 DC/PT，无新增阻塞。

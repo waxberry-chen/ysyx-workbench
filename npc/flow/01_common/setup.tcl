@@ -11,13 +11,20 @@ set top [dict get $cfg top]
 set stage $::env(NPC_STAGE)
 set reports [file join $run reports $stage]
 set outputs [file join $run outputs]
-file mkdir $reports $outputs
+file mkdir $reports $outputs [file join $reports environment]
+# 按用途分类；complete.txt 是阶段完成标记，仍放在阶段根目录。
+# probe 只有环境报告；DC 增加综合资源/功耗，PT 增加覆盖与时序报告。
+if {$stage eq "syn"} {
+    foreach category {summary checks timing area power} {file mkdir [file join $reports $category]}
+} elseif {$stage eq "sta"} {
+    foreach category {checks timing} {file mkdir [file join $reports $category]}
+}
 # 所有 RTL/include 路径从快照中的 npc/ 解析，而不是从服务器原工作区解析。
 cd $npc_root
 set_host_options -max_cores [dict get $cfg max_cores]
 # DC V-2023.12-SP5 实测没有 version 命令；读取 shell 的产品版本变量。
 # get_app_var 返回字符串，必须显式 puts 才能写进 redirect 的报告。
-redirect -file [file join $reports version.rpt] {puts [get_app_var sh_product_version]}
+redirect -file [file join $reports environment version.rpt] {puts [get_app_var sh_product_version]}
 # 部分 EDA 命令失败时返回 0，不一定抛出 Tcl 异常；把布尔失败转换为 error。
 # 此函数只用于已约定返回布尔值的命令；driver 还会检查日志中的 Error。
 proc require_true {value message} {
@@ -55,9 +62,9 @@ proc library_reports {} {
         # DC P-2019.03 PDF 429 示例：report_synlib standard.sldb。
         # 不能把所有库都改成 report_synlib；PT 不配置 synthetic_library。
         if {$::stage ne "sta" && [file extension $name] eq ".sldb"} {
-            redirect -file [file join $reports "library_${name}.rpt"] {report_synlib $name}
+            redirect -file [file join $reports environment "library_${name}.rpt"] {report_synlib $name}
         } else {
-            redirect -file [file join $reports "library_${name}.rpt"] {report_lib $name}
+            redirect -file [file join $reports environment "library_${name}.rpt"] {report_lib $name}
         }
     }
 }

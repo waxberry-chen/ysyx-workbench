@@ -288,14 +288,14 @@ def parse_metrics(path):
 # 没有主流程 Error 等条件满足后，才能称执行 COMPLETE；仍不自动称 signoff PASS。
 def inspect_stage(run, stage):
     report = run/'reports'/stage
-    required = ['version.rpt', 'complete.txt']
+    required = ['environment/version.rpt', 'complete.txt']
     if stage == 'syn':
-        required += ['area.rpt', 'qor.rpt', 'check_design_pre.rpt', 'check_design_post.rpt', 'check_timing.rpt', 'constraints.rpt', 'timing_max.rpt', 'timing_min.rpt', 'design.rpt', 'references.rpt', 'resources.rpt', 'power_status.txt']
+        required += ['area/area.rpt', 'summary/qor.rpt', 'checks/check_design_pre.rpt', 'checks/check_design_post.rpt', 'checks/check_timing.rpt', 'checks/constraint_violations.rpt', 'timing/timing_max.rpt', 'timing/timing_min.rpt', 'environment/design.rpt', 'area/references.rpt', 'area/resources.rpt', 'power/power_status.txt']
     elif stage == 'sta':
-        required += ['units.rpt', 'design.rpt', 'wire_load.rpt', 'check_timing.rpt', 'coverage.rpt', 'coverage_untested.rpt', 'constraints.rpt', 'timing_max.rpt', 'timing_min.rpt', 'metrics_max.tsv', 'metrics_min.tsv']
-        required += [f'{group}_{delay}.rpt' for group in ['Reg2Reg', 'In2Reg', 'Reg2Out', 'In2Out'] for delay in ['max', 'min']]
+        required += ['environment/units.rpt', 'environment/design.rpt', 'environment/wire_load.rpt', 'checks/check_timing.rpt', 'checks/coverage.rpt', 'checks/coverage_untested.rpt', 'checks/constraint_violations.rpt', 'timing/timing_max.rpt', 'timing/timing_min.rpt', 'timing/metrics_max.tsv', 'timing/metrics_min.tsv']
+        required += [f'timing/{group}_{delay}.rpt' for group in ['Reg2Reg', 'In2Reg', 'Reg2Out', 'In2Out'] for delay in ['max', 'min']]
     required_paths = [report/name for name in required]
-    libs = list(report.glob('library_*.rpt'))
+    libs = list((report/'environment').glob('library_*.rpt'))
     require(libs, 'Missing library reports')
     required_paths += libs
     if stage == 'syn':
@@ -319,19 +319,19 @@ def inspect_stage(run, stage):
     if stage == 'syn':
         # 提取的是映射 cell area；其单位来自库，不是芯片/die 面积。
         # 正面积与合法 top 只是必要条件，不能替代资源保留和电路功能审查。
-        area = re.search(r'Total cell area:\s*([0-9.eE+-]+)', (report/'area.rpt').read_text())
+        area = re.search(r'Total cell area:\s*([0-9.eE+-]+)', (report/'area/area.rpt').read_text())
         require(area and math.isfinite(float(area[1])) and float(area[1]) > 0, 'Missing/zero/invalid mapped cell area')
         netlist = (run/'outputs/core.v').read_text()
         require(re.search(r'\bmodule\s+ysyx_core_axi4lite\b', netlist), 'Netlist top absent')
         require(not re.search(r'\b(?:GTECH_\w*|SEQGEN)\b', netlist), 'Unmapped primitive in exported netlist')
         result['cell_area'] = float(area[1])
-        result['power'] = (report/'power_status.txt').read_text().strip()
+        result['power'] = (report/'power/power_status.txt').read_text().strip()
     if stage == 'sta':
         # coverage 统计的是 timing checks，不是唯一端点数：一个端点可有多种检查。
         # 这里要求已知报告格式；遇到新版本格式要调整解析器，不能默认填零通过。
-        result['timing'] = {d: parse_metrics(report/f'metrics_{d}.tsv') for d in ['max', 'min']}
+        result['timing'] = {d: parse_metrics(report/f'timing/metrics_{d}.tsv') for d in ['max', 'min']}
         # UG L-2016.06 PDF 657. Unknown report format fails closed.
-        coverage = re.search(r'All Checks\s+(\d+)\s+(\d+)\s*\([^)]*\)\s+(\d+)\s*\([^)]*\)\s+(\d+)\s*\([^)]*\)', (report/'coverage.rpt').read_text())
+        coverage = re.search(r'All Checks\s+(\d+)\s+(\d+)\s*\([^)]*\)\s+(\d+)\s*\([^)]*\)\s+(\d+)\s*\([^)]*\)', (report/'checks/coverage.rpt').read_text())
         require(coverage and int(coverage[1]) > 0, 'Missing/empty/unrecognized coverage summary')
         result['coverage'] = dict(zip(['total', 'met', 'violated', 'untested'], map(int, coverage.groups())))
         require(result['coverage']['total'] == sum(result['coverage'][k] for k in ['met','violated','untested']), 'Inconsistent coverage summary')
@@ -379,7 +379,8 @@ def execute(run, stage):
         raise
     # 成功或失败都保留已产生的日志/报告/hash，便于诊断；不删除失败证据。
     finally:
-        paths = list((run/'reports'/stage).glob('*')) + [run/'logs'/f'{stage}.log']
+        # Reports are categorized: hash nested files too, including failed/optional attempts.
+        paths = list((run/'reports'/stage).rglob('*')) + [run/'logs'/f'{stage}.log']
         if stage == 'syn':
             paths += list((run/'outputs').glob('*'))
         record['artifacts'] = {str(p.relative_to(run)): sha(p) for p in paths if p.is_file()}
@@ -411,6 +412,9 @@ def main(argv=None):
             if args.action == 'sta':
                 execute(run, 'sta')
             else:
+                # Report layout/parser belong to the frozen run, just like STA inputs.
+                require(sha(Path(__file__)) == sha(run/'inputs/npc/flow/01_common/flow.py'),
+                        'Runner changed; invoke the archived runner for this run')
                 require(m['stages'], 'No stage has run')
                 for name, stage in m['stages'].items():
                     require(stage['status'] == 'COMPLETE', f'{name} is {stage["status"]}')

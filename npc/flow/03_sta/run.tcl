@@ -20,21 +20,21 @@ if {[catch {
     # 两者均以负值表示违例，所以“数据越快越好”并不适用于 hold 检查。
     # 无 SPEF，且未传播时钟树；数据路径仍使用单元延迟及配置的互连估算。
     update_timing
-    redirect -file [file join $reports units.rpt] {report_units}
-    redirect -file [file join $reports design.rpt] {report_design}
-    redirect -file [file join $reports wire_load.rpt] {report_wire_load}
+    redirect -file [file join $reports environment units.rpt] {report_units}
+    redirect -file [file join $reports environment design.rpt] {report_design}
+    redirect -file [file join $reports environment wire_load.rpt] {report_wire_load}
     # 阶段 3：先确认“分析了什么”，再看“是否满足目标”。
     # coverage 的 met/violated/untested 分别是通过、违例、未测试的 timing checks。
     # untested 不可当作通过；常量、例外、无时钟等原因需要逐项解释。
     # 该 coverage 不是 RTL 仿真覆盖率。依据：PT L-2016.06 正文 17-25 / PDF 657。
-    redirect -file [file join $reports check_timing.rpt] {check_timing -verbose}
-    redirect -file [file join $reports coverage.rpt] {report_analysis_coverage}
-    redirect -file [file join $reports coverage_untested.rpt] {report_analysis_coverage -status_details {untested}}
-    redirect -file [file join $reports constraints.rpt] {report_constraint -all_violators -nosplit}
+    redirect -file [file join $reports checks check_timing.rpt] {check_timing -verbose}
+    redirect -file [file join $reports checks coverage.rpt] {report_analysis_coverage}
+    redirect -file [file join $reports checks coverage_untested.rpt] {report_analysis_coverage -status_details {untested}}
+    redirect -file [file join $reports checks constraint_violations.rpt] {report_constraint -all_violators -nosplit}
     # 阶段 4：max/min 分别保存晚到/早到分析；全局报告包含实际可分析的 check。
     # 先输出代表路径供人阅读，再独立提取全部负 slack 端点，避免只用前 20 条算 TNS。
     foreach delay {max min} {
-        redirect -file [file join $reports timing_${delay}.rpt] {report_timing -delay_type $delay -max_paths 20 -nosplit}
+        redirect -file [file join $reports timing timing_${delay}.rpt] {report_timing -delay_type $delay -max_paths 20 -nosplit}
         # One worst path per endpoint; bounded to a count above all pins + ports.
         set limit [expr {[sizeof_collection [get_pins -hierarchical *]] + [sizeof_collection [all_outputs]] + 1}]
         set paths [get_timing_paths -delay_type $delay -slack_lesser_than 0.0 -nworst 1 -max_paths $limit]
@@ -58,7 +58,7 @@ if {[catch {
             set wns [expr {min($wns, $slack)}]
             incr count
         }
-        set f [open [file join $reports metrics_${delay}.tsv] w]
+        set f [open [file join $reports timing metrics_${delay}.tsv] w]
         puts $f "wns\t$wns\ntns\t$tns\nviolating_endpoints\t$count"
         close $f
         # 阶段 5：按边界保存四类路径，方便定位是内部逻辑还是接口预算限制频率。
@@ -71,7 +71,7 @@ if {[catch {
         foreach {group from to} [list Reg2Reg [all_registers -clock_pins] [all_registers -data_pins] \
                 In2Reg $external_inputs [all_registers -data_pins] \
                 Reg2Out [all_registers -clock_pins] [all_outputs] In2Out $external_inputs [all_outputs]] {
-            redirect -file [file join $reports ${group}_${delay}.rpt] {
+            redirect -file [file join $reports timing ${group}_${delay}.rpt] {
                 report_timing -from $from -to $to -delay_type $delay -max_paths 10 -nosplit
             }
         }

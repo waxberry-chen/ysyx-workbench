@@ -19,7 +19,7 @@ if {[catch {
     require_true [link] "link failed"
     # check_design 找结构问题；它不证明功能等价，也不证明所有路径满足时序。
     # redirect 将工具报告写入文件，同时保留命令返回值供 require_true 检查。
-    redirect -file [file join $reports check_design_pre.rpt] {set ok [check_design]}
+    redirect -file [file join $reports checks check_design_pre.rpt] {set ok [check_design]}
     require_true $ok "pre-compile check_design failed"
     # 阶段 3：施加环境与约束。DC 需要知道时钟和外部预算才能按目标优化。
     environment
@@ -34,7 +34,7 @@ if {[catch {
     require_true [compile -map_effort medium] "compile failed"
     # 将层次内名字规范成 Verilog 可导出的形式，不改变要实现的逻辑功能。
     change_names -rules verilog -hierarchy
-    redirect -file [file join $reports check_design_post.rpt] {set ok [check_design]}
+    redirect -file [file join $reports checks check_design_post.rpt] {set ok [check_design]}
     require_true $ok "post-compile check_design failed"
     # 只检查叶级单元是否仍未映射；层次容器本身不应被误当作待映射逻辑。
     # 本设计预期只有边沿触发的寄存器；发现 level-sensitive latch 则停止。
@@ -50,18 +50,18 @@ if {[catch {
     # 阶段 6：报告解释。area 是映射单元面积，非 floorplan/die 面积；
     # QoR（Quality of Results）汇总优化结果；resources/reference 帮助确认
     # 乘除法等结构实际映射成了什么；design 报告用于核对环境/WLM。
-    redirect -file [file join $reports area.rpt] {report_area -hierarchy}
-    redirect -file [file join $reports qor.rpt] {report_qor}
-    redirect -file [file join $reports resources.rpt] {report_resources -hierarchy}
-    redirect -file [file join $reports references.rpt] {report_reference -hierarchy}
-    redirect -file [file join $reports design.rpt] {report_design}
+    redirect -file [file join $reports area area.rpt] {report_area -hierarchy}
+    redirect -file [file join $reports summary qor.rpt] {report_qor}
+    redirect -file [file join $reports area resources.rpt] {report_resources -hierarchy}
+    redirect -file [file join $reports area references.rpt] {report_reference -hierarchy}
+    redirect -file [file join $reports environment design.rpt] {report_design}
     # check_timing 查约束/分析完整性；constraint 列违例；report_timing 展示路径。
     # max 关注晚到数据（通常为 setup/recovery），min 关注早到数据（hold/removal）；
     # -max_paths 20 仅限制报告展示数量，不等于整个设计只分析 20 条路径。
-    redirect -file [file join $reports check_timing.rpt] {check_timing}
-    redirect -file [file join $reports constraints.rpt] {report_constraint -all_violators -nosplit}
-    redirect -file [file join $reports timing_max.rpt] {report_timing -delay_type max -max_paths 20 -nosplit}
-    redirect -file [file join $reports timing_min.rpt] {report_timing -delay_type min -max_paths 20 -nosplit}
+    redirect -file [file join $reports checks check_timing.rpt] {check_timing}
+    redirect -file [file join $reports checks constraint_violations.rpt] {report_constraint -all_violators -nosplit}
+    redirect -file [file join $reports timing timing_max.rpt] {report_timing -delay_type max -max_paths 20 -nosplit}
+    redirect -file [file join $reports timing timing_min.rpt] {report_timing -delay_type min -max_paths 20 -nosplit}
     # Power never changes the saved timing design. Its diagnostics are isolated.
     # 阶段 7（可选）：时序产物导出后才估算功耗，不把活动假设用于本轮优化。
     # -base_clock 将 toggle rate 关联到 core_clk 周期；时钟每周期翻转两次，
@@ -73,7 +73,7 @@ if {[catch {
     if {[dict get $cfg power_enable]} {
         puts "NPC_OPTIONAL_POWER_BEGIN"
         set power_error [catch {
-            redirect -file [file join $reports power_attempt.rpt] {
+            redirect -file [file join $reports power power_attempt.rpt] {
                 set_switching_activity -base_clock core_clk -toggle_rate [dict get $cfg power_toggle] \
                     -static_probability [dict get $cfg power_probability] $data_inputs
                 set_switching_activity -base_clock core_clk -toggle_rate 2.0 -static_probability 0.5 [get_ports clk]
@@ -88,7 +88,7 @@ if {[catch {
         }
         puts "NPC_OPTIONAL_POWER_END"
     }
-    set f [open [file join $reports power_status.txt] w]; puts $f $power_status; close $f
+    set f [open [file join $reports power power_status.txt] w]; puts $f $power_status; close $f
     complete
 } message]} {puts stderr "NPC_FLOW_ERROR: $message"; exit 1}
 exit 0

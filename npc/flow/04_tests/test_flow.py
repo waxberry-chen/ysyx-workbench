@@ -23,24 +23,26 @@ import os
 from pathlib import Path
 run=Path(os.environ['NPC_RUN_CONFIG']).parent.parent
 stage=os.environ['NPC_STAGE']; r=run/'reports'/stage; r.mkdir(parents=True,exist_ok=True)
-(r/'version.rpt').write_text('MOCK TOOL - NOT EDA\\n')
-(r/'library_mock.rpt').write_text('MOCK LIBRARY\\n')
-(r/'complete.txt').write_text('NPC_FLOW_COMPLETE '+stage+'\\n')
+def report(name, text='MOCK REPORT\\n'):
+ p=r/name; p.parent.mkdir(parents=True,exist_ok=True); p.write_text(text)
+report('environment/version.rpt','MOCK TOOL - NOT EDA\\n')
+report('environment/library_mock.rpt','MOCK LIBRARY\\n')
+report('complete.txt','NPC_FLOW_COMPLETE '+stage+'\\n')
 if stage=='syn':
- for name in ['qor','check_design_pre','check_design_post','check_timing','constraints','timing_max','timing_min','design','references','resources']:
-  (r/(name+'.rpt')).write_text('MOCK REPORT\\n')
- (r/'area.rpt').write_text('Total cell area: 12.5\\n')
- (r/'power_status.txt').write_text('NOT_EVALUATED: disabled\\n')
+ for name in ['summary/qor','checks/check_design_pre','checks/check_design_post','checks/check_timing','checks/constraint_violations','timing/timing_max','timing/timing_min','environment/design','area/references','area/resources']:
+  report(name+'.rpt')
+ report('area/area.rpt','Total cell area: 12.5\\n')
+ report('power/power_status.txt','NOT_EVALUATED: disabled\\n')
  for name,content in [('core.v','module ysyx_core_axi4lite(); endmodule'),('core.ddc','MOCK DDC'),('dc.sdc','MOCK SDC')]:
   (run/'outputs'/name).write_text(content)
 if stage=='sta':
- for name in ['units','design','wire_load','check_timing','coverage_untested','constraints','timing_max','timing_min']:
-  (r/(name+'.rpt')).write_text('MOCK REPORT\\n')
- (r/'coverage.rpt').write_text('All Checks 10 10 (100%) 0 (0%) 0 (0%)\\n')
+ for name in ['environment/units','environment/design','environment/wire_load','checks/check_timing','checks/coverage_untested','checks/constraint_violations','timing/timing_max','timing/timing_min']:
+  report(name+'.rpt')
+ report('checks/coverage.rpt','All Checks 10 10 (100%) 0 (0%) 0 (0%)\\n')
  for delay in ['max','min']:
-  (r/('metrics_'+delay+'.tsv')).write_text('wns\\t0.0\\ntns\\t0.0\\nviolating_endpoints\\t0\\n')
+  report('timing/metrics_'+delay+'.tsv','wns\\t0.0\\ntns\\t0.0\\nviolating_endpoints\\t0\\n')
   for group in ['Reg2Reg','In2Reg','Reg2Out','In2Out']:
-   (r/(group+'_'+delay+'.rpt')).write_text('MOCK PATH REPORT\\n')
+   report('timing/'+group+'_'+delay+'.rpt','MOCK PATH REPORT\\n')
 '''
 
 
@@ -278,7 +280,7 @@ dict set site library_reviewed 1
         with self.assertRaisesRegex(f.FlowError, 'Unmapped primitive'):
             f.inspect_stage(run, 'syn')
         netlist.write_text(original)
-        report = run/'reports/syn/area.rpt'
+        report = run/'reports/syn/area/area.rpt'
         report.write_text('Total cell area: 0\n')
         with self.assertRaisesRegex(f.FlowError, 'cell area'):
             f.inspect_stage(run, 'syn')
@@ -302,16 +304,16 @@ dict set site library_reviewed 1
     def test_negative_slack_and_untested(self):
         run = self.syn()
         f.execute(run, 'sta')
-        (run/'reports/sta/metrics_max.tsv').write_text('wns\t-1\ntns\t-2\nviolating_endpoints\t2\n')
+        (run/'reports/sta/timing/metrics_max.tsv').write_text('wns\t-1\ntns\t-2\nviolating_endpoints\t2\n')
         self.assertEqual(f.inspect_stage(run, 'sta')['signoff'], 'TIMING_FAIL')
-        (run/'reports/sta/metrics_max.tsv').write_text('wns\t0\ntns\t0\nviolating_endpoints\t0\n')
-        (run/'reports/sta/coverage.rpt').write_text('All Checks 10 9 (90%) 0 (0%) 1 (10%)\n')
+        (run/'reports/sta/timing/metrics_max.tsv').write_text('wns\t0\ntns\t0\nviolating_endpoints\t0\n')
+        (run/'reports/sta/checks/coverage.rpt').write_text('All Checks 10 9 (90%) 0 (0%) 1 (10%)\n')
         self.assertEqual(f.inspect_stage(run, 'sta')['signoff'], 'REVIEW_REQUIRED')
 
     def test_unknown_coverage_format(self):
         run = self.syn()
         f.execute(run, 'sta')
-        (run/'reports/sta/coverage.rpt').write_text('Changed report format')
+        (run/'reports/sta/checks/coverage.rpt').write_text('Changed report format')
         with self.assertRaisesRegex(f.FlowError, 'unrecognized coverage'):
             f.inspect_stage(run, 'sta')
 
@@ -331,12 +333,12 @@ dict set site library_reviewed 1
         f.execute(run, 'sta')
         for current, stage in [(probe, 'probe'), (run, 'syn'), (run, 'sta')]:
             reports = current/'reports'/stage
-            self.assertIn('MOCK-VERSION-NOT-EDA', (reports/'version.rpt').read_text())
+            self.assertIn('MOCK-VERSION-NOT-EDA', (reports/'environment/version.rpt').read_text())
             if stage != 'sta':
-                self.assertIn('MOCK synthetic library standard.sldb', (reports/'library_standard.sldb.rpt').read_text())
-                self.assertIn('MOCK technology library gtech', (reports/'library_gtech.rpt').read_text())
+                self.assertIn('MOCK synthetic library standard.sldb', (reports/'environment/library_standard.sldb.rpt').read_text())
+                self.assertIn('MOCK technology library gtech', (reports/'environment/library_gtech.rpt').read_text())
             else:
-                self.assertFalse((reports/'library_standard.sldb.rpt').exists())
+                self.assertFalse((reports/'environment/library_standard.sldb.rpt').exists())
         result = f.inspect_stage(run, 'sta')
         self.assertEqual(result['timing']['max']['violating_endpoints'], 1)
         self.assertEqual(result['timing']['max']['tns'], -1.0)
@@ -346,17 +348,53 @@ dict set site library_reviewed 1
     def test_probe_report_errors_despite_successful_exit(self):
         # 真实 DC 可能退出 0 且写 complete.txt，但 redirect 内的报告仍含 Error。
         for filename, diagnostic in [
-            ('version.rpt', "Error: unknown command 'version' (CMD-005)"),
-            ('library_standard.sldb.rpt', 'Error: Use the report_synlib command. (UIL-29)'),
+            ('environment/version.rpt', "Error: unknown command 'version' (CMD-005)"),
+            ('environment/library_standard.sldb.rpt', 'Error: Use the report_synlib command. (UIL-29)'),
         ]:
             with self.subTest(report=filename):
                 self.tool.write_text(FAKE + f"\n(r/{filename!r}).write_text({diagnostic!r})\n")
-                run = self.new_run(filename)
+                run = self.new_run(Path(filename).name)
                 with self.assertRaisesRegex(f.FlowError, 'Tool/structural error'):
                     f.execute(run, 'probe')
                 stage = json.loads((run/'manifest.json').read_text())['stages']['probe']
                 self.assertEqual(stage['exit_code'], 0)
                 self.assertEqual(stage['status'], 'FAILED')
+
+    def test_nested_reports_are_hashed_and_verified(self):
+        run = self.syn()
+        f.execute(run, 'sta')
+        manifest = f.verify(run)
+        for stage in ['syn', 'sta']:
+            actual = {str(p.relative_to(run)) for p in (run/'reports'/stage).rglob('*') if p.is_file()}
+            self.assertTrue(actual <= manifest['stages'][stage]['artifacts'].keys())
+        # A nested report mutation must stop reuse even when the netlist is unchanged.
+        (run/'reports/syn/checks/constraint_violations.rpt').write_text('tampered')
+        with self.assertRaisesRegex(f.FlowError, 'Artifact hash mismatch'):
+            f.verify(run)
+
+    def test_nested_violation_report_is_required_and_errors_fail(self):
+        run = self.syn()
+        path = run/'reports/syn/checks/constraint_violations.rpt'
+        path.write_text('Error: injected report failure')
+        with self.assertRaisesRegex(f.FlowError, 'Tool/structural error'):
+            f.inspect_stage(run, 'syn')
+        path.unlink()
+        # An old flat report cannot substitute for a missing categorized report.
+        (run/'reports/syn/constraints.rpt').write_text('MOCK old report')
+        with self.assertRaisesRegex(f.FlowError, 'Missing/empty'):
+            f.inspect_stage(run, 'syn')
+
+    def test_inspect_requires_matching_archived_runner(self):
+        run = self.syn()
+        self.assertEqual(f.main(['inspect', '--run', str(run)]), 0)
+        # Model a different current runner while retaining a valid frozen run.
+        changed = self.root/'different-runner.py'
+        changed.write_text('# new version')
+        with patch.object(f, '__file__', str(changed)):
+            with patch('sys.stderr') as stderr:
+                self.assertEqual(f.main(['inspect', '--run', str(run)]), 1)
+                self.assertTrue(any('archived runner' in str(c) for c in stderr.write.call_args_list))
+        self.assertEqual(f.verify(run)['stages']['syn']['status'], 'COMPLETE')
 
     def test_tcl_path_quoting(self):
         literal = 'space $env(HOME) [error bad] " \\ end'

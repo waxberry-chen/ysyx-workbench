@@ -2,6 +2,9 @@
 
 2026-10-16：**S2 本地实现和验证完成**。输入 HEAD：`235f60619d2ae32a57ee2520cfd76f1a6a9f326f`，开始时工作区干净。未改 RTL、ref-flow 或服务器库路径，未运行 DC/PT。本地验证使用 Tcl/模拟工具，不能据此宣称 EDA flow 已在真实工具上跑通。
 
+2026-10-18 补记：新 run 报告按 environment/summary/checks/timing/area/power 分类，
+`constraints.rpt` 改为 `checks/constraint_violations.rpt`；[当前报告索引](../../../../npc/flow/README.md#报告目录与阅读顺序)列出文件用途和旧 run 的检查方式。本页下方保留 S2 初始实现记录；已有归档不迁移。
+
 ## 1. 实现范围与裁剪决定
 
 入口：[npc/flow/README.md](../../../../npc/flow/README.md)、[Makefile](../../../../npc/flow/Makefile)。沿用 S1 的 `ysyx_core_axi4lite`、16 项 SV filelist 和观察端口策略。只搭建一个 top、一个配置、一个库/角的 DC → PT 链，没有新增 PnR、FM、GLS 或活动仿真依赖。
