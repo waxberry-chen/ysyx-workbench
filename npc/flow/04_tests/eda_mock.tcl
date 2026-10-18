@@ -56,24 +56,29 @@ if {$::env(NPC_STAGE) eq "sta"} {
 }
 proc get_cells {args} {
     if {[lindex $args 0] eq "-of_objects"} {return [file dirname [lindex $args 1]]}
-    if {[lindex $args end] eq {full_name == core/u_lsu}} {
-        if {[info exists ::env(NPC_MOCK_NO_LSU)]} {return {}}
-        return core/u_lsu
-    }
     return {}
 }
-proc get_designs {name} {
-    if {$name ne "ysyx_lsu"} {error "Unexpected design lookup: $name"}
-    return $name
+proc current_design {args} {
+    if {[llength $args]} {set ::mock_current_design [lindex $args 0]}
+    return $::mock_current_design
 }
-proc set_max_capacitance {value objects} {
-    if {$::env(NPC_STAGE) ne "syn" || $objects ne "ysyx_lsu" || $value != 0.075} {
-        error "Capacitance margin must be local to LSU synthesis"
+proc set_max_fanout {value objects} {
+    if {$::env(NPC_STAGE) ne "syn" || $objects ne $::top || $value != 32} {
+        error "Max fanout must be 32 on synthesis top"
     }
-    set ::mock_lsu_margin_applied 1
+    set ::mock_syn_max_fanout $value
+}
+proc set_auto_disable_drc_nets {args} {
+    if {$::env(NPC_STAGE) ne "syn" || $args ne {-on_clock_network true}} {
+        error "Only clock network DRC fixing may be disabled"
+    }
+    set ::mock_clock_drc_disabled true
 }
 proc compile {args} {
-    if {![info exists ::mock_lsu_margin_applied]} {error "Missing LSU margin before compile"}
+    if {![info exists ::mock_syn_max_fanout]} {error "Missing top fanout before compile"}
+    if {![info exists ::mock_clock_drc_disabled]} {error "Clock DRC protection missing before compile"}
+    if {[info exists ::env(NPC_MOCK_DROP_SYN_FANOUT)]} {unset ::mock_syn_max_fanout}
+    if {[info exists ::env(NPC_MOCK_DROP_CLOCK_DRC)]} {set ::mock_clock_drc_disabled false}
     return 1
 }
 proc all_registers {args} {
@@ -96,6 +101,7 @@ proc get_pins {args} {
 proc get_nets {args} {
     if {[lindex $args 0] ne "-of_objects"} {error "Enable nets must be discovered from pins"}
     set pin [lindex $args 1]
+    if {$pin eq "clk"} {return clk_net}
     dict for {net pins} $::cap_connections {if {$pin in $pins} {return $net}}
     error "Unknown mock net for $pin"
 }
@@ -112,11 +118,18 @@ proc get_timing_paths {args} {
 proc get_attribute {args} {
     set object [lindex $args end-1]
     set name [lindex $args end]
+    if {$name eq "max_fanout" && $object eq $::top} {
+        if {[info exists ::mock_syn_max_fanout]} {return $::mock_syn_max_fanout}
+        error "Mock design fanout missing"
+    }
+    if {$name eq "auto_disable_drc_nets" && $object eq "clk_net"} {return $::mock_clock_drc_disabled}
+    if {$name eq "default_fanout_load"} {return 1.0}
+    # A non-unit explicit weight catches accidental interpretation as pin count.
+    if {$name eq "fanout_load" && [string match */EDFCNQD1/E $object]} {return 2.0}
     if {$name eq "slack"} {if {$object eq "path1"} {return -1.0} else {return -0.5}}
     if {$name eq "endpoint"} {return same_endpoint}
     if {$name eq "direction"} {if {[file tail $object] in {E I}} {return in} else {return out}}
     if {$name eq "ref_name"} {
-        if {$object eq "core/u_lsu"} {return ysyx_lsu}
         if {$object eq $::cap_driver} {return INVD1}
         if {$object eq $::cap_buffer} {return BUFFD1}
         return EDFCNQD1
@@ -165,7 +178,7 @@ proc set_false_path {args} {
 }
 # 本次诊断不执行 set_fix_multiple_port_nets；不提供该命令的无操作替身，
 # 防止真实 Tcl 在测试中悄悄恢复强制 buffer 策略。是否消除电气违例需真实 EDA 验证。
-foreach command {set_host_options define_design_lib elaborate current_design link link_design set_operating_conditions set_wire_load_mode set_wire_load_model change_names update_timing create_clock set_clock_uncertainty set_clock_transition set_clock_latency set_input_delay set_input_transition set_output_delay set_load} {
+foreach command {set_host_options define_design_lib elaborate link link_design set_operating_conditions set_wire_load_mode set_wire_load_model change_names update_timing create_clock set_clock_uncertainty set_clock_transition set_clock_latency set_input_delay set_input_transition set_output_delay set_load} {
     proc $command {args} {return 1}
 }
 foreach command {report_qor report_resources report_reference report_design check_timing report_disable_timing report_units report_wire_load} {
@@ -180,7 +193,7 @@ proc all_high_fanout {args} {
 proc report_net {args} {
     if {[dict exists $::cap_connections [lindex $args end]]} {
         if {[lrange $args 0 end-1] eq {-max_capacitance} && $::env(NPC_STAGE) eq "syn"} {
-            puts "MOCK DC capacitance constraint Required Actual Slack"
+            puts "MOCK DC capacitance view Load LoadUR LoadUF"
             return
         }
         if {[lrange $args 0 end-1] ne {-connections -verbose}} {error "Missing capacitance connection details"}

@@ -23,6 +23,9 @@ proc report_lsu_enable_capacitance {} {
         puts "tool_version: [get_app_var sh_product_version]"
         puts "library: [dict get $site library_name]"
         puts "configured_capacitance_unit: [dict get $site capacitance_unit]"
+        puts "LIBRARY_FANOUT_DEFAULT: [dict get $site library_name]"
+        cap_attributes [get_libs [dict get $site library_name]] {default_fanout_load}
+        # 配合下方 LIB_PIN fanout_load 审查 32 的实际含义；缺失值不是零或自动为 1。
         puts "Policy: read-only; UNAVAILABLE is not zero; compare report_net and constraint_violations too."
         foreach variable {report_capacitance_use_ccs_receiver_model timing_max_capacitance_derate} {
             # 已注册的应用变量在工具 Tcl 中可见；不创建或修改未知的应用变量。
@@ -55,8 +58,8 @@ proc report_lsu_enable_capacitance {} {
                 set net [dict get $nets_by_name $name]
                 puts "NET: $name"
                 report_net -connections -verbose $net
-                # DC 的普通 report_net 电容与 DRC 计算口径可能不同；直接保存
-                # Required/Actual/Slack。依据 DC P-2019.03 正文 8-9。
+                # 补充 DC 的电容视图（手册 8-9）。2023 版实测输出 Load/LoadUR/
+                # LoadUF 等列，不能假定与旧手册一样含 Required/Actual/Slack。
                 if {$stage eq "syn"} {report_net -max_capacitance $net}
                 cap_attributes $net {wire_capacitance_min wire_capacitance_max total_capacitance_min total_capacitance_max}
                 set drivers 0
@@ -84,7 +87,7 @@ proc report_lsu_enable_capacitance {} {
                 if {[sizeof_collection $lib_pin] != 1} {
                     puts "Warning: NPC_CAP_LIB_PIN_UNAVAILABLE: $name"
                 } else {
-                    cap_attributes $lib_pin {direction capacitance rise_capacitance fall_capacitance max_capacitance min_capacitance}
+                    cap_attributes $lib_pin {direction fanout_load capacitance rise_capacitance fall_capacitance max_capacitance min_capacitance}
                 }
             }
         }

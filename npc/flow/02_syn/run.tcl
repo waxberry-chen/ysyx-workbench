@@ -25,21 +25,41 @@ if {[catch {
     # 阶段 3：施加环境与约束。DC 需要知道时钟和外部预算才能按目标优化。
     environment
     source [file join $npc_root [dict get $cfg sdc]]
-    # LSU 综合裕量：上轮 req_fire 分支驱动 54 个 E pin + 一个 buffer 输入，
-    # PT 负载 0.088724 pF 超过 INVD1 的 0.084770 pF 库上限，DC 却未报违例。
-    # 先采用 0.075 pF 的局部优化目标，促使 compile 分组/缓冲真实负载。
-    # 此值比上述库上限低约 11.5%，是本轮实验裕量，不是新的工艺规则。
-    # 对象是 LSU 的 design（全部内部网络），不是 instance，也不是仅一条 E net。
-    # 在映射前按 RTL 层次定位，避免绑定会随综合变化的 U13/n3；找不到则停止。
-    # 依据：DC P-2019.03 正文 8-8：set_max_capacitance 可施加到 design，
-    # 与库限制并存时取更严格者。单位由 flow preflight 要求为 pF。
-    set lsu_cell [get_cells -hierarchical -filter {full_name == core/u_lsu}]
-    if {[sizeof_collection $lsu_cell] != 1} {error "Expected exactly one core/u_lsu for capacitance margin"}
-    set lsu_design [get_designs [get_attribute $lsu_cell ref_name]]
-    if {[sizeof_collection $lsu_design] != 1} {error "Cannot resolve LSU design for capacitance margin"}
-    set_max_capacitance 0.075 $lsu_design
-    puts "NPC_SYN_POLICY: LSU design [get_object_name $lsu_design] max_capacitance=0.075 pF (synthesis margin)"
-    # PT 重放原始 SDC，仍按库规则验收；此局部优化目标留在 DC 导出约束/数据库中。
+    # 限制非时钟网络的 fanout load，替代额外的全局 0.075 pF 电容目标。
+    # 与 C906 公共 SDC 的 MAX_FANOUT=32 一致；不是把库电容检查关掉。
+    # DC P-2019.03 8-6–8-7：fanout 是库 fanout_load 之和，不一定是 pin 个数。
+    # 施加到本次 compile 的顶层，避免子 design 约束在顶层综合后丢失（10-12）。
+    set syn_max_fanout 32
+    set_max_fanout $syn_max_fanout [current_design]
+    # ideal clock 是时序模型；是否修复 clock DRC 是另一项设置。
+    # 8-13–8-14 推荐 -on_clock_network，覆盖完整时钟网络（含上游时钟逻辑），
+    # 避免按 32 的普通数据网络目标给时钟插 buffer。此命令不改变时钟时序模型。
+    # 当前无 CTS/gating，SDC 保持 ideal clock 和指定 slew/uncertainty。
+    # 只关闭 clock network 的 DRC 修复，不理想化 reset 或 LSU req_fire。
+    set_auto_disable_drc_nets -on_clock_network true
+    # 赋值成功不等于属性保留：compile 前后读取顶层目标及 clk 源网络保护属性。
+    proc check_syn_fanout_policy {phase expected} {
+        global top
+        set design [current_design]
+        if {[get_object_name $design] ne $top} {error "Fanout policy check is not at synthesis top"}
+        if {[catch {get_attribute $design max_fanout} actual] ||
+            ![string is double -strict $actual]} {
+            error "Synthesis max_fanout missing at $phase"
+        }
+        if {abs($actual - $expected) > 1e-9} {error "Synthesis max_fanout changed at $phase: $actual"}
+        set clock_nets [get_nets -of_objects [get_ports clk]]
+        if {[sizeof_collection $clock_nets] == 0} {error "Clock source net missing at $phase"}
+        foreach_in_collection net $clock_nets {
+            if {[catch {get_attribute $net auto_disable_drc_nets} disabled] ||
+                ![string is boolean -strict $disabled]} {
+                error "Clock DRC protection unavailable at $phase: [get_object_name $net]"
+            }
+            if {!$disabled} {error "Clock DRC protection lost at $phase: [get_object_name $net]"}
+            puts "NPC_SYN_CLOCK_DRC: $phase net=[get_object_name $net] auto_disable_drc_nets=$disabled"
+        }
+        puts "NPC_SYN_FANOUT: $phase design=$top max_fanout=$actual"
+    }
+    check_syn_fanout_policy pre_compile $syn_max_fanout
     # 03 的无负载 EXU buffer 与 input→output 直通连接重合；本轮撤去原来的
     # set_fix_multiple_port_nets -all -buffer_constants，检验强制端口隔离是否留下冗余单元。
     # DC 默认可用 assign 表示直通/多端口网络，PT 可读该网表；module 边界不必插 buffer。
@@ -52,6 +72,7 @@ if {[catch {
     # 阶段 4：compile 优化逻辑并映射到 target_library 的具体单元。
     # map_effort 是映射优化努力等级，不是目标频率；目标周期由 SDC 给出。
     require_true [compile -map_effort medium] "compile failed"
+    check_syn_fanout_policy post_compile $syn_max_fanout
     # 将层次内名字规范成 Verilog 可导出的形式，不改变要实现的逻辑功能。
     change_names -rules verilog -hierarchy
     redirect -file [file join $reports checks check_design_post.rpt] {set ok [check_design]}
@@ -79,6 +100,8 @@ if {[catch {
     # 同时保存连接明细；不先假定它是 clk，也不修改阈值来隐藏 warning。
     # 这里数的是直接连接的 fanout，不穿透 buffer/inverter 合并整棵树。
     redirect -file [file join $reports checks high_fanout.rpt] {
+        # threshold=1000 是工具高扇出建模/报告阈值，和优化目标 max_fanout=32 不同。
+        check_syn_fanout_policy report $syn_max_fanout
         puts "high_fanout_net_threshold: [get_app_var high_fanout_net_threshold]"
         set high_fanout_nets [all_high_fanout -nets]
         puts "high_fanout_net_count: [sizeof_collection $high_fanout_nets]"

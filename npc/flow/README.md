@@ -187,13 +187,16 @@ The next S3 diagnostic run removes the explicit
 66 unloaded EXU buffers in experiment 03. Feedthrough assigns may remain;
 ordinary timing-driven buffering is still allowed. Electrical checks stay enabled.
 See [the next-run procedure and acceptance checks](../../docs/notes/post-c/4-pre-soc-signoff/s3-buffer-check.md).
-The following repair experiment adds a **DC-only 0.075 pF maximum-capacitance
-target to the LSU design**, before compile. It covers all LSU internal nets, not
-only the request enable. The previous run had one PT max-capacitance violation
-on that enable network despite a clean DC constraint report. This tighter target
-asks DC to redistribute/buffer loads; it does not relax any library rule. PT
-continues to check the original SDC and library limits. See
-[the evidence, margin rationale and rerun checks](../../docs/notes/post-c/4-pre-soc-signoff/s3-capacitance-check.md#5-诊断返回与局部修复实验).
+The current repair experiment sets **DC-only `max_fanout 32` on the synthesis
+top**, replacing the extra 0.075 pF capacitance target. This is a sum of library
+`fanout_load` weights, not necessarily 32 pins. All library capacitance and slew
+limits remain applicable to ordinary data/control nets. DC explicitly disables
+clock-network DRC fixing with `set_auto_disable_drc_nets -on_clock_network true`;
+the shared SDC retains ideal-clock timing. Pre/post compile checks read back the
+top fanout attribute and the clock source net's `auto_disable_drc_nets` flag.
+PT continues to check the original SDC and library rules. Other high-fanout control
+nets, including reset, may change; compare area and timing after rerunning.
+See [fanout policy and clock handling](../../docs/notes/post-c/4-pre-soc-signoff/s3-capacitance-check.md#7-改用-max_fanout-32-并排除时钟-drc-修复).
 The built-in standard synthetic library supports HDL operators. Server mapping
 and resource reports must confirm that the large arithmetic really maps.
 PT reads `outputs/core.v` and replays the **same frozen design SDC/config** as DC;
@@ -265,7 +268,7 @@ python3 npc/flow/build/<RUN_ID>/inputs/npc/flow/01_common/flow.py \
 
 检查器与 manifest 递归记录分类目录内的产物，包括失败阶段和可选功耗的诊断文件；
 子目录中的报告被修改也会触发 hash 校验失败。报告分类本身只调整组织与命名；
-诊断增强及随后的 LSU 局部综合裕量实验见上文；后者会改变综合优化目标，待服务器验证。
+诊断增强及随后的综合裕量实验见上文；后者会改变综合优化目标，待服务器验证。
 
 ## Evidence and failure semantics
 
