@@ -72,6 +72,7 @@ proc set_auto_disable_drc_nets {args} {
     if {$::env(NPC_STAGE) ne "syn" || $args ne {-on_clock_network true}} {
         error "Only clock network DRC fixing may be disabled"
     }
+    if {[info exists ::env(NPC_MOCK_CLOCK_DRC_COMMAND_ERROR)]} {error "Injected clock DRC command failure"}
     set ::mock_clock_drc_disabled true
 }
 proc compile {args} {
@@ -122,7 +123,14 @@ proc get_attribute {args} {
         if {[info exists ::mock_syn_max_fanout]} {return $::mock_syn_max_fanout}
         error "Mock design fanout missing"
     }
-    if {$name eq "auto_disable_drc_nets" && $object eq "clk_net"} {return $::mock_clock_drc_disabled}
+    if {$name eq "auto_disable_drc_nets" && $object eq "clk_net"} {
+        # 默认重现服务器：命令可用，但该 net 属性不可查询；不伪造为 true。
+        if {[info exists ::env(NPC_MOCK_DROP_CLOCK_DRC)]} {return $::mock_clock_drc_disabled}
+        if {[lsearch -exact $args -quiet] < 0} {
+            puts "Warning: Attribute 'auto_disable_drc_nets' does not exist on net 'clk_net'. (UID-101)"
+        }
+        return ""
+    }
     if {$name eq "default_fanout_load"} {return 1.0}
     # A non-unit explicit weight catches accidental interpretation as pin count.
     if {$name eq "fanout_load" && [string match */EDFCNQD1/E $object]} {return 2.0}

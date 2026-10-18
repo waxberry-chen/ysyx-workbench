@@ -394,7 +394,17 @@ dict set site library_reviewed 1
         syn_log = (run/'logs/syn.log').read_text()
         for phase in ['pre_compile', 'post_compile']:
             self.assertIn(f'NPC_SYN_FANOUT: {phase} design=ysyx_core_axi4lite max_fanout=32', syn_log)
-            self.assertIn(f'NPC_SYN_CLOCK_DRC: {phase} net=clk_net auto_disable_drc_nets=true', syn_log)
+            self.assertIn(f'NPC_SYN_CLOCK_DRC: {phase} net=clk_net auto_disable_drc_nets=UNAVAILABLE', syn_log)
+        self.assertNotIn('UID-101', syn_log)
+        self.assertIn('auto_disable_drc_nets=UNAVAILABLE', fanout)
+
+    def test_clock_drc_command_failure_is_not_optional(self):
+        self.tool.write_text("#!/usr/bin/env python3\nimport os,sys\nfrom pathlib import Path\nos.environ['NPC_MOCK_CLOCK_DRC_COMMAND_ERROR']='1'\nmock=Path(os.environ['NPC_FLOW_SNAPSHOT'])/'04_tests/eda_mock.tcl'\nos.execvp('tclsh',['tclsh',str(mock),sys.argv[-1]])\n")
+        run = self.new_run()
+        with self.assertRaises(f.FlowError):
+            f.execute(run, 'syn')
+        self.assertIn('Injected clock DRC command failure', (run/'logs/syn.log').read_text())
+        self.assertFalse((run/'outputs/core.v').exists())
 
     def test_lost_fanout_or_clock_protection_stops_synthesis(self):
         for env, diagnostic in [('NPC_MOCK_DROP_SYN_FANOUT', 'Synthesis max_fanout missing'),

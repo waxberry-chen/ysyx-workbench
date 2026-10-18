@@ -192,8 +192,11 @@ top**, replacing the extra 0.075 pF capacitance target. This is a sum of library
 `fanout_load` weights, not necessarily 32 pins. All library capacitance and slew
 limits remain applicable to ordinary data/control nets. DC explicitly disables
 clock-network DRC fixing with `set_auto_disable_drc_nets -on_clock_network true`;
-the shared SDC retains ideal-clock timing. Pre/post compile checks read back the
-top fanout attribute and the clock source net's `auto_disable_drc_nets` flag.
+the shared SDC retains ideal-clock timing. Pre/post compile checks require the
+top fanout attribute to remain present. The clock source net's
+`auto_disable_drc_nets` flag is an optional query: DC 2023 reports it unavailable,
+so the report records `UNAVAILABLE`, not a verified true/false result. Check the
+mapped clock connectivity; failures of the policy command itself still stop the flow.
 PT continues to check the original SDC and library rules. Other high-fanout control
 nets, including reset, may change; compare area and timing after rerunning.
 See [fanout policy and clock handling](../../docs/notes/post-c/4-pre-soc-signoff/s3-capacitance-check.md#7-改用-max_fanout-32-并排除时钟-drc-修复).

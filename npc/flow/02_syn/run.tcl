@@ -37,7 +37,9 @@ if {[catch {
     # 当前无 CTS/gating，SDC 保持 ideal clock 和指定 slew/uncertainty。
     # 只关闭 clock network 的 DRC 修复，不理想化 reset 或 LSU req_fire。
     set_auto_disable_drc_nets -on_clock_network true
-    # 赋值成功不等于属性保留：compile 前后读取顶层目标及 clk 源网络保护属性。
+    puts "NPC_SYN_CLOCK_DRC_POLICY: requested -on_clock_network true; verify mapped clock connectivity"
+    # 顶层 max_fanout 必须保留。clock net 属性在 DC 2023 实测不可查询，
+    # 仅作为可选诊断；UNAVAILABLE 不等于设置失败，也不等于已经验证保护生效。
     proc check_syn_fanout_policy {phase expected} {
         global top
         set design [current_design]
@@ -50,10 +52,11 @@ if {[catch {
         set clock_nets [get_nets -of_objects [get_ports clk]]
         if {[sizeof_collection $clock_nets] == 0} {error "Clock source net missing at $phase"}
         foreach_in_collection net $clock_nets {
-            if {[catch {get_attribute $net auto_disable_drc_nets} disabled] ||
-                ![string is boolean -strict $disabled]} {
-                error "Clock DRC protection unavailable at $phase: [get_object_name $net]"
+            if {[catch {get_attribute -quiet $net auto_disable_drc_nets} disabled] || $disabled eq ""} {
+                puts "NPC_SYN_CLOCK_DRC: $phase net=[get_object_name $net] auto_disable_drc_nets=UNAVAILABLE; review clock connectivity"
+                continue
             }
+            if {![string is boolean -strict $disabled]} {error "Unexpected clock DRC attribute at $phase: $disabled"}
             if {!$disabled} {error "Clock DRC protection lost at $phase: [get_object_name $net]"}
             puts "NPC_SYN_CLOCK_DRC: $phase net=[get_object_name $net] auto_disable_drc_nets=$disabled"
         }
