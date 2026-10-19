@@ -15,6 +15,7 @@
 !/tests/b1_coverage_check.py
 !/tests/b1_waveforms.py
 !/tests/synthesis_scope_check.py
+!/tests/ysyx_soc_contract_check.py
 !/tests/isa_contract_test.py
 !*.f
 !.gitignore
