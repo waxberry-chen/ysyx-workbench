@@ -1,0 +1,592 @@
+{
+  "date": "2026-10-19",
+  "baseline_run": "npc/flow/build/core-tt-5ns-no-port-buffers",
+  "reproduction_run": "npc/flow/build/core-tt-5ns-s6-repro",
+  "baseline_manifest_sha256": "596f673bcf461ae92fb6217d75bc5d6c80469c35d540b24cd9d5b45f4984598e",
+  "reproduction_manifest_sha256": "1ceecd2fab1a022ae9611457006768cd4de9f865285af942988459ed8acde869",
+  "verified_counts": {
+    "inputs_per_run": 37,
+    "syn_artifacts_per_run": 23,
+    "sta_artifacts_per_run": 25,
+    "raw_archive_files": 52
+  },
+  "inputs_changed": [
+    "inputs/run.tcl"
+  ],
+  "run_tcl_equal_after_run_path_normalization": true,
+  "config_equal": true,
+  "external_input_hashes_equal": true,
+  "external_inputs_reread_locally": false,
+  "server_evidence": "frozen driver verify(run) before/after each successful stage; both stages COMPLETE exit 0; no separate inspect transcript supplied",
+  "git_dirty_explanation": "same recorded Makefile default SITE change in both runs; implementation and evaluated config unchanged",
+  "current_source_comparison": [
+    {
+      "path": "npc/flow/Makefile",
+      "snapshot_sha256": "5c179e809a431d6d5ec0887205c52c34b1463f25e1eeebf34af77186d36ad88c",
+      "current_sha256": "1418b3a5a2320ec633283883acd300bd4a9487a630c04706f2218289f7b69af8",
+      "equal": false
+    },
+    {
+      "path": "npc/flow/04_tests/test_flow.py",
+      "snapshot_sha256": "ac29e25bf5cf566857903e45d64e0802944fca8155468699abbaef2dfa0d2795",
+      "current_sha256": "ac29e25bf5cf566857903e45d64e0802944fca8155468699abbaef2dfa0d2795",
+      "equal": true
+    },
+    {
+      "path": "npc/flow/04_tests/sdc_check.tcl",
+      "snapshot_sha256": "e6833ed68a2a08b363a57e2f799da0b2cae2224e664b550e2c5d62c9ca65fe7e",
+      "current_sha256": "e6833ed68a2a08b363a57e2f799da0b2cae2224e664b550e2c5d62c9ca65fe7e",
+      "equal": true
+    },
+    {
+      "path": "npc/flow/04_tests/eda_mock.tcl",
+      "snapshot_sha256": "005d61439593503faf1c4fe1a323f5808b1b98cf5f12ac2cad28d9fc22cef262",
+      "current_sha256": "005d61439593503faf1c4fe1a323f5808b1b98cf5f12ac2cad28d9fc22cef262",
+      "equal": true
+    },
+    {
+      "path": "npc/flow/00_indata/constraints/core.sdc",
+      "snapshot_sha256": "63af4ff50972c2bffc53c1d706266da3b538027c3ae58f9a3acc361ba6f32688",
+      "current_sha256": "63af4ff50972c2bffc53c1d706266da3b538027c3ae58f9a3acc361ba6f32688",
+      "equal": true
+    },
+    {
+      "path": "npc/flow/00_indata/configs/npc_core.tcl",
+      "snapshot_sha256": "9f86f0e90ae97e732c6e472c778e73a85b1c10c50c995eaa36d7c71619ef4239",
+      "current_sha256": "9f86f0e90ae97e732c6e472c778e73a85b1c10c50c995eaa36d7c71619ef4239",
+      "equal": true
+    },
+    {
+      "path": "npc/flow/00_indata/configs/site.example.tcl",
+      "snapshot_sha256": "7c18afebe97914855677fe53a0dd28a9e1a4030fde6820e5d5df4f0457e76128",
+      "current_sha256": "7c18afebe97914855677fe53a0dd28a9e1a4030fde6820e5d5df4f0457e76128",
+      "equal": true
+    },
+    {
+      "path": "npc/flow/00_indata/filelists/core.f",
+      "snapshot_sha256": "78eb35ab7614d72a663fe17f8bb6cec175ae20b66b352ef0d3f84106b46b018d",
+      "current_sha256": "78eb35ab7614d72a663fe17f8bb6cec175ae20b66b352ef0d3f84106b46b018d",
+      "equal": true
+    },
+    {
+      "path": "npc/flow/02_syn/probe.tcl",
+      "snapshot_sha256": "434a59c8be8e73744c6f46195a6c384ac686615a888b7c109216275ae3a2bc9d",
+      "current_sha256": "434a59c8be8e73744c6f46195a6c384ac686615a888b7c109216275ae3a2bc9d",
+      "equal": true
+    },
+    {
+      "path": "npc/flow/02_syn/run.tcl",
+      "snapshot_sha256": "afa8266cb2929c28a0ea17fdfd071b2681368cae500e894c8bbf14e5264fad3e",
+      "current_sha256": "afa8266cb2929c28a0ea17fdfd071b2681368cae500e894c8bbf14e5264fad3e",
+      "equal": true
+    },
+    {
+      "path": "npc/flow/03_sta/run.tcl",
+      "snapshot_sha256": "b22f3f4b9f882956a0df8f073925dca88f10da936621a62d4e63b5f7a8bca746",
+      "current_sha256": "b22f3f4b9f882956a0df8f073925dca88f10da936621a62d4e63b5f7a8bca746",
+      "equal": true
+    },
+    {
+      "path": "npc/flow/01_common/capacitance.tcl",
+      "snapshot_sha256": "3d1af8e02dee11f9877949d0093b0edc62119a6987bc759ac6189badcf44d1e1",
+      "current_sha256": "3d1af8e02dee11f9877949d0093b0edc62119a6987bc759ac6189badcf44d1e1",
+      "equal": true
+    },
+    {
+      "path": "npc/flow/01_common/setup.tcl",
+      "snapshot_sha256": "85ee895c5f534ec89d5d13a4c162873e5d5cce01ae25b80d4dd37b183997d730",
+      "current_sha256": "85ee895c5f534ec89d5d13a4c162873e5d5cce01ae25b80d4dd37b183997d730",
+      "equal": true
+    },
+    {
+      "path": "npc/flow/01_common/config_dump.tcl",
+      "snapshot_sha256": "e6dbf4ba202391a3199fe2a152fa9766ad456e37988ab5ea9903eb7f81e28101",
+      "current_sha256": "e6dbf4ba202391a3199fe2a152fa9766ad456e37988ab5ea9903eb7f81e28101",
+      "equal": true
+    },
+    {
+      "path": "npc/flow/01_common/flow.py",
+      "snapshot_sha256": "204141d75d661dc463ae74fa3a2c8cf7afebe2ab8d9f9e2946eecbf971346856",
+      "current_sha256": "204141d75d661dc463ae74fa3a2c8cf7afebe2ab8d9f9e2946eecbf971346856",
+      "equal": true
+    },
+    {
+      "path": "npc/vsrc/bus/ysyx_lsu_axi4lite_adapter.sv",
+      "snapshot_sha256": "26a095bac629d1b0c94a3c691ab3edb46bf2286f45c664d7e1ba3255768b5a20",
+      "current_sha256": "26a095bac629d1b0c94a3c691ab3edb46bf2286f45c664d7e1ba3255768b5a20",
+      "equal": true
+    },
+    {
+      "path": "npc/vsrc/bus/ysyx_ifu_axi4lite_adapter.sv",
+      "snapshot_sha256": "3e1cfb51f0a844a9244fc0c900f0198ed33221d9eddf3bbda2c81c1c2d052988",
+      "current_sha256": "3e1cfb51f0a844a9244fc0c900f0198ed33221d9eddf3bbda2c81c1c2d052988",
+      "equal": true
+    },
+    {
+      "path": "npc/vsrc/bus/ysyx_axi4lite_arbiter.sv",
+      "snapshot_sha256": "799b5c5447a3872cfd50396ef963355ef0168b6240086b29f4bebbebd0f2c2c2",
+      "current_sha256": "799b5c5447a3872cfd50396ef963355ef0168b6240086b29f4bebbebd0f2c2c2",
+      "equal": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_alu.sv",
+      "snapshot_sha256": "cbe707eb49dbe9eb30ed8a496dc628866eb4f888a1210d77f3ceef0374f470a1",
+      "current_sha256": "cbe707eb49dbe9eb30ed8a496dc628866eb4f888a1210d77f3ceef0374f470a1",
+      "equal": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_idu.sv",
+      "snapshot_sha256": "a798f56deb77174611b71f26c0ac942629b0e067b67040bf03638c3020414a5a",
+      "current_sha256": "a798f56deb77174611b71f26c0ac942629b0e067b67040bf03638c3020414a5a",
+      "equal": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_exu.sv",
+      "snapshot_sha256": "78900f7a8c9d4000b10fe9f2b976feb82a4ba425ca1ea7a5bc8bae4f5d540f32",
+      "current_sha256": "78900f7a8c9d4000b10fe9f2b976feb82a4ba425ca1ea7a5bc8bae4f5d540f32",
+      "equal": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_core.sv",
+      "snapshot_sha256": "0cd0589982a2343a648a07e37a008d2b0e2949dbc90c15e740f7d2b1b6f07181",
+      "current_sha256": "0cd0589982a2343a648a07e37a008d2b0e2949dbc90c15e740f7d2b1b6f07181",
+      "equal": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_opbuf.sv",
+      "snapshot_sha256": "11e6880f0b2118bacf9df9dcf0a4012dd6b3fd1192f02d490c46aa87d1cd7ae3",
+      "current_sha256": "11e6880f0b2118bacf9df9dcf0a4012dd6b3fd1192f02d490c46aa87d1cd7ae3",
+      "equal": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_gen_imm.sv",
+      "snapshot_sha256": "7b72f39d8bc17eee2ffb186d6183855c0075776a8505084e0204f147c6192d1a",
+      "current_sha256": "7b72f39d8bc17eee2ffb186d6183855c0075776a8505084e0204f147c6192d1a",
+      "equal": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_csr.sv",
+      "snapshot_sha256": "1742779d54d071fca71043afeaa687e219a22dca6fb092f84fd74aacc1a67e38",
+      "current_sha256": "1742779d54d071fca71043afeaa687e219a22dca6fb092f84fd74aacc1a67e38",
+      "equal": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_lsu.sv",
+      "snapshot_sha256": "1ec2463ade5aa1bd5c01a4dc15519be42be2d8104689c43579fcda81d2bd1654",
+      "current_sha256": "1ec2463ade5aa1bd5c01a4dc15519be42be2d8104689c43579fcda81d2bd1654",
+      "equal": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_regfile.sv",
+      "snapshot_sha256": "80c66dc0a1fcf39133e5287d9befe0670dceccc9f4237135b8c53ff310cc3eab",
+      "current_sha256": "80c66dc0a1fcf39133e5287d9befe0670dceccc9f4237135b8c53ff310cc3eab",
+      "equal": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_ifu.sv",
+      "snapshot_sha256": "d605a85513dbad82bfc7ff67707ea2ddd891ae7fe516ec5fdf40b64830099759",
+      "current_sha256": "d605a85513dbad82bfc7ff67707ea2ddd891ae7fe516ec5fdf40b64830099759",
+      "equal": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_branch.sv",
+      "snapshot_sha256": "6cc2d908aeb37572de4cb026a578a452d46ca3e11d59be69d6023e29d2195537",
+      "current_sha256": "6cc2d908aeb37572de4cb026a578a452d46ca3e11d59be69d6023e29d2195537",
+      "equal": true
+    },
+    {
+      "path": "npc/vsrc/gnrl/ysyx_global.sv",
+      "snapshot_sha256": "39dc2658d350ab8293953b819346339cac640f377b4bfa3bec30ed5b9828d2f9",
+      "current_sha256": "39dc2658d350ab8293953b819346339cac640f377b4bfa3bec30ed5b9828d2f9",
+      "equal": true
+    },
+    {
+      "path": "npc/vsrc/gnrl/ysyx_gnrl_primitive.sv",
+      "snapshot_sha256": "69e7f79f3636533b0d10016fd04097dbdf92c13f342c7e12c0f25402188f7c15",
+      "current_sha256": "69e7f79f3636533b0d10016fd04097dbdf92c13f342c7e12c0f25402188f7c15",
+      "equal": true
+    },
+    {
+      "path": "npc/vsrc/top/ysyx_core_axi4lite.sv",
+      "snapshot_sha256": "af1ca045a20f6780ef0e030b9cd8a60459bade4c9f4d80c9c80b15ed43b96d5a",
+      "current_sha256": "af1ca045a20f6780ef0e030b9cd8a60459bade4c9f4d80c9c80b15ed43b96d5a",
+      "equal": true
+    }
+  ],
+  "stage_results_equal": true,
+  "report_only_inspect_stage_reparsed": true,
+  "reports": {
+    "reports/syn/complete.txt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "6c66dc55a113e692c9b2e3f299f773d2b96d6121909ea049633911d7371edd89",
+      "raw_equal": true
+    },
+    "reports/syn/environment/version.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "a9ae53b7befd951ea229317e14b61dcc3d6aa386a2e8e9e28967812b26b84288",
+      "raw_equal": true
+    },
+    "reports/syn/environment/library_gtech.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "b757f0a4a9d4396907fc81f48f2877d365b70b781672dfc37e82f46085d20e08",
+      "raw_equal": false
+    },
+    "reports/syn/environment/library_tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "529ea4672765492a3a0e0c9edbff0716978d4195773507121b26d62665c5da21",
+      "raw_equal": false
+    },
+    "reports/syn/environment/library_standard.sldb.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "f9810d98edc186f37516c7e71e537204a670d734684f2aefe3c1783e4d567e09",
+      "raw_equal": false
+    },
+    "reports/syn/environment/design.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "66b1940fafc399ccf22967b2692a7013b3bfdb4d13b5503be90ae96e6d83d3c7",
+      "raw_equal": false
+    },
+    "reports/syn/summary/qor.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n",
+        "(?m)^\\s*(?:Logic Optimization|Mapping Optimization|Overall Compile Time|Overall Compile Wall Clock Time):[^\\n]*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "86920e0ef0c671dfe67b253dc48a6dd850f9943a3e33898cdf6a90ad0be1c521",
+      "raw_equal": false
+    },
+    "reports/syn/checks/check_design_pre.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "bbc18528f7a4eb743e7655886321108df029f8ad99cee63e97e7969eeb4d6255",
+      "raw_equal": false
+    },
+    "reports/syn/checks/check_design_post.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "8123b75d728be990828b15a5a1cf0d2454d2fbf2bf8c220aea59bc026b60b3fd",
+      "raw_equal": false
+    },
+    "reports/syn/checks/high_fanout.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "b210c823e50c7ac3794ebb3e68b6d97d56f262d972f5bd36a8cfc4c61bb82875",
+      "raw_equal": false
+    },
+    "reports/syn/checks/check_timing.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "b90bc9dd0132dab9ebfb150ffc4a7591fe109ea75d4063faeee4fd0f8e7bdc34",
+      "raw_equal": true
+    },
+    "reports/syn/checks/constraint_violations.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "6a74a30949d08151f0ac8bc4db43fd4970949a15799898485b0aeb1cb3b91821",
+      "raw_equal": false
+    },
+    "reports/syn/checks/lsu_enable_capacitance.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "3ca8fc8f43e45315fc5726372f14c9fa7ee6ff6d83b8aab7364bdd6cc4abd5f2",
+      "raw_equal": false
+    },
+    "reports/syn/timing/timing_max.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "823d6a3efa62d06463bd32af97a87712b6b6059769efb35a19513c1a585dbcb7",
+      "raw_equal": false
+    },
+    "reports/syn/timing/timing_min.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "47171acb5ba763377551a9fc98fa2935e9d078a226606354b27eaa4e47b0e77d",
+      "raw_equal": false
+    },
+    "reports/syn/area/area.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "b3ffe6a55a5f460b16042846e8ca48c4500d640fc39ab60169cc7302d54908a9",
+      "raw_equal": false
+    },
+    "reports/syn/area/resources.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "e437e314913e3be57d83b4f2a093a107284c1f91c7220656f92c7cd5ccd94948",
+      "raw_equal": false
+    },
+    "reports/syn/area/references.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "64ded5bc8eacff7de49f8b18527e02fa577520e25e45d542583e3320949a8de0",
+      "raw_equal": false
+    },
+    "reports/syn/power/power_status.txt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "f81febf00488729ee9a772bbfe522514961d35cfb2f551030749a48d4daf9cf7",
+      "raw_equal": true
+    },
+    "reports/sta/complete.txt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "011f8e831e12b897cb364cd1aaf3515b8fa8403c78309d1f44a2d299ba552cfd",
+      "raw_equal": true
+    },
+    "reports/sta/environment/version.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "88e56c41c2e2a9af3422664cbfc10104666065d21ca8bb552d541db0214bef0f",
+      "raw_equal": true
+    },
+    "reports/sta/environment/library_tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "85b4069d86c05d1629748bbc3c323f2e570dc9aa858b4f6a84e5dd2f067fc241",
+      "raw_equal": false
+    },
+    "reports/sta/environment/units.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "4d59d37392f52b6ed82e5f4d18ef8fa01566bed798aefb22f1feecfe7cc54365",
+      "raw_equal": false
+    },
+    "reports/sta/environment/design.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "8b252da5a74b08d92804c10780308f74dc3fabecbe005fdd680feef7e081ddb9",
+      "raw_equal": false
+    },
+    "reports/sta/environment/wire_load.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "4f8eaaf5efd431fb833fe4586c8cd2808b4f6c50f7225835ed0ec28196aa81fc",
+      "raw_equal": false
+    },
+    "reports/sta/checks/check_timing.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "c523fb9da6f6cbb39ec056e06ddb033286dc80b2cfd93352c7faa3c41db4c994",
+      "raw_equal": true
+    },
+    "reports/sta/checks/coverage.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "0c421da8a9983f353923f647aafc296c8077323e3343eaf8e32a0d34d5c2f70b",
+      "raw_equal": false
+    },
+    "reports/sta/checks/coverage_untested.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "7d73a05c7537e1a5db785de2ba8de5963872e4f520649a0650b41ed4327e5dd1",
+      "raw_equal": false
+    },
+    "reports/sta/checks/disable_timing.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "ae494cf260d5a4ccf45963f50eaca0e76cbcbe734ce8e047b0419fd9523a7ff2",
+      "raw_equal": false
+    },
+    "reports/sta/checks/constraint_violations.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "a5af08caef864a735581996ea3a000f833a43cbf0092c205a48c9fb4bff88b65",
+      "raw_equal": false
+    },
+    "reports/sta/checks/lsu_enable_capacitance.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "44eae4346dd8aafd08e66dd71ca578c1e3325cab72df034c15171277eed9630d",
+      "raw_equal": false
+    },
+    "reports/sta/timing/timing_max.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "1e6748b893dcedc96184614144734b86cfbe357ec71fe93a35788380958b3fe2",
+      "raw_equal": false
+    },
+    "reports/sta/timing/metrics_max.tsv": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "50b199a07257cfd0b84d201c755bd476ced9871e470baf72b1419a0ceae1e33c",
+      "raw_equal": true
+    },
+    "reports/sta/timing/Reg2Reg_max.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "5beb1ba4944049915c8d5c573cbd5562e21233dac094859e7cc444a87f97c37a",
+      "raw_equal": false
+    },
+    "reports/sta/timing/In2Reg_max.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "3903ed866bed4f99e4105ffa29caeea69b7a5250f2a07c5a12709fa0a62689cb",
+      "raw_equal": false
+    },
+    "reports/sta/timing/Reg2Out_max.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "a7c0276ba5d8c2b84cf61d07e4b9003f9b8f27ff73413bec34f6d419a2fa1e3b",
+      "raw_equal": false
+    },
+    "reports/sta/timing/In2Out_max.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "ee1be7859ae5dfc65cc1baa33088bde8d7b14c79d9290cbaf9b488810f69f9a8",
+      "raw_equal": false
+    },
+    "reports/sta/timing/timing_min.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "101e2b433ea3a80bb63fabf2039b5db2f9a2d77be97f636b9e7f0cc0807c6dee",
+      "raw_equal": false
+    },
+    "reports/sta/timing/metrics_min.tsv": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "50b199a07257cfd0b84d201c755bd476ced9871e470baf72b1419a0ceae1e33c",
+      "raw_equal": true
+    },
+    "reports/sta/timing/Reg2Reg_min.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "8932e408cab286abc8ebb8636dd1b7aa3dafb3e1425ba3538504eebb36d4871c",
+      "raw_equal": false
+    },
+    "reports/sta/timing/In2Reg_min.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "caf78aabb9a9532ae935d988faef572be10df4476909bd1d9617222b78669b01",
+      "raw_equal": false
+    },
+    "reports/sta/timing/Reg2Out_min.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "3d2191b1e42e43767cf42abfe17daf34ec7b99c7bc1a689b9c8512adc0240cd8",
+      "raw_equal": false
+    },
+    "reports/sta/timing/In2Out_min.rpt": {
+      "normalization_patterns": [
+        "(?m)^Date\\s*:.*\\n"
+      ],
+      "equal": true,
+      "normalized_sha256": "80011cb522d7fa133c673a168d637dee54d382196c447f1f019a03cacb971b6e",
+      "raw_equal": false
+    }
+  },
+  "outputs": {
+    "core.v": {
+      "normalization_pattern": "(?m)^// Date\\s*:.*\\n",
+      "equal": true,
+      "normalized_sha256": "0d7f24012fe070ec327d67f40540dacaba0784027249ffeb4e08cd0fa9a6304d",
+      "old_raw_sha256": "26baff53dd4a71dc0d96e4d8a22e55cd1b7a141ef181f5dbdc8726ab7cae9ec3",
+      "new_raw_sha256": "071a806412dde42272d149bd6f9eaebf27584fa68e52b4c69dc2fd5853208d06"
+    },
+    "dc.sdc": {
+      "normalization_pattern": "(?m)^# Created by write_sdc on .*\\n",
+      "equal": true,
+      "normalized_sha256": "42089f5fd974f6fa1decb3b5340b27b0f7fce6d58d6c402588afc0bcd5fe4228",
+      "old_raw_sha256": "adb50abdd856576415630792555f13bed2f3db727a3ab5b9d7143a2fd010221e",
+      "new_raw_sha256": "84578905e0b1f9af75db9231c9ea0162d78100d3d40d4b0dd18c4cd0842971c2"
+    },
+    "core.ddc": {
+      "raw_equal": false,
+      "old_raw_sha256": "e5e48af9c85b7a682fb3e48b728789623b22a923f76712ab51d143912fdd685a",
+      "new_raw_sha256": "df25877bc9f69bc5ca3d0b7635648148e0122e63c580933ed1eb0581e19da4b4",
+      "semantic_comparison": "NOT_PERFORMED; no local EDA; mapped Verilog and exported SDC compared separately"
+    }
+  },
+  "warning_sets_equal": {
+    "syn": true,
+    "sta": true
+  },
+  "decision": "S6_ACCEPTED_WITH_EXISTING_SCOPE; reset deferred; no power/physical signoff"
+}

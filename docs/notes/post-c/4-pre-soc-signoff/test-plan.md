@@ -1,6 +1,8 @@
 # M4 验收矩阵
 
-2026-10-18：[04 基线](synthesis-results/04-200mhz-baseline/README.md)已完成当前范围的 I01/I02/I03/I06/I07/I08 审查。DC/PT 无约束违例，PT setup/hold slack +0.596843/+0.008754 ns；coverage 的 9450 untested 分为 9426 reset deferred 和 24 个 mtvec[1:0] 常量条件禁用，未留下未解释的功能端点。I04/I05/I13 沿用 S2.5 同版本 RTL 证据（本次 17 份 RTL hash 相同），未声称重跑。I11 未评估；I09/I10 延后。I12 已保存 04 的 51 份原始归档，S6 最终复现/交接仍待完成。详见 [S3 结果](3-synthesis-sta.md)。
+2026-10-18：[04 基线](synthesis-results/04-200mhz-baseline/README.md)已完成当前范围的 I01/I02/I03/I06/I07/I08 审查。DC/PT 无约束违例，PT setup/hold slack +0.596843/+0.008754 ns；coverage 的 9450 untested 分为 9426 reset deferred 和 24 个 mtvec[1:0] 常量条件禁用，未留下未解释的功能端点。I04/I05/I13 沿用 S2.5 同版本 RTL 证据（本次 17 份 RTL hash 相同），未声称重跑。I11 未评估；I09/I10 延后。I12 当时已保存 04 的 51 份原始归档；后续 S6 完成状态见下文。详见 [S3 结果](3-synthesis-sta.md)。
+
+2026-10-19：[S6 本地验收](6-reproduction.md)重新执行 I05/I13、四组 scope/lint 和 flow 44 项测试，全部通过；17 份 RTL 与 04 快照相同。[05 服务器独立复现](synthesis-results/05-s6-reproduction/README.md)已返回并通过对照：面积、路径、coverage、负载与告警均一致，输入/产物 hash 自洽，原始证据已归档。**I12 关闭，S6 与 [M4 本轮总验收](signoff.md)通过。**
 
 后续 run 的 I04/I06/I08 范围更新：按用户决定，reset 时序作为 [明确的 deferred 项](reset-timing-todo.md)，不将脉宽或 recovery/removal 声称为 PASS。审核 false path 只匹配 rst_n，数据预算和其他检查完整；实际库脉宽/释放约束留待 reset 机制明确后补齐。03 的历史 coverage 数值保留，下一轮必须核对真实覆盖变化。
 
@@ -18,7 +20,7 @@
 | I10（延后） | 功能网表 smoke | 匹配 stdcell 模型；相同 AXI 环境/有限程序下 RTL/网表 commit PC/inst、异常、内存副作用结果一致；不得访问已经优化掉的内部 regfile 层次来“证明通过” | 延后，非本轮出口 |
 | I11（附带） | DC report_power 粗估 | PVT/频率/load/互连模型、活动假设/单位/来源可追溯；记录 internal/switching/leakage/total 与 warning；无 workload 数据，不声称实际程序功耗；不可用时记未评估，不阻塞 I07/I08 | S3 |
 | I13 | ISA 与异常契约 | 16 项 GPR/M 移除、独立译码 oracle、97 个预期非法 trap、六种 CSR 与 WARL、LSU 无副作用及 wrong-path；双平台通过，边界见 S2.5 报告 | S2.5（本地通过） |
-| I12 | 可复现归档 | 干净 run 复现；失败退出码 + 工具错误/报告检查；版本/配置/输入输出 hash 和原始报告归档；Q&A 与结果边界一致 | S6 |
+| I12（已通过） | 可复现归档 | 干净 run 复现；失败退出码 + 工具错误/报告检查；版本/配置/输入输出 hash 和原始报告归档；Q&A 与结果边界一致 | S6 |
 
 本轮不搭建四值、GLS、FM 或 PTPX 流程；I09/I10 保留后续验证需求，不纳入本轮通过率。DC/PT 的面积/时序报告不能代替等价验证、X 检查或网表 smoke。
 

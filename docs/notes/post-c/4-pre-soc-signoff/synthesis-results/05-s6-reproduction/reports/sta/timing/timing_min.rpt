@@ -1,0 +1,615 @@
+****************************************
+Report : timing
+	-path_type full
+	-delay_type min
+	-slack_lesser_than 1000000015047466219876688855040.000000
+	-max_paths 20
+	-sort_by slack
+Design : ysyx_core_axi4lite
+Version: T-2022.03-SP5
+Date   : Mon Oct 19 19:14:17 2026
+****************************************
+
+
+  Startpoint: core/u_lsu/req_addr_q_reg_14_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_lsu_axi4lite_adapter/request_addr_q_reg_14_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                       Incr       Path
+  ------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                              0.000000   0.000000
+  clock network delay (ideal)                                                             0.000000   0.000000
+  core/u_lsu/req_addr_q_reg_14_/CP (EDFCNQD1BWP12T40P140)                                 0.000000   0.000000 r
+  core/u_lsu/req_addr_q_reg_14_/Q (EDFCNQD1BWP12T40P140)                                  0.071387   0.071387 f
+  core/u_lsu_axi4lite_adapter/request_addr_q_reg_14_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                  0.071387
+
+  clock core_clk (rise edge)                                                              0.000000   0.000000
+  clock network delay (ideal)                                                             0.000000   0.000000
+  clock reconvergence pessimism                                                           0.000000   0.000000
+  clock uncertainty                                                                       0.050000   0.050000
+  core/u_lsu_axi4lite_adapter/request_addr_q_reg_14_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                       0.012632   0.062632
+  data required time                                                                                 0.062632
+  ------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                 0.062632
+  data arrival time                                                                                  -0.071387
+  ------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                        0.008754
+
+
+  Startpoint: core/u_lsu/req_wdata_q_reg_22_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_lsu_axi4lite_adapter/request_wdata_q_reg_22_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                        Incr       Path
+  -------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                               0.000000   0.000000
+  clock network delay (ideal)                                                              0.000000   0.000000
+  core/u_lsu/req_wdata_q_reg_22_/CP (EDFCNQD1BWP12T40P140)                                 0.000000   0.000000 r
+  core/u_lsu/req_wdata_q_reg_22_/Q (EDFCNQD1BWP12T40P140)                                  0.071387   0.071387 f
+  core/u_lsu_axi4lite_adapter/request_wdata_q_reg_22_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                   0.071387
+
+  clock core_clk (rise edge)                                                               0.000000   0.000000
+  clock network delay (ideal)                                                              0.000000   0.000000
+  clock reconvergence pessimism                                                            0.000000   0.000000
+  clock uncertainty                                                                        0.050000   0.050000
+  core/u_lsu_axi4lite_adapter/request_wdata_q_reg_22_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                        0.012632   0.062632
+  data required time                                                                                  0.062632
+  -------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                  0.062632
+  data arrival time                                                                                   -0.071387
+  -------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                         0.008754
+
+
+  Startpoint: core/u_lsu/req_addr_q_reg_24_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_lsu_axi4lite_adapter/request_addr_q_reg_24_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                       Incr       Path
+  ------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                              0.000000   0.000000
+  clock network delay (ideal)                                                             0.000000   0.000000
+  core/u_lsu/req_addr_q_reg_24_/CP (EDFCNQD1BWP12T40P140)                                 0.000000   0.000000 r
+  core/u_lsu/req_addr_q_reg_24_/Q (EDFCNQD1BWP12T40P140)                                  0.071387   0.071387 f
+  core/u_lsu_axi4lite_adapter/request_addr_q_reg_24_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                  0.071387
+
+  clock core_clk (rise edge)                                                              0.000000   0.000000
+  clock network delay (ideal)                                                             0.000000   0.000000
+  clock reconvergence pessimism                                                           0.000000   0.000000
+  clock uncertainty                                                                       0.050000   0.050000
+  core/u_lsu_axi4lite_adapter/request_addr_q_reg_24_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                       0.012632   0.062632
+  data required time                                                                                 0.062632
+  ------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                 0.062632
+  data arrival time                                                                                  -0.071387
+  ------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                        0.008754
+
+
+  Startpoint: core/u_lsu/req_addr_q_reg_0_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_lsu_axi4lite_adapter/request_addr_q_reg_0_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                      Incr       Path
+  -----------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  core/u_lsu/req_addr_q_reg_0_/CP (EDFCNQD1BWP12T40P140)                                 0.000000   0.000000 r
+  core/u_lsu/req_addr_q_reg_0_/Q (EDFCNQD1BWP12T40P140)                                  0.071387   0.071387 f
+  core/u_lsu_axi4lite_adapter/request_addr_q_reg_0_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                 0.071387
+
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  clock reconvergence pessimism                                                          0.000000   0.000000
+  clock uncertainty                                                                      0.050000   0.050000
+  core/u_lsu_axi4lite_adapter/request_addr_q_reg_0_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                      0.012632   0.062632
+  data required time                                                                                0.062632
+  -----------------------------------------------------------------------------------------------------------------
+  data required time                                                                                0.062632
+  data arrival time                                                                                 -0.071387
+  -----------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                       0.008754
+
+
+  Startpoint: core/u_lsu/req_wdata_q_reg_8_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_lsu_axi4lite_adapter/request_wdata_q_reg_8_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                       Incr       Path
+  ------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                              0.000000   0.000000
+  clock network delay (ideal)                                                             0.000000   0.000000
+  core/u_lsu/req_wdata_q_reg_8_/CP (EDFCNQD1BWP12T40P140)                                 0.000000   0.000000 r
+  core/u_lsu/req_wdata_q_reg_8_/Q (EDFCNQD1BWP12T40P140)                                  0.071387   0.071387 f
+  core/u_lsu_axi4lite_adapter/request_wdata_q_reg_8_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                  0.071387
+
+  clock core_clk (rise edge)                                                              0.000000   0.000000
+  clock network delay (ideal)                                                             0.000000   0.000000
+  clock reconvergence pessimism                                                           0.000000   0.000000
+  clock uncertainty                                                                       0.050000   0.050000
+  core/u_lsu_axi4lite_adapter/request_wdata_q_reg_8_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                       0.012632   0.062632
+  data required time                                                                                 0.062632
+  ------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                 0.062632
+  data arrival time                                                                                  -0.071387
+  ------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                        0.008754
+
+
+  Startpoint: core/u_lsu/req_wdata_q_reg_13_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_lsu_axi4lite_adapter/request_wdata_q_reg_13_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                        Incr       Path
+  -------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                               0.000000   0.000000
+  clock network delay (ideal)                                                              0.000000   0.000000
+  core/u_lsu/req_wdata_q_reg_13_/CP (EDFCNQD1BWP12T40P140)                                 0.000000   0.000000 r
+  core/u_lsu/req_wdata_q_reg_13_/Q (EDFCNQD1BWP12T40P140)                                  0.071387   0.071387 f
+  core/u_lsu_axi4lite_adapter/request_wdata_q_reg_13_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                   0.071387
+
+  clock core_clk (rise edge)                                                               0.000000   0.000000
+  clock network delay (ideal)                                                              0.000000   0.000000
+  clock reconvergence pessimism                                                            0.000000   0.000000
+  clock uncertainty                                                                        0.050000   0.050000
+  core/u_lsu_axi4lite_adapter/request_wdata_q_reg_13_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                        0.012632   0.062632
+  data required time                                                                                  0.062632
+  -------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                  0.062632
+  data arrival time                                                                                   -0.071387
+  -------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                         0.008754
+
+
+  Startpoint: core/u_lsu/req_addr_q_reg_15_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_lsu_axi4lite_adapter/request_addr_q_reg_15_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                       Incr       Path
+  ------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                              0.000000   0.000000
+  clock network delay (ideal)                                                             0.000000   0.000000
+  core/u_lsu/req_addr_q_reg_15_/CP (EDFCNQD1BWP12T40P140)                                 0.000000   0.000000 r
+  core/u_lsu/req_addr_q_reg_15_/Q (EDFCNQD1BWP12T40P140)                                  0.071387   0.071387 f
+  core/u_lsu_axi4lite_adapter/request_addr_q_reg_15_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                  0.071387
+
+  clock core_clk (rise edge)                                                              0.000000   0.000000
+  clock network delay (ideal)                                                             0.000000   0.000000
+  clock reconvergence pessimism                                                           0.000000   0.000000
+  clock uncertainty                                                                       0.050000   0.050000
+  core/u_lsu_axi4lite_adapter/request_addr_q_reg_15_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                       0.012632   0.062632
+  data required time                                                                                 0.062632
+  ------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                 0.062632
+  data arrival time                                                                                  -0.071387
+  ------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                        0.008754
+
+
+  Startpoint: core/u_lsu/req_wdata_q_reg_23_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_lsu_axi4lite_adapter/request_wdata_q_reg_23_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                        Incr       Path
+  -------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                               0.000000   0.000000
+  clock network delay (ideal)                                                              0.000000   0.000000
+  core/u_lsu/req_wdata_q_reg_23_/CP (EDFCNQD1BWP12T40P140)                                 0.000000   0.000000 r
+  core/u_lsu/req_wdata_q_reg_23_/Q (EDFCNQD1BWP12T40P140)                                  0.071387   0.071387 f
+  core/u_lsu_axi4lite_adapter/request_wdata_q_reg_23_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                   0.071387
+
+  clock core_clk (rise edge)                                                               0.000000   0.000000
+  clock network delay (ideal)                                                              0.000000   0.000000
+  clock reconvergence pessimism                                                            0.000000   0.000000
+  clock uncertainty                                                                        0.050000   0.050000
+  core/u_lsu_axi4lite_adapter/request_wdata_q_reg_23_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                        0.012632   0.062632
+  data required time                                                                                  0.062632
+  -------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                  0.062632
+  data arrival time                                                                                   -0.071387
+  -------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                         0.008754
+
+
+  Startpoint: core/u_lsu/req_addr_q_reg_25_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_lsu_axi4lite_adapter/request_addr_q_reg_25_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                       Incr       Path
+  ------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                              0.000000   0.000000
+  clock network delay (ideal)                                                             0.000000   0.000000
+  core/u_lsu/req_addr_q_reg_25_/CP (EDFCNQD1BWP12T40P140)                                 0.000000   0.000000 r
+  core/u_lsu/req_addr_q_reg_25_/Q (EDFCNQD1BWP12T40P140)                                  0.071387   0.071387 f
+  core/u_lsu_axi4lite_adapter/request_addr_q_reg_25_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                  0.071387
+
+  clock core_clk (rise edge)                                                              0.000000   0.000000
+  clock network delay (ideal)                                                             0.000000   0.000000
+  clock reconvergence pessimism                                                           0.000000   0.000000
+  clock uncertainty                                                                       0.050000   0.050000
+  core/u_lsu_axi4lite_adapter/request_addr_q_reg_25_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                       0.012632   0.062632
+  data required time                                                                                 0.062632
+  ------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                 0.062632
+  data arrival time                                                                                  -0.071387
+  ------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                        0.008754
+
+
+  Startpoint: core/u_lsu/req_addr_q_reg_1_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_lsu_axi4lite_adapter/request_addr_q_reg_1_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                      Incr       Path
+  -----------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  core/u_lsu/req_addr_q_reg_1_/CP (EDFCNQD1BWP12T40P140)                                 0.000000   0.000000 r
+  core/u_lsu/req_addr_q_reg_1_/Q (EDFCNQD1BWP12T40P140)                                  0.071387   0.071387 f
+  core/u_lsu_axi4lite_adapter/request_addr_q_reg_1_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                 0.071387
+
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  clock reconvergence pessimism                                                          0.000000   0.000000
+  clock uncertainty                                                                      0.050000   0.050000
+  core/u_lsu_axi4lite_adapter/request_addr_q_reg_1_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                      0.012632   0.062632
+  data required time                                                                                0.062632
+  -----------------------------------------------------------------------------------------------------------------
+  data required time                                                                                0.062632
+  data arrival time                                                                                 -0.071387
+  -----------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                       0.008754
+
+
+  Startpoint: core/u_lsu/req_wdata_q_reg_9_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_lsu_axi4lite_adapter/request_wdata_q_reg_9_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                       Incr       Path
+  ------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                              0.000000   0.000000
+  clock network delay (ideal)                                                             0.000000   0.000000
+  core/u_lsu/req_wdata_q_reg_9_/CP (EDFCNQD1BWP12T40P140)                                 0.000000   0.000000 r
+  core/u_lsu/req_wdata_q_reg_9_/Q (EDFCNQD1BWP12T40P140)                                  0.071387   0.071387 f
+  core/u_lsu_axi4lite_adapter/request_wdata_q_reg_9_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                  0.071387
+
+  clock core_clk (rise edge)                                                              0.000000   0.000000
+  clock network delay (ideal)                                                             0.000000   0.000000
+  clock reconvergence pessimism                                                           0.000000   0.000000
+  clock uncertainty                                                                       0.050000   0.050000
+  core/u_lsu_axi4lite_adapter/request_wdata_q_reg_9_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                       0.012632   0.062632
+  data required time                                                                                 0.062632
+  ------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                 0.062632
+  data arrival time                                                                                  -0.071387
+  ------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                        0.008754
+
+
+  Startpoint: core/u_lsu/req_wdata_q_reg_14_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_lsu_axi4lite_adapter/request_wdata_q_reg_14_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                        Incr       Path
+  -------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                               0.000000   0.000000
+  clock network delay (ideal)                                                              0.000000   0.000000
+  core/u_lsu/req_wdata_q_reg_14_/CP (EDFCNQD1BWP12T40P140)                                 0.000000   0.000000 r
+  core/u_lsu/req_wdata_q_reg_14_/Q (EDFCNQD1BWP12T40P140)                                  0.071387   0.071387 f
+  core/u_lsu_axi4lite_adapter/request_wdata_q_reg_14_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                   0.071387
+
+  clock core_clk (rise edge)                                                               0.000000   0.000000
+  clock network delay (ideal)                                                              0.000000   0.000000
+  clock reconvergence pessimism                                                            0.000000   0.000000
+  clock uncertainty                                                                        0.050000   0.050000
+  core/u_lsu_axi4lite_adapter/request_wdata_q_reg_14_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                        0.012632   0.062632
+  data required time                                                                                  0.062632
+  -------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                  0.062632
+  data arrival time                                                                                   -0.071387
+  -------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                         0.008754
+
+
+  Startpoint: core/u_lsu/req_addr_q_reg_16_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_lsu_axi4lite_adapter/request_addr_q_reg_16_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                       Incr       Path
+  ------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                              0.000000   0.000000
+  clock network delay (ideal)                                                             0.000000   0.000000
+  core/u_lsu/req_addr_q_reg_16_/CP (EDFCNQD1BWP12T40P140)                                 0.000000   0.000000 r
+  core/u_lsu/req_addr_q_reg_16_/Q (EDFCNQD1BWP12T40P140)                                  0.071387   0.071387 f
+  core/u_lsu_axi4lite_adapter/request_addr_q_reg_16_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                  0.071387
+
+  clock core_clk (rise edge)                                                              0.000000   0.000000
+  clock network delay (ideal)                                                             0.000000   0.000000
+  clock reconvergence pessimism                                                           0.000000   0.000000
+  clock uncertainty                                                                       0.050000   0.050000
+  core/u_lsu_axi4lite_adapter/request_addr_q_reg_16_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                       0.012632   0.062632
+  data required time                                                                                 0.062632
+  ------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                 0.062632
+  data arrival time                                                                                  -0.071387
+  ------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                        0.008754
+
+
+  Startpoint: core/u_lsu/req_wdata_q_reg_24_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_lsu_axi4lite_adapter/request_wdata_q_reg_24_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                        Incr       Path
+  -------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                               0.000000   0.000000
+  clock network delay (ideal)                                                              0.000000   0.000000
+  core/u_lsu/req_wdata_q_reg_24_/CP (EDFCNQD1BWP12T40P140)                                 0.000000   0.000000 r
+  core/u_lsu/req_wdata_q_reg_24_/Q (EDFCNQD1BWP12T40P140)                                  0.071387   0.071387 f
+  core/u_lsu_axi4lite_adapter/request_wdata_q_reg_24_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                   0.071387
+
+  clock core_clk (rise edge)                                                               0.000000   0.000000
+  clock network delay (ideal)                                                              0.000000   0.000000
+  clock reconvergence pessimism                                                            0.000000   0.000000
+  clock uncertainty                                                                        0.050000   0.050000
+  core/u_lsu_axi4lite_adapter/request_wdata_q_reg_24_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                        0.012632   0.062632
+  data required time                                                                                  0.062632
+  -------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                  0.062632
+  data arrival time                                                                                   -0.071387
+  -------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                         0.008754
+
+
+  Startpoint: core/u_lsu/req_addr_q_reg_26_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_lsu_axi4lite_adapter/request_addr_q_reg_26_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                       Incr       Path
+  ------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                              0.000000   0.000000
+  clock network delay (ideal)                                                             0.000000   0.000000
+  core/u_lsu/req_addr_q_reg_26_/CP (EDFCNQD1BWP12T40P140)                                 0.000000   0.000000 r
+  core/u_lsu/req_addr_q_reg_26_/Q (EDFCNQD1BWP12T40P140)                                  0.071387   0.071387 f
+  core/u_lsu_axi4lite_adapter/request_addr_q_reg_26_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                  0.071387
+
+  clock core_clk (rise edge)                                                              0.000000   0.000000
+  clock network delay (ideal)                                                             0.000000   0.000000
+  clock reconvergence pessimism                                                           0.000000   0.000000
+  clock uncertainty                                                                       0.050000   0.050000
+  core/u_lsu_axi4lite_adapter/request_addr_q_reg_26_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                       0.012632   0.062632
+  data required time                                                                                 0.062632
+  ------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                 0.062632
+  data arrival time                                                                                  -0.071387
+  ------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                        0.008754
+
+
+  Startpoint: core/u_lsu/req_addr_q_reg_2_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_lsu_axi4lite_adapter/request_addr_q_reg_2_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                      Incr       Path
+  -----------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  core/u_lsu/req_addr_q_reg_2_/CP (EDFCNQD1BWP12T40P140)                                 0.000000   0.000000 r
+  core/u_lsu/req_addr_q_reg_2_/Q (EDFCNQD1BWP12T40P140)                                  0.071387   0.071387 f
+  core/u_lsu_axi4lite_adapter/request_addr_q_reg_2_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                 0.071387
+
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  clock reconvergence pessimism                                                          0.000000   0.000000
+  clock uncertainty                                                                      0.050000   0.050000
+  core/u_lsu_axi4lite_adapter/request_addr_q_reg_2_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                      0.012632   0.062632
+  data required time                                                                                0.062632
+  -----------------------------------------------------------------------------------------------------------------
+  data required time                                                                                0.062632
+  data arrival time                                                                                 -0.071387
+  -----------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                       0.008754
+
+
+  Startpoint: core/u_lsu/req_wdata_q_reg_15_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_lsu_axi4lite_adapter/request_wdata_q_reg_15_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                        Incr       Path
+  -------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                               0.000000   0.000000
+  clock network delay (ideal)                                                              0.000000   0.000000
+  core/u_lsu/req_wdata_q_reg_15_/CP (EDFCNQD1BWP12T40P140)                                 0.000000   0.000000 r
+  core/u_lsu/req_wdata_q_reg_15_/Q (EDFCNQD1BWP12T40P140)                                  0.071387   0.071387 f
+  core/u_lsu_axi4lite_adapter/request_wdata_q_reg_15_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                   0.071387
+
+  clock core_clk (rise edge)                                                               0.000000   0.000000
+  clock network delay (ideal)                                                              0.000000   0.000000
+  clock reconvergence pessimism                                                            0.000000   0.000000
+  clock uncertainty                                                                        0.050000   0.050000
+  core/u_lsu_axi4lite_adapter/request_wdata_q_reg_15_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                        0.012632   0.062632
+  data required time                                                                                  0.062632
+  -------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                  0.062632
+  data arrival time                                                                                   -0.071387
+  -------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                         0.008754
+
+
+  Startpoint: core/u_lsu/req_wdata_q_reg_0_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_lsu_axi4lite_adapter/request_wdata_q_reg_0_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                       Incr       Path
+  ------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                              0.000000   0.000000
+  clock network delay (ideal)                                                             0.000000   0.000000
+  core/u_lsu/req_wdata_q_reg_0_/CP (EDFCNQD1BWP12T40P140)                                 0.000000   0.000000 r
+  core/u_lsu/req_wdata_q_reg_0_/Q (EDFCNQD1BWP12T40P140)                                  0.071387   0.071387 f
+  core/u_lsu_axi4lite_adapter/request_wdata_q_reg_0_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                  0.071387
+
+  clock core_clk (rise edge)                                                              0.000000   0.000000
+  clock network delay (ideal)                                                             0.000000   0.000000
+  clock reconvergence pessimism                                                           0.000000   0.000000
+  clock uncertainty                                                                       0.050000   0.050000
+  core/u_lsu_axi4lite_adapter/request_wdata_q_reg_0_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                       0.012632   0.062632
+  data required time                                                                                 0.062632
+  ------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                 0.062632
+  data arrival time                                                                                  -0.071387
+  ------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                        0.008754
+
+
+  Startpoint: core/u_lsu/req_addr_q_reg_17_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_lsu_axi4lite_adapter/request_addr_q_reg_17_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                       Incr       Path
+  ------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                              0.000000   0.000000
+  clock network delay (ideal)                                                             0.000000   0.000000
+  core/u_lsu/req_addr_q_reg_17_/CP (EDFCNQD1BWP12T40P140)                                 0.000000   0.000000 r
+  core/u_lsu/req_addr_q_reg_17_/Q (EDFCNQD1BWP12T40P140)                                  0.071387   0.071387 f
+  core/u_lsu_axi4lite_adapter/request_addr_q_reg_17_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                  0.071387
+
+  clock core_clk (rise edge)                                                              0.000000   0.000000
+  clock network delay (ideal)                                                             0.000000   0.000000
+  clock reconvergence pessimism                                                           0.000000   0.000000
+  clock uncertainty                                                                       0.050000   0.050000
+  core/u_lsu_axi4lite_adapter/request_addr_q_reg_17_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                       0.012632   0.062632
+  data required time                                                                                 0.062632
+  ------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                 0.062632
+  data arrival time                                                                                  -0.071387
+  ------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                        0.008754
+
+
+  Startpoint: core/u_lsu/req_wdata_q_reg_25_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: core/u_lsu_axi4lite_adapter/request_wdata_q_reg_25_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                        Incr       Path
+  -------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                               0.000000   0.000000
+  clock network delay (ideal)                                                              0.000000   0.000000
+  core/u_lsu/req_wdata_q_reg_25_/CP (EDFCNQD1BWP12T40P140)                                 0.000000   0.000000 r
+  core/u_lsu/req_wdata_q_reg_25_/Q (EDFCNQD1BWP12T40P140)                                  0.071387   0.071387 f
+  core/u_lsu_axi4lite_adapter/request_wdata_q_reg_25_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                   0.071387
+
+  clock core_clk (rise edge)                                                               0.000000   0.000000
+  clock network delay (ideal)                                                              0.000000   0.000000
+  clock reconvergence pessimism                                                            0.000000   0.000000
+  clock uncertainty                                                                        0.050000   0.050000
+  core/u_lsu_axi4lite_adapter/request_wdata_q_reg_25_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                        0.012632   0.062632
+  data required time                                                                                  0.062632
+  -------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                  0.062632
+  data arrival time                                                                                   -0.071387
+  -------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                         0.008754
+
+Warning: report_timing has satisfied the max_paths criteria. There are 2040 further endpoints which have paths of interest with slack less than 1000000015047466219876688855040.000000 that were not considered when generating this report. (UITE-502)
+
+1

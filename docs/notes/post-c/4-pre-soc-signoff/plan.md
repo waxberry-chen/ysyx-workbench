@@ -1,6 +1,6 @@
 # M4 设计与验收计划
 
-> 2026-10-18；状态：S0/S1、S2 与 S2.5 完成；[S3 范围内基线成立](3-synthesis-sta.md)，04 在 TT / 200 MHz 下 DC/PT 无违例，reset deferred 与常量条件禁用已分类。S6 最终复现/交接待完成；原 S4/S5 延后。
+> 2026-10-19；状态：S0/S1、S2 与 S2.5 完成；[S3 范围内基线成立](3-synthesis-sta.md)，04 在 TT / 200 MHz 下 DC/PT 无违例，reset deferred 与常量条件禁用已分类。2026-10-19：[S6 本地回归与服务器独立复现通过](6-reproduction.md)，[M4 本轮验收完成](signoff.md)，下一步 M5；原 S4/S5 延后。
 > 初始规划输入 HEAD：`0fe53bfcdbb1193b94415a9bb8382bcd7d71b4cf`；S1 输入 HEAD 与修改/验证记录见 [S1 综合范围](1-synthesis-scope.md)。ref-flow 保持原样。
 > 配套：[手册检索入口](manual-index.md)、[参考审查](0-ref-flow-review.md)、[缺失 flow 脚本说明](missing-inputs.md)、[流程图与输入输出](0-flow-map.md)、[验收矩阵](test-plan.md)、[总路线](../roadmap.md)。
 
@@ -38,7 +38,7 @@
 | S3 综合与 STA 基线（本轮范围已验收） | DC 分析/展开/映射，导出网表/SDC/DDC；PT 读同一网表和库，ideal clock，无 SPEF；报告 max/min、约束覆盖、area/关键路径 | **正式面积与时序基线**；先完成 S2.5 并通过下述基线准备审查；link 无未解析引用，无非预期 latch/环/未约束功能端点；WNS/TNS 如实记录，未达标实验先归档为诊断结果，不自动提升为正式基线或 timing PASS |
 | S4 四值与网表 smoke（延后） | 原计划保留为后续验证方向，本轮不搭建四值/门级仿真环境 | 不作为本轮 DC/PT 基线出口；未执行状态明确保留，不能声称网表等价或 X 验证通过 |
 | S5 活动与 PTPX（延后） | 本轮不生成功耗专用 VCD/SAIF、不建 PTPX flow；DC 简要估算并入 S3 | 不作为本轮出口；后续有具体低功耗优化问题时再启动 |
-| S6 基线归档 | 固化相关 RTL 回归、synth/STA 入口，复查 warning/waiver，归档 manifest、报告、指标、Q&A | 面积/时序基线可复现；DC 功耗为附带估算，可标记不支持/未评估；不要求完成原 S4/S5 |
+| S6 基线归档（本轮范围已验收） | 固化相关 RTL 回归、synth/STA 入口，复查 warning/waiver，归档 manifest、报告、指标、Q&A | 面积/时序基线可复现；DC 功耗为附带估算，可标记不支持/未评估；不要求完成原 S4/S5 |
 
 保留 S3–S6 原编号，以 S2.5 插入新增步骤；当前执行链为 **S0 → S1 → S2 → S2.5 → S3 → S6**。S0/S2 本地蒸馏不等待工艺文件补拷，库路径沿用服务器配置；服务器执行前核对 DC/PT 和对应逻辑库。四值/GLS/PTPX 工具与单元仿真模型不再构成本轮依赖。首次评估的主体为面积与时序，不承诺完整 PPA 或物理实现 sign-off。
 

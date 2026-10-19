@@ -1,0 +1,279 @@
+make: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+make NPC_PLATFORM=legacy lint
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+verilator --lint-only --sv -Wall -Wno-fatal -F /home/cym/prj/ysyx-workbench/npc/filelist.f --top-module ysyx_core
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/./vsrc/core/ysyx_gen_imm.sv:12:49: Bits of signal are not used: 'inst'[6:0]
+                                                                                         : ... In instance ysyx_core.u_decode_imm
+   12 |         input                   [31 : 0]        inst,
+      |                                                 ^~~~
+                       ... For warning description see https://verilator.org/warn/UNUSEDSIGNAL?v=5.008
+                       ... Use "/* verilator lint_off UNUSEDSIGNAL */" and lint_on around source to disable this message.
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make NPC_PLATFORM=b1 lint
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+verilator --lint-only --sv -Wall -Wno-fatal -F /home/cym/prj/ysyx-workbench/npc/filelist-b1.f --top-module ysyx_b1_top
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/./vsrc/core/ysyx_gen_imm.sv:12:49: Bits of signal are not used: 'inst'[6:0]
+                                                                                         : ... In instance ysyx_b1_top.cpu.core.u_decode_imm
+   12 |         input                   [31 : 0]        inst,
+      |                                                 ^~~~
+                       ... For warning description see https://verilator.org/warn/UNUSEDSIGNAL?v=5.008
+                       ... Use "/* verilator lint_off UNUSEDSIGNAL */" and lint_on around source to disable this message.
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make NPC_PLATFORM=b1 LINT_TOP=ysyx_core_axi4lite lint
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+verilator --lint-only --sv -Wall -Wno-fatal -F /home/cym/prj/ysyx-workbench/npc/filelist-b1.f --top-module ysyx_core_axi4lite
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/./vsrc/core/ysyx_gen_imm.sv:12:49: Bits of signal are not used: 'inst'[6:0]
+                                                                                         : ... In instance ysyx_core_axi4lite.core.u_decode_imm
+   12 |         input                   [31 : 0]        inst,
+      |                                                 ^~~~
+                       ... For warning description see https://verilator.org/warn/UNUSEDSIGNAL?v=5.008
+                       ... Use "/* verilator lint_off UNUSEDSIGNAL */" and lint_on around source to disable this message.
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make b1-directed-regress
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+make b1-arbiter-test b1-xbar-test b1-xbar-config-test b1-slaves-test b1-slaves-config-test b1-redirect-test ifu-axi4lite-adapter-integ-test
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+verilator --lint-only --sv -Wall --assert -Wno-SYNCASYNCNET \
+	--top-module ysyx_axi4lite_arbiter /home/cym/prj/ysyx-workbench/npc/vsrc/bus/ysyx_axi4lite_arbiter.sv
+verilator --cc --exe --build --assert --sv -Wall -Wno-SYNCASYNCNET \
+	--top-module ysyx_axi4lite_arbiter --Mdir /home/cym/prj/ysyx-workbench/npc/build/b1-arbiter-test \
+	-CFLAGS '-std=c++14 -Wall -Wextra' \
+	/home/cym/prj/ysyx-workbench/npc/vsrc/bus/ysyx_axi4lite_arbiter.sv /home/cym/prj/ysyx-workbench/npc/tests/axi4lite_arbiter_tb.cpp
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/b1-arbiter-test'
+make[3]: Nothing to be done for 'default'.
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/b1-arbiter-test'
+/home/cym/prj/ysyx-workbench/npc/build/b1-arbiter-test/Vysyx_axi4lite_arbiter \
+	/home/cym/prj/ysyx-workbench/npc/build/b1-arbiter-test/coverage.csv
+T01-T04 directed scoreboard: PASS
+T08 reset epochs (13 phases): PASS
+Arbiter random seed 1: 1000/1000 PASS
+Arbiter random seed 2: 1000/1000 PASS
+Arbiter random seed 3: 1000/1000 PASS
+Arbiter random seed 4: 1000/1000 PASS
+Arbiter random seed 5: 1000/1000 PASS
+Arbiter random seed 6: 1000/1000 PASS
+Arbiter random seed 7: 1000/1000 PASS
+Arbiter random seed 8: 1000/1000 PASS
+Arbiter random seed 9: 1000/1000 PASS
+Arbiter random seed 10: 1000/1000 PASS
+accepted=10143 completed=10132 reset_aborted=11 slave_write_effects=893 coverage_bins=74
+M3 S1 arbiter standalone: PASS
+verilator --lint-only --sv -Wall --assert -Wno-SYNCASYNCNET \
+	--top-module axi4lite_xbar_test_top -GSRAM_BYTES=1048576 \
+	/home/cym/prj/ysyx-workbench/npc/vsrc/bus/ysyx_axi4lite_xbar.sv /home/cym/prj/ysyx-workbench/npc/vsrc/bus/ysyx_axi4lite_decerr.sv /home/cym/prj/ysyx-workbench/npc/tests/axi4lite_xbar_test_top.sv
+verilator --cc --exe --build --assert --sv -Wall -Wno-SYNCASYNCNET \
+	--top-module ysyx_axi4lite_decerr --Mdir /home/cym/prj/ysyx-workbench/npc/build/b1-decerr-test \
+	-CFLAGS '-std=c++14 -Wall -Wextra' \
+	/home/cym/prj/ysyx-workbench/npc/vsrc/bus/ysyx_axi4lite_decerr.sv /home/cym/prj/ysyx-workbench/npc/tests/axi4lite_decerr_tb.cpp
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/b1-decerr-test'
+make[3]: Nothing to be done for 'default'.
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/b1-decerr-test'
+/home/cym/prj/ysyx-workbench/npc/build/b1-decerr-test/Vysyx_axi4lite_decerr /home/cym/prj/ysyx-workbench/npc/build/b1-decerr-test/coverage.csv
+DECERR PASS accepted=328 completed=317 aborted=11 bins=65 cycles=9179
+verilator --cc --exe --build --assert --sv -Wall -Wno-SYNCASYNCNET \
+	--top-module axi4lite_xbar_test_top -GSRAM_BYTES=1048576 \
+	--Mdir /home/cym/prj/ysyx-workbench/npc/build/b1-xbar-test \
+	-CFLAGS '-std=c++14 -Wall -Wextra -DTEST_SRAM_BYTES=1048576' \
+	/home/cym/prj/ysyx-workbench/npc/vsrc/bus/ysyx_axi4lite_xbar.sv /home/cym/prj/ysyx-workbench/npc/vsrc/bus/ysyx_axi4lite_decerr.sv /home/cym/prj/ysyx-workbench/npc/tests/axi4lite_xbar_test_top.sv \
+	/home/cym/prj/ysyx-workbench/npc/tests/axi4lite_xbar_tb.cpp
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/b1-xbar-test'
+make[3]: Nothing to be done for 'default'.
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/b1-xbar-test'
+/home/cym/prj/ysyx-workbench/npc/build/b1-xbar-test/Vaxi4lite_xbar_test_top /home/cym/prj/ysyx-workbench/npc/build/b1-xbar-test/coverage.csv
+seed=1 completed=1000 PASS
+seed=2 completed=1000 PASS
+seed=3 completed=1000 PASS
+seed=4 completed=1000 PASS
+seed=5 completed=1000 PASS
+seed=6 completed=1000 PASS
+seed=7 completed=1000 PASS
+seed=8 completed=1000 PASS
+seed=9 completed=1000 PASS
+seed=10 completed=1000 PASS
+XBAR PASS accepted=10488 completed=10446 aborted=42 effects=1872 bins=215 cycles=204024
+python3 /home/cym/prj/ysyx-workbench/npc/tests/axi4lite_xbar_config_test.py /home/cym/prj/ysyx-workbench/npc/build/b1-xbar-config-test
+config minimum SRAM_BYTES=4 expected_valid=True PASS
+config non_power_of_two SRAM_BYTES=12288 expected_valid=True PASS
+config touch_mmio SRAM_BYTES=536870984 expected_valid=True PASS
+config zero SRAM_BYTES=0 expected_valid=False PASS
+config misaligned SRAM_BYTES=6 expected_valid=False PASS
+config overlap SRAM_BYTES=536870988 expected_valid=False PASS
+config overflow SRAM_BYTES=2147483652 expected_valid=False PASS
+verilator --lint-only --sv -Wall --assert -Wno-SYNCASYNCNET \
+	--top-module axi4lite_slaves_test_top -GSRAM_BYTES=1048576 \
+	/home/cym/prj/ysyx-workbench/npc/vsrc/bus/ysyx_axi4lite_slave_frontend.sv /home/cym/prj/ysyx-workbench/npc/vsrc/periph/ysyx_axi4lite_sram.sv /home/cym/prj/ysyx-workbench/npc/vsrc/periph/ysyx_axi4lite_uart.sv /home/cym/prj/ysyx-workbench/npc/vsrc/periph/ysyx_axi4lite_clint.sv /home/cym/prj/ysyx-workbench/npc/tests/axi4lite_slaves_test_top.sv
+verilator --cc --exe --build --assert --sv -Wall -Wno-SYNCASYNCNET \
+	--top-module axi4lite_slaves_test_top -GSRAM_BYTES=1048576 \
+	--Mdir /home/cym/prj/ysyx-workbench/npc/build/b1-slaves-test \
+	-CFLAGS '-std=c++14 -Wall -Wextra -DTEST_SRAM_BYTES=1048576' \
+	/home/cym/prj/ysyx-workbench/npc/vsrc/bus/ysyx_axi4lite_slave_frontend.sv /home/cym/prj/ysyx-workbench/npc/vsrc/periph/ysyx_axi4lite_sram.sv /home/cym/prj/ysyx-workbench/npc/vsrc/periph/ysyx_axi4lite_uart.sv /home/cym/prj/ysyx-workbench/npc/vsrc/periph/ysyx_axi4lite_clint.sv /home/cym/prj/ysyx-workbench/npc/tests/axi4lite_slaves_test_top.sv /home/cym/prj/ysyx-workbench/npc/tests/axi4lite_slaves_tb.cpp
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/b1-slaves-test'
+make[3]: Nothing to be done for 'default'.
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/b1-slaves-test'
+/home/cym/prj/ysyx-workbench/npc/build/b1-slaves-test/Vaxi4lite_slaves_test_top /home/cym/prj/ysyx-workbench/npc/build/b1-slaves-test/coverage.csv
+CLINT high-low-high retries=1 PASS
+seed=1 3 slaves x 1000 completed PASS
+seed=2 3 slaves x 1000 completed PASS
+seed=3 3 slaves x 1000 completed PASS
+seed=4 3 slaves x 1000 completed PASS
+seed=5 3 slaves x 1000 completed PASS
+seed=6 3 slaves x 1000 completed PASS
+seed=7 3 slaves x 1000 completed PASS
+seed=8 3 slaves x 1000 completed PASS
+seed=9 3 slaves x 1000 completed PASS
+seed=10 3 slaves x 1000 completed PASS
+SLAVES PASS accepted=32125 completed=32107 aborted=18 uart_events=93 sram_write_effects=2442 bins=436 cycles=405707
+python3 /home/cym/prj/ysyx-workbench/npc/tests/axi4lite_slaves_config_test.py /home/cym/prj/ysyx-workbench/npc/build/b1-slaves-config-test
+config minimum SRAM_BYTES=4 expected_valid=True PASS
+config non_power_of_two SRAM_BYTES=12288 expected_valid=True PASS
+config zero SRAM_BYTES=0 expected_valid=False PASS
+config misaligned SRAM_BYTES=6 expected_valid=False PASS
+config overlap SRAM_BYTES=536870988 expected_valid=False PASS
+config overflow SRAM_BYTES=2147483652 expected_valid=False PASS
+verilator --cc --exe --build --assert --sv -Wall -Wno-SYNCASYNCNET \
+ --top-module axi4lite_redirect_test_top --Mdir /home/cym/prj/ysyx-workbench/npc/build/b1-redirect-test \
+ -CFLAGS '-std=c++14' /home/cym/prj/ysyx-workbench/npc/vsrc/gnrl/ysyx_gnrl_primitive.sv \
+ /home/cym/prj/ysyx-workbench/npc/vsrc/core/ysyx_ifu.sv /home/cym/prj/ysyx-workbench/npc/vsrc/bus/ysyx_ifu_axi4lite_adapter.sv \
+ /home/cym/prj/ysyx-workbench/npc/vsrc/bus/ysyx_axi4lite_arbiter.sv /home/cym/prj/ysyx-workbench/npc/tests/axi4lite_redirect_test_top.sv \
+ /home/cym/prj/ysyx-workbench/npc/tests/axi4lite_redirect_tb.cpp
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/b1-redirect-test'
+make[3]: Nothing to be done for 'default'.
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/b1-redirect-test'
+/home/cym/prj/ysyx-workbench/npc/build/b1-redirect-test/Vaxi4lite_redirect_test_top /home/cym/prj/ysyx-workbench/npc/build/b1-redirect-test/coverage.csv
+Redirect + Arbiter PASS 18 phase/response/competitor bins
+verilator --binary --timing --assert --sv -Wall -Wno-fatal -Wno-BLKSEQ -Wno-SYNCASYNCNET -Wno-TIMESCALEMOD \
+	--top-module ysyx_ifu_axi4lite_adapter_integ_tb \
+	--Mdir /home/cym/prj/ysyx-workbench/npc/build/ifu-axi4lite-adapter-integ-test \
+	/home/cym/prj/ysyx-workbench/npc/vsrc/gnrl/ysyx_gnrl_primitive.sv \
+	/home/cym/prj/ysyx-workbench/npc/vsrc/core/ysyx_ifu.sv \
+	/home/cym/prj/ysyx-workbench/npc/vsrc/bus/ysyx_ifu_axi4lite_adapter.sv \
+	/home/cym/prj/ysyx-workbench/npc/tests/ysyx_ifu_axi4lite_adapter_integ_tb.sv
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/ifu-axi4lite-adapter-integ-test'
+make[3]: Nothing to be done for 'default'.
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/ifu-axi4lite-adapter-integ-test'
+/home/cym/prj/ysyx-workbench/npc/build/ifu-axi4lite-adapter-integ-test/Vysyx_ifu_axi4lite_adapter_integ_tb
+ysyx IFU + AXI4-Lite adapter integration test: PASS
+- /home/cym/prj/ysyx-workbench/npc/tests/ysyx_ifu_axi4lite_adapter_integ_tb.sv:256: Verilog $finish
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make b1-random-regress
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+make b1-fabric-test
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+verilator --cc --exe --build --trace --assert --sv -Wall -Wno-SYNCASYNCNET \
+ -Wno-DECLFILENAME --top-module axi4lite_fabric_test_top --Mdir /home/cym/prj/ysyx-workbench/npc/build/b1-fabric-test \
+ -CFLAGS '-std=c++14' /home/cym/prj/ysyx-workbench/npc/vsrc/bus/ysyx_axi4lite_arbiter.sv /home/cym/prj/ysyx-workbench/npc/vsrc/bus/ysyx_axi4lite_decerr.sv /home/cym/prj/ysyx-workbench/npc/vsrc/bus/ysyx_axi4lite_slave_frontend.sv /home/cym/prj/ysyx-workbench/npc/vsrc/bus/ysyx_axi4lite_xbar.sv /home/cym/prj/ysyx-workbench/npc/vsrc/periph/ysyx_axi4lite_clint.sv /home/cym/prj/ysyx-workbench/npc/vsrc/periph/ysyx_axi4lite_sram.sv /home/cym/prj/ysyx-workbench/npc/vsrc/periph/ysyx_axi4lite_uart.sv /home/cym/prj/ysyx-workbench/npc/tests/axi4lite_delay_shim.sv /home/cym/prj/ysyx-workbench/npc/tests/axi4lite_fabric_test_top.sv /home/cym/prj/ysyx-workbench/npc/tests/axi4lite_fabric_tb.cpp
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/b1-fabric-test'
+make[3]: Nothing to be done for 'default'.
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/b1-fabric-test'
+/home/cym/prj/ysyx-workbench/npc/build/b1-fabric-test/Vaxi4lite_fabric_test_top /home/cym/prj/ysyx-workbench/npc/build/b1-fabric-test/coverage.csv /home/cym/prj/ysyx-workbench/npc/build/b1-fabric-test/representative.vcd
+Fabric PASS accepted=10510 completed=10350 aborted=160 effects=780 uart=76 cycles=371658 bins=284
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make b1-system-regress
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+make b1-system-test
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+make NPC_PLATFORM=b1 SRAM_BYTES=1048576 MTIME_HZ=1000000 build
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/b1-1048576-1000000/Vysyx_b1_top 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/b1-1048576-1000000'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/b1-1048576-1000000'
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+python3 /home/cym/prj/ysyx-workbench/npc/tests/b1_system_test.py \
+	--binary /home/cym/prj/ysyx-workbench/npc/build/b1-1048576-1000000/Vysyx_b1_top \
+	--out /home/cym/prj/ysyx-workbench/npc/build/b1-system-test-1048576-1000000 \
+	--sram-bytes 1048576 --mtime-hz 1000000
+add-longlong: PASS commits=1659 cycles=24320
+add: PASS commits=1095 cycles=16402
+bit: PASS commits=312 cycles=4461
+bubble-sort: PASS commits=2871 cycles=47889
+crc32: PASS commits=13282 cycles=183152
+div: PASS commits=16468 cycles=231733
+dummy: PASS commits=12 cycles=185
+fact: PASS commits=1890 cycles=26379
+fib: PASS commits=598 cycles=9043
+goldbach: PASS commits=8140 cycles=112495
+hello-str: PASS commits=3300 cycles=49567
+if-else: PASS commits=358 cycles=4782
+leap-year: PASS commits=8470 cycles=117672
+load-store: PASS commits=473 cycles=7055
+matrix-mul: PASS commits=132175 cycles=1776492
+max: PASS commits=1123 cycles=17106
+mersenne: PASS commits=25189 cycles=343330
+min3: PASS commits=1444 cycles=21701
+mov-c: PASS commits=78 cycles=1229
+movsx: PASS commits=129 cycles=1967
+mul-longlong: PASS commits=6355 cycles=81154
+pascal: PASS commits=3278 cycles=49498
+prime: PASS commits=55093 cycles=742998
+quick-sort: PASS commits=3295 cycles=46920
+recursion: PASS commits=6551 cycles=93040
+select-sort: PASS commits=2941 cycles=45896
+shift: PASS commits=409 cycles=6172
+shuixianhua: PASS commits=136792 cycles=1861700
+string: PASS commits=1676 cycles=24710
+sub-longlong: PASS commits=1659 cycles=24320
+sum: PASS commits=527 cycles=8491
+switch: PASS commits=307 cycles=4199
+to-lower-case: PASS commits=2123 cycles=28571
+wanshu: PASS commits=18135 cycles=249461
+hello: PASS commits=460 cycles=7609
+lanes: PASS commits=193 cycles=2925
+uptime: PASS commits=5812 cycles=96664
+yield-os: PASS commits=23933 cycles=395282
+unmapped-1: PASS commits=18 cycles=232
+unmapped-2: PASS commits=18 cycles=239
+unmapped-3: PASS commits=18 cycles=239
+sram-end-1: PASS commits=18 cycles=232
+sram-end-2: PASS commits=18 cycles=239
+sram-end-3: PASS commits=18 cycles=239
+uart-fetch: PASS commits=20 cycles=254
+clint-fetch: PASS commits=20 cycles=254
+uart-read: PASS commits=19 cycles=250
+clint-write: PASS commits=19 cycles=251
+uart-reserved: PASS commits=19 cycles=251
+uart-word: PASS commits=19 cycles=251
+misaligned-load: PASS commits=19 cycles=232
+misaligned-store: PASS commits=19 cycles=232
+redirect: PASS commits=11 cycles=163
+B1 system regression: 53 PASS
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make NPC_PLATFORM=b1 B1_SIM_SHIM=1 build
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/b1-1048576-1000000-shim/Vysyx_b1_top 	...
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/b1-1048576-1000000-shim'
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/b1-1048576-1000000-shim'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+python3 /home/cym/prj/ysyx-workbench/npc/tests/b1_closure_test.py
+add-seed1 PASS commits=1095 cycles=32972
+add-seed2 PASS commits=1095 cycles=33118
+add-seed3 PASS commits=1095 cycles=33260
+add-seed4 PASS commits=1095 cycles=33077
+add-seed5 PASS commits=1095 cycles=33050
+add-seed6 PASS commits=1095 cycles=33022
+add-seed7 PASS commits=1095 cycles=33075
+add-seed8 PASS commits=1095 cycles=33143
+add-seed9 PASS commits=1095 cycles=33204
+add-seed10 PASS commits=1095 cycles=33150
+bubble-sort-seed1 PASS commits=2871 cycles=97433
+bubble-sort-seed2 PASS commits=2871 cycles=97695
+bubble-sort-seed3 PASS commits=2871 cycles=97543
+bubble-sort-seed4 PASS commits=2871 cycles=97765
+bubble-sort-seed5 PASS commits=2871 cycles=97558
+bubble-sort-seed6 PASS commits=2871 cycles=97725
+bubble-sort-seed7 PASS commits=2871 cycles=97540
+bubble-sort-seed8 PASS commits=2871 cycles=97725
+bubble-sort-seed9 PASS commits=2871 cycles=97826
+bubble-sort-seed10 PASS commits=2871 cycles=97601
+rtthread-fixed PASS commits=262561 cycles=3771422
+rtthread-shim-seed42 PASS commits=262561 cycles=7598355
+hello-empty PASS commits=383 cycles=6245
+S5 system closure: 23 PASS
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make b1-coverage-check
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+python3 /home/cym/prj/ysyx-workbench/npc/tests/b1_coverage_check.py
+Required coverage PASS; C01-C13 legal bins checked; exclusions explicit
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make: Leaving directory '/home/cym/prj/ysyx-workbench/npc'

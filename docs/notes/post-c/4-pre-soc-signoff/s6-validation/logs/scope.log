@@ -1,0 +1,8 @@
+make: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+python3 /home/cym/prj/ysyx-workbench/npc/tests/synthesis_scope_check.py
+synthesis: PASS (9 reviewed warnings)
+synthesis_overrides_dpi: PASS (9 reviewed warnings)
+simulation_no_dpi: PASS (2 reviewed warnings)
+simulation_dpi: PASS (2 reviewed warnings)
+Synthesis scope check: PASS; evidence: /home/cym/prj/ysyx-workbench/npc/flow/build/scope-check
+make: Leaving directory '/home/cym/prj/ysyx-workbench/npc'

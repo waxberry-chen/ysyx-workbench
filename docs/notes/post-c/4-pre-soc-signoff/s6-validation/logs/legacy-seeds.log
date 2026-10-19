@@ -1,0 +1,16 @@
+make: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+RAM seed 1 -> /home/cym/prj/ysyx-workbench/npc/build/seed-logs/seed-1.log
+RAM seed 2 -> /home/cym/prj/ysyx-workbench/npc/build/seed-logs/seed-2.log
+RAM seed 3 -> /home/cym/prj/ysyx-workbench/npc/build/seed-logs/seed-3.log
+RAM seed 4 -> /home/cym/prj/ysyx-workbench/npc/build/seed-logs/seed-4.log
+RAM seed 5 -> /home/cym/prj/ysyx-workbench/npc/build/seed-logs/seed-5.log
+RAM seed 6 -> /home/cym/prj/ysyx-workbench/npc/build/seed-logs/seed-6.log
+RAM seed 7 -> /home/cym/prj/ysyx-workbench/npc/build/seed-logs/seed-7.log
+RAM seed 8 -> /home/cym/prj/ysyx-workbench/npc/build/seed-logs/seed-8.log
+RAM seed 9 -> /home/cym/prj/ysyx-workbench/npc/build/seed-logs/seed-9.log
+RAM seed 10 -> /home/cym/prj/ysyx-workbench/npc/build/seed-logs/seed-10.log
+All RAM seeds passed: 1 2 3 4 5 6 7 8 9 10
+make: Leaving directory '/home/cym/prj/ysyx-workbench/npc'

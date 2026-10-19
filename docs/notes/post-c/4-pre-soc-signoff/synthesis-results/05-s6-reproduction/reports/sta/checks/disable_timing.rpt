@@ -1,0 +1,734 @@
+****************************************
+Report : disable_timing
+Design : ysyx_core_axi4lite
+Version: T-2022.03-SP5
+Date   : Mon Oct 19 19:14:17 2026
+****************************************
+
+Flags :     c  case-analysis
+            C  Conditional arc
+            d  default conditional arc
+            f  false net-arc
+            l  loop breaking
+            L  db inherited loop breaking
+	    m  mode
+            p  propagated constant
+            u  user-defined
+            U  User-defined library arcs
+
+Cell or Port                From    To      Sense           Flag  Reason
+--------------------------------------------------------------------------------
+core/u_opbuf/u_context_reg/U103
+                            A2      ZN      negative_unate  p     A2 = 0
+arbiter/U252                A1      ZN      negative_unate  C     B1 = 0
+arbiter/U252                A2      ZN      negative_unate  C     A1 = 0, B1 = 0
+arbiter/U252                A2      ZN      negative_unate  C     A1 = 0, B1 = 0
+arbiter/U252                A2      ZN      negative_unate  C     A1 = 0, B1 = 0
+arbiter/U252                B1      ZN      negative_unate  C     A1 = 0
+arbiter/U252                B2      ZN      negative_unate  C     A1 = 0, B1 = 0
+arbiter/U252                B2      ZN      negative_unate  C     A1 = 0, B1 = 0
+arbiter/U252                B2      ZN      negative_unate  C     A1 = 0, B1 = 0
+arbiter/U253                A1      ZN      negative_unate  p     A1 = 0
+arbiter/U253                A1      ZN      negative_unate  p     A1 = 0
+arbiter/U253                A1      ZN      negative_unate  p     A1 = 0
+arbiter/U253                A2      ZN      negative_unate  p     A1 = 0
+arbiter/U253                A2      ZN      negative_unate  p     A1 = 0
+arbiter/U253                A2      ZN      negative_unate  p     A1 = 0
+arbiter/U253                B1      ZN      negative_unate  C     A1 = 0
+arbiter/U253                B2      ZN      negative_unate  C     A1 = 0
+arbiter/U236                A1      ZN      negative_unate  p     A1 = 0
+arbiter/U236                A1      ZN      negative_unate  p     A1 = 0
+arbiter/U236                A1      ZN      negative_unate  p     A1 = 0
+arbiter/U236                A2      ZN      negative_unate  p     A1 = 0
+arbiter/U236                A2      ZN      negative_unate  p     A1 = 0
+arbiter/U236                A2      ZN      negative_unate  p     A1 = 0
+arbiter/U236                B1      ZN      negative_unate  C     A1 = 0
+arbiter/U236                B2      ZN      negative_unate  C     A1 = 0
+arbiter/U238                A1      ZN      negative_unate  p     A1 = 0
+arbiter/U238                A1      ZN      negative_unate  p     A1 = 0
+arbiter/U238                A1      ZN      negative_unate  p     A1 = 0
+arbiter/U238                A2      ZN      negative_unate  p     A1 = 0
+arbiter/U238                A2      ZN      negative_unate  p     A1 = 0
+arbiter/U238                A2      ZN      negative_unate  p     A1 = 0
+arbiter/U238                B1      ZN      negative_unate  C     A1 = 0
+arbiter/U238                B2      ZN      negative_unate  C     A1 = 0
+arbiter/U240                A1      ZN      negative_unate  p     A1 = 0
+arbiter/U240                A1      ZN      negative_unate  p     A1 = 0
+arbiter/U240                A1      ZN      negative_unate  p     A1 = 0
+arbiter/U240                A2      ZN      negative_unate  p     A1 = 0
+arbiter/U240                A2      ZN      negative_unate  p     A1 = 0
+arbiter/U240                A2      ZN      negative_unate  p     A1 = 0
+arbiter/U240                B1      ZN      negative_unate  C     A1 = 0
+arbiter/U240                B2      ZN      negative_unate  C     A1 = 0
+arbiter/U241                A1      ZN      negative_unate  p     A1 = 0
+arbiter/U241                A1      ZN      negative_unate  p     A1 = 0
+arbiter/U241                A1      ZN      negative_unate  p     A1 = 0
+arbiter/U241                A2      ZN      negative_unate  p     A1 = 0
+arbiter/U241                A2      ZN      negative_unate  p     A1 = 0
+arbiter/U241                A2      ZN      negative_unate  p     A1 = 0
+arbiter/U241                B1      ZN      negative_unate  C     A1 = 0
+arbiter/U241                B2      ZN      negative_unate  C     A1 = 0
+arbiter/U243                A1      ZN      negative_unate  p     A1 = 0
+arbiter/U243                A1      ZN      negative_unate  p     A1 = 0
+arbiter/U243                A1      ZN      negative_unate  p     A1 = 0
+arbiter/U243                A2      ZN      negative_unate  p     A1 = 0
+arbiter/U243                A2      ZN      negative_unate  p     A1 = 0
+arbiter/U243                A2      ZN      negative_unate  p     A1 = 0
+arbiter/U243                B1      ZN      negative_unate  C     A1 = 0
+arbiter/U243                B2      ZN      negative_unate  C     A1 = 0
+arbiter/U244                A1      ZN      negative_unate  p     A1 = 0
+arbiter/U244                A1      ZN      negative_unate  p     A1 = 0
+arbiter/U244                A1      ZN      negative_unate  p     A1 = 0
+arbiter/U244                A2      ZN      negative_unate  p     A1 = 0, B1 = 1
+arbiter/U244                A2      ZN      negative_unate  p     A1 = 0, B1 = 1
+arbiter/U244                A2      ZN      negative_unate  p     A1 = 0, B1 = 1
+arbiter/U244                B1      ZN      negative_unate  p     B1 = 1
+arbiter/U244                B1      ZN      negative_unate  p     B1 = 1
+arbiter/U244                B1      ZN      negative_unate  p     B1 = 1
+arbiter/U244                B2      ZN      negative_unate  C     A1 = 0, B1 = 1
+arbiter/U246                A1      ZN      negative_unate  p     A1 = 1
+arbiter/U246                A1      ZN      negative_unate  p     A1 = 1
+arbiter/U246                A1      ZN      negative_unate  p     A1 = 1
+arbiter/U246                B1      ZN      negative_unate  C     A1 = 1
+arbiter/U246                B1      ZN      negative_unate  C     A1 = 1
+arbiter/U246                B2      ZN      negative_unate  C     A1 = 1
+arbiter/U246                B2      ZN      negative_unate  C     A1 = 1
+arbiter/U247                A1      ZN      negative_unate  p     A1 = 1
+arbiter/U247                A1      ZN      negative_unate  p     A1 = 1
+arbiter/U247                A1      ZN      negative_unate  p     A1 = 1
+arbiter/U247                A2      ZN      negative_unate  C     A1 = 1, B1 = 1
+arbiter/U247                A2      ZN      negative_unate  C     A1 = 1, B1 = 1
+arbiter/U247                B1      ZN      negative_unate  p     B1 = 1
+arbiter/U247                B1      ZN      negative_unate  p     B1 = 1
+arbiter/U247                B1      ZN      negative_unate  p     B1 = 1
+arbiter/U247                B2      ZN      negative_unate  C     A1 = 1, B1 = 1
+arbiter/U247                B2      ZN      negative_unate  C     A1 = 1, B1 = 1
+arbiter/U251                A2      ZN      negative_unate  p     A2 = 1
+core/u_opbuf/u_context_reg/U373
+                            B       ZN      negative_unate  p     B = 0
+core/u_opbuf/u_context_reg/U373
+                            B       ZN      negative_unate  p     B = 0
+core/u_opbuf/u_context_reg/U373
+                            B       ZN      negative_unate  p     B = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_0_
+                            CP      D       hold_clk_rise   p     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_0_
+                            CP      D       setup_clk_rise  p     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_0_
+                            CP      E       hold_clk_rise   C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_0_
+                            CP      E       setup_clk_rise  C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_0_
+                            CP      CP      clock_pulse_width_high
+                                                            C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_0_
+                            CP      CP      clock_pulse_width_low
+                                                            C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_0_
+                            CP      CDN     removal_rise_clk_rise
+                                                            C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_0_
+                            CP      CDN     recovery_rise_clk_rise
+                                                            C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_0_
+                            CDN     CDN     clock_pulse_width_low
+                                                            C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_0_
+                            CDN     CDN     clock_pulse_width_low
+                                                            C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_0_
+                            CDN     CDN     clock_pulse_width_low
+                                                            C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_0_
+                            CDN     CDN     clock_pulse_width_low
+                                                            C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_0_
+                            CDN     Q       clear_low       C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_0_
+                            CDN     Q       clear_low       C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_0_
+                            CDN     Q       clear_low       C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_0_
+                            CDN     Q       clear_low       C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_1_
+                            CP      D       hold_clk_rise   p     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_1_
+                            CP      D       setup_clk_rise  p     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_1_
+                            CP      E       hold_clk_rise   C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_1_
+                            CP      E       setup_clk_rise  C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_1_
+                            CP      CP      clock_pulse_width_high
+                                                            C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_1_
+                            CP      CP      clock_pulse_width_low
+                                                            C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_1_
+                            CP      CDN     removal_rise_clk_rise
+                                                            C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_1_
+                            CP      CDN     recovery_rise_clk_rise
+                                                            C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_1_
+                            CDN     CDN     clock_pulse_width_low
+                                                            C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_1_
+                            CDN     CDN     clock_pulse_width_low
+                                                            C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_1_
+                            CDN     CDN     clock_pulse_width_low
+                                                            C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_1_
+                            CDN     CDN     clock_pulse_width_low
+                                                            C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_1_
+                            CDN     Q       clear_low       C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_1_
+                            CDN     Q       clear_low       C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_1_
+                            CDN     Q       clear_low       C     D = 0
+core/u_csr/gen_csr_1__csr_dfflr/qout_r_reg_1_
+                            CDN     Q       clear_low       C     D = 0
+core/u_csr/gen_csr_0__csr_dfflr/U43
+                            A1      Z       positive_unate  C     B1 = 1
+core/u_csr/gen_csr_0__csr_dfflr/U43
+                            A1      Z       positive_unate  C     B1 = 1
+core/u_csr/gen_csr_0__csr_dfflr/U43
+                            A2      Z       positive_unate  C     B1 = 1
+core/u_csr/gen_csr_0__csr_dfflr/U43
+                            A2      Z       positive_unate  C     B1 = 1
+core/u_csr/gen_csr_0__csr_dfflr/U43
+                            B1      Z       positive_unate  p     B1 = 1
+core/u_csr/gen_csr_0__csr_dfflr/U43
+                            B1      Z       positive_unate  p     B1 = 1
+core/u_csr/gen_csr_0__csr_dfflr/U43
+                            B1      Z       positive_unate  p     B1 = 1
+core/u_csr/gen_csr_0__csr_dfflr/U44
+                            A1      Z       positive_unate  C     B1 = 1
+core/u_csr/gen_csr_0__csr_dfflr/U44
+                            A1      Z       positive_unate  C     B1 = 1
+core/u_csr/gen_csr_0__csr_dfflr/U44
+                            A2      Z       positive_unate  C     B1 = 1
+core/u_csr/gen_csr_0__csr_dfflr/U44
+                            A2      Z       positive_unate  C     B1 = 1
+core/u_csr/gen_csr_0__csr_dfflr/U44
+                            B1      Z       positive_unate  p     B1 = 1
+core/u_csr/gen_csr_0__csr_dfflr/U44
+                            B1      Z       positive_unate  p     B1 = 1
+core/u_csr/gen_csr_0__csr_dfflr/U44
+                            B1      Z       positive_unate  p     B1 = 1
+core/u_csr/gen_csr_2__csr_dfflr/U44
+                            A1      Z       positive_unate  C     B1 = 0
+core/u_csr/gen_csr_2__csr_dfflr/U44
+                            A2      Z       positive_unate  C     B1 = 0
+core/u_csr/gen_csr_2__csr_dfflr/U44
+                            B1      Z       positive_unate  p     B1 = 0
+core/u_csr/gen_csr_2__csr_dfflr/U44
+                            B1      Z       positive_unate  p     B1 = 0
+core/u_csr/gen_csr_2__csr_dfflr/U44
+                            B1      Z       positive_unate  p     B1 = 0
+core/u_csr/gen_csr_2__csr_dfflr/U44
+                            B2      Z       positive_unate  p     B1 = 0
+core/u_csr/gen_csr_2__csr_dfflr/U44
+                            B2      Z       positive_unate  p     B1 = 0
+core/u_csr/gen_csr_2__csr_dfflr/U44
+                            B2      Z       positive_unate  p     B1 = 0
+core/u_csr/gen_csr_2__csr_dfflr/U35
+                            A1      Z       positive_unate  C     B2 = 0
+core/u_csr/gen_csr_2__csr_dfflr/U35
+                            A2      Z       positive_unate  C     B2 = 0
+core/u_csr/gen_csr_2__csr_dfflr/U35
+                            B1      Z       positive_unate  p     B2 = 0
+core/u_csr/gen_csr_2__csr_dfflr/U35
+                            B1      Z       positive_unate  p     B2 = 0
+core/u_csr/gen_csr_2__csr_dfflr/U35
+                            B1      Z       positive_unate  p     B2 = 0
+core/u_csr/gen_csr_2__csr_dfflr/U35
+                            B2      Z       positive_unate  p     B2 = 0
+core/u_csr/gen_csr_2__csr_dfflr/U35
+                            B2      Z       positive_unate  p     B2 = 0
+core/u_csr/gen_csr_2__csr_dfflr/U35
+                            B2      Z       positive_unate  p     B2 = 0
+core/u_opbuf/u_context_reg/U343
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U343
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U343
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U343
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U343
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U343
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U343
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U343
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U344
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U344
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U344
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U344
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U344
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U344
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U344
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U344
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U345
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U345
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U345
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U345
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U345
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U345
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U345
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U345
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U346
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U346
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U346
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U346
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U346
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U346
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U346
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U346
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U347
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U347
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U347
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U347
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U347
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U347
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U347
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U347
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U348
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U348
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U348
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U348
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U348
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U348
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U348
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U348
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U349
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U349
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U349
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U349
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U349
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U349
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U349
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U349
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U350
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U350
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U350
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U350
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U350
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U350
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U350
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U350
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U351
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U351
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U351
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U351
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U351
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U351
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U351
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U351
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U352
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U352
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U352
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U352
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U352
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U352
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U352
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U352
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U353
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U353
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U353
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U353
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U353
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U353
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U353
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U353
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U354
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U354
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U354
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U354
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U354
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U354
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U354
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U354
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U355
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U355
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U355
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U355
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U355
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U355
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U355
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U355
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U356
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U356
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U356
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U356
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U356
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U356
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U356
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U356
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U357
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U357
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U357
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U357
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U357
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U357
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U357
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U357
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U358
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U358
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U358
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U358
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U358
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U358
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U358
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U358
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U359
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U359
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U359
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U359
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U359
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U359
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U359
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U359
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U360
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U360
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U360
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U360
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U360
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U360
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U360
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U360
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U361
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U361
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U361
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U361
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U361
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U361
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U361
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U361
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U362
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U362
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U362
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U362
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U362
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U362
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U362
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U362
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U363
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U363
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U363
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U363
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U363
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U363
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U363
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U363
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U364
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U364
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U364
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U364
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U364
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U364
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U364
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U364
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U365
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U365
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U365
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U365
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U365
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U365
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U365
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U365
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U366
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U366
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U366
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U366
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U366
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U366
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U366
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U366
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U367
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U367
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U367
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U367
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U367
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U367
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U367
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U367
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U368
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U368
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U368
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U368
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U368
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U368
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U368
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U368
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U369
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U369
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U369
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U369
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U369
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U369
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U369
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U369
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U370
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U370
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U370
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U370
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U370
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U370
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U370
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U370
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U371
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U371
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U371
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U371
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U371
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U371
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U371
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U371
+                            B2      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U372
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U372
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U372
+                            A1      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U372
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U372
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U372
+                            A2      Z       positive_unate  p     A1 = 0
+core/u_opbuf/u_context_reg/U372
+                            B1      Z       positive_unate  C     A1 = 0
+core/u_opbuf/u_context_reg/U372
+                            B2      Z       positive_unate  C     A1 = 0
+
+1

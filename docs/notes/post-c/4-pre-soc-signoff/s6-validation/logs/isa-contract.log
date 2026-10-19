@@ -1,0 +1,54 @@
+make: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+verilator --cc --exe --build --sv -Wall --top-module ysyx_idu \
+ --Mdir /home/cym/prj/ysyx-workbench/npc/build/idu-contract-test \
+ /home/cym/prj/ysyx-workbench/npc/vsrc/core/ysyx_idu.sv /home/cym/prj/ysyx-workbench/npc/tests/idu_contract_tb.cpp
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/idu-contract-test'
+make[1]: Nothing to be done for 'default'.
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/idu-contract-test'
+/home/cym/prj/ysyx-workbench/npc/build/idu-contract-test/Vysyx_idu
+IDU contract: PASS (360192 independent checks)
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/m4-s1/state-simulation'
+make[1]: Nothing to be done for 'default'.
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/m4-s1/state-simulation'
+Architectural state test: PASS (GPR, CSR, asynchronous/repeated reset)
+- /home/cym/prj/ysyx-workbench/npc/tests/ysyx_architectural_state_tb.sv:86: Verilog $finish
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/m4-s1/state-synthesis'
+make[1]: Nothing to be done for 'default'.
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/m4-s1/state-synthesis'
+Architectural state test: PASS (GPR, CSR, asynchronous/repeated reset)
+- /home/cym/prj/ysyx-workbench/npc/tests/ysyx_architectural_state_tb.sv:86: Verilog $finish
+verilator --binary --timing --assert --sv -Wall -Wno-fatal -Wno-BLKSEQ -Wno-SYNCASYNCNET -Wno-TIMESCALEMOD \
+	--top-module ysyx_exu_tb --Mdir /home/cym/prj/ysyx-workbench/npc/build/exu-test \
+	/home/cym/prj/ysyx-workbench/npc/vsrc/gnrl/ysyx_gnrl_primitive.sv \
+	/home/cym/prj/ysyx-workbench/npc/vsrc/core/ysyx_alu.sv /home/cym/prj/ysyx-workbench/npc/vsrc/core/ysyx_branch.sv \
+	/home/cym/prj/ysyx-workbench/npc/vsrc/core/ysyx_exu.sv /home/cym/prj/ysyx-workbench/npc/tests/ysyx_exu_tb.sv
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/exu-test'
+make[1]: Nothing to be done for 'default'.
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/exu-test'
+/home/cym/prj/ysyx-workbench/npc/build/exu-test/Vysyx_exu_tb
+ysyx_exu directed test: PASS
+- /home/cym/prj/ysyx-workbench/npc/tests/ysyx_exu_tb.sv:408: Verilog $finish
+make -C /home/cym/prj/ysyx-workbench/nemu git_commit=
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/nemu'
+INFO: Variable BINARY is: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so
+make[1]: Nothing to be done for 'app'.
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/nemu'
+make NPC_PLATFORM=legacy build
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make NPC_PLATFORM=b1 build
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/b1-1048576-1000000/Vysyx_b1_top 	...
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/b1-1048576-1000000'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/b1-1048576-1000000'
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+python3 /home/cym/prj/ysyx-workbench/npc/tests/isa_contract_test.py
+legacy-illegal: PASS (97 independently expected traps)
+b1-illegal: PASS (97 independently expected traps)
+legacy-legal: PASS (0 independently expected traps)
+b1-legal: PASS (0 independently expected traps)
+ISA contract: PASS; evidence: /home/cym/prj/ysyx-workbench/npc/build/isa-contract-test
+make: Leaving directory '/home/cym/prj/ysyx-workbench/npc'

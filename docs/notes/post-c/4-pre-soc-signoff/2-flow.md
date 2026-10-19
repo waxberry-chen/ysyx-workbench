@@ -115,7 +115,7 @@ make -C npc/flow check test
 
 ## 7. 下一步与阻塞
 
-**无本地 S2 未解决阻塞**。以下为 S2 交接时的服务器 S3 操作步骤；当前已完成，结果见 [S3 基线](3-synthesis-sta.md)，下一步为 S6 最终复现/交接：
+**无本地 S2 未解决阻塞**。以下为 S2 交接时的服务器 S3 操作步骤；当前已完成，结果见 [S3 基线](3-synthesis-sta.md)，S6 已完成，最终状态见 [M4 验收](signoff.md)，下一步为 M5；以下保留服务器操作顺序：
 
 1. 同步已提交版本与候选 site，配置真实 DC/PT 路径，执行 probe，核对库属性/单位/PVT/模型并填写 operating condition。
 2. 运行 preflight，再用全新 run 执行 synth/sta；记录版本/license 和真实命令兼容性，处理所有结构与约束问题。

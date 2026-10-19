@@ -1,0 +1,210 @@
+{
+  "baseline_head": "9e449fac5b8abe863c6bd5c90f79a1c4230607a1",
+  "local_head": "415c87b2ae9a3eafd5c29e859098ee60b9521e87",
+  "baseline_input_count": 37,
+  "artifact_counts": {
+    "syn": 23,
+    "sta": 25
+  },
+  "archive_count": 51,
+  "current_inputs": [
+    {
+      "path": "npc/vsrc/gnrl/ysyx_global.sv",
+      "baseline_sha256": "39dc2658d350ab8293953b819346339cac640f377b4bfa3bec30ed5b9828d2f9",
+      "current_sha256": "39dc2658d350ab8293953b819346339cac640f377b4bfa3bec30ed5b9828d2f9",
+      "match": true
+    },
+    {
+      "path": "npc/vsrc/gnrl/ysyx_gnrl_primitive.sv",
+      "baseline_sha256": "69e7f79f3636533b0d10016fd04097dbdf92c13f342c7e12c0f25402188f7c15",
+      "current_sha256": "69e7f79f3636533b0d10016fd04097dbdf92c13f342c7e12c0f25402188f7c15",
+      "match": true
+    },
+    {
+      "path": "npc/vsrc/bus/ysyx_axi4lite_arbiter.sv",
+      "baseline_sha256": "799b5c5447a3872cfd50396ef963355ef0168b6240086b29f4bebbebd0f2c2c2",
+      "current_sha256": "799b5c5447a3872cfd50396ef963355ef0168b6240086b29f4bebbebd0f2c2c2",
+      "match": true
+    },
+    {
+      "path": "npc/vsrc/bus/ysyx_lsu_axi4lite_adapter.sv",
+      "baseline_sha256": "26a095bac629d1b0c94a3c691ab3edb46bf2286f45c664d7e1ba3255768b5a20",
+      "current_sha256": "26a095bac629d1b0c94a3c691ab3edb46bf2286f45c664d7e1ba3255768b5a20",
+      "match": true
+    },
+    {
+      "path": "npc/vsrc/bus/ysyx_ifu_axi4lite_adapter.sv",
+      "baseline_sha256": "3e1cfb51f0a844a9244fc0c900f0198ed33221d9eddf3bbda2c81c1c2d052988",
+      "current_sha256": "3e1cfb51f0a844a9244fc0c900f0198ed33221d9eddf3bbda2c81c1c2d052988",
+      "match": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_opbuf.sv",
+      "baseline_sha256": "11e6880f0b2118bacf9df9dcf0a4012dd6b3fd1192f02d490c46aa87d1cd7ae3",
+      "current_sha256": "11e6880f0b2118bacf9df9dcf0a4012dd6b3fd1192f02d490c46aa87d1cd7ae3",
+      "match": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_core.sv",
+      "baseline_sha256": "0cd0589982a2343a648a07e37a008d2b0e2949dbc90c15e740f7d2b1b6f07181",
+      "current_sha256": "0cd0589982a2343a648a07e37a008d2b0e2949dbc90c15e740f7d2b1b6f07181",
+      "match": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_regfile.sv",
+      "baseline_sha256": "80c66dc0a1fcf39133e5287d9befe0670dceccc9f4237135b8c53ff310cc3eab",
+      "current_sha256": "80c66dc0a1fcf39133e5287d9befe0670dceccc9f4237135b8c53ff310cc3eab",
+      "match": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_ifu.sv",
+      "baseline_sha256": "d605a85513dbad82bfc7ff67707ea2ddd891ae7fe516ec5fdf40b64830099759",
+      "current_sha256": "d605a85513dbad82bfc7ff67707ea2ddd891ae7fe516ec5fdf40b64830099759",
+      "match": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_gen_imm.sv",
+      "baseline_sha256": "7b72f39d8bc17eee2ffb186d6183855c0075776a8505084e0204f147c6192d1a",
+      "current_sha256": "7b72f39d8bc17eee2ffb186d6183855c0075776a8505084e0204f147c6192d1a",
+      "match": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_idu.sv",
+      "baseline_sha256": "a798f56deb77174611b71f26c0ac942629b0e067b67040bf03638c3020414a5a",
+      "current_sha256": "a798f56deb77174611b71f26c0ac942629b0e067b67040bf03638c3020414a5a",
+      "match": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_csr.sv",
+      "baseline_sha256": "1742779d54d071fca71043afeaa687e219a22dca6fb092f84fd74aacc1a67e38",
+      "current_sha256": "1742779d54d071fca71043afeaa687e219a22dca6fb092f84fd74aacc1a67e38",
+      "match": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_branch.sv",
+      "baseline_sha256": "6cc2d908aeb37572de4cb026a578a452d46ca3e11d59be69d6023e29d2195537",
+      "current_sha256": "6cc2d908aeb37572de4cb026a578a452d46ca3e11d59be69d6023e29d2195537",
+      "match": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_lsu.sv",
+      "baseline_sha256": "1ec2463ade5aa1bd5c01a4dc15519be42be2d8104689c43579fcda81d2bd1654",
+      "current_sha256": "1ec2463ade5aa1bd5c01a4dc15519be42be2d8104689c43579fcda81d2bd1654",
+      "match": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_exu.sv",
+      "baseline_sha256": "78900f7a8c9d4000b10fe9f2b976feb82a4ba425ca1ea7a5bc8bae4f5d540f32",
+      "current_sha256": "78900f7a8c9d4000b10fe9f2b976feb82a4ba425ca1ea7a5bc8bae4f5d540f32",
+      "match": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_alu.sv",
+      "baseline_sha256": "cbe707eb49dbe9eb30ed8a496dc628866eb4f888a1210d77f3ceef0374f470a1",
+      "current_sha256": "cbe707eb49dbe9eb30ed8a496dc628866eb4f888a1210d77f3ceef0374f470a1",
+      "match": true
+    },
+    {
+      "path": "npc/vsrc/top/ysyx_core_axi4lite.sv",
+      "baseline_sha256": "af1ca045a20f6780ef0e030b9cd8a60459bade4c9f4d80c9c80b15ed43b96d5a",
+      "current_sha256": "af1ca045a20f6780ef0e030b9cd8a60459bade4c9f4d80c9c80b15ed43b96d5a",
+      "match": true
+    },
+    {
+      "path": "npc/flow/Makefile",
+      "baseline_sha256": "5c179e809a431d6d5ec0887205c52c34b1463f25e1eeebf34af77186d36ad88c",
+      "current_sha256": "1418b3a5a2320ec633283883acd300bd4a9487a630c04706f2218289f7b69af8",
+      "match": false
+    },
+    {
+      "path": "npc/flow/02_syn/probe.tcl",
+      "baseline_sha256": "434a59c8be8e73744c6f46195a6c384ac686615a888b7c109216275ae3a2bc9d",
+      "current_sha256": "434a59c8be8e73744c6f46195a6c384ac686615a888b7c109216275ae3a2bc9d",
+      "match": true
+    },
+    {
+      "path": "npc/flow/02_syn/run.tcl",
+      "baseline_sha256": "afa8266cb2929c28a0ea17fdfd071b2681368cae500e894c8bbf14e5264fad3e",
+      "current_sha256": "afa8266cb2929c28a0ea17fdfd071b2681368cae500e894c8bbf14e5264fad3e",
+      "match": true
+    },
+    {
+      "path": "npc/flow/01_common/capacitance.tcl",
+      "baseline_sha256": "3d1af8e02dee11f9877949d0093b0edc62119a6987bc759ac6189badcf44d1e1",
+      "current_sha256": "3d1af8e02dee11f9877949d0093b0edc62119a6987bc759ac6189badcf44d1e1",
+      "match": true
+    },
+    {
+      "path": "npc/flow/01_common/flow.py",
+      "baseline_sha256": "204141d75d661dc463ae74fa3a2c8cf7afebe2ab8d9f9e2946eecbf971346856",
+      "current_sha256": "204141d75d661dc463ae74fa3a2c8cf7afebe2ab8d9f9e2946eecbf971346856",
+      "match": true
+    },
+    {
+      "path": "npc/flow/01_common/config_dump.tcl",
+      "baseline_sha256": "e6dbf4ba202391a3199fe2a152fa9766ad456e37988ab5ea9903eb7f81e28101",
+      "current_sha256": "e6dbf4ba202391a3199fe2a152fa9766ad456e37988ab5ea9903eb7f81e28101",
+      "match": true
+    },
+    {
+      "path": "npc/flow/01_common/setup.tcl",
+      "baseline_sha256": "85ee895c5f534ec89d5d13a4c162873e5d5cce01ae25b80d4dd37b183997d730",
+      "current_sha256": "85ee895c5f534ec89d5d13a4c162873e5d5cce01ae25b80d4dd37b183997d730",
+      "match": true
+    },
+    {
+      "path": "npc/flow/04_tests/sdc_check.tcl",
+      "baseline_sha256": "e6833ed68a2a08b363a57e2f799da0b2cae2224e664b550e2c5d62c9ca65fe7e",
+      "current_sha256": "e6833ed68a2a08b363a57e2f799da0b2cae2224e664b550e2c5d62c9ca65fe7e",
+      "match": true
+    },
+    {
+      "path": "npc/flow/04_tests/test_flow.py",
+      "baseline_sha256": "ac29e25bf5cf566857903e45d64e0802944fca8155468699abbaef2dfa0d2795",
+      "current_sha256": "ac29e25bf5cf566857903e45d64e0802944fca8155468699abbaef2dfa0d2795",
+      "match": true
+    },
+    {
+      "path": "npc/flow/04_tests/eda_mock.tcl",
+      "baseline_sha256": "005d61439593503faf1c4fe1a323f5808b1b98cf5f12ac2cad28d9fc22cef262",
+      "current_sha256": "005d61439593503faf1c4fe1a323f5808b1b98cf5f12ac2cad28d9fc22cef262",
+      "match": true
+    },
+    {
+      "path": "npc/flow/00_indata/constraints/core.sdc",
+      "baseline_sha256": "63af4ff50972c2bffc53c1d706266da3b538027c3ae58f9a3acc361ba6f32688",
+      "current_sha256": "63af4ff50972c2bffc53c1d706266da3b538027c3ae58f9a3acc361ba6f32688",
+      "match": true
+    },
+    {
+      "path": "npc/flow/00_indata/configs/site.example.tcl",
+      "baseline_sha256": "7c18afebe97914855677fe53a0dd28a9e1a4030fde6820e5d5df4f0457e76128",
+      "current_sha256": "7c18afebe97914855677fe53a0dd28a9e1a4030fde6820e5d5df4f0457e76128",
+      "match": true
+    },
+    {
+      "path": "npc/flow/00_indata/configs/npc_core.tcl",
+      "baseline_sha256": "9f86f0e90ae97e732c6e472c778e73a85b1c10c50c995eaa36d7c71619ef4239",
+      "current_sha256": "9f86f0e90ae97e732c6e472c778e73a85b1c10c50c995eaa36d7c71619ef4239",
+      "match": true
+    },
+    {
+      "path": "npc/flow/00_indata/filelists/core.f",
+      "baseline_sha256": "78eb35ab7614d72a663fe17f8bb6cec175ae20b66b352ef0d3f84106b46b018d",
+      "current_sha256": "78eb35ab7614d72a663fe17f8bb6cec175ae20b66b352ef0d3f84106b46b018d",
+      "match": true
+    },
+    {
+      "path": "npc/flow/03_sta/run.tcl",
+      "baseline_sha256": "b22f3f4b9f882956a0df8f073925dca88f10da936621a62d4e63b5f7a8bca746",
+      "current_sha256": "b22f3f4b9f882956a0df8f073925dca88f10da936621a62d4e63b5f7a8bca746",
+      "match": true
+    }
+  ],
+  "external_inputs_locally_available": {
+    "/home/cym/prj/ysyx-workbench/npc/flow/00_indata/DB/STD_NEW/tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.db": false,
+    "/15T/tools/synopsys/syn/V-2023.12-SP5/bin/dc_shell": false,
+    "/15T/tools/synopsys/prime/T-2022.03-SP5/bin/pt_shell": false,
+    "/15T/tools/synopsys/syn/V-2023.12-SP5/admin/setup/.synopsys_dc.setup": false
+  }
+}

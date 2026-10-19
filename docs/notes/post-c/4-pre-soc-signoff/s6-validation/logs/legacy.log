@@ -1,0 +1,1705 @@
+make: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+make lint primitive-test ifu-test lsu-test exu-test \
+	ifu-axi4lite-adapter-test ifu-axi4lite-adapter-integ-test \
+	lsu-axi4lite-adapter-test access-fault-test \
+	address-misaligned-test
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+verilator --lint-only --sv -Wall -Wno-fatal -F /home/cym/prj/ysyx-workbench/npc/filelist.f --top-module ysyx_core
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/./vsrc/core/ysyx_gen_imm.sv:12:49: Bits of signal are not used: 'inst'[6:0]
+                                                                                         : ... In instance ysyx_core.u_decode_imm
+   12 |         input                   [31 : 0]        inst,
+      |                                                 ^~~~
+                       ... For warning description see https://verilator.org/warn/UNUSEDSIGNAL?v=5.008
+                       ... Use "/* verilator lint_off UNUSEDSIGNAL */" and lint_on around source to disable this message.
+verilator --binary --timing --assert --sv -Wall -Wno-fatal -Wno-BLKSEQ -Wno-SYNCASYNCNET -Wno-TIMESCALEMOD \
+	--top-module ysyx_gnrl_buffer_tb --Mdir /home/cym/prj/ysyx-workbench/npc/build/primitive-test \
+	/home/cym/prj/ysyx-workbench/npc/vsrc/gnrl/ysyx_gnrl_primitive.sv \
+	/home/cym/prj/ysyx-workbench/npc/tests/ysyx_gnrl_buffer_tb.sv
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/primitive-test'
+make[2]: Nothing to be done for 'default'.
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/primitive-test'
+/home/cym/prj/ysyx-workbench/npc/build/primitive-test/Vysyx_gnrl_buffer_tb
+ysyx generic ready/valid buffer directed test: PASS
+- /home/cym/prj/ysyx-workbench/npc/tests/ysyx_gnrl_buffer_tb.sv:167: Verilog $finish
+verilator --binary --timing --assert --sv -Wall -Wno-fatal -Wno-BLKSEQ -Wno-SYNCASYNCNET -Wno-TIMESCALEMOD \
+	--top-module ysyx_ifu_tb --Mdir /home/cym/prj/ysyx-workbench/npc/build/ifu-test \
+	/home/cym/prj/ysyx-workbench/npc/vsrc/gnrl/ysyx_gnrl_primitive.sv \
+	/home/cym/prj/ysyx-workbench/npc/vsrc/core/ysyx_ifu.sv /home/cym/prj/ysyx-workbench/npc/tests/ysyx_ifu_tb.sv
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/ifu-test'
+make[2]: Nothing to be done for 'default'.
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/ifu-test'
+/home/cym/prj/ysyx-workbench/npc/build/ifu-test/Vysyx_ifu_tb
+ysyx_ifu directed test: PASS
+- /home/cym/prj/ysyx-workbench/npc/tests/ysyx_ifu_tb.sv:235: Verilog $finish
+verilator --binary --timing --assert --sv -Wall -Wno-fatal -Wno-BLKSEQ -Wno-SYNCASYNCNET -Wno-TIMESCALEMOD \
+	--top-module ysyx_lsu_tb --Mdir /home/cym/prj/ysyx-workbench/npc/build/lsu-test \
+	/home/cym/prj/ysyx-workbench/npc/vsrc/core/ysyx_lsu.sv /home/cym/prj/ysyx-workbench/npc/tests/ysyx_lsu_tb.sv
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/lsu-test'
+make[2]: Nothing to be done for 'default'.
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/lsu-test'
+/home/cym/prj/ysyx-workbench/npc/build/lsu-test/Vysyx_lsu_tb
+ysyx_lsu directed test: PASS
+- /home/cym/prj/ysyx-workbench/npc/tests/ysyx_lsu_tb.sv:184: Verilog $finish
+verilator --binary --timing --assert --sv -Wall -Wno-fatal -Wno-BLKSEQ -Wno-SYNCASYNCNET -Wno-TIMESCALEMOD \
+	--top-module ysyx_exu_tb --Mdir /home/cym/prj/ysyx-workbench/npc/build/exu-test \
+	/home/cym/prj/ysyx-workbench/npc/vsrc/gnrl/ysyx_gnrl_primitive.sv \
+	/home/cym/prj/ysyx-workbench/npc/vsrc/core/ysyx_alu.sv /home/cym/prj/ysyx-workbench/npc/vsrc/core/ysyx_branch.sv \
+	/home/cym/prj/ysyx-workbench/npc/vsrc/core/ysyx_exu.sv /home/cym/prj/ysyx-workbench/npc/tests/ysyx_exu_tb.sv
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/exu-test'
+make[2]: Nothing to be done for 'default'.
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/exu-test'
+/home/cym/prj/ysyx-workbench/npc/build/exu-test/Vysyx_exu_tb
+ysyx_exu directed test: PASS
+- /home/cym/prj/ysyx-workbench/npc/tests/ysyx_exu_tb.sv:408: Verilog $finish
+verilator --binary --timing --assert --sv -Wall -Wno-fatal -Wno-BLKSEQ -Wno-SYNCASYNCNET -Wno-TIMESCALEMOD \
+	--top-module ysyx_ifu_axi4lite_adapter_tb \
+	--Mdir /home/cym/prj/ysyx-workbench/npc/build/ifu-axi4lite-adapter-test \
+	/home/cym/prj/ysyx-workbench/npc/vsrc/bus/ysyx_ifu_axi4lite_adapter.sv \
+	/home/cym/prj/ysyx-workbench/npc/tests/ysyx_ifu_axi4lite_adapter_tb.sv
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/ifu-axi4lite-adapter-test'
+make[2]: Nothing to be done for 'default'.
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/ifu-axi4lite-adapter-test'
+/home/cym/prj/ysyx-workbench/npc/build/ifu-axi4lite-adapter-test/Vysyx_ifu_axi4lite_adapter_tb
+ysyx IFU AXI4-Lite adapter directed test: PASS
+- /home/cym/prj/ysyx-workbench/npc/tests/ysyx_ifu_axi4lite_adapter_tb.sv:193: Verilog $finish
+verilator --binary --timing --assert --sv -Wall -Wno-fatal -Wno-BLKSEQ -Wno-SYNCASYNCNET -Wno-TIMESCALEMOD \
+	--top-module ysyx_ifu_axi4lite_adapter_integ_tb \
+	--Mdir /home/cym/prj/ysyx-workbench/npc/build/ifu-axi4lite-adapter-integ-test \
+	/home/cym/prj/ysyx-workbench/npc/vsrc/gnrl/ysyx_gnrl_primitive.sv \
+	/home/cym/prj/ysyx-workbench/npc/vsrc/core/ysyx_ifu.sv \
+	/home/cym/prj/ysyx-workbench/npc/vsrc/bus/ysyx_ifu_axi4lite_adapter.sv \
+	/home/cym/prj/ysyx-workbench/npc/tests/ysyx_ifu_axi4lite_adapter_integ_tb.sv
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/ifu-axi4lite-adapter-integ-test'
+make[2]: Nothing to be done for 'default'.
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/ifu-axi4lite-adapter-integ-test'
+/home/cym/prj/ysyx-workbench/npc/build/ifu-axi4lite-adapter-integ-test/Vysyx_ifu_axi4lite_adapter_integ_tb
+ysyx IFU + AXI4-Lite adapter integration test: PASS
+- /home/cym/prj/ysyx-workbench/npc/tests/ysyx_ifu_axi4lite_adapter_integ_tb.sv:256: Verilog $finish
+verilator --binary --timing --assert --sv -Wall -Wno-fatal -Wno-BLKSEQ -Wno-SYNCASYNCNET -Wno-TIMESCALEMOD \
+	--top-module ysyx_lsu_axi4lite_adapter_tb \
+	--Mdir /home/cym/prj/ysyx-workbench/npc/build/lsu-axi4lite-adapter-test \
+	/home/cym/prj/ysyx-workbench/npc/vsrc/bus/ysyx_lsu_axi4lite_adapter.sv \
+	/home/cym/prj/ysyx-workbench/npc/tests/ysyx_lsu_axi4lite_adapter_tb.sv
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/lsu-axi4lite-adapter-test'
+make[2]: Nothing to be done for 'default'.
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/lsu-axi4lite-adapter-test'
+/home/cym/prj/ysyx-workbench/npc/build/lsu-axi4lite-adapter-test/Vysyx_lsu_axi4lite_adapter_tb
+ysyx LSU AXI4-Lite adapter directed test: PASS
+- /home/cym/prj/ysyx-workbench/npc/tests/ysyx_lsu_axi4lite_adapter_tb.sv:312: Verilog $finish
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+Access fault fetch -> /home/cym/prj/ysyx-workbench/npc/build/access-fault-test/fetch.log
+Access fault load -> /home/cym/prj/ysyx-workbench/npc/build/access-fault-test/load.log
+Access fault store -> /home/cym/prj/ysyx-workbench/npc/build/access-fault-test/store.log
+Instruction/load/store access fault tests: PASS
+Address-misaligned load -> /home/cym/prj/ysyx-workbench/npc/build/address-misaligned-test/load.log
+Address-misaligned store -> /home/cym/prj/ysyx-workbench/npc/build/address-misaligned-test/store.log
+Load/store address-misaligned tests: PASS
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building add-longlong-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/add-longlong-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m add-longlong-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/add-longlong-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/add-longlong-riscv32e-npc.bin, size = 960[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x80000134[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 1659[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 11049[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 1659[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 6.660[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 659[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 2813[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 194[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 199[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 785[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 194[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 1856, responses = 1856, errors = 0, AR stall cycles = 659, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 546 (loads = 443, stores = 103), responses = 546, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 130, R = 0, AW = 42, W = 34, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building add-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/add-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m add-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/add-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/add-riscv32e-npc.bin, size = 636[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x80000114[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 1095[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 7801[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 1095[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 7.124[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 467[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 1952[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 212[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 105[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 444[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 212[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 1310, responses = 1310, errors = 0, AR stall cycles = 467, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 282 (loads = 243, stores = 39), responses = 282, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 83, R = 0, AW = 9, W = 14, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building bit-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/bit-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m bit-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/bit-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/bit-riscv32e-npc.bin, size = 612[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x8000021c[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 312[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 2182[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 312[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 6.994[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 116[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 571[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 57[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 18[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 85[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 57[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 371, responses = 371, errors = 0, AR stall cycles = 116, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 53 (loads = 34, stores = 19), responses = 53, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 8, R = 0, AW = 2, W = 8, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building bubble-sort-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/bubble-sort-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m bubble-sort-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/bubble-sort-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/bubble-sort-riscv32e-npc.bin, size = 464[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x80000138[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 2871[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 22151[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 2871[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 7.715[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 1272[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 5613[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 789[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 396[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 1633[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 789[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 3749, responses = 3749, errors = 0, AR stall cycles = 1272, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 1055 (loads = 823, stores = 232), responses = 1055, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 251, R = 0, AW = 77, W = 81, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building crc32-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/crc32-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m crc32-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/crc32-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/crc32-riscv32e-npc.bin, size = 1468[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x80000144[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 13282[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 95704[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 13282[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 7.206[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 5420[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 24662[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 3120[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 155[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 537[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 3120[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 16403, responses = 16403, errors = 0, AR stall cycles = 5420, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 351 (loads = 90, stores = 261), responses = 351, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 36, R = 0, AW = 51, W = 74, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building div-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/div-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m div-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/div-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/div-riscv32e-npc.bin, size = 672[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x80000158[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 16468[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 122279[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 16468[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 7.425[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 6996[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 31414[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 4496[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 62[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 221[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 4496[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 20965, responses = 20965, errors = 0, AR stall cycles = 6996, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 150 (loads = 83, stores = 67), responses = 150, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 22, R = 0, AW = 30, W = 14, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building dummy-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/dummy-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m dummy-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/dummy-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/dummy-riscv32e-npc.bin, size = 120[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x80000030[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 12[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 93[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 12[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 7.750[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 7[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 21[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 3[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 2[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 3[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 16, responses = 16, errors = 0, AR stall cycles = 7, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 1 (loads = 0, stores = 1), responses = 1, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 0, R = 0, AW = 0, W = 0, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building fact-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/fact-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m fact-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/fact-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/fact-riscv32e-npc.bin, size = 468[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x800000f8[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 1890[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 13615[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 1890[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 7.204[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 810[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 3472[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 433[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 60[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 166[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 433[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 2326, responses = 2326, errors = 0, AR stall cycles = 810, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 110 (loads = 66, stores = 44), responses = 110, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 31, R = 0, AW = 12, W = 19, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building fib-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/fib-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m fib-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/fib-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/fib-riscv32e-npc.bin, size = 584[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x800000c0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 598[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 4266[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 598[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 7.134[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 242[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 1077[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 118[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 69[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 222[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 118[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 720, responses = 720, errors = 0, AR stall cycles = 242, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 159 (loads = 117, stores = 42), responses = 159, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 46, R = 0, AW = 13, W = 12, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building goldbach-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/goldbach-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m goldbach-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/goldbach-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/goldbach-riscv32e-npc.bin, size = 636[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x80000180[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 8140[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 57171[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 8140[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 7.023[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 3203[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 14690[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 1616[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 287[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 1095[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 1616[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 9786, responses = 9786, errors = 0, AR stall cycles = 3203, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 702 (loads = 449, stores = 253), responses = 702, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 126, R = 0, AW = 79, W = 99, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building hello-str-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/hello-str-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m hello-str-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/hello-str-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/hello-str-riscv32e-npc.bin, size = 7964[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x80000118[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 3300[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 22616[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 3300[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 6.853[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 1310[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 5629[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 439[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 539[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 1801[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 439[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 3760, responses = 3760, errors = 0, AR stall cycles = 1310, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 1139 (loads = 686, stores = 453), responses = 1139, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 245, R = 0, AW = 181, W = 140, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building if-else-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/if-else-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m if-else-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/if-else-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/if-else-riscv32e-npc.bin, size = 416[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x800000e8[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 358[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 2408[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 358[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 6.726[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 128[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 626[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 53[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 11[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 53[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 53[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 412, responses = 412, errors = 0, AR stall cycles = 128, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 35 (loads = 31, stores = 4), responses = 35, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 8, R = 0, AW = 1, W = 2, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building leap-year-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/leap-year-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m leap-year-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/leap-year-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/leap-year-riscv32e-npc.bin, size = 956[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x800000cc[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 8470[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 61901[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 8470[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 7.308[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 3478[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 15960[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 2142[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 42[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 200[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 2142[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 10613, responses = 10613, errors = 0, AR stall cycles = 3478, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 132 (loads = 128, stores = 4), responses = 132, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 39, R = 0, AW = 1, W = 2, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building load-store-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/load-store-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m load-store-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/load-store-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/load-store-riscv32e-npc.bin, size = 708[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x800001fc[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 473[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 3276[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 473[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 6.926[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 193[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 827[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 78[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 64[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 223[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 78[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 557, responses = 557, errors = 0, AR stall cycles = 193, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 134 (loads = 90, stores = 44), responses = 134, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 41, R = 0, AW = 13, W = 11, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building matrix-mul-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/matrix-mul-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m matrix-mul-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/matrix-mul-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/matrix-mul-riscv32e-npc.bin, size = 2056[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x8000015c[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 132175[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 919514[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 132175[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 6.957[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 52536[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 235618[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 25274[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 2370[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 9241[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 25274[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 157579, responses = 157579, errors = 0, AR stall cycles = 52536, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 6158 (loads = 4723, stores = 1435), responses = 6158, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 1481, R = 0, AW = 472, W = 520, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building max-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/max-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m max-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/max-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/max-riscv32e-npc.bin, size = 640[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x80000118[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 1123[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 8099[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 1123[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 7.212[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 485[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 2034[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 248[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 104[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 427[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 248[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 1372, responses = 1372, errors = 0, AR stall cycles = 485, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 282 (loads = 243, stores = 39), responses = 282, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 87, R = 0, AW = 10, W = 7, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building mersenne-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/mersenne-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m mersenne-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/mersenne-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/mersenne-riscv32e-npc.bin, size = 2252[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x80000154[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 25189[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 174440[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 25189[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 6.925[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 9929[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 44532[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 4483[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 1070[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 3378[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 4483[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 29693, responses = 29693, errors = 0, AR stall cycles = 9929, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 2252 (loads = 1090, stores = 1162), responses = 2252, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 341, R = 0, AW = 420, W = 398, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building min3-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/min3-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m min3-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/min3-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/min3-riscv32e-npc.bin, size = 704[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x80000168[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 1444[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 10246[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 1444[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 7.096[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 614[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 2619[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 276[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 138[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 571[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 276[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 1728, responses = 1728, errors = 0, AR stall cycles = 614, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 385 (loads = 311, stores = 74), responses = 385, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 98, R = 0, AW = 24, W = 17, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building mov-c-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/mov-c-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m mov-c-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/mov-c-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/mov-c-riscv32e-npc.bin, size = 408[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x80000124[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 78[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 584[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 78[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 7.487[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 38[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 150[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 17[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 8[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 35[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 17[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 96, responses = 96, errors = 0, AR stall cycles = 38, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 23 (loads = 12, stores = 11), responses = 23, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 2, R = 0, AW = 5, W = 1, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building movsx-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/movsx-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m movsx-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/movsx-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/movsx-riscv32e-npc.bin, size = 592[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x800001d0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 129[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 926[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 129[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 7.178[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 59[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 236[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 25[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 20[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 47[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 25[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 155, responses = 155, errors = 0, AR stall cycles = 59, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 35 (loads = 19, stores = 16), responses = 35, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 13, R = 0, AW = 3, W = 4, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building mul-longlong-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/mul-longlong-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m mul-longlong-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/mul-longlong-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/mul-longlong-riscv32e-npc.bin, size = 760[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x80000170[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 6355[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 42252[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 6355[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 6.649[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 2383[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 10831[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 872[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 104[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 342[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 872[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 7230, responses = 7230, errors = 0, AR stall cycles = 2383, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 222 (loads = 131, stores = 91), responses = 222, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 56, R = 0, AW = 26, W = 27, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building pascal-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/pascal-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m pascal-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/pascal-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/pascal-riscv32e-npc.bin, size = 608[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x80000120[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 3278[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 22462[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 3278[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 6.852[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 1292[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 5751[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 562[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 457[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 1491[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 562[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 3843, responses = 3843, errors = 0, AR stall cycles = 1292, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 968 (loads = 498, stores = 470), responses = 968, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 152, R = 0, AW = 164, W = 173, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building prime-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/prime-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m prime-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/prime-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/prime-riscv32e-npc.bin, size = 516[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x800000e0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 55093[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 394101[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 55093[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 7.153[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 22738[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 101280[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 12425[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 16[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 76[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 12425[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 67519, responses = 67519, errors = 0, AR stall cycles = 22738, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 39 (loads = 24, stores = 15), responses = 39, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 2, R = 0, AW = 7, W = 9, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building quick-sort-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/quick-sort-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m quick-sort-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/quick-sort-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/quick-sort-riscv32e-npc.bin, size = 1196[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x80000414[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 3295[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 22514[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 3295[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 6.833[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 1320[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 5766[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 501[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 283[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 1037[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 501[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 3835, responses = 3835, errors = 0, AR stall cycles = 1320, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 706 (loads = 496, stores = 210), responses = 706, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 160, R = 0, AW = 68, W = 70, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building recursion-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/recursion-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m recursion-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/recursion-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/recursion-riscv32e-npc.bin, size = 944[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x80000290[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 6551[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 44116[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 6551[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 6.734[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 2508[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 11248[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 972[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 610[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 2101[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 972[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 7535, responses = 7535, errors = 0, AR stall cycles = 2508, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 1398 (loads = 909, stores = 489), responses = 1398, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 312, R = 0, AW = 178, W = 154, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building select-sort-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/select-sort-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m select-sort-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/select-sort-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/select-sort-riscv32e-npc.bin, size = 516[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x8000016c[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 2941[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 22136[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 2941[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 7.527[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 1296[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 5659[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 846[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 187[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 891[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 846[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 3789, responses = 3789, errors = 0, AR stall cycles = 1296, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 589 (loads = 485, stores = 104), responses = 589, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 126, R = 0, AW = 30, W = 41, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building shift-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/shift-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m shift-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/shift-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/shift-riscv32e-npc.bin, size = 532[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x8000014c[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 409[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 2848[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 409[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 6.963[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 162[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 719[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 72[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 47[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 181[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 72[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 484, responses = 484, errors = 0, AR stall cycles = 162, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 119 (loads = 83, stores = 36), responses = 119, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 30, R = 0, AW = 9, W = 11, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building shuixianhua-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/shuixianhua-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m shuixianhua-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/shuixianhua-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/shuixianhua-riscv32e-npc.bin, size = 696[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x80000188[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 136792[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 971905[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 136792[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 7.105[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 55589[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 249288[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 29754[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 1692[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 6250[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 29754[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 166681, responses = 166681, errors = 0, AR stall cycles = 55589, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 4011 (loads = 2406, stores = 1605), responses = 4011, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 747, R = 0, AW = 515, W = 533, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building string-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/string-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m string-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/string-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/string-riscv32e-npc.bin, size = 888[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x8000014c[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 1676[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 11427[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 1676[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 6.818[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 684[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 2944[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 266[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 169[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 697[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 266[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 1945, responses = 1945, errors = 0, AR stall cycles = 684, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 473 (loads = 448, stores = 25), responses = 473, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 151, R = 0, AW = 9, W = 11, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building sub-longlong-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/sub-longlong-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m sub-longlong-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/sub-longlong-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/sub-longlong-riscv32e-npc.bin, size = 960[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x80000134[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 1659[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 11049[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 1659[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 6.660[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 659[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 2813[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 194[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 199[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 785[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 194[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 1856, responses = 1856, errors = 0, AR stall cycles = 659, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 546 (loads = 443, stores = 103), responses = 546, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 130, R = 0, AW = 42, W = 34, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building sum-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/sum-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m sum-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/sum-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/sum-riscv32e-npc.bin, size = 228[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x8000009c[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 527[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 3695[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 527[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 7.011[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 232[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 926[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 104[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 90[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 271[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 104[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 632, responses = 632, errors = 0, AR stall cycles = 232, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 205 (loads = 102, stores = 103), responses = 205, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 27, R = 0, AW = 36, W = 33, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building switch-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/switch-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m switch-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/switch-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/switch-riscv32e-npc.bin, size = 392[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x800000d0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 307[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 2103[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 307[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 6.850[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 114[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 548[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 51[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 10[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 59[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 51[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 359, responses = 359, errors = 0, AR stall cycles = 114, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 35 (loads = 31, stores = 4), responses = 35, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 7, R = 0, AW = 1, W = 2, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building to-lower-case-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/to-lower-case-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m to-lower-case-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/to-lower-case-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/to-lower-case-riscv32e-npc.bin, size = 396[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x800000c4[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 2123[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 14697[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 2123[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 6.923[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 877[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 3768[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 387[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 46[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 210[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 387[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 2511, responses = 2511, errors = 0, AR stall cycles = 877, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 135 (loads = 131, stores = 4), responses = 135, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 43, R = 0, AW = 1, W = 2, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+# Building wanshu-run [riscv32e-npc]
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-npc]
+make[3]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ OBJCOPY -> build/wanshu-riscv32e-npc.bin
+mainargs=
+make[3]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[4]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[4]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+[33mload_img:[0m wanshu-riscv32e-npc.bin
+[1;33mHello, ysyx!
+[0mINFO: parse_args: -l
+I-AXI slave: seed=42, max_latency=3, ARREADY=75%
+D-AXI slave: seed=2654435731, max_latency=3, channel_ready=75%
+[1;32mLoading img: /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/wanshu-riscv32e-npc.bin
+[0m[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/load_img.cpp:24 load_img] The image is /home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests/build/wanshu-riscv32e-npc.bin, size = 556[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'serial' at [0xa00003f8, 0xa00003ff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/mmio.c:42 add_mmio_map] Add mmio map 'rtc' at [0xa0000048, 0xa0000067][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:99 difftest_init_npc] open dynamic lib: /home/cym/prj/ysyx-workbench/nemu/build/riscv32-nemu-interpreter-so[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/difftest/dut.c:119 difftest_init_npc] Differential testing: [1;32mON[0m[0m
+[1;34m[src/memory/paddr.c:53 init_mem] physical memory area [0x80000000, 0x87ffffff][0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:202 cpu_exec] sim: [1;32mHIT GOOD TRAP[0m at pc = 0x80000128[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/sim.cpp:110 statistic] total guest instructions = 18135[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:98 sim_stats_report] simulation statistics:[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:99 sim_stats_report]   cycles                  = 129709[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:100 sim_stats_report]   committed instructions = 18135[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:101 sim_stats_report]   CPI                     = 7.152[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:102 sim_stats_report]   IF request stall cycles = 7425[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:104 sim_stats_report]   IF response wait cycles = 33289[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:106 sim_stats_report]   IF response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:108 sim_stats_report]   redirects               = 4095[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:109 sim_stats_report]   data request stall cycles = 263[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:111 sim_stats_report]   data response wait cycles = 975[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:113 sim_stats_report]   data response stall cycles= 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/utils/sim_stats.cpp:115 sim_stats_report]   frontend flushes        = 4095[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:122 report] I-RAM transactions: requests = 22235, responses = 22235, errors = 0, AR stall cycles = 7425, R stall cycles = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:256 report] D-RAM transactions: requests = 683 (loads = 545, stores = 138), responses = 683, errors = 0[0m
+[1;36m[/home/cym/prj/ysyx-workbench/npc/csrc/memory/ram_model.cpp:262 report] D-AXI channel stalls: AR = 161, R = 0, AW = 40, W = 71, B = 0[0m
+[1;32mTestcase end!
+[0mmake[3]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+test list [34 item(s)]: add-longlong add bit bubble-sort crc32 div dummy fact fib goldbach hello-str if-else leap-year load-store matrix-mul max mersenne min3 mov-c movsx mul-longlong pascal prime quick-sort recursion select-sort shift shuixianhua string sub-longlong sum switch to-lower-case wanshu
+[  add-longlong] [1;32mPASS[0m
+[           add] [1;32mPASS[0m
+[           bit] [1;32mPASS[0m
+[   bubble-sort] [1;32mPASS[0m
+[         crc32] [1;32mPASS[0m
+[           div] [1;32mPASS[0m
+[         dummy] [1;32mPASS[0m
+[          fact] [1;32mPASS[0m
+[           fib] [1;32mPASS[0m
+[      goldbach] [1;32mPASS[0m
+[     hello-str] [1;32mPASS[0m
+[       if-else] [1;32mPASS[0m
+[     leap-year] [1;32mPASS[0m
+[    load-store] [1;32mPASS[0m
+[    matrix-mul] [1;32mPASS[0m
+[           max] [1;32mPASS[0m
+[      mersenne] [1;32mPASS[0m
+[          min3] [1;32mPASS[0m
+[         mov-c] [1;32mPASS[0m
+[         movsx] [1;32mPASS[0m
+[  mul-longlong] [1;32mPASS[0m
+[        pascal] [1;32mPASS[0m
+[         prime] [1;32mPASS[0m
+[    quick-sort] [1;32mPASS[0m
+[     recursion] [1;32mPASS[0m
+[   select-sort] [1;32mPASS[0m
+[         shift] [1;32mPASS[0m
+[   shuixianhua] [1;32mPASS[0m
+[        string] [1;32mPASS[0m
+[  sub-longlong] [1;32mPASS[0m
+[           sum] [1;32mPASS[0m
+[        switch] [1;32mPASS[0m
+[ to-lower-case] [1;32mPASS[0m
+[        wanshu] [1;32mPASS[0m
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/am-kernels/tests/cpu-tests'
+[33mINFO:[0m Verilating /home/cym/prj/ysyx-workbench/npc/build/Vysyx_core 	...
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build'
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build'
+AXI4-Lite architectural trace: PASS (d18898e78483a270397c27594904e2fd520d84b7dc7c7dbac9401790f6d34392)
+make: Leaving directory '/home/cym/prj/ysyx-workbench/npc'

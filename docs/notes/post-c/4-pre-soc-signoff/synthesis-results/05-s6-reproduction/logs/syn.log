@@ -1,0 +1,1123 @@
+Info: [VCS_SAVE_RESTORE_INFO] ASLR (Address Space Layout Randomization) is detected on the machine. To enable $save functionality, ASLR will be switched off and simv re-executed.
+Please use '-no_save' simv switch to avoid this.
+
+                           Design Compiler Graphical 
+                                 DC Ultra (TM)
+                                  DFTMAX (TM)
+                              Power Compiler (TM)
+                                 DesignWare (R)
+                                 DC Expert (TM)
+                               Design Vision (TM)
+                               HDL Compiler (TM)
+                               VHDL Compiler (TM)
+                                  DFT Compiler
+                               Design Compiler(R)
+
+               Version V-2023.12-SP5 for linux64 - Jul 16, 2024 
+
+                    Copyright (c) 1988 - 2024 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+   or distribution of this software is strictly prohibited.  Licensed Products
+     communicate with Synopsys servers for the purpose of providing software
+    updates, detecting software piracy and verifying that customers are using
+    Licensed Products in conformity with the applicable License Key for such
+  Licensed Products. Synopsys will use information gathered in connection with
+    this process to deliver software updates and pursue software pirates and
+                                   infringers.
+
+ Inclusivity & Diversity - Visit SolvNetPlus to read the "Synopsys Statement on
+            Inclusivity and Diversity" (Refer to article 000036315 at
+                        https://solvnetplus.synopsys.com)
+Initializing...
+Initializing gui preferences from file  /home/cym/.synopsys_dc_gui/preferences.tcl
+Current time:       Mon Oct 19 19:13:16 2026
+Hostname:           rack-01
+CPU Model:          AMD EPYC 9654 96-Core Processor
+CPU Details:        Cores = 1 : Sockets = 1 : Cache Size = 1024 KB : Freq = 2.40 GHz
+OS:                 Linux 4.18.0-553.109.1.el8_10.x86_64
+RAM:                1510 GB (Free 921 GB)
+Swap:                 3 GB (Free   3 GB)
+Work Filesystem:    /home mounted to /dev/mapper/rl_rack--01-home
+Tmp Filesystem:     / mounted to /dev/mapper/rl_rack--01-root
+Work Disk:          1786 GB (Free 1511 GB)
+Tmp Disk:            69 GB (Free  28 GB)
+
+CPU Load: 81%, Ram Free: 921 GB, Swap Free: 3 GB, Work Disk Free: 1511 GB, Tmp Disk Free: 28 GB
+# DC 综合入口：冻结的 SV RTL + 工艺库 + SDC → 标准单元网表/设计数据库/报告。
+# 普通非物理综合不会给出布局、时钟树或布线结果；脚本可运行也不等于时序达标。
+# 组织方式参考 ref-flow 的分阶段脚本；这里将库配置移到展开/link 之前。
+if {[catch {
+    source [file join $::env(NPC_FLOW_SNAPSHOT) 01_common setup.tcl]
+    source [file join $::env(NPC_FLOW_SNAPSHOT) 01_common capacitance.tcl]
+    if {[shell_is_in_topographical_mode]} {error "Baseline requires wire-load DC, not TOPO"}
+    # 阶段 1：库/工作目录准备。WORK 保存 analyze 中间数据，每个 run 独立。
+    libraries
+    library_reports
+    define_design_lib WORK -path [file join $run work]
+    # Library setup precedes analyze/elaborate/link. All sources are SV.
+    # 阶段 2：analyze 检查 SV 并产生 HDL 中间表示；elaborate 根据 top、参数和
+    # generate 展开层次，形成工艺无关逻辑；此时还没有完成标准单元映射。
+    # current_design 指定随后命令作用的设计；link 把实例引用连接到模块/库定义。
+    # 依据：DC P-2019.03 正文 6-4 / PDF 154。
+    require_true [analyze -format sverilog -define [dict get $cfg defines] $rtl_sources] "analyze failed"
+    elaborate $top
+    current_design $top
+    require_true [link] "link failed"
+    # check_design 找结构问题；它不证明功能等价，也不证明所有路径满足时序。
+    # redirect 将工具报告写入文件，同时保留命令返回值供 require_true 检查。
+    redirect -file [file join $reports checks check_design_pre.rpt] {set ok [check_design]}
+    require_true $ok "pre-compile check_design failed"
+    # 阶段 3：施加环境与约束。DC 需要知道时钟和外部预算才能按目标优化。
+    environment
+    source [file join $npc_root [dict get $cfg sdc]]
+    # 限制非时钟网络的 fanout load，替代额外的全局 0.075 pF 电容目标。
+    # 与 C906 公共 SDC 的 MAX_FANOUT=32 一致；不是把库电容检查关掉。
+    # DC P-2019.03 8-6–8-7：fanout 是库 fanout_load 之和，不一定是 pin 个数。
+    # 施加到本次 compile 的顶层，避免子 design 约束在顶层综合后丢失（10-12）。
+    set syn_max_fanout 32
+    set_max_fanout $syn_max_fanout [current_design]
+    # ideal clock 是时序模型；是否修复 clock DRC 是另一项设置。
+    # 8-13–8-14 推荐 -on_clock_network，覆盖完整时钟网络（含上游时钟逻辑），
+    # 避免按 32 的普通数据网络目标给时钟插 buffer。此命令不改变时钟时序模型。
+    # 当前无 CTS/gating，SDC 保持 ideal clock 和指定 slew/uncertainty。
+    # 只关闭 clock network 的 DRC 修复，不理想化 reset 或 LSU req_fire。
+    set_auto_disable_drc_nets -on_clock_network true
+    puts "NPC_SYN_CLOCK_DRC_POLICY: requested -on_clock_network true; verify mapped clock connectivity"
+    # 顶层 max_fanout 必须保留。clock net 属性在 DC 2023 实测不可查询，
+    # 仅作为可选诊断；UNAVAILABLE 不等于设置失败，也不等于已经验证保护生效。
+    proc check_syn_fanout_policy {phase expected} {
+        global top
+        set design [current_design]
+        if {[get_object_name $design] ne $top} {error "Fanout policy check is not at synthesis top"}
+        if {[catch {get_attribute $design max_fanout} actual] ||
+            ![string is double -strict $actual]} {
+            error "Synthesis max_fanout missing at $phase"
+        }
+        if {abs($actual - $expected) > 1e-9} {error "Synthesis max_fanout changed at $phase: $actual"}
+        set clock_nets [get_nets -of_objects [get_ports clk]]
+        if {[sizeof_collection $clock_nets] == 0} {error "Clock source net missing at $phase"}
+        foreach_in_collection net $clock_nets {
+            if {[catch {get_attribute -quiet $net auto_disable_drc_nets} disabled] || $disabled eq ""} {
+                puts "NPC_SYN_CLOCK_DRC: $phase net=[get_object_name $net] auto_disable_drc_nets=UNAVAILABLE; review clock connectivity"
+                continue
+            }
+            if {![string is boolean -strict $disabled]} {error "Unexpected clock DRC attribute at $phase: $disabled"}
+            if {!$disabled} {error "Clock DRC protection lost at $phase: [get_object_name $net]"}
+            puts "NPC_SYN_CLOCK_DRC: $phase net=[get_object_name $net] auto_disable_drc_nets=$disabled"
+        }
+        puts "NPC_SYN_FANOUT: $phase design=$top max_fanout=$actual"
+    }
+    check_syn_fanout_policy pre_compile $syn_max_fanout
+    # 03 的无负载 EXU buffer 与 input→output 直通连接重合；本轮撤去原来的
+    # set_fix_multiple_port_nets -all -buffer_constants，检验强制端口隔离是否留下冗余单元。
+    # DC 默认可用 assign 表示直通/多端口网络，PT 可读该网表；module 边界不必插 buffer。
+    # 依据：DC P-2019.03 正文 11-32–11-33。仍允许 compile 为真实时序/负载需求插 buffer。
+    # 不手工删除 U4 等实例、不伪造内部负载，也不放宽库电容限制；结果必须由新 PT 验证。
+    # 后端接入若要求修复此类连接，再单独选择重连/缓冲策略并重跑，而非提前强制补 buffer。
+    puts "NPC_SYN_POLICY: no explicit multiple-port-net repair; feedthrough assigns allowed"
+    # Ordinary compile avoids an implicit Ultra/Graphical/clock-gating dependency.
+    # No gate_clock, scan, UPF, datapath gating, incremental or physical options.
+    # 阶段 4：compile 优化逻辑并映射到 target_library 的具体单元。
+    # map_effort 是映射优化努力等级，不是目标频率；目标周期由 SDC 给出。
+    require_true [compile -map_effort medium] "compile failed"
+    check_syn_fanout_policy post_compile $syn_max_fanout
+    # 将层次内名字规范成 Verilog 可导出的形式，不改变要实现的逻辑功能。
+    change_names -rules verilog -hierarchy
+    redirect -file [file join $reports checks check_design_post.rpt] {set ok [check_design]}
+    require_true $ok "post-compile check_design failed"
+    # 只检查叶级单元是否仍未映射；层次容器本身不应被误当作待映射逻辑。
+    # 本设计预期只有边沿触发的寄存器；发现 level-sensitive latch 则停止。
+    set unmapped [get_cells -hierarchical -filter {is_hierarchical == false && is_unmapped == true}]
+    if {[sizeof_collection $unmapped] != 0} {error "Unmapped cells remain"}
+    if {[sizeof_collection [all_registers -level_sensitive]] != 0} {error "Unexpected latches in mapped design"}
+    # 阶段 5：固定交付物。core.v 是单元实例/连线，供 PT 读取；core.ddc 是
+    # DC 的设计数据库，保留工具设计信息，不能与输入的工艺 .db 混淆。
+    # dc.sdc 保存 DC 当前约束作核对；PT 实际重放的是同一份原始设计 SDC。
+    write -format verilog -hierarchy -output [file join $outputs core.v]
+    write -format ddc -hierarchy -output [file join $outputs core.ddc]
+    write_sdc [file join $outputs dc.sdc]
+    # 阶段 6：报告解释。area 是映射单元面积，非 floorplan/die 面积；
+    # QoR（Quality of Results）汇总优化结果；resources/reference 帮助确认
+    # 乘除法等结构实际映射成了什么；design 报告用于核对环境/WLM。
+    redirect -file [file join $reports area area.rpt] {report_area -hierarchy}
+    redirect -file [file join $reports summary qor.rpt] {report_qor}
+    redirect -file [file join $reports area resources.rpt] {report_resources -hierarchy}
+    redirect -file [file join $reports area references.rpt] {report_reference -hierarchy}
+    redirect -file [file join $reports environment design.rpt] {report_design}
+    # TIM-134 只报告数量，不说明网络名称。按工具实际阈值查询整个层次，
+    # 同时保存连接明细；不先假定它是 clk，也不修改阈值来隐藏 warning。
+    # 这里数的是直接连接的 fanout，不穿透 buffer/inverter 合并整棵树。
+    redirect -file [file join $reports checks high_fanout.rpt] {
+        # threshold=1000 是工具高扇出建模/报告阈值，和优化目标 max_fanout=32 不同。
+        check_syn_fanout_policy report $syn_max_fanout
+        puts "high_fanout_net_threshold: [get_app_var high_fanout_net_threshold]"
+        set high_fanout_nets [all_high_fanout -nets]
+        puts "high_fanout_net_count: [sizeof_collection $high_fanout_nets]"
+        if {[sizeof_collection $high_fanout_nets] == 0} {
+            puts "No nets exceed the tool high-fanout threshold."
+        } else {
+            foreach_in_collection net $high_fanout_nets {
+                puts "high_fanout_net: [get_object_name $net]"
+                report_net -connections -verbose $net
+            }
+        }
+    }
+    # check_timing 查约束/分析完整性；constraint 列违例；report_timing 展示路径。
+    # max 关注晚到数据（通常为 setup/recovery），min 关注早到数据（hold/removal）；
+    # -max_paths 20 仅限制报告展示数量，不等于整个设计只分析 20 条路径。
+    redirect -file [file join $reports checks check_timing.rpt] {check_timing}
+    redirect -file [file join $reports checks constraint_violations.rpt] {report_constraint -all_violators -significant_digits 6 -nosplit}
+    redirect -file [file join $reports timing timing_max.rpt] {report_timing -delay_type max -max_paths 20 -significant_digits 6 -nosplit}
+    redirect -file [file join $reports timing timing_min.rpt] {report_timing -delay_type min -max_paths 20 -significant_digits 6 -nosplit}
+    report_lsu_enable_capacitance
+    # Power never changes the saved timing design. Its diagnostics are isolated.
+    # 阶段 7（可选）：时序产物导出后才估算功耗，不把活动假设用于本轮优化。
+    # -base_clock 将 toggle rate 关联到 core_clk 周期；时钟每周期翻转两次，
+    # reset 假定不激活，其余输入只给统计活动，内部活动仍有默认/传播成分。
+    # BEGIN/END 供 driver 区分可选功耗诊断；没有异常也只能标为待审查。
+    # 普通 DC 的具体活动/报告选项仍须查服务器帮助；User Guide 中的 Graphical
+    # 示例不是本模式已验证的依据，详见 M4/2-flow.md §6。
+    set power_status "NOT_EVALUATED: disabled"
+    if {[dict get $cfg power_enable]} {
+        puts "NPC_OPTIONAL_POWER_BEGIN"
+        set power_error [catch {
+            redirect -file [file join $reports power power_attempt.rpt] {
+                set_switching_activity -base_clock core_clk -toggle_rate [dict get $cfg power_toggle] \
+                    -static_probability [dict get $cfg power_probability] $data_inputs
+                set_switching_activity -base_clock core_clk -toggle_rate 2.0 -static_probability 0.5 [get_ports clk]
+                set_switching_activity -base_clock core_clk -toggle_rate 0.0 -static_probability 1.0 [get_ports rst_n]
+                report_switching_activity
+                report_power
+                report_power -hierarchy
+            }
+        } power_message]
+        if {$power_error} {set power_status "NOT_EVALUATED: $power_message"} else {
+            set power_status "REVIEW_REQUIRED: assumed input activity; internal default/propagated activity; no workload"
+        }
+        puts "NPC_OPTIONAL_POWER_END"
+    }
+    set f [open [file join $reports power power_status.txt] w]; puts $f $power_status; close $f
+    complete
+} message]} {puts stderr "NPC_FLOW_ERROR: $message"; exit 1}
+Loading db file '/home/cym/prj/ysyx-workbench/npc/flow/00_indata/DB/STD_NEW/tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.db'
+Information: Using CCS timing libraries. (TIM-024)
+Loading db file '/15T/tools/synopsys/syn/V-2023.12-SP5/libraries/syn/standard.sldb'
+Loading db file '/15T/tools/synopsys/syn/V-2023.12-SP5/libraries/syn/gtech.db'
+  Loading link library 'tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs'
+  Loading link library 'gtech'
+Loading db file '/home/cym/prj/ysyx-workbench/npc/flow/00_indata/DB/STD_NEW/tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.db'
+Warning: Overwriting design file '/home/cym/prj/ysyx-workbench/npc/flow/00_indata/DB/STD_NEW/tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.db'. (DDB-24)
+Loaded 0 designs.
+Running PRESTO HDLC
+Compiling source file ./vsrc/gnrl/ysyx_gnrl_primitive.sv
+Opening include file ./vsrc/gnrl/ysyx_global.sv
+Compiling source file ./vsrc/core/ysyx_alu.sv
+Compiling source file ./vsrc/core/ysyx_branch.sv
+Compiling source file ./vsrc/core/ysyx_gen_imm.sv
+Compiling source file ./vsrc/core/ysyx_idu.sv
+Compiling source file ./vsrc/core/ysyx_regfile.sv
+Compiling source file ./vsrc/core/ysyx_csr.sv
+Compiling source file ./vsrc/core/ysyx_ifu.sv
+Compiling source file ./vsrc/core/ysyx_opbuf.sv
+Compiling source file ./vsrc/core/ysyx_exu.sv
+Compiling source file ./vsrc/core/ysyx_lsu.sv
+Compiling source file ./vsrc/bus/ysyx_ifu_axi4lite_adapter.sv
+Compiling source file ./vsrc/bus/ysyx_lsu_axi4lite_adapter.sv
+Compiling source file ./vsrc/core/ysyx_core.sv
+Compiling source file ./vsrc/bus/ysyx_axi4lite_arbiter.sv
+Compiling source file ./vsrc/top/ysyx_core_axi4lite.sv
+Presto compilation completed successfully.
+Running PRESTO HDLC
+Presto compilation completed successfully. (ysyx_core_axi4lite)
+Elaborated 1 design.
+Current design is now 'ysyx_core_axi4lite'.
+Information: Building the design 'ysyx_core'. (HDL-193)
+Presto compilation completed successfully. (ysyx_core)
+Information: Building the design 'ysyx_axi4lite_arbiter'. (HDL-193)
+
+Statistics for case statements in always block at line 112 in file
+	'./vsrc/bus/ysyx_axi4lite_arbiter.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|           129            |    auto/auto     |
+===============================================
+
+Inferred memory devices in process
+	in routine ysyx_axi4lite_arbiter line 112 in file
+		'./vsrc/bus/ysyx_axi4lite_arbiter.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|     resp_q_reg      | Flip-flop |   2   |  Y  | N  | Y  | N  | N  | N  | N  |
+|     state_q_reg     | Flip-flop |   4   |  Y  | N  | Y  | N  | N  | N  | N  |
+|     owner_q_reg     | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|     write_q_reg     | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|  prefer_lsu_q_reg   | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|    aw_have_q_reg    | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|    w_have_q_reg     | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|    aw_sent_q_reg    | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|    w_sent_q_reg     | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|     addr_q_reg      | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|     prot_q_reg      | Flip-flop |   3   |  Y  | N  | Y  | N  | N  | N  | N  |
+|     wdata_q_reg     | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|     strb_q_reg      | Flip-flop |   4   |  Y  | N  | Y  | N  | N  | N  | N  |
+|     rdata_q_reg     | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (ysyx_axi4lite_arbiter)
+Information: Building the design 'ysyx_gnrl_dfflrs' instantiated from design 'ysyx_core' with
+	the parameters "DW=32,RST=32'h80000000". (HDL-193)
+
+Inferred memory devices in process
+	in routine ysyx_gnrl_dfflrs_32_80000000 line 137 in file
+		'./vsrc/gnrl/ysyx_gnrl_primitive.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|     qout_r_reg      | Flip-flop |   1   |  N  | N  | N  | Y  | N  | N  | N  |
+|     qout_r_reg      | Flip-flop |  31   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (ysyx_gnrl_dfflrs_32_80000000)
+Information: Building the design 'ysyx_ifu' instantiated from design 'ysyx_core' with
+	the parameters "PC_RST=32'h80000000,IFQ_DEPTH=2". (HDL-193)
+
+Statistics for case statements in always block at line 85 in file
+	'./vsrc/core/ysyx_ifu.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            97            |    auto/auto     |
+===============================================
+
+Inferred memory devices in process
+	in routine ysyx_ifu_80000000_2 line 85 in file
+		'./vsrc/core/ysyx_ifu.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|  request_pc_q_reg   | Flip-flop |   1   |  N  | N  | N  | Y  | N  | N  | N  |
+|  request_pc_q_reg   | Flip-flop |  31   |  Y  | N  | Y  | N  | N  | N  | N  |
+|     state_q_reg     | Flip-flop |   2   |  Y  | N  | Y  | N  | N  | N  | N  |
+|   fetch_pc_q_reg    | Flip-flop |   1   |  N  | N  | N  | Y  | N  | N  | N  |
+|   fetch_pc_q_reg    | Flip-flop |  31   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (ysyx_ifu_80000000_2)
+Information: Building the design 'ysyx_idu'. (HDL-193)
+Presto compilation completed successfully. (ysyx_idu)
+Information: Building the design 'ysyx_gen_imm'. (HDL-193)
+
+Statistics for case statements in always block at line 18 in file
+	'./vsrc/core/ysyx_gen_imm.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            19            |    auto/auto     |
+===============================================
+Presto compilation completed successfully. (ysyx_gen_imm)
+Information: Building the design 'ysyx_regfile'. (HDL-193)
+
+Inferred memory devices in process
+	in routine ysyx_regfile line 25 in file
+		'./vsrc/core/ysyx_regfile.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|    reg_file_reg     | Flip-flop |  512  |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Statistics for MUX_OPs
+======================================================
+| block name/line  | Inputs | Outputs | # sel inputs |
+======================================================
+| ysyx_regfile/34  |   16   |   32    |      4       |
+| ysyx_regfile/35  |   16   |   32    |      4       |
+======================================================
+Presto compilation completed successfully. (ysyx_regfile)
+Information: Building the design 'ysyx_opbuf'. (HDL-193)
+Presto compilation completed successfully. (ysyx_opbuf)
+Information: Building the design 'ysyx_exu'. (HDL-193)
+
+Inferred memory devices in process
+	in routine ysyx_exu line 207 in file
+		'./vsrc/core/ysyx_exu.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|   mem_wait_q_reg    | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (ysyx_exu)
+Information: Building the design 'ysyx_csr'. (HDL-193)
+Presto compilation completed successfully. (ysyx_csr)
+Information: Building the design 'ysyx_lsu'. (HDL-193)
+Warning:  ./vsrc/core/ysyx_lsu.sv:124: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+
+Statistics for case statements in always block at line 72 in file
+	'./vsrc/core/ysyx_lsu.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            82            |    auto/auto     |
+|           105            |    auto/auto     |
+===============================================
+
+Inferred memory devices in process
+	in routine ysyx_lsu line 72 in file
+		'./vsrc/core/ysyx_lsu.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+| response_error_reg  | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|      state_reg      | Flip-flop |   2   |  Y  | N  | Y  | N  | N  | N  | N  |
+|   req_write_q_reg   | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|   req_addr_q_reg    | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|   req_type_q_reg    | Flip-flop |   3   |  Y  | N  | Y  | N  | N  | N  | N  |
+|   req_wdata_q_reg   | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|  response_data_reg  | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (ysyx_lsu)
+Information: Building the design 'ysyx_ifu_axi4lite_adapter'. (HDL-193)
+Warning:  ./vsrc/bus/ysyx_ifu_axi4lite_adapter.sv:97: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+
+Statistics for case statements in always block at line 64 in file
+	'./vsrc/bus/ysyx_ifu_axi4lite_adapter.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            71            |    auto/auto     |
+===============================================
+
+Inferred memory devices in process
+	in routine ysyx_ifu_axi4lite_adapter line 64 in file
+		'./vsrc/bus/ysyx_ifu_axi4lite_adapter.sv'.
+================================================================================
+|    Register Name     |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+================================================================================
+| response_error_q_reg | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|     state_q_reg      | Flip-flop |   2   |  Y  | N  | Y  | N  | N  | N  | N  |
+|  request_addr_q_reg  | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+| response_data_q_reg  | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+================================================================================
+Presto compilation completed successfully. (ysyx_ifu_axi4lite_adapter)
+Information: Building the design 'ysyx_lsu_axi4lite_adapter'. (HDL-193)
+
+Statistics for case statements in always block at line 79 in file
+	'./vsrc/bus/ysyx_lsu_axi4lite_adapter.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            80            |    auto/auto     |
+===============================================
+
+Statistics for case statements in always block at line 122 in file
+	'./vsrc/bus/ysyx_lsu_axi4lite_adapter.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|           133            |    auto/auto     |
+===============================================
+
+Inferred memory devices in process
+	in routine ysyx_lsu_axi4lite_adapter line 122 in file
+		'./vsrc/bus/ysyx_lsu_axi4lite_adapter.sv'.
+================================================================================
+|    Register Name     |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+================================================================================
+| response_error_q_reg | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|     state_q_reg      | Flip-flop |   3   |  Y  | N  | Y  | N  | N  | N  | N  |
+|  request_addr_q_reg  | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|  request_size_q_reg  | Flip-flop |   2   |  Y  | N  | Y  | N  | N  | N  | N  |
+| request_wdata_q_reg  | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|   aw_pending_q_reg   | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|   w_pending_q_reg    | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+| response_data_q_reg  | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+================================================================================
+Presto compilation completed successfully. (ysyx_lsu_axi4lite_adapter)
+Information: Building the design 'ysyx_gnrl_fifo' instantiated from design 'ysyx_ifu_80000000_2' with
+	the parameters "DW=65,DEPTH=2". (HDL-193)
+
+Statistics for case statements in always block at line 327 in file
+	'./vsrc/gnrl/ysyx_gnrl_primitive.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|           355            |    auto/auto     |
+===============================================
+
+Inferred memory devices in process
+	in routine ysyx_gnrl_fifo_DW65_DEPTH2 line 327 in file
+		'./vsrc/gnrl/ysyx_gnrl_primitive.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|     count_q_reg     | Flip-flop |   2   |  Y  | N  | Y  | N  | N  | N  | N  |
+|     storage_reg     | Flip-flop |  130  |  Y  | N  | N  | N  | N  | N  | N  |
+|   read_ptr_q_reg    | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|   write_ptr_q_reg   | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (ysyx_gnrl_fifo_DW65_DEPTH2)
+Information: Building the design 'ysyx_gnrl_rv_reg' instantiated from design 'ysyx_opbuf' with
+	the parameters "DW=277". (HDL-193)
+
+Inferred memory devices in process
+	in routine ysyx_gnrl_rv_reg_DW277 line 271 in file
+		'./vsrc/gnrl/ysyx_gnrl_primitive.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|     valid_q_reg     | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|     data_q_reg      | Flip-flop |  277  |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (ysyx_gnrl_rv_reg_DW277)
+Information: Building the design 'ysyx_alu'. (HDL-193)
+Warning:  ./vsrc/core/ysyx_alu.sv:28: signed to unsigned assignment occurs. (VER-318)
+
+Statistics for case statements in always block at line 10 in file
+	'./vsrc/core/ysyx_alu.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            12            |    auto/auto     |
+===============================================
+Presto compilation completed successfully. (ysyx_alu)
+Information: Building the design 'ysyx_branch'. (HDL-193)
+
+Statistics for case statements in always block at line 17 in file
+	'./vsrc/core/ysyx_branch.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            18            |    auto/auto     |
+===============================================
+Presto compilation completed successfully. (ysyx_branch)
+Information: Building the design 'ysyx_gnrl_data_mux' instantiated from design 'ysyx_exu' with
+	the parameters "DW=32,N=4". (HDL-193)
+Presto compilation completed successfully. (ysyx_gnrl_data_mux_DW32_N4)
+Information: Building the design 'ysyx_gnrl_dfflrs' instantiated from design 'ysyx_csr' with
+	the parameters "32,@28206b3a33343320743a20693a2028206b3a33303820743a20693a31362028206b3a31373820743a31333a22696e74254e624d764f26262220693a20693a20292028206b3a31373820743a31333a22696e74254e624d764f26262220693a20693a202920292028206b3a31383220743a32393a22617272617928302533312530256c6f6769632925386667493162642220693a20683a33323a303030303138303020292028206b3a31383220743a32393a22617272617928302533312530256c6f6769632925386667493162642220693a20683a33323a3030303030303030202920292000@". (HDL-193)
+
+Inferred memory devices in process
+	in routine ysyx_gnrl_dfflrs_DW32_856242 line 137 in file
+		'./vsrc/gnrl/ysyx_gnrl_primitive.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|     qout_r_reg      | Flip-flop |  30   |  Y  | N  | Y  | N  | N  | N  | N  |
+|     qout_r_reg      | Flip-flop |   2   |  Y  | N  | N  | Y  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (ysyx_gnrl_dfflrs_DW32_856242)
+Information: Building the design 'ysyx_gnrl_dfflrs' instantiated from design 'ysyx_csr' with
+	the parameters "32,@28206b3a33343320743a20693a2028206b3a33303820743a20693a31362028206b3a31373820743a31333a22696e74254e624d764f26262220693a20693a3120292028206b3a31373820743a31333a22696e74254e624d764f26262220693a20693a202920292028206b3a31383220743a32393a22617272617928302533312530256c6f6769632925386667493162642220693a20683a33323a303030303138303020292028206b3a31383220743a32393a22617272617928302533312530256c6f6769632925386667493162642220693a20683a33323a3030303030303030202920292000@". (HDL-193)
+
+Inferred memory devices in process
+	in routine ysyx_gnrl_dfflrs_DW32_393242 line 137 in file
+		'./vsrc/gnrl/ysyx_gnrl_primitive.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|     qout_r_reg      | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (ysyx_gnrl_dfflrs_DW32_393242)
+Information: Building the design 'ysyx_gnrl_dfflrs' instantiated from design 'ysyx_csr' with
+	the parameters "32,@28206b3a33343320743a20693a2028206b3a33303820743a20693a31362028206b3a31373820743a31333a22696e74254e624d764f26262220693a20693a3220292028206b3a31373820743a31333a22696e74254e624d764f26262220693a20693a202920292028206b3a31383220743a32393a22617272617928302533312530256c6f6769632925386667493162642220693a20683a33323a303030303138303020292028206b3a31383220743a32393a22617272617928302533312530256c6f6769632925386667493162642220693a20683a33323a3030303030303030202920292000@". (HDL-193)
+
+Inferred memory devices in process
+	in routine ysyx_gnrl_dfflrs_DW32_197242 line 137 in file
+		'./vsrc/gnrl/ysyx_gnrl_primitive.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|     qout_r_reg      | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (ysyx_gnrl_dfflrs_DW32_197242)
+Information: Building the design 'ysyx_gnrl_dfflrs' instantiated from design 'ysyx_csr' with
+	the parameters "32,@28206b3a33343320743a20693a2028206b3a33303820743a20693a31362028206b3a31373820743a31333a22696e74254e624d764f26262220693a20693a3320292028206b3a31373820743a31333a22696e74254e624d764f26262220693a20693a202920292028206b3a31383220743a32393a22617272617928302533312530256c6f6769632925386667493162642220693a20683a33323a303030303138303020292028206b3a31383220743a32393a22617272617928302533312530256c6f6769632925386667493162642220693a20683a33323a3030303030303030202920292000@". (HDL-193)
+
+Inferred memory devices in process
+	in routine ysyx_gnrl_dfflrs_DW32_312242 line 137 in file
+		'./vsrc/gnrl/ysyx_gnrl_primitive.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|     qout_r_reg      | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (ysyx_gnrl_dfflrs_DW32_312242)
+Current design is 'ysyx_core_axi4lite'.
+
+  Linking design 'ysyx_core_axi4lite'
+  Using the following designs and libraries:
+  --------------------------------------------------------------------------
+  * (23 designs)              /home/cym/prj/ysyx-workbench/npc/flow/build/core-tt-5ns-s6-repro/inputs/npc/ysyx_core_axi4lite.db, etc
+  tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs (library) /home/cym/prj/ysyx-workbench/npc/flow/00_indata/DB/STD_NEW/tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.db
+
+Using operating conditions 'tt0p9v25c' found in library 'tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs'.
+Current design is 'ysyx_core_axi4lite'.
+NPC_SYN_CLOCK_DRC_POLICY: requested -on_clock_network true; verify mapped clock connectivity
+Current design is 'ysyx_core_axi4lite'.
+NPC_SYN_CLOCK_DRC: pre_compile net=clk auto_disable_drc_nets=UNAVAILABLE; review clock connectivity
+NPC_SYN_FANOUT: pre_compile design=ysyx_core_axi4lite max_fanout=32.000000
+NPC_SYN_POLICY: no explicit multiple-port-net repair; feedthrough assigns allowed
+CPU Load: 0%, Ram Free: 920 GB, Swap Free: 3 GB, Work Disk Free: 1511 GB, Tmp Disk Free: 28 GB
+Information: Evaluating DesignWare library utilization. (UISN-27)
+
+============================================================================
+| DesignWare Building Block Library  |         Version         | Available |
+============================================================================
+| Basic DW Building Blocks           | V-2023.12-DWBB_202312.5 |     *     |
+| Licensed DW Building Blocks        |                         |           |
+============================================================================
+
+====================================================================================================
+| Flow Information                                                                                 |
+----------------------------------------------------------------------------------------------------
+| Flow         | Design Compiler                                                                   |
+====================================================================================================
+| Design Information                                      | Value                                  |
+====================================================================================================
+| Number of Scenarios                                     | 0                                      |
+| Leaf Cell Count                                         | 3376                                   |
+| Number of User Hierarchies                              | 22                                     |
+| Sequential Cell Count                                   | 1541                                   |
+| Macro Count                                             | 0                                      |
+| Number of Power Domains                                 | 0                                      |
+| Number of Path Groups                                   | 2                                      |
+| Number of VT Class                                      | 0                                      |
+| Number of Clocks                                        | 1                                      |
+| Number of Dont Touch Cells                              | 297                                    |
+| Number of Dont Touch Nets                               | 0                                      |
+| Number of Size Only Cells                               | 0                                      |
+| Design with UPF Data                                    | false                                  |
+====================================================================================================
+
+Information: There are 691 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+
+
+  Beginning Pass 1 Mapping
+  ------------------------
+  Processing 'ysyx_axi4lite_arbiter'
+  Processing 'ysyx_lsu_axi4lite_adapter'
+  Processing 'ysyx_ifu_axi4lite_adapter'
+  Processing 'ysyx_lsu'
+  Processing 'ysyx_gnrl_dfflrs_DW32_312242'
+  Processing 'ysyx_gnrl_dfflrs_DW32_197242'
+  Processing 'ysyx_gnrl_dfflrs_DW32_393242'
+  Processing 'ysyx_gnrl_dfflrs_DW32_856242'
+  Processing 'ysyx_csr'
+  Processing 'ysyx_gnrl_data_mux_DW32_N4'
+  Processing 'ysyx_branch'
+  Processing 'ysyx_alu'
+  Processing 'ysyx_exu'
+  Processing 'ysyx_gnrl_rv_reg_DW277'
+  Processing 'ysyx_opbuf'
+  Processing 'ysyx_regfile'
+Information: The register 'reg_file_reg[0][31]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][30]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][29]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][28]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][27]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][26]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][25]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][24]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][23]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][22]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][21]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][20]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][19]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][18]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][17]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][16]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][15]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][14]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][13]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][12]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][11]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][10]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][9]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][8]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][7]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][6]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][5]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][4]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][3]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][2]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][1]' is a constant and will be removed. (OPT-1206)
+Information: The register 'reg_file_reg[0][0]' is a constant and will be removed. (OPT-1206)
+  Processing 'ysyx_gen_imm'
+  Processing 'ysyx_idu'
+  Processing 'ysyx_gnrl_fifo_DW65_DEPTH2'
+  Processing 'ysyx_ifu_80000000_2'
+  Processing 'ysyx_gnrl_dfflrs_32_80000000'
+  Processing 'ysyx_core'
+  Processing 'ysyx_core_axi4lite'
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+
+  Beginning Implementation Selection
+  ----------------------------------
+  Processing 'ysyx_core_DW01_cmp6_0'
+  Processing 'ysyx_core_DW01_cmp6_1'
+  Processing 'ysyx_lsu_axi4lite_adapter_DW01_ash_0_DW01_ash_1'
+  Processing 'ysyx_lsu_axi4lite_adapter_DW_rash_0'
+  Processing 'ysyx_exu_DW01_add_0'
+  Processing 'ysyx_branch_DW01_cmp2_0'
+  Processing 'ysyx_branch_DW01_cmp6_0_DW01_cmp6_2'
+  Processing 'ysyx_alu_DW_rash_0_DW_rash_1'
+  Processing 'ysyx_alu_DW_rash_1_DW_rash_2'
+  Processing 'ysyx_alu_DW01_cmp2_0_DW01_cmp2_1'
+  Processing 'ysyx_alu_DW01_cmp2_1_DW01_cmp2_2'
+  Processing 'ysyx_alu_DW01_ash_0_DW01_ash_2'
+  Processing 'ysyx_alu_DW01_sub_0'
+  Processing 'ysyx_alu_DW01_add_0_DW01_add_1'
+  Processing 'ysyx_ifu_80000000_2_DW01_add_0_DW01_add_2'
+  Processing 'ysyx_ifu_80000000_2_DW01_add_1_DW01_add_3'
+
+  Beginning Mapping Optimizations  (Medium effort)
+  -------------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:09   26000.7      0.00       0.0       0.0                          
+    0:00:10   26000.7      0.00       0.0       0.0                          
+    0:00:10   26000.7      0.00       0.0       0.0                          
+    0:00:10   26000.7      0.00       0.0       0.0                          
+    0:00:10   26000.7      0.00       0.0       0.0                          
+    0:00:12    9378.1      0.00       0.0       0.0                          
+    0:00:12    9377.8      0.00       0.0       0.0                          
+    0:00:12    9377.8      0.00       0.0       0.0                          
+    0:00:12    9377.8      0.00       0.0       0.0                          
+    0:00:12    9377.8      0.00       0.0       0.0                          
+    0:00:12    9377.8      0.00       0.0       0.0                          
+    0:00:12    9377.8      0.00       0.0       0.0                          
+    0:00:12    9377.8      0.00       0.0       0.0                          
+    0:00:12    9377.8      0.00       0.0       0.0                          
+
+
+
+  Beginning Delay Optimization Phase
+  ----------------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:12    9377.8      0.00       0.0       0.0                          
+    0:00:12    9377.8      0.00       0.0       0.0                          
+    0:00:12    9377.8      0.00       0.0       0.0                          
+    0:00:12    9377.8      0.00       0.0       0.0                          
+    0:00:14    9318.1      0.00       0.0     333.7                          
+
+
+  Beginning Design Rule Fixing  (max_transition)  (max_fanout)  (max_capacitance)
+  ----------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:14    9318.1      0.00       0.0     333.7                          
+    0:00:14    9322.2      0.00       0.0       0.0                          
+
+
+  Beginning Area-Recovery Phase  (cleanup)
+  -----------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:14    9322.2      0.00       0.0       0.0                          
+    0:00:14    9322.2      0.00       0.0       0.0                          
+    0:00:14    9299.3      0.00       0.0       0.0                          
+    0:00:14    9280.5      0.00       0.0       0.0                          
+    0:00:14    9269.4      0.00       0.0       0.0                          
+    0:00:14    9264.2      0.00       0.0       0.0                          
+    0:00:14    9261.2      0.00       0.0       0.0                          
+    0:00:14    9259.3      0.00       0.0       0.0                          
+    0:00:14    9259.3      0.00       0.0       0.0                          
+    0:00:14    9259.3      0.00       0.0       0.0                          
+    0:00:14    9259.3      0.00       0.0       0.0                          
+    0:00:14    9259.3      0.00       0.0       0.0                          
+    0:00:14    9259.3      0.00       0.0       0.0                          
+    0:00:14    9259.3      0.00       0.0       0.0                          
+    0:00:14    9259.3      0.00       0.0       0.0                          
+    0:00:14    9242.9      0.00       0.0       0.0                          
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+Warning: Design 'ysyx_core_axi4lite' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+     Net 'core/u_csr/gen_csr[3].csr_dfflr/clk': 1509 load(s), 1 driver(s)
+CPU Load: 0%, Ram Free: 920 GB, Swap Free: 3 GB, Work Disk Free: 1511 GB, Tmp Disk Free: 28 GB
+Information: Total number of MV cells in the design.
+----------------------------------------------------------------------------------------------------
+ MV Cells                                           Total Number                                   
+----------------------------------------------------------------------------------------------------
+ Level Shifter:                                     0                                             
+ Enable Level Shifter:                              0                                             
+ Isolation Cell:                                    0                                             
+ Retention Cell:                                    0                                             
+ Retention Clamp Cell:                              0                                             
+ Switch Cell:                                       0                                             
+ Always-On Cell:                                    0                                             
+ Repeater Cell:                                     0                                             
+
+----------------------------------------------------------------------------------------------------
+Unmapped MV Cells 
+----------------------------------------------------------------------------------------------------
+0 Isolation Cells are unmapped 
+0 Retention Clamp Cells are unmapped 
+----------------------------------------------------------------------------------------------------
+Current design is 'ysyx_core_axi4lite'.
+NPC_SYN_CLOCK_DRC: post_compile net=clk auto_disable_drc_nets=UNAVAILABLE; review clock connectivity
+NPC_SYN_FANOUT: post_compile design=ysyx_core_axi4lite max_fanout=32.000000
+Warning: In the design ysyx_core, net 'ifu_axi_arprot[2]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_core, net 'dec_trap_cause[2]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[31]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[30]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[29]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[28]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[27]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[26]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[25]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[24]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[23]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[22]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[21]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[20]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[19]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[18]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[17]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[16]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[15]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[14]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[13]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[12]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[11]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[10]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[9]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[8]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[7]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[6]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[5]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[4]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[3]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[2]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[1]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rdata[0]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rresp[1]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'ifu_axi_rresp[0]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[31]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[30]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[29]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[28]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[27]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[26]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[25]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[24]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[23]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[22]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[21]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[20]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[19]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[18]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[17]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[16]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[15]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[14]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[13]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[12]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[11]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[10]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[9]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[8]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[7]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[6]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[5]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[4]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[3]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[2]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[1]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_araddr[0]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_arprot[2]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_arprot[1]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_axi4lite_arbiter, net 'm_axi_arprot[0]' is connecting multiple ports. (UCN-1)
+Warning: The specified replacement character (_) is conflicting with the specified allowed or restricted character.   (UCN-4)
+Warning: In the design ysyx_idu, net 'inst[14]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_idu, net 'inst[13]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_idu, net 'inst[12]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_idu, net '*Logic0*' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_idu, net 'trap_cause[3]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_idu, net 'trap_valid' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[31]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[30]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[29]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[28]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[27]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[26]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[25]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[24]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[23]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[22]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[21]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[20]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[19]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[18]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[17]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[16]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[15]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[14]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[13]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[12]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[11]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[10]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[9]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[8]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[7]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[6]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[5]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[4]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[3]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[2]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[1]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_pc[0]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[31]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[30]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[29]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[28]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[27]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[26]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[25]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[24]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[23]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[22]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[21]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[20]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[19]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[18]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[17]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[16]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[15]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[14]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[13]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[12]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[11]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[10]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[9]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[8]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[7]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[6]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[5]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[4]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[3]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[2]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[1]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_inst[0]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_mem_type[2]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_mem_type[1]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_mem_type[0]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_csr_addr[11]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_csr_addr[10]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_csr_addr[9]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_csr_addr[8]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_csr_addr[7]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_csr_addr[6]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_csr_addr[5]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_csr_addr[4]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_csr_addr[3]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_csr_addr[2]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_csr_addr[1]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_csr_addr[0]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rd_idx[4]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rd_idx[3]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rd_idx[2]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rd_idx[1]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rd_idx[0]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[31]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[30]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[29]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[28]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[27]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[26]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[25]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[24]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[23]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[22]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[21]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[20]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[19]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[18]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[17]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[16]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[15]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[14]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[13]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[12]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[11]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[10]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[9]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[8]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[7]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[6]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[5]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[4]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[3]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[2]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[1]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_rs2_data[0]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[31]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[30]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[29]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[28]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[27]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[26]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[25]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[24]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[23]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[22]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[21]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[20]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[19]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[18]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[17]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[16]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[15]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[14]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[13]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[12]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[11]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[10]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[9]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[8]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[7]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[6]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[5]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[4]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[3]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[2]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[1]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'trap_cause[0]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[31]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[30]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[29]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[28]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[27]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[26]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[25]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[24]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[23]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[22]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[21]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[20]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[19]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[18]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[17]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[16]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[15]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[14]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[13]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[12]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[11]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[10]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[9]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[8]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[7]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[6]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[5]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[4]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[3]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[2]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[1]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'lsu_req_addr[0]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[31]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[30]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[29]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[28]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[27]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[26]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[25]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[24]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[23]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[22]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[21]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[20]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[19]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[18]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[17]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[16]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[15]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[14]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[13]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[12]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[11]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[10]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[9]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[8]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[7]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[6]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[5]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[4]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[3]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[2]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[1]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_npc[0]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_valid' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'op_is_store' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu, net 'commit_exception' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_ifu_axi4lite_adapter, net '*Logic1*' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[31]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[30]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[29]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[28]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[27]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[26]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[25]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[24]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[23]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[22]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[21]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[20]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[19]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[18]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[17]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[16]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[15]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[14]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[13]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[12]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[11]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[10]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[9]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[8]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[7]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[6]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[5]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[4]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[3]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net 'm_axi_awaddr[2]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net '*Logic0*' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_lsu_axi4lite_adapter, net '*Logic1*' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu_DW01_add_0, net 'A[1]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_exu_DW01_add_0, net 'A[0]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_alu_DW_rash_0_DW_rash_1, net 'A[31]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_ifu_80000000_2_DW01_add_0_DW01_add_2, net 'A[1]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_ifu_80000000_2_DW01_add_0_DW01_add_2, net 'A[0]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_ifu_80000000_2_DW01_add_1_DW01_add_3, net 'A[1]' is connecting multiple ports. (UCN-1)
+Warning: In the design ysyx_ifu_80000000_2_DW01_add_1_DW01_add_3, net 'A[0]' is connecting multiple ports. (UCN-1)
+Writing verilog file '/home/cym/prj/ysyx-workbench/npc/flow/build/core-tt-5ns-s6-repro/outputs/core.v'.
+Warning: Verilog 'assign' or 'tran' statements are written out. (VO-4)
+Writing ddc file '/home/cym/prj/ysyx-workbench/npc/flow/build/core-tt-5ns-s6-repro/outputs/core.ddc'.
+exit 0
+
+Memory usage for this session 1862 Mbytes.
+Memory usage for this session including child processes 1862 Mbytes.
+CPU usage for this session 47 seconds ( 0.01 hours ).
+Elapsed time for this session 53 seconds ( 0.01 hours ).
+
+Thank you...

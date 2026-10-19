@@ -1,0 +1,180 @@
+{
+  "date": "2026-10-19",
+  "source_head": "415c87b2ae9a3eafd5c29e859098ee60b9521e87",
+  "initial_worktree": "clean",
+  "build_mode": "existing incremental build directories; test executables and programs rerun; not a clean rebuild or EDA run",
+  "status": "LOCAL_PASS; S6_PENDING_SERVER_REPRODUCTION",
+  "tool_versions": {
+    "python": "3.10.12",
+    "verilator": "Verilator 5.008 2023-03-04 rev v5.008",
+    "riscv_gcc": "11.4.0",
+    "tcl": "8.6.12"
+  },
+  "commands": [
+    {
+      "argv": [
+        "make",
+        "-C",
+        "npc/flow",
+        "check",
+        "test"
+      ],
+      "exit": 0,
+      "seconds": 2.57,
+      "log": "logs/flow-check-test.log"
+    },
+    {
+      "name": "isa-contract",
+      "argv": [
+        "make",
+        "-C",
+        "npc",
+        "isa-contract-test",
+        "git_commit="
+      ],
+      "exit": 0,
+      "seconds": 0.7,
+      "log": "logs/isa-contract.log"
+    },
+    {
+      "name": "scope",
+      "argv": [
+        "make",
+        "-C",
+        "npc",
+        "synthesis-scope-check",
+        "git_commit="
+      ],
+      "exit": 0,
+      "seconds": 0.54,
+      "log": "logs/scope.log"
+    },
+    {
+      "name": "b1-signoff",
+      "argv": [
+        "make",
+        "-C",
+        "npc",
+        "b1-signoff",
+        "git_commit="
+      ],
+      "exit": 0,
+      "seconds": 30.95,
+      "log": "logs/b1-signoff.log"
+    },
+    {
+      "name": "legacy",
+      "argv": [
+        "make",
+        "-C",
+        "npc",
+        "axi4lite-directed-regress",
+        "axi4lite-cpu-regress",
+        "axi4lite-trace-test",
+        "git_commit="
+      ],
+      "exit": 0,
+      "seconds": 11.61,
+      "log": "logs/legacy.log"
+    },
+    {
+      "name": "legacy-seeds",
+      "argv": [
+        "make",
+        "-C",
+        "npc",
+        "seed-regress",
+        "IMG=../am-kernels/tests/cpu-tests/build/add-riscv32e-npc.bin",
+        "git_commit="
+      ],
+      "exit": 0,
+      "seconds": 0.79,
+      "log": "logs/legacy-seeds.log"
+    }
+  ],
+  "summary": {
+    "flow_tests": 44,
+    "scope_profiles": 4,
+    "idu_checks": 360192,
+    "isa_platform_programs": 4,
+    "illegal_traps_per_platform": 97,
+    "b1_fixed_system_programs": 53,
+    "b1_closure_programs": 23,
+    "legacy_cpu_tests": 34,
+    "legacy_delay_seeds": 10,
+    "legacy_trace_sha256": "d18898e78483a270397c27594904e2fd520d84b7dc7c7dbac9401790f6d34392"
+  },
+  "files": {
+    "logs/flow-check-test.log": {
+      "source": "/tmp/npc-m4-s6-20261019/flow-check-test.log",
+      "sha256": "60c04face4f0debeee17ee12c8c882a1e01a500c160bdade01fa49a0f0d0d3ed",
+      "bytes": 5720
+    },
+    "logs/isa-contract.log": {
+      "source": "/tmp/npc-m4-s6-20261019/isa-contract.log",
+      "sha256": "ae8a09d5a2b9efd5b5c05a5c6822665d514d83957fd864427f926651ea16d219",
+      "bytes": 3801
+    },
+    "logs/scope.log": {
+      "source": "/tmp/npc-m4-s6-20261019/scope.log",
+      "sha256": "580b8dbb0d454f57a48c6dc522c4ce8cd799033b778819679f0276e654542adf",
+      "bytes": 465
+    },
+    "logs/b1-signoff.log": {
+      "source": "/tmp/npc-m4-s6-20261019/b1-signoff.log",
+      "sha256": "ca970dbceab39f795cbb63094e5c301cfa030c4137396d4a5000403c928b55db",
+      "bytes": 18836
+    },
+    "logs/legacy.log": {
+      "source": "/tmp/npc-m4-s6-20261019/legacy.log",
+      "sha256": "c36bfb614cd6abcfb0f58c549c374f5f8bc456e6838674b828bc77d032e4ad9f",
+      "bytes": 158890
+    },
+    "logs/legacy-seeds.log": {
+      "source": "/tmp/npc-m4-s6-20261019/legacy-seeds.log",
+      "sha256": "039c4ad0511a2ee6c0c844aa52739fb0d824b08b235114da44fb612455423b57",
+      "bytes": 1122
+    },
+    "results/isa-contract.json": {
+      "source": "npc/build/isa-contract-test/results.json",
+      "sha256": "7456b2bb43f92385eb0e410243b4999e1e8c670d2e257cae760988822577e773",
+      "bytes": 547
+    },
+    "results/scope-manifest.json": {
+      "source": "npc/flow/build/scope-check/manifest.json",
+      "sha256": "d31d29f5f1af5656b24d1a976f65c5e2eb28caa36f3ae2d89d8e3dc970c402a5",
+      "bytes": 7367
+    },
+    "results/b1-system.csv": {
+      "source": "npc/build/b1-system-test-1048576-1000000/results.csv",
+      "sha256": "91818468f652ca719854b822dedac9cbaf44837203275f92c1619dc798309f7e",
+      "bytes": 13678
+    },
+    "results/b1-closure.csv": {
+      "source": "npc/build/b1-closure/results.csv",
+      "sha256": "fd4c0614bb6499ad61ca6b4b40d5065bea74ee3dc649af7fbbca747d61a26c8c",
+      "bytes": 6763
+    },
+    "results/coverage-summary.csv": {
+      "source": "npc/build/b1-closure/coverage-summary.csv",
+      "sha256": "8e66ffe06c2261ff1874ee86c1a27cebb0fbb8c36409e522a45ed68e04fb6d82",
+      "bytes": 327
+    },
+    "results/coverage-exclusions.csv": {
+      "source": "npc/build/b1-closure/coverage-exclusions.csv",
+      "sha256": "53b4a46d9ce6997b5cb5107eb8457b447029dc50a7ad347f05528311b0038196",
+      "bytes": 351
+    },
+    "results/fabric-coverage.csv": {
+      "source": "npc/build/b1-fabric-test/coverage.csv",
+      "sha256": "c2d871802c75a8331948d40521bb5976159ac6e5df1b5766ec66884b46248475",
+      "bytes": 5579
+    },
+    "input-audit.json": {
+      "source": "/tmp/npc-m4-s6-20261019/input-audit.json",
+      "sha256": "408f5864041af61ff0f0b64cf028cad7669f42456d99283526d1d0b0eaffabed",
+      "bytes": 9153
+    }
+  },
+  "external_eda_validation": "NOT_PERFORMED: DC/PT, library DB and DC startup file are on the server"
+}

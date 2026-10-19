@@ -190,3 +190,19 @@
 - 完整解析 coverage：9426 reset deferred + 24 mtvec[1:0] 常量条件禁用 = 9450 untested；其他检查 10730 met、0 violated。结构告警按连接分类，禁用弧只有 p/C，无 l/L。UITE-416 与两个常量 D 端的对应关系标为交叉证据推断，不冒充工具逐名证明。
 - 新增 [04 原始归档](synthesis-results/04-200mhz-baseline/README.md)（51 文件、原字节/hash）及 [S3 结果](3-synthesis-sta.md)，更新计划/矩阵/路线/展示入口。工具 REVIEW_REQUIRED 不改写；人工接受当前 TT、ideal clock、ZeroWireload、reset deferred 的 core 基线，S6 最终复现/交接待完成。
 - 本次未改 RTL/SDC/flow，未运行新 EDA 或重复功能测试；功能版本证据沿用 S2.5，不把 gate-level/formal/功耗/物理 sign-off 计入通过。
+
+## 2026-10-19：S6 本地最终回归与复现交接
+
+- 从干净 HEAD `415c87b` 重新执行 flow check/test（44 项）、ISA/异常契约、四组 synthesis scope、B1 signoff、legacy 定向/34 项 CPU/固定 trace/10 seeds，全部通过。使用既有增量构建目录，未声称全量 clean rebuild；功能输入与 04 相同。
+- 再次核验 04 的 37 项输入、23 DC/25 PT 产物及 51 份长期归档 hash；32 份 NPC 输入快照仅 Makefile 默认 SITE 与当前不同，显式传 SITE 即可保持配置一致。17 份 RTL、设计 SDC/config 与实际 flow 执行代码一致。
+- 新增 [S6 交接记录](6-reproduction.md)及 [14 份本地证据与 manifest](s6-validation/manifest.json)，固定命令、版本、退出码、原始日志/结果与 hash；修正 flow README 和展示证据索引中的过时候选状态及 reset 预算描述。
+- 当前阻塞为 I12 的独立服务器新 run 复现：本地无 DC/PT、原 DB 与安装 setup，不能用 mock/旧报告 hash 检查替代。交接使用 `core-tt-5ns-s6-repro`，不覆盖 04；需核对面积、路径、coverage、负载和告警，而非只看零违例。
+- S3 已验收结论保留；S6 本地完成、服务器待验，M4 总验收未关闭，不预填 `signoff.md`。没有修改 RTL、SDC、flow 执行脚本或历史 EDA 归档，也未代替用户提交/同步/执行服务器。
+
+## 2026-10-19：S6 独立复现通过，M4 本轮验收关闭
+
+- 用户回传 `core-tt-5ns-s6-repro`，北京时间 19:13 创建；DC/PT 均 COMPLETE、exit 0。服务器仍为 `9e449fac` 与相同 Makefile SITE 默认值修改，设计/site 求值及外部依赖 hash 与 04 一致；37 输入只有 run 路径变化。
+- 两次输入/产物 hash 自洽，新 run 37 输入、23 DC/25 PT 产物核验通过。重新解析报告与 manifest 结果一致；43 份报告仅日期与 QoR 四行耗时不同，综合网表/导出 SDC 仅日期注释不同；DDC 未做语义比较。
+- 面积 9242.855942、setup/hold +0.596843/+0.008754 ns、coverage 及负载分支全部复现 04。告警集合无新增或消失，延续相同 reset deferred、常量条件禁用和结构审查依据；原 REVIEW_REQUIRED 保留。
+- 新增 [05 归档](synthesis-results/05-s6-reproduction/README.md)（52 份原始文件、comparison.json）和 [M4 signoff](signoff.md)，关闭 I12/S6，更新计划、矩阵、路线及展示入口。干净 run 不冒充干净 Git checkout，SITE 已记录差异不影响实际配置。
+- 外部依赖检查依赖服务器阶段内原 driver 的前后核验；本地未访问服务器 DB/工具，也未收到单独 inspect 终端记录。未修改 RTL/SDC/执行脚本或运行产物，沿用本日已完成的 S6 功能回归；当前范围内无阻塞，下一步 M5。

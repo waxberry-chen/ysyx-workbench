@@ -1,0 +1,767 @@
+NPC_LSU_ENABLE_CAPACITANCE
+stage: sta
+tool_version: T-2022.03-SP5
+library: tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+configured_capacitance_unit: pf
+LIBRARY_FANOUT_DEFAULT: tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+  default_fanout_load: UNAVAILABLE
+Policy: read-only; UNAVAILABLE is not zero; compare report_net and constraint_violations too.
+report_capacitance_use_ccs_receiver_model: true
+timing_max_capacitance_derate: 1
+enable_pin_count: 68
+anchor: core/u_lsu/req_wdata_q_reg_1_/E -> core/u_lsu/n3
+anchor: core/u_lsu/req_wdata_q_reg_24_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_addr_q_reg_8_/E -> core/u_lsu/n1
+anchor: core/u_lsu/req_addr_q_reg_19_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_addr_q_reg_3_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_addr_q_reg_14_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_wdata_q_reg_19_/E -> core/u_lsu/n1
+anchor: core/u_lsu/req_addr_q_reg_30_/E -> core/u_lsu/n1
+anchor: core/u_lsu/req_wdata_q_reg_14_/E -> core/u_lsu/n3
+anchor: core/u_lsu/req_wdata_q_reg_7_/E -> core/u_lsu/n3
+anchor: core/u_lsu/req_wdata_q_reg_30_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_addr_q_reg_25_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_wdata_q_reg_2_/E -> core/u_lsu/n3
+anchor: core/u_lsu/req_addr_q_reg_20_/E -> core/u_lsu/n1
+anchor: core/u_lsu/req_wdata_q_reg_25_/E -> core/u_lsu/n1
+anchor: core/u_lsu/req_addr_q_reg_9_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_type_q_reg_0_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_wdata_q_reg_20_/E -> core/u_lsu/n3
+anchor: core/u_lsu/req_addr_q_reg_4_/E -> core/u_lsu/n1
+anchor: core/u_lsu/req_addr_q_reg_15_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_addr_q_reg_31_/E -> core/u_lsu/n1
+anchor: core/u_lsu/req_addr_q_reg_10_/E -> core/u_lsu/n1
+anchor: core/u_lsu/req_wdata_q_reg_15_/E -> core/u_lsu/n3
+anchor: core/u_lsu/req_wdata_q_reg_8_/E -> core/u_lsu/n3
+anchor: core/u_lsu/req_wdata_q_reg_31_/E -> core/u_lsu/n1
+anchor: core/u_lsu/req_addr_q_reg_26_/E -> core/u_lsu/n1
+anchor: core/u_lsu/req_wdata_q_reg_10_/E -> core/u_lsu/n3
+anchor: core/u_lsu/req_wdata_q_reg_3_/E -> core/u_lsu/n3
+anchor: core/u_lsu/req_addr_q_reg_21_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_wdata_q_reg_26_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_type_q_reg_1_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_addr_q_reg_5_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_wdata_q_reg_21_/E -> core/u_lsu/n3
+anchor: core/u_lsu/req_addr_q_reg_16_/E -> core/u_lsu/n1
+anchor: core/u_lsu/req_addr_q_reg_0_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_addr_q_reg_11_/E -> core/u_lsu/n1
+anchor: core/u_lsu/req_wdata_q_reg_16_/E -> core/u_lsu/n3
+anchor: core/u_lsu/req_wdata_q_reg_9_/E -> core/u_lsu/n3
+anchor: core/u_lsu/req_addr_q_reg_27_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_wdata_q_reg_11_/E -> core/u_lsu/n3
+anchor: core/u_lsu/req_wdata_q_reg_4_/E -> core/u_lsu/n3
+anchor: core/u_lsu/req_addr_q_reg_22_/E -> core/u_lsu/n1
+anchor: core/u_lsu/req_wdata_q_reg_27_/E -> core/u_lsu/n1
+anchor: core/u_lsu/req_type_q_reg_2_/E -> core/u_lsu/n1
+anchor: core/u_lsu/req_wdata_q_reg_22_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_addr_q_reg_6_/E -> core/u_lsu/n1
+anchor: core/u_lsu/req_addr_q_reg_17_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_addr_q_reg_1_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_addr_q_reg_12_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_wdata_q_reg_17_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_write_q_reg/E -> core/u_lsu/n1
+anchor: core/u_lsu/req_addr_q_reg_28_/E -> core/u_lsu/n1
+anchor: core/u_lsu/req_wdata_q_reg_12_/E -> core/u_lsu/n3
+anchor: core/u_lsu/req_wdata_q_reg_5_/E -> core/u_lsu/n3
+anchor: core/u_lsu/req_addr_q_reg_23_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_wdata_q_reg_28_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_wdata_q_reg_0_/E -> core/u_lsu/n1
+anchor: core/u_lsu/req_wdata_q_reg_23_/E -> core/u_lsu/n1
+anchor: core/u_lsu/req_addr_q_reg_7_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_addr_q_reg_18_/E -> core/u_lsu/n1
+anchor: core/u_lsu/req_addr_q_reg_2_/E -> core/u_lsu/n1
+anchor: core/u_lsu/req_addr_q_reg_13_/E -> core/u_lsu/n1
+anchor: core/u_lsu/req_wdata_q_reg_18_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_addr_q_reg_29_/E -> core/u_lsu/n2
+anchor: core/u_lsu/req_wdata_q_reg_13_/E -> core/u_lsu/n3
+anchor: core/u_lsu/req_wdata_q_reg_6_/E -> core/u_lsu/n3
+anchor: core/u_lsu/req_addr_q_reg_24_/E -> core/u_lsu/n1
+anchor: core/u_lsu/req_wdata_q_reg_29_/E -> core/u_lsu/n1
+enable_net_count: 3
+NET: core/u_lsu/n1
+****************************************
+Report : net
+	-connections
+	-verbose
+Design : ysyx_core_axi4lite
+Version: T-2022.03-SP5
+Date   : Mon Oct 19 19:14:17 2026
+****************************************
+
+
+Connections for net 'core/u_lsu/n1':
+    pin capacitance:    min:0.0365424    max:0.0405621
+    wire capacitance:   min:    0    max:    0   
+    total capacitance:  min:0.0365424    max:0.0405621
+    wire resistance:    min:    0    max:    0   
+    number of drivers:  1
+    number of loads:    25
+    number of pins:     26
+
+                                                   Min       Max
+    Driver Pins              Type                  Pin Cap   Pin Cap
+    ------------             ----------------      --------  --------
+    core/u_lsu/U3/ZN         Output Pin (CKND0BWP12T40P140) 0 0
+
+                                                   Min       Max
+    Load Pins                Type                  Pin Cap   Pin Cap
+    ------------             ----------------      --------  --------
+    core/u_lsu/req_addr_q_reg_8_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_19_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_30_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_20_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_25_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_4_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_31_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_10_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_31_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_26_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_16_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_11_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_22_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_27_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_type_q_reg_2_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_6_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_write_q_reg/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_28_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_0_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_23_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_18_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_2_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_13_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_24_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_29_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+
+  wire_capacitance_min: 0.000000
+  wire_capacitance_max: 0.000000
+  total_capacitance_min: 0.036542
+  total_capacitance_max: 0.040562
+PIN: core/u_lsu/U3/ZN direction=out reference=CKND0BWP12T40P140
+  max_capacitance: 0.045377
+  min_capacitance: 0.000410
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_8_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_19_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_30_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_20_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_25_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_4_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_31_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_10_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_31_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_26_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_16_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_11_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_22_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_27_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_type_q_reg_2_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_6_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_write_q_reg/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_28_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_0_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_23_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_18_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_2_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_13_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_24_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_29_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+direct_output_pin_count: 1
+direct_input_pin_count: 25
+NET: core/u_lsu/n2
+****************************************
+Report : net
+	-connections
+	-verbose
+Design : ysyx_core_axi4lite
+Version: T-2022.03-SP5
+Date   : Mon Oct 19 19:14:17 2026
+****************************************
+
+
+Connections for net 'core/u_lsu/n2':
+    pin capacitance:    min:0.0365424    max:0.0405621
+    wire capacitance:   min:    0    max:    0   
+    total capacitance:  min:0.0365424    max:0.0405621
+    wire resistance:    min:    0    max:    0   
+    number of drivers:  1
+    number of loads:    25
+    number of pins:     26
+
+                                                   Min       Max
+    Driver Pins              Type                  Pin Cap   Pin Cap
+    ------------             ----------------      --------  --------
+    core/u_lsu/U4/ZN         Output Pin (CKND0BWP12T40P140) 0 0
+
+                                                   Min       Max
+    Load Pins                Type                  Pin Cap   Pin Cap
+    ------------             ----------------      --------  --------
+    core/u_lsu/req_wdata_q_reg_24_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_19_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_3_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_14_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_30_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_25_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_9_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_type_q_reg_0_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_15_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_21_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_26_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_type_q_reg_1_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_5_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_0_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_27_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_22_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_17_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_1_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_12_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_17_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_23_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_28_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_7_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_18_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_addr_q_reg_29_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+
+  wire_capacitance_min: 0.000000
+  wire_capacitance_max: 0.000000
+  total_capacitance_min: 0.036542
+  total_capacitance_max: 0.040562
+PIN: core/u_lsu/U4/ZN direction=out reference=CKND0BWP12T40P140
+  max_capacitance: 0.045377
+  min_capacitance: 0.000410
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_24_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_19_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_3_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_14_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_30_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_25_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_9_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_type_q_reg_0_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_15_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_21_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_26_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_type_q_reg_1_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_5_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_0_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_27_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_22_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_17_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_1_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_12_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_17_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_23_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_28_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_7_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_18_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_addr_q_reg_29_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+direct_output_pin_count: 1
+direct_input_pin_count: 25
+NET: core/u_lsu/n3
+****************************************
+Report : net
+	-connections
+	-verbose
+Design : ysyx_core_axi4lite
+Version: T-2022.03-SP5
+Date   : Mon Oct 19 19:14:17 2026
+****************************************
+
+
+Connections for net 'core/u_lsu/n3':
+    pin capacitance:    min:0.0263105    max:0.0292047
+    wire capacitance:   min:    0    max:    0   
+    total capacitance:  min:0.0263105    max:0.0292047
+    wire resistance:    min:    0    max:    0   
+    number of drivers:  1
+    number of loads:    18
+    number of pins:     19
+
+                                                   Min       Max
+    Driver Pins              Type                  Pin Cap   Pin Cap
+    ------------             ----------------      --------  --------
+    core/u_lsu/U5/ZN         Output Pin (CKND0BWP12T40P140) 0 0
+
+                                                   Min       Max
+    Load Pins                Type                  Pin Cap   Pin Cap
+    ------------             ----------------      --------  --------
+    core/u_lsu/req_wdata_q_reg_1_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_14_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_7_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_2_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_20_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_15_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_8_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_10_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_3_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_21_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_16_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_9_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_11_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_4_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_12_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_5_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_13_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+    core/u_lsu/req_wdata_q_reg_6_/E Input Pin (EDFCNQD1BWP12T40P140) 0.0014617 0.00162248
+
+  wire_capacitance_min: 0.000000
+  wire_capacitance_max: 0.000000
+  total_capacitance_min: 0.026311
+  total_capacitance_max: 0.029205
+PIN: core/u_lsu/U5/ZN direction=out reference=CKND0BWP12T40P140
+  max_capacitance: 0.045377
+  min_capacitance: 0.000410
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_1_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_14_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_7_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_2_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_20_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_15_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_8_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_10_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_3_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_21_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_16_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_9_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_11_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_4_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_12_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_5_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_13_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+PIN: core/u_lsu/req_wdata_q_reg_6_/E direction=in reference=EDFCNQD1BWP12T40P140
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+  total_ccs_capacitance_max_rise: UNAVAILABLE
+  total_ccs_capacitance_max_fall: UNAVAILABLE
+  total_ccs_capacitance_min_rise: UNAVAILABLE
+  total_ccs_capacitance_min_fall: UNAVAILABLE
+direct_output_pin_count: 1
+direct_input_pin_count: 18
+LIB_PIN: tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs/CKND0BWP12T40P140/ZN
+  direction: out
+  fanout_load: 0.000000
+  capacitance: UNAVAILABLE
+  rise_capacitance: UNAVAILABLE
+  fall_capacitance: UNAVAILABLE
+  max_capacitance: 0.045377
+  min_capacitance: 0.000410
+LIB_PIN: tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs/EDFCNQD1BWP12T40P140/E
+  direction: in
+  fanout_load: 1.000000
+  capacitance: UNAVAILABLE
+  rise_capacitance: UNAVAILABLE
+  fall_capacitance: UNAVAILABLE
+  max_capacitance: UNAVAILABLE
+  min_capacitance: UNAVAILABLE
+NPC_LSU_ENABLE_CAPACITANCE_END

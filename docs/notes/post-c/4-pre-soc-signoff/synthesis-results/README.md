@@ -7,7 +7,8 @@
 | [01 首次综合](01-first-synthesis/README.md) | 2026-10-17 / `core-tt-10ns-split` | DC 完成；10 ns setup/hold 未满足；PT 未运行；用于发现实现/评估问题，不作为正式 S3 基线 |
 | [02 RV32E / 无 M](02-rv32e-no-m/README.md) | 2026-10-18 / `core-tt-10ns-rv32e-nom` | DC/PT 完成，10 ns 无 setup/hold 违例；面积 9511.319905；PT 有 66 条 min-capacitance 违例、5516 项脉宽检查未测试，正 slack 路径未输出；仍非正式基线 |
 | [03 200 MHz 候选](03-200mhz-candidate/README.md) | 2026-10-18 / `core-tt-5ns-baseline` | DC/PT 完成；PT setup/hold slack +0.531597/+0.013534 ns；面积不变；高扇出确认为 clk，禁用弧无 loop-breaking 标记；66 条 min-capacitance 和复位脉宽审查仍未关闭，尚非正式基线 |
-| [04 200 MHz 基线](04-200mhz-baseline/README.md) | 2026-10-18 / `core-tt-5ns-no-port-buffers`，HEAD `9e449fac` | **S3 范围内基线成立**；DC/PT 无约束违例；setup/hold +0.596843/+0.008754 ns；面积 9242.855942；9426 reset deferred + 24 常量条件禁用已分类；S6 待完成 |
+| [04 200 MHz 基线](04-200mhz-baseline/README.md) | 2026-10-18 / `core-tt-5ns-no-port-buffers`，HEAD `9e449fac` | **S3 范围内基线成立**；DC/PT 无约束违例；setup/hold +0.596843/+0.008754 ns；面积 9242.855942；9426 reset deferred + 24 常量条件禁用已分类；独立复现见 05 |
+| [05 S6 独立复现](05-s6-reproduction/README.md) | 2026-10-19 / `core-tt-5ns-s6-repro`，HEAD `9e449fac` | **S6 / 本轮 M4 验收完成**；面积、时序、coverage、负载和告警复现 04；网表/SDC 仅日期注释不同，43 份报告仅日期与四行耗时不同；范围限制不变 |
 
 每次有价值的综合实验建立独立目录，记录设计范围、实际源版本及 dirty 状态、工具/库/约束/互连模型、指标、关键路径、问题和下一步。记录布局：
 

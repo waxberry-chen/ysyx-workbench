@@ -1,6 +1,6 @@
 # S3：core pre-layout 综合 / STA 基线
 
-2026-10-18。[04 基线审查与原始证据](synthesis-results/04-200mhz-baseline/README.md)支持建立本轮正式面积/数据时序基线；S6 最终复现与交接仍待完成。
+2026-10-18。[04 基线审查与原始证据](synthesis-results/04-200mhz-baseline/README.md)支持建立本轮正式面积/数据时序基线；[S6](6-reproduction.md) 已于 2026-10-19 完成本地最终回归与服务器独立复现，详见 [M4 总验收](signoff.md)。
 
 | 项目 | 结果 |
 | --- | --- |

@@ -1,6 +1,6 @@
 # Post-C Roadmap：从弹性 RV32E Core 到可展示的 SoC/RTL 项目
 
-> 规划更新：2026-10-18；M4 S2.5 ISA 收敛已完成本地验收，当前已建立 S3 范围内面积/时序基线，下一步 S6 最终复现/交接；M4 初始输入基线：`0fe53bf`（M3 功能/协议仿真验收后）
+> 规划更新：2026-10-19；M4 S2.5 ISA 收敛已完成本地验收，当前已建立 S3 范围内面积/时序基线，S6 已于 2026-10-19 完成最终回归与服务器独立复现，M4 本轮验收通过，下一步 M5；M4 初始输入基线：`0fe53bf`（M3 功能/协议仿真验收后）
 >
 > 求职方向优先级：SoC/RTL Design > Design Verification > Physical Design  
 > 本文用于决定 post-C 阶段的投入顺序。具体接口、地址映射和考核要求仍以开始该阶段时的最新版官方讲义与上游仓库为准。
@@ -283,6 +283,8 @@ interconnect system-level test plan 合并实施。
 2026-10-18 后续范围决定：按用户要求，早期 core 评估暂缓 reset 时序，对 rst_n 设置精确 false path，删除虚拟 release delay；脉宽/实际释放机制见 [reset TODO](4-pre-soc-signoff/reset-timing-todo.md)。历史 03 不改写，后续继续审查真实 coverage，电容违例与其他结构问题仍需处理。
 
 2026-10-18：**[S3 core pre-layout 基线成立](4-pre-soc-signoff/3-synthesis-sta.md)**；[04](4-pre-soc-signoff/synthesis-results/04-200mhz-baseline/README.md) 在 TT / 200 MHz 下 DC/PT 无约束违例，面积 9242.855942 library_area，PT setup/hold +0.596843/+0.008754 ns。9426 reset deferred 与 24 常量条件禁用已分类，结构告警经审查；保留观察端口、ideal clock 和 ZeroWireload 边界，不外推物理或全 PVT sign-off。下一步 S6，M4 总验收尚未宣布完成。
+
+2026-10-19：**[S6 与 M4 本轮验收通过](4-pre-soc-signoff/signoff.md)**；flow 44 项、ISA/异常、四组源闭包、B1 完整验收及 legacy 回归通过；[05 独立 synth/STA 复现](4-pre-soc-signoff/synthesis-results/05-s6-reproduction/README.md)与 04 的面积、时序、coverage、负载和告警一致。I12 关闭，无当前范围内阻塞；保留 reset、功耗及物理评估限制，下一步 M5。
 
 这个里程碑防止“B1 仿真能跑，但接 SoC 时同时暴露协议、时序、复位和构建问题”。先建立最小实现基线，工作量取决于现有 RTL、工艺库和可复用 flow；不在取得工具与输入前承诺全部检查已可运行。
 
@@ -580,8 +582,8 @@ docs/notes/
 
 ## 9. 最近三个行动
 
-1. 以 [04 S3 基线](4-pre-soc-signoff/synthesis-results/04-200mhz-baseline/README.md)为依据完成 S6 最终复现/交接：固定源版本、site/工具/库与约束，核对干净运行目录重建步骤、原始报告和验收结论；
-2. 整理 M4 总验收与展示材料，保留 TT、ideal clock、ZeroWireload 和 reset deferred 边界；后续改进使用独立 run 与 04 对比，功耗仍为可选粗估，S4/S5 延后；
-3. 提前核对并固定 ysyxSoC revision 与接口契约，特别是窄 MMIO 读的地址/size 语义；当前 Lite adapter 已对齐地址，不能假设最外层固定 SIZE wrapper 能恢复这些信息。明确边界后再按 M5 实施集成。
+1. 按 [M4 验收交接](4-pre-soc-signoff/signoff.md)进入 M5 准备：固定 ysyxSoC revision、集成边界及启动/reset/中断需求，形成 M5 计划与验收条件；
+2. 明确 ysyxSoC 接口适配与测试入口，尤其窄 MMIO 的地址/size 语义；在契约确定后实施启动和系统回归；
+3. 保留 04/05 core 基线作为后续对照；集成后 scope、IO 或 reset 条件改变时另建综合配置和 run，不能直接沿用 core 指标宣称完整 SoC PPA。
 
 在这三项完成前，不启动 GShare、经典五级流水重写、D-cache 或大规模外设扩展。

@@ -1,0 +1,159 @@
+{
+  "top": "ysyx_core_axi4lite",
+  "tool": "Verilator 5.008 2023-03-04 rev v5.008",
+  "input_sha256": {
+    "flow/00_indata/filelists/core.f": "78eb35ab7614d72a663fe17f8bb6cec175ae20b66b352ef0d3f84106b46b018d",
+    "./vsrc/gnrl/ysyx_gnrl_primitive.sv": "69e7f79f3636533b0d10016fd04097dbdf92c13f342c7e12c0f25402188f7c15",
+    "./vsrc/core/ysyx_alu.sv": "cbe707eb49dbe9eb30ed8a496dc628866eb4f888a1210d77f3ceef0374f470a1",
+    "./vsrc/core/ysyx_branch.sv": "6cc2d908aeb37572de4cb026a578a452d46ca3e11d59be69d6023e29d2195537",
+    "./vsrc/core/ysyx_gen_imm.sv": "7b72f39d8bc17eee2ffb186d6183855c0075776a8505084e0204f147c6192d1a",
+    "./vsrc/core/ysyx_idu.sv": "a798f56deb77174611b71f26c0ac942629b0e067b67040bf03638c3020414a5a",
+    "./vsrc/core/ysyx_regfile.sv": "80c66dc0a1fcf39133e5287d9befe0670dceccc9f4237135b8c53ff310cc3eab",
+    "./vsrc/core/ysyx_csr.sv": "1742779d54d071fca71043afeaa687e219a22dca6fb092f84fd74aacc1a67e38",
+    "./vsrc/core/ysyx_ifu.sv": "d605a85513dbad82bfc7ff67707ea2ddd891ae7fe516ec5fdf40b64830099759",
+    "./vsrc/core/ysyx_opbuf.sv": "11e6880f0b2118bacf9df9dcf0a4012dd6b3fd1192f02d490c46aa87d1cd7ae3",
+    "./vsrc/core/ysyx_exu.sv": "78900f7a8c9d4000b10fe9f2b976feb82a4ba425ca1ea7a5bc8bae4f5d540f32",
+    "./vsrc/core/ysyx_lsu.sv": "1ec2463ade5aa1bd5c01a4dc15519be42be2d8104689c43579fcda81d2bd1654",
+    "./vsrc/bus/ysyx_ifu_axi4lite_adapter.sv": "3e1cfb51f0a844a9244fc0c900f0198ed33221d9eddf3bbda2c81c1c2d052988",
+    "./vsrc/bus/ysyx_lsu_axi4lite_adapter.sv": "26a095bac629d1b0c94a3c691ab3edb46bf2286f45c664d7e1ba3255768b5a20",
+    "./vsrc/core/ysyx_core.sv": "0cd0589982a2343a648a07e37a008d2b0e2949dbc90c15e740f7d2b1b6f07181",
+    "./vsrc/bus/ysyx_axi4lite_arbiter.sv": "799b5c5447a3872cfd50396ef963355ef0168b6240086b29f4bebbebd0f2c2c2",
+    "./vsrc/top/ysyx_core_axi4lite.sv": "af1ca045a20f6780ef0e030b9cd8a60459bade4c9f4d80c9c80b15ed43b96d5a",
+    "vsrc/gnrl/ysyx_global.sv": "39dc2658d350ab8293953b819346339cac640f377b4bfa3bec30ed5b9828d2f9",
+    "tests/synthesis_scope_check.py": "f595aa5ee2294c6f7da1c3431832d1e06283e12b9836778e8cfee64bc2d7adc8"
+  },
+  "profiles": {
+    "synthesis": {
+      "defines": [
+        "SYNTHESIS"
+      ],
+      "waivers": [
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:71:13: Signal is not used: 'if_ctx_fire'",
+          "reason": "Assertion-only handshake observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:136:13: Signal is not used: 'op_rs1_idx'",
+          "reason": "Assertion-only operand observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:137:13: Signal is not used: 'op_rs2_idx'",
+          "reason": "Assertion-only operand observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:146:13: Signal is not used: 'exu_commit_pc'",
+          "reason": "Assertion-only commit observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:151:13: Signal is not used: 'commit_mem_wdata'",
+          "reason": "Assertion-only store observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_gen_imm.sv:12:49: Bits of signal are not used: 'inst'[6:0]",
+          "reason": "Opcode inst[6:0] is decoded upstream"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_exu.sv:17:24: Signal is not used: 'op_pred_taken'",
+          "reason": "Assertion-only prediction observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_exu.sv:18:24: Signal is not used: 'op_pred_npc'",
+          "reason": "Assertion-only prediction observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/bus/ysyx_lsu_axi4lite_adapter.sv:66:13: Signal is not used: 'local_request_aligned'",
+          "reason": "Assertion-only alignment observation"
+        }
+      ],
+      "result": "PASS"
+    },
+    "synthesis_overrides_dpi": {
+      "defines": [
+        "SYNTHESIS",
+        "NPC_SIM_DPI",
+        "DIFF"
+      ],
+      "waivers": [
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:71:13: Signal is not used: 'if_ctx_fire'",
+          "reason": "Assertion-only handshake observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:136:13: Signal is not used: 'op_rs1_idx'",
+          "reason": "Assertion-only operand observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:137:13: Signal is not used: 'op_rs2_idx'",
+          "reason": "Assertion-only operand observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:146:13: Signal is not used: 'exu_commit_pc'",
+          "reason": "Assertion-only commit observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:151:13: Signal is not used: 'commit_mem_wdata'",
+          "reason": "Assertion-only store observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_gen_imm.sv:12:49: Bits of signal are not used: 'inst'[6:0]",
+          "reason": "Opcode inst[6:0] is decoded upstream"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_exu.sv:17:24: Signal is not used: 'op_pred_taken'",
+          "reason": "Assertion-only prediction observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_exu.sv:18:24: Signal is not used: 'op_pred_npc'",
+          "reason": "Assertion-only prediction observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/bus/ysyx_lsu_axi4lite_adapter.sv:66:13: Signal is not used: 'local_request_aligned'",
+          "reason": "Assertion-only alignment observation"
+        }
+      ],
+      "result": "PASS"
+    },
+    "simulation_no_dpi": {
+      "defines": [],
+      "waivers": [
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_gen_imm.sv:12:49: Bits of signal are not used: 'inst'[6:0]",
+          "reason": "Opcode inst[6:0] is decoded upstream"
+        },
+        {
+          "diagnostic": "%Warning-SYNCASYNCNET: vsrc/top/ysyx_core_axi4lite.sv:7:17: Signal flopped as both synchronous and async: 'rst_n'",
+          "reason": "SVA samples the hardware asynchronous reset"
+        }
+      ],
+      "result": "PASS"
+    },
+    "simulation_dpi": {
+      "defines": [
+        "NPC_SIM_DPI",
+        "DIFF"
+      ],
+      "waivers": [
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_gen_imm.sv:12:49: Bits of signal are not used: 'inst'[6:0]",
+          "reason": "Opcode inst[6:0] is decoded upstream"
+        },
+        {
+          "diagnostic": "%Warning-SYNCASYNCNET: vsrc/top/ysyx_core_axi4lite.sv:7:17: Signal flopped as both synchronous and async: 'rst_n'",
+          "reason": "SVA samples the hardware asynchronous reset"
+        }
+      ],
+      "result": "PASS"
+    }
+  },
+  "scope": {
+    "description": "Core + adapters + Arbiter, observation ports retained",
+    "parameter_overrides": {},
+    "core_defaults": {
+      "PC_RST": "0x80000000",
+      "IFQ_DEPTH": 2
+    },
+    "gpr_entries": 16,
+    "m_arithmetic": "removed",
+    "dc_checked": false
+  }
+}

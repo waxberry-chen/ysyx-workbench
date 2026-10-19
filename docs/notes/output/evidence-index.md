@@ -1,6 +1,6 @@
 # 工程事实与证据索引
 
-> 更新：2026-10-15；Core/adapters 验收快照：`5b6f29c`；M3 候选源码见阶段 manifest。这里只索引已有证据，不替代各阶段的测试与实验记录。
+> 更新：2026-10-19；早期 Core/adapters 验收快照：`5b6f29c`；M3/M4 的各自源码见阶段 manifest。这里只索引已有证据，不替代各阶段的测试与实验记录。
 
 ## 已有工程事实
 
@@ -15,6 +15,8 @@
 | 架构一致性与性能样本 | commit trace / simulation statistics | [基线](../post-c/2-axi4-lite/0-freeze-baseline.md)、[验收 §4、§6](../post-c/2-axi4-lite/4-signoff.md) | 固定 `add` 样本：1095 commits，5121 → 7801 cycles；架构字段 hash 一致。不是通用性能结论或 PPA 优化成果 |
 | B1 系统集成 | [`npc/vsrc/top/`](../../../npc/vsrc/top/)、[`系统测试`](../../../npc/tests/b1_system_test.py) | [S4 报告](../post-c/3-axi4-lite-interconnect/4-integration.md)、[manifest](../post-c/3-axi4-lite-interconnect/s4-manifest.json) | S4 系统/兼容通过；含真实 stale DECERR 与构建 VPATH bug case；S5 closure 见下一行 |
 | M3 closure 与 RT-Thread | [`fabric TB`](../../../npc/tests/axi4lite_fabric_tb.cpp)、[`RT-Thread fixture`](../../../npc/tests/b1-rtthread/) | [S5](../post-c/3-axi4-lite-interconnect/5-closure.md)、[signoff](../post-c/3-axi4-lite-interconnect/signoff.md)、[manifest](../post-c/3-axi4-lite-interconnect/s5-manifest.json) | 10350 fabric 完成/160 中止、69 reset、18 redirect 组合、53+23 系统程序；有实际波形与机器可读必测覆盖，不包含 formal/EDA |
+| M4 core 综合 / STA 基线 | [`npc/flow/`](../../../npc/flow/) | [S3 结论](../post-c/4-pre-soc-signoff/3-synthesis-sta.md)、[04 原始证据](../post-c/4-pre-soc-signoff/synthesis-results/04-200mhz-baseline/README.md) | TT / 200 MHz，area 9242.855942 library_area，setup/hold +0.596843/+0.008754 ns，DC/PT 无违例；core + adapters + Arbiter，ideal clock / ZeroWireload，reset deferred；无功耗/物理 sign-off |
+| M4 最终功能回归与复现交接 | [`测试入口`](../../../npc/scripts/tests.mk)、[`flow Makefile`](../../../npc/flow/Makefile) | [S6 记录](../post-c/4-pre-soc-signoff/6-reproduction.md)、[本地验证 manifest](../post-c/4-pre-soc-signoff/s6-validation/manifest.json) | 本地 flow 44 项、ISA/异常、四组 scope、B1 和 legacy 回归通过；[05 独立复现](../post-c/4-pre-soc-signoff/synthesis-results/05-s6-reproduction/README.md)通过，[M4 本轮总验收](../post-c/4-pre-soc-signoff/signoff.md)关闭 |
 
 已有 AXI 阶段验收的 RTL 基线为 `94cf9ac`，验收提交为 `5b6f29c`。复现入口：
 
@@ -27,7 +29,7 @@ make -C npc axi4lite-signoff
 ## 尚未形成的证据
 
 - ysyxSoC 启动/中断闭环与 RT-Thread 定时抢占验证。
-- DC 映射综合、PrimeTime STA、面积/关键路径/时序结果。
+- 集成后完整 SoC 的综合/STA 结果；已有 M4 core 单 corner 基线及独立复现，不能外推完整 SoC。
 - 明确条件下的架构优化对照实验、功耗分析或 PnR 结果。
 - bounded formal 与四值仿真结果；已完成的功能 bin 覆盖不等于形式证明。
 
@@ -41,4 +43,4 @@ make -C npc axi4lite-signoff
 
 ## M4 S2.5：当前 ISA 与异常契约
 
-2026-10-18：[实施与验收报告](../post-c/4-pre-soc-signoff/2.5-isa-contract.md)记录 16 GPR、无 M、非法指令精确异常和四 CSR 契约；含独立译码、双平台 trap、B1 signoff 与 legacy 回归。与首次综合的功能范围不同，不能直接宣称相同 ISA 的 PPA 优化；当前没有新配置的 DC/PT 结果。
+2026-10-18：[实施与验收报告](../post-c/4-pre-soc-signoff/2.5-isa-contract.md)记录 16 GPR、无 M、非法指令精确异常和四 CSR 契约；含独立译码、双平台 trap、B1 signoff 与 legacy 回归。与首次综合的功能范围不同，不能直接宣称相同 ISA 的 PPA 优化；后续 02–04 已取得该配置的 DC/PT 结果，04 为当前 S3 基线。2026-10-19 的 S6 本地最终回归再次验证相同实现版本。

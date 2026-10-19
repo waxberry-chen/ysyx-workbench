@@ -62,8 +62,8 @@ make -C npc/flow check test
 contract. `test` exercises failure handling/provenance with explicitly fake tools,
 and sources the actual Tcl scripts against a mock command surface. Passing these
 checks **does not establish DC/PT command compatibility, library/license readiness,
-synthesis, STA, or timing PASS**. RTL is unchanged in S2; S1 regressions remain the
-functional evidence.
+synthesis, STA, or timing PASS**. Current functional evidence includes the S2.5
+ISA contract and the [S6 final local regressions](../../docs/notes/post-c/4-pre-soc-signoff/6-reproduction.md#2-本地最终回归本次重新执行的证据).
 
 ## Server execution
 
@@ -94,8 +94,8 @@ Update `site.local.tcl` with the actual `library_name`, `operating_condition`,
 PVT/Vt and `area_unit`. Verify **ns** time and **pF** capacitance units against the
 library; other units require explicit conversion of the design constraints.
 Then set `library_reviewed=1`. The supplied example intentionally has this flag
-at 0 and an empty operating condition, so it cannot silently become a measured
-NPC corner based only on a filename. Private `*.local.tcl` files are ignored.
+at 0; its candidate library name and operating condition still require review,
+so it cannot silently become a measured NPC corner based only on a filename. Private `*.local.tcl` files are ignored.
 
 ```bash
 make -C npc/flow preflight SITE=00_indata/configs/site.local.tcl
@@ -106,9 +106,13 @@ make -C npc/flow sta RUN=build/core-tt-200mhz-split
 make -C npc/flow inspect RUN=build/core-tt-200mhz
 ```
 
-当前默认周期为 **5 ns / 200 MHz**，I/O/reset 的 0.2/2.0 ns 预算保持不变。
-这是依据 10 ns 实验最差路径选出的新综合目标，尚未取得该频率的 DC/PT 结果；
-推算与候选验收见 [S3 重跑说明](../../docs/notes/post-c/4-pre-soc-signoff/s3-rerun.md)。
+当前默认周期为 **5 ns / 200 MHz**，数据 I/O 的 min/max 为 0.2/2.0 ns；
+reset 无 input delay，仅按当前 scope 设置精确 false path。
+[04 实验](../../docs/notes/post-c/4-pre-soc-signoff/synthesis-results/04-200mhz-baseline/README.md)
+已建立该条件下的 S3 面积/数据时序基线。
+[S6 复现与交接](../../docs/notes/post-c/4-pre-soc-signoff/6-reproduction.md)包含最终回归、
+服务器新 run 命令及复现对照标准；05 已独立复现 04，
+[M4 本轮验收完成](../../docs/notes/post-c/4-pre-soc-signoff/signoff.md)。后续复现继续使用新目录，不覆盖历史 run。
 
 `preflight` checks paths/config/tool executability, not license checkout or Tcl
 command support. `probe`/`synth`/`all` always create a **new** run; existing IDs
@@ -153,13 +157,14 @@ failed run before retrying; existing runs retain their original inputs.
 
 ## Constraints and models
 
-`00_indata/configs/npc_core.tcl` freezes a **pre-layout candidate** 5 ns target (200 MHz), not a
-measured operating frequency. Inputs and outputs have 0.2/2.0 ns min/max delay;
+`00_indata/configs/npc_core.tcl` freezes the **pre-layout baseline** 5 ns target (200 MHz), not a
+measured silicon frequency or a demonstrated Fmax. Inputs and outputs have 0.2/2.0 ns min/max delay;
 setup/hold uncertainty is 0.2/0.05 ns; clock/input transition 0.1 ns; output load
 0.01 pF; source latency min/max 0 ns. All observation outputs are included.
 These are explicit initial interface assumptions, not extracted from a board or
-SoC. S3 may produce a negative-slack baseline; frequency exploration is a separate
-configuration/run with the other assumptions held fixed.
+SoC. The accepted S3 run satisfies timing under these assumptions. Failed runs
+remain diagnostic records; frequency exploration is a separate configuration/run
+with the other assumptions held fixed.
 
 For early core-only evaluation, `set_false_path -from [get_ports rst_n]` defers
 reset timing until the actual SoC/reset source and IO contract are defined. The old
@@ -182,12 +187,12 @@ zero RC or of a particular WLM name. No SPEF or C906 wire model is substituted.
 
 DC uses ordinary `compile -map_effort medium`, without `compile_ultra`, gating,
 scan, UPF, physical optimization or additional DesignWare Foundation libraries.
-The next S3 diagnostic run removes the explicit
-`set_fix_multiple_port_nets -all -buffer_constants` request to investigate the
-66 unloaded EXU buffers in experiment 03. Feedthrough assigns may remain;
+The current policy omits the explicit
+`set_fix_multiple_port_nets -all -buffer_constants` request; the 66 min-capacitance
+violations from experiment 03 no longer appear in accepted run 04. Feedthrough assigns may remain;
 ordinary timing-driven buffering is still allowed. Electrical checks stay enabled.
-See [the next-run procedure and acceptance checks](../../docs/notes/post-c/4-pre-soc-signoff/s3-buffer-check.md).
-The current repair experiment sets **DC-only `max_fanout 32` on the synthesis
+See [the original diagnostic procedure and acceptance checks](../../docs/notes/post-c/4-pre-soc-signoff/s3-buffer-check.md).
+The accepted baseline sets **DC-only `max_fanout 32` on the synthesis
 top**, replacing the extra 0.075 pF capacitance target. This is a sum of library
 `fanout_load` weights, not necessarily 32 pins. All library capacitance and slew
 limits remain applicable to ordinary data/control nets. DC explicitly disables
@@ -198,7 +203,9 @@ top fanout attribute to remain present. The clock source net's
 so the report records `UNAVAILABLE`, not a verified true/false result. Check the
 mapped clock connectivity; failures of the policy command itself still stop the flow.
 PT continues to check the original SDC and library rules. Other high-fanout control
-nets, including reset, may change; compare area and timing after rerunning.
+nets, including reset, are subject to this optimization policy. Run 04 has no
+DC/PT constraint violations; S6 checks reproduction against its area, timing and
+coverage rather than treating the policy alone as proof of passing.
 See [fanout policy and clock handling](../../docs/notes/post-c/4-pre-soc-signoff/s3-capacitance-check.md#7-改用-max_fanout-32-并排除时钟-drc-修复).
 The built-in standard synthetic library supports HDL operators. Server mapping
 and resource reports must confirm that the large arithmetic really maps.

@@ -6,7 +6,7 @@
 
 基于[一生一芯](https://ysyx.oscc.cc/docs/)推进的软硬件协同工程，重点是处理器 RTL、总线/互联、验证和 SoC 集成。软件与模拟器用于提供 workload 和参考行为，后续通过综合、STA 和性能实验评估架构取舍。
 
-NPC 已从集中式多周期控制演进为单发射、顺序提交的弹性前后端：IFU、IFQ、opbuf、EXU、LSU 分别持有指令或访存上下文，由 commit/redirect 协调架构状态更新与控制流切换。当前已完成 IFU/LSU AXI4-Lite adapters、Arbiter、Xbar/default、SRAM/UART/CLINT，并接入 Core/B1 系统；[M3 功能/协议仿真验收](../post-c/3-axi4-lite-interconnect/signoff.md)通过，包含固定 RT-Thread workload。已建立 [M4 S3 core 综合/STA 基线](../post-c/4-pre-soc-signoff/3-synthesis-sta.md)，下一步完成复现与交接。
+NPC 已从集中式多周期控制演进为单发射、顺序提交的弹性前后端：IFU、IFQ、opbuf、EXU、LSU 分别持有指令或访存上下文，由 commit/redirect 协调架构状态更新与控制流切换。当前已完成 IFU/LSU AXI4-Lite adapters、Arbiter、Xbar/default、SRAM/UART/CLINT，并接入 Core/B1 系统；[M3 功能/协议仿真验收](../post-c/3-axi4-lite-interconnect/signoff.md)通过，包含固定 RT-Thread workload。已建立 [M4 S3 core 综合/STA 基线](../post-c/4-pre-soc-signoff/3-synthesis-sta.md)，[S6 独立复现与 M4 本轮验收](../post-c/4-pre-soc-signoff/signoff.md)已通过，下一步进入 M5 ysyxSoC 集成。
 
 ## 当前可展示内容
 
