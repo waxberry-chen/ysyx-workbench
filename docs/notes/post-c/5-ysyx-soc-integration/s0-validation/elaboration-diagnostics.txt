@@ -1,0 +1,125 @@
+Selected diagnostics: undriven placeholders, mixed sampling, UART legacy style.
+Full lint log remains in npc/build/m5-s0/contract-check/lint.log.
+
+%Warning-DEFPARAM: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/uart16550/rtl/uart_regs.v:396:41: defparam is deprecated (IEEE 1800-2017 C.4.1)
+                                                                                              : ... Suggest use instantiation with #(.width(...etc...))
+  396 |   defparam i_uart_sync_flops.width      = 1;
+      |                                         ^
+%Warning-DEFPARAM: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/uart16550/rtl/uart_regs.v:397:41: defparam is deprecated (IEEE 1800-2017 C.4.1)
+                                                                                              : ... Suggest use instantiation with #(.init_value(...etc...))
+  397 |   defparam i_uart_sync_flops.init_value = 1'b1;
+      |                                         ^
+%Warning-UNDRIVEN: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/gpio/gpio_top_apb.v:11:17: Signal is not driven: 'in_pready'
+                                                                                       : ... In instance ysyxSoCFull.asic.lgpio.mgpio
+   11 |   output        in_pready,
+      |                 ^~~~~~~~~
+%Warning-UNDRIVEN: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/gpio/gpio_top_apb.v:12:17: Signal is not driven: 'in_prdata'
+                                                                                       : ... In instance ysyxSoCFull.asic.lgpio.mgpio
+   12 |   output [31:0] in_prdata,
+      |                 ^~~~~~~~~
+%Warning-UNDRIVEN: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/gpio/gpio_top_apb.v:13:17: Signal is not driven: 'in_pslverr'
+                                                                                       : ... In instance ysyxSoCFull.asic.lgpio.mgpio
+   13 |   output        in_pslverr,
+      |                 ^~~~~~~~~~
+%Warning-UNDRIVEN: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/gpio/gpio_top_apb.v:15:17: Signal is not driven: 'gpio_out'
+                                                                                       : ... In instance ysyxSoCFull.asic.lgpio.mgpio
+   15 |   output [15:0] gpio_out,
+      |                 ^~~~~~~~
+%Warning-UNDRIVEN: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/gpio/gpio_top_apb.v:17:17: Signal is not driven: 'gpio_seg_0'
+                                                                                       : ... In instance ysyxSoCFull.asic.lgpio.mgpio
+   17 |   output [7:0]  gpio_seg_0,
+      |                 ^~~~~~~~~~
+%Warning-UNDRIVEN: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/gpio/gpio_top_apb.v:18:17: Signal is not driven: 'gpio_seg_1'
+                                                                                       : ... In instance ysyxSoCFull.asic.lgpio.mgpio
+   18 |   output [7:0]  gpio_seg_1,
+      |                 ^~~~~~~~~~
+%Warning-UNDRIVEN: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/gpio/gpio_top_apb.v:19:17: Signal is not driven: 'gpio_seg_2'
+                                                                                       : ... In instance ysyxSoCFull.asic.lgpio.mgpio
+   19 |   output [7:0]  gpio_seg_2,
+      |                 ^~~~~~~~~~
+%Warning-UNDRIVEN: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/gpio/gpio_top_apb.v:20:17: Signal is not driven: 'gpio_seg_3'
+                                                                                       : ... In instance ysyxSoCFull.asic.lgpio.mgpio
+   20 |   output [7:0]  gpio_seg_3,
+      |                 ^~~~~~~~~~
+%Warning-UNDRIVEN: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/gpio/gpio_top_apb.v:21:17: Signal is not driven: 'gpio_seg_4'
+                                                                                       : ... In instance ysyxSoCFull.asic.lgpio.mgpio
+   21 |   output [7:0]  gpio_seg_4,
+      |                 ^~~~~~~~~~
+%Warning-UNDRIVEN: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/gpio/gpio_top_apb.v:22:17: Signal is not driven: 'gpio_seg_5'
+                                                                                       : ... In instance ysyxSoCFull.asic.lgpio.mgpio
+   22 |   output [7:0]  gpio_seg_5,
+      |                 ^~~~~~~~~~
+%Warning-UNDRIVEN: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/gpio/gpio_top_apb.v:23:17: Signal is not driven: 'gpio_seg_6'
+                                                                                       : ... In instance ysyxSoCFull.asic.lgpio.mgpio
+   23 |   output [7:0]  gpio_seg_6,
+      |                 ^~~~~~~~~~
+%Warning-UNDRIVEN: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/gpio/gpio_top_apb.v:24:17: Signal is not driven: 'gpio_seg_7'
+                                                                                       : ... In instance ysyxSoCFull.asic.lgpio.mgpio
+   24 |   output [7:0]  gpio_seg_7
+      |                 ^~~~~~~~~~
+%Warning-UNDRIVEN: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/ps2/ps2_top_apb.v:11:17: Signal is not driven: 'in_pready'
+                                                                                     : ... In instance ysyxSoCFull.asic.lkeyboard.mps2
+   11 |   output        in_pready,
+      |                 ^~~~~~~~~
+%Warning-UNDRIVEN: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/ps2/ps2_top_apb.v:12:17: Signal is not driven: 'in_prdata'
+                                                                                     : ... In instance ysyxSoCFull.asic.lkeyboard.mps2
+   12 |   output [31:0] in_prdata,
+      |                 ^~~~~~~~~
+%Warning-UNDRIVEN: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/ps2/ps2_top_apb.v:13:17: Signal is not driven: 'in_pslverr'
+                                                                                     : ... In instance ysyxSoCFull.asic.lkeyboard.mps2
+   13 |   output        in_pslverr,
+      |                 ^~~~~~~~~~
+%Warning-UNDRIVEN: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/vga/vga_top_apb.v:11:17: Signal is not driven: 'in_pready'
+                                                                                     : ... In instance ysyxSoCFull.asic.lvga.mvga
+   11 |   output        in_pready,
+      |                 ^~~~~~~~~
+%Warning-UNDRIVEN: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/vga/vga_top_apb.v:12:17: Signal is not driven: 'in_prdata'
+                                                                                     : ... In instance ysyxSoCFull.asic.lvga.mvga
+   12 |   output [31:0] in_prdata,
+      |                 ^~~~~~~~~
+%Warning-UNDRIVEN: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/vga/vga_top_apb.v:13:17: Signal is not driven: 'in_pslverr'
+                                                                                     : ... In instance ysyxSoCFull.asic.lvga.mvga
+   13 |   output        in_pslverr,
+      |                 ^~~~~~~~~~
+%Warning-UNDRIVEN: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/vga/vga_top_apb.v:15:17: Signal is not driven: 'vga_r'
+                                                                                     : ... In instance ysyxSoCFull.asic.lvga.mvga
+   15 |   output [7:0]  vga_r,
+      |                 ^~~~~
+%Warning-UNDRIVEN: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/vga/vga_top_apb.v:16:17: Signal is not driven: 'vga_g'
+                                                                                     : ... In instance ysyxSoCFull.asic.lvga.mvga
+   16 |   output [7:0]  vga_g,
+      |                 ^~~~~
+%Warning-UNDRIVEN: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/vga/vga_top_apb.v:17:17: Signal is not driven: 'vga_b'
+                                                                                     : ... In instance ysyxSoCFull.asic.lvga.mvga
+   17 |   output [7:0]  vga_b,
+      |                 ^~~~~
+%Warning-UNDRIVEN: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/vga/vga_top_apb.v:18:17: Signal is not driven: 'vga_hsync'
+                                                                                     : ... In instance ysyxSoCFull.asic.lvga.mvga
+   18 |   output        vga_hsync,
+      |                 ^~~~~~~~~
+%Warning-UNDRIVEN: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/vga/vga_top_apb.v:19:17: Signal is not driven: 'vga_vsync'
+                                                                                     : ... In instance ysyxSoCFull.asic.lvga.mvga
+   19 |   output        vga_vsync,
+      |                 ^~~~~~~~~
+%Warning-UNDRIVEN: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/vga/vga_top_apb.v:20:17: Signal is not driven: 'vga_valid'
+                                                                                     : ... In instance ysyxSoCFull.asic.lvga.mvga
+   20 |   output        vga_valid
+      |                 ^~~~~~~~~
+%Warning-BLKSEQ: /home/cym/prj/ysyx-workbench/ysyxSoC/perip/uart16550/rtl/uart_top_apb.v:52:32: Blocking assignment '=' in sequential logic process
+                                                                                              : ... Suggest using delayed assignment '<='
+   52 |              2'b11: reg_dat8_w = #1 in_pwdata[31:24];
+      |                                ^
+%Warning-SYNCASYNCNET: /home/cym/prj/ysyx-workbench/ysyxSoC/build/ysyxSoCFull.v:5250:17: Signal flopped as both synchronous and async: 'reset'
+                       /home/cym/prj/ysyx-workbench/ysyxSoC/perip/uart16550/rtl/uart_regs.v:428:9: ... Location of async usage
+  428 |     if (wb_rst_i)
+      |         ^~~~~~~~
+                       /home/cym/prj/ysyx-workbench/ysyxSoC/build/ysyxSoCFull.v:593:12: ... Location of sync usage
+  593 |       if (~reset & ~(~_arFIFOMap_0_T_6 | arFIFOMap_0_count)) begin  
+      |            ^~~~~
+%Warning-SYNCASYNCNET: /home/cym/prj/ysyx-workbench/ysyxSoC/build/ysyxSoCFull.v:4367:15: Signal flopped as both synchronous and async: 'ysyxSoCFull.asic._axi42apb_auto_out_pwdata'
+                       /home/cym/prj/ysyx-workbench/ysyxSoC/perip/uart16550/rtl/uart_top_apb.v:52:37: ... Location of async usage
+   52 |              2'b11: reg_dat8_w = #1 in_pwdata[31:24];
+      |                                     ^~~~~~~~~
+                       /home/cym/prj/ysyx-workbench/ysyxSoC/perip/spi/rtl/spi_top.v:185:31: ... Location of sync usage
+  185 |           divider[7:0] <= #Tp wb_dat_i[7:0];
+      |                               ^~~~~~~~

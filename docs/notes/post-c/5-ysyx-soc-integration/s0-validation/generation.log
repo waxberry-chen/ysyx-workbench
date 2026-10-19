@@ -1,0 +1,11 @@
+make: Entering directory '/home/cym/prj/ysyx-workbench/ysyxSoC'
+Found existing firtool directory in /home/cym/prj/ysyx-workbench/ysyxSoC/patch/firtool
+If you want to update firtool, please remove the existing firtool directory
+CHISEL_FIRTOOL_PATH=/home/cym/prj/ysyx-workbench/ysyxSoC/patch/firtool/firtool-1.105.0/bin \
+mill -i ysyxsoc.runMain ysyx.Elaborate --target-dir build
+======================== ysyxsoc.runMain ysyx.Elaborate --target-dir build =======================
+[321/321] ================= ysyxsoc.runMain ysyx.Elaborate --target-dir build ================= 2s
+mv build/ysyxSoCTop.sv build/ysyxSoCFull.v
+sed -i -e 's/_\(aw\|ar\|w\|r\|b\)_\(\|bits_\)/_\1/g' build/ysyxSoCFull.v
+sed -i '/firrtl_black_box_resource_files.f/, $d' build/ysyxSoCFull.v
+make: Leaving directory '/home/cym/prj/ysyx-workbench/ysyxSoC'

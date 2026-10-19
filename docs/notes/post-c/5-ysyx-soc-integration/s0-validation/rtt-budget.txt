@@ -1,0 +1,33 @@
+Existing B1 ELF; static sizing only, not a new SoC workload run.
+
+$ riscv64-linux-gnu-size -A /home/cym/prj/ysyx-workbench/npc/tests/b1-rtthread/build/b1-rtthread-riscv32e-npc-b1-1048576-1000000.elf
+/home/cym/prj/ysyx-workbench/npc/tests/b1-rtthread/build/b1-rtthread-riscv32e-npc-b1-1048576-1000000.elf  :
+section                      size         addr
+.text                       17976   2147483648
+.rodata                      3544   2147501624
+.sdata._rt_thread_defunct       8   2147505168
+.data._object_container        64   2147505176
+.sdata.heap                     8   2147505240
+.bss                        21332   2147505248
+.comment                       43            0
+.riscv.attributes              30            0
+Total                       43005
+
+
+
+$ riscv64-linux-gnu-readelf -A /home/cym/prj/ysyx-workbench/npc/tests/b1-rtthread/build/b1-rtthread-riscv32e-npc-b1-1048576-1000000.elf
+Attribute Section: riscv
+File Attributes
+  Tag_RISCV_arch: "rv32e1p9"
+  Tag_RISCV_priv_spec: 1
+  Tag_RISCV_priv_spec_minor: 11
+
+Selected symbols:
+800095f8 00001000 b idle_thread_stack
+80005460 00004000 b stacks
+
+Layout symbols:
+80013000 B _end
+80013000 B _heap_start
+80013000 B _stack_pointer
+8000b000 B _stack_top

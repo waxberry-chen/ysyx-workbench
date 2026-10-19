@@ -323,6 +323,8 @@ interconnect system-level test plan 合并实施。
 
 2026-10-19：已建立 [M5 目录](5-ysyx-soc-integration/README.md)、[S0–S8 设计与验收计划](5-ysyx-soc-integration/plan.md)和[验收矩阵](5-ysyx-soc-integration/test-plan.md)。当前 S0 尚未执行；下一步固定上游契约、生成环境、reset/IRQ 和内存预算，再实施原生 AXI4 单拍接口。原版学习入口采用 2607 C5，B2 保留为本工程沿用的阶段称呼。
 
+2026-10-19：**[M5 S0 完成](5-ysyx-soc-integration/0-upstream-contract.md)**。固定ysyxSoC `df38a4d...`及递归依赖/补丁，重新生成成功，61-port ABI与静态展开核对通过；地址/reset/IRQ/模型缺口已记录，确定4MiB PSRAM路线。无阻止S1的外部依赖；下一步S1原生AXI4单拍transport。默认错误响应/空外设、真实XIP和PSRAM颗粒仍须分别在S2/S4落实，不代表SoC功能已验收。
+
 #### 架构建议
 
 不要把 ysyxSoC 的完整 AXI4 信号直接扩散回 IFU、LSU。保留 local req/rsp 边界，但不承诺 B2 只改最外层 wrapper：当前 Lite 读接口不传 size，且 adapter 已对齐地址，无法在下游还原窄 MMIO 读。先核对目标设备要求，必要时从 local 边界增加原生 AXI4 单拍 adapter；B1 的 Lite 系统继续作为独立验证对象。
@@ -383,6 +385,8 @@ ysyxSoC
 默认先选 **Flash -> SRAM boot**，因为它能用较小范围证明 boot flow、LMA/VMA、MMIO 和软件/硬件协作。若最新版考核要求不同，以官方要求为准。SDRAM/AXI burst 可与后续 I-cache 阶段合并；不要在此阶段同时展开 Flash、PSRAM、SDRAM、VGA、PS/2 和 GPIO。
 
 M5 规划补充：Flash → SRAM 是最小启动出口，不意味着所有 workload 都能放进讲义中的 8 KiB SRAM。现有 B1 RT-Thread 静态线程栈已达 16 KiB，另要求 heap > 32 KiB；S0 必须核算新 workload 容量，默认预期 S4 需要 PSRAM 承载 RT-Thread。只有证明专用 workload 的容量及验证能力足够，才可免去 PSRAM；不无记录扩大 SRAM 或取消系统验收。详见 [M5 容量与启动设计](5-ysyx-soc-integration/plan.md#33-地址容量和启动)。
+
+S0 实际决策：已有RT-Thread ELF静态段42,932B，采用4MiB PSRAM；Flash → SRAM保留为小程序启动出口，完整系统程序走Flash → PSRAM。实际地址容量和模型缺口以 [S0契约](5-ysyx-soc-integration/0-upstream-contract.md)为准。
 
 #### 出口
 
@@ -586,8 +590,8 @@ docs/notes/
 
 ## 9. 最近三个行动
 
-1. 按已建立的 [M5 计划](5-ysyx-soc-integration/plan.md)执行 S0：固定 ysyxSoC revision、生成环境、接口/地址/reset/中断契约，并核算 SRAM/RT-Thread 容量与 PSRAM 需求；
-2. S0 出口通过后执行 S1 原生 AXI4 单拍适配，重点验证窄 MMIO 的地址/size 语义；再按 S2–S6 推进启动、DiffTest、中断和系统回归；
+1. 按已完成的 [M5 S0契约](5-ysyx-soc-integration/0-upstream-contract.md)执行 S1：原生AXI4单拍适配、CPU内部CLINT路由与wrapper，验证窄MMIO的地址/size及握手语义，保留B1回归；
+2. S1出口通过后推进S2最小SoC，落实S0发现的默认错误响应、空外设、DPI backing与仿真时间配置；再按S3–S6完成启动、DiffTest、PSRAM与timer/RT-Thread；
 3. 保留 04/05 core 基线作为后续对照；集成后 scope、IO 或 reset 条件改变时另建综合配置和 run，不能直接沿用 core 指标宣称完整 SoC PPA。
 
 在这三项完成前，不启动 GShare、经典五级流水重写、D-cache 或大规模外设扩展。

@@ -1,6 +1,6 @@
 # M5 设计与验收计划
 
-> 2026-10-19；状态：规划完成，S0–S8 均未执行。
+> 2026-10-19；状态：[S0 上游与平台契约](0-upstream-contract.md)完成，S1–S8 待实施。S0 已重新生成 SoC 并检查 61-port ABI；尚无 NPC 接入/系统程序运行结论。
 > 本地规划输入：`d7c5b139eca8f6ffc467ecea472d4395998b1cea`；前置为 [M4 signoff](../4-pre-soc-signoff/signoff.md)。该 commit 是本地输入，不是 ysyxSoC revision。
 > 配套：[验收矩阵](test-plan.md)、[开发日志](dev-log.md)、[Q&A](qa/README.md)、[总路线](../roadmap.md)。
 
@@ -46,6 +46,8 @@ UART 最终需要初始化波特率并验证实际串行 TX；自动化串行接
 
 S0 固定完整 commit、recursive submodule revision、上游补丁及本地 patch，并对照 `src/CPU.scala`、`src/Top.scala`、地址译码和生成 Verilog 逐项核对。模块/文件命名按该 revision 的要求处理；观测信号放在仿真绑定/明确的评估 top 中，不随意增加 BlackBox 的正式端口。
 
+S0 实际冻结为 `df38a4d93d1d71e621fe91b106d088bd33af984a` + 已核对的 Rocket Chip 补丁，仿真 top 为 `ysyxSoCFull`，CPU ABI 为 `ysyx_00000000`。本文的规划候选表保留背景；后续实现以 [S0 实际契约](0-upstream-contract.md)为准。
+
 在线 [Makefile](https://github.com/OSCPU/ysyxSoC/blob/ysyx6/Makefile)提供 `dev-init` 和 `verilog`，涉及 Mill、firtool 和子模块补丁；`dev-init` 有 `git apply` 操作，不能假设可无条件重复执行。S0 记录工具版本、依赖下载与生成步骤，区分生成入口、CPU 集成 top、Verilator top 和综合 top。生成 RTL 留在构建目录，以 revision/patch/生成命令重建，不提交为手写源码。
 
 新平台计划采用独立 `NPC_PLATFORM=ysyxsoc` 与 AM `ARCH=riscv32e-ysyxsoc`，具体入口在 S0 核对后冻结；**目前均不存在，不能直接运行**。它们拥有独立 filelist、模型、镜像加载、MMIO 表和 build 目录。保留现有 `legacy`、`b1` 及 `riscv32e-npc` 的行为；不同平台的地址不要靠全局替换混用。
@@ -72,7 +74,7 @@ flowchart TD
 - 外部 master 初版**全局最多一笔未完成事务**，包括读写互斥，完成响应后释放 owner。IFU/LSU 都有请求时使用有界公平仲裁；请求直到真正接受前、响应返回后分别如何转交，要与已有 local 合同一致。
 - 单拍 `AxLEN=0`、`WLAST=1`，计划使用 `AxBURST=INCR`、固定 ID 0；具体信号宽度/其他属性以 S0 为准。IFU 为 32 位取指，LSU 的 byte/halfword/word 对应 size；AW/AR 不无条件清除低地址位，WDATA/WSTRB 与返回 RDATA 的 lane 处理保持一致且只做一次。
 - AW/W 分别握手，任意反压时 payload 稳定；等待 B/R 完成才结束事务。核查 RID/BID、单拍 RLAST、response 错误到 access fault；对非法响应做协议诊断，不把它当成功数据。
-- CPU 只拦截自己的 CLINT；其余地址送 SoC，由实际互联/设备决定是否合法。保留已有未对齐异常策略，CPU 不发出不支持的未对齐访问；不新增覆盖全地址空间的自定义 RAM 白名单。
+- CPU 只拦截自己的 CLINT；其余地址送 SoC，由实际互联/设备决定是否合法。S0 已发现上游缺少统一默认错误处理，S2 需在 SoC 侧补确定的非法地址/只读写/禁用设备响应，不能假设当前都会返回 DECERR。保留已有未对齐异常策略，不新增 CPU RAM 白名单。
 - 上游 slave 口在关闭 ChipLink 且确认无访问源时可按契约 tie-off，断言验证没有请求；若实际存在访问者，必须设计完成/报错响应，不能靠永久 `ready=0` 隐藏死锁。不宣称实现了通用 AXI slave。
 - reset 采用共同复位 CPU 与 SoC 事务域的初始配置。若以后允许 CPU 单独复位，需单独设计旧响应隔离/排空；仅清除 CPU owner 无法撤销已接受的 SoC 写操作。
 
@@ -98,6 +100,8 @@ flowchart TD
 
 **容量决策**：现有 B1 RT-Thread 已明显超过 8 KiB，不能沿用 B1 默认 1 MiB SRAM 假装接入了上游 SRAM。S0 统计 text/rodata/data/bss、栈、heap 和峰值余量。默认预期 S4 需要 PSRAM 承载 RT-Thread，先保持 Flash → SRAM 小程序这个独立出口；只有专用裁剪 workload 的静态与运行预算均证实足够，才可记录理由免去 PSRAM。不得通过删掉 timer/线程验证、无记录放大 SRAM 或取消 RT-Thread 规避容量问题。
 
+S0 决策已落实：现有 ELF 静态段合计42,932 B，另需主栈/heap，**本轮采用4 MiB PSRAM路线**；Flash backing 先限制为16 MiB。PSRAM 颗粒当前为空，SPI 普通路径没有 XIP，因此 S4 同时包含这两项实现和验证，不能只写软件搬运。具体预算及模型合同见 [S0 第6节](0-upstream-contract.md#6-存储模型和启动容量决策)。
+
 PSRAM 若启用，仅补完成启动和 workload 所必需的模型/控制器功能及访问测试；QPI 加速、多级 bootloader 性能优化留待有测量需求时推进。先核查上游哪些是完整实现、哪些是练习占位，再决定复用或实现工作量。这里是 SoC 功能仿真与 CPU 范围综合，不要求 memory compiler；任何仿真存储模型都不能混入“已实现 SRAM macro”的结论。
 
 ### 3.4 中断、CSR、参考模型与 reset
@@ -118,9 +122,9 @@ machine timer interrupt 是本工程 roadmap 的明确目标，不能用“CLINT
 
 | 阶段 | 工作与依赖 | 出口及交付物 |
 | --- | --- | --- |
-| **S0：上游和平台契约** | 固定 revision/submodules/patch；生成 SoC 并核对 ports/top/map；审查工具链、模型、reset/IRQ、AM ISA 与容量预算 | `0-upstream-contract.md`：版本/命令、block diagram、地址和容量表、端口/reset表、模型缺口及处置、Flash/PSRAM 决策；实际生成成功，尚未要求 NPC 跑程序。矩阵 M01/M02 |
+| **S0：上游和平台契约（完成）** | 固定 revision/submodules/patch；生成 SoC 并核对 ports/top/map；审查工具链、模型、reset/IRQ、AM ISA 与容量预算 | [实际契约](0-upstream-contract.md)与 [manifest](s0-validation/manifest.json)：重新生成/61-port 核对/静态展开通过，PSRAM 路线确定；M01/M02 的 S0 范围通过 |
 | **S1：local 边界与原生 AXI4** | 按 3.2 分离语义主体/transport，新增单拍 adapters、仲裁/router、wrapper 及 CLINT 基础读时钟路径；此时不开启 timer IRQ | `1-axi4-interface.md`：时序合同与状态机、参数和源闭包；独立 AXI 测试证明窄访问/反压/错误/复位/仲裁。B1/legacy 回归通过。M03–M05、M16 |
-| **S2：最小 SoC bring-up** | 接入 S0 生成 top、外围模型和 harness；透传 reset PC；禁用未启用输入；先 MROM ebreak，再 UART A | `2-bringup.md`：构建入口、第一条取指与一次 UART 写的波形、退出/timeout；观测通道不干预功能。M06 |
+| **S2：最小 SoC bring-up** | 接入 S0 生成 top、外围模型和 harness；透传 reset PC；处理默认错误响应/空外设/仿真延时；先 MROM ebreak，再 UART A | `2-bringup.md`：构建入口、第一条取指与一次 UART 写的波形、退出/timeout；关闭 S0 的 G02–G04/G07 对本步的影响；M06 |
 | **S3：AM、SRAM 与 DiffTest** | 新 AM platform/linker，SRAM stack、data/bss；参考端多区域内存、设备分类和 commit/CSR 适配 | `3-runtime-difftest.md`：内存布局、hello/mem-test、可容纳 CPU tests 与 microbench smoke；RAM 正常逐指令差分，MMIO skip 有明确范围。M07/M08 |
 | **S4：Flash 启动与容量闭环** | Flash 控制器/模型实际读写协议审查；SPI 读、XIP、Flash → SRAM；按 S0 预算补 PSRAM 和 Flash → PSRAM | `4-boot-memory.md`：镜像/ELF/map、启动序列、预填 RAM 后的复制/清零证据；最大验收 workload 能装载并有栈/heap 余量。M09/M10 |
 | **S5：CLINT 与精确中断** | mtimecmp/IRQ、CSR/IDU/EXU、AM/NEMU/DiffTest 联动；先手写 trap 程序再接 tick | `5-timer-interrupt.md`：CSR/IRQ 合同、优先级表、独立 cause/EPC/副作用预期、定向与延迟测试；MRET 正确恢复。M11–M13 |
@@ -139,15 +143,15 @@ machine timer interrupt 是本工程 roadmap 的明确目标，不能用“CLINT
 
 ## 5. 实施依赖与阻塞报告
 
-**当前计划编写没有阻塞；尚未开始集成，以下是必须关闭的实施前置项。** 不把“尚未核查”写成“已经缺失”，也不将在线分支名当成完成版本固定。
+**S0 已完成，当前没有阻止 S1 的外部依赖。** 原前置项状态如下；后续功能缺口详见 [S0 第7节](0-upstream-contract.md#7-缺口与分阶段处置)。
 
 | 项目 | 当前已知情况 | 关闭时点 / 无法完成时的处理 |
 | --- | --- | --- |
-| 上游源码、依赖、生成工具 | 当前工作区无 ysyxSoC checkout；尚无项目锁定 revision 和生成记录 | S0；若下载/工具/patch 阻塞，报告具体命令和文件，可继续写接口测试，但不宣布 S0 通过 |
-| 外设/存储模型 | 原讲义有要求自行补充的练习；未审查选定 revision 的完整性 | S0 列缺口，S2/S4 按实际需要补齐；不能仅链接空函数后认为设备可用 |
-| RT-Thread 容量 | 原 B1 fixture 明确不适合 8 KiB SRAM；新 workload 尚无 map | S0 选容量方案，S4 实证关闭；默认预期需要 PSRAM，不悄悄扩 SRAM |
-| ISA/CSR 与 ABI | 已有 RV32E/Zicsr 编译目标，新增 runtime/RTT 的实际依赖待核对 | S0 列支持清单，S5 关闭需要的 CSR/IRQ 缺口；发现 M/C/高 GPR 依赖先修软件构建或报告范围冲突 |
-| reset / 外部 IRQ | 尚无固定 SoC reset 机制与外部 IRQ source 清单 | S0 冻结功能合同，S1/S5 测试，S7 分类物理限制；不直接继承旧 reset false path 作为答案 |
+| 上游源码、依赖、生成工具 | revision/补丁/递归依赖已核对，重新生成返回0 | S0 已关闭，升级上游需重新审查 |
+| 外设/存储模型 | 已发现缺 backing、空外设、默认错误路径、缺 XIP 和 PSRAM 颗粒 | S0 审查完成；S2/S4 按 G02–G07 实现，不把静态展开当功能通过 |
+| RT-Thread 容量 | B1 ELF 静态段42,932 B，已选4 MiB PSRAM并给出预算 | S0 选型完成；SoC ELF/map及运行峰值在 S4/S6 实测 |
+| ISA/CSR 与 ABI | 当前 trap 支持RV32E；AM/RTT中断路径缺失，S5新增mie/mip timer能力 | S0 清单完成；S5实现并同步参考接口/测试，仍不宣称完整合规 |
+| reset / 外部 IRQ | 外部IRQ固定0；CPU reset为外部reset OR 10级延迟，初始约定20周期共同复位 | S0 合同完成；S1/S2/S5功能测试，S7物理限制复查 |
 | 服务器 DC/PT | M4 已跑通，M5 尚无新配置/结果 | S7 交付命令与审查清单，由用户执行回传；没有回传结果时不得宣布 S7/S8 完成 |
 
 后续按有价值的进展更新 QA 和 dev-log；运行日志/网表/生成 RTL 留在构建目录，只归档必要的可展示证据。出现真实阻塞时，说明它阻塞哪一出口、已有证据、下一步需要什么，并继续不受影响的工作。

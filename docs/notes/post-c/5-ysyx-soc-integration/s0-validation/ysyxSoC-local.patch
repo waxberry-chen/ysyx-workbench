@@ -1,0 +1,11 @@
+diff --git a/.gitignore b/.gitignore
+index 3c0160d0..cc39d3e5 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,2 +1,5 @@
+ build/
+ out/
++
++# firtool
++/patch/firtool
+\ No newline at end of file

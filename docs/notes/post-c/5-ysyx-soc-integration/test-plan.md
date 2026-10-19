@@ -1,13 +1,15 @@
 # M5 验收矩阵
 
-> 2026-10-19：以下均为计划，尚未执行。阶段定义见 [plan](plan.md)。后续填写真实命令、输入版本、日志/波形及结论；不是运行一次 hello 就将整行标为 PASS。
+> 2026-10-19：[S0](0-upstream-contract.md)完成，M01/M02 的 S0 范围通过；M03–M18 待执行。M01 的“接口一致”指生成实例与上游 spec/冻结合同一致，实际 NPC wrapper 的功能集成仍属于 S1/S2。
+
+S0 证据：[manifest](s0-validation/manifest.json)、[61-port 表](s0-validation/cpu-ports.csv)、[生成日志](s0-validation/generation.log)、[静态展开诊断](s0-validation/elaboration-diagnostics.txt)、[容量检查](s0-validation/rtt-budget.txt)。空 CPU stub 只用于静态展开，没有运行指令；242 条上游诊断已分类，不构成全 SoC lint clean。
 
 ## 必做项与独立预期
 
 | ID / 阶段 | 检查内容与通过条件 | 必须保留的证据 |
 | --- | --- | --- |
-| M01 / S0 | 固定 upstream/submodules/patch 与生成工具；从约定入口生成 SoC，实际端口与 wrapper 契约一致，无依赖未解析 | revision、工具版本、命令、生成文件 hash、接口表 |
-| M02 / S0 | 地址译码窗口与真实容量分别列出；CPU/SoC reset 域、极性/释放、外部 IRQ 源和模型缺口明确；RTT 容量路线已选定 | map/容量预算、reset 表、缺口处置表；未确认项不标完成 |
+| M01 / S0：PASS | 固定 upstream/submodules/patch 与生成工具；真实重新生成，61-port ABI一致；空CPU stub静态展开无缺失模块，不含DPI链接/功能验证 | 上述生成日志、manifest、端口表与告警处置 |
+| M02 / S0：PASS | 实际地址/容量、20周期共同reset与CPU释放延迟、IRQ固定0、模型缺口及负责阶段已明确；已选4MiB PSRAM路线 | S0 第4–7节、RTT静态预算；动态容量/IRQ/错误响应仍在后续验收 |
 | M03 / S1 | AXI byte offset 0/1/2/3、halfword offset 0/2、word 对齐；raw address/size/WSTRB/数据 lane 正确。模拟有读副作用的 byte 寄存器，窄读仅作用目标寄存器 | 独立 bus scoreboard、定向用例、关键波形；不能只在宽容 RAM 模型验证 |
 | M04 / S1 | AW 先/W 先/同周期，AR/AW/W/B/R 各通道反压；payload 稳定，RID/BID/RLAST 检查，响应完成前 owner 不变；读写全局 single-outstanding | 断言与事务计数；请求、响应、副作用逐笔相等；无重复 B/R 接收 |
 | M05 / S1 | IFU/LSU 同时持续请求的公平性；redirect 时旧取指响应丢弃；SLVERR/DECERR 精确 fault；请求未收/部分写通道已收/等待响应时的共同复位 | accepted/completed/aborted 分类、各状态定向覆盖；延迟有界时无饥饿/超时；非法响应为诊断负例 |
