@@ -1,0 +1,1 @@
+NPC_SOC_FAIL: DiffTest mismatch GPR[5] pc=0x20000010 ref=0xf000000 dut=0xf000001 pc=0x20000010

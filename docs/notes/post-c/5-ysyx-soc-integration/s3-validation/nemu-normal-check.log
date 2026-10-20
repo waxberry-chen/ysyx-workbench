@@ -1,0 +1,1 @@
+PASS: normal .config RV32I x16=6 x17=7; M mul x18=42; PC=0x8000000c. Build: make -C nemu git_commit= -j2 (no tracer commit). Existing general shared target needs libreadline preloaded by test host; SoC isolated library has no readline dependency.

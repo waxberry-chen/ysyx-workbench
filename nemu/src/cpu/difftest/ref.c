@@ -17,11 +17,17 @@
 #include <cpu/cpu.h>
 #include <difftest-def.h>
 #include <memory/paddr.h>
+#ifdef CONFIG_YSYXSOC
+#include <memory/ysyxsoc.h>
+#endif
 // In ref.c
 //   NEMU as ref, NPC as dut. 
 //   TO_REF: dut -> ref
 
 __EXPORT void difftest_memcpy(paddr_t addr, void *buf, size_t n, bool direction) {
+#ifdef CONFIG_YSYXSOC
+  assert(soc_memory_span(addr, n)); // do not memcpy across region boundaries
+#endif
   if (direction == DIFFTEST_TO_DUT) {
     memcpy(buf, guest_to_host(addr), n);  // guest_to_host, in NEMU domain
   } else if (direction == DIFFTEST_TO_REF) {

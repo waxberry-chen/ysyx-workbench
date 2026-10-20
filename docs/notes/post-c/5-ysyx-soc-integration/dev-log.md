@@ -57,3 +57,13 @@
 - 按用户反馈扩写 [S2 实施记录](2-bringup.md)，建立功能/改动位置/验证对应表，串起构建、MROM与PC复位、SoC guard、UART、monitor及退出路径，给出文件行定位与关键符号。
 - 区分S2新增、S1复用和上游已有机制，并明确Flash backing、完整SoC中途复位、SPI内部副作用等尚未验证的范围；M5后续实施文档沿用这一组织方式。
 - 本次仅更新文档，核对源码位置、链接和既有验收数据；未修改功能源码或重跑硬件仿真，原验收结果不变。
+
+## 2026-10-20：S3 AM/SRAM/DiffTest 完成
+
+- 输入主仓库 `c33bbfa`，ysyxSoC `65238f4b`；保留预期的 Rocket Chip 补丁。本次修改在主仓库，无 CPU 功能 RTL 或子模块源码改动，未 add/commit。
+- 新增 `ARCH=riscv32e-ysyxsoc`、4KiB MROM/8KiB SRAM linker、2KiB 栈预算，以及 poison/data-copy/bss-clear 启动代码。SRAM 全部由真实 CPU store 初始化，harness 只加载 MROM。UART 支持初始化/THRE/TEMT，AM uptime 读取内部 mtime。
+- 新增提交后21-word状态快照、每条指令差分和最终整块SRAM比较。UART/mtime使用单次输入同步，无整状态skip。独立NEMU profile不修改普通`.config`，参考端从自身状态推导访存fault，未用DUT cause作注入依据。
+- `make -C npc s3-test`通过：31个正向workload，含24个CPU tests、AM hello/memory/traps/timer、sieve/fib smoke和区域首尾汇编；35个CPU tests全部尝试构建，`hello-str`超MROM3912B，10项只构建未运行。8次异常cause/EPC有独立预期。
+- 比较器GPR扰动、删除data-copy、删除bss-clear、ROM/RAM链接超容量五类负例按预期失败。S2完整回归、普通NEMU 32GPR/M smoke、新AM `run`入口均通过。普通NEMU shared target已有readline依赖，测试宿主预加载后完成检查，本轮不改普通构建系统。
+- 新增[实现与源码导读](3-runtime-difftest.md)和[精选证据](s3-validation/README.md)，更新QA/plan/验收矩阵/roadmap。说明VMA/LMA、采样顺序、同步边界和容量分类，而非只记录PASS。
+- M07/M08的MROM/SRAM范围关闭，无当前阻塞；下一步S4真实Flash/PSRAM启动。timer IRQ、完整benchmark/RTT、随机系统延迟及新scope综合仍待后续。

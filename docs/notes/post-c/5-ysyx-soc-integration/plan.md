@@ -1,6 +1,6 @@
 # M5 设计与验收计划
 
-> 2026-10-20；状态：S0–[S2](2-bringup.md)完成，S3–S8 待实施。真实 SoC 的 MROM/UART/SRAM 定向运行与错误传播通过；尚无 AM/DiffTest 或完整系统软件验收结论。
+> 2026-10-20；状态：S0–[S3](3-runtime-difftest.md)完成，S4–S8 待实施。AM 的 MROM/SRAM 启动、逐指令 DiffTest 与限定软件子集通过；完整系统软件验收尚未完成。
 > 本地规划输入：`d7c5b139eca8f6ffc467ecea472d4395998b1cea`；前置为 [M4 signoff](../4-pre-soc-signoff/signoff.md)。该 commit 是本地输入，不是 ysyxSoC revision。
 > 配套：[验收矩阵](test-plan.md)、[开发日志](dev-log.md)、[Q&A](qa/README.md)、[总路线](../roadmap.md)。
 
@@ -56,7 +56,7 @@ S2 后按用户指定将 CPU 文件/模块及 Scala BlackBox 改为 `ysyx_250300
 
 在线 [Makefile](https://github.com/OSCPU/ysyxSoC/blob/ysyx6/Makefile)提供 `dev-init` 和 `verilog`，涉及 Mill、firtool 和子模块补丁；`dev-init` 有 `git apply` 操作，不能假设可无条件重复执行。S0 记录工具版本、依赖下载与生成步骤，区分生成入口、CPU 集成 top、Verilator top 和综合 top。生成 RTL 留在构建目录，以 revision/patch/生成命令重建，不提交为手写源码。
 
-目标入口采用 `NPC_PLATFORM=ysyxsoc` 与 AM `ARCH=riscv32e-ysyxsoc`；**目前均不存在，不能直接运行**。S1–S3 按层更新 filelist、模型、镜像加载、MMIO 表和 build 入口，使当前工程转向 SoC。`ysyxsoc` 是目标平台标识，不是要求继续支持 `legacy/b1` 的硬件模式选择；旧入口可随迁移移除或明确停用，不增加兼容分支。同步清理引用旧模块/端口的测试和 flow 配置，避免留下无说明的失效命令；M4 的历史 RTL/flow 用对应 Git revision 复现。
+当前入口为 `NPC_PLATFORM=ysyxsoc` 与 AM `ARCH=riscv32e-ysyxsoc`，已随 S1–S3 实现，可用 `make -C npc s3-test` 或新 AM 平台 `run`。`ysyxsoc` 是目标平台标识，不是要求继续支持 `legacy/b1` 的硬件模式选择；旧入口已停用，不增加兼容分支。M4 的历史 RTL/flow 用对应 Git revision 复现。
 
 ### 3.2 CPU transport 与 wrapper
 
@@ -130,7 +130,7 @@ machine timer interrupt 是本工程 roadmap 的明确目标，不能用“CLINT
 | **S0：上游和平台契约（完成）** | 固定 revision/submodules/patch；生成 SoC 并核对 ports/top/map；审查工具链、模型、reset/IRQ、AM ISA 与容量预算 | [实际契约](0-upstream-contract.md)与 [manifest](s0-validation/manifest.json)：重新生成/61-port 核对/静态展开通过，PSRAM 路线确定；M01/M02 的 S0 范围通过 |
 | **S1：现有接口升级为 AXI4 单拍（完成）** | 按 3.2 升级现有 adapters/仲裁/顶层，加入 CLINT 路由、SoC wrapper 和基础计时访问；迁移测试/构建引用，不保留 B1 兼容路径；此时不开启 timer IRQ | [S1 实施记录](1-axi4-interface.md)与 [证据](s1-validation/README.md)：时序合同、源闭包、迁移表；协议/CPU 定向回归与实际 wrapper 静态展开通过。M03–M05、M16 的 S1 范围 |
 | **S2：最小 SoC bring-up（完成）** | 接入 S0 生成 top、外围模型和 harness；透传 reset PC；处理默认错误响应/空外设/仿真延时；先 MROM ebreak，再 UART A | [S2 实施记录](2-bringup.md)与[证据](s2-validation/README.md)：真实 MROM/UART TX、SRAM/错误路径、harness 负例与 guard 协议通过；关闭 G02 的 S2 部分和 G03/G04/G07，M06 PASS |
-| **S3：AM、SRAM 与 DiffTest** | 新 AM platform/linker，SRAM stack、data/bss；参考端多区域内存、设备分类和 commit/CSR 适配 | `3-runtime-difftest.md`：内存布局、hello/mem-test、可容纳 CPU tests 与 microbench smoke；RAM 正常逐指令差分，MMIO skip 有明确范围。M07/M08 |
+| **S3：AM、SRAM 与 DiffTest（完成）** | 新 AM platform/linker，真实 SRAM poison/copy/clear 和 stack/heap；独立 NEMU profile、设备读值同步与提交后状态比较 | [实施导读](3-runtime-difftest.md)与[证据](s3-validation/README.md)：31个正向 workload、24个CPU tests、sieve/fib smoke及故障检测负例；所有提交差分、无整状态 skip。M07/M08 的 MROM/SRAM 范围通过 |
 | **S4：Flash 启动与容量闭环** | Flash 控制器/模型实际读写协议审查；SPI 读、XIP、Flash → SRAM；按 S0 预算补 PSRAM 和 Flash → PSRAM | `4-boot-memory.md`：镜像/ELF/map、启动序列、预填 RAM 后的复制/清零证据；最大验收 workload 能装载并有栈/heap 余量。M09/M10 |
 | **S5：CLINT 与精确中断** | mtimecmp/IRQ、CSR/IDU/EXU、AM/NEMU/DiffTest 联动；先手写 trap 程序再接 tick | `5-timer-interrupt.md`：CSR/IRQ 合同、优先级表、独立 cause/EPC/副作用预期、定向与延迟测试；MRET 正确恢复。M11–M13 |
 | **S6：系统回归** | RT-Thread 有限抢占/阻塞唤醒 workload，UART 实际 TX；CPU tests、microbench 子集与协议随机延迟/错误回归 | `6-system-validation.md`：程序/预算/seed/覆盖清单；固定 PASS 与超时，至少两个非主动 yield 的线程在 tick 驱动下取得进展。M14–M16 |
@@ -148,12 +148,12 @@ machine timer interrupt 是本工程 roadmap 的明确目标，不能用“CLINT
 
 ## 5. 实施依赖与阻塞报告
 
-**S0–S2 已完成，当前没有阻止 S3 开始的外部依赖。** 原前置项状态如下；后续功能缺口详见 [S0 第7节](0-upstream-contract.md#7-缺口与分阶段处置)。
+**S0–S3 已完成，当前没有阻止 S4 开始的外部依赖。** 原前置项状态如下；后续功能缺口详见 [S0 第7节](0-upstream-contract.md#7-缺口与分阶段处置)。
 
 | 项目 | 当前已知情况 | 关闭时点 / 无法完成时的处理 |
 | --- | --- | --- |
 | 上游源码、依赖、生成工具 | revision/补丁/递归依赖已核对，重新生成返回0 | S0 已关闭，升级上游需重新审查 |
-| 外设/存储模型 | 已发现缺 backing、空外设、默认错误路径、缺 XIP 和 PSRAM 颗粒 | S2 backing/错误响应/禁用输出/时间推进完成；S4 仍需 XIP/PSRAM，G02 的 DiffTest 部分交 S3 |
+| 外设/存储模型 | S2 已补 backing/错误响应/禁用输出/时间推进；S3 已补 MROM/SRAM DiffTest | G02 的本轮 DiffTest 部分已关闭；S4 仍需真实 XIP/PSRAM 及其 reference 映射 |
 | RT-Thread 容量 | B1 ELF 静态段42,932 B，已选4 MiB PSRAM并给出预算 | S0 选型完成；SoC ELF/map及运行峰值在 S4/S6 实测 |
 | ISA/CSR 与 ABI | 当前 trap 支持RV32E；AM/RTT中断路径缺失，S5新增mie/mip timer能力 | S0 清单完成；S5实现并同步参考接口/测试，仍不宣称完整合规 |
 | reset / 外部 IRQ | 外部IRQ固定0；CPU reset为外部reset OR 10级延迟，初始约定20周期共同复位 | S0 合同完成；S1/S2/S5功能测试，S7物理限制复查 |

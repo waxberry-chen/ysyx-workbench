@@ -1,0 +1,15 @@
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/m5-s3/programs/cpu-hello-str'
+# Building cpu-hello-str-insert-arg [riscv32e-ysyxsoc]
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-ysyxsoc]
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-ysyxsoc]
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Creating image [riscv32e-ysyxsoc]
++ LD -> build/cpu-hello-str-riscv32e-ysyxsoc.elf
+riscv64-linux-gnu-ld: /home/cym/prj/ysyx-workbench/npc/build/m5-s3/programs/cpu-hello-str/build/cpu-hello-str-riscv32e-ysyxsoc.elf section `.text' will not fit in region `mrom'
+riscv64-linux-gnu-ld: MROM image exceeds 4 KiB
+riscv64-linux-gnu-ld: region `mrom' overflowed by 3912 bytes
+make[1]: *** [/home/cym/prj/ysyx-workbench/abstract-machine/Makefile:144: /home/cym/prj/ysyx-workbench/npc/build/m5-s3/programs/cpu-hello-str/build/cpu-hello-str-riscv32e-ysyxsoc.elf] Error 1
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/m5-s3/programs/cpu-hello-str'

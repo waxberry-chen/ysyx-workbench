@@ -1,0 +1,5 @@
+[1;34m[src/cpu/cpu-exec.c:166 cpu_exec] nemu: [1;31mHIT BAD TRAP[0m at pc = 0x20000378[0m
+[1;34m[src/cpu/cpu-exec.c:130 statistic] host time spent = 302 us[0m
+[1;34m[src/cpu/cpu-exec.c:131 statistic] total guest instructions = 6306[0m
+[1;34m[src/cpu/cpu-exec.c:132 statistic] simulation frequency = 20880794 inst/s[0m
+NPC_SOC_FAIL: ebreak with nonzero a0 pc=0x20000378

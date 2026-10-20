@@ -1,6 +1,6 @@
 # M5 验收矩阵
 
-> 2026-10-20：S0–S2 完成；M01/M02 的 S0 范围、M03–M05/M16 的 S1 范围、M06 的 S2 范围通过。真实 SoC 已运行 MROM/UART/SRAM 与错误程序，证据见 [S2](2-bringup.md)及[摘要](s2-validation/README.md)。
+> 2026-10-20：S0–S3 完成；M01/M02 的 S0 范围、M03–M05/M16 的 S1 范围、M06–M08 的 S2/S3 范围通过。AM、31个正向差分 workload 和启动/比较器负例见 [S3](3-runtime-difftest.md)及[证据](s3-validation/README.md)。
 
 S0 证据：[manifest](s0-validation/manifest.json)、[61-port 表](s0-validation/cpu-ports.csv)、[生成日志](s0-validation/generation.log)、[静态展开诊断](s0-validation/elaboration-diagnostics.txt)、[容量检查](s0-validation/rtt-budget.txt)。空 CPU stub 只用于静态展开，没有运行指令；242 条上游诊断已分类，不构成全 SoC lint clean。
 
@@ -16,8 +16,8 @@ S0 证据：[manifest](s0-validation/manifest.json)、[61-port 表](s0-validatio
 | M04 / S1：PASS | AW 先/W 先/同周期，AR/AW/W/B/R 各通道反压；payload 稳定，RID/BID/RLAST 检查，响应完成前 owner 不变；读写全局 single-outstanding | 断言与事务计数；请求、响应、副作用逐笔相等；无重复 B/R 接收 |
 | M05 / S1：PASS | IFU/LSU 同时持续请求的公平性；redirect 时旧取指响应丢弃；SLVERR/DECERR 精确 fault；请求未收/部分写通道已收/等待响应时的共同复位 | accepted/completed/aborted 分类、各状态定向覆盖；延迟有界时无饥饿/超时；非法响应为诊断负例 |
 | M06 / S2：PASS | reset 后首个 MROM PC 与数据正确，ebreak 按当前退出约定结束；UART byte store 实际到达目标寄存器，仅输出一个 A | ebreak/uart FST、commit/bus/寄存器 CSV、独立 TX 解码精确 A、32 次精确 fault；见 S2 归档，未用队列打印代替 TX 验证 |
-| M07 / S3 | SRAM stack、8/16/32 位访存、64 位软件组合访存、byte mask、区域首尾、避栈 mem-test；data 复制/bss 清零/全局变量写正确；未对齐按既定 trap 策略验证 | ELF/map、链接容量断言、预填 RAM 后测试、错误原因/EPC；不要求 RV32 单条 64 位 load/store |
-| M08 / S3 | MROM/SRAM/Flash 等普通存储逐指令 DiffTest；设备按平台识别；MMIO skip/同步只限相应提交；故意扰动一次普通指令结果能触发 mismatch | 参考端区域表、同步方案、skip 统计、检测能力负例、hello/适用 CPU tests 日志 |
+| M07 / S3：PASS | SRAM stack、8/16/32 位访存、软件64位、byte mask、首尾、避栈mem-test、data/bss、全局改写和8次独立异常预期通过 | [S3](3-runtime-difftest.md)：CPU预填2048word；分别移除copy/clear的负例失败；链接容量断言、布局和实际最小sp已记录 |
+| M08 / S3：PASS（MROM/SRAM） | 31个正向workload所有提交逐指令比较并核对最终8KiB SRAM；UART/mtime仅单次输入同步，无整状态skip；普通addi结果扰动触发mismatch | [S3证据](s3-validation/README.md)：hello、24个CPU tests、sieve/fib smoke及分类；Flash/PSRAM随S4接通后再加入普通存储差分，未提前计PASS |
 | M09 / S4 | SPI 读与映射/XIP 访问一致；目标 RAM 预填图案后由 CPU 从 Flash 搬运，复制边界、data/bss、stack 与入口 PC 正确；超容量镜像构建/加载失败 | Flash 镜像/ELF/map/hash、boot 波形、目标区校验；无 harness 代搬运 |
 | M10 / S4 | 验收程序真实容量足够；若启用 PSRAM，完成控制器/模型事务及 byte/half/word、连续/随机地址、首尾/越界、延迟测试，再运行 Flash → PSRAM 程序 | 实际容量、存储测试、boot 与栈/heap 余量；若不启用 PSRAM须用新 workload 预算证明可免 |
 | M11 / S5 | mtime 单调/tick 换算/跨低字溢出读取；mtimecmp 分字写；比较阈值前后 pending；mask=0/1 与 pending=0/1 四组合；只读/不支持 CSR 访问语义 | 独立 timer/CSR scoreboard、RV32 程序自检、CSR 支持表与负例 |
@@ -25,7 +25,7 @@ S0 证据：[manifest](s0-validation/manifest.json)、[61-port 表](s0-validatio
 | M13 / S5 | AM timer event、真实中断开关、RV32E 上下文保存恢复；timer cause/EPC 独立验证后再比较 NEMU；中断返回不无条件增加 EPC | 手写 trap 程序、嵌入式上下文校验、DiffTest 注入/时间同步规则 |
 | M14 / S6 | 有限 RT-Thread：至少两线程无需主动 yield 也能在 tick 下交替取得进展，阻塞/唤醒、上下文、heap/stack 正确；退出有固定 PASS 与超时 | workload/map、tick/调度计数、寄存器和内存自检、余量、日志；协作测试若复用须迁移到 SoC，不要求旧 B1 fixture 仍可运行 |
 | M15 / S6 | UART 配置波特率、轮询发送状态；实际 serial TX 解码长字符串，字符数量/顺序一致；系统在固定与随机总线延迟下完成 | 串行接收器输出与时序；不能仅依赖上游 RTL 的队列打印 |
-| M16 / S1–S6：S1 PASS，其余待验 | 在升级后的 AXI4 接口上验证原有 CPU 语义：译码/GPR/CSR、commit/redirect、非法指令和访存异常、副作用；随后运行 SoC hello、适用 CPU tests、microbench smoke及随机延迟/错误测试 | 原检查点→新测试的迁移表、命令、seed、通过数/排除原因、timeout；不要求旧 B1/legacy 平台通过，不将未迁移测试静默计为 PASS |
+| M16 / S1–S6：S1/S3范围PASS，系统随机回归待S6 | 在升级后的 AXI4 接口上验证原有 CPU 语义；S3已运行SoC hello、24个CPU tests与sieve/fib smoke，完整系统随机延迟/错误测试仍待后续 | 原检查点→新测试的迁移表、命令、seed、通过数/排除原因、timeout；不要求旧 B1/legacy 平台通过，不将未迁移测试静默计为 PASS |
 | M17 / S7 | 真实 DC/PT 对冻结的新 scope 完成；无未解析引用、非预期 latch/loop/未约束功能端点，setup/hold 与电气规则通过，coverage/告警有逐类处置 | manifest、SDC/端口预算、area/qor/timing/DRV/coverage、reset 例外和主要路径；未达标为诊断结果 |
 | M18 / S8 | 干净运行目录重建镜像/SoC 仿真；S0–S7 证据对应最终版本；M6 的存储、程序、频率与统计口径固定 | signoff、复现命令、版本/hash、剩余风险、精选波形与 bug case |
 

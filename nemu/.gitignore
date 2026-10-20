@@ -12,3 +12,4 @@ include/config
 include/generated
 docs/
 !compile_commands.json
+/build/

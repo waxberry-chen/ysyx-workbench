@@ -190,6 +190,38 @@ IFDEF(CONFIG_FTRACE, int rs1_for_jalr = BITS(INSTPAT_INST(s), 19, 15));
 }
 
 int isa_exec_once(Decode *s) {
+#ifdef CONFIG_YSYXSOC
+  // Independently derive memory faults from the reference PC/registers/map.
+  // Do not inject the DUT's reported cause into the reference.
+  extern bool soc_memory_span(paddr_t, size_t);
+  extern bool soc_memory_writable(paddr_t, size_t);
+  extern bool soc_device_access(paddr_t, int, bool);
+  int fault = -1;
+  if (s->pc & 3) fault = 0;
+  else if (!soc_memory_span(s->pc, 4)) fault = 1;
+  if (fault < 0) {
+    uint32_t ins = vaddr_ifetch(s->pc, 4), op = ins & 127, f3=(ins>>12)&7;
+    if (op==3 || op==0x23) {
+      bool wr = op==0x23;
+      unsigned rs=(ins>>15)&31;
+      if (rs >= 16) fault=2;
+      else {
+        int32_t imm = wr ? (int32_t)((ins&0xfe000000)|((ins>>7&31)<<20))>>20 : (int32_t)ins>>20;
+        uint32_t a=cpu.gpr[rs]+imm;
+        int len=1<<(f3&3);
+        if ((f3&3)>2 || (wr && f3>2) || (!wr && f3==6)) fault=2;
+        else if (a & (len-1)) fault=wr ? 6 : 4;
+        else if (!(wr ? soc_memory_writable(a,len) : soc_memory_span(a,len)) &&
+                 !soc_device_access(a,len,wr)) fault=wr ? 7 : 5;
+      }
+    }
+  }
+  if (fault >= 0) {
+    s->dnpc = isa_raise_intr(fault, s->pc);
+    m_trap_update_mstatus(&cpu.csr.mstatus);
+    return 0;
+  }
+#endif
   s->isa.inst = inst_fetch(&s->snpc, 4);
   return decode_exec(s);
 }

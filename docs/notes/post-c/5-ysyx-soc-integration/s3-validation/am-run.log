@@ -1,0 +1,38 @@
+make: Entering directory '/home/cym/prj/ysyx-workbench/npc/tests/soc-runtime'
+# Building soc-runtime-run [riscv32e-ysyxsoc]
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-ysyxsoc]
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-ysyxsoc]
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+mainargs=
+make -C /home/cym/prj/ysyx-workbench/npc soc-ref
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+make -C ../nemu -f scripts/ysyxsoc.mk
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/nemu'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/nemu'
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make -C /home/cym/prj/ysyx-workbench/npc run IMG=/home/cym/prj/ysyx-workbench/npc/tests/soc-runtime/build/soc-runtime-riscv32e-ysyxsoc.bin \
+  ARGS="--diff /home/cym/prj/ysyx-workbench/npc/../nemu/build/ysyxsoc/nemu-ref.so "
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/npc'
+make -C /home/cym/prj/ysyx-workbench/ysyxSoC verilog
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/ysyxSoC'
+make[2]: Nothing to be done for 'verilog'.
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/ysyxSoC'
+mkdir -p /home/cym/prj/ysyx-workbench/npc/build/ysyxsoc
+verilator --cc --exe --build -j 2 --sv --timing --assert --trace-fst --timescale-override 1ns/1ps -Wall -Wno-fatal -Wno-SYNCASYNCNET -Werror-WIDTH -Werror-PINMISSING -Werror-PINNOTFOUND -Werror-LATCH -Werror-UNOPTFLAT -Werror-UNDRIVEN --top-module ysyxSoCFull -I/home/cym/prj/ysyx-workbench/ysyxSoC/perip/uart16550/rtl -I/home/cym/prj/ysyx-workbench/ysyxSoC/perip/spi/rtl -F filelist-soc.f /home/cym/prj/ysyx-workbench/ysyxSoC/build/ysyxSoCFull.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/amba/apb_delayer.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/amba/axi4_delayer.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/amba/npc_axi4_guard.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/bitrev/bitrev.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/flash/flash.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/gpio/gpio_top_apb.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/ps2/ps2_top_apb.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/psram/efabless/EF_PSRAM_CTRL.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/psram/efabless/EF_PSRAM_CTRL_wb.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/psram/psram.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/psram/psram_top_apb.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/sdram/core_sdram_axi4/sdram_axi.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/sdram/core_sdram_axi4/sdram_axi_core.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/sdram/core_sdram_axi4/sdram_axi_pmem.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/sdram/sdram.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/sdram/sdram_top_apb.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/sdram/sdram_top_axi.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/spi/rtl/spi_clgen.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/spi/rtl/spi_defines.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/spi/rtl/spi_shift.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/spi/rtl/spi_top.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/spi/rtl/spi_top_apb.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/uart16550/rtl/raminfr.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/uart16550/rtl/uart_defines.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/uart16550/rtl/uart_receiver.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/uart16550/rtl/uart_regs.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/uart16550/rtl/uart_rfifo.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/uart16550/rtl/uart_sync_flops.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/uart16550/rtl/uart_tfifo.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/uart16550/rtl/uart_top_apb.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/uart16550/rtl/uart_transmitter.v /home/cym/prj/ysyx-workbench/ysyxSoC/perip/vga/vga_top_apb.v /home/cym/prj/ysyx-workbench/npc/sim/soc_monitor.sv /home/cym/prj/ysyx-workbench/npc/csrc/soc/main.cpp /home/cym/prj/ysyx-workbench/npc/csrc/soc/difftest.cpp -CFLAGS '-std=c++17 -Wall -Wextra' -LDFLAGS '-ldl' --Mdir /home/cym/prj/ysyx-workbench/npc/build/ysyxsoc
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/ysyxsoc'
+make[2]: Nothing to be done for 'default'.
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/ysyxsoc'
+/home/cym/prj/ysyx-workbench/npc/build/ysyxsoc/VysyxSoCFull --mrom "/home/cym/prj/ysyx-workbench/npc/tests/soc-runtime/build/soc-runtime-riscv32e-ysyxsoc.bin" --diff /home/cym/prj/ysyx-workbench/npc/../nemu/build/ysyxsoc/nemu-ref.so 
+Hello, ysyxSoC!
+[1;34m[src/cpu/cpu-exec.c:166 cpu_exec] nemu: [1;32mHIT GOOD TRAP[0m at pc = 0x200000e8[0m
+[1;34m[src/cpu/cpu-exec.c:130 statistic] host time spent = 343 us[0m
+[1;34m[src/cpu/cpu-exec.c:131 statistic] total guest instructions = 6356[0m
+[1;34m[src/cpu/cpu-exec.c:132 statistic] simulation frequency = 18530612 inst/s[0m
+HIT GOOD TRAP: real ysyxSoC commits=6356 cycles=133142 UART_TX=Hello, ysyxSoC!
+
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/npc'
+make: Leaving directory '/home/cym/prj/ysyx-workbench/npc/tests/soc-runtime'

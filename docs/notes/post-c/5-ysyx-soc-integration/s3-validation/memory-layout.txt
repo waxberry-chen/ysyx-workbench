@@ -1,0 +1,36 @@
+riscv64-linux-gnu-objdump -h memory ELF
+
+/home/cym/prj/ysyx-workbench/npc/build/m5-s3/programs/memory/build/memory-riscv32e-ysyxsoc.elf:     file format elf32-littleriscv
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000003bc  20000000  20000000  00001000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .rodata       00000040  200003bc  200003bc  000013bc  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  2 .data         00000020  0f000000  200003fc  00002000  2**3
+                  CONTENTS, ALLOC, LOAD, DATA
+  3 .bss          00000030  0f000020  2000041c  00002020  2**3
+                  ALLOC
+  4 .riscv.attributes 0000001a  00000000  00000000  00002020  2**0
+                  CONTENTS, READONLY
+
+Linker symbols
+{
+  "__am_bss_clear": "0x20000058",
+  "__am_data_copy": "0x20000028",
+  "__am_runtime_ready": "0x20000078",
+  "_bss_end": "0xf000050",
+  "_bss_start": "0xf000020",
+  "_data_end": "0xf000020",
+  "_data_load": "0x200003fc",
+  "_data_start": "0xf000000",
+  "_heap_end": "0xf001800",
+  "_heap_start": "0xf000050",
+  "_rom_end": "0x2000041c",
+  "_sram_start": "0xf000000",
+  "_stack_bottom": "0xf001800",
+  "_stack_top": "0xf002000",
+  "_start": "0x20000000",
+  "_trm_init": "0x20000380"
+}

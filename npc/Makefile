@@ -1,4 +1,4 @@
-# M5: real SoC harness in S2; AM/DiffTest integration follows in S3.
+# M5: real SoC harness, AM runtime and per-commit DiffTest.
 # S1 retains independent responder checks alongside real-system tests.
 .DEFAULT_GOAL := help
 NPC_HOME := $(abspath .)
@@ -12,6 +12,7 @@ endif
 help:
 	@echo 'M5 S1: make s1-test; make lint; artifacts: npc/build/m5-s1'
 	@echo 'M5 S2: make s2-test; make run IMG=/path/to/mrom.bin [ARGS="..."]'
+	@echo 'M5 S3: make s3-test; AM ARCH=riscv32e-ysyxsoc; make soc-ref'
 lint:
 	verilator --lint-only --sv --assert -Wall -Wno-fatal --top-module ysyx_25030087 -F filelist-soc.f
 include scripts/tests.mk

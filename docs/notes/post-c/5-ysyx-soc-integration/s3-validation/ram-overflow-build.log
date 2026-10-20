@@ -1,0 +1,14 @@
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/m5-s3/programs/ram-overflow'
+# Building ram-overflow-insert-arg [riscv32e-ysyxsoc]
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-ysyxsoc]
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-ysyxsoc]
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ AS source0.S
+# Creating image [riscv32e-ysyxsoc]
++ LD -> build/ram-overflow-riscv32e-ysyxsoc.elf
+riscv64-linux-gnu-ld: SRAM data/bss overlaps reserved 2 KiB stack
+make[1]: *** [/home/cym/prj/ysyx-workbench/abstract-machine/Makefile:144: /home/cym/prj/ysyx-workbench/npc/build/m5-s3/programs/ram-overflow/build/ram-overflow-riscv32e-ysyxsoc.elf] Error 1
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/m5-s3/programs/ram-overflow'

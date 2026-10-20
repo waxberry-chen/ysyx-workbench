@@ -1,0 +1,352 @@
+{
+  "hello": {
+    "binary_bytes": 384,
+    "sha256": "1675c4529be34892f519845685efb5a79c412632c0b48e145d8c0d645eee18b2",
+    "data_bytes": 0,
+    "bss_bytes": 0,
+    "heap_bytes": 6144,
+    "stack_reserved": 2048,
+    "stack_used": 24
+  },
+  "memory": {
+    "binary_bytes": 1052,
+    "sha256": "7426bf83c1cfbc7b06d4df4d6448a3f19fe03497ba3bc90c6cf9f89f2ee444e7",
+    "data_bytes": 32,
+    "bss_bytes": 48,
+    "heap_bytes": 6064,
+    "stack_reserved": 2048,
+    "stack_used": 420
+  },
+  "traps": {
+    "binary_bytes": 552,
+    "sha256": "0944c7bac13891a9ad5fce0021cf44835cadec5e22345e5ed6efca96c086aa04",
+    "data_bytes": 0,
+    "bss_bytes": 16,
+    "heap_bytes": 6128,
+    "stack_reserved": 2048,
+    "stack_used": 20
+  },
+  "timer": {
+    "binary_bytes": 2200,
+    "sha256": "e506a222557d39ebb62af522fcdc2c21d42385f7bdc5476dbd22bbb88b35d012",
+    "data_bytes": 0,
+    "bss_bytes": 0,
+    "heap_bytes": 6144,
+    "stack_reserved": 2048,
+    "stack_used": 96
+  },
+  "micro-sieve": {
+    "binary_bytes": 1000,
+    "sha256": "153d16b76e651f615c193f4891cc40e9a4e95fd2746060c482c9ab667139fb1d",
+    "data_bytes": 28,
+    "bss_bytes": 20,
+    "heap_bytes": 6096,
+    "stack_reserved": 2048,
+    "stack_used": 44
+  },
+  "micro-fib": {
+    "binary_bytes": 1640,
+    "sha256": "f15ac659b4292e7154afe4341b86603081c2e526745e9dbadd5c95f3dfa7469b",
+    "data_bytes": 28,
+    "bss_bytes": 36,
+    "heap_bytes": 6080,
+    "stack_reserved": 2048,
+    "stack_used": 112
+  },
+  "cpu-add-longlong": {
+    "binary_bytes": 1116,
+    "sha256": "890a3ea889c949ab3fd5499a26b390c3fff66dba2ff1d4b09f02f880071ca5cc",
+    "data_bytes": 576,
+    "bss_bytes": 0,
+    "heap_bytes": 5568,
+    "stack_reserved": 2048,
+    "stack_used": 44
+  },
+  "cpu-add": {
+    "binary_bytes": 796,
+    "sha256": "9304c3505b2f07e5a4b9df14c8fc03d9739c421a104e6104119955ba1303390c",
+    "data_bytes": 288,
+    "bss_bytes": 0,
+    "heap_bytes": 5856,
+    "stack_reserved": 2048,
+    "stack_used": 40
+  },
+  "cpu-bit": {
+    "binary_bytes": 772,
+    "sha256": "04fe0a9d25b307146e9e98983ae12ca34bd00c497684dd1fa9da77b456ca057f",
+    "data_bytes": 0,
+    "bss_bytes": 0,
+    "heap_bytes": 6144,
+    "stack_reserved": 2048,
+    "stack_used": 32
+  },
+  "cpu-bubble-sort": {
+    "binary_bytes": 624,
+    "sha256": "51f5b4b4871001618265e72fe095a577f587cd2373cfbc581a6055f7a39d2989",
+    "data_bytes": 80,
+    "bss_bytes": 0,
+    "heap_bytes": 6064,
+    "stack_reserved": 2048,
+    "stack_used": 28
+  },
+  "cpu-crc32": {
+    "binary_bytes": 600,
+    "sha256": "e0356c2e1543521dbf4b9c50d05992e0fd6a5851a00c1cb7234bb347acea12ea",
+    "data_bytes": 0,
+    "bss_bytes": 1040,
+    "heap_bytes": 5104,
+    "stack_reserved": 2048
+  },
+  "cpu-div": {
+    "binary_bytes": 792,
+    "sha256": "e05a012569fb39f6f8e18bcd01f88b9bd9b43a5ce8ebe7d710f008b7ce4967bb",
+    "data_bytes": 0,
+    "bss_bytes": 48,
+    "heap_bytes": 6096,
+    "stack_reserved": 2048,
+    "stack_used": 32
+  },
+  "cpu-dummy": {
+    "binary_bytes": 292,
+    "sha256": "5dfbb1855c830a5f21f839b6b8b4d3dd1ce0556b9b73ee6f228b6ba52745c2c7",
+    "data_bytes": 0,
+    "bss_bytes": 0,
+    "heap_bytes": 6144,
+    "stack_reserved": 2048,
+    "stack_used": 12
+  },
+  "cpu-fact": {
+    "binary_bytes": 568,
+    "sha256": "bbad47514969e3ad46978460e6bc013a37071476739b29cc66bb4326b2ebbb27",
+    "data_bytes": 52,
+    "bss_bytes": 60,
+    "heap_bytes": 6032,
+    "stack_reserved": 2048
+  },
+  "cpu-fib": {
+    "binary_bytes": 744,
+    "sha256": "65beb7c53e3136747b567b2c96a2f3626da49243d08276ffb79ccc852683f3ce",
+    "data_bytes": 320,
+    "bss_bytes": 0,
+    "heap_bytes": 5824,
+    "stack_reserved": 2048,
+    "stack_used": 24
+  },
+  "cpu-goldbach": {
+    "binary_bytes": 796,
+    "sha256": "43d8157dd5022a44a24ecea99dcf2c974777a45bf4e3adefbbb70b2fa8c80e5d",
+    "data_bytes": 0,
+    "bss_bytes": 0,
+    "heap_bytes": 6144,
+    "stack_reserved": 2048
+  },
+  "cpu-if-else": {
+    "binary_bytes": 576,
+    "sha256": "1d0bf14734fcb4b93fb886a4028cc75dd61fa57335ec0e8447dc606d36770cc0",
+    "data_bytes": 112,
+    "bss_bytes": 0,
+    "heap_bytes": 6032,
+    "stack_reserved": 2048,
+    "stack_used": 24
+  },
+  "cpu-leap-year": {
+    "binary_bytes": 1116,
+    "sha256": "968206edd6001ca2bb0e6dd77e3124359c9087787b04abad9ee7942768ccf87f",
+    "data_bytes": 500,
+    "bss_bytes": 12,
+    "heap_bytes": 5632,
+    "stack_reserved": 2048,
+    "stack_used": 24
+  },
+  "cpu-load-store": {
+    "binary_bytes": 868,
+    "sha256": "ca79bf4c2ff1db4701f791f73feb2478fc7c635917d5d8a98ae0f19279d78baa",
+    "data_bytes": 128,
+    "bss_bytes": 0,
+    "heap_bytes": 6016,
+    "stack_reserved": 2048,
+    "stack_used": 32
+  },
+  "cpu-matrix-mul": {
+    "binary_bytes": 1816,
+    "sha256": "b734e9aee1d8c7844285416076dbe5fbd3de6a70d2329215349db0216c255aa2",
+    "data_bytes": 1200,
+    "bss_bytes": 400,
+    "heap_bytes": 4544,
+    "stack_reserved": 2048
+  },
+  "cpu-max": {
+    "binary_bytes": 800,
+    "sha256": "1d47fd64a5305563de13ec4a197ac249f8b22344d32db26bbc7bb3adb365a4df",
+    "data_bytes": 288,
+    "bss_bytes": 0,
+    "heap_bytes": 5856,
+    "stack_reserved": 2048,
+    "stack_used": 40
+  },
+  "cpu-mersenne": {
+    "binary_bytes": 2412,
+    "sha256": "99f2d5a728223bed524db02337d3fc9fd80bc37a2a4117cf8cb6c2e65ecb6212",
+    "data_bytes": 0,
+    "bss_bytes": 0,
+    "heap_bytes": 6144,
+    "stack_reserved": 2048
+  },
+  "cpu-min3": {
+    "binary_bytes": 864,
+    "sha256": "e2bfa95b48b663cd73084ea1735dbe3c5a04471fec19451d19339307a33bd5bc",
+    "data_bytes": 272,
+    "bss_bytes": 0,
+    "heap_bytes": 5872,
+    "stack_reserved": 2048,
+    "stack_used": 48
+  },
+  "cpu-mov-c": {
+    "binary_bytes": 524,
+    "sha256": "463f8a90cf12991bcd12485535ee608dcff86351674e0246e695e0a2abbd54f4",
+    "data_bytes": 0,
+    "bss_bytes": 48,
+    "heap_bytes": 6096,
+    "stack_reserved": 2048,
+    "stack_used": 24
+  },
+  "cpu-movsx": {
+    "binary_bytes": 696,
+    "sha256": "8fa8d1cad7c5118b3bb2a8073137274a56420c6b8b64637c4fa5e8accb27c78c",
+    "data_bytes": 0,
+    "bss_bytes": 64,
+    "heap_bytes": 6080,
+    "stack_reserved": 2048,
+    "stack_used": 24
+  },
+  "cpu-mul-longlong": {
+    "binary_bytes": 916,
+    "sha256": "c7563f0d25f5e6bd710a09c588f9984d43757a08a7e55044574febdb3f9cb0d1",
+    "data_bytes": 96,
+    "bss_bytes": 0,
+    "heap_bytes": 6048,
+    "stack_reserved": 2048,
+    "stack_used": 68
+  },
+  "cpu-pascal": {
+    "binary_bytes": 644,
+    "sha256": "a98baf96589ecb96e24d706533cfa845cf1d5f1f08467c37358a776eb17f34e3",
+    "data_bytes": 124,
+    "bss_bytes": 132,
+    "heap_bytes": 5888,
+    "stack_reserved": 2048
+  },
+  "cpu-prime": {
+    "binary_bytes": 676,
+    "sha256": "6abf6b35943f683090559619cea245eacf086cc07e2f09d009baf9d521c933d1",
+    "data_bytes": 40,
+    "bss_bytes": 8,
+    "heap_bytes": 6096,
+    "stack_reserved": 2048
+  },
+  "cpu-quick-sort": {
+    "binary_bytes": 1356,
+    "sha256": "f761949165e47d45384a1121664319d420d99401ad8bd925612a8a367a8a7815",
+    "data_bytes": 80,
+    "bss_bytes": 0,
+    "heap_bytes": 6064,
+    "stack_reserved": 2048,
+    "stack_used": 108
+  },
+  "cpu-recursion": {
+    "binary_bytes": 1096,
+    "sha256": "cc51366c0b3842a5f351ed39df988cbb35eafb2d2a5ea50c28a4ea2ece4cd307",
+    "data_bytes": 28,
+    "bss_bytes": 20,
+    "heap_bytes": 6096,
+    "stack_reserved": 2048,
+    "stack_used": 164
+  },
+  "cpu-select-sort": {
+    "binary_bytes": 676,
+    "sha256": "5db548b3ada3443062a46649d82b1d74b09fbe58665a1f4aff04125ad68ec77b",
+    "data_bytes": 80,
+    "bss_bytes": 0,
+    "heap_bytes": 6064,
+    "stack_reserved": 2048,
+    "stack_used": 36
+  },
+  "cpu-shift": {
+    "binary_bytes": 692,
+    "sha256": "df3a2fe93ea03be73e783990059142afad1cf66b8f93034210881391a1aa69d5",
+    "data_bytes": 128,
+    "bss_bytes": 0,
+    "heap_bytes": 6016,
+    "stack_reserved": 2048,
+    "stack_used": 32
+  },
+  "cpu-shuixianhua": {
+    "binary_bytes": 856,
+    "sha256": "b876a35f86ff883245251d38084a6cd7d877d188095463011fb01237c0a8e220",
+    "data_bytes": 16,
+    "bss_bytes": 0,
+    "heap_bytes": 6128,
+    "stack_reserved": 2048
+  },
+  "cpu-string": {
+    "binary_bytes": 1028,
+    "sha256": "817321dcae15f913eda2117041cde06a00b3f5df88335f7330e79ec3e5b9856f",
+    "data_bytes": 32,
+    "bss_bytes": 32,
+    "heap_bytes": 6080,
+    "stack_reserved": 2048,
+    "stack_used": 24
+  },
+  "cpu-sub-longlong": {
+    "binary_bytes": 1116,
+    "sha256": "c21788ee58ff52097c0b2641add0f07fcd157a1e6c16885d43db36951b761e47",
+    "data_bytes": 576,
+    "bss_bytes": 0,
+    "heap_bytes": 5568,
+    "stack_reserved": 2048,
+    "stack_used": 44
+  },
+  "cpu-sum": {
+    "binary_bytes": 388,
+    "sha256": "7de32dd92addde83491082e929803010c4f9e3e3932041b806c60f3a6e6aeed8",
+    "data_bytes": 0,
+    "bss_bytes": 0,
+    "heap_bytes": 6144,
+    "stack_reserved": 2048,
+    "stack_used": 28
+  },
+  "cpu-switch": {
+    "binary_bytes": 552,
+    "sha256": "ea397db9f16bf39f577c4a8f57e92252529d615ace63067f0b7ac9ae5da5d61a",
+    "data_bytes": 60,
+    "bss_bytes": 4,
+    "heap_bytes": 6080,
+    "stack_reserved": 2048,
+    "stack_used": 24
+  },
+  "cpu-to-lower-case": {
+    "binary_bytes": 556,
+    "sha256": "b9735bf3036b49b3b3ce736642ae6787d61db24d7fc16eba33405f458882b9f9",
+    "data_bytes": 128,
+    "bss_bytes": 0,
+    "heap_bytes": 6016,
+    "stack_reserved": 2048,
+    "stack_used": 24
+  },
+  "cpu-unalign": {
+    "binary_bytes": 528,
+    "sha256": "f7afa01b8d7fb3f78b9c9c7fb165952b7167f767d8538d0394c7a69bcb97d8c7",
+    "data_bytes": 4,
+    "bss_bytes": 28,
+    "heap_bytes": 6112,
+    "stack_reserved": 2048
+  },
+  "cpu-wanshu": {
+    "binary_bytes": 716,
+    "sha256": "8ac8fe9924cec12e445b51ba5fa6c4a353ffc5c4eaf0bd5d9fa24611060a40b7",
+    "data_bytes": 8,
+    "bss_bytes": 8,
+    "heap_bytes": 6128,
+    "stack_reserved": 2048
+  }
+}

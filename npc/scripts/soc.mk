@@ -10,7 +10,8 @@ SOC_FLAGS := --cc --exe --build -j 2 --sv --timing --assert --trace-fst \
  -Werror-UNOPTFLAT -Werror-UNDRIVEN --top-module ysyxSoCFull \
  -I$(SOC_HOME)/perip/uart16550/rtl -I$(SOC_HOME)/perip/spi/rtl \
  -F filelist-soc.f $(SOC_RTL) $(SOC_PERIPH) $(NPC_HOME)/sim/soc_monitor.sv \
- $(NPC_HOME)/csrc/soc/main.cpp -CFLAGS '-std=c++17 -Wall -Wextra' --Mdir $(SOC_BUILD)
+ $(NPC_HOME)/csrc/soc/main.cpp $(NPC_HOME)/csrc/soc/difftest.cpp \
+ -CFLAGS '-std=c++17 -Wall -Wextra' -LDFLAGS '-ldl' --Mdir $(SOC_BUILD)
 .PHONY: soc-verilog soc-build build run sim s2-test
 soc-verilog:
 	$(MAKE) -C $(SOC_HOME) verilog
@@ -24,3 +25,9 @@ run sim: soc-build
 	$(SOC_BINARY) --mrom "$(IMG)" $(ARGS)
 s2-test: soc-build
 	python3 tests/m5_s2_test.py
+
+.PHONY: soc-ref s3-test
+soc-ref:
+	$(MAKE) -C ../nemu -f scripts/ysyxsoc.mk
+s3-test: soc-build soc-ref
+	python3 tests/m5_s3_test.py
