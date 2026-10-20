@@ -23,6 +23,7 @@ module ysyx_core #(
     input              ifu_axi_arready,
     output     [31:0]  ifu_axi_araddr,
     output     [2:0]   ifu_axi_arprot,
+    output     [2:0]   ifu_axi_arsize,
     input              ifu_axi_rvalid,
     output             ifu_axi_rready,
     input      [31:0]  ifu_axi_rdata,
@@ -32,6 +33,7 @@ module ysyx_core #(
     input              lsu_axi_awready,
     output     [31:0]  lsu_axi_awaddr,
     output     [2:0]   lsu_axi_awprot,
+    output     [2:0]   lsu_axi_awsize,
     output             lsu_axi_wvalid,
     input              lsu_axi_wready,
     output     [31:0]  lsu_axi_wdata,
@@ -43,6 +45,7 @@ module ysyx_core #(
     input              lsu_axi_arready,
     output     [31:0]  lsu_axi_araddr,
     output     [2:0]   lsu_axi_arprot,
+    output     [2:0]   lsu_axi_arsize,
     input              lsu_axi_rvalid,
     output             lsu_axi_rready,
     input      [31:0]  lsu_axi_rdata,
@@ -472,7 +475,7 @@ ysyx_lsu u_lsu (
     .dmem_rsp_error (dmem_rsp_error)
 );
 
-ysyx_ifu_axi4lite_adapter u_ifu_axi4lite_adapter (
+ysyx_ifu_axi4_adapter u_ifu_axi4_adapter (
     .clk           (clk),
     .rst_n         (rst_n),
     .imem_req_valid(imem_req_valid),
@@ -486,13 +489,14 @@ ysyx_ifu_axi4lite_adapter u_ifu_axi4lite_adapter (
     .m_axi_arready (ifu_axi_arready),
     .m_axi_araddr  (ifu_axi_araddr),
     .m_axi_arprot  (ifu_axi_arprot),
+    .m_axi_arsize  (ifu_axi_arsize),
     .m_axi_rvalid  (ifu_axi_rvalid),
     .m_axi_rready  (ifu_axi_rready),
     .m_axi_rdata   (ifu_axi_rdata),
     .m_axi_rresp   (ifu_axi_rresp)
 );
 
-ysyx_lsu_axi4lite_adapter u_lsu_axi4lite_adapter (
+ysyx_lsu_axi4_adapter u_lsu_axi4_adapter (
     .clk           (clk),
     .rst_n         (rst_n),
     .dmem_req_valid(dmem_req_valid),
@@ -509,6 +513,7 @@ ysyx_lsu_axi4lite_adapter u_lsu_axi4lite_adapter (
     .m_axi_awready (lsu_axi_awready),
     .m_axi_awaddr  (lsu_axi_awaddr),
     .m_axi_awprot  (lsu_axi_awprot),
+    .m_axi_awsize  (lsu_axi_awsize),
     .m_axi_wvalid  (lsu_axi_wvalid),
     .m_axi_wready  (lsu_axi_wready),
     .m_axi_wdata   (lsu_axi_wdata),
@@ -520,6 +525,7 @@ ysyx_lsu_axi4lite_adapter u_lsu_axi4lite_adapter (
     .m_axi_arready (lsu_axi_arready),
     .m_axi_araddr  (lsu_axi_araddr),
     .m_axi_arprot  (lsu_axi_arprot),
+    .m_axi_arsize  (lsu_axi_arsize),
     .m_axi_rvalid  (lsu_axi_rvalid),
     .m_axi_rready  (lsu_axi_rready),
     .m_axi_rdata   (lsu_axi_rdata),

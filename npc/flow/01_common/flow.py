@@ -105,6 +105,9 @@ def load_config(config, site):
 # include 文件虽不作为独立编译源传入，也必须进入 hash 闭包，防止漏记宏定义变化。
 # 这是 S1 的 source-only 清单约定，不是任意 Verilog filelist/预处理器的通用解析器。
 def source_inputs(cfg):
+    if cfg['top'] == 'ysyx_core_axi4lite' and not (NPC / 'vsrc/top/ysyx_core_axi4lite.sv').is_file():
+        raise FlowError('M4 Lite scope retired by M5 S1. Reproduce M4 using its pinned Git revision; '
+                        'the new SoC CPU scope/SDC is scheduled for M5 S7. Existing run inspection remains available.')
     def local(name):
         path = (NPC / name).resolve()
         require(path.is_relative_to(NPC), f'Input escapes npc/: {name}')

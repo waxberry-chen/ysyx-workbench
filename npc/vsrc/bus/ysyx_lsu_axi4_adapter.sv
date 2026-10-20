@@ -1,11 +1,14 @@
+// Internal single-beat AXI channel subset: variable address/SIZE/PROT and
+// responses. The shared arbiter materializes fixed ID/LEN/BURST/LAST and checks
+// response identity/shape. This interface is not a reusable full AXI4 master.
 
 
-// Fully-registered, single-outstanding load/store AXI4-Lite adapter.
+// Fully-registered, single-outstanding load/store AXI4 single-beat adapter.
 //
 // Read requests use AR/R.  Write address and data are independent AXI
 // channels, so aw_pending_q and w_pending_q retire each payload separately
 // before the adapter waits for the single B response.
-module ysyx_lsu_axi4lite_adapter (
+module ysyx_lsu_axi4_adapter (
     input              clk,
     input              rst_n,
 
@@ -24,6 +27,7 @@ module ysyx_lsu_axi4lite_adapter (
     input              m_axi_awready,
     output     [31:0]  m_axi_awaddr,
     output     [2:0]   m_axi_awprot,
+    output     [2:0]   m_axi_awsize,
     output             m_axi_wvalid,
     input              m_axi_wready,
     output     [31:0]  m_axi_wdata,
@@ -36,6 +40,7 @@ module ysyx_lsu_axi4lite_adapter (
     input              m_axi_arready,
     output     [31:0]  m_axi_araddr,
     output     [2:0]   m_axi_arprot,
+    output     [2:0]   m_axi_arsize,
     input              m_axi_rvalid,
     output             m_axi_rready,
     input      [31:0]  m_axi_rdata,
@@ -61,7 +66,6 @@ reg        response_error_q;
 reg [3:0] base_strobe;
 
 wire [4:0]  byte_shift;
-wire [31:0] aligned_addr;
 wire [31:0] normalized_read_data;
 wire        local_request_aligned;
 wire        local_req_fire;
@@ -73,7 +77,6 @@ wire        axi_b_fire;
 wire        local_rsp_fire;
 
 assign byte_shift = {request_addr_q[1:0], 3'b000};
-assign aligned_addr = {request_addr_q[31:2], 2'b00};
 assign normalized_read_data = m_axi_rdata >> byte_shift;
 
 always @(*) begin
@@ -94,7 +97,8 @@ assign dmem_req_ready = rst_n && (state_q == IDLE);
 assign local_req_fire = dmem_req_valid && dmem_req_ready;
 
 assign m_axi_arvalid = rst_n && (state_q == SEND_AR);
-assign m_axi_araddr  = aligned_addr;
+assign m_axi_araddr  = request_addr_q;
+assign m_axi_arsize = {1'b0, request_size_q};
 assign m_axi_arprot  = 3'b001;
 assign axi_ar_fire   = m_axi_arvalid && m_axi_arready;
 
@@ -102,7 +106,8 @@ assign m_axi_rready = rst_n && (state_q == WAIT_R);
 assign axi_r_fire   = m_axi_rvalid && m_axi_rready;
 
 assign m_axi_awvalid = rst_n && (state_q == SEND_WRITE) && aw_pending_q;
-assign m_axi_awaddr  = aligned_addr;
+assign m_axi_awaddr  = request_addr_q;
+assign m_axi_awsize = {1'b0, request_size_q};
 assign m_axi_awprot  = 3'b001;
 assign axi_aw_fire   = m_axi_awvalid && m_axi_awready;
 
@@ -200,7 +205,7 @@ property p_ar_payload_stable_when_stalled;
     @(posedge clk) disable iff (!rst_n)
         m_axi_arvalid && !m_axi_arready
         |=> m_axi_arvalid &&
-            $stable({m_axi_araddr, m_axi_arprot});
+            $stable({m_axi_araddr, m_axi_arsize, m_axi_arprot});
 endproperty
 assert property (p_ar_payload_stable_when_stalled);
 
@@ -208,7 +213,7 @@ property p_aw_payload_stable_when_stalled;
     @(posedge clk) disable iff (!rst_n)
         m_axi_awvalid && !m_axi_awready
         |=> m_axi_awvalid &&
-            $stable({m_axi_awaddr, m_axi_awprot});
+            $stable({m_axi_awaddr, m_axi_awsize, m_axi_awprot});
 endproperty
 assert property (p_aw_payload_stable_when_stalled);
 

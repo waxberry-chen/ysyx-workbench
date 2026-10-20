@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""S2.5 independent expected traps + legal Zicsr execution on legacy and B1.
+"""S2.5 independent expected traps + legal Zicsr execution on the upgraded S1 AXI4 CPU.
 
 The program checks cause/EPC/state itself; the runner checks exact trap sites and
-memory request counts. DiffTest is additional state checking, not the oracle for
-whether an instruction should trap. Sources/images/traces stay under build/.
+memory request counts. S1 checks architectural results independently; full SoC DiffTest follows in S3. Sources/images/traces stay under build/.
 """
 import json
 import os
@@ -225,21 +224,16 @@ for name,text in [('illegal',''.join(source)),('legal',legal)]:
     symbols=command(name+'-symbols',['riscv64-linux-gnu-nm','-n',elf])
     addresses={fields[2]:int(fields[0],16) for line in symbols.splitlines() if len(fields:=line.split())==3}
     expected=[(addresses[f'fault_{i}'],word) for i,(_,word) in enumerate(cases)] if name=='illegal' else []
-    for platform,exe in [('legacy','npc/build/Vysyx_core'),('b1','npc/build/b1-1048576-1000000/Vysyx_b1_top')]:
-        tag=f'{platform}-{name}'; trace=OUT/f'{tag}.trace'
-        env=dict(os.environ,NPC_MAX_CYCLES='1000000')
-        log=command(tag,[ROOT/exe,'-b','-d',REF,f'--commit-trace={trace}',binary],env=env)
-        assert 'HIT GOOD TRAP' in log and 'Differential testing:' in log, tag
+    for seed in (1, 7):
+        tag=f'axi4-{name}-{seed}'; trace=OUT/f'{tag}.trace'
+        log=command(tag,[ROOT/'npc/build/m5-s1/cpu/Vaxi4_cpu_test_top',binary,trace,seed])
+        assert 'HIT GOOD TRAP' in log, tag
         rows=[line.split() for line in trace.read_text().splitlines() if not line.startswith('#')]
         traps=[r for r in rows if r[5]=='1']
         assert [(int(r[1],16),int(r[2],16)) for r in traps]==expected, (tag,'trap sites')
         assert all(int(r[6],16)==2 and r[9]=='0' for r in traps), (tag,'trap metadata')
-        # Only one scratch initialization store and one check load per fault.
         loads=len(cases) if name=='illegal' else 0; stores=int(name=='illegal')
-        if platform=='legacy':
-            assert f'D-RAM transactions: requests = {loads+stores} (loads = {loads}, stores = {stores})' in log, tag
-        else:
-            assert f'B1 master LSU ar={loads} aw={stores} w={stores} completed={loads+stores}' in log, tag
+        assert re.search(rf' writes={stores} data_reads={loads} ', log), (tag, log)
         results.append(dict(name=tag,status='PASS',commits=len(rows),expected_traps=len(expected),loads=loads,stores=stores))
         print(f'{tag}: PASS ({len(expected)} independently expected traps)',flush=True)
 (OUT/'results.json').write_text(json.dumps(results,indent=2)+'\n')

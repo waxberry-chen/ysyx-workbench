@@ -2,7 +2,13 @@
 // Preserve the Core's two adapters; export the arbiter's single master port.
 // monitor_bus bits [0:13]: IF ARV/ARR/RV/RR, LSU ARV/ARR/RV/RR,
 // LSU AWV/AWR/WV/WR/BV/BR. These are passive harness observations.
-module ysyx_core_axi4lite (
+module ysyx_core_axi4 #(parameter PC_RST = 32'h20000000) (
+    output [3:0] m_axi_arid, m_axi_awid,
+    output [7:0] m_axi_arlen, m_axi_awlen,
+    output [1:0] m_axi_arburst, m_axi_awburst,
+    output m_axi_wlast,
+    input [3:0] m_axi_rid, m_axi_bid,
+    input m_axi_rlast,
     input wire  clk,
     input wire  rst_n,
     output wire [31:0] commit_pc,
@@ -21,6 +27,7 @@ module ysyx_core_axi4lite (
     input wire  m_axi_arready,
     output wire [31:0] m_axi_araddr,
     output wire [2:0] m_axi_arprot,
+    output wire [2:0] m_axi_arsize,
     input wire  m_axi_rvalid,
     output wire  m_axi_rready,
     input wire [31:0] m_axi_rdata,
@@ -29,6 +36,7 @@ module ysyx_core_axi4lite (
     input wire  m_axi_awready,
     output wire [31:0] m_axi_awaddr,
     output wire [2:0] m_axi_awprot,
+    output wire [2:0] m_axi_awsize,
     output wire  m_axi_wvalid,
     input wire  m_axi_wready,
     output wire [31:0] m_axi_wdata,
@@ -42,6 +50,7 @@ wire  ifu_axi_arvalid;
 wire  ifu_axi_arready;
 wire [31:0] ifu_axi_araddr;
 wire [2:0] ifu_axi_arprot;
+wire [2:0] ifu_axi_arsize;
 wire  ifu_axi_rvalid;
 wire  ifu_axi_rready;
 wire [31:0] ifu_axi_rdata;
@@ -50,6 +59,7 @@ wire  lsu_axi_awvalid;
 wire  lsu_axi_awready;
 wire [31:0] lsu_axi_awaddr;
 wire [2:0] lsu_axi_awprot;
+wire [2:0] lsu_axi_awsize;
 wire  lsu_axi_wvalid;
 wire  lsu_axi_wready;
 wire [31:0] lsu_axi_wdata;
@@ -61,12 +71,13 @@ wire  lsu_axi_arvalid;
 wire  lsu_axi_arready;
 wire [31:0] lsu_axi_araddr;
 wire [2:0] lsu_axi_arprot;
+wire [2:0] lsu_axi_arsize;
 wire  lsu_axi_rvalid;
 wire  lsu_axi_rready;
 wire [31:0] lsu_axi_rdata;
 wire [1:0] lsu_axi_rresp;
 assign monitor_bus = {lsu_axi_bready, lsu_axi_bvalid, lsu_axi_wready, lsu_axi_wvalid, lsu_axi_awready, lsu_axi_awvalid, lsu_axi_rready, lsu_axi_rvalid, lsu_axi_arready, lsu_axi_arvalid, ifu_axi_rready, ifu_axi_rvalid, ifu_axi_arready, ifu_axi_arvalid};
-ysyx_core core (
+ysyx_core #(.PC_RST(PC_RST)) core (
     .clk(clk),
     .rst_n(rst_n),
     .commit_pc(commit_pc),
@@ -85,6 +96,7 @@ ysyx_core core (
     .ifu_axi_arready(ifu_axi_arready),
     .ifu_axi_araddr(ifu_axi_araddr),
     .ifu_axi_arprot(ifu_axi_arprot),
+    .ifu_axi_arsize(ifu_axi_arsize),
     .ifu_axi_rvalid(ifu_axi_rvalid),
     .ifu_axi_rready(ifu_axi_rready),
     .ifu_axi_rdata(ifu_axi_rdata),
@@ -93,6 +105,7 @@ ysyx_core core (
     .lsu_axi_awready(lsu_axi_awready),
     .lsu_axi_awaddr(lsu_axi_awaddr),
     .lsu_axi_awprot(lsu_axi_awprot),
+    .lsu_axi_awsize(lsu_axi_awsize),
     .lsu_axi_wvalid(lsu_axi_wvalid),
     .lsu_axi_wready(lsu_axi_wready),
     .lsu_axi_wdata(lsu_axi_wdata),
@@ -104,18 +117,31 @@ ysyx_core core (
     .lsu_axi_arready(lsu_axi_arready),
     .lsu_axi_araddr(lsu_axi_araddr),
     .lsu_axi_arprot(lsu_axi_arprot),
+    .lsu_axi_arsize(lsu_axi_arsize),
     .lsu_axi_rvalid(lsu_axi_rvalid),
     .lsu_axi_rready(lsu_axi_rready),
     .lsu_axi_rdata(lsu_axi_rdata),
     .lsu_axi_rresp(lsu_axi_rresp)
 );
-ysyx_axi4lite_arbiter arbiter (
+ysyx_axi4_arbiter arbiter (
+    .m_axi_arid(m_axi_arid),
+    .m_axi_awid(m_axi_awid),
+    .m_axi_arlen(m_axi_arlen),
+    .m_axi_awlen(m_axi_awlen),
+    .m_axi_arburst(m_axi_arburst),
+    .m_axi_awburst(m_axi_awburst),
+    .m_axi_wlast(m_axi_wlast),
+    .m_axi_rid(m_axi_rid),
+    .m_axi_bid(m_axi_bid),
+    .m_axi_rlast(m_axi_rlast),
+
     .clk(clk),
     .rst_n(rst_n),
     .ifu_axi_arvalid(ifu_axi_arvalid),
     .ifu_axi_arready(ifu_axi_arready),
     .ifu_axi_araddr(ifu_axi_araddr),
     .ifu_axi_arprot(ifu_axi_arprot),
+    .ifu_axi_arsize(ifu_axi_arsize),
     .ifu_axi_rvalid(ifu_axi_rvalid),
     .ifu_axi_rready(ifu_axi_rready),
     .ifu_axi_rdata(ifu_axi_rdata),
@@ -124,6 +150,7 @@ ysyx_axi4lite_arbiter arbiter (
     .lsu_axi_awready(lsu_axi_awready),
     .lsu_axi_awaddr(lsu_axi_awaddr),
     .lsu_axi_awprot(lsu_axi_awprot),
+    .lsu_axi_awsize(lsu_axi_awsize),
     .lsu_axi_wvalid(lsu_axi_wvalid),
     .lsu_axi_wready(lsu_axi_wready),
     .lsu_axi_wdata(lsu_axi_wdata),
@@ -135,6 +162,7 @@ ysyx_axi4lite_arbiter arbiter (
     .lsu_axi_arready(lsu_axi_arready),
     .lsu_axi_araddr(lsu_axi_araddr),
     .lsu_axi_arprot(lsu_axi_arprot),
+    .lsu_axi_arsize(lsu_axi_arsize),
     .lsu_axi_rvalid(lsu_axi_rvalid),
     .lsu_axi_rready(lsu_axi_rready),
     .lsu_axi_rdata(lsu_axi_rdata),
@@ -143,6 +171,7 @@ ysyx_axi4lite_arbiter arbiter (
     .m_axi_arready(m_axi_arready),
     .m_axi_araddr(m_axi_araddr),
     .m_axi_arprot(m_axi_arprot),
+    .m_axi_arsize(m_axi_arsize),
     .m_axi_rvalid(m_axi_rvalid),
     .m_axi_rready(m_axi_rready),
     .m_axi_rdata(m_axi_rdata),
@@ -151,6 +180,7 @@ ysyx_axi4lite_arbiter arbiter (
     .m_axi_awready(m_axi_awready),
     .m_axi_awaddr(m_axi_awaddr),
     .m_axi_awprot(m_axi_awprot),
+    .m_axi_awsize(m_axi_awsize),
     .m_axi_wvalid(m_axi_wvalid),
     .m_axi_wready(m_axi_wready),
     .m_axi_wdata(m_axi_wdata),

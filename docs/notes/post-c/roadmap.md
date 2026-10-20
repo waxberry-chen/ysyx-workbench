@@ -1,6 +1,6 @@
 # Post-C Roadmap：从弹性 RV32E Core 到可展示的 SoC/RTL 项目
 
-> 规划更新：2026-10-19；M4 S2.5 ISA 收敛已完成本地验收，当前已建立 S3 范围内面积/时序基线，S6 已于 2026-10-19 完成最终回归与服务器独立复现，M4 本轮验收通过，下一步 M5；M4 初始输入基线：`0fe53bf`（M3 功能/协议仿真验收后）
+> 规划更新：2026-10-19；M4 S2.5 ISA 收敛已完成本地验收，当前已建立 S3 范围内面积/时序基线，S6 已于 2026-10-19 完成最终回归与服务器独立复现，M4 本轮验收通过；M5 S0/S1 已完成（2026-10-20），下一步 S2 最小 SoC bring-up；M4 初始输入基线：`0fe53bf`（M3 功能/协议仿真验收后）
 >
 > 求职方向优先级：SoC/RTL Design > Design Verification > Physical Design  
 > 本文用于决定 post-C 阶段的投入顺序。具体接口、地址映射和考核要求仍以开始该阶段时的最新版官方讲义与上游仓库为准。
@@ -30,9 +30,10 @@
 3-axi4-lite-interconnect：Arbiter -> Xbar -> SRAM/UART/CLINT/DECERR
         │               已建立 lint/SVA/随机回压基线
         ▼
-当前主线
+已完成
 4-pre-soc-signoff：DC/PT 面积与时序基线；附带 DC 功耗粗估
         ▼
+当前主线（S0/S1 完成，下一步 S2）
 5-ysyx-soc-integration：AXI4 单拍子集封装 -> ysyxSoC 最小启动闭环
         │                    MROM/SRAM/UART/CLINT/DiffTest/RT-Thread
         ▼
@@ -325,15 +326,17 @@ interconnect system-level test plan 合并实施。
 
 2026-10-19：**[M5 S0 完成](5-ysyx-soc-integration/0-upstream-contract.md)**。固定ysyxSoC `df38a4d...`及递归依赖/补丁，重新生成成功，61-port ABI与静态展开核对通过；地址/reset/IRQ/模型缺口已记录，确定4MiB PSRAM路线。无阻止S1的外部依赖；下一步S1原生AXI4单拍transport。默认错误响应/空外设、真实XIP和PSRAM颗粒仍须分别在S2/S4落实，不代表SoC功能已验收。
 
+2026-10-20：按用户决定，M5 直接升级当前接口，不维护 B1/SoC 两套 transport。B1 是接入前的历史系统测试；S1 迁移有效的 CPU/协议检查，取消旧 B1/legacy 兼容验收要求。历史 RTL、M3/M4 报告通过对应 Git revision 复现，当前只推进 SoC 接口。
+
 #### 架构建议
 
-不要把 ysyxSoC 的完整 AXI4 信号直接扩散回 IFU、LSU。保留 local req/rsp 边界，但不承诺 B2 只改最外层 wrapper：当前 Lite 读接口不传 size，且 adapter 已对齐地址，无法在下游还原窄 MMIO 读。先核对目标设备要求，必要时从 local 边界增加原生 AXI4 单拍 adapter；B1 的 Lite 系统继续作为独立验证对象。
+保留 IFU/LSU 的 local req/rsp 语义边界，直接将现有 adapters、仲裁和顶层升级为面向 ysyxSoC 的 AXI4 单拍接口。当前 Lite 读接口不传 size，且 adapter 已对齐地址，必须在 adapter 内保留原始信息，不能只在最外层补端口。不新增 Lite/AXI4 模式选择或旧地址兼容层；B1 的有效测试检查点迁移到新接口，旧系统仅作历史复现。
 
 ```text
 IFU/LSU semantic state
         │ local req/rsp
         ▼
-transport adapters + core Arbiter
+升级后的 AXI4 adapters + core Arbiter
         │ single-outstanding；保留目标协议需要的 address/size
         ▼
 ysyx top wrapper / AXI4 single-beat interface
@@ -590,7 +593,7 @@ docs/notes/
 
 ## 9. 最近三个行动
 
-1. 按已完成的 [M5 S0契约](5-ysyx-soc-integration/0-upstream-contract.md)执行 S1：原生AXI4单拍适配、CPU内部CLINT路由与wrapper，验证窄MMIO的地址/size及握手语义，保留B1回归；
+1. 按已完成的 [M5 S0契约](5-ysyx-soc-integration/0-upstream-contract.md)执行 S1：直接升级现有 adapter/仲裁/顶层为 AXI4 单拍接口，加入 CLINT 路由与 wrapper，迁移 CPU/协议检查；不维护旧 B1 兼容路径；
 2. S1出口通过后推进S2最小SoC，落实S0发现的默认错误响应、空外设、DPI backing与仿真时间配置；再按S3–S6完成启动、DiffTest、PSRAM与timer/RT-Thread；
 3. 保留 04/05 core 基线作为后续对照；集成后 scope、IO 或 reset 条件改变时另建综合配置和 run，不能直接沿用 core 指标宣称完整 SoC PPA。
 

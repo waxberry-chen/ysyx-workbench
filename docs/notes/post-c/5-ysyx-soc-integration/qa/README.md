@@ -6,7 +6,7 @@
 
 当前 LSU Lite adapter 已将地址按 word 对齐，Lite 读接口也没有携带访问 size。下游 wrapper 无法恢复原来的 byte address 和读宽度。UART 等 byte 寄存器可能有读取副作用，整字读后截取数据不一定等价于一次 byte 读。
 
-因此计划从现有 IFU/LSU local req/rsp 处保留原始信息，新增 AXI4 单拍 transport，固定 `LEN=0` 也能正确表达窄访问。B1 的 Lite 配置继续保留；暂不实现 burst 或多 outstanding，并不意味着可以丢弃 size、ID/响应匹配和独立通道握手语义。
+因此直接升级现有 adapter，使 IFU/LSU local req/rsp 中的原始地址和宽度正确传到 AXI4 接口，固定 `LEN=0` 也能表达窄访问。按2026-10-20决定，不维护 B1 Lite 兼容路径；暂不实现 burst 或多 outstanding，并不意味着可以丢弃 size、ID/响应匹配和独立通道握手语义。
 
 ## Q2：Flash 启动和可写内存容量有什么关系？为什么不能直接搬用 B1 的 RT-Thread？
 
@@ -31,3 +31,25 @@ Flash 提供程序初始内容，但 `.data/.bss`、栈和 heap 仍需要可写�
 不一定。RESP如何产生取决于具体译码和slave。当前上游没有统一default responder，地址选择有简化；SRAM自身有范围检查，但不能替其他设备保证错误行为，MROM写甚至是断言而不是B通道错误响应。
 
 CPU应正确传播收到的错误，同时SoC要保证未映射/禁用/只读写有确定应答，避免地址别名和无限等待。本工程将这项工作放到S2的SoC侧；S1先用可控responder验证adapter的错误传播。仿真timeout能发现挂死，却不是硬件access fault的实现。
+
+## Q6：升级到 SoC 时，为什么不同时维护 B1 和 SoC 接口？
+
+B1 是接入真实 SoC 前的系统测试阶段，没有持续使用旧硬件接口的需求。双路径会增加参数、源文件组合、地址兼容和回归的维护量。当前选择直接升级已有 adapter、仲裁和顶层，保留 local req/rsp 的语义边界；transport 只是这些总线传送逻辑的统称，不要求新增一套可替换后端。
+
+保留的是验证积累：握手/owner、错误传播、commit/redirect、ISA/CSR 等检查需要迁移到新接口；不要求旧 B1 程序和旧地址仍可运行。需要复查 B1 或 M4 基线时，使用对应 Git revision 和归档证据。移除旧接口兼容与减少 CPU 行为验证是两回事。
+
+## Q7：单拍、单 outstanding 的 AXI4 与 AXI4-Lite 有什么区别？
+
+实现控制可以很接近，但接口语义不同。本工程通过 AxSIZE=0/1/2 表达窄访问，保留原始字节地址；外部接口还有固定的 ID/LEN/BURST/LAST。AXI4-Lite 没有 AxSIZE，且 Lite 本身也允许多个 outstanding，单 outstanding 是我们的实现选择。具体 S1 合同见 [实现记录](../1-axi4-interface.md#2-信号合同)。
+
+“字节地址不按 word 对齐”也不等于支持 misaligned word：例如 byte@…05 是自然对齐的 byte 访问，word@…01 仍按 CPU 的异常策略处理。
+
+## Q8：为什么 W-first 写不能立即按 AWADDR 路由？
+
+AXI 写地址与写数据独立握手，W 没有地址；W 先到时，当前 AWADDR 可能尚无有效意义。S1 的仲裁器与 router 分别缓冲 AW/W，收齐后按锁存地址选 CLINT 或外部 SoC，响应完成前保持责任归属。测试覆盖 ingress/egress 的三种 AW/W 顺序组合和部分写复位。
+
+## Q9：为什么 CLINT 在 CPU wrapper 内，ChipLink 却关闭？
+
+当前 ysyxSoC 没有实例化 CLINT，CPU ABI 也没有独立 timer IRQ 输入；将独立计时模块放在 wrapper 内、流水线外，可以本地译码并在 S5 直连 MTIP。S1 只有 mtime，跟随 CPU 时钟/复位，不代表完整 CLINT 或独立常开计时域。
+
+ChipLink 用于通过片间链路访问另一颗芯片的内存/设备；当前 M5 系统与 M6 cache/burst 不依赖它。关闭后 CPU slave 口没有访问源，保持 tie-off 并断言无请求；以后开启必须重新设计 slave、复位及跨时钟域合同，不能只切换开关。

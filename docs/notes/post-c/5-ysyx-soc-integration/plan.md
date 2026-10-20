@@ -1,8 +1,10 @@
 # M5 设计与验收计划
 
-> 2026-10-19；状态：[S0 上游与平台契约](0-upstream-contract.md)完成，S1–S8 待实施。S0 已重新生成 SoC 并检查 61-port ABI；尚无 NPC 接入/系统程序运行结论。
+> 2026-10-19；状态：S0、[S1](1-axi4-interface.md)完成，S2–S8 待实施。实际 wrapper ABI、独立 CPU/协议测试与真实 SoC 静态展开通过；尚无真实 SoC 系统程序运行结论。
 > 本地规划输入：`d7c5b139eca8f6ffc467ecea472d4395998b1cea`；前置为 [M4 signoff](../4-pre-soc-signoff/signoff.md)。该 commit 是本地输入，不是 ysyxSoC revision。
 > 配套：[验收矩阵](test-plan.md)、[开发日志](dev-log.md)、[Q&A](qa/README.md)、[总路线](../roadmap.md)。
+
+> 2026-10-20 范围调整：按用户决定，直接将当前 Lite 接口升级为面向 ysyxSoC 的 AXI4 单拍接口，不并行维护 B1/SoC 两套 transport。B1 是已完成的接入前系统测试，旧版本通过 Git 和历史验收记录复现；范围调整后已完成 S1 RTL 与定向验收，见 [S1 实施记录](1-axi4-interface.md)。
 
 ## 1. 依据、目标与范围
 
@@ -12,31 +14,33 @@ M5 的出口是 **CPU 接入真实 SoC 总线和设备、启动过程可验证�
 
 | 范围 | 本轮安排 |
 | --- | --- |
-| CPU 接口 | 原生 AXI4 单拍 master、wrapper、CPU 内部 CLINT；保留 B1 Lite 独立配置 |
+| CPU 接口 | 在现有 adapter/仲裁/顶层基础上升级为 AXI4 单拍 master，加入 SoC wrapper 与内部 CLINT；只维护这一条接口路径 |
 | 最小系统 | 上游 MROM、SRAM、UART16550；AM runtime、linker、DiffTest、访问错误传播 |
 | 外部启动 | 必做 Flash → SRAM 小程序闭环；RT-Thread 容量不足时接通 PSRAM 并完成 Flash → PSRAM 启动 |
 | 中断 | `mtime/mtimecmp`、machine timer interrupt、必要 CSR、精确 trap/MRET、AM/RT-Thread tick |
 | 系统验证 | hello、适用 CPU tests、限定 microbench smoke、有限 RT-Thread 抢占/阻塞唤醒测试、随机延迟与错误注入 |
-| 实现评估 | 对 CPU + 新 transport/仲裁/router + CLINT + wrapper 的明确可综合边界运行 DC/PT；服务器仍由用户手动同步和运行 |
+| 实现评估 | 对 CPU + 升级后的 adapter/仲裁/router + CLINT + wrapper 的明确可综合边界运行 DC/PT；服务器仍由用户手动同步和运行 |
 | 延后 | SDRAM、AXI burst、多 outstanding、cache、GPIO/PS2/VGA、完整图形/NVBoard 展示、ChipLink、外部中断控制器、完整交互 shell |
 
 UART 最终需要初始化波特率并验证实际串行 TX；自动化串行接收器即可，不强制引入 NVBoard。RX 与交互 shell 可另立扩展，不作为本轮 timer/RT-Thread 的前提。原讲义的 PSRAM/QPI、SDRAM、图形等练习有各自学习价值；这里的范围裁剪不能表述成“整章 C5/B2 全部完成”。
 
-## 2. 已有基础与必须处理的缺口
+## 2. S0 时的基础与缺口
+
+下表保留迁移前的诊断输入；S1 已解决接口、mtime 和 wrapper 部分，当前实现及剩余项以 [S1 交接](1-axi4-interface.md#7-s2-交接)为准。
 
 | 本地事实 | M5 需要做什么 |
 | --- | --- |
-| `ysyx_core` 内部已有 IFU/LSU local req/rsp，但 Lite adapters 也实例化在内部；`ysyx_core_axi4lite` 外层再仲裁 | 从已有 local 边界组织可替换 transport；不能仅把最外层 Lite 信号补成 AXI4 |
-| LSU Lite adapter 将地址按 word 对齐，Lite 读通道没有 size | 新 transport 保留原始 byte address 与访问宽度；对 UART 窄读不能先读整字再截取 |
-| core 的 `PC_RST` 默认 `0x80000000`，当前 Lite 顶层没有透传该参数 | 新 profile 透传启动地址，MROM/Flash 启动分别配置；旧平台默认值保留 |
-| B1 CLINT 只有只读 `mtime`，地址为 `0xa0000048/4c`，没有 `mtimecmp` 或 IRQ | 为 SoC 配置 CPU 内部 CLINT 地址及寄存器，补比较器/IRQ，保留 B1 兼容配置 |
+| `ysyx_core` 内部已有 IFU/LSU local req/rsp，但 Lite adapters 也实例化在内部；`ysyx_core_axi4lite` 外层再仲裁 | 直接升级现有 adapters、仲裁 payload 与顶层连接；保留 local 语义边界，不引入 Lite/AXI4 双配置或额外兼容层 |
+| LSU Lite adapter 将地址按 word 对齐，Lite 读通道没有 size | 修改 adapter 保留原始 byte address 与访问宽度；对 UART 窄读不能先读整字再截取 |
+| core 的 `PC_RST` 默认 `0x80000000`，当前 Lite 顶层没有透传该参数 | 透传 SoC 启动地址，MROM/Flash 启动分别配置；旧平台默认值不作为兼容要求 |
+| B1 CLINT 只有只读 `mtime`，地址为 `0xa0000048/4c`，没有 `mtimecmp` 或 IRQ | 改用 SoC 合同的 CPU 内部 CLINT 地址及寄存器，分步补比较器/IRQ；不保留旧地址别名或 B1 兼容配置 |
 | CSR 当前为 `mstatus/mtvec/mepc/mcause`；AM `ienabled()` 返回 false、`iset()` 为空 | 明确扩展 CSR 清单、硬件中断入口、AM 上下文/事件与 RT-Thread interrupt hooks |
 | EXU 以地址最高半字节等于 `0xa` 标记 MMIO；harness 据此跳过参考执行 | 必须按平台修正。SoC UART 不在该区间，SDRAM 却在其中；不能让未来 RAM 访问整体逃过 DiffTest |
-| 当前 harness/AM/NEMU 配置面向 legacy/B1 地址与镜像加载 | 新增独立 SoC profile、存储区域和启动加载路径；同步参考内存，不把 SoC 镜像仍装到旧 `0x80000000` |
+| 当前 harness/AM/NEMU 配置面向 legacy/B1 地址与镜像加载 | 将 NPC 运行入口迁移到 SoC，更新存储区域、启动加载和参考内存同步；不把镜像仍装到旧 `0x80000000`，也不影响 NEMU 其他平台用途 |
 | B1 RT-Thread 是协作调度，两个静态栈合计 16 KiB，并要求 heap > 32 KiB | 不能直接迁移到 8 KiB SRAM，也不能将协作调度通过当成 timer interrupt 通过 |
 | M4 04/05 为 core Lite 边界、TT/5 ns、ideal clock/ZeroWireload，reset 时序 deferred | 新接口和 CLINT 改变 scope/端口，另建 flow 配置；复查实际 reset 机制和旧例外，不覆写 M4 基线 |
 
-源码核对入口：[core](../../../../npc/vsrc/core/ysyx_core.sv)、[Lite 顶层](../../../../npc/vsrc/top/ysyx_core_axi4lite.sv)、[LSU adapter](../../../../npc/vsrc/bus/ysyx_lsu_axi4lite_adapter.sv)、[CLINT](../../../../npc/vsrc/periph/ysyx_axi4lite_clint.sv)、[EXU](../../../../npc/vsrc/core/ysyx_exu.sv)、[CSR](../../../../npc/vsrc/core/ysyx_csr.sv)、[AM CTE](../../../../abstract-machine/am/src/riscv/npc/cte.c)、[RT-Thread workload](../../../../npc/tests/b1-rtthread/workload.c)。
+源码核对入口：[core](../../../../npc/vsrc/core/ysyx_core.sv)、[当前 AXI4 顶层](../../../../npc/vsrc/top/ysyx_core_axi4.sv)、[LSU adapter](../../../../npc/vsrc/bus/ysyx_lsu_axi4_adapter.sv)、[CLINT](../../../../npc/vsrc/periph/ysyx_axi4lite_clint.sv)、[EXU](../../../../npc/vsrc/core/ysyx_exu.sv)、[CSR](../../../../npc/vsrc/core/ysyx_csr.sv)、[AM CTE](../../../../abstract-machine/am/src/riscv/npc/cte.c)、[RT-Thread workload](../../../../npc/tests/b1-rtthread/workload.c)。
 
 ## 3. 设计约定
 
@@ -50,15 +54,13 @@ S0 实际冻结为 `df38a4d93d1d71e621fe91b106d088bd33af984a` + 已核对的 Roc
 
 在线 [Makefile](https://github.com/OSCPU/ysyxSoC/blob/ysyx6/Makefile)提供 `dev-init` 和 `verilog`，涉及 Mill、firtool 和子模块补丁；`dev-init` 有 `git apply` 操作，不能假设可无条件重复执行。S0 记录工具版本、依赖下载与生成步骤，区分生成入口、CPU 集成 top、Verilator top 和综合 top。生成 RTL 留在构建目录，以 revision/patch/生成命令重建，不提交为手写源码。
 
-新平台计划采用独立 `NPC_PLATFORM=ysyxsoc` 与 AM `ARCH=riscv32e-ysyxsoc`，具体入口在 S0 核对后冻结；**目前均不存在，不能直接运行**。它们拥有独立 filelist、模型、镜像加载、MMIO 表和 build 目录。保留现有 `legacy`、`b1` 及 `riscv32e-npc` 的行为；不同平台的地址不要靠全局替换混用。
+目标入口采用 `NPC_PLATFORM=ysyxsoc` 与 AM `ARCH=riscv32e-ysyxsoc`；**目前均不存在，不能直接运行**。S1–S3 按层更新 filelist、模型、镜像加载、MMIO 表和 build 入口，使当前工程转向 SoC。`ysyxsoc` 是目标平台标识，不是要求继续支持 `legacy/b1` 的硬件模式选择；旧入口可随迁移移除或明确停用，不增加兼容分支。同步清理引用旧模块/端口的测试和 flow 配置，避免留下无说明的失效命令；M4 的历史 RTL/flow 用对应 Git revision 复现。
 
 ### 3.2 CPU transport 与 wrapper
 
 ```mermaid
 flowchart TD
-    Core[IFU / LSU：local req-rsp] --> Select{构建配置}
-    Select -->|legacy / B1| Lite[现有 Lite adapters 与仲裁]
-    Select -->|ysyxSoC| Native[保留 byte address / size 的 transport 与仲裁]
+    Core[IFU / LSU：local req-rsp] --> Native[由现有 adapter 与仲裁升级：保留 byte address / size]
     Native --> Route{CPU 侧目标译码}
     Route -->|CLINT 区间| Timer[内部 mtime / mtimecmp]
     Route -->|其他地址| Wrapper[AXI4 单拍 master / ysyx wrapper]
@@ -68,9 +70,10 @@ flowchart TD
     Trap --> Core
 ```
 
-图表示功能边界，router 放在 local 侧还是 AXI 侧在 S1 设计说明中冻结；选择应避免为 CLINT 再堆一套不必要协议转换，并明确 owner、错误返回与 reset 行为。
+图表示单一接口路径的功能边界。本文的 transport 只是 adapter、握手和事务传送逻辑的统称，不要求新增一层模块或可切换后端。S1 已冻结为仲裁后的 AXI 侧 router；先收齐 AW/W 再路由，明确 owner、错误返回与 reset 行为。
 
-- 先保留 local req/rsp 的 hold、accept、response、取消规则，将 CPU 语义主体与 transport 装配分离或参数化；不复制两份 IFU/LSU/EXU。B1 wrapper 继续接回原 Lite 路径。重构若改变 DPI 层次，同步调整 harness 和测试。
+- 保留 local req/rsp 的 hold、accept、response、取消规则，直接升级现有 adapter/仲裁/顶层，必要时重命名为 AXI4 模块；不复制 IFU/LSU/EXU，也不保留原 Lite 路径供运行时或构建时选择。若改变 DPI 层次，同步调整 harness 和测试。
+- 迁移旧测试中的有效检查点：GPR/CSR、译码、精确异常、commit/redirect、访存副作用及协议 owner/反压等。S1 用升级后的 AXI4 接口和可控 responder 做 CPU 定向回归，S2/S3 起在真实 SoC 上补系统验证；不以“B1 不兼容”为由删除行为检查。
 - 外部 master 初版**全局最多一笔未完成事务**，包括读写互斥，完成响应后释放 owner。IFU/LSU 都有请求时使用有界公平仲裁；请求直到真正接受前、响应返回后分别如何转交，要与已有 local 合同一致。
 - 单拍 `AxLEN=0`、`WLAST=1`，计划使用 `AxBURST=INCR`、固定 ID 0；具体信号宽度/其他属性以 S0 为准。IFU 为 32 位取指，LSU 的 byte/halfword/word 对应 size；AW/AR 不无条件清除低地址位，WDATA/WSTRB 与返回 RDATA 的 lane 处理保持一致且只做一次。
 - AW/W 分别握手，任意反压时 payload 稳定；等待 B/R 完成才结束事务。核查 RID/BID、单拍 RLAST、response 错误到 access fault；对非法响应做协议诊断，不把它当成功数据。
@@ -112,7 +115,7 @@ machine timer interrupt 是本工程 roadmap 的明确目标，不能用“CLINT
 - CSR 至少增加 `mie.MTIE`、`mip.MTIP` 及其读写语义，结合 `mstatus.MIE/MPIE`；继续使用 direct `mtvec`。是否需要 `mscratch`、只读身份 CSR 等，由 AM/trap 汇编和冻结的上游要求逐项核查，不把所有未实现 CSR 默认读成零。更新 IDU 白名单、非法访问测试、CSR DPI/状态布局与 NEMU 参考适配。
 - 在 precise architectural boundary 接受中断：保存下一条尚未执行指令的 PC，处理已接受的 LSU/总线操作后才能改变执行流；清除/失效错误路径取指。明确同步异常、redirect、pending IRQ 的优先级，验证无漏提交、重复 store 或已完成指令重执行。machine timer `mcause=0x80000007`；MRET 恢复后按 pending/mask 状态判断是否再次进入。
 - `io_interrupt` 是外部中断输入，不是内部 MTIP 的别名。本轮关闭外部 IRQ 来源、明确未支持的处理与断言；若上游配置强制产生外部 IRQ，则在 S0 报告范围冲突后补充对应设计，不静默冒充 timer IRQ。
-- AM 实现 timer 事件、`ienabled/iset` 和 RV32E 上下文保存；中断返回不得像 ECALL 一样无条件 `mepc += 4`。RT-Thread 补真实中断开关、tick 与退出中断后的调度，移除新平台上的空 hooks；不改变 B1 固定协作 workload 的历史验收含义。
+- AM 实现 timer 事件、`ienabled/iset` 和 RV32E 上下文保存；中断返回不得像 ECALL 一样无条件 `mepc += 4`。RT-Thread 补真实中断开关、tick 与退出中断后的调度，移除空 hooks；B1 固定协作 workload 仅作为历史证据，迁移后的测试另行记录。
 - DiffTest 按冻结地址表同步普通存储和镜像；仅对有依据的设备访问做单次 skip/输入同步。timer/IRQ 的 cycle 行为与 NEMU 指令步进不同，需要明确时间输入和中断注入边界。用独立 scoreboard/程序预期检查 pending、mask、cause、EPC，不能仅把 DUT 报的 cause 注入参考端再声称中断检测正确。
 - S0 记录 reset 来源、极性、保持周期、释放相位、CPU/互联/外设覆盖域。结合[现有 reset TODO](../4-pre-soc-signoff/reset-timing-todo.md)决定同步释放是否由 wrapper 或上游承担；测试待响应时的共同复位。仿真周期要求不自动等于芯片脉宽保证。S7 按已确定的机制重新审查 false path、recovery/removal、脉宽及 coverage；仍缺物理依据的项目显式延后，不虚构数值，也不扩大例外掩盖正常数据路径。
 
@@ -123,7 +126,7 @@ machine timer interrupt 是本工程 roadmap 的明确目标，不能用“CLINT
 | 阶段 | 工作与依赖 | 出口及交付物 |
 | --- | --- | --- |
 | **S0：上游和平台契约（完成）** | 固定 revision/submodules/patch；生成 SoC 并核对 ports/top/map；审查工具链、模型、reset/IRQ、AM ISA 与容量预算 | [实际契约](0-upstream-contract.md)与 [manifest](s0-validation/manifest.json)：重新生成/61-port 核对/静态展开通过，PSRAM 路线确定；M01/M02 的 S0 范围通过 |
-| **S1：local 边界与原生 AXI4** | 按 3.2 分离语义主体/transport，新增单拍 adapters、仲裁/router、wrapper 及 CLINT 基础读时钟路径；此时不开启 timer IRQ | `1-axi4-interface.md`：时序合同与状态机、参数和源闭包；独立 AXI 测试证明窄访问/反压/错误/复位/仲裁。B1/legacy 回归通过。M03–M05、M16 |
+| **S1：现有接口升级为 AXI4 单拍（完成）** | 按 3.2 升级现有 adapters/仲裁/顶层，加入 CLINT 路由、SoC wrapper 和基础计时访问；迁移测试/构建引用，不保留 B1 兼容路径；此时不开启 timer IRQ | [S1 实施记录](1-axi4-interface.md)与 [证据](s1-validation/README.md)：时序合同、源闭包、迁移表；协议/CPU 定向回归与实际 wrapper 静态展开通过。M03–M05、M16 的 S1 范围 |
 | **S2：最小 SoC bring-up** | 接入 S0 生成 top、外围模型和 harness；透传 reset PC；处理默认错误响应/空外设/仿真延时；先 MROM ebreak，再 UART A | `2-bringup.md`：构建入口、第一条取指与一次 UART 写的波形、退出/timeout；关闭 S0 的 G02–G04/G07 对本步的影响；M06 |
 | **S3：AM、SRAM 与 DiffTest** | 新 AM platform/linker，SRAM stack、data/bss；参考端多区域内存、设备分类和 commit/CSR 适配 | `3-runtime-difftest.md`：内存布局、hello/mem-test、可容纳 CPU tests 与 microbench smoke；RAM 正常逐指令差分，MMIO skip 有明确范围。M07/M08 |
 | **S4：Flash 启动与容量闭环** | Flash 控制器/模型实际读写协议审查；SPI 读、XIP、Flash → SRAM；按 S0 预算补 PSRAM 和 Flash → PSRAM | `4-boot-memory.md`：镜像/ELF/map、启动序列、预填 RAM 后的复制/清零证据；最大验收 workload 能装载并有栈/heap 余量。M09/M10 |
@@ -143,7 +146,7 @@ machine timer interrupt 是本工程 roadmap 的明确目标，不能用“CLINT
 
 ## 5. 实施依赖与阻塞报告
 
-**S0 已完成，当前没有阻止 S1 的外部依赖。** 原前置项状态如下；后续功能缺口详见 [S0 第7节](0-upstream-contract.md#7-缺口与分阶段处置)。
+**S0/S1 已完成，当前没有阻止 S2 开始的外部依赖。** 原前置项状态如下；后续功能缺口详见 [S0 第7节](0-upstream-contract.md#7-缺口与分阶段处置)。
 
 | 项目 | 当前已知情况 | 关闭时点 / 无法完成时的处理 |
 | --- | --- | --- |

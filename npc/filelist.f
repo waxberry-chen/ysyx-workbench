@@ -11,8 +11,8 @@
 ./vsrc/core/ysyx_lsu.sv
 ./vsrc/core/ysyx_csr.sv
 
-./vsrc/bus/ysyx_ifu_axi4lite_adapter.sv
-./vsrc/bus/ysyx_lsu_axi4lite_adapter.sv
+./vsrc/bus/ysyx_ifu_axi4_adapter.sv
+./vsrc/bus/ysyx_lsu_axi4_adapter.sv
 
 ./vsrc/gnrl/ysyx_global.sv
 ./vsrc/gnrl/ysyx_gnrl_primitive.sv

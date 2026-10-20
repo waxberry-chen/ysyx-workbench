@@ -1,5 +1,10 @@
 # NPC DC/PT baseline flow
 
+> M5 S1（2026-10-20）：当前 RTL 已升级，M4 的 `ysyx_core_axi4lite` scope 不再存在。
+> 本页原命令/配置用于历史复现，请使用 M4 对应 Git revision；当前新建 run 的 preflight 会明确拒绝旧 scope。
+> 已存在 run 的 `inspect` 不受影响。新的 CPU + router/CLINT/wrapper scope 与 SDC 在 M5 S7 建立。
+
+
 M4 S2 provides a small **wire-load DC → pre-layout PT** flow for
 `ysyx_core_axi4lite`: Core + IFU/LSU adapters + Arbiter. All commit/monitor ports remain in scope. M4 S2.5 reduces the register file to
 16 entries and removes M arithmetic; illegal encodings raise cause 2.

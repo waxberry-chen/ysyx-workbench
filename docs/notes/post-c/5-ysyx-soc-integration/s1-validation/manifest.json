@@ -1,0 +1,395 @@
+{
+  "date": "2026-10-20",
+  "status": "S1_PASS",
+  "command": "make -C npc s1-test",
+  "base_head": "f8641b61d97aeacf12d2bc5937840a450f53e0c0",
+  "source_state": "uncommitted working tree; hashes below identify tested source inputs",
+  "verilator": "Verilator 5.008 2023-03-04 rev v5.008",
+  "source_sha256": {
+    "npc/Makefile": "9eba8965678b3ac6a00de73983381e73fa63c3d3d80a34b6eec76bb413fb7cb7",
+    "npc/filelist-soc.f": "a3a5bed57e99f434946ab58f256dfc4aafd707ea9cfe9fb8f48a50235a05e64d",
+    "npc/filelist.f": "1a730f986632c3379f2beadee5588395e067abd4879dba017ba78a96f3800447",
+    "npc/flow/01_common/flow.py": "b61ba089e7dc4d8b7f83f63783a9a7a6392d159a6388632a3f0c13e0e626094e",
+    "npc/scripts/tests.mk": "27d547a1affc071aa9bf755762720527ef8afef9ab97a78009ae8c6f12d3bcfe",
+    "npc/tests/access_fault.S": "65a23435b7cc5c7f1acf5ccdf19fd0fce7c152eb47930b8cf001ca06d6407e11",
+    "npc/tests/address_misaligned.S": "32330c914ca8470a9733251e8e7cceec568fcb97a89862fae99cb53f88574a51",
+    "npc/tests/axi4_arbiter_tb.cpp": "d851ef4a78666499edd5d099a67f793ea6b481e3f2d95724cb5dbc8777f07367",
+    "npc/tests/axi4_cpu_tb.cpp": "006a709b1844edcdd3c42cbb106968ec513202ec03d33b0cde0d401622daba69",
+    "npc/tests/axi4_cpu_test_top.sv": "9303dab314abaed8844d78274658ff811abe8b490a06cda6421abb1011329818",
+    "npc/tests/axi4_fabric_test_top.sv": "8ea58a5dcda0ad6838fb74ac808b99109b48de877b92006ff2291dc4b8f3f27a",
+    "npc/tests/axi4_redirect_tb.cpp": "815418965ad4b2d42f38ad062bd7f65fb3fe9db4a69d5fde445640e429b8bc3c",
+    "npc/tests/axi4_redirect_test_top.sv": "4a7c431b239dd1b161591d554ed5f4a13bc1222665bb88e5967c1aa9f9a1130a",
+    "npc/tests/idu_contract_tb.cpp": "78162a8410012dd8431e7424da88b1ee94d25b475bcf35103ea704be2dd818b6",
+    "npc/tests/isa_contract_test.py": "eb8bafecbe19e25f4e4c87e8cd59c561aa0b28c3567bb1977af5030e64e1d7b9",
+    "npc/tests/m5_s1_memory.S": "511c6244c33e141aa6ce00b83f0d85012e3f90f5a741307d0a382d0011a77127",
+    "npc/tests/m5_s1_test.py": "b72fbb875a2a1afd9d36c847bd5ae2dad6dacf213650b4229edb113383af9711",
+    "npc/tests/ysyx_architectural_state_tb.sv": "4f2323bb91c22e4e2e7ba13db64eeb09d798fba64202b1b7d440f8c13dbcab34",
+    "npc/tests/ysyx_axi4_router_tb.sv": "63147e7842dcb49aea803266db136162ea55e7f746b306b56a90f3a7fa151966",
+    "npc/tests/ysyx_clint_tb.sv": "abcec3361709a2c968a11b32e5bdd80e78e561564be84381241a767bf0dd5d58",
+    "npc/tests/ysyx_exu_tb.sv": "13d67b472e2d894f981b363c91062085c2273e5c1a25b229b49cda8c34329971",
+    "npc/tests/ysyx_gnrl_buffer_tb.sv": "3d619b5e177379f855b6dc2160eb0faec6e6b1d0f0240d67cc515f7c1a88403a",
+    "npc/tests/ysyx_ifu_axi4_adapter_integ_tb.sv": "c86606ebb501323c69df686adb66dbc79b1a08b1e4010fa146ceb012d7a1ec43",
+    "npc/tests/ysyx_ifu_axi4_adapter_tb.sv": "f74b7b709cbb5ff9eafff2abff2768861c191e4751e90c96efe03615343c1861",
+    "npc/tests/ysyx_ifu_tb.sv": "ffce76c67b14fb1105de9c8f5aed8d6795518d31468cd2ed15601d95c0df601e",
+    "npc/tests/ysyx_lsu_axi4_adapter_tb.sv": "b027e7a6180a1110606a4f2d15007a99da2ca1c0df3d033c0cf1271912af3616",
+    "npc/tests/ysyx_lsu_tb.sv": "93547f47aa2d52295a98151e765f01b4048250dc2a2594f441e2f10fb15f665e",
+    "npc/tests/ysyx_soc_contract_check.py": "0633476174690a2df1503fca822aa3139b441b065adb930dd51d1820b1fd69f3",
+    "npc/tests/ysyx_soc_wrapper_tb.sv": "d716bcdda242f2eec7ef5b70709d7bba612b3c0c64a824bdb7a3ada7321d644c",
+    "npc/vsrc/bus/ysyx_axi4_arbiter.sv": "57b407a5f38bd14979b51c8e52feb106168393ae38d3879269811726aae4b750",
+    "npc/vsrc/bus/ysyx_axi4_router.sv": "30d926d8f504323a19e88fa6428a6ad250ce082116702cfcf5c644c5ac1679ab",
+    "npc/vsrc/bus/ysyx_ifu_axi4_adapter.sv": "9643e9b1f6212c3ebaf1acc8c3f1d84efc896cf3971aae401898a0da8552fd76",
+    "npc/vsrc/bus/ysyx_lsu_axi4_adapter.sv": "309ea53b7418bb6779cfcb5490294b2aaf0785f9f4ba00f9097b947a096c966e",
+    "npc/vsrc/core/ysyx_alu.sv": "cbe707eb49dbe9eb30ed8a496dc628866eb4f888a1210d77f3ceef0374f470a1",
+    "npc/vsrc/core/ysyx_branch.sv": "6cc2d908aeb37572de4cb026a578a452d46ca3e11d59be69d6023e29d2195537",
+    "npc/vsrc/core/ysyx_core.sv": "5d2e754b240e26fc439d873f24944f0e1c03856261cfba22b1176f44b8adbac4",
+    "npc/vsrc/core/ysyx_csr.sv": "1742779d54d071fca71043afeaa687e219a22dca6fb092f84fd74aacc1a67e38",
+    "npc/vsrc/core/ysyx_exu.sv": "78900f7a8c9d4000b10fe9f2b976feb82a4ba425ca1ea7a5bc8bae4f5d540f32",
+    "npc/vsrc/core/ysyx_gen_imm.sv": "7b72f39d8bc17eee2ffb186d6183855c0075776a8505084e0204f147c6192d1a",
+    "npc/vsrc/core/ysyx_i_ram.sv": "22e81a4e674cc43b0741e207cb66a000002b53103953b4d68a72b636926f910f",
+    "npc/vsrc/core/ysyx_idu.sv": "a798f56deb77174611b71f26c0ac942629b0e067b67040bf03638c3020414a5a",
+    "npc/vsrc/core/ysyx_ifu.sv": "d605a85513dbad82bfc7ff67707ea2ddd891ae7fe516ec5fdf40b64830099759",
+    "npc/vsrc/core/ysyx_lsu.sv": "1ec2463ade5aa1bd5c01a4dc15519be42be2d8104689c43579fcda81d2bd1654",
+    "npc/vsrc/core/ysyx_opbuf.sv": "11e6880f0b2118bacf9df9dcf0a4012dd6b3fd1192f02d490c46aa87d1cd7ae3",
+    "npc/vsrc/core/ysyx_regfile.sv": "80c66dc0a1fcf39133e5287d9befe0670dceccc9f4237135b8c53ff310cc3eab",
+    "npc/vsrc/gnrl/ysyx_global.sv": "39dc2658d350ab8293953b819346339cac640f377b4bfa3bec30ed5b9828d2f9",
+    "npc/vsrc/gnrl/ysyx_gnrl_primitive.sv": "69e7f79f3636533b0d10016fd04097dbdf92c13f342c7e12c0f25402188f7c15",
+    "npc/vsrc/periph/ysyx_clint.sv": "c447d93d62b3bddf8ac5b18aacf30cdc1af4d5e3781908a1cdf44fa46515c14b",
+    "npc/vsrc/top/ysyx_00000000.sv": "dbedf614107ec07b502f594b13b995dc1557cf6f2d6c374660aa3d340289a2c3",
+    "npc/vsrc/top/ysyx_core_axi4.sv": "625117780267ede73f72716269ff1d7a530ba1178738f795db21a7f5b6689403",
+    "npc/vsrc/top/ysyx_soc_cpu.sv": "b7f641a6a19294c6086d0423d9221a3b9c328d6e6f84068f922c652c74a7dc2e"
+  },
+  "generated_soc_sha256": "dbcd69976731a6ea547877eeecd1b5dda4fac543929ca7b64c133339efd68844",
+  "upstream_contract": "../s0-validation/manifest.json",
+  "checks": [
+    {
+      "name": "ifu-adapter-build",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "ifu-adapter",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "lsu-adapter-build",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "lsu-adapter",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "ifu-integration-build",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "ifu-integration",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "arbiter-build",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "arbiter",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "fabric-build",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "fabric",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "arbiter-bad-rid",
+      "status": "PASS",
+      "negative": true
+    },
+    {
+      "name": "arbiter-bad-bid",
+      "status": "PASS",
+      "negative": true
+    },
+    {
+      "name": "arbiter-bad-rlast",
+      "status": "PASS",
+      "negative": true
+    },
+    {
+      "name": "fabric-bad-rid",
+      "status": "PASS",
+      "negative": true
+    },
+    {
+      "name": "fabric-bad-bid",
+      "status": "PASS",
+      "negative": true
+    },
+    {
+      "name": "fabric-bad-rlast",
+      "status": "PASS",
+      "negative": true
+    },
+    {
+      "name": "redirect-build",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "redirect",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "clint-build",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "clint",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "router-local-build",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "router-local",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "wrapper-build",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "wrapper",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "wrapper-badirq",
+      "status": "PASS",
+      "negative": true
+    },
+    {
+      "name": "wrapper-badslave",
+      "status": "PASS",
+      "negative": true
+    },
+    {
+      "name": "cpu-build",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "isa-contract",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "fault-fetch-build",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "fault-fetch-objcopy",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "fault-fetch-2",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "fault-fetch-3",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "fault-load-build",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "fault-load-objcopy",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "fault-load-2",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "fault-load-3",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "fault-store-build",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "fault-store-objcopy",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "fault-store-2",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "fault-store-3",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "misaligned-load-build",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "misaligned-load-objcopy",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "misaligned-load",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "misaligned-store-build",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "misaligned-store-objcopy",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "misaligned-store",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "memory-build",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "memory-objcopy",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "memory-1",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "memory-2",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "memory-3",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "memory-4",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "memory-5",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "memory-6",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "memory-7",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "memory-8",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "memory-9",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "memory-10",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "cpu-lint",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "cpu-synthesis-lint",
+      "status": "PASS",
+      "negative": false
+    },
+    {
+      "name": "soc-elaboration",
+      "status": "PASS",
+      "negative": false
+    }
+  ],
+  "warning_counts": {
+    "cpu-lint": {
+      "PINCONNECTEMPTY": 13,
+      "UNUSEDSIGNAL": 16
+    },
+    "cpu-synthesis-lint": {
+      "PINCONNECTEMPTY": 13,
+      "UNUSEDSIGNAL": 28
+    },
+    "soc-elaboration": {
+      "PINCONNECTEMPTY": 26,
+      "DECLFILENAME": 4,
+      "DEFPARAM": 2,
+      "UNUSEDSIGNAL": 133,
+      "UNDRIVEN": 24,
+      "UNUSEDPARAM": 3,
+      "BLKSEQ": 1
+    }
+  },
+  "not_validated": [
+    "real SoC functional execution / AM / DiffTest",
+    "timer interrupt / mtimecmp",
+    "new scope DC/PT",
+    "formal / four-state / physical reset"
+  ]
+}

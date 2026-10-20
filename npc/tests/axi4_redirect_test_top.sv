@@ -1,5 +1,5 @@
 
-module axi4lite_redirect_test_top (
+module axi4_redirect_test_top (
  input wire clk,rst_n,redirect_valid,
  input wire [31:0] redirect_target,
  output wire if_ctx_valid,if_ctx_error,
@@ -87,7 +87,8 @@ ysyx_ifu #(
     .imem_rsp_error   (imem_rsp_error)
 );
 
-ysyx_ifu_axi4lite_adapter u_adapter (
+ysyx_ifu_axi4_adapter u_adapter (
+    .m_axi_arsize(),
     .clk           (clk),
     .rst_n         (rst_n),
     .imem_req_valid(imem_req_valid),
@@ -106,7 +107,11 @@ ysyx_ifu_axi4lite_adapter u_adapter (
     .m_axi_rdata   (ifu_axi_rdata),
     .m_axi_rresp   (ifu_axi_rresp)
 );
-ysyx_axi4lite_arbiter arbiter (.clk(clk),.rst_n(rst_n),
+ysyx_axi4_arbiter arbiter (
+.ifu_axi_arsize(3'd2), .lsu_axi_arsize(3'd2), .lsu_axi_awsize(3'd2),
+.m_axi_arsize(), .m_axi_awsize(), .m_axi_arid(), .m_axi_awid(),
+.m_axi_arlen(), .m_axi_awlen(), .m_axi_arburst(), .m_axi_awburst(),
+.m_axi_wlast(), .m_axi_rid(4'd0), .m_axi_bid(4'd0), .m_axi_rlast(1'b1),.clk(clk),.rst_n(rst_n),
 .lsu_axi_arvalid(lsu_axi_arvalid),
 .lsu_axi_arready(lsu_axi_arready),
 .lsu_axi_araddr(lsu_axi_araddr),

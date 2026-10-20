@@ -3,6 +3,8 @@
 > 2026-10-19：**S0 出口通过，下一步 S1**。已重新生成 SoC、核对 CPU ABI、审查地址/模型/reset/IRQ 和容量；尚未接入 NPC、运行 SoC 程序或进行新 scope 的综合。
 > 输入 workbench：`30bc679d02a45f4179ffaf738977c87254931bb7`；[验收矩阵](test-plan.md) M01/M02 的 S0 范围通过。已知功能缺口列在第 7 节，分别阻塞后续 S2/S4/S5 的出口，不阻塞当前契约冻结。
 
+> 2026-10-20 交接更新：S1 改为直接升级现有接口，不再要求 B1/SoC 双路径兼容。下文的上游版本、生成检查、地址与模型事实及 `s0-validation/` 原始证据保持原样；实施路径以更新后的 [计划](plan.md)为准。
+
 ## 1. 固定的源码、工具与生成结果
 
 | 项目 | 本次实际值 |
@@ -51,7 +53,7 @@ flowchart TD
 - **仿真 top 冻结为 `ysyxSoCFull`**，显式驱动 `clock/reset`、`externalPins_uart_rx=1`（空闲）、PS2 clock/data=1、GPIO input=0；输出由 harness 观察。颗粒模型已经在 Full 内实例化，不能重复添加。
 - **CPU 集成模块暂定 `ysyx_00000000`**，与实际生成 BlackBox 保持一致。这是本地集成占位名，不冒充真实学号；正式课程提交需要另行落实命名要求，不阻塞当前 M5。CPU debug/commit 信号通过专用仿真绑定/监测取得，不随意增加这个正式 ABI 的端口。
 - **S7 综合 top 另立**，仅覆盖 NPC 核与 transport/router/CLINT/wrapper；Full 中有 DPI 及空颗粒模型，不能拿来宣称完整 SoC 可综合。
-- 新 profile 名冻结为 `NPC_PLATFORM=ysyxsoc`、AM `ARCH=riscv32e-ysyxsoc`；入口在 S1–S3 实现，当前仍不存在。SoC filelist 包含生成文件、CPU wrapper、明确的外围源和 UART/SPI include path，不复用 B1 的设备列表。
+- 目标平台入口为 `NPC_PLATFORM=ysyxsoc`、AM `ARCH=riscv32e-ysyxsoc`；入口在 S1–S3 实现，当前仍不存在。按2026-10-20决定，它们承接当前工程，不要求继续支持旧 B1/legacy 硬件配置。SoC filelist 包含生成文件、CPU wrapper、明确的外围源和 UART/SPI include path，不复用 B1 的设备列表。
 
 ## 3. 实际 CPU 端口合同
 
@@ -145,8 +147,8 @@ S4 路线：
 
 | ID | 已核实的缺口 / 风险 | 影响出口与既定处置 |
 | --- | --- | --- |
-| G01 | CPU `ysyx_00000000` 目前没有 NPC 实现 | S1 实现 native single-beat transport/wrapper；本次仅用自动生成的无事务 stub 检查 ABI |
-| G02 | `mrom_read/flash_read` 无 NPC SoC backing，harness 地址和 MMIO 判断仍为旧平台 | S2/S3 增加独立 profile、加载范围、设备分类和 DiffTest；不能用 `0xa...` 继续判设备 |
+| G01 | CPU `ysyx_00000000` 目前没有 NPC 实现 | S1 直接升级现有接口并接出 wrapper；本次仅用自动生成的无事务 stub 检查 ABI |
+| G02 | `mrom_read/flash_read` 无 NPC SoC backing，harness 地址和 MMIO 判断仍为旧平台 | S2/S3 将运行入口迁移到 SoC，更新加载范围、设备分类和 DiffTest；不能用 `0xa...` 继续判设备 |
 | G03 | 未映射/禁用设备/MROM 写没有统一确定的错误响应 | S2 添加 SoC 侧错误路由与测试；CPU adapter 只负责正常传播错误 |
 | G04 | GPIO/PS2/VGA 控制器为空，24 个输出未驱动；SDRAM 颗粒为空 | S2 将本轮禁用外设隔离/提供确定的错误应答及静态输出；不实现其完整功能；禁止把全 top lint 返回 0 当作这些设备可用 |
 | G05 | SPI 普通路径没有 XIP，`FAST_FLASH` 直接经 DPI 跳过 serial transfer | S4 完成 XIP RTL，拒绝对只读 Flash 的写；验收关闭 FAST_FLASH |
@@ -179,4 +181,9 @@ python3 npc/tests/ysyx_soc_contract_check.py
 
 精选原始诊断见 [elaboration-diagnostics.txt](s0-validation/elaboration-diagnostics.txt)；完整 log、stub、命令和运行 manifest 在 `npc/build/m5-s0/contract-check/`，未提交生成 RTL 或二进制。历史证据 manifest 记录真实 hash；后续 run 不应覆盖这次归档。
 
-S1 的输入已明确：使用本次 61-port ABI、CPU 内部 CLINT 地址、共同 reset 规则和本地 req/rsp 语义，保留 B1；先实现/验证 raw byte address 的 transport，再接入 S2 的真实 SoC。S0 不需要 DC/PT 或 memory compiler；M4 04/05 基线保持不变。
+S1 的输入已明确：使用本次 61-port ABI、CPU 内部 CLINT 地址、共同 reset 规则和本地 req/rsp 语义，直接升级现有 adapter/仲裁/顶层，迁移 CPU/协议检查；不保留 B1 兼容接口。先验证 raw byte address 的 AXI4 单拍路径，再接入 S2 的真实 SoC。S0 不需要 DC/PT 或 memory compiler；M4 04/05 归档保持不变，复现使用其历史 Git revision。
+
+
+## 2026-10-20 S1 交接更新
+
+[S1](1-axi4-interface.md)已完成本页冻结 ABI 的实际 wrapper、单拍 AXI4、仲裁后 CLINT 路由及 mtime 子集；真实 wrapper 静态展开与独立 CPU/协议回归通过。S0 原始 manifest/生成结果保持不变，mtimecmp/IRQ 仍为 S5，真实 SoC 功能启动为下一步 S2。

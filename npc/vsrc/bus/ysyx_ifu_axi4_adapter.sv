@@ -1,12 +1,15 @@
+// Internal single-beat AXI channel subset: variable address/SIZE/PROT and
+// responses. The shared arbiter materializes fixed ID/LEN/BURST/LAST and checks
+// response identity/shape. This interface is not a reusable full AXI4 master.
 
 
-// Fully-registered, single-outstanding instruction AXI4-Lite adapter.
+// Fully-registered, single-outstanding instruction AXI4 single-beat adapter.
 //
 // The local request is captured before ARVALID is asserted.  Likewise, an AXI
 // read response is captured before it is exposed on the local response
 // channel.  This keeps AXI inputs out of combinational paths to AXI outputs and
 // gives both sides independent backpressure.
-module ysyx_ifu_axi4lite_adapter (
+module ysyx_ifu_axi4_adapter (
     input              clk,
     input              rst_n,
 
@@ -22,6 +25,7 @@ module ysyx_ifu_axi4lite_adapter (
     input              m_axi_arready,
     output     [31:0]  m_axi_araddr,
     output     [2:0]   m_axi_arprot,
+    output     [2:0]   m_axi_arsize,
     input              m_axi_rvalid,
     output             m_axi_rready,
     input      [31:0]  m_axi_rdata,
@@ -48,6 +52,7 @@ assign local_req_fire = imem_req_valid && imem_req_ready;
 
 assign m_axi_arvalid = rst_n && (state_q == SEND_AR);
 assign m_axi_araddr  = request_addr_q;
+assign m_axi_arsize = 3'd2;
 assign m_axi_arprot  = 3'b101;
 assign axi_ar_fire   = m_axi_arvalid && m_axi_arready;
 
@@ -110,7 +115,7 @@ property p_ar_payload_stable_when_stalled;
     @(posedge clk) disable iff (!rst_n)
         m_axi_arvalid && !m_axi_arready
         |=> m_axi_arvalid &&
-            $stable({m_axi_araddr, m_axi_arprot});
+            $stable({m_axi_araddr, m_axi_arsize, m_axi_arprot});
 endproperty
 assert property (p_ar_payload_stable_when_stalled);
 

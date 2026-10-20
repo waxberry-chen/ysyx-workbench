@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
 
 
-module ysyx_lsu_axi4lite_adapter_tb;
+module ysyx_lsu_axi4_adapter_tb;
 
 reg         clk = 1'b0;
 reg         rst_n = 1'b0;
@@ -21,6 +21,7 @@ wire        m_axi_awvalid;
 reg         m_axi_awready = 1'b0;
 wire [31:0] m_axi_awaddr;
 wire [2:0]  m_axi_awprot;
+wire [2:0]  m_axi_awsize;
 wire        m_axi_wvalid;
 reg         m_axi_wready = 1'b0;
 wire [31:0] m_axi_wdata;
@@ -32,6 +33,7 @@ wire        m_axi_arvalid;
 reg         m_axi_arready = 1'b0;
 wire [31:0] m_axi_araddr;
 wire [2:0]  m_axi_arprot;
+wire [2:0]  m_axi_arsize;
 reg         m_axi_rvalid = 1'b0;
 wire        m_axi_rready;
 reg  [31:0] m_axi_rdata = 32'b0;
@@ -58,7 +60,7 @@ always @(posedge clk) begin
         b_handshakes <= b_handshakes + 1;
 end
 
-ysyx_lsu_axi4lite_adapter u_adapter (.*);
+ysyx_lsu_axi4_adapter u_adapter (.*);
 
 task tick;
 begin
@@ -78,7 +80,7 @@ task check;
     input [8*112-1:0] message;
 begin
     if (!condition) begin
-        $display("LSU AXI4-Lite adapter test failed: %0s", message);
+        $display("LSU AXI4 single-beat adapter test failed: %0s", message);
         $fatal;
     end
 end
@@ -97,7 +99,7 @@ begin
     tick;
     dmem_req_valid = 1'b0;
     settle;
-    check(m_axi_arvalid && m_axi_araddr == {address[31:2], 2'b00} &&
+    check(m_axi_arvalid && m_axi_araddr == address && m_axi_arsize == {1'b0,size} &&
           m_axi_arprot == 3'b001 && !dmem_req_ready,
           "read request was not captured correctly");
 end
@@ -146,7 +148,7 @@ begin
     dmem_req_valid = 1'b0;
     settle;
     check(m_axi_awvalid && m_axi_wvalid &&
-          m_axi_awaddr == {address[31:2], 2'b00} &&
+          m_axi_awaddr == address && m_axi_awsize == {1'b0,size} &&
           m_axi_awprot == 3'b001 && !dmem_req_ready,
           "store request was not captured correctly");
 end
@@ -193,10 +195,10 @@ initial begin
     // data is normalized to bits [7:0] before reaching LSU.
     issue_read(32'h8000_0103, 2'd0);
     tick;
-    check(m_axi_arvalid && m_axi_araddr == 32'h8000_0100,
+    check(m_axi_arvalid && m_axi_araddr == 32'h8000_0103 && m_axi_arsize == 0,
           "AR payload changed during first stalled cycle");
     tick;
-    check(m_axi_arvalid && m_axi_araddr == 32'h8000_0100,
+    check(m_axi_arvalid && m_axi_araddr == 32'h8000_0103 && m_axi_arsize == 0,
           "AR payload changed during second stalled cycle");
     accept_read_address;
     tick;
@@ -308,7 +310,7 @@ initial begin
     check(dmem_req_ready && !dmem_rsp_valid,
           "adapter did not return to idle after reset");
 
-    $display("ysyx LSU AXI4-Lite adapter directed test: PASS");
+    $display("ysyx LSU AXI4 single-beat adapter directed test: PASS");
     $finish;
 end
 

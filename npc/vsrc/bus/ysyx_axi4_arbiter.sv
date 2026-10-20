@@ -1,16 +1,23 @@
 
 
-// IFU read-only + LSU read/write -> one AXI4-Lite master.
+// IFU read-only + LSU read/write -> one AXI4 single-beat master.
 // One service slot, including the buffered upstream response. A grant is
 // reserved before asserting READY; AW and W are then captured independently.
 // All interface outputs depend only on registers (and reset), never READY.
-module ysyx_axi4lite_arbiter (
+module ysyx_axi4_arbiter (
+    output [3:0] m_axi_arid, m_axi_awid,
+    output [7:0] m_axi_arlen, m_axi_awlen,
+    output [1:0] m_axi_arburst, m_axi_awburst,
+    output m_axi_wlast,
+    input [3:0] m_axi_rid, m_axi_bid,
+    input m_axi_rlast,
     input              clk,
     input              rst_n,
     input              ifu_axi_arvalid,
     output             ifu_axi_arready,
     input      [31:0]  ifu_axi_araddr,
     input      [2:0]   ifu_axi_arprot,
+    input      [2:0]   ifu_axi_arsize,
     output             ifu_axi_rvalid,
     input              ifu_axi_rready,
     output     [31:0]  ifu_axi_rdata,
@@ -19,6 +26,7 @@ module ysyx_axi4lite_arbiter (
     output             lsu_axi_arready,
     input      [31:0]  lsu_axi_araddr,
     input      [2:0]   lsu_axi_arprot,
+    input      [2:0]   lsu_axi_arsize,
     output             lsu_axi_rvalid,
     input              lsu_axi_rready,
     output     [31:0]  lsu_axi_rdata,
@@ -27,6 +35,7 @@ module ysyx_axi4lite_arbiter (
     output             lsu_axi_awready,
     input      [31:0]  lsu_axi_awaddr,
     input      [2:0]   lsu_axi_awprot,
+    input      [2:0]   lsu_axi_awsize,
     input              lsu_axi_wvalid,
     output             lsu_axi_wready,
     input      [31:0]  lsu_axi_wdata,
@@ -38,6 +47,7 @@ module ysyx_axi4lite_arbiter (
     input              m_axi_arready,
     output     [31:0]  m_axi_araddr,
     output     [2:0]   m_axi_arprot,
+    output     [2:0]   m_axi_arsize,
     input              m_axi_rvalid,
     output             m_axi_rready,
     input      [31:0]  m_axi_rdata,
@@ -46,6 +56,7 @@ module ysyx_axi4lite_arbiter (
     input              m_axi_awready,
     output     [31:0]  m_axi_awaddr,
     output     [2:0]   m_axi_awprot,
+    output     [2:0]   m_axi_awsize,
     output             m_axi_wvalid,
     input              m_axi_wready,
     output     [31:0]  m_axi_wdata,
@@ -54,6 +65,15 @@ module ysyx_axi4lite_arbiter (
     output             m_axi_bready,
     input      [1:0]   m_axi_bresp
 );
+
+// These constants define the only supported outbound AXI4 transaction shape.
+assign m_axi_arid = 0;
+assign m_axi_awid = 0;
+assign m_axi_arlen = 0;
+assign m_axi_awlen = 0;
+assign m_axi_arburst = 2'b01;
+assign m_axi_awburst = 2'b01;
+assign m_axi_wlast = 1'b1;
 
 typedef enum logic [3:0] {
     IDLE, COLLECT_R, SEND_R, WAIT_R, RESP_R,
@@ -64,7 +84,7 @@ reg owner_q;                 // 0: IFU, 1: LSU
 reg write_q;
 reg prefer_lsu_q;            // priority on the next contention
 reg [31:0] addr_q, wdata_q, rdata_q;
-reg [2:0] prot_q;
+reg [2:0] prot_q, size_q;
 reg [3:0] strb_q;
 reg [1:0] resp_q;
 reg aw_have_q, w_have_q, aw_sent_q, w_sent_q;
@@ -99,9 +119,11 @@ assign lsu_axi_bresp = resp_q;
 
 assign m_axi_arvalid = rst_n && state_q == SEND_R;
 assign m_axi_araddr = addr_q;
+assign m_axi_arsize = size_q;
 assign m_axi_arprot = prot_q;
 assign m_axi_awvalid = rst_n && state_q == SEND_W && !aw_sent_q;
 assign m_axi_awaddr = addr_q;
+assign m_axi_awsize = size_q;
 assign m_axi_awprot = prot_q;
 assign m_axi_wvalid = rst_n && state_q == SEND_W && !w_sent_q;
 assign m_axi_wdata = wdata_q;
@@ -121,6 +143,7 @@ always @(posedge clk or negedge rst_n) begin
         w_sent_q <= 1'b0;
         addr_q <= 32'b0;
         prot_q <= 3'b0;
+        size_q <= 3'b0;
         wdata_q <= 32'b0;
         strb_q <= 4'b0;
         rdata_q <= 32'b0;
@@ -135,18 +158,20 @@ always @(posedge clk or negedge rst_n) begin
             COLLECT_R: if (up_ar_fire) begin
                 addr_q <= owner_q ? lsu_axi_araddr : ifu_axi_araddr;
                 prot_q <= owner_q ? lsu_axi_arprot : ifu_axi_arprot;
+                size_q <= owner_q ? lsu_axi_arsize : ifu_axi_arsize;
                 state_q <= SEND_R;
             end
             SEND_R: if (ar_fire) state_q <= WAIT_R;
             WAIT_R: if (r_fire) begin
                 rdata_q <= m_axi_rdata;
-                resp_q <= m_axi_rresp;
+                resp_q <= (m_axi_rid != 0 || !m_axi_rlast) ? 2'b10 : m_axi_rresp;
                 state_q <= RESP_R;
             end
             COLLECT_W: begin
                 if (up_aw_fire) begin
                     addr_q <= lsu_axi_awaddr;
                     prot_q <= lsu_axi_awprot;
+                    size_q <= lsu_axi_awsize;
                     aw_have_q <= 1'b1;
                 end
                 if (up_w_fire) begin
@@ -164,7 +189,7 @@ always @(posedge clk or negedge rst_n) begin
                     state_q <= WAIT_W;
             end
             WAIT_W: if (b_fire) begin
-                resp_q <= m_axi_bresp;
+                resp_q <= (m_axi_bid != 0) ? 2'b10 : m_axi_bresp;
                 state_q <= RESP_W;
             end
             RESP_R, RESP_W: if (done) begin
@@ -184,6 +209,16 @@ end
 
 // A01-A04/A08: safety properties, not an unbounded liveness proof.
 `ifndef SYNTHESIS
+axi_read_shape: assert property (@(posedge clk) disable iff (!rst_n)
+    m_axi_rvalid |-> m_axi_rid == 0 && m_axi_rlast)
+    else $fatal(1, "AXI4 protocol: RID/RLAST mismatch");
+axi_write_id: assert property (@(posedge clk) disable iff (!rst_n)
+    m_axi_bvalid |-> m_axi_bid == 0)
+    else $fatal(1, "AXI4 protocol: BID mismatch");
+axi_no_unsolicited_r: assert property (@(posedge clk) disable iff (!rst_n)
+    m_axi_rvalid |-> state_q == WAIT_R || state_q == SEND_R);
+axi_no_unsolicited_b: assert property (@(posedge clk) disable iff (!rst_n)
+    m_axi_bvalid |-> state_q == WAIT_W || state_q == SEND_W);
 a03_lsu_request_contract: assert property (@(posedge clk) disable iff (!rst_n)
     !(lsu_axi_arvalid && (lsu_axi_awvalid || lsu_axi_wvalid)));
 a02_owner_type_holding: assert property (@(posedge clk) disable iff (!rst_n)
@@ -201,9 +236,9 @@ a04_response_blocks_requests: assert property (@(posedge clk) disable iff (!rst_
     state_q == RESP_R || state_q == RESP_W |->
         !(ifu_axi_arready || lsu_axi_arready || lsu_axi_awready || lsu_axi_wready));
 a01_ar_holding: assert property (@(posedge clk) disable iff (!rst_n)
-    m_axi_arvalid && !m_axi_arready |=> m_axi_arvalid && $stable({m_axi_araddr,m_axi_arprot}));
+    m_axi_arvalid && !m_axi_arready |=> m_axi_arvalid && $stable({m_axi_araddr,m_axi_arsize,m_axi_arprot}));
 a01_aw_holding: assert property (@(posedge clk) disable iff (!rst_n)
-    m_axi_awvalid && !m_axi_awready |=> m_axi_awvalid && $stable({m_axi_awaddr,m_axi_awprot}));
+    m_axi_awvalid && !m_axi_awready |=> m_axi_awvalid && $stable({m_axi_awaddr,m_axi_awsize,m_axi_awprot}));
 a01_w_holding: assert property (@(posedge clk) disable iff (!rst_n)
     m_axi_wvalid && !m_axi_wready |=> m_axi_wvalid && $stable({m_axi_wdata,m_axi_wstrb}));
 a01_ifu_r_holding: assert property (@(posedge clk) disable iff (!rst_n)

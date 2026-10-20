@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
 
 
-module ysyx_ifu_axi4lite_adapter_integ_tb;
+module ysyx_ifu_axi4_adapter_integ_tb;
 
 localparam [31:0] PC_RST = 32'h8000_0000;
 
@@ -29,6 +29,7 @@ wire        m_axi_arvalid;
 reg         m_axi_arready = 1'b0;
 wire [31:0] m_axi_araddr;
 wire [2:0]  m_axi_arprot;
+wire [2:0]  m_axi_arsize;
 reg         m_axi_rvalid = 1'b0;
 wire        m_axi_rready;
 reg  [31:0] m_axi_rdata = 32'b0;
@@ -70,7 +71,7 @@ ysyx_ifu #(
     .imem_rsp_error   (imem_rsp_error)
 );
 
-ysyx_ifu_axi4lite_adapter u_adapter (
+ysyx_ifu_axi4_adapter u_adapter (
     .clk           (clk),
     .rst_n         (rst_n),
     .imem_req_valid(imem_req_valid),
@@ -84,6 +85,7 @@ ysyx_ifu_axi4lite_adapter u_adapter (
     .m_axi_arready (m_axi_arready),
     .m_axi_araddr  (m_axi_araddr),
     .m_axi_arprot  (m_axi_arprot),
+    .m_axi_arsize  (m_axi_arsize),
     .m_axi_rvalid  (m_axi_rvalid),
     .m_axi_rready  (m_axi_rready),
     .m_axi_rdata   (m_axi_rdata),
@@ -108,7 +110,7 @@ task check;
     input [8*112-1:0] message;
 begin
     if (!condition) begin
-        $display("IFU + AXI4-Lite adapter integration test failed: %0s",
+        $display("IFU + AXI4 single-beat adapter integration test failed: %0s",
                  message);
         $fatal;
     end
@@ -252,7 +254,7 @@ initial begin
     tick;
     if_ctx_ready = 1'b0;
 
-    $display("ysyx IFU + AXI4-Lite adapter integration test: PASS");
+    $display("ysyx IFU + AXI4 single-beat adapter integration test: PASS");
     $finish;
 end
 

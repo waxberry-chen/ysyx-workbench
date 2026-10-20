@@ -1,10 +1,10 @@
-#include "Vaxi4lite_redirect_test_top.h"
+#include "Vaxi4_redirect_test_top.h"
 #include "verilated.h"
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
 struct Bench {
- Vaxi4lite_redirect_test_top d;int cycles=0;bool allow_context=false;
+ Vaxi4_redirect_test_top d;int cycles=0;bool allow_context=false;
  void check(bool ok,const char*s){if(!ok)throw std::runtime_error(s);}
  void step(){d.clk=0;d.eval();check(allow_context||!d.if_ctx_valid,"stale response entered IFQ");d.clk=1;d.eval();d.clk=0;d.eval();cycles++;check(cycles<4096,"watchdog");}
  template<class F>void until(F f){d.eval();while(!f())step();}

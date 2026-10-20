@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
 
 
-module ysyx_ifu_axi4lite_adapter_tb;
+module ysyx_ifu_axi4_adapter_tb;
 
 reg         clk = 1'b0;
 reg         rst_n = 1'b0;
@@ -16,6 +16,7 @@ wire        m_axi_arvalid;
 reg         m_axi_arready = 1'b0;
 wire [31:0] m_axi_araddr;
 wire [2:0]  m_axi_arprot;
+wire [2:0]  m_axi_arsize;
 reg         m_axi_rvalid = 1'b0;
 wire        m_axi_rready;
 reg  [31:0] m_axi_rdata = 32'b0;
@@ -23,7 +24,7 @@ reg  [1:0]  m_axi_rresp = 2'b0;
 
 always #5 clk = ~clk;
 
-ysyx_ifu_axi4lite_adapter u_adapter (
+ysyx_ifu_axi4_adapter u_adapter (
     .clk           (clk),
     .rst_n         (rst_n),
     .imem_req_valid(imem_req_valid),
@@ -37,6 +38,7 @@ ysyx_ifu_axi4lite_adapter u_adapter (
     .m_axi_arready (m_axi_arready),
     .m_axi_araddr  (m_axi_araddr),
     .m_axi_arprot  (m_axi_arprot),
+    .m_axi_arsize  (m_axi_arsize),
     .m_axi_rvalid  (m_axi_rvalid),
     .m_axi_rready  (m_axi_rready),
     .m_axi_rdata   (m_axi_rdata),
@@ -61,7 +63,7 @@ task check;
     input [8*96-1:0] message;
 begin
     if (!condition) begin
-        $display("IFU AXI4-Lite adapter test failed: %0s", message);
+        $display("IFU AXI4 single-beat adapter test failed: %0s", message);
         $fatal;
     end
 end
@@ -76,7 +78,7 @@ begin
     tick;
     imem_req_valid = 1'b0;
     settle;
-    check(m_axi_arvalid && m_axi_araddr == imem_req_addr,
+    check(m_axi_arsize == 2 && m_axi_arvalid && m_axi_araddr == imem_req_addr,
           "captured request did not reach AR channel");
 
     m_axi_arready = 1'b1;
@@ -123,10 +125,10 @@ initial begin
           m_axi_araddr == 32'h8000_0000 && m_axi_arprot == 3'b101,
           "AR request payload is incorrect");
     tick;
-    check(m_axi_arvalid && m_axi_araddr == 32'h8000_0000,
+    check(m_axi_arsize == 2 && m_axi_arvalid && m_axi_araddr == 32'h8000_0000,
           "AR request changed during first stalled cycle");
     tick;
-    check(m_axi_arvalid && m_axi_araddr == 32'h8000_0000,
+    check(m_axi_arsize == 2 && m_axi_arvalid && m_axi_araddr == 32'h8000_0000,
           "AR request changed during second stalled cycle");
 
     m_axi_arready = 1'b1;
@@ -165,7 +167,7 @@ initial begin
     check(imem_req_ready && !imem_rsp_valid,
           "OKAY transaction did not complete");
 
-    // AXI4-Lite supports only OKAY as a successful normal response.  Verify
+    // AXI4 single-beat supports only OKAY as a successful normal response.  Verify
     // that every non-zero encoding becomes a local access error.
     run_response_code(2'b01, 32'haaaa_0001);
     run_response_code(2'b10, 32'haaaa_0002);
@@ -189,7 +191,7 @@ initial begin
     check(imem_req_ready && !m_axi_arvalid && !imem_rsp_valid,
           "adapter did not return to idle after reset");
 
-    $display("ysyx IFU AXI4-Lite adapter directed test: PASS");
+    $display("ysyx IFU AXI4 single-beat adapter directed test: PASS");
     $finish;
 end
 

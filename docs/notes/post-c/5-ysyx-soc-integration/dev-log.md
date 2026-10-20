@@ -1,5 +1,7 @@
 # M5 开发日志
 
+当前生效决定：2026-10-20 起直接升级现有接口，取消 B1/SoC 双路径兼容；下面2026-10-19的“保留 B1 Lite”是已被替代的初始规划。
+
 ## 2026-10-19：建立计划
 
 - 输入：M4 已验收；本地 HEAD `d7c5b139eca8f6ffc467ecea472d4395998b1cea`。阅读 roadmap、M4 交接、原版 2607 C5/2306 B2、本地重组讲义及现有 core/AM/harness/RT-Thread 实现。
@@ -18,3 +20,19 @@
 - 核对真实地址：SRAM8KiB、MROM4KiB、PSRAM4MiB；现有RTT ELF静态段42,932B，确定S4接通PSRAM。Flash backing限制16MiB，PSRAM颗粒模型及真实XIP需实现。
 - 发现原上游不能保证所有非法地址均返回DECERR，MROM写会断言，空外设有未驱动输出；已分配S2处理。另有DPI backing、旧MMIO分类、带延时外围仿真配置，以及S5的AM/RTT中断链缺口。
 - M01/M02 的S0范围通过；没有当前外部阻塞，下一步S1。未修改NPC/SoC功能RTL，保留用户`.gitignore`修改与预期Rocket Chip补丁，未git add/commit。
+
+## 2026-10-20：S1 改为单一接口演进
+
+- 用户明确 B1 只是接入 SoC 前的系统测试，后续不必兼容；取消同时维护 Lite/SoC 两套 transport 的要求。
+- S1 直接升级现有 adapter/仲裁/顶层，保留 local req/rsp 语义与必要的 CPU/协议检查；CLINT 改用 SoC 合同地址，不保留 B1 地址别名。
+- 更新架构图、S1 出口与 M16：S1 用 AXI4 responder 做 CPU/协议验证，S2/S3 起切入真实 SoC，S6 不再以旧 B1/legacy signoff 为 gate。实施时同步迁移或停用旧构建/测试/flow 引用，记录检查点去向。
+- M3/M4 历史验收与 S0 原始证据不改写，旧平台通过 Git revision 复现。本次只调整文档，未修改 RTL/构建脚本，未执行 git add/commit；下一步仍为 S1。
+
+## 2026-10-20：S1 完成，直接升级 AXI4 与内部 CLINT
+
+- 原 adapters/arbiter/top 直接升级并重命名；增加 raw byte address/SIZE，外部固定 ID=0、LEN=0、INCR、WLAST=1，检查 RID/BID/RLAST；保留单服务槽、公平性和既有 CPU req/rsp 语义。
+- 增加仲裁后 router、mtime-only CLINT、`ysyx_soc_cpu` 和精确61-port `ysyx_00000000`。W-first 写先缓冲等待 AW，CLINT 副作用只执行一次；不增加通用 burst/slave/IRQ 功能。
+- `make -C npc s1-test` 通过：模块/360192项译码检查、两组10×1000协议随机、复位/公平性/顺序覆盖、8项预期失败诊断、97项非法编码的两seed回归、访存错误/未对齐与10seed memory/CLINT；真实wrapper默认MROM PC和真实SoC静态展开通过。详情见 [S1](1-axi4-interface.md)。
+- 迁移时发现旧 LSU 测试仍期待 word 对齐地址，按已确认的窄传输合同修正为 raw address，并加入 SIZE 检查。未靠恢复旧行为让测试通过。
+- 旧 legacy/B1 系统入口和 M4 Lite 新建 flow 明确停用；保留历史复现说明，AM/SoC DiffTest 尚未执行。新增 `npc/README.md` 说明当前可运行入口。
+- 无 S1 阻塞；下一步 S2。上游与嵌套子模块未修改，未 git add/commit。

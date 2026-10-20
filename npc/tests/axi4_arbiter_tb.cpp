@@ -1,7 +1,13 @@
-// Independent pin-level driver/scoreboard for the M3 S1 arbiter.
+// Independent pin-level driver/scoreboard for the M5 S1 arbiter.
 // No DUT internal state is read. The slave responds to observed transactions;
 // upstream completion must match the original descriptor, exactly once.
-#include "Vysyx_axi4lite_arbiter.h"
+#ifdef TEST_ROUTER
+#include "Vaxi4_fabric_test_top.h"
+using Dut = Vaxi4_fabric_test_top;
+#else
+#include "Vysyx_axi4_arbiter.h"
+using Dut = Vysyx_axi4_arbiter;
+#endif
 #include "verilated.h"
 #include <array>
 #include <cstdint>
@@ -15,11 +21,13 @@
 #include <string>
 #include <vector>
 
+static std::string injected_fault;
+
 struct Tx {
     unsigned owner = 0;
     bool write = false;
     uint32_t addr = 0, data = 0;
-    unsigned prot = 0, strb = 0, resp = 0;
+    unsigned size = 2, prot = 0, strb = 0, resp = 0;
     int order = 0; // -1 AW first, 0 together, +1 W first
     unsigned gap = 0, publish_delay = 0;
     std::array<unsigned, 3> delay{}; // downstream AR/AW/W READY delay
@@ -39,7 +47,7 @@ struct Held {
 
 class Bench {
 public:
-    Vysyx_axi4lite_arbiter dut;
+    Dut dut;
     std::array<std::deque<Tx>, 2> queue;
     Tx *active = nullptr;
     uint64_t cycle = 0, accepted = 0, completed = 0, aborted = 0, effects = 0;
@@ -58,7 +66,7 @@ public:
         t.owner = owner; t.write = write;
         t.addr = 0x80000000u + 4 * ++serial;
         t.data = 0xc37a4200u ^ (serial * 7919u);
-        t.prot = serial % 8; // verify forwarding, not hard-coded IFU/LSU PROT
+        t.size = serial % 3; t.prot = serial % 8; // verify forwarding, not hard-coded IFU/LSU PROT
         t.strb = serial % 16;
         return t;
     }
@@ -72,6 +80,9 @@ public:
         dut.ifu_axi_arprot = dut.lsu_axi_arprot = dut.lsu_axi_awprot = 0;
         dut.lsu_axi_wdata = dut.lsu_axi_wstrb = 0;
         dut.m_axi_rdata = dut.m_axi_rresp = dut.m_axi_bresp = 0;
+        dut.m_axi_rid = injected_fault=="rid" ? 1:0;
+        dut.m_axi_bid = injected_fault=="bid" ? 1:0; dut.m_axi_rlast = injected_fault!="rlast";
+        dut.ifu_axi_arsize = dut.lsu_axi_arsize = dut.lsu_axi_awsize = 2;
     }
     void reset() {
         if (active) ++aborted;
@@ -110,14 +121,17 @@ public:
             if (owner == 0) {
                 dut.ifu_axi_arvalid = ar;
                 dut.ifu_axi_araddr = t.up_ar < 0 ? t.addr : 0xdead0000;
+                dut.ifu_axi_arsize = t.size;
                 dut.ifu_axi_arprot = t.up_ar < 0 ? t.prot : 0;
                 dut.ifu_axi_rready = t.rsp_stalls >= t.response_hold;
             } else {
                 dut.lsu_axi_arvalid = ar;
                 dut.lsu_axi_araddr = t.up_ar < 0 ? t.addr : 0xbeef0000;
+                dut.lsu_axi_arsize = t.size;
                 dut.lsu_axi_arprot = t.up_ar < 0 ? t.prot : 0;
                 dut.lsu_axi_awvalid = aw; dut.lsu_axi_wvalid = w;
                 dut.lsu_axi_awaddr = t.up_aw < 0 ? t.addr : 0xabad0000;
+                dut.lsu_axi_awsize = t.size;
                 dut.lsu_axi_awprot = t.up_aw < 0 ? t.prot : 0;
                 dut.lsu_axi_wdata = t.up_w < 0 ? t.data : ~t.data;
                 dut.lsu_axi_wstrb = t.up_w < 0 ? t.strb : (t.strb ^ 15);
@@ -180,20 +194,23 @@ public:
         if (dut.lsu_axi_wvalid && dut.lsu_axi_wready) {
             Tx &t=accept(1); check(t.up_w<0 && t.write,"duplicate W"); t.up_w=cycle;
         }
+        check(dut.m_axi_arid==0 && dut.m_axi_awid==0 && dut.m_axi_arlen==0 &&
+            dut.m_axi_awlen==0 && dut.m_axi_arburst==1 && dut.m_axi_awburst==1 &&
+            dut.m_axi_wlast, "single-beat AXI4 constants");
         bool down_any=dut.m_axi_arvalid || dut.m_axi_awvalid || dut.m_axi_wvalid;
         check(!down_any || active,"forwarded a request without an accepted upstream transaction");
         if (down_any) {
             Tx &t=*active;
             if (dut.m_axi_arvalid) {
                 check(!t.write && t.up_ar>=0 && t.down_ar<0,"unexpected downstream AR");
-                check(dut.m_axi_araddr==t.addr && dut.m_axi_arprot==t.prot,"AR payload mismatch");
+                check(dut.m_axi_araddr==t.addr && dut.m_axi_arprot==t.prot && dut.m_axi_arsize==t.size,"AR payload mismatch");
                 if (dut.m_axi_arready) { t.down_ar=cycle; bin("AR",t.stalls[0]); }
                 else ++t.stalls[0];
             }
             if (dut.m_axi_awvalid || dut.m_axi_wvalid)
                 check(t.write && t.up_aw>=0 && t.up_w>=0,"write forwarded before collecting independent AW/W");
             if (dut.m_axi_awvalid) {
-                check(t.down_aw<0 && dut.m_axi_awaddr==t.addr && dut.m_axi_awprot==t.prot,"AW payload/duplicate");
+                check(t.down_aw<0 && dut.m_axi_awaddr==t.addr && dut.m_axi_awprot==t.prot && dut.m_axi_awsize==t.size,"AW payload/duplicate");
                 if (dut.m_axi_awready) { t.down_aw=cycle; bin("AW",t.stalls[1]); }
                 else ++t.stalls[1];
             }
@@ -340,7 +357,7 @@ public:
         uint64_t before=completed;
         for (unsigned i=0;i<1000;++i) {
             unsigned owner=i%2; Tx t=transaction(owner,owner && (rng()%2));
-            t.addr=rng() & ~3u; t.data=rng(); t.prot=rng()%8; t.strb=rng()%16;
+            t.addr=(rng() & 0x0ffffffcu) | 0x80000000u; // reserve CLINT for directed checks t.data=rng(); t.prot=rng()%8; t.strb=rng()%16;
             t.resp=std::array<unsigned,3>{0,2,3}[rng()%3];
             t.order=int(rng()%3)-1; t.gap=1+rng()%7; t.publish_delay=rng()%8;
             t.delay={unsigned(rng()%8),unsigned(rng()%8),unsigned(rng()%8)};
@@ -365,13 +382,14 @@ public:
         f.close(); check(bool(f),"coverage write failed");
         std::cout<<"accepted="<<accepted<<" completed="<<completed<<" reset_aborted="<<aborted
                  <<" slave_write_effects="<<effects<<" coverage_bins="<<coverage.size()<<"\n";
-        std::cout<<"M3 S1 arbiter standalone: PASS\n";
+        std::cout<<"M5 S1 transaction scoreboard: PASS\n";
     }
 };
 
 int main(int argc,char **argv) {
     Verilated::commandArgs(argc,argv);
     try {
+        if(argc>2) injected_fault=argv[2];
         Bench b; b.directed(); b.reset_cases();
         for (unsigned seed=1;seed<=10;++seed) b.random(seed);
         b.finish(argc>1?argv[1]:"arbiter-coverage.csv"); b.dut.final();
