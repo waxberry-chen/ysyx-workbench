@@ -61,7 +61,7 @@ reg io_master_rlast = '0;
 wire io_slave_rlast;
 reg [3:0] io_master_rid = '0;
 wire [3:0] io_slave_rid;
-ysyx_00000000 dut (.*);
+ysyx_25030087 dut (.*);
 always #5 clock=~clock;
 task tick; @(posedge clock); #1; endtask
 initial begin

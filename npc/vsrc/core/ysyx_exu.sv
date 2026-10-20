@@ -199,7 +199,13 @@ assign commit_mem_wdata = op_rs2_data;
 assign commit_mem_error = commit_mem_valid & data_access_exception;
 assign commit_exception = commit_valid & exception_valid;
 assign commit_exception_cause = exception_cause;
-assign commit_is_mmio   = commit_mem_valid & (alu_result[31:28] == 4'ha);
+// SoC device classification for observation only; never gates address routing.
+// Flash/PSRAM/SDRAM are memory, even though SDRAM starts at 0xa0000000.
+wire device_address = (alu_result[31:16] == 16'h0200) ||
+                      (alu_result >= 32'h10000000 && alu_result < 32'h10002010) ||
+                      (alu_result >= 32'h10011000 && alu_result < 32'h10011008) ||
+                      (alu_result >= 32'h21000000 && alu_result < 32'h21200000);
+assign commit_is_mmio = commit_mem_valid && device_address;
 
 assign redirect_valid  = commit_valid & control_redirect;
 assign redirect_target = commit_npc;

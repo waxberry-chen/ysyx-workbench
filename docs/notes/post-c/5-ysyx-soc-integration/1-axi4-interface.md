@@ -3,11 +3,13 @@
 > 2026-10-20：S1 完成。M03–M05、M16 的 S1 范围通过；当前没有阻塞。下一步 S2 真实 SoC bring-up。
 > 本步使用独立 responder 运行 CPU，并将真实 wrapper 与生成 SoC 静态展开；尚未完成 SoC 功能启动、AM/DiffTest 或新 scope DC/PT。
 
+> S2 后续更新：本文模块名已跟随当前源码改为 `ysyx_25030087`；S1 原始归档中的 `ysyx_00000000` 保留历史事实。改名后的 S1 完整回归及 S2 运行均通过，见 [复验记录](s2-validation/rename-check.json)。
+
 ## 1. 实现边界与选择依据
 
 ```mermaid
 flowchart TD
-    Wrapper[ysyx_00000000：冻结的 61-port ABI] --> Sub[ysyx_soc_cpu]
+    Wrapper[ysyx_25030087：冻结的 61-port ABI] --> Sub[ysyx_soc_cpu]
     Sub --> Core[ysyx_core：IFU/LSU local req-rsp]
     Core --> Adapters[升级原 IFU/LSU adapters]
     Adapters --> Arb[ysyx_axi4_arbiter：公平仲裁、单服务槽]
@@ -38,7 +40,7 @@ flowchart TD
 | 非法响应 | RID/BID 非 0 或 RLAST 非 1：仿真断言失败；综合逻辑将该返回标成 SLVERR，不作为成功数据 |
 | 固定配置 | ChipLink 关闭、外部 IRQ 为 0；CPU slave 输出 tie-off，活动请求/IRQ 触发断言 |
 
-内部 adapter 接口只携带变化的 address/SIZE/PROT 与数据/response；固定 ID/LEN/BURST/LAST 在共享 master 仲裁器统一生成。它是本项目固定单拍合同下的内部通道子集，不能把 adapter 单独当作具有任意 AXI4 能力的 IP。对外 `ysyx_00000000` 与冻结 ABI 完全一致；该 ABI 不包含 PROT，内部 PROT 只供分类/检查使用。
+内部 adapter 接口只携带变化的 address/SIZE/PROT 与数据/response；固定 ID/LEN/BURST/LAST 在共享 master 仲裁器统一生成。它是本项目固定单拍合同下的内部通道子集，不能把 adapter 单独当作具有任意 AXI4 能力的 IP。对外 `ysyx_25030087` 与冻结 ABI 完全一致；该 ABI 不包含 PROT，内部 PROT 只供分类/检查使用。
 
 ID/LAST 断言用于发现协议违规；综合侧错误标记不是任意损坏总线的恢复机制。例如非法多拍响应后的排空不属于本实现合同。
 

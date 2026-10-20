@@ -1,0 +1,102 @@
+[
+  {
+    "name": "guard-build",
+    "status": "PASS",
+    "negative": false
+  },
+  {
+    "name": "guard",
+    "status": "PASS",
+    "negative": false
+  },
+  {
+    "name": "ebreak-build",
+    "status": "PASS",
+    "negative": false
+  },
+  {
+    "name": "ebreak-objcopy",
+    "status": "PASS",
+    "negative": false
+  },
+  {
+    "name": "ebreak",
+    "status": "PASS",
+    "negative": false
+  },
+  {
+    "name": "uart-build",
+    "status": "PASS",
+    "negative": false
+  },
+  {
+    "name": "uart-objcopy",
+    "status": "PASS",
+    "negative": false
+  },
+  {
+    "name": "uart",
+    "status": "PASS",
+    "negative": false
+  },
+  {
+    "name": "memory-build",
+    "status": "PASS",
+    "negative": false
+  },
+  {
+    "name": "memory-objcopy",
+    "status": "PASS",
+    "negative": false
+  },
+  {
+    "name": "memory",
+    "status": "PASS",
+    "negative": false
+  },
+  {
+    "name": "faults-build",
+    "status": "PASS",
+    "negative": false
+  },
+  {
+    "name": "faults-objcopy",
+    "status": "PASS",
+    "negative": false
+  },
+  {
+    "name": "faults-symbols",
+    "status": "PASS",
+    "negative": false
+  },
+  {
+    "name": "faults",
+    "status": "PASS",
+    "negative": false
+  },
+  {
+    "name": "empty",
+    "status": "PASS",
+    "negative": true
+  },
+  {
+    "name": "oversized",
+    "status": "PASS",
+    "negative": true
+  },
+  {
+    "name": "timeout",
+    "status": "PASS",
+    "negative": true
+  },
+  {
+    "name": "bad-exit",
+    "status": "PASS",
+    "negative": true
+  },
+  {
+    "name": "missing-image",
+    "status": "PASS",
+    "negative": true
+  }
+]

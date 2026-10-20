@@ -22,4 +22,4 @@
 ./vsrc/periph/ysyx_clint.sv
 ./vsrc/bus/ysyx_axi4_router.sv
 ./vsrc/top/ysyx_soc_cpu.sv
-./vsrc/top/ysyx_00000000.sv
+./vsrc/top/ysyx_25030087.sv

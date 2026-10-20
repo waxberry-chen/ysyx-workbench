@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-20",
+  "cpu_module": "ysyx_25030087",
+  "generated_cpu_instance": "ysyx_25030087 cpu",
+  "old_generated_module_absent": true,
+  "cpu_port_count": 61,
+  "cpu_abi": "PASS",
+  "rocket_patch_exact_match": true,
+  "s2": "PASS",
+  "s1_regression": "PASS",
+  "comparison_with_previous_s2": {
+    "ebreak": "all summary fields unchanged",
+    "uart": "all summary fields unchanged",
+    "memory": "all summary fields unchanged",
+    "faults": "all summary fields unchanged",
+    "ebreak.bus.csv": "byte-identical",
+    "ebreak.commit.csv": "byte-identical",
+    "uart.uart.csv": "byte-identical",
+    "uart.bus.csv": "byte-identical",
+    "uart.commit.csv": "byte-identical"
+  }
+}

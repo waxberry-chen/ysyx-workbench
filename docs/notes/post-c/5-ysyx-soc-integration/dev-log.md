@@ -36,3 +36,24 @@
 - 迁移时发现旧 LSU 测试仍期待 word 对齐地址，按已确认的窄传输合同修正为 raw address，并加入 SIZE 检查。未靠恢复旧行为让测试通过。
 - 旧 legacy/B1 系统入口和 M4 Lite 新建 flow 明确停用；保留历史复现说明，AM/SoC DiffTest 尚未执行。新增 `npc/README.md` 说明当前可运行入口。
 - 无 S1 阻塞；下一步 S2。上游与嵌套子模块未修改，未 git add/commit。
+
+## 2026-10-20：S2 完成，真实 SoC 最小启动
+
+- 接入真实 `ysyxSoCFull`、MROM/可选 Flash backing、仿真 bind monitor；100 MHz、20周期外部复位，正确推进 `--timing` 内部事件。CPU 首次释放采样305ns，首AR355ns，首提交445ns。
+- ysyxSoC fork 新增 SoC 侧 guard，先完整检查地址/访问形态，再进入上游简化译码；非法/禁用/只读写产生 DECERR/SLVERR。GPIO/PS2/VGA 空壳补确定输出；Flash XIP/PSRAM 暂隔离至 S4。没有修改嵌套 Rocket Chip，保留已有补丁。
+- MROM ebreak、UART divisor1/8N1实际TX=`A`、SRAM/MROM窄访存/首尾通过。31次数据fault+1次取指fault精确cause/EPC通过，越界写不改变SRAM，无非法UART副作用。
+- 测试定位到取指fault之后可能还有PC+4预取：总线多一个DECERR，redirect正确丢弃，架构只提交一次cause1；在独立预期中明确区分事务与trap计数。
+- 新guard独立测试1261笔完成、7笔复位终止并恢复；5类harness负例通过。`make -C npc s2-test`、完整 `s1-test` 回归通过；[结果与版本证据](s2-validation/README.md)。
+- G02的harness/分类部分、G03/G04/G07关闭，DiffTest留S3。无当前阻塞；下一步AM/linker/SRAM初始化/参考端同步。主仓库与ysyxSoC均有本步改动，未git add/commit；以后提交需先记录子模块改动，再更新主仓库gitlink。
+
+## 2026-10-20：CPU 顶层改名并复验 S2
+
+- 按用户指定将 `ysyx_00000000.sv` / `ysyx_00000000` 改为 `ysyx_25030087.sv` / `ysyx_25030087`，同步 ysyxSoC Scala BlackBox、源列表、lint、bind、wrapper 测试和接口审计脚本；端口与 reset PC 不变。
+- 重新执行 SoC 生成、S2 完整验收、S1 完整回归和61-port接口检查，全部通过。ebreak/UART/memory/faults全部统计与改名前一致，归档的取指/UART CSV逐字节一致；更新 [S2 manifest 与复验记录](s2-validation/README.md)。
+- 无新增阻塞。S0/S1 原始报告保留旧占位名；本次未修改 Rocket Chip，未暂存或提交。
+
+## 2026-10-20：补齐 S2 实现与源码导读
+
+- 按用户反馈扩写 [S2 实施记录](2-bringup.md)，建立功能/改动位置/验证对应表，串起构建、MROM与PC复位、SoC guard、UART、monitor及退出路径，给出文件行定位与关键符号。
+- 区分S2新增、S1复用和上游已有机制，并明确Flash backing、完整SoC中途复位、SPI内部副作用等尚未验证的范围；M5后续实施文档沿用这一组织方式。
+- 本次仅更新文档，核对源码位置、链接和既有验收数据；未修改功能源码或重跑硬件仿真，原验收结果不变。

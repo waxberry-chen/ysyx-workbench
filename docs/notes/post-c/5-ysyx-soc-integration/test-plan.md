@@ -1,6 +1,6 @@
 # M5 验收矩阵
 
-> 2026-10-20：S0/S1 完成，M01/M02 的 S0 范围、M03–M05、M16 的 S1 范围通过。实际 NPC wrapper ABI/默认首地址/静态展开也已验证；真实 SoC 系统运行仍待 S2。证据见 [S1](1-axi4-interface.md)及 [摘要](s1-validation/README.md)。
+> 2026-10-20：S0–S2 完成；M01/M02 的 S0 范围、M03–M05/M16 的 S1 范围、M06 的 S2 范围通过。真实 SoC 已运行 MROM/UART/SRAM 与错误程序，证据见 [S2](2-bringup.md)及[摘要](s2-validation/README.md)。
 
 S0 证据：[manifest](s0-validation/manifest.json)、[61-port 表](s0-validation/cpu-ports.csv)、[生成日志](s0-validation/generation.log)、[静态展开诊断](s0-validation/elaboration-diagnostics.txt)、[容量检查](s0-validation/rtt-budget.txt)。空 CPU stub 只用于静态展开，没有运行指令；242 条上游诊断已分类，不构成全 SoC lint clean。
 
@@ -15,7 +15,7 @@ S0 证据：[manifest](s0-validation/manifest.json)、[61-port 表](s0-validatio
 | M03 / S1：PASS | AXI byte offset 0/1/2/3、halfword offset 0/2、word 对齐；raw address/size/WSTRB/数据 lane 正确。模拟有读副作用的 byte 寄存器，窄读仅作用目标寄存器 | 独立 bus scoreboard、定向用例、关键波形；不能只在宽容 RAM 模型验证 |
 | M04 / S1：PASS | AW 先/W 先/同周期，AR/AW/W/B/R 各通道反压；payload 稳定，RID/BID/RLAST 检查，响应完成前 owner 不变；读写全局 single-outstanding | 断言与事务计数；请求、响应、副作用逐笔相等；无重复 B/R 接收 |
 | M05 / S1：PASS | IFU/LSU 同时持续请求的公平性；redirect 时旧取指响应丢弃；SLVERR/DECERR 精确 fault；请求未收/部分写通道已收/等待响应时的共同复位 | accepted/completed/aborted 分类、各状态定向覆盖；延迟有界时无饥饿/超时；非法响应为诊断负例 |
-| M06 / S2 | reset 后首个 MROM PC 与数据正确，ebreak 按当前退出约定结束；UART byte store 实际到达目标寄存器，仅输出一个 A | 取指/commit 与 UART 写波形、退出码；此时队列打印只能证明早期通路 |
+| M06 / S2：PASS | reset 后首个 MROM PC 与数据正确，ebreak 按当前退出约定结束；UART byte store 实际到达目标寄存器，仅输出一个 A | ebreak/uart FST、commit/bus/寄存器 CSV、独立 TX 解码精确 A、32 次精确 fault；见 S2 归档，未用队列打印代替 TX 验证 |
 | M07 / S3 | SRAM stack、8/16/32 位访存、64 位软件组合访存、byte mask、区域首尾、避栈 mem-test；data 复制/bss 清零/全局变量写正确；未对齐按既定 trap 策略验证 | ELF/map、链接容量断言、预填 RAM 后测试、错误原因/EPC；不要求 RV32 单条 64 位 load/store |
 | M08 / S3 | MROM/SRAM/Flash 等普通存储逐指令 DiffTest；设备按平台识别；MMIO skip/同步只限相应提交；故意扰动一次普通指令结果能触发 mismatch | 参考端区域表、同步方案、skip 统计、检测能力负例、hello/适用 CPU tests 日志 |
 | M09 / S4 | SPI 读与映射/XIP 访问一致；目标 RAM 预填图案后由 CPU 从 Flash 搬运，复制边界、data/bss、stack 与入口 PC 正确；超容量镜像构建/加载失败 | Flash 镜像/ELF/map/hash、boot 波形、目标区校验；无 harness 代搬运 |

@@ -1,0 +1,19 @@
+{
+  "pass": true,
+  "cycles": 695,
+  "commits": 36,
+  "exceptions": 0,
+  "ar": 45,
+  "aw": 7,
+  "w": 7,
+  "r": 45,
+  "b": 7,
+  "cpu_release_ps": 305000,
+  "first_ar_ps": 355000,
+  "first_commit_ps": 445000,
+  "mrom_dpi_calls": 156,
+  "flash_dpi_calls": 0,
+  "uart_thr_writes": 1,
+  "uart_register_reads": 6,
+  "uart_serial_bytes": 1
+}

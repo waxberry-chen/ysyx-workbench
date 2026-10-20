@@ -100,11 +100,11 @@ def cpu():
         assert 'device_reads=1 device_writes=1' in text,text
 
 def elaboration():
-    run('cpu-lint',[*FLAGS,'--lint-only','--top-module','ysyx_00000000','-F','filelist-soc.f'])
+    run('cpu-lint',[*FLAGS,'--lint-only','--top-module','ysyx_25030087','-F','filelist-soc.f'])
     run('cpu-synthesis-lint',[*FLAGS,'--lint-only','-DSYNTHESIS','-DNPC_SIM_DPI',
-        '--top-module','ysyx_00000000','-F','filelist-soc.f'])
+        '--top-module','ysyx_25030087','-F','filelist-soc.f'])
     # Compare the actual handwritten wrapper with the S0 frozen independent table.
-    text=(NPC/'vsrc/top/ysyx_00000000.sv').read_text().split(');',1)[0]
+    text=(NPC/'vsrc/top/ysyx_25030087.sv').read_text().split(');',1)[0]
     actual={n:(d,int(w)+1 if w else 1) for d,w,n in re.findall(r'\b(input|output)\s+(?:\[(\d+):0\]\s+)?(\w+)',text)}
     with (ROOT/'docs/notes/post-c/5-ysyx-soc-integration/s0-validation/cpu-ports.csv').open() as f:
         expected={r['name']:(r['direction_at_cpu'],int(r['width'])) for r in csv.DictReader(f)}

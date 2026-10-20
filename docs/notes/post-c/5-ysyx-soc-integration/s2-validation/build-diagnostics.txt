@@ -1,0 +1,10 @@
+Source: final S2 Verilator build, --timing --assert, 1ns/1ps.
+BLKSEQ: 1
+DECLFILENAME: 5
+DEFPARAM: 2
+PINCONNECTEMPTY: 26
+UNUSEDPARAM: 3
+UNUSEDSIGNAL: 128
+UNDRIVEN/WIDTH/PINMISSING/PINNOTFOUND/LATCH/UNOPTFLAT: 0 (fatal gates)
+SYNCASYNCNET explicitly suppressed; shared reset/physical timing limitations remain.
+Other warning classes remain visible; this is not full SoC lint clean.

@@ -1,6 +1,6 @@
 # M5 设计与验收计划
 
-> 2026-10-19；状态：S0、[S1](1-axi4-interface.md)完成，S2–S8 待实施。实际 wrapper ABI、独立 CPU/协议测试与真实 SoC 静态展开通过；尚无真实 SoC 系统程序运行结论。
+> 2026-10-20；状态：S0–[S2](2-bringup.md)完成，S3–S8 待实施。真实 SoC 的 MROM/UART/SRAM 定向运行与错误传播通过；尚无 AM/DiffTest 或完整系统软件验收结论。
 > 本地规划输入：`d7c5b139eca8f6ffc467ecea472d4395998b1cea`；前置为 [M4 signoff](../4-pre-soc-signoff/signoff.md)。该 commit 是本地输入，不是 ysyxSoC revision。
 > 配套：[验收矩阵](test-plan.md)、[开发日志](dev-log.md)、[Q&A](qa/README.md)、[总路线](../roadmap.md)。
 
@@ -51,6 +51,8 @@ UART 最终需要初始化波特率并验证实际串行 TX；自动化串行接
 S0 固定完整 commit、recursive submodule revision、上游补丁及本地 patch，并对照 `src/CPU.scala`、`src/Top.scala`、地址译码和生成 Verilog 逐项核对。模块/文件命名按该 revision 的要求处理；观测信号放在仿真绑定/明确的评估 top 中，不随意增加 BlackBox 的正式端口。
 
 S0 实际冻结为 `df38a4d93d1d71e621fe91b106d088bd33af984a` + 已核对的 Rocket Chip 补丁，仿真 top 为 `ysyxSoCFull`，CPU ABI 为 `ysyx_00000000`。本文的规划候选表保留背景；后续实现以 [S0 实际契约](0-upstream-contract.md)为准。
+
+S2 后按用户指定将 CPU 文件/模块及 Scala BlackBox 改为 `ysyx_25030087`；61-port ABI 与 reset PC 保持一致，改名后重新生成及 S1/S2 复验通过。S0/S1 原始归档保留当时的占位名。
 
 在线 [Makefile](https://github.com/OSCPU/ysyxSoC/blob/ysyx6/Makefile)提供 `dev-init` 和 `verilog`，涉及 Mill、firtool 和子模块补丁；`dev-init` 有 `git apply` 操作，不能假设可无条件重复执行。S0 记录工具版本、依赖下载与生成步骤，区分生成入口、CPU 集成 top、Verilator top 和综合 top。生成 RTL 留在构建目录，以 revision/patch/生成命令重建，不提交为手写源码。
 
@@ -127,7 +129,7 @@ machine timer interrupt 是本工程 roadmap 的明确目标，不能用“CLINT
 | --- | --- | --- |
 | **S0：上游和平台契约（完成）** | 固定 revision/submodules/patch；生成 SoC 并核对 ports/top/map；审查工具链、模型、reset/IRQ、AM ISA 与容量预算 | [实际契约](0-upstream-contract.md)与 [manifest](s0-validation/manifest.json)：重新生成/61-port 核对/静态展开通过，PSRAM 路线确定；M01/M02 的 S0 范围通过 |
 | **S1：现有接口升级为 AXI4 单拍（完成）** | 按 3.2 升级现有 adapters/仲裁/顶层，加入 CLINT 路由、SoC wrapper 和基础计时访问；迁移测试/构建引用，不保留 B1 兼容路径；此时不开启 timer IRQ | [S1 实施记录](1-axi4-interface.md)与 [证据](s1-validation/README.md)：时序合同、源闭包、迁移表；协议/CPU 定向回归与实际 wrapper 静态展开通过。M03–M05、M16 的 S1 范围 |
-| **S2：最小 SoC bring-up** | 接入 S0 生成 top、外围模型和 harness；透传 reset PC；处理默认错误响应/空外设/仿真延时；先 MROM ebreak，再 UART A | `2-bringup.md`：构建入口、第一条取指与一次 UART 写的波形、退出/timeout；关闭 S0 的 G02–G04/G07 对本步的影响；M06 |
+| **S2：最小 SoC bring-up（完成）** | 接入 S0 生成 top、外围模型和 harness；透传 reset PC；处理默认错误响应/空外设/仿真延时；先 MROM ebreak，再 UART A | [S2 实施记录](2-bringup.md)与[证据](s2-validation/README.md)：真实 MROM/UART TX、SRAM/错误路径、harness 负例与 guard 协议通过；关闭 G02 的 S2 部分和 G03/G04/G07，M06 PASS |
 | **S3：AM、SRAM 与 DiffTest** | 新 AM platform/linker，SRAM stack、data/bss；参考端多区域内存、设备分类和 commit/CSR 适配 | `3-runtime-difftest.md`：内存布局、hello/mem-test、可容纳 CPU tests 与 microbench smoke；RAM 正常逐指令差分，MMIO skip 有明确范围。M07/M08 |
 | **S4：Flash 启动与容量闭环** | Flash 控制器/模型实际读写协议审查；SPI 读、XIP、Flash → SRAM；按 S0 预算补 PSRAM 和 Flash → PSRAM | `4-boot-memory.md`：镜像/ELF/map、启动序列、预填 RAM 后的复制/清零证据；最大验收 workload 能装载并有栈/heap 余量。M09/M10 |
 | **S5：CLINT 与精确中断** | mtimecmp/IRQ、CSR/IDU/EXU、AM/NEMU/DiffTest 联动；先手写 trap 程序再接 tick | `5-timer-interrupt.md`：CSR/IRQ 合同、优先级表、独立 cause/EPC/副作用预期、定向与延迟测试；MRET 正确恢复。M11–M13 |
@@ -146,15 +148,17 @@ machine timer interrupt 是本工程 roadmap 的明确目标，不能用“CLINT
 
 ## 5. 实施依赖与阻塞报告
 
-**S0/S1 已完成，当前没有阻止 S2 开始的外部依赖。** 原前置项状态如下；后续功能缺口详见 [S0 第7节](0-upstream-contract.md#7-缺口与分阶段处置)。
+**S0–S2 已完成，当前没有阻止 S3 开始的外部依赖。** 原前置项状态如下；后续功能缺口详见 [S0 第7节](0-upstream-contract.md#7-缺口与分阶段处置)。
 
 | 项目 | 当前已知情况 | 关闭时点 / 无法完成时的处理 |
 | --- | --- | --- |
 | 上游源码、依赖、生成工具 | revision/补丁/递归依赖已核对，重新生成返回0 | S0 已关闭，升级上游需重新审查 |
-| 外设/存储模型 | 已发现缺 backing、空外设、默认错误路径、缺 XIP 和 PSRAM 颗粒 | S0 审查完成；S2/S4 按 G02–G07 实现，不把静态展开当功能通过 |
+| 外设/存储模型 | 已发现缺 backing、空外设、默认错误路径、缺 XIP 和 PSRAM 颗粒 | S2 backing/错误响应/禁用输出/时间推进完成；S4 仍需 XIP/PSRAM，G02 的 DiffTest 部分交 S3 |
 | RT-Thread 容量 | B1 ELF 静态段42,932 B，已选4 MiB PSRAM并给出预算 | S0 选型完成；SoC ELF/map及运行峰值在 S4/S6 实测 |
 | ISA/CSR 与 ABI | 当前 trap 支持RV32E；AM/RTT中断路径缺失，S5新增mie/mip timer能力 | S0 清单完成；S5实现并同步参考接口/测试，仍不宣称完整合规 |
 | reset / 外部 IRQ | 外部IRQ固定0；CPU reset为外部reset OR 10级延迟，初始约定20周期共同复位 | S0 合同完成；S1/S2/S5功能测试，S7物理限制复查 |
 | 服务器 DC/PT | M4 已跑通，M5 尚无新配置/结果 | S7 交付命令与审查清单，由用户执行回传；没有回传结果时不得宣布 S7/S8 完成 |
 
 后续按有价值的进展更新 QA 和 dev-log；运行日志/网表/生成 RTL 留在构建目录，只归档必要的可展示证据。出现真实阻塞时，说明它阻塞哪一出口、已有证据、下一步需要什么，并继续不受影响的工作。
+
+各子步骤实施记录遵循 [roadmap 的文档撰写要求](../roadmap.md#子步骤实施文档以理解与学习为目标)，以读者理解和学习实现为目标，讲清做了什么、改在哪里、如何工作及怎样验证。本 Milestone 可参考 [S2 源码导读](2-bringup.md)，按具体改动调整篇幅与结构。

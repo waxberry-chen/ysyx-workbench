@@ -50,7 +50,7 @@ def main():
     if not cpu:
         raise ValueError("Generated CPU module absent")
     signals = declarations(cpu[1])
-    instance = re.search(r"ysyx_00000000\s+cpu\s*\((.*?)\);", cpu[2], re.S)
+    instance = re.search(r"ysyx_25030087\s+cpu\s*\((.*?)\);", cpu[2], re.S)
     connections = dict(re.findall(r"\.(\w+)\s*\((.*?)\)", instance[1]))
 
     # Independent ABI expectation: the upstream human-readable CPU spec.
@@ -91,7 +91,7 @@ def main():
     ports = [f"  {d} {'[' + str(w-1) + ':0] ' if w > 1 else ''}{n}"
              for n, (d, w) in expected.items()]
     assigns = [f"  assign {n} = '0;" for n, (d, _) in expected.items() if d == "output"]
-    stub.write_text("module ysyx_00000000(\n" + ",\n".join(ports) + "\n);\n"
+    stub.write_text("module ysyx_25030087(\n" + ",\n".join(ports) + "\n);\n"
                     + "\n".join(assigns) + "\nendmodule\n")
     sources = [generated, stub, *sorted((SOC / "perip").rglob("*.v"))]
     args = ["verilator", "--lint-only", "--sv", "--timing", "--assert", "-Wall", "-Wno-fatal",
