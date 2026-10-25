@@ -1,11 +1,13 @@
 # Post-C Roadmap：从弹性 RV32E Core 到可展示的 SoC/RTL 项目
 
-> 规划更新：2026-10-20；M4 S2.5 ISA 收敛已完成本地验收，当前已建立 S3 范围内面积/时序基线，S6 已于 2026-10-19 完成最终回归与服务器独立复现，M4 本轮验收通过；M5 S0–S2 已完成（2026-10-20），下一步 S3 AM/SRAM/DiffTest；M4 初始输入基线：`0fe53bf`（M3 功能/协议仿真验收后）
+> 规划更新：2026-10-25；M4 S2.5 ISA 收敛已完成本地验收，当前已建立 S3 范围内面积/时序基线，S6 已于 2026-10-19 完成最终回归与服务器独立复现，M4 本轮验收通过；M5 S0–S3 已完成，下一步 S4 Flash/PSRAM 启动；M4 初始输入基线：`0fe53bf`（M3 功能/协议仿真验收后）
 >
 > 求职方向优先级：SoC/RTL Design > Design Verification > Physical Design  
 > 本文用于决定 post-C 阶段的投入顺序。具体接口、地址映射和考核要求仍以开始该阶段时的最新版官方讲义与上游仓库为准。
 
-对外展示统一从 [`docs/notes/output/`](../output/README.md) 进入；开发与实验详录留在所属阶段。优先推进 RTL 主线，同步积累证据，不设置独立的 job-release 阶段，也不把整理简历变成等待完整 SoC/PPA 的串行任务。
+对外展示统一从 [`docs/notes/output/`](../output/README.md) 进入；开发与实验详录留在所属阶段。按 2026-10-25 用户决定，本轮先完成 **M5 → 限定 GShare 增量 → 版本冻结 → 理解考察与简历 v1 → 投递与回顾并行**。实现期间继续积累证据，集中求职准备不占技术 Milestone 编号。
+
+**冻结后的明确待办：[JOB-PREP-01：理解精髓与 DE/DV 能力复盘](../output/interview-readiness.md)。** M5 与 GShare 的验收交接都须保留这个入口；版本冻结后先开展该任务。下文 M6 I-cache / M7 深化是长期候选，不作为本轮简历 v1 的前置，也不自动紧接 M5 启动。
 
 ## 1. 结论先行
 
@@ -31,17 +33,23 @@
         │               已建立 lint/SVA/随机回压基线
         ▼
 已完成
-4-pre-soc-signoff：DC/PT 面积与时序基线；附带 DC 功耗粗估
+4-pre-soc-signoff：DC/PT 面积与时序基线；DC 功耗粗估暂缓
         ▼
-当前主线（S0–S2 完成，下一步 S3）
+当前主线（S0–S3 完成，下一步 S4）
 5-ysyx-soc-integration：AXI4 单拍子集封装 -> ysyxSoC 最小启动闭环
         │                    MROM/SRAM/UART/CLINT/DiffTest/RT-Thread
         ▼
-6-icache-performance：已有统计扩展 -> trace/cachesim -> I-cache -> AXI burst
+限定 GShare 增量：功能回归 + 同条件性能/面积/时序对照
+        │
+        ▼
+本轮冻结 -> JOB-PREP-01：理解考察与简历 v1 -> 投递与回顾
+        │
+        ▼
+后续按需：6-icache-performance：trace/cachesim -> I-cache -> AXI burst
         │
         ▼
 7-role-deepening：根据数据只选一条主攻
-        ├─ RTL/CPU：弹性后端切级、forwarding/hazard、再考虑 GShare/BTB
+        ├─ RTL/CPU：弹性后端切级、forwarding/hazard、预测器深化
         └─ DV：AXI 子系统 UVM/coverage closure + 更深的 formal
 ```
 
@@ -50,7 +58,7 @@
 1. **AXI4-Lite 和 ysyxSoC 仍是最高优先级**，因为它们把 CPU 模块、互联、设备、软件和验证真正连成系统。
 2. **验证和实现检查随设计推进**：日常优先 lint/单测/相关回归，稳定阶段补综合、STA、四值与适用的 formal；工具条件不足时明确待验，不把所有检查变成每次提交的前置条件。
 3. **五级流水不再是近期必做的整核重写**。在 ysyxSoC 和性能基线完成后，根据 CPI/stall/关键路径决定是否把当前弹性后端继续切级。
-4. **展示素材持续积累、按需包装**。需要投递时对已有证据做一次简短评估并生成简历，不以任一 milestone 或工具流程全部完成为前提。
+4. **展示素材持续积累，本轮冻结后集中复盘**。按用户选择，在 M5 + 限定 GShare 增量完成后考察理解、生成简历 v1，再边投递边回顾；不等待所有长期扩展完成。
 
 ## 2. 判断依据
 
@@ -124,6 +132,8 @@
 - 架构图、test plan、结果表和一篇完整 bug story。
 
 ### P1：量化优化，增强设计深度
+
+本轮冻结前的优化只选限定 GShare 增量，单独明确功能验收与同条件性能/面积/时序对照；下面的 cache/burst 等为后续候选，不加入本轮截止范围。具体 GShare 计划在开始实施前编写，本文不预先宣称已完成或已有收益。
 
 - 性能事件计数器和可重复 benchmark；
 - trace 驱动的 cache 参数探索；
@@ -556,7 +566,7 @@ L5  lint + synthesis/STA + 4-state/netlist smoke
 
 [`docs/notes/output/`](../output/README.md) 保存项目简介、[证据总索引](../output/evidence-index.md)以及精选图/PPT、bug case 和简历素材。它只引用阶段实验，不复制维护另一份结果表。重要功能或优化验收后补充证据链接、更新状态；普通小提交不要求编写展示文章。
 
-需要投递时，检查“能解释设计与取舍、能定位证据与个人贡献、能说明限制”，从已有素材选取 2～3 条简历描述和少量图/案例即可。功能阶段仍保留技术验收与基线，不等同于求职资格门槛。
+本轮在 M5 + GShare 冻结后，按 [JOB-PREP-01](../output/interview-readiness.md) 集中检查“能独立解释与推导、能定位证据、能完成小变化并验证”，再从已有素材选取 2～3 条简历描述和少量图/案例。工程验收与个人理解考察分别记录；代码通过测试不自动代表本人已掌握。
 
 ### 阶段面试 Q&A
 
@@ -583,7 +593,7 @@ L5  lint + synthesis/STA + 4-state/netlist smoke
 
 ### 暂停扩展、补齐证据的触发条件
 
-出现以下情况时先做必要收尾，再继续主线；不要求额外组织一次正式 job-release：
+开发期间出现以下情况时先做必要收尾，再继续主线；本轮冻结后另按 JOB-PREP-01 集中开展理解考察与简历准备：
 
 - 新功能开始同时跨 core、bus、SoC 和 software 多层修改；
 - 当前 milestone 已通过但文档和结果表尚未整理；
@@ -615,12 +625,14 @@ docs/notes/
 
 阶段面试问答使用各 Milestone 内的 `qa/` 目录，以 `qa/README.md` 为入口，按上文“阶段面试 Q&A”规则随有价值的进展维护。
 
-原计划的独立 `6-job-ready-release` 已取消，未创建的 I-cache/深化阶段顺延为 6/7。展示入口放在与 `post-c/` 平级的 `docs/notes/output/`，不占用技术 milestone 编号。
+原计划的独立 `6-job-ready-release` 技术目录已取消，未创建的 I-cache/深化阶段保留编号 6/7。2026-10-25 新约定的集中求职准备由 `docs/notes/output/interview-readiness.md` 承担，不恢复该技术目录；GShare 增量的目录和编号在其实施计划中确定，不在此预建空目录。
 
 ## 9. 最近三个行动
 
 1. 按 [M5 S3 交接](5-ysyx-soc-integration/3-runtime-difftest.md)推进 S4：真实 Flash XIP/Flash → SRAM 启动，再接通 PSRAM，并扩展 guard/普通存储差分；
 2. 按 S5–S6 完成 timer interrupt 与有限 RT-Thread 系统回归；保持真实存储容量、独立异常/中断预期及实际 UART TX 验证；
-3. 保留 04/05 core 基线作为后续对照；集成后 scope、IO 或 reset 条件改变时另建综合配置和 run，不能直接沿用 core 指标宣称完整 SoC PPA。
+3. 按 M5 S7–S8 完成新边界综合/STA 与验收交接；保留 04/05 core 基线，scope、IO 或 reset 条件改变时另建配置和 run，不能沿用 core 指标宣称完整 SoC PPA。
 
 在这三项完成前，不启动 GShare、经典五级流水重写、D-cache 或大规模外设扩展。
+
+之后按本轮顺序完成限定 GShare 增量并冻结版本，进入 **[JOB-PREP-01](../output/interview-readiness.md)**。验收交接和决定下一步工作时检查该待办，避免直接转入新的技术扩展而遗漏理解考察与简历 v1。

@@ -135,9 +135,11 @@ machine timer interrupt 是本工程 roadmap 的明确目标，不能用“CLINT
 | **S5：CLINT 与精确中断** | mtimecmp/IRQ、CSR/IDU/EXU、AM/NEMU/DiffTest 联动；先手写 trap 程序再接 tick | `5-timer-interrupt.md`：CSR/IRQ 合同、优先级表、独立 cause/EPC/副作用预期、定向与延迟测试；MRET 正确恢复。M11–M13 |
 | **S6：系统回归** | RT-Thread 有限抢占/阻塞唤醒 workload，UART 实际 TX；CPU tests、microbench 子集与协议随机延迟/错误回归 | `6-system-validation.md`：程序/预算/seed/覆盖清单；固定 PASS 与超时，至少两个非主动 yield 的线程在 tick 驱动下取得进展。M14–M16 |
 | **S7：新边界综合/STA** | 功能 RTL 固定；另建 scope/filelist/端口预算/SDC，适配新增 AXI、IRQ/reset；用户运行 DC/PT 后审查回传结果 | `7-synthesis-sta.md` 与精选原始报告：面积/时序、结构、DRV、coverage、reset 处置；不覆盖 M4 04/05。M17 |
-| **S8：验收和 M6 交接** | 干净构建复现，汇总测试、bug、图/波形、源与报告版本；固定可用于 cache 比较的程序和存储配置 | `signoff.md`：逐项结论、例外、未做内容与 M6 输入；所有本轮必做项完成且无未处置阻塞。M18 |
+| **S8：验收与后续交接** | 干净构建复现，汇总测试、bug、图/波形、源与报告版本；固定后续优化可比较的程序和存储配置 | `signoff.md`：逐项结论、例外、未做内容与后续输入；所有本轮必做项完成且无未处置阻塞。M18 |
 
 主链 S0 → S1 → S2 → S3 → S4 → S5 → S6 → S7 → S8。S3 后可以独立开发 S5 的模块测试，但完整系统结论仍依赖 S4 的装载/容量闭环；不以并行开发跳过出口。
+
+**2026-10-25 后续顺序更新**：S8 交接后按 [roadmap](../roadmap.md) 规划限定 GShare 增量；M5 + GShare 完成并冻结后进入 [JOB-PREP-01：理解考察与简历 v1](../../output/interview-readiness.md)，不自动开始 M6 I-cache。S8 交接须保留此待办链接；个人理解考察不计入 M5 的 RTL 功能验收。
 
 ### S7 的具体评估条件
 
