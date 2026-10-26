@@ -1,6 +1,12 @@
 // Frozen ysyxSoC CPU BlackBox ABI. Internal assertions enforce the disabled
 // ChipLink/external-IRQ configuration; enabling either requires a new contract.
-module ysyx_25030087 #(parameter PC_RST = 32'h20000000) (
+module ysyx_25030087 #(
+`ifdef NPC_FLASH_BOOT
+    parameter PC_RST = 32'h30000000
+`else
+    parameter PC_RST = 32'h20000000
+`endif
+) (
     input clock,
     input reset,
     input io_interrupt,

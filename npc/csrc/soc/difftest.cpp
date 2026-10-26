@@ -17,7 +17,8 @@ void mismatch(const char *what,uint32_t pc,unsigned index,uint32_t expected,uint
 }
 }
 SocDiff::~SocDiff() { if(handle)dlclose(handle); }
-void SocDiff::init(const std::string &path,const std::vector<uint8_t> &rom) {
+void SocDiff::init(const std::string &path,const std::vector<uint8_t> &rom,
+                   const std::vector<uint8_t> &flash,uint32_t reset_pc) {
   handle=dlopen(path.c_str(),RTLD_NOW|RTLD_LOCAL);
   if(!handle)throw std::runtime_error(dlerror());
   auto abi=symbol<uint32_t(*)()>(handle,"difftest_soc_abi");
@@ -28,8 +29,10 @@ void SocDiff::init(const std::string &path,const std::vector<uint8_t> &rom) {
   feed=symbol<decltype(feed)>(handle,"difftest_soc_feed");
   status=symbol<decltype(status)>(handle,"difftest_soc_status");
   symbol<void(*)(int)>(handle,"difftest_init")(0);
-  // Only ROM is loaded. Both machines execute the same SRAM initialization.
+  // Only nonvolatile images are loaded. Both machines execute RAM startup.
   copy(0x20000000,const_cast<uint8_t*>(rom.data()),rom.size(),true);
+  if(!flash.empty())copy(0x30000000,const_cast<uint8_t*>(flash.data()),flash.size(),true);
+  SocState state{};regs(state.data(),false);state[16]=reset_pc;regs(state.data(),true);
 }
 void SocDiff::step(const SocCommit &c,const SocState &actual) {
   SocState before{},expected{};
@@ -37,7 +40,9 @@ void SocDiff::step(const SocCommit &c,const SocState &actual) {
   if(before[16]!=c.pc)mismatch("commit PC",c.pc,16,before[16],c.pc);
   uint32_t ins=0;
   bool fetchable=(c.pc>=0x20000000 && c.pc<=0x20000ffc) ||
-                 (c.pc>=0x0f000000 && c.pc<=0x0f001ffc);
+                 (c.pc>=0x0f000000 && c.pc<=0x0f001ffc) ||
+                 (c.pc>=0x30000000 && c.pc<=0x30fffffc) ||
+                 (c.pc>=0x80000000 && c.pc<=0x803ffffc);
   if(fetchable && !(c.pc&3)) {
     copy(c.pc,&ins,4,false);
     if(ins!=c.inst)mismatch("instruction",c.pc,0,ins,c.inst);
@@ -48,6 +53,7 @@ void SocDiff::step(const SocCommit &c,const SocState &actual) {
       uint32_t addr=before[rs1]+imm;
       int len=1<<(f3&3);
       bool device=(addr>=0x10000000 && addr<=0x10000007 && len==1) ||
+                  (addr>=0x10001000 && addr<=0x10001018 && len==4) ||
                   ((addr==0x0200bff8 || addr==0x0200bffc) && len==4 && !wr);
       if(device && !(addr&(len-1))) {
         if(c.flags&1)throw std::runtime_error("Unexpected device access exception");
@@ -69,6 +75,13 @@ void SocDiff::step(const SocCommit &c,const SocState &actual) {
   for(unsigned i=0;i<expected.size();++i)
     if(expected[i]!=actual[i])mismatch(i<16?"GPR":i==16?"next PC":"CSR",c.pc,i,expected[i],actual[i]);
   ++steps;
+}
+void SocDiff::psram_memory(const std::vector<uint8_t> &actual) {
+  std::vector<uint8_t> expected(actual.size());
+  copy(0x80000000,expected.data(),expected.size(),false);
+  for(unsigned i=0;i<expected.size();++i)
+    if(expected[i]!=actual[i])mismatch("PSRAM byte",0x80000000+i,i,expected[i],actual[i]);
+  ++psram_checks;
 }
 void SocDiff::memory(const std::array<uint32_t,2048> &actual) {
   std::array<uint32_t,2048> expected{};

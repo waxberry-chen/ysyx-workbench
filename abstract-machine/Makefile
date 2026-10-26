@@ -47,6 +47,16 @@ endif
 
 # NPC profile/capacity/frequency are part of every object and library path.
 ARCH_BUILD := $(ARCH)
+ifneq ($(filter %-ysyxsoc,$(ARCH)),)
+SOC_BOOT ?= mrom
+ifneq ($(filter $(SOC_BOOT),mrom flash-sram flash-psram),$(SOC_BOOT))
+$(error AM SOC_BOOT must be mrom, flash-sram or flash-psram)
+endif
+ifneq ($(SOC_BOOT),mrom)
+ARCH_BUILD := $(ARCH)-$(SOC_BOOT)
+endif
+export SOC_BOOT
+endif
 ifneq ($(filter %-npc,$(ARCH)),)
 NPC_PLATFORM ?= legacy
 SRAM_BYTES ?= 1048576

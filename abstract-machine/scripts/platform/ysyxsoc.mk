@@ -3,6 +3,10 @@ AM_SRCS := riscv/ysyxsoc/start.S riscv/ysyxsoc/trm.c riscv/ysyxsoc/ioe.c \
            platform/dummy/vme.c platform/dummy/mpe.c
 CFLAGS += -fdata-sections -ffunction-sections
 LDSCRIPTS += $(AM_HOME)/scripts/ysyxsoc.ld
+ifneq ($(SOC_BOOT),mrom)
+AM_SRCS := $(subst riscv/ysyxsoc/start.S,riscv/ysyxsoc/flash-start.S,$(AM_SRCS))
+LDSCRIPTS := $(AM_HOME)/scripts/ysyxsoc-$(SOC_BOOT).ld
+endif
 LDFLAGS += --gc-sections -e _start -Map=$(IMAGE).map
 
 MAINARGS_MAX_LEN = 64
@@ -19,6 +23,6 @@ insert-arg: image
 
 # The reference profile is isolated from NEMU's normal .config and build.
 run: insert-arg
-	$(MAKE) -C $(NPC_HOME) soc-ref
-	$(MAKE) -C $(NPC_HOME) run IMG=$(IMAGE).bin \
+	$(MAKE) -C $(NPC_HOME) soc-ref SOC_BOOT=mrom
+	$(MAKE) -C $(NPC_HOME) run SOC_BOOT=$(if $(filter mrom,$(SOC_BOOT)),mrom,flash) IMG=$(IMAGE).bin \
 	  ARGS="--diff $(NPC_HOME)/../nemu/build/ysyxsoc/nemu-ref.so $(ARGS)"

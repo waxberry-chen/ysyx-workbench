@@ -73,7 +73,7 @@ def guard():
         '--top-module', 'npc_axi4_guard', '--Mdir', directory,
         ROOT/'ysyxSoC/perip/amba/npc_axi4_guard.v', NPC/'tests/soc/guard_tb.cpp'])
     text = run('guard', [directory/'Vnpc_axi4_guard'])
-    assert 'completed=1261 reset_aborted=7 cases=28 random_seed=27 random=1000 downstream_errors=2 reset_recovery=7' in text
+    assert 'completed=1351 reset_aborted=7 cases=38 random_seed=27 random=1000 downstream_errors=2 reset_recovery=7' in text
 
 
 def smoke():
@@ -107,13 +107,13 @@ def smoke():
 def faults():
     # Explicit oracle: expected response is data, not inferred from DUT routing.
     cases = []
-    for addr in (0, 0x0f002000, 0x10003000, 0x20001000, 0x40000000, 0xc0000000, 0xffffffff):
+    for addr in (0, 0x0f002000, 0x10003000, 0x20001000, 0x40000000, 0x80400000, 0xc0000000, 0xffffffff):
         for write in (False, True):
             cases.append((addr, write, 0, 3))
-    for addr in (0x10002000, 0x10011000, 0x21000000, 0x30000000, 0x80000000, 0xa0000000):
+    for addr in (0x10002000, 0x10011000, 0x21000000, 0x31000000, 0xa0000000):
         for write in (False, True):
             cases.append((addr, write, 0, 2))
-    cases += [(0x20000000, True, 2, 2), (0x10000000, False, 2, 2),
+    cases += [(0x30000000, True, 2, 2), (0x20000000, True, 2, 2), (0x10000000, False, 2, 2),
               (0x10000000, True, 2, 2), (0x10001000, False, 0, 2),
               (0x10001000, True, 0, 2)]
     lines = ['.section .text', '.globl _start', '.option norvc', '_start:',

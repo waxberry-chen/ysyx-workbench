@@ -1,5 +1,5 @@
-// Real ysyxSoCFull driver. Backing exists only for ROM/Flash; SRAM accesses and
-// peripheral effects always execute through the generated RTL and its models.
+// Real ysyxSoCFull driver. Only ROM/Flash receive images. PSRAM backing is
+// accessible through serial-model DPI; SRAM lives in RTL. No RAM preload.
 #include "VysyxSoCFull.h"
 #include "VysyxSoCFull__Dpi.h"
 #include "difftest.h"
@@ -20,6 +20,14 @@
 namespace {
 constexpr uint64_t HalfPeriod=5000; // --timescale-override 1ns/1ps; 100 MHz
 constexpr uint32_t RomBase=0x20000000;
+#ifdef NPC_FLASH_BOOT
+constexpr uint32_t ResetPC=0x30000000;
+#else
+constexpr uint32_t ResetPC=RomBase;
+#endif
+std::vector<uint8_t> psram(4*1024*1024,0);
+uint64_t psram_reads=0,psram_writes=0;
+uint32_t min_psram_sp=0x80400000;
 std::vector<uint8_t> rom(4096,0),flash;
 VerilatedContext *context=nullptr;
 std::ofstream commits,bus,uart_events;
@@ -67,6 +75,16 @@ extern "C" void flash_read(int addr,int *data) {
     if(uint64_t(off)+4>flash.size()) {fail("flash_read offset out of bounds");*data=0;return;}
     *data=int(word(flash,off));
 }
+extern "C" int psram_read(int addr) {
+    ++psram_reads;
+    if(uint32_t(addr)>=psram.size()){fail("PSRAM serial read out of bounds");return 0;}
+    return psram[uint32_t(addr)];
+}
+extern "C" void psram_write(int addr,int data) {
+    ++psram_writes;
+    if(uint32_t(addr)>=psram.size()){fail("PSRAM serial write out of bounds");return;}
+    psram[uint32_t(addr)]=uint8_t(data);
+}
 extern "C" void npc_soc_commit(int pc,int inst,int a0,int flags,int cause,int addr) {
     if(commit_pending)fail("Unconsumed architectural commit");
     commit_pending=true;pending={uint32_t(pc),uint32_t(inst),uint32_t(flags),uint32_t(cause),uint32_t(addr)};
@@ -107,7 +125,8 @@ int main(int argc,char **argv) {
         auto output=[](std::ofstream &f,const std::string &path){f.open(path);if(!f)throw std::runtime_error("Cannot write: "+path);};
         for(int i=1;i<argc;++i) {
             std::string opt=argv[i];
-            if(opt=="--help") {std::cout<<"--mrom FILE [--diff REF.so] [--diff-inject-at COMMIT] [--flash FILE] [--max-cycles N] [--trace FST] [--commit-trace CSV] [--bus-trace CSV] [--uart-events CSV] [--uart-log FILE] [--summary JSON] [--uart-bit-cycles N]\n";return 0;}
+            if(opt=="--help") {std::cout<<"Boot profile is fixed at build time; reset PC=0x"<<std::hex<<ResetPC
+                <<"\n[--mrom FILE] [--flash FILE] [--diff REF.so] [--diff-inject-at COMMIT] [--max-cycles N] [--trace FST] [--commit-trace CSV] [--bus-trace CSV] [--uart-events CSV] [--uart-log FILE] [--summary JSON] [--uart-bit-cycles N]\n";return 0;}
             if(i+1>=argc)throw std::runtime_error("Missing argument for "+opt);
             std::string val=argv[++i];
             if(opt=="--mrom")image=val;else if(opt=="--flash")flash_image=val;
@@ -122,10 +141,12 @@ int main(int argc,char **argv) {
             else if(opt=="--uart-events")output(uart_events,val);
             else throw std::runtime_error("Unknown option: "+opt);
         }
-        if(image.empty())throw std::runtime_error("--mrom image is required");
-        load(image,rom,4096,0);if(!flash_image.empty())load(flash_image,flash,16*1024*1024,0xff);
+        if(ResetPC==RomBase && image.empty())throw std::runtime_error("--mrom image is required");
+        if(ResetPC!=RomBase && flash_image.empty())throw std::runtime_error("--flash image is required");
+        if(!image.empty())load(image,rom,4096,0);
+        if(!flash_image.empty())load(flash_image,flash,16*1024*1024,0xff);
         if(inject_at && diff_path.empty())throw std::runtime_error("--diff-inject-at requires --diff");
-        if(!diff_path.empty())diff.init(diff_path,rom);
+        if(!diff_path.empty())diff.init(diff_path,rom,flash,ResetPC);
         auto ctx=std::make_unique<VerilatedContext>();context=ctx.get();ctx->commandArgs(argc,argv);
         ctx->traceEverOn(!wave_path.empty());
         auto dut=std::make_unique<VysyxSoCFull>(ctx.get());
@@ -159,6 +180,8 @@ int main(int argc,char **argv) {
                 for(unsigned i=0;i<state.size();++i)state[i]=uint32_t(npc_soc_state(int(i)));
                 if(state[2]>=0x0f000000 && state[2]<=0x0f002000)
                     min_sram_sp=std::min(min_sram_sp,state[2]);
+                if(state[2]>=0x80000000 && state[2]<=0x80400000)
+                    min_psram_sp=std::min(min_psram_sp,state[2]);
                 if(diff.active()) {
                     if(commit_count==inject_at)state[5]^=1; // comparator negative test only
                     try {diff.step(pending,state);}catch(const std::exception &e){fail(e.what());}
@@ -181,13 +204,13 @@ int main(int argc,char **argv) {
         }
         if(error.empty() && !stopped)fail(ctx->gotFinish()?"Unexpected RTL finish":"Simulation timeout");
         if(stopped && last_a0)fail("ebreak with nonzero a0");
-        if(stopped && (first_ar!=RomBase || first_pc!=RomBase))fail("Wrong first MROM address/PC");
-        if(stopped && first_inst!=word(rom,0))fail("First instruction differs from image");
+        if(stopped && (first_ar!=ResetPC || first_pc!=ResetPC))fail("Wrong first boot address/PC");
+        if(stopped && first_inst!=word(ResetPC==RomBase?rom:flash,0))fail("First instruction differs from image");
         if(error.empty() && stopped && diff.active()) {
             svSetScope(sram_scope);
             std::array<uint32_t,2048> state{};
             for(unsigned i=0;i<state.size();++i)state[i]=uint32_t(npc_soc_sram_word(int(i)));
-            try {diff.memory(state);}catch(const std::exception &e){fail(e.what());}
+            try {diff.memory(state);diff.psram_memory(psram);}catch(const std::exception &e){fail(e.what());}
         }
         dut->final();if(!wave_path.empty())wave.close();
         if(!uart_path.empty()){std::ofstream f(uart_path,std::ios::binary);f<<tx_bytes;if(!f)throw std::runtime_error("UART log write failed");}
@@ -200,7 +223,11 @@ int main(int argc,char **argv) {
              <<",\n  \"uart_thr_writes\": "<<thr_writes<<",\n  \"uart_register_reads\": "<<uart_reads<<",\n  \"uart_serial_bytes\": "<<tx_bytes.size()
              <<",\n  \"diff_steps\": "<<diff.steps<<",\n  \"diff_device_reads\": "<<diff.device_reads
              <<",\n  \"diff_device_writes\": "<<diff.device_writes<<",\n  \"diff_sram_checks\": "<<diff.memory_checks
-             <<",\n  \"min_sram_sp\": "<<min_sram_sp<<"\n}\n";
+             <<",\n  \"min_sram_sp\": "<<min_sram_sp
+             <<",\n  \"min_psram_sp\": "<<min_psram_sp
+             <<",\n  \"psram_read_bytes\": "<<psram_reads<<",\n  \"psram_write_bytes\": "<<psram_writes
+             <<",\n  \"diff_psram_checks\": "<<diff.psram_checks
+             <<",\n  \"reset_pc\": "<<ResetPC<<"\n}\n";
             if(!f)throw std::runtime_error("Summary write failed");
         }
         if(!error.empty()){std::cerr<<"NPC_SOC_FAIL: "<<error<<" pc=0x"<<std::hex<<last_pc<<"\n";return 1;}

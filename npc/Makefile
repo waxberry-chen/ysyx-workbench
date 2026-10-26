@@ -13,6 +13,7 @@ help:
 	@echo 'M5 S1: make s1-test; make lint; artifacts: npc/build/m5-s1'
 	@echo 'M5 S2: make s2-test; make run IMG=/path/to/mrom.bin [ARGS="..."]'
 	@echo 'M5 S3: make s3-test; AM ARCH=riscv32e-ysyxsoc; make soc-ref'
+	@echo 'M5 S4: make s4-test; make run SOC_BOOT=flash IMG=/path/to/flash.bin'
 lint:
 	verilator --lint-only --sv --assert -Wall -Wno-fatal --top-module ysyx_25030087 -F filelist-soc.f
 include scripts/tests.mk

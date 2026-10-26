@@ -53,7 +53,12 @@ struct Bench {
             if((d.out_rvalid&&d.out_rready)||(d.out_bvalid&&d.out_bready))response=true;
             if(d.in_rvalid||d.in_bvalid){
                 check((t.write?d.in_bvalid:d.in_rvalid) && !(d.in_rvalid&&d.in_bvalid),"response kind");
-                check((t.write?d.in_bresp:d.in_rresp)==t.resp,"response code");
+                if((t.write?d.in_bresp:d.in_rresp)!=t.resp) {
+                    std::cerr<<"addr=0x"<<std::hex<<t.addr<<std::dec<<" size="<<t.size
+                             <<" write="<<t.write<<" expected="<<t.resp
+                             <<" actual="<<unsigned(t.write?d.in_bresp:d.in_rresp)<<'\n';
+                    throw std::runtime_error("response code");
+                }
                 check((t.write?d.in_bid:d.in_rid)==id,"response ID");
                 if(!t.write)check(d.in_rlast && d.in_rdata==(t.forward?rd:0),"read payload/last");
                 if(t.forward)check(response,"reply before downstream completion");
@@ -91,9 +96,14 @@ int main(int argc,char **argv){
             {0x10001000,false,2,0,0,true},{0x10001000,true,2,15,0,true},
             {0x10001000,true,0,1,2,false},{0x10002000,false,2,0,2,false},
             {0x10011000,true,2,15,2,false},{0x21000000,false,2,0,2,false},
-            {0x30000000,true,2,15,2,false},{0x80000000,false,2,0,2,false},
+            {0x30000000,true,2,15,2,false},{0x80000000,false,2,0,0,true},
             {0xa0000000,false,2,0,2,false},{0x10003000,false,2,0,3,false},
             {0xc0000000,true,2,15,3,false},{0xffffffff,false,0,0,3,false},
+            {0x30000000,false,2,0,0,true},{0x30ffffff,false,0,0,0,true},
+            {0x31000000,false,2,0,2,false},{0x30ffffff,false,1,0,2,false},
+            {0x803fffff,false,0,0,0,true},{0x803ffffc,true,2,15,0,true},
+            {0x80400000,false,2,0,3,false},{0x803fffff,false,1,0,3,false},
+            {0x80000000,true,2,5,2,false},{0x80000001,true,0,2,0,true},
             {0x0f000001,false,2,0,2,false},{0x0f000000,true,0,2,2,false}
         };
         for(auto t:cases)for(int in=-1;in<=1;++in)for(int out=-1;out<=1;++out)b.transaction(t,in,out);
@@ -106,6 +116,6 @@ int main(int argc,char **argv){
         b.transaction(w,0,-1,"down_aw");b.transaction(w,0,1,"down_w");
         b.transaction(w,0,0,"wait_b");b.transaction(r,0,0,"wait_r");
         b.transaction(Tx{0,true,2,15,3,false},0,0,"response");
-        std::cout<<"Guard: PASS completed="<<b.completed<<" reset_aborted="<<b.aborted<<" cases=28 random_seed=27 random=1000 downstream_errors=2 reset_recovery=7\n";
+        std::cout<<"Guard: PASS completed="<<b.completed<<" reset_aborted="<<b.aborted<<" cases=38 random_seed=27 random=1000 downstream_errors=2 reset_recovery=7\n";
     }catch(const std::exception &e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
 }
