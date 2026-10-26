@@ -1,0 +1,16 @@
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/m5-s4/programs/overflow-flash-sram'
+# Building overflow-flash-sram-image [riscv32e-ysyxsoc]
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+# Building am-archive [riscv32e-ysyxsoc]
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/am'
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
+# Building klib-archive [riscv32e-ysyxsoc]
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/abstract-machine/klib'
++ CC overflow.c
+# Creating image [riscv32e-ysyxsoc]
++ LD -> build/overflow-flash-sram-riscv32e-ysyxsoc-flash-sram.elf
+riscv64-linux-gnu-ld: /home/cym/prj/ysyx-workbench/npc/build/m5-s4/programs/overflow-flash-sram/build/overflow-flash-sram-riscv32e-ysyxsoc-flash-sram.elf section `.bss' will not fit in region `ram'
+riscv64-linux-gnu-ld: RAM static sections overlap reserved stack
+riscv64-linux-gnu-ld: region `ram' overflowed by 176 bytes
+make[1]: *** [/home/cym/prj/ysyx-workbench/abstract-machine/Makefile:154: /home/cym/prj/ysyx-workbench/npc/build/m5-s4/programs/overflow-flash-sram/build/overflow-flash-sram-riscv32e-ysyxsoc-flash-sram.elf] Error 1
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/m5-s4/programs/overflow-flash-sram'

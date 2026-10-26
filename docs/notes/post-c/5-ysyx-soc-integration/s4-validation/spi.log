@@ -1,0 +1,7 @@
+F
+[1;34m[src/cpu/cpu-exec.c:166 cpu_exec] nemu: [1;32mHIT GOOD TRAP[0m at pc = 0x200001d0[0m
+[1;34m[src/cpu/cpu-exec.c:130 statistic] host time spent = 341 us[0m
+[1;34m[src/cpu/cpu-exec.c:131 statistic] total guest instructions = 6295[0m
+[1;34m[src/cpu/cpu-exec.c:132 statistic] simulation frequency = 18460410 inst/s[0m
+HIT GOOD TRAP: real ysyxSoC commits=6295 cycles=133700 UART_TX=F
+

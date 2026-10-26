@@ -18,8 +18,8 @@ S0 证据：[manifest](s0-validation/manifest.json)、[61-port 表](s0-validatio
 | M06 / S2：PASS | reset 后首个 MROM PC 与数据正确，ebreak 按当前退出约定结束；UART byte store 实际到达目标寄存器，仅输出一个 A | ebreak/uart FST、commit/bus/寄存器 CSV、独立 TX 解码精确 A、32 次精确 fault；见 S2 归档，未用队列打印代替 TX 验证 |
 | M07 / S3：PASS | SRAM stack、8/16/32 位访存、软件64位、byte mask、首尾、避栈mem-test、data/bss、全局改写和8次独立异常预期通过 | [S3](3-runtime-difftest.md)：CPU预填2048word；分别移除copy/clear的负例失败；链接容量断言、布局和实际最小sp已记录 |
 | M08 / S3：PASS（MROM/SRAM） | 31个正向workload所有提交逐指令比较并核对最终8KiB SRAM；UART/mtime仅单次输入同步，无整状态skip；普通addi结果扰动触发mismatch | [S3证据](s3-validation/README.md)：hello、24个CPU tests、sieve/fib smoke及分类；Flash/PSRAM随S4接通后再加入普通存储差分，未提前计PASS |
-| M09 / S4 | SPI 读与映射/XIP 访问一致；目标 RAM 预填图案后由 CPU 从 Flash 搬运，复制边界、data/bss、stack 与入口 PC 正确；超容量镜像构建/加载失败 | Flash 镜像/ELF/map/hash、boot 波形、目标区校验；无 harness 代搬运 |
-| M10 / S4 | 验收程序真实容量足够；若启用 PSRAM，完成控制器/模型事务及 byte/half/word、连续/随机地址、首尾/越界、延迟测试，再运行 Flash → PSRAM 程序 | 实际容量、存储测试、boot 与栈/heap 余量；若不启用 PSRAM须用新 workload 预算证明可免 |
+| M09 / S4：PASS | SPI 读与映射/XIP 访问一致；目标 RAM 预填图案后由 CPU 从 Flash 搬运，复制边界、data/bss、stack 与入口 PC 正确；超容量镜像构建/加载失败 | [S4 证据](s4-validation/README.md)：SPI 已知内容/XIP、两种启动、4 个 copy/clear 负例、镜像/链接容量负例；CSV 与本地 FST，无 harness 代搬运 |
+| M10 / S4：PASS | 验收程序真实容量足够；若启用 PSRAM，完成控制器/模型事务及 byte/half/word、连续/随机地址、首尾/越界、延迟测试，再运行 Flash → PSRAM 程序 | [S4 证据](s4-validation/README.md)：4 MiB PSRAM，宽度/首尾/地址位/300 次固定 seed 混合访问；串行等待、guard 随机背压；34 个 CPU tests、RTT 协作 workload 的真实装载/预算/容量检查。完整水位与抢占留 S6 |
 | M11 / S5 | mtime 单调/tick 换算/跨低字溢出读取；mtimecmp 分字写；比较阈值前后 pending；mask=0/1 与 pending=0/1 四组合；只读/不支持 CSR 访问语义 | 独立 timer/CSR scoreboard、RV32 程序自检、CSR 支持表与负例 |
 | M12 / S5 | 精确 IRQ：ALU/branch、空闲、LSU pending、错误响应、同步异常同时出现、redirect、MRET 后仍 pending；保存正确 EPC/cause/MIE/MPIE，无重复 store 或跳过指令 | 优先级表和每类用例；trap/MRET 波形、提交与内存副作用独立预期 |
 | M13 / S5 | AM timer event、真实中断开关、RV32E 上下文保存恢复；timer cause/EPC 独立验证后再比较 NEMU；中断返回不无条件增加 EPC | 手写 trap 程序、嵌入式上下文校验、DiffTest 注入/时间同步规则 |

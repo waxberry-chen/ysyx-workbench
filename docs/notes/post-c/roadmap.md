@@ -342,6 +342,8 @@ interconnect system-level test plan 合并实施。
 
 2026-10-20：**[M5 S3 完成](5-ysyx-soc-integration/3-runtime-difftest.md)**。新增 `ARCH=riscv32e-ysyxsoc`、真实 SRAM poison/data/bss 初始化与独立 NEMU profile；31个正向workload全部提交差分、最终SRAM比较通过，含24个CPU tests和sieve/fib smoke。普通指令结果扰动、遗漏copy/clear、容量超限负例均有效，S2回归通过；无整状态skip、无当前阻塞。下一步S4真实Flash/PSRAM启动；完整benchmark/RTT与timer IRQ仍待后续。
 
+2026-10-26：**[M5 S4 完成](5-ysyx-soc-integration/4-boot-memory.md)**。真实 SPI/XIP、Flash → SRAM/4 MiB PSRAM、普通存储差分与最终 RAM 比较通过；34个适用CPU tests、RT-Thread协作容量workload及启动/容量负例通过，S1/S2/S3回归通过。实际静态RAM42,992 B，无当前阻塞；下一步S5 timer interrupt，未宣称抢占RTOS完成。
+
 #### 架构建议
 
 保留 IFU/LSU 的 local req/rsp 语义边界，直接将现有 adapters、仲裁和顶层升级为面向 ysyxSoC 的 AXI4 单拍接口。当前 Lite 读接口不传 size，且 adapter 已对齐地址，必须在 adapter 内保留原始信息，不能只在最外层补端口。不新增 Lite/AXI4 模式选择或旧地址兼容层；B1 的有效测试检查点迁移到新接口，旧系统仅作历史复现。
@@ -629,8 +631,8 @@ docs/notes/
 
 ## 9. 最近三个行动
 
-1. 按 [M5 S3 交接](5-ysyx-soc-integration/3-runtime-difftest.md)推进 S4：真实 Flash XIP/Flash → SRAM 启动，再接通 PSRAM，并扩展 guard/普通存储差分；
-2. 按 S5–S6 完成 timer interrupt 与有限 RT-Thread 系统回归；保持真实存储容量、独立异常/中断预期及实际 UART TX 验证；
+1. 按 [M5 S4 交接](5-ysyx-soc-integration/4-boot-memory.md)推进 S5：mtimecmp/MTIP、CPU 中断使能与精确入口、reference 同步及 AM 中断接口；
+2. 按 S6 完成有限 RT-Thread 系统回归与容量/水位实测；在已通过的 Flash/PSRAM 协作 workload 上补 timer/抢占验证，保持真实 UART TX 与独立中断预期；
 3. 按 M5 S7–S8 完成新边界综合/STA 与验收交接；保留 04/05 core 基线，scope、IO 或 reset 条件改变时另建配置和 run，不能沿用 core 指标宣称完整 SoC PPA。
 
 在这三项完成前，不启动 GShare、经典五级流水重写、D-cache 或大规模外设扩展。

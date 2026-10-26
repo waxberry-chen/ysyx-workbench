@@ -1,0 +1,75 @@
+boot-flash-sram
+/home/cym/prj/ysyx-workbench/npc/build/m5-s4/programs/boot-flash-sram/build/boot-flash-sram-riscv32e-ysyxsoc-flash-sram.elf:     file format elf32-littleriscv
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .boot         000000c0  30000000  30000000  00001000  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .text         000001f0  0f000000  300000c0  00002000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .data         00000010  0f0001f0  300002b0  000021f0  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  3 .bss          00000050  0f000200  300002c0  00002200  2**2
+                  ALLOC
+  4 .riscv.attributes 0000001a  00000000  00000000  00002200  2**0
+                  CONTENTS, READONLY
+{
+  "profile": "flash-sram",
+  "binary_bytes": 704,
+  "sha256": "5106deedc819db5f8a27fe873e9337cd025c135ab392044cce99db898e706504",
+  "static_ram_bytes": 592,
+  "heap_bytes": 5552,
+  "stack_reserved": 2048,
+  "stack_used": 232
+}
+
+boot-flash-psram
+/home/cym/prj/ysyx-workbench/npc/build/m5-s4/programs/boot-flash-psram/build/boot-flash-psram-riscv32e-ysyxsoc-flash-psram.elf:     file format elf32-littleriscv
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .boot         000000c0  30000000  30000000  00001000  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .text         000001f0  80000000  300000c0  00002000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .data         00000010  800001f0  300002b0  000021f0  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  3 .bss          00000050  80000200  300002c0  00002200  2**2
+                  ALLOC
+  4 .riscv.attributes 0000001a  00000000  00000000  00002200  2**0
+                  CONTENTS, READONLY
+{
+  "profile": "flash-psram",
+  "binary_bytes": 704,
+  "sha256": "134608d3340abc852f0327c541fef4012e60dab3f5387f5ef14fe06902c3cfc5",
+  "static_ram_bytes": 592,
+  "heap_bytes": 4128176,
+  "stack_reserved": 65536,
+  "stack_used": 232
+}
+
+rtthread-capacity
+/home/cym/prj/ysyx-workbench/npc/build/m5-s4/programs/rtthread-capacity/build/rtthread-capacity-riscv32e-ysyxsoc-flash-psram.elf:     file format elf32-littleriscv
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .boot         000000c0  30000000  30000000  00001000  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .text         00005438  80000000  300000c0  00002000  2**3
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .data         00000050  80005438  300054f8  00007438  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  3 .bss          00005360  80005490  30005548  00007490  2**4
+                  ALLOC
+  4 .riscv.attributes 0000001e  00000000  00000000  00007488  2**0
+                  CONTENTS, READONLY
+{
+  "profile": "flash-psram",
+  "binary_bytes": 21832,
+  "sha256": "38c96eb6527db17ffed71b99081222c9ce7cd8e28217208fbf0b19fc31c86de4",
+  "static_ram_bytes": 42992,
+  "heap_bytes": 4085776,
+  "stack_reserved": 65536,
+  "lowest_observed_sp": 2147513256,
+  "thread_stack_reservation": 16384
+}

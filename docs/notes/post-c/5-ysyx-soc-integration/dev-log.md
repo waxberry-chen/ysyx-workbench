@@ -67,3 +67,14 @@
 - 比较器GPR扰动、删除data-copy、删除bss-clear、ROM/RAM链接超容量五类负例按预期失败。S2完整回归、普通NEMU 32GPR/M smoke、新AM `run`入口均通过。普通NEMU shared target已有readline依赖，测试宿主预加载后完成检查，本轮不改普通构建系统。
 - 新增[实现与源码导读](3-runtime-difftest.md)和[精选证据](s3-validation/README.md)，更新QA/plan/验收矩阵/roadmap。说明VMA/LMA、采样顺序、同步边界和容量分类，而非只记录PASS。
 - M07/M08的MROM/SRAM范围关闭，无当前阻塞；下一步S4真实Flash/PSRAM启动。timer IRQ、完整benchmark/RTT、随机系统延迟及新scope综合仍待后续。
+
+
+## 2026-10-26：S4 Flash 启动与 PSRAM 容量闭环
+
+- 复用已有 SPI/Flash 与 PSRAM controller，新增真实 XIP FSM、4 MiB PSRAM 串行颗粒模型；Flash backing 限 16 MiB，guard 与 reference 同步范围/权限。未修改生成 RTL 或原有 Rocket Chip 补丁，未恢复 B1 transport。
+- MROM/Flash 硬件构建配置隔离；AM 增加 `flash-sram`/`flash-psram`，Flash reset PC 为 `0x30000000`。CPU 执行静态区非零预填、text/data 搬运、bss 清零与 RAM 跳转，harness 不预装 RAM。
+- 首尾测试发现原 PSRAM 控制器 DONE 后仍多发一个 SCK，末 word 读会越界；修正 reader/writer 的 SCK/CE 收尾，并将 PSRAM 启动限定在 APB access phase。独立 byte/half/word、地址位、混合随机访问与最终整块 RAM 比较通过。
+- 41 个正向 workload、34 个适用 CPU tests 与 9 个启动/容量负例通过；S1/S2/S3 回归通过。普通 Flash/PSRAM 参与逐提交差分，SPI 寄存器仅单次设备输入同步；RTT 203 次 ECALL 协作调度不计 timer IRQ。
+- RTT 新镜像21,832 B、静态RAM42,992 B，预留64 KiB主栈后heap区间4,085,776 B；100轮AB线程交替、heap释放恢复和实际UART通过。完整分线程/主栈水位与heap峰值数字留S6补充。
+- [S4 源码导读](4-boot-memory.md)按职责/功能/位置/机制/验证展开；[精选证据](s4-validation/README.md)记录源码hash、ELF布局、启动提交、正反例和回归。Q16–Q18记录XIP/搬运、DPI位置与存储边界测试价值。
+- 本步无未解决阻塞；下一步S5 timer interrupt。工作区包含主仓库和ysyxSoC改动，未git add/commit；先提交SoC再更新主仓库gitlink，嵌套Rocket Chip原补丁无需因S4新增提交。

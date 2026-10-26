@@ -87,3 +87,21 @@ IFU 可能已发出后续预取。S2 的非法取指测试中，`0x20001000` 与
 posedge callback可能先于非阻塞赋值生效。S3在该边沿只暂存commit元数据，等`eval()`返回再读取GPR、更新后的架构PC和CSR，与执行了一条指令的REF比较。
 
 设备读值随时间变化，因此本轮仅同步UART/mtime该次读的输入，让REF仍执行load并比较其他寄存器、PC和CSR；ROM/SRAM全部正常差分。它比整状态skip保留更多检查，但仍不能独立证明设备返回的数据正确，必须结合真实TX、寄存器副作用和timer定向预期。详见[S3第4节](../3-runtime-difftest.md#4-difftest-为什么这样采样和同步)。
+
+## Q16：Flash XIP 和 Flash 搬到 RAM 执行，有什么区别？
+
+XIP 时，CPU 的取指地址就在 Flash 映射范围，每次读经过 APB→SPI 转换，串行取得指令。搬运启动先借助 XIP 执行小段 boot 代码，再将 `.text/.rodata` 与 `.data` 从 Flash LMA 复制到 RAM VMA，清 bss，跳到 RAM 中的入口。
+
+因此 reset PC 指向 Flash，不代表整个应用都从 Flash 运行。当前 S4 的 Flash profile 在 `0x30000000` 起步，应用分别在 SRAM `0x0f000000` 或 PSRAM `0x80000000` 执行；应结合 ELF/map、复制 store 和跳转后的提交 PC 来证明。实现见 [S4 启动导读](../4-boot-memory.md#5-启动代码与-linker-怎样配合)。
+
+## Q17：PSRAM 模型用了 DPI-C，是否就绕过了真实硬件路径？
+
+关键是 DPI 所在的位置。本工程的 CPU 先发 AXI4，经 APB、PSRAM 控制器，最后由外部器件模型解码 `0xeb/0x38` 命令和串行地址/数据，再调用 DPI 访问 backing。这样仍会暴露命令、地址、字节顺序、strobe、等待周期和事务结束错误。
+
+如果 harness 直接按 CPU 地址读写数组，或者启动时把应用塞进 RAM，才会绕过这些待验证环节。当前 Flash/PSRAM 在 NEMU 中是独立普通存储，复制指令和 RAM 取指都参与差分，最后比较整块 RAM；只有明确的 SPI **寄存器**读值采用设备输入同步。
+
+## Q18：外部存储首尾地址测试为什么有价值？
+
+除了发现地址截断/容量别名，还会暴露协议边界问题。本次 PSRAM 最后一个 word 读取最初触发越界：控制器 DONE 后仍多发一个 SCK 上升沿，颗粒模型尝试准备第五字节。正确修复是 DONE 时停止 SCK 并释放片选，而不是增大 backing 或屏蔽越界。
+
+类似地，Flash 总线窗口虽然声明了 256 MiB，本轮器件只有 16 MiB；必须在截成 24-bit 串行地址之前拒绝超容量访问，否则 `0x31000000` 会悄悄访问 Flash 起点。详见 [S4 容量和错误策略](../4-boot-memory.md#4-容量权限与错误必须一致)。
