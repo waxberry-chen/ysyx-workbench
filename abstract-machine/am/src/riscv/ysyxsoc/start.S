@@ -13,6 +13,7 @@ _start:
   sw t1, 0(t0)
   addi t0, t0, 4
   bltu t0, sp, 1b
+  /* Copy data section to SRAM */
 __am_data_copy:
   la t0, _data_load
   la t1, _data_start
@@ -24,6 +25,7 @@ __am_data_copy:
   addi t0, t0, 4
   addi t1, t1, 4
   j 2b
+  /* Clear bss section */
 3:
 __am_bss_clear:
   la t0, _bss_start
@@ -33,6 +35,7 @@ __am_bss_clear:
   sw zero, 0(t0)
   addi t0, t0, 4
   j 4b
+  /* Call AM trm_init */
 5:
 __am_runtime_ready:
   call _trm_init
