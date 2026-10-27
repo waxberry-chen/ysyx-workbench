@@ -1,6 +1,6 @@
 # Post-C Roadmap：从弹性 RV32E Core 到可展示的 SoC/RTL 项目
 
-> 规划更新：2026-10-25；M4 S2.5 ISA 收敛已完成本地验收，当前已建立 S3 范围内面积/时序基线，S6 已于 2026-10-19 完成最终回归与服务器独立复现，M4 本轮验收通过；M5 S0–S3 已完成，下一步 S4 Flash/PSRAM 启动；M4 初始输入基线：`0fe53bf`（M3 功能/协议仿真验收后）
+> 规划更新：2026-10-27；M4 S2.5 ISA 收敛已完成本地验收，当前已建立 S3 范围内面积/时序基线，S6 已于 2026-10-19 完成最终回归与服务器独立复现，M4 本轮验收通过；M5 S0–S4 已完成，下一步 S5 CLINT 与精确中断；新增后期可选 RT-Thread 交互演示，M5 边界不变；M4 初始输入基线：`0fe53bf`（M3 功能/协议仿真验收后）
 >
 > 求职方向优先级：SoC/RTL Design > Design Verification > Physical Design  
 > 本文用于决定 post-C 阶段的投入顺序。具体接口、地址映射和考核要求仍以开始该阶段时的最新版官方讲义与上游仓库为准。
@@ -35,7 +35,7 @@
 已完成
 4-pre-soc-signoff：DC/PT 面积与时序基线；DC 功耗粗估暂缓
         ▼
-当前主线（S0–S3 完成，下一步 S4）
+当前主线（S0–S4 完成，下一步 S5）
 5-ysyx-soc-integration：AXI4 单拍子集封装 -> ysyxSoC 最小启动闭环
         │                    MROM/SRAM/UART/CLINT/DiffTest/RT-Thread
         ▼
@@ -149,6 +149,7 @@
 - 为 AXI interconnect 建立一个聚焦、可复用的 UVM 环境并完成 coverage closure；
 - 若确有多个时钟或复位域，再做真实 CDC/RDC 设计与检查；
 - 后续确有物理实现需求时再裁剪既有 flow；近期不实施 PnR。
+- [RT-Thread 交互控制台与应用演示](#后期可选rt-thread-交互控制台与应用演示)：接收终端命令、查看系统状态、启动简单程序；本轮冻结及求职准备后按需选择。
 
 ### 暂缓
 
@@ -498,6 +499,45 @@ S0 实际决策：已有RT-Thread ELF静态段42,932B，采用4MiB PSRAM；Flash
 - 针对 congestion/timing 的 RTL 反馈修改。
 
 它目前排在 SoC/RTL 与 DV 之后，不应阻塞主线。
+
+### 后期可选：RT-Thread 交互控制台与应用演示
+
+2026-10-27 记录，**尚未实施，不改变 M5 的 S0–S8 范围或验收条件**。本轮仍按 M5 → 限定 GShare → 冻结 → [JOB-PREP-01](../output/interview-readiness.md) 推进；交互演示是后期候选，不要求先完成 M6/M7，也不作为简历 v1 的前置。
+
+**版本与运行模型明确为：RT-Thread Standard（标准版）的裁剪配置，RV32E、单核、M-mode、无 MMU，内核与应用线程共享地址空间。** 本地 `rt-thread-am` 的 [版本定义](../../../rt-thread-am/include/rtdef.h) 为 5.0.1；当前 workload 从该源码树选择内核子集，并使用[独立 rtconfig.h](../../../npc/tests/b1-rtthread/include/rtconfig.h)，没有启用 `RT_USING_SMART`。裁剪成小配置不等于已经迁移到 Nano 发行版。
+
+| 版本 | 主要定位 | 与本选项的关系 |
+| --- | --- | --- |
+| RT-Thread Nano | 极简实时内核，支持多线程、同步通信等，不要求 MMU | 可作轻量 RTOS 参考；本工程无需另换 Nano 源码来实现简单交互 |
+| RT-Thread Standard | 可裁剪内核与设备框架、FinSH/MSH 等组件，不以 MMU 为前提 | 沿用本地版本，按需加入 shell、驱动与应用，作为本选项的目标 |
+| RT-Thread Smart | 在标准版基础上引入用户态应用、系统调用与独立地址空间；其 MMU 方案用于地址转换和隔离 | 不纳入本选项，不追加虚拟内存与用户进程移植 |
+
+版本划分参考 [RT-Thread 官方文档说明](https://gitee.com/rtthread/docs-online/blob/master/README.md)。**能输入命令、运行多线程程序，不要求 MMU；MMU 解决的是虚拟地址映射与隔离等问题。** 本选项的程序共享内存，没有独立进程地址空间；“以后增加 ELF loader”也不自动意味着改用 Smart，动态加载与地址空间隔离应分别设计。
+
+目标是让 SoC 具备可操作的计算机使用体验：从 Flash 启动 RT-Thread，在终端输入 `help/version/ps/free` 等简单命令，查看线程和内存，启动一个测试或小程序，完成后返回 shell；后台线程可继续运行。
+
+**先支持“命令调用已链接进镜像的程序入口或创建线程”。** 可选择适配后的 AM 程序，约定参数、返回和资源释放，避免沿用 `halt/ebreak` 结束整个系统。若希望从文件中加载独立 ELF，再增加程序来源、loader、ABI/重定位和生命周期管理；这是更进一步的选项。命令行本身不要求文件系统，也不等于支持全部 RT-Thread 组件。
+
+#### 硬件支持与增量边界
+
+下表区分“当前已具备”与“既定计划完成后具备”：截至本记录，M5 S4 已验收，S5/S6 的中断与抢占尚未实现。
+
+| 所需能力 | 当前或既定 roadmap 的覆盖 | 此可选项需要额外完成的工作 |
+| --- | --- | --- |
+| 执行代码、访问数据、保存上下文 | 已有 RV32E、栈/heap、同步 trap/MRET 和协作式线程切换 | 按现有 ISA/ABI 编译所选组件与程序；基础交互无需增加 M/C、MMU 或用户态 |
+| 启动和运行存储 | S4 已有 16 MiB Flash 只读镜像、8 KiB SRAM、4 MiB PSRAM 及真实搬运启动 | 复用 `flash-psram`，重新核算 shell、程序及各线程的栈/heap 预算；不预设需要 SDRAM |
+| tick、临界区、抢占与超时 | M5 S5/S6 计划完成 CLINT `mtimecmp/MTIP`、CPU 精确中断、AM 中断开关和有限 RT-Thread 抢占/阻塞唤醒 | 检查新增 shell/IPC/驱动所用接口，增加后台线程与交互并行的测试；不能将有限 workload 通过等同于所有内核 API 已验证 |
+| UART 双向通信 | 上游 UART16550 RTL 已有 RX/TX，M5 已验证真实 TX；RX 输入闭环尚未完成 | harness 将终端字符编码为 RX 引脚波形并实时显示 TX；驱动读取真实 UART 接收寄存器，提供缓冲和 shell 输入通知 |
+| 外部设备中断 | 当前 M5 不开放外部 IRQ，也不实现 PLIC | 第一版可用定时轮询线程接收 UART 并唤醒 shell；若选择 UART IRQ，再补外部中断接线、CSR/入口、ISR 和参考同步。PLIC 按多中断源管理需求另行决定 |
+| 文件与持久化存储（进一步选做） | 当前 Flash 路线仅支持读取，PSRAM 是易失 RAM；M5 不提供文件系统 | 需要文件命令时接文件系统与存储后端；如要求修改文件并在复位后保留，再实现 Flash 擦写或其他可写非易失介质 |
+
+#### 软件、仿真与验证补充
+
+- **接入 shell 和设备框架：** 单独配置 FinSH/MSH、console、所需 IPC 与组件初始化。现有 [S4 RT-Thread workload](5-ysyx-soc-integration/s4-validation/README.md) 只运行有限内核子集；旧 [BSP uart.c](../../../rt-thread-am/bsp/abstract-machine/src/uart.c) 的 `_uart_getc()` 返回固定命令字符串，不能当作真实 RX。无字符时应等待，有字符后通知并唤醒 shell，不能只替换一次读取函数。
+- **接好构建与布局：** 参考 [extra.ld](../../../rt-thread-am/bsp/abstract-machine/extra.ld)，将 `FSymTab` 命令表、`.rti_fn*` 初始化表等纳入当前链接布局，核对 `KEEP`、VMA/LMA 和启动复制范围；补齐所选命令依赖的 libc/BSP 占位函数。
+- **保留自动化入口：** 在 [SoC harness](../../../npc/csrc/soc/main.cpp) 中同时支持人工输入和按仿真时间回放字符，输入经过真实 UART RX；沿用设备输入同步与 DiffTest 检查。交互会话支持主动退出，回归保留有界超时与明确 PASS。
+
+最小验收：人工输入和自动回放均能执行若干内置命令；至少一个程序运行后返回 shell 并可再次启动；无输入时其他线程仍能推进；连续输入、编辑/回车及缓冲边界有检查；保留 UART RX/TX、命令输出和线程进度证据。外部 ELF 加载、文件系统、网络及图形等按实际需求另立范围。
 
 ## 6. 贯穿所有阶段的质量门
 
