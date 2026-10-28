@@ -16,7 +16,7 @@ Flash 提供程序初始内容，但 `.data/.bss`、栈和 heap 仍需要可写�
 
 ## Q3：能读 mtime、能运行 RT-Thread，是否代表支持中断？
 
-都不代表。当前 CLINT 只有计时器，B1 RT-Thread 通过主动 yield 协作切换。timer interrupt 还需要 mtimecmp/pending、CSR mask、精确接受边界、trap/MRET，以及 AM 与 RT-Thread 的 tick/中断开关和调度。
+都不代表。规划 M5 时 CLINT 只有计时器，B1 RT-Thread 通过主动 yield 协作切换；S5/S6 已补齐并验证 timer IRQ 和有限抢占。timer interrupt 还需要 mtimecmp/pending、CSR mask、精确接受边界、trap/MRET，以及 AM 与 RT-Thread 的 tick/中断开关和调度。
 
 验收要让没有主动 yield 的线程也因 tick 得到运行机会，并检查 cause、EPC、上下文与访存副作用。上游 `io_interrupt` 是外部中断输入，与 CPU 内部 timer pending 分开；不能仅把 DUT 的 cause 注入 NEMU 后状态一致当成中断检测正确的证明。
 
@@ -129,3 +129,21 @@ RV32 更新 64-bit compare 用“低半部全1 → 高半部 → 最终低半部
 手写程序故意不清第一次 IRQ 的 pending，MRET 后立即再次进入。IFU 原先只在 WAIT 上处理 redirect，已经进入 DROP 后再 redirect 会错误回到 REQ，遗留的旧取指响应无人接收，CPU 停止提交。
 
 修复是“更新目标，但保留仍需排空旧响应的状态”。这个场景也说明，redirect 是改变未来执行流，不是消除已经发出的总线事务。现在保留连续 redirect 的 IFU+adapter 定向和 MRET-pending 系统自检。
+
+## Q23：如何证明 RT-Thread 发生的是抢占，而不是程序主动切换？
+
+S6 的两个同优先级线程在一段没有函数调用、ECALL、yield 或 sleep 的汇编中，分别推进自己的计数，再等另一个线程到达同一轮。若没有 timer 驱动的调度，第一线程无法让另一线程取得进展。测试还用 scheduler hook 检查忙等待阶段的切换发生在中断上下文，并检查不同线程的寄存器哨兵。
+
+之后单独进入 sleep 阶段，检查 tick 到期恢复、idle 运行和资源正确性。把这两阶段分开，才能区分“被抢占”和“主动阻塞后换人运行”。实现见 [S6 第2–3节](../6-system-validation.md#2-如何证明真的发生了抢占)。
+
+## Q24：多线程系统怎样统计栈使用，SP 和填充图案有什么区别？
+
+每个线程有独立栈地址区间，主栈又在另一处。先从 ELF 或线程信息确定各区间，再分别记录最小 SP，按“栈顶减最小 SP”算本次最大使用；不能拿全局最低 SP 从主栈顶相减。
+
+填充图案扫描统计被写过的范围，SP 则记录分配过的栈帧范围。函数可以先减 SP、稍后才写局部变量，所以两者可以相差几个字节。S6 同时检查各栈底部余量和 heap 归还，但这些观测不等于证明任意输入下的最坏资源需求。
+
+## Q25：AXI 随机延迟能直接每周期随机开关 VALID 吗？
+
+不能。VALID 已经展示且 READY 未接收时，VALID 和 payload 必须保持；每周期随机清 VALID 会让测试环境本身违反协议。S6 在展示 VALID 之前选取等待周期，展示后保持到握手完成，AW/W 分别处理，R/B 也独立延迟。
+
+验证模型同样要检查：独立数据序列验证丢失/重复/乱序，计数验证缓冲占用，断言验证保持；再接真实 SoC 跑软件。`max=7` 是每道等待门的附加周期上限，不是整次 PSRAM 访问的延迟上限。

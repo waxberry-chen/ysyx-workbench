@@ -1,0 +1,6 @@
+DELAY PASS sent=1000 received=1000 cycles=7001
+NPC_DELAY channel=0 accepted=1000 delivered=1000 input_waits=0 output_waits=0 seed=1 max=0 fixed=0
+DELAY PASS sent=1000 received=1000 cycles=12405
+NPC_DELAY channel=0 accepted=1000 delivered=1000 input_waits=3514 output_waits=3403 seed=7 max=7 fixed=0
+DELAY PASS sent=1000 received=1000 cycles=14001
+NPC_DELAY channel=0 accepted=1000 delivered=1000 input_waits=3000 output_waits=3000 seed=1 max=3 fixed=1

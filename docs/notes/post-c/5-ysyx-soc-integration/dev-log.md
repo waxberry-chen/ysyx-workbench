@@ -88,3 +88,13 @@
 - 最终 `make -C npc s5-test` 通过：6 个 SoC 程序共 139,396 条提交、17 次 IRQ 全部差分；每次完成 SRAM/PSRAM 全内存比较；10 个随机延迟 seed 各 200 次物理 store/load 与提交数一致；单元/译码定向通过。`make -C npc s1-test` 和 `make -C npc s2-test s3-test s4-test` 功能回归通过，包含 34 个适用 CPU tests 与 RTT 协作容量用例；最终仅加强 CLINT 事务检查后再以 S5 统一入口复验。详见 [S5](5-timer-interrupt.md)与[证据](s5-validation/README.md)。
 - RT-Thread BSP 修复单核 interrupt-switch 原型与临界区旧状态恢复，接通显式开启的 tick；单线程 smoke 完成三次 IRQ 并输出 `RTT TICK PASS`。独立 checkout 的改动已导出 [rtthread-bsp.patch](../../../../npc/tests/soc-timer/rtthread-bsp.patch)，基础 revision、hash 与应用方式已记录；未提交任何仓库。
 - 当前无阻塞。下一步 S6 验证完整的非主动 yield 双线程抢占、阻塞唤醒及各栈/heap 水位；本步不宣称完整 RTOS 交互功能或新范围 DC/PT 已通过。既有 ysyxSoC/嵌套 Rocket Chip 工作区改动未修改。
+
+## 2026-10-28：S6 系统回归完成
+
+- 输入主仓库 `debe357f384e22978f7856ca2db503f525c02585`。新增 `soc-system` 固定 RT-Thread 配置、双线程汇编屏障/寄存器哨兵、sleep 唤醒及 heap/栈自检；复用 S5 的 AM/NEMU/BSP，没有修改功能 RTL。保留已有 ysyxSoC/嵌套 Rocket Chip 状态，未 add/commit。
+- 新增仿真专用五通道 AXI 延迟模型和生成器，正常/延迟构建目录隔离；源 wrapper 和上游生成 RTL 不修改。通道验证在零附加等待、固定等待、随机等待各完成 1,000 笔；VALID/payload、独立数据预期和计数通过。
+- harness 增加按 ELF 区间分类的 SP 统计和 UART 串行帧时间；线程另扫描 RT-Thread 填充图案。首轮测试的切换次数阈值过严，六轮屏障实际最低需要每方向三次切入，修正预期后通过；这是测试模型修正，没有放宽进度、Context 或副作用检查。
+- 四组定向/回归共 68 个真实 SoC 正向运行，1,824,069 条提交及 30 次 IRQ 全部差分，每次比较最终 SRAM/PSRAM；34 个适用 CPU tests 通过，unalign 明确排除。独立 S1 协议/CPU/错误和 SoC guard 回归通过，合计 10 个预期失败检查有效。
+- 正常和随机等待 RTT 各 15 IRQ，均完成六轮非主动 yield 交替、sleep 4/6 tick 后于 4/7 tick 恢复、idle 运行；heap 峰值544 B并归零。主栈/worker0/worker1/idle 最大观测使用224/448/372/268 B。UART divisor=8，在正常、固定、随机等待下各精确输出528字节，并实际出现忙轮询。
+- [实施导读](6-system-validation.md)按层次说明功能/改动位置、抢占证明、阻塞唤醒、水位、延迟模型、真实 UART 与验证分工。[精选证据](s6-validation/README.md)保存分组原始 manifest、source patch、镜像/ELF hash、汇总与关键日志；最后的帮助/provenance及栈负例补充单独注明，不将增量验收称为 S8 干净重建。
+- M14–M16 关闭，无未处置阻塞。下一步 S7 是 CPU 子系统 pre-layout 面积/时序评估，由用户执行服务器 DC/PT；不包含 whole-SoC PPA 或新增交互 shell。
