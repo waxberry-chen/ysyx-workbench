@@ -345,6 +345,8 @@ interconnect system-level test plan 合并实施。
 
 2026-10-26：**[M5 S4 完成](5-ysyx-soc-integration/4-boot-memory.md)**。真实 SPI/XIP、Flash → SRAM/4 MiB PSRAM、普通存储差分与最终 RAM 比较通过；34个适用CPU tests、RT-Thread协作容量workload及启动/容量负例通过，S1/S2/S3回归通过。实际静态RAM42,992 B，无当前阻塞；下一步S5 timer interrupt，未宣称抢占RTOS完成。
 
+2026-10-28：**[M5 S5 完成](5-ysyx-soc-integration/5-timer-interrupt.md)**。CPU 内部 CLINT、mie/mip、精确 timer IRQ/MRET、AM 上下文和 RTT tick smoke 已接通；6 个 SoC 程序的 139,396 条提交与 17 次 IRQ 全部差分，10 个随机延迟 seed 和 2 个检测负例通过。修复连续 redirect 丢失旧取指响应的死锁；S1–S4 功能回归通过。当前无阻塞，下一步 S6 完整抢占/阻塞唤醒与资源水位，之后 S7 新范围综合。RT-Thread BSP 改动附主仓库可重放补丁，不把单线程 tick 当成完整 RTOS 验收。
+
 #### 架构建议
 
 保留 IFU/LSU 的 local req/rsp 语义边界，直接将现有 adapters、仲裁和顶层升级为面向 ysyxSoC 的 AXI4 单拍接口。当前 Lite 读接口不传 size，且 adapter 已对齐地址，必须在 adapter 内保留原始信息，不能只在最外层补端口。不新增 Lite/AXI4 模式选择或旧地址兼容层；B1 的有效测试检查点迁移到新接口，旧系统仅作历史复现。

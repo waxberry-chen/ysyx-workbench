@@ -105,3 +105,27 @@ XIP 时，CPU 的取指地址就在 Flash 映射范围，每次读经过 APB→S
 除了发现地址截断/容量别名，还会暴露协议边界问题。本次 PSRAM 最后一个 word 读取最初触发越界：控制器 DONE 后仍多发一个 SCK 上升沿，颗粒模型尝试准备第五字节。正确修复是 DONE 时停止 SCK 并释放片选，而不是增大 backing 或屏蔽越界。
 
 类似地，Flash 总线窗口虽然声明了 256 MiB，本轮器件只有 16 MiB；必须在截成 24-bit 串行地址之前拒绝超容量访问，否则 `0x31000000` 会悄悄访问 Flash 起点。详见 [S4 容量和错误策略](../4-boot-memory.md#4-容量权限与错误必须一致)。
+
+## Q19：能读 mtime，为什么还需要 timer interrupt？如何关闭一次中断？
+
+读 mtime 是软件主动查询；`mtime >= mtimecmp` 产生 MTIP 后，CPU 在 MTIE/MIE 都打开且到达可接受边界时主动进入 handler，软件才能在忙循环中被 tick 打断。MTIP 是电平，不是一闪而过的脉冲。设置未来的 mtimecmp 会清除 pending；清 MTIE/MIE 仅屏蔽交付，写 mip.MTIP 不会清除硬件源。
+
+RV32 更新 64-bit compare 用“低半部全1 → 高半部 → 最终低半部”，避免临时更早的 deadline。MRET 后仍 pending 会立即再次进入；这不是 MRET 出错。见 [S5 timer/CSR 合同](../5-timer-interrupt.md#2-冻结的-timercsr-合同)。
+
+## Q20：为什么有 IRQ 时不能直接 flush 所有东西？精确的 EPC 怎么决定？
+
+已被设备接受的 store 不可撤回。若 flush 后保存 store PC，返回后重做就可能重复写设备。当前实现会保持已展示的 LSU 请求，等待已接受访存的成功或错误响应，先完成该指令再判断 IRQ；尚未执行的 ALU/branch 可以丢弃。
+
+保存的是下一条未执行指令的 PC。branch 已提交就保存目标地址，未执行就保存 branch 自身。IRQ 入口不是一条正常提交，不做普通写回；返回不加4。同步 ECALL 已经执行，AM 才将其 EPC 加4。见 [S5 精确边界与优先级](../5-timer-interrupt.md#3-精确中断边界哪条指令算已经执行)。
+
+## Q21：NEMU 没有 CPU 周期，怎么验证异步 timer IRQ？
+
+不能让 NEMU 每执行一条指令就把 time 加1。S5 用独立的逐周期 timer 模型核对 RTL 的计数、compare 和 MTIP，再把边沿前/后的 MTIP 输入参考端。IRQ 到来时参考端用自己的 PC 和 CSR 检查条件、生成 cause/EPC，并比较全部状态。
+
+参考端仍不知道流水线忙闲，所以 IRQ 的具体边沿由 DUT 事件告知。遗漏/过早交付、优先级和重复 store，需要固定 EPC 自检、EXU 定向、随机延迟下物理事务计数和超时补充。给 REF 注入 DUT 的 cause/EPC 再比较相同值不构成独立验证。见 [S5 验证分层](../5-timer-interrupt.md#6-如何验证而不是给参考端一个-cause-就算通过)。
+
+## Q22：本轮最有价值的中断 bug 是什么？
+
+手写程序故意不清第一次 IRQ 的 pending，MRET 后立即再次进入。IFU 原先只在 WAIT 上处理 redirect，已经进入 DROP 后再 redirect 会错误回到 REQ，遗留的旧取指响应无人接收，CPU 停止提交。
+
+修复是“更新目标，但保留仍需排空旧响应的状态”。这个场景也说明，redirect 是改变未来执行流，不是消除已经发出的总线事务。现在保留连续 redirect 的 IFU+adapter 定向和 MRET-pending 系统自检。

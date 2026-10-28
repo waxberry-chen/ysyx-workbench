@@ -1,6 +1,6 @@
 # M5 设计与验收计划
 
-> 2026-10-26；状态：S0–[S4](4-boot-memory.md)完成，下一步 S5。真实 SPI/XIP、Flash → SRAM/PSRAM、34 个适用 CPU tests 与协作式 RT-Thread 容量验证通过；timer IRQ/抢占与完整系统验收仍待后续。
+> 2026-10-28；状态：S0–[S5](5-timer-interrupt.md)完成，下一步 S6。timer/CSR、精确 IRQ、AM 与 RTT tick smoke 已验证；完整抢占/阻塞唤醒和资源水位留 S6，新 CPU 范围 DC/PT 留 S7。
 > 本地规划输入：`d7c5b139eca8f6ffc467ecea472d4395998b1cea`；前置为 [M4 signoff](../4-pre-soc-signoff/signoff.md)。该 commit 是本地输入，不是 ysyxSoC revision。
 > 配套：[验收矩阵](test-plan.md)、[开发日志](dev-log.md)、[Q&A](qa/README.md)、[总路线](../roadmap.md)。
 
@@ -131,8 +131,8 @@ machine timer interrupt 是本工程 roadmap 的明确目标，不能用“CLINT
 | **S1：现有接口升级为 AXI4 单拍（完成）** | 按 3.2 升级现有 adapters/仲裁/顶层，加入 CLINT 路由、SoC wrapper 和基础计时访问；迁移测试/构建引用，不保留 B1 兼容路径；此时不开启 timer IRQ | [S1 实施记录](1-axi4-interface.md)与 [证据](s1-validation/README.md)：时序合同、源闭包、迁移表；协议/CPU 定向回归与实际 wrapper 静态展开通过。M03–M05、M16 的 S1 范围 |
 | **S2：最小 SoC bring-up（完成）** | 接入 S0 生成 top、外围模型和 harness；透传 reset PC；处理默认错误响应/空外设/仿真延时；先 MROM ebreak，再 UART A | [S2 实施记录](2-bringup.md)与[证据](s2-validation/README.md)：真实 MROM/UART TX、SRAM/错误路径、harness 负例与 guard 协议通过；关闭 G02 的 S2 部分和 G03/G04/G07，M06 PASS |
 | **S3：AM、SRAM 与 DiffTest（完成）** | 新 AM platform/linker，真实 SRAM poison/copy/clear 和 stack/heap；独立 NEMU profile、设备读值同步与提交后状态比较 | [实施导读](3-runtime-difftest.md)与[证据](s3-validation/README.md)：31个正向 workload、24个CPU tests、sieve/fib smoke及故障检测负例；所有提交差分、无整状态 skip。M07/M08 的 MROM/SRAM 范围通过 |
-| **S4：Flash 启动与容量闭环** | Flash 控制器/模型读协议与只读权限审查；SPI 读、XIP、Flash → SRAM；按 S0 预算补 PSRAM 和 Flash → PSRAM | `4-boot-memory.md`：镜像/ELF/map、启动序列、预填 RAM 后的复制/清零证据；最大验收 workload 能装载并有栈/heap 余量。M09/M10 |
-| **S5：CLINT 与精确中断** | mtimecmp/IRQ、CSR/IDU/EXU、AM/NEMU/DiffTest 联动；先手写 trap 程序再接 tick | `5-timer-interrupt.md`：CSR/IRQ 合同、优先级表、独立 cause/EPC/副作用预期、定向与延迟测试；MRET 正确恢复。M11–M13 |
+| **S4：Flash 启动与容量闭环（完成）** | Flash 控制器/模型读协议与只读权限审查；SPI 读、XIP、Flash → SRAM；按 S0 预算补 PSRAM 和 Flash → PSRAM | `4-boot-memory.md`：镜像/ELF/map、启动序列、预填 RAM 后的复制/清零证据；最大验收 workload 能装载并有栈/heap 余量。M09/M10 |
+| **S5：CLINT 与精确中断（完成）** | mtimecmp/IRQ、CSR/IDU/EXU、AM/NEMU/DiffTest 联动；先手写 trap 程序再接 tick | [实施导读](5-timer-interrupt.md)与[证据](s5-validation/README.md)：6 个 SoC 程序、139,396 条提交和 17 次 IRQ 差分；10 个随机延迟 seed、2 个故障检测负例；M11–M13 通过 |
 | **S6：系统回归** | RT-Thread 有限抢占/阻塞唤醒 workload，UART 实际 TX；CPU tests、microbench 子集与协议随机延迟/错误回归 | `6-system-validation.md`：程序/预算/seed/覆盖清单；固定 PASS 与超时，至少两个非主动 yield 的线程在 tick 驱动下取得进展。M14–M16 |
 | **S7：新边界综合/STA** | 功能 RTL 固定；另建 scope/filelist/端口预算/SDC，适配新增 AXI、IRQ/reset；用户运行 DC/PT 后审查回传结果 | `7-synthesis-sta.md` 与精选原始报告：面积/时序、结构、DRV、coverage、reset 处置；不覆盖 M4 04/05。M17 |
 | **S8：验收与后续交接** | 干净构建复现，汇总测试、bug、图/波形、源与报告版本；固定后续优化可比较的程序和存储配置 | `signoff.md`：逐项结论、例外、未做内容与后续输入；所有本轮必做项完成且无未处置阻塞。M18 |
@@ -150,14 +150,14 @@ machine timer interrupt 是本工程 roadmap 的明确目标，不能用“CLINT
 
 ## 5. 实施依赖与阻塞报告
 
-**S0–S4 已完成，当前没有阻止 S5 开始的外部依赖。** 原前置项状态如下；后续功能缺口详见 [S0 第7节](0-upstream-contract.md#7-缺口与分阶段处置)。
+**S0–S5 已完成，当前没有阻止 S6 开始的外部依赖。** 原前置项状态如下；后续功能缺口详见 [S0 第7节](0-upstream-contract.md#7-缺口与分阶段处置)。
 
 | 项目 | 当前已知情况 | 关闭时点 / 无法完成时的处理 |
 | --- | --- | --- |
 | 上游源码、依赖、生成工具 | revision/补丁/递归依赖已核对，重新生成返回0 | S0 已关闭，升级上游需重新审查 |
 | 外设/存储模型 | S2 已补 backing/错误响应/禁用输出/时间推进；S3 已补 MROM/SRAM DiffTest | G02 的本轮 DiffTest 部分已关闭；S4 已完成真实 XIP/PSRAM、普通存储 reference 映射与最终 RAM 比较 |
 | RT-Thread 容量 | B1 ELF 静态段42,932 B，已选4 MiB PSRAM并给出预算 | S4 实测 Flash 21,832 B、静态 RAM 42,992 B、heap 区间 4,085,776 B；协作 workload 通过，S6 继续完整栈/heap 水位与抢占验证 |
-| ISA/CSR 与 ABI | 当前 trap 支持RV32E；AM/RTT中断路径缺失，S5新增mie/mip timer能力 | S0 清单完成；S5实现并同步参考接口/测试，仍不宣称完整合规 |
+| ISA/CSR 与 ABI | S5 已实现 mie/mip、timer IRQ、AM/RTT tick；SoC 参考 ABI 为 23 word | M11–M13 通过；S6 继续完整调度/阻塞验证，仍不宣称完整特权规范合规 |
 | reset / 外部 IRQ | 外部IRQ固定0；CPU reset为外部reset OR 10级延迟，初始约定20周期共同复位 | S0 合同完成；S1/S2/S5功能测试，S7物理限制复查 |
 | 服务器 DC/PT | M4 已跑通，M5 尚无新配置/结果 | S7 交付命令与审查清单，由用户执行回传；没有回传结果时不得宣布 S7/S8 完成 |
 

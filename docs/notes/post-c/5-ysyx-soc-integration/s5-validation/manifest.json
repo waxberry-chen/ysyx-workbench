@@ -1,0 +1,118 @@
+{
+  "date": "2026-10-28",
+  "scope": "M5 S5, uncommitted working tree; base HEAD plus source hashes",
+  "root_head": "c36f5054588889739aa6a94cfadecffa21f65db5",
+  "root_diff_sha256": "ef4fb06b11ac79dd0ff0a98fc808680dc228a5c416f2794c98b07f7c60e55007",
+  "ysyxSoC_head": "2d365297e76661faeafb4059d3ed257d26fe8778",
+  "recursive_submodules": [
+    "2d365297e76661faeafb4059d3ed257d26fe8778 ysyxSoC (heads/npc-integration)",
+    " d0c6b50fdefcdbe121e9788433ea51f7efaf1d32 ysyxSoC/rocket-chip (v1.6-701-gd0c6b50fd)",
+    " 52768c97a27b254c0cc0ac9401feb55b29e18c28 ysyxSoC/rocket-chip/dependencies/cde (0.1.2-8-g52768c9)",
+    " e3bcc90db37f1aec9f8048813f4f0666098d9bee ysyxSoC/rocket-chip/dependencies/chisel (2019-03-11-SNAPSHOT-4441-ge3bcc90db3)",
+    " edf375300d99a4c260a214d7c1553de0040771d7 ysyxSoC/rocket-chip/dependencies/diplomacy (remotes/origin/diplomacy-review-4-gedf3753)",
+    " d93aa570806013dea479a92ba9bb33d1f2d4f69f ysyxSoC/rocket-chip/dependencies/hardfloat (remotes/origin/dev-16-gd93aa57)",
+    " 5c06db33fc1e2130f67c045327b0ec949032df1d ysyxSoC/rocket-chip/dependencies/hardfloat/berkeley-softfloat-3 (5c06db3)",
+    " 06b20075dd3c1a5d0dd007a93643282832221612 ysyxSoC/rocket-chip/dependencies/hardfloat/berkeley-testfloat-3 (06b2007)"
+  ],
+  "ysyxSoC_status": [
+    "m rocket-chip"
+  ],
+  "rocket_chip_status": [
+    "M src/main/scala/amba/axi4/Parameters.scala"
+  ],
+  "rtthread_head": "beb7fa16e7d282c9409cfbb78225249d193e276e",
+  "rtthread_status": [
+    "M bsp/abstract-machine/src/context.c",
+    " M bsp/abstract-machine/src/interrupt.c"
+  ],
+  "rtthread_patch": "npc/tests/soc-timer/rtthread-bsp.patch",
+  "tools": {
+    "verilator": "Verilator 5.008 2023-03-04 rev v5.008",
+    "python": "Python 3.10.12",
+    "riscv_gcc": "riscv64-linux-gnu-gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0"
+  },
+  "commands": [
+    "make -C npc s5-test (final unified run, including actual CLINT transfer checks)",
+    "make -C npc s1-test",
+    "make -C npc s2-test s3-test s4-test"
+  ],
+  "regression_note": "S1-S4 functional regression passed; final CLINT transfer checker strengthening was then revalidated with unified S5. RTL/AM/RTT unchanged between these runs.",
+  "source_sha256": {
+    "abstract-machine/am/include/ysyxsoc.h": "95b8229ab53d902a89f658d65ebf8e45119a3e0e45096d819651521534a23a35",
+    "abstract-machine/am/src/riscv/npc/cte.c": "b99b7c07006a4736f7a5b36b95cdbdff8c39de799e71a2e2698d423eb17989e5",
+    "abstract-machine/am/src/riscv/npc/trap.S": "e2574a07ca48c8cb2b48afc00783894530da28ca96b131482b12c206955ba64b",
+    "nemu/include/difftest-def.h": "71aae7904d0b37eeb1df1af6b5b24124083e0bb42177978de60fdaf313c5c9b0",
+    "nemu/src/isa/riscv32/include/isa-def.h": "b111d6aaacc66c78f1bcba8cd41d0c953d7567fe4c90df558dbcb1e5916fcf73",
+    "nemu/src/isa/riscv32/inst.c": "ba4d3655a87813b6d814161513939751485da70f1d00a99d4839ed905b977dd4",
+    "nemu/src/memory/ysyxsoc.c": "520e738792385ae00d2f4fbba7a0e3de382654b9a728e73effb13cef65ce3656",
+    "npc/.gitignore": "ddd006b7ca7f346ca02db63508ce0ebe157d70f86c03ca7e7812989cc9a39433",
+    "npc/Makefile": "8c191931f5be7d0c5641c3cdfa89a595dde6e5508bfb2eb8c3fe26e456a20298",
+    "npc/csrc/soc/difftest.cpp": "91b48371d559b3e1aa4730dbcdc1a6a171cff58fc9cfd6956d1144b0333c28c6",
+    "npc/csrc/soc/difftest.h": "f92ac87c7f715e673088b626b873e246a4cfc51cc0f7b5344ba10470705ba7bc",
+    "npc/csrc/soc/main.cpp": "bcd211fe443e4a1888ec8c134cd059629b1403ee8e323c5276d769875387fd1d",
+    "npc/csrc/soc/timer.h": "944e0a381b3acff3036c17ed91be99d9b9890555759a67e76645ef0d0067cd0a",
+    "npc/scripts/soc.mk": "39b7ae13ef0897c268885cf32e01efd3354a627f32d17ae13ae10f50c3dc699e",
+    "npc/sim/soc_monitor.sv": "f0f3d3279b6c0cb6c8938faef36b071915a23fd4a46254e2b72902f382232ca7",
+    "npc/tests/axi4_fabric_test_top.sv": "8bad869ecc3d41d8d84c71eba401b6c25eb66b477d4379f93953f2271646c11c",
+    "npc/tests/idu_contract_tb.cpp": "4ba4b2d6d51842bb0aa6f7077c24b29fc7b93e410a6ec7fa657422b8231fc3a6",
+    "npc/tests/m5_s4_test.py": "6e5975237b6c44747e3ade36f4475afc3f46ee50bc4db51e1f881974ba5c1450",
+    "npc/tests/m5_s5_test.py": "78b506ad273607db09533035b4176fc4224f314ba050d8e4ca33dcf16e90d470",
+    "npc/tests/soc-timer/README.md": "7b4c393e630825952484a3433c8d5a6a4299ef659a1b1d5812cc453b59083ef1",
+    "npc/tests/soc-timer/am-timer.c": "c338feaf7e42d7d453e0206dbd9bfb46b01c8984ce1c6b38afe2104fbfb2c392",
+    "npc/tests/soc-timer/latency.S": "2c9fd36f220022f3264cff6eb24c2ac152542450467fc5a4c51d2dd5c3fe7fa3",
+    "npc/tests/soc-timer/registers.S": "46a7e493fa1185e964c2fc282c05f6f7309979220d04be9997da9c686ad76fd3",
+    "npc/tests/soc-timer/rtthread-bsp.patch": "44d3531f36eec5ebb1ca3346c4bda9290602f2c8ef9796676e07074dfaa74e8a",
+    "npc/tests/soc-timer/rtthread-tick.c": "69b51d3688ee8af2fcf4ead3956eac0019b491be792c78d26a31d13be608cafa",
+    "npc/tests/soc-timer/timer-registers.c": "3771592c7a0269effd7d2fdea5d65bbf3c61624615e2ce858bfcae9a491d96a7",
+    "npc/tests/soc-timer/trap.S": "64826f82f6dc57e89c33dd3c174ef7fdd33d99b37d53da88a300742ba4a88966",
+    "npc/tests/ysyx_architectural_state_tb.sv": "dcf100957045b830fb8f279e39fc63f1f20cc984893275883fedab000f1092a3",
+    "npc/tests/ysyx_axi4_router_tb.sv": "8acf42a9959c8a32a8f51e763c307503f794eda39aab7dce493f823b84571029",
+    "npc/tests/ysyx_clint_tb.sv": "832a19d4277fdf3b85fc84c25c417cb5e885d9628660e4028780a5932cbb1a68",
+    "npc/tests/ysyx_exu_tb.sv": "694ff903ea401e2d4841e0b7a473b797402c0c17341e85008406716876f5242c",
+    "npc/tests/ysyx_ifu_axi4_adapter_integ_tb.sv": "a4de1ef96fd752c8911df38f3dcae82ac247e9d478b78ea2c70ac7e3c50545d2",
+    "npc/vsrc/bus/ysyx_axi4_router.sv": "6738000570613379fff8a19f37964f6dc7ee0079c088e7e7d2f3669ddcf2abc0",
+    "npc/vsrc/core/ysyx_core.sv": "c0f93cbc0099b10fdb2aa3fc6b7a1d014f01c81ff847b9896b21b7ec6f305afb",
+    "npc/vsrc/core/ysyx_csr.sv": "2562b476d11cb57b5e8f51e8c4d85646289893246c7ee2a3a4289abd1f6765bb",
+    "npc/vsrc/core/ysyx_exu.sv": "49c6af81ab516ca96a156d36890c3c6aa36f54277c22d8c487fea754bda34060",
+    "npc/vsrc/core/ysyx_idu.sv": "d3802667e58390e23075af8000b4231a37721d2fd88c55dcf4f675c484f29642",
+    "npc/vsrc/core/ysyx_ifu.sv": "ddf28fefd61b1f425c6353ef165e444f5194fcbfe7e4715fffb30fe493016370",
+    "npc/vsrc/periph/ysyx_clint.sv": "e9026df843f999c371bf56c9c0f555f88db50331b6f8f79260bc0ec6950b3fde",
+    "npc/vsrc/top/ysyx_core_axi4.sv": "19fc073b740072e3b6bbda89f5dd60927c299112b2da860c60064b59896db22e",
+    "npc/vsrc/top/ysyx_soc_cpu.sv": "f5a6fbebb45ddcec9503c0cb5e891b013b877a5dec3539767542f4d95c092b1c",
+    "rt-thread-am/bsp/abstract-machine/src/context.c": "9ce13eb63bd2b19bae9a36fe47b6d978e45904e07de607f6767a77743779c8d5",
+    "rt-thread-am/bsp/abstract-machine/src/interrupt.c": "ebc3b2f9b6555683212b9a47e4a1f84559000cfe4a65f0e071a62ccc6a48d7dd",
+    "ysyxSoC/rocket-chip/src/main/scala/amba/axi4/Parameters.scala": "58eca056bcc63448f8b58aa1577c49d7b3267e593bb55d7ef815c68025435d82"
+  },
+  "generated_sha256": {
+    "ysyxSoC/build/ysyxSoCFull.v": "0b56421ba159ae31913de62169d8c22082d8e3b9d74388e28638dd5218b9c9de",
+    "npc/build/ysyxsoc/VysyxSoCFull": "64d15d22d335835ccc71c2773e767dd195973ca5095c31f0ce53e07512b024ff",
+    "npc/build/ysyxsoc-flash/VysyxSoCFull": "4d01f8a7f284dc2a29bab7761a77341390d39da08075d4405f7cd45c00393b17",
+    "nemu/build/ysyxsoc/nemu-ref.so": "7d1bfb1e7a4f1241c5604961afa7de1efd8ae155faa9250c13b0808efb133512",
+    "npc/build/m5-s5/latency-1.fst": "d13cdb37ab62341990e3760c23e42fae43259fa87728efb2509905ee25b75e33"
+  },
+  "total_soc_workloads": 6,
+  "soc_commits": 139396,
+  "soc_interrupts": 17,
+  "latency_seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "negative_cases": [
+    "irq-epc-negative",
+    "context-negative"
+  ],
+  "limits": [
+    "single-hart M-mode timer only",
+    "IRQ event timing is DUT-driven, checked by directed/program/transaction tests",
+    "RTT full preemption/wakeup and resource watermarks remain S6",
+    "new CPU synthesis/STA remains S7"
+  ]
+}

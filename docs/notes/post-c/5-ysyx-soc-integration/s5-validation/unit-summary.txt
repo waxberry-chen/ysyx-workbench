@@ -1,0 +1,77 @@
+Source: /tmp/m5-s5-unit.log
+ysyx_exu directed test: PASS (including IRQ priority and LSU drain)
+Architectural state test: PASS (GPR, CSR, asynchronous/repeated reset)
+Architectural state test: PASS (GPR, CSR, asynchronous/repeated reset)
+IDU contract: PASS (361344 independent checks)
+Source: /tmp/m5-s5-s1.log
+ysyx generic ready/valid buffer directed test: PASS
+ysyx_ifu directed test: PASS
+ysyx_lsu directed test: PASS
+ysyx_exu directed test: PASS (including IRQ priority and LSU drain)
+Architectural state test: PASS (GPR, CSR, asynchronous/repeated reset)
+Architectural state test: PASS (GPR, CSR, asynchronous/repeated reset)
+IDU contract: PASS (361344 independent checks)
+ifu-adapter-build: PASS
+ifu-adapter: PASS
+lsu-adapter-build: PASS
+lsu-adapter: PASS
+ifu-integration-build: PASS
+ifu-integration: PASS
+arbiter-build: PASS
+arbiter: PASS
+fabric-build: PASS
+fabric: PASS
+arbiter-bad-rid: PASS
+arbiter-bad-bid: PASS
+arbiter-bad-rlast: PASS
+fabric-bad-rid: PASS
+fabric-bad-bid: PASS
+fabric-bad-rlast: PASS
+redirect-build: PASS
+redirect: PASS
+clint-build: PASS
+clint: PASS
+router-local-build: PASS
+router-local: PASS
+wrapper-build: PASS
+wrapper: PASS
+wrapper-badirq: PASS
+wrapper-badslave: PASS
+cpu-build: PASS
+isa-contract: PASS
+fault-fetch-build: PASS
+fault-fetch-objcopy: PASS
+fault-fetch-2: PASS
+fault-fetch-3: PASS
+fault-load-build: PASS
+fault-load-objcopy: PASS
+fault-load-2: PASS
+fault-load-3: PASS
+fault-store-build: PASS
+fault-store-objcopy: PASS
+fault-store-2: PASS
+fault-store-3: PASS
+misaligned-load-build: PASS
+misaligned-load-objcopy: PASS
+misaligned-load: PASS
+misaligned-store-build: PASS
+misaligned-store-objcopy: PASS
+misaligned-store: PASS
+memory-build: PASS
+memory-objcopy: PASS
+memory-1: PASS
+memory-2: PASS
+memory-3: PASS
+memory-4: PASS
+memory-5: PASS
+memory-6: PASS
+memory-7: PASS
+memory-8: PASS
+memory-9: PASS
+memory-10: PASS
+cpu-lint: PASS
+cpu-synthesis-lint: PASS
+soc-elaboration: PASS
+S1 all: PASS; evidence: /home/cym/prj/ysyx-workbench/npc/build/m5-s1
+Source: /home/cym/prj/ysyx-workbench/npc/build/m5-s5/clint.log
+CLINT: PASS word read/write, rollover, write priority, rejected accesses, reset

@@ -1,6 +1,6 @@
 # M5 验收矩阵
 
-> 2026-10-20：S0–S3 完成；M01/M02 的 S0 范围、M03–M05/M16 的 S1 范围、M06–M08 的 S2/S3 范围通过。AM、31个正向差分 workload 和启动/比较器负例见 [S3](3-runtime-difftest.md)及[证据](s3-validation/README.md)。
+> 2026-10-28：S0–S5 完成，M01–M13 的对应阶段范围通过。S5 的 timer/IRQ/AM 与 RTT tick 证据见 [实施记录](5-timer-interrupt.md)和[精选归档](s5-validation/README.md)；M14–M16 的完整系统验收仍在 S6。
 
 S0 证据：[manifest](s0-validation/manifest.json)、[61-port 表](s0-validation/cpu-ports.csv)、[生成日志](s0-validation/generation.log)、[静态展开诊断](s0-validation/elaboration-diagnostics.txt)、[容量检查](s0-validation/rtt-budget.txt)。空 CPU stub 只用于静态展开，没有运行指令；242 条上游诊断已分类，不构成全 SoC lint clean。
 
@@ -20,9 +20,9 @@ S0 证据：[manifest](s0-validation/manifest.json)、[61-port 表](s0-validatio
 | M08 / S3：PASS（MROM/SRAM） | 31个正向workload所有提交逐指令比较并核对最终8KiB SRAM；UART/mtime仅单次输入同步，无整状态skip；普通addi结果扰动触发mismatch | [S3证据](s3-validation/README.md)：hello、24个CPU tests、sieve/fib smoke及分类；Flash/PSRAM随S4接通后再加入普通存储差分，未提前计PASS |
 | M09 / S4：PASS | SPI 读与映射/XIP 访问一致；目标 RAM 预填图案后由 CPU 从 Flash 搬运，复制边界、data/bss、stack 与入口 PC 正确；超容量镜像构建/加载失败 | [S4 证据](s4-validation/README.md)：SPI 已知内容/XIP、两种启动、4 个 copy/clear 负例、镜像/链接容量负例；CSV 与本地 FST，无 harness 代搬运 |
 | M10 / S4：PASS | 验收程序真实容量足够；若启用 PSRAM，完成控制器/模型事务及 byte/half/word、连续/随机地址、首尾/越界、延迟测试，再运行 Flash → PSRAM 程序 | [S4 证据](s4-validation/README.md)：4 MiB PSRAM，宽度/首尾/地址位/300 次固定 seed 混合访问；串行等待、guard 随机背压；34 个 CPU tests、RTT 协作 workload 的真实装载/预算/容量检查。完整水位与抢占留 S6 |
-| M11 / S5 | mtime 单调/tick 换算/跨低字溢出读取；mtimecmp 分字写；比较阈值前后 pending；mask=0/1 与 pending=0/1 四组合；只读/不支持 CSR 访问语义 | 独立 timer/CSR scoreboard、RV32 程序自检、CSR 支持表与负例 |
-| M12 / S5 | 精确 IRQ：ALU/branch、空闲、LSU pending、错误响应、同步异常同时出现、redirect、MRET 后仍 pending；保存正确 EPC/cause/MIE/MPIE，无重复 store 或跳过指令 | 优先级表和每类用例；trap/MRET 波形、提交与内存副作用独立预期 |
-| M13 / S5 | AM timer event、真实中断开关、RV32E 上下文保存恢复；timer cause/EPC 独立验证后再比较 NEMU；中断返回不无条件增加 EPC | 手写 trap 程序、嵌入式上下文校验、DiffTest 注入/时间同步规则 |
+| M11 / S5：PASS | mtime 单调/tick 换算/跨低字溢出读取；mtimecmp 分字写；比较阈值前后 pending；mask=0/1 与 pending=0/1 四组合；只读/不支持 CSR 访问语义 | [S5 证据](s5-validation/README.md)：逐周期 timer 模型、CLINT/CSR 定向、timer-registers 溢出/重装、mip 只读和未知 CSR 自检 |
+| M12 / S5：PASS | 精确 IRQ：ALU/branch、空闲、LSU pending、错误响应、同步异常同时出现、redirect、MRET 后仍 pending；保存正确 EPC/cause/MIE/MPIE，无重复 store 或跳过指令 | [S5 证据](s5-validation/README.md)：EXU 优先级、连续 redirect、固定 EPC 的 MRET pending 自检；10 个 seed 各 200 次物理 store/load 与提交数一致，含 FST |
+| M13 / S5：PASS | AM timer event、真实中断开关、RV32E 上下文保存恢复；timer cause/EPC 独立验证后再比较 NEMU；中断返回不无条件增加 EPC | [S5 证据](s5-validation/README.md)：三种启动布局 AM、独立 cause/EPC 和 pre/post MTIP、23-word ABI、EPC 扰动/漏恢复 t0 负例、RTT tick smoke |
 | M14 / S6 | 有限 RT-Thread：至少两线程无需主动 yield 也能在 tick 下交替取得进展，阻塞/唤醒、上下文、heap/stack 正确；退出有固定 PASS 与超时 | workload/map、tick/调度计数、寄存器和内存自检、余量、日志；协作测试若复用须迁移到 SoC，不要求旧 B1 fixture 仍可运行 |
 | M15 / S6 | UART 配置波特率、轮询发送状态；实际 serial TX 解码长字符串，字符数量/顺序一致；系统在固定与随机总线延迟下完成 | 串行接收器输出与时序；不能仅依赖上游 RTL 的队列打印 |
 | M16 / S1–S6：S1/S3范围PASS，系统随机回归待S6 | 在升级后的 AXI4 接口上验证原有 CPU 语义；S3已运行SoC hello、24个CPU tests与sieve/fib smoke，完整系统随机延迟/错误测试仍待后续 | 原检查点→新测试的迁移表、命令、seed、通过数/排除原因、timeout；不要求旧 B1/legacy 平台通过，不将未迁移测试静默计为 PASS |

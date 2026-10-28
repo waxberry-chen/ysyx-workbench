@@ -78,3 +78,13 @@
 - RTT 新镜像21,832 B、静态RAM42,992 B，预留64 KiB主栈后heap区间4,085,776 B；100轮AB线程交替、heap释放恢复和实际UART通过。完整分线程/主栈水位与heap峰值数字留S6补充。
 - [S4 源码导读](4-boot-memory.md)按职责/功能/位置/机制/验证展开；[精选证据](s4-validation/README.md)记录源码hash、ELF布局、启动提交、正反例和回归。Q16–Q18记录XIP/搬运、DPI位置与存储边界测试价值。
 - 本步无未解决阻塞；下一步S5 timer interrupt。工作区包含主仓库和ysyxSoC改动，未git add/commit；先提交SoC再更新主仓库gitlink，嵌套Rocket Chip原补丁无需因S4新增提交。
+
+## 2026-10-28：S5 timer IRQ 与精确入口完成
+
+- CLINT 增加 64-bit mtimecmp 与持续 MTIP；保留 word-only、一次请求一次副作用、mtime 半字写优先于 tick 的合同。CPU 内部接线不改变 61-port SoC ABI。
+- CSR/IDU 增加 mie.MTIE、只读 mip.MTIP；EXU 在无待完成 LSU 操作且无已知同步异常时接受独立 IRQ 事件。保存下一条未执行 PC，不把 IRQ 计作普通提交；AM 实现 timer event、真实 iset/ienabled 和上下文恢复。
+- 修复 MRET 后立即再次 pending 暴露的 IFU 死锁：第二次 redirect 不能丢失 DROP 中尚待排空的旧取指。另补齐 NEMU regcpy 长度，SoC snapshot 统一为 23 word 并静态检查；普通 NEMU ABI 不变。
+- 增加独立周期 timer 模型、pre/post MTIP 同步和 IRQ 比较；CLINT 事务的实际地址/方向/次数/写数据与参考指令核对。EPC 取样扰动与漏恢复 t0 两类负例分别验证比较器和软件合同。
+- 最终 `make -C npc s5-test` 通过：6 个 SoC 程序共 139,396 条提交、17 次 IRQ 全部差分；每次完成 SRAM/PSRAM 全内存比较；10 个随机延迟 seed 各 200 次物理 store/load 与提交数一致；单元/译码定向通过。`make -C npc s1-test` 和 `make -C npc s2-test s3-test s4-test` 功能回归通过，包含 34 个适用 CPU tests 与 RTT 协作容量用例；最终仅加强 CLINT 事务检查后再以 S5 统一入口复验。详见 [S5](5-timer-interrupt.md)与[证据](s5-validation/README.md)。
+- RT-Thread BSP 修复单核 interrupt-switch 原型与临界区旧状态恢复，接通显式开启的 tick；单线程 smoke 完成三次 IRQ 并输出 `RTT TICK PASS`。独立 checkout 的改动已导出 [rtthread-bsp.patch](../../../../npc/tests/soc-timer/rtthread-bsp.patch)，基础 revision、hash 与应用方式已记录；未提交任何仓库。
+- 当前无阻塞。下一步 S6 验证完整的非主动 yield 双线程抢占、阻塞唤醒及各栈/heap 水位；本步不宣称完整 RTOS 交互功能或新范围 DC/PT 已通过。既有 ysyxSoC/嵌套 Rocket Chip 工作区改动未修改。

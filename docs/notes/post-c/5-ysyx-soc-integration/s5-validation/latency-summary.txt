@@ -1,0 +1,10 @@
+seed=1: HIT GOOD TRAP commits=1282 reads=1735 writes=200 data_reads=200 device_reads=0 device_writes=0; committed_test_stores=200
+seed=2: HIT GOOD TRAP commits=1294 reads=1744 writes=200 data_reads=200 device_reads=0 device_writes=0; committed_test_stores=200
+seed=3: HIT GOOD TRAP commits=1282 reads=1726 writes=200 data_reads=200 device_reads=0 device_writes=0; committed_test_stores=200
+seed=4: HIT GOOD TRAP commits=1282 reads=1734 writes=200 data_reads=200 device_reads=0 device_writes=0; committed_test_stores=200
+seed=5: HIT GOOD TRAP commits=1294 reads=1744 writes=200 data_reads=200 device_reads=0 device_writes=0; committed_test_stores=200
+seed=6: HIT GOOD TRAP commits=1294 reads=1740 writes=200 data_reads=200 device_reads=0 device_writes=0; committed_test_stores=200
+seed=7: HIT GOOD TRAP commits=1282 reads=1732 writes=200 data_reads=200 device_reads=0 device_writes=0; committed_test_stores=200
+seed=8: HIT GOOD TRAP commits=1294 reads=1749 writes=200 data_reads=200 device_reads=0 device_writes=0; committed_test_stores=200
+seed=9: HIT GOOD TRAP commits=1282 reads=1736 writes=200 data_reads=200 device_reads=0 device_writes=0; committed_test_stores=200
+seed=10: HIT GOOD TRAP commits=1282 reads=1734 writes=200 data_reads=200 device_reads=0 device_writes=0; committed_test_stores=200
