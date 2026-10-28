@@ -31,7 +31,7 @@ uint64_t psram_reads=0,psram_writes=0;
 uint32_t min_psram_sp=0x80400000;
 std::vector<uint8_t> rom(4096,0),flash;
 VerilatedContext *context=nullptr;
-std::ofstream commits,bus,uart_events,irq_events;
+std::ofstream commits,bus,uart_events,irq_events,uart_frames;
 std::string error,tx_bytes;
 uint64_t commit_count=0,exceptions=0,ar_count=0,aw_count=0,w_count=0,r_count=0,b_count=0;
 uint64_t cpu_release_ps=0,first_ar_ps=0,first_commit_ps=0,mrom_calls=0,flash_calls=0;
@@ -47,6 +47,15 @@ bool irq_pending=false;
 uint32_t irq_pc=0;
 uint64_t irq_count=0;
 uint8_t uart_lcr=0;
+// Named regions separate the boot stack from each RTOS thread stack. Observe
+// architectural SP after every instruction/IRQ; never preload stack contents.
+struct StackRegion {
+    std::string name;
+    uint32_t low,high,minimum;
+    uint64_t samples=0;
+};
+std::vector<StackRegion> stacks;
+bool stack_started=false;
 void fail(const std::string &why) {if(error.empty())error=why;}
 uint64_t now() {return context->time();}
 void load(const std::string &path,std::vector<uint8_t> &dest,size_t capacity,uint8_t fill) {
@@ -143,8 +152,9 @@ int main(int argc,char **argv) {
         auto output=[](std::ofstream &f,const std::string &path){f.open(path);if(!f)throw std::runtime_error("Cannot write: "+path);};
         for(int i=1;i<argc;++i) {
             std::string opt=argv[i];
+            if(opt.rfind("+npc_delay_",0)==0) continue; // simulation shim plusargs
             if(opt=="--help") {std::cout<<"Boot profile is fixed at build time; reset PC=0x"<<std::hex<<ResetPC
-                <<"\n[--mrom FILE] [--flash FILE] [--diff REF.so] [--diff-inject-at COMMIT] [--irq-inject-at EVENT] [--max-cycles N] [--trace FST] [--commit-trace CSV] [--bus-trace CSV] [--irq-trace CSV] [--uart-events CSV] [--uart-log FILE] [--summary JSON] [--uart-bit-cycles N]\n";return 0;}
+                <<"\n[--mrom FILE] [--flash FILE] [--diff REF.so] [--diff-inject-at COMMIT] [--irq-inject-at EVENT] [--max-cycles N] [--trace FST] [--commit-trace CSV] [--bus-trace CSV] [--irq-trace CSV] [--uart-events CSV] [--uart-log FILE] [--summary JSON] [--uart-bit-cycles N] [--uart-serial-trace CSV] [--stack-region NAME:LOW:HIGH] (repeatable)\n";return 0;}
             if(i+1>=argc)throw std::runtime_error("Missing argument for "+opt);
             std::string val=argv[++i];
             if(opt=="--mrom")image=val;else if(opt=="--flash")flash_image=val;
@@ -159,6 +169,19 @@ int main(int argc,char **argv) {
             else if(opt=="--bus-trace")output(bus,val);
             else if(opt=="--irq-trace")output(irq_events,val);
             else if(opt=="--uart-events")output(uart_events,val);
+            else if(opt=="--uart-serial-trace")output(uart_frames,val);
+            else if(opt=="--stack-region") {
+                auto a=val.find(':'),b=val.find(':',a==std::string::npos?0:a+1);
+                if(a==std::string::npos || b==std::string::npos || !a)
+                    throw std::runtime_error("Stack region requires NAME:LOW:HIGH");
+                auto name=val.substr(0,a);auto low=number(val.substr(a+1,b-a-1)),high=number(val.substr(b+1));
+                if(name.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-")!=std::string::npos ||
+                   low>=high || high>UINT32_MAX)
+                    throw std::runtime_error("Invalid stack region");
+                for(const auto &s:stacks) if(name==s.name || (low<s.high && high>s.low))
+                    throw std::runtime_error("Overlapping/duplicate stack region");
+                stacks.push_back({name,uint32_t(low),uint32_t(high),uint32_t(high),0});
+            }
             else throw std::runtime_error("Unknown option: "+opt);
         }
         if(ResetPC==RomBase && image.empty())throw std::runtime_error("--mrom image is required");
@@ -178,7 +201,7 @@ int main(int argc,char **argv) {
         uint64_t edge=HalfPeriod,cycles=0;
         uint64_t sample=std::numeric_limits<uint64_t>::max();
         const uint64_t bit_time=bit_cycles*2*HalfPeriod;
-        int serial_bit=-2;uint8_t serial_data=0;bool prev_tx=true;
+        int serial_bit=-2;uint8_t serial_data=0;bool prev_tx=true;uint64_t serial_start=0;
         // Advance to whichever happens first: an external edge, a Verilator
         // delayed event (#1/#Tp), or the UART decoder's sample time.
         while(error.empty() && !stopped && !ctx->gotFinish() && cycles<max_cycles) {
@@ -202,6 +225,12 @@ int main(int argc,char **argv) {
                     min_sram_sp=std::min(min_sram_sp,state[2]);
                 if(state[2]>=0x80000000 && state[2]<=0x80400000)
                     min_psram_sp=std::min(min_psram_sp,state[2]);
+                bool in_stack=false;
+                for(auto &s:stacks) if(state[2]>s.low && state[2]<=s.high) {
+                    in_stack=true;s.minimum=std::min(s.minimum,state[2]);++s.samples;
+                }
+                if(!stacks.empty() && stack_started && !in_stack)fail("SP outside declared stack regions");
+                stack_started|=in_stack;
                 if(diff.active()) {
                     if(commit_count==inject_at)state[5]^=1; // comparator negative test only
                     if(irq_pending && irq_count==irq_inject_at)state[19]^=4; // corrupt sampled EPC only
@@ -216,11 +245,14 @@ int main(int argc,char **argv) {
             }
             bool tx=dut->externalPins_uart_tx;
             if(!dut->reset) {
-                if(serial_bit==-2 && prev_tx && !tx) {serial_bit=-1;serial_data=0;sample=now()+bit_time/2;}
+                if(serial_bit==-2 && prev_tx && !tx) {serial_bit=-1;serial_data=0;serial_start=now();sample=now()+bit_time/2;}
                 if(now()==sample) {
                     if(serial_bit==-1) {if(tx)fail("UART false start");}
                     else if(serial_bit<8) serial_data|=uint8_t(tx)<<serial_bit;
-                    else {if(!tx)fail("UART framing error");else tx_bytes.push_back(char(serial_data));}
+                    else {if(!tx)fail("UART framing error");else {
+                        tx_bytes.push_back(char(serial_data));
+                        if(uart_frames.is_open())uart_frames<<serial_start<<','<<now()<<','<<unsigned(serial_data)<<'\n';
+                    }}
                     ++serial_bit;
                     if(serial_bit==9){serial_bit=-2;sample=std::numeric_limits<uint64_t>::max();}
                     else sample+=bit_time;
@@ -254,7 +286,15 @@ int main(int argc,char **argv) {
              <<",\n  \"min_psram_sp\": "<<min_psram_sp
              <<",\n  \"psram_read_bytes\": "<<psram_reads<<",\n  \"psram_write_bytes\": "<<psram_writes
              <<",\n  \"diff_psram_checks\": "<<diff.psram_checks
-             <<",\n  \"reset_pc\": "<<ResetPC<<"\n}\n";
+             <<",\n  \"uart_bit_cycles\": "<<bit_cycles
+             <<",\n  \"reset_pc\": "<<ResetPC<<",\n  \"stacks\": [";
+            for(size_t i=0;i<stacks.size();++i) {
+                const auto &s=stacks[i];if(i)f<<',';
+                f<<"\n    {\"name\": \""<<s.name<<"\", \"low\": "<<s.low<<", \"high\": "<<s.high
+                 <<", \"min_sp\": "<<s.minimum<<", \"used\": "<<s.high-s.minimum
+                 <<", \"remaining\": "<<s.minimum-s.low<<", \"samples\": "<<s.samples<<'}';
+            }
+            f<<"\n  ]\n}\n";
             if(!f)throw std::runtime_error("Summary write failed");
         }
         if(!error.empty()){std::cerr<<"NPC_SOC_FAIL: "<<error<<" pc=0x"<<std::hex<<last_pc<<"\n";return 1;}

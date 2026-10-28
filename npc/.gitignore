@@ -39,3 +39,5 @@
 !/tests/m5_s4_test.py
 !/tests/m5_s5_test.py
 !/tests/soc-timer/rtthread-bsp.patch
+!/tests/m5_s6_test.py
+!/scripts/soc_delay.py
