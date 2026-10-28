@@ -1,0 +1,107 @@
+diff --git a/bsp/abstract-machine/src/context.c b/bsp/abstract-machine/src/context.c
+index bd665373b..43ff5a593 100644
+--- a/bsp/abstract-machine/src/context.c
++++ b/bsp/abstract-machine/src/context.c
+@@ -1,6 +1,10 @@
+ #include <am.h>
+ #include <klib.h>
+ #include <rtthread.h>
++#include <rthw.h>
++#ifdef __ARCH_RISCV32E_YSYXSOC
++#include <ysyxsoc.h>
++#endif
+ 
+ typedef struct {
+   void (*entry)(void *);
+@@ -21,6 +25,16 @@ static void thread_bootstrap(void *arg) {
+ 
+ static Context* ev_handler(Event e, Context *c) {
+   switch (e.event) {
++    case EVENT_IRQ_TIMER:
++#ifdef __ARCH_RISCV32E_YSYXSOC
++      // No nested interrupts: rearm before advancing kernel time. The kernel
++      // may request a switch while irq_nest>0; apply it when leaving this trap.
++      ysyxsoc_timer_deadline(ysyxsoc_mtime()+YSYXSOC_TIMER_HZ/RT_TICK_PER_SECOND);
++      rt_interrupt_enter();
++      rt_tick_increase();
++      rt_interrupt_leave();
++#endif
++      /* fall through: honor a pending interrupt-context switch */
+     case EVENT_YIELD: {
+       if (pending_to == NULL) {
+         return c;
+@@ -36,8 +50,6 @@ static Context* ev_handler(Event e, Context *c) {
+       assert(next != NULL);
+       return next;
+     }
+-    case EVENT_IRQ_TIMER:
+-      return c;
+     default: printf("Unhandled event ID = %d\n", e.event); assert(0);
+   }
+   return c;
+@@ -47,6 +59,15 @@ void __am_cte_init() {
+   cte_init(ev_handler);
+ }
+ 
++#ifdef __ARCH_RISCV32E_YSYXSOC
++// Explicit opt-in after kernel initialization. S4 cooperative tests do not
++// call this; installing a trap handler alone must not start scheduling ticks.
++void __am_timer_init(void) {
++  ysyxsoc_timer_deadline(ysyxsoc_mtime()+YSYXSOC_TIMER_HZ/RT_TICK_PER_SECOND);
++  ysyxsoc_timer_enable(1);
++}
++#endif
++
+ void rt_hw_context_switch_to(rt_ubase_t to) {
+   assert(pending_to == NULL);
+   pending_from = NULL;
+@@ -62,8 +83,13 @@ void rt_hw_context_switch(rt_ubase_t from, rt_ubase_t to) {
+   yield();
+ }
+ 
+-void rt_hw_context_switch_interrupt(void *context, rt_ubase_t from, rt_ubase_t to, struct rt_thread *to_thread) {
+-  assert(0);
++void rt_hw_context_switch_interrupt(rt_ubase_t from, rt_ubase_t to,
++                                   rt_thread_t from_thread, rt_thread_t to_thread) {
++  (void)from_thread; (void)to_thread;
++  // More than one scheduling decision can occur in one tick (time slice and
++  // timer wakeup). Save the original interrupted thread once, take last target.
++  if(pending_to==NULL)pending_from=(void **)from;
++  pending_to=(void **)to;
+ }
+ 
+ rt_uint8_t *rt_hw_stack_init(void *tentry, void *parameter, rt_uint8_t *stack_addr, void *texit) {
+@@ -79,5 +105,7 @@ rt_uint8_t *rt_hw_stack_init(void *tentry, void *parameter, rt_uint8_t *stack_ad
+     .start = NULL,
+     .end = start,
+   };
+-  return (rt_uint8_t *)kcontext(kstack, thread_bootstrap, start);
++  Context *c=kcontext(kstack, thread_bootstrap, start);
++  c->mstatus |= 1u<<7; // first MRET starts a thread with global interrupts enabled
++  return (rt_uint8_t *)c;
+ }
+diff --git a/bsp/abstract-machine/src/interrupt.c b/bsp/abstract-machine/src/interrupt.c
+index 1652c5d09..b5136433b 100644
+--- a/bsp/abstract-machine/src/interrupt.c
++++ b/bsp/abstract-machine/src/interrupt.c
+@@ -1,10 +1,16 @@
+ #include <am.h>
+ #include <klib.h>
++#include <rthw.h>
+ 
+-void rt_hw_interrupt_enable() {
+-  iset(1);
++void rt_hw_interrupt_enable(rt_base_t level) {
++  iset(level != 0);
+ }
+ 
+-void rt_hw_interrupt_disable() {
+-  iset(0);
++rt_base_t rt_hw_interrupt_disable(void) {
++  // No protected data is touched before iset(false). An interrupt between
++  // these calls returns with the same enable state. Retain the AM interface
++  // so this BSP remains usable on the other AM platforms too.
++  rt_base_t old=ienabled();
++  iset(false);
++  return old;
+ }

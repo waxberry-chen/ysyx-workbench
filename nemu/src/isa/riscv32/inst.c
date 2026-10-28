@@ -61,6 +61,10 @@ word_t csr_read(word_t index) {
     case 0x305: return cpu.csr.mtvec;
     case 0x341: return cpu.csr.mepc;
     case 0x342: return cpu.csr.mcause;
+#ifdef CONFIG_YSYXSOC
+    case 0x304: return cpu.csr.mie;
+    case 0x344: return cpu.csr.mip;
+#endif
     default: assert(0);
   } 
 }
@@ -71,6 +75,10 @@ void csr_write(word_t index, word_t wdata) {
     case 0x305: cpu.csr.mtvec   = wdata & ~3u; return;
     case 0x341: cpu.csr.mepc    = wdata & ~3u; return;
     case 0x342: cpu.csr.mcause  = wdata; return;
+#ifdef CONFIG_YSYXSOC
+    case 0x304: cpu.csr.mie = wdata & 0x80u; return;
+    case 0x344: return; // implemented bits are hardware-owned
+#endif
     default: assert(0);
   }
 }
@@ -201,6 +209,11 @@ int isa_exec_once(Decode *s) {
   else if (!soc_memory_span(s->pc, 4)) fault = 1;
   if (fault < 0) {
     uint32_t ins = vaddr_ifetch(s->pc, 4), op = ins & 127, f3=(ins>>12)&7;
+    if (op==0x73 && f3) {
+      unsigned csr=ins>>20, rd=(ins>>7)&31, rs=(ins>>15)&31;
+      bool known=csr==0x300 || csr==0x304 || csr==0x305 || csr==0x341 || csr==0x342 || csr==0x344;
+      if (!known || f3==4 || rd>=16 || (f3<4 && rs>=16)) fault=2;
+    }
     if (op==3 || op==0x23) {
       bool wr = op==0x23;
       unsigned rs=(ins>>15)&31;

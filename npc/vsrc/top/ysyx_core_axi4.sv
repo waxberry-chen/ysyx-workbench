@@ -11,6 +11,7 @@ module ysyx_core_axi4 #(parameter PC_RST = 32'h20000000) (
     input m_axi_rlast,
     input wire  clk,
     input wire  rst_n,
+    input wire  timer_irq,
     output wire [31:0] commit_pc,
     output wire [31:0] commit_inst,
     output wire  commit_valid,
@@ -80,6 +81,7 @@ assign monitor_bus = {lsu_axi_bready, lsu_axi_bvalid, lsu_axi_wready, lsu_axi_wv
 ysyx_core #(.PC_RST(PC_RST)) core (
     .clk(clk),
     .rst_n(rst_n),
+    .timer_irq(timer_irq),
     .commit_pc(commit_pc),
     .commit_inst(commit_inst),
     .commit_valid(commit_valid),

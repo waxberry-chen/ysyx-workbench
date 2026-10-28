@@ -44,6 +44,12 @@ __am_asm_trap:
 
   MAP(REGS, PUSH)
 
+  // x2 is restored by removing this frame; keep its interrupted value in the
+  // Context too, so handlers can inspect every architectural GPR.
+  addi t0, sp, CONTEXT_SIZE
+  STORE t0, OFFSET_SP(sp)
+  STORE zero, 0(sp)
+
   csrr t0, mcause
   csrr t1, mstatus
   csrr t2, mepc

@@ -49,3 +49,9 @@ s4-test: soc-ref
 	$(MAKE) soc-build SOC_BOOT=mrom
 	$(MAKE) soc-build SOC_BOOT=flash
 	python3 tests/m5_s4_test.py
+
+.PHONY: s5-test
+s5-test: soc-ref exu-test architectural-state-test idu-contract-test
+	$(MAKE) soc-build SOC_BOOT=mrom
+	$(MAKE) soc-build SOC_BOOT=flash
+	python3 tests/m5_s5_test.py

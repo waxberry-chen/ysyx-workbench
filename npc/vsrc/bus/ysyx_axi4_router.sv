@@ -6,6 +6,7 @@
 module ysyx_axi4_router (
     input clk,
     input rst_n,
+    output timer_irq,
     input s_axi_arvalid,
     output s_axi_arready,
     input [31:0] s_axi_araddr,
@@ -75,7 +76,7 @@ ysyx_clint clint (
     .clk(clk), .rst_n(rst_n), .req_valid(local_valid),
     .req_write(state_q == DISPATCH_W), .req_addr(addr_q), .req_size(size_q),
     .req_wdata(data_q), .req_wstrb(strb_q),
-    .rsp_data(local_data), .rsp_error(local_error)
+    .rsp_data(local_data), .rsp_error(local_error), .timer_irq(timer_irq)
 );
 // IDLE observes which transaction is being offered, then reserves a channel.
 // A read can be accepted directly; write ready is raised only in COLLECT_W.

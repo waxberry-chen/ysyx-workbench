@@ -1,6 +1,8 @@
 module ysyx_csr (
     input           clk, 
     input           rst_n,
+    input           timer_irq,
+    output          interrupt_pending,
     // csr r/w interface
     input [12-1:0]  csr_addr,
     input [32-1:0]  csr_wdata,
@@ -49,7 +51,15 @@ assign mstatus_trap = {csr_mstatus[31:13], 2'b11, csr_mstatus[10:8], csr_mstatus
 assign mstatus_mret = {csr_mstatus[31:13], 2'b11, csr_mstatus[10:8], 1'b1, csr_mstatus[6:4], csr_mstatus[7], csr_mstatus[2:0]};
 
 // Minimal M-only contract: MPP is hardwired to M; only MIE/MPIE are writable.
-// No interrupt delivery, other privilege modes, or extension status fields.
+// Timer only: unsupported interrupt bits read zero and ignore writes.
+// mip.MTIP is read-only hardware state; a CSR write cannot acknowledge it.
+reg [31:0] csr_mie;
+wire [31:0] csr_mip = timer_irq ? 32'h80 : 32'b0;
+assign interrupt_pending = csr_mstatus[3] && csr_mie[7] && timer_irq;
+always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) csr_mie <= 32'b0;
+    else if (csr_we && csr_addr == 12'h304) csr_mie <= csr_wdata & 32'h80;
+end
 wire [31:0] mstatus_write = (csr_wdata & 32'h00000088) | 32'h00001800;
 assign csr_d[0] = trap_valid ? mstatus_trap : (mret_valid ? mstatus_mret : mstatus_write);
 assign csr_d[1] = csr_wdata & 32'hfffffffc; // Direct mode only.
@@ -79,7 +89,8 @@ end
 `endif
 `endif
 
-assign csr_rdata = (csr_idx[3])?csr_mcause:(csr_idx[2])?csr_mepc:(csr_idx[1])?csr_mtvec:(csr_idx[0])?csr_mstatus:32'b0; // Unknown addresses never alias mstatus.
+assign csr_rdata = csr_addr == 12'h304 ? csr_mie : csr_addr == 12'h344 ? csr_mip :
+                  (csr_idx[3])?csr_mcause:(csr_idx[2])?csr_mepc:(csr_idx[1])?csr_mtvec:(csr_idx[0])?csr_mstatus:32'b0; // Unknown addresses never alias mstatus.
 assign trap_target = csr_mtvec;
 assign mret_target = csr_mepc;
 

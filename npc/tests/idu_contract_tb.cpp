@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
     for (uint32_t v : {0x37,0x17,0x6f}) add(0x7f,v,1);
     add(0x707f,0x67,3); add(0x707f,0x0f,0);
     for (uint32_t v : {0x73,0x100073,0x30200073}) add(~0u,v,0);
-    for (uint32_t addr : {0x300,0x305,0x341,0x342})
+    for (uint32_t addr : {0x300,0x304,0x305,0x341,0x342,0x344})
         for (uint32_t f : {1,2,3,5,6,7}) add(0xfff0707f,(addr<<20)|(f<<12)|0x73, f<4?3:1);
     uint64_t count=0;
     auto check = [&](uint32_t inst) {

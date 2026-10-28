@@ -43,6 +43,7 @@ module ysyx_soc_cpu #(parameter PC_RST = 32'h20000000) (
     input wire [1:0] m_axi_bresp,
     output wire [13:0] monitor_bus
 );
+    wire timer_irq;
     wire a_axi_arvalid;
     wire a_axi_arready;
     wire [31:0] a_axi_araddr;
@@ -75,7 +76,7 @@ ysyx_core_axi4 #(.PC_RST(PC_RST)) cpu (
     .m_axi_rid(a_axi_rid),
     .m_axi_rlast(a_axi_rlast),
     .clk(clk),
-    .rst_n(rst_n),
+    .rst_n(rst_n), .timer_irq(timer_irq),
     .commit_pc(commit_pc),
     .commit_inst(commit_inst),
     .commit_valid(commit_valid),
@@ -116,7 +117,7 @@ ysyx_core_axi4 #(.PC_RST(PC_RST)) cpu (
     .m_axi_bid(a_axi_bid)
 );
 ysyx_axi4_router router (
-    .clk(clk), .rst_n(rst_n),
+    .clk(clk), .rst_n(rst_n), .timer_irq(timer_irq),
     .s_axi_arvalid(a_axi_arvalid),
     .s_axi_arready(a_axi_arready),
     .s_axi_araddr(a_axi_araddr),

@@ -19,10 +19,11 @@ bool soc_memory_span(paddr_t a, size_t n) {
 }
 bool soc_memory_writable(paddr_t a, size_t n) { return span(a,n,0x0f000000,sizeof ram) || span(a,n,0x80000000,sizeof psram); }
 bool soc_device_access(paddr_t a, int len, bool write) {
+  (void)write;
   // Explicit register operations only: Flash/PSRAM never consume MMIO tokens.
   return (a >= 0x10000000 && a <= 0x10000007 && len == 1) ||
          (a >= 0x10001000 && a <= 0x10001018 && !(a & 3) && len == 4) ||
-         ((a == 0x0200bff8 || a == 0x0200bffc) && len == 4 && !write);
+         ((a == 0x0200bff8 || a == 0x0200bffc || a == 0x02004000 || a == 0x02004004) && len == 4);
 }
 uint8_t *guest_to_host(paddr_t a) {
   assert(soc_memory_span(a,1));
@@ -66,8 +67,19 @@ void paddr_write(paddr_t a, int len, word_t data) {
   device(a,len,true,data);
 }
 __EXPORT uint32_t difftest_soc_abi(void) {
-  _Static_assert(sizeof(CPU_state)==21*4, "SoC DiffTest ABI: 16 GPR + PC + 4 CSR");
-  return 0x534f4315; // SOC + word count; reject an unrelated NEMU .so early
+  _Static_assert(sizeof(CPU_state)==23*4, "SoC DiffTest ABI: 16 GPR + PC + 6 CSR");
+  _Static_assert(DIFFTEST_REG_SIZE==sizeof(CPU_state), "regcpy must include every SoC CSR");
+  return 0x534f4317; // SOC + word count; reject an unrelated NEMU .so early
+}
+// Synchronize a peripheral input, never copy DUT trap CSR/GPR state. The
+// cycle-counted timer oracle supplies pre-edge MTIP for CSR reads/entry and
+// post-edge MTIP for the architectural snapshot.
+__EXPORT void difftest_soc_timer(bool pending) { cpu.csr.mip=pending ? 0x80u : 0; }
+__EXPORT int difftest_soc_interrupt(void) {
+  if (!(cpu.csr.mstatus & 8) || !(cpu.csr.mie & cpu.csr.mip & 0x80)) return -1;
+  cpu.pc=isa_raise_intr(0x80000007u,cpu.pc);
+  cpu.csr.mstatus=(cpu.csr.mstatus & ~0x88u) | ((cpu.csr.mstatus & 8u)<<4) | 0x1800u;
+  return 0;
 }
 __EXPORT int difftest_soc_status(void) {
   assert(!io.pending);

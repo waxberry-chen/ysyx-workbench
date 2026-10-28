@@ -1,5 +1,6 @@
 `timescale 1ns/1ps
 module ysyx_clint_tb;
+wire timer_irq;
 reg clk=0, rst_n=0, req_valid=0, req_write=0;
 reg [31:0] req_addr=0, req_wdata=0;
 reg [2:0] req_size=2;
@@ -35,13 +36,30 @@ initial begin
     tick();req_write=0;req_wstrb=15;
     #1;assert(rsp_data==2) else $fatal(1,"partial write effect");
     req_addr=32'h02004000;
-    #1;assert(rsp_error && rsp_data==0) else $fatal(1,"S5 register prematurely implemented");
+    #1;assert(!rsp_error && rsp_data==32'hffffffff && !timer_irq) else $fatal(1,"compare reset");
     req_addr=32'h0200bff9;
     #1;assert(rsp_error) else $fatal(1,"bad offset accepted");
     @(negedge clk);rst_n=0;req_addr=32'h0200bffc;req_valid=0;
     tick();assert(rsp_data==0) else $fatal(1,"reset high");
     req_addr=32'h0200bff8;
     #1;assert(rsp_data==0) else $fatal(1,"reset low");
+    rst_n=1;
+    put(32'h02004004,0); put(32'h02004000,100);
+    put(32'h0200bff8,99);
+    #1;assert(!timer_irq) else $fatal(1,"early threshold");
+    tick();assert(timer_irq) else $fatal(1,"equality threshold");
+    tick();assert(timer_irq) else $fatal(1,"pending not level");
+    put(32'h02004000,32'hffffffff);
+    #1;assert(!timer_irq) else $fatal(1,"rearm did not clear");
+    put(32'h02004004,1);put(32'h02004000,0);
+    put(32'h0200bff8,32'hffffffff);
+    #1;assert(!timer_irq) else $fatal(1,"compare before rollover");
+    tick();assert(timer_irq) else $fatal(1,"compare across rollover");
+    @(negedge clk);req_addr=32'h02004004;req_wdata=0;
+    req_valid=1;req_write=1;req_wstrb=1;
+    #1;assert(rsp_error) else $fatal(1,"partial compare write accepted");
+    tick();req_write=0;req_valid=0;req_wstrb=15;
+    #1;assert(rsp_data==1) else $fatal(1,"invalid write changed compare");
     $display("CLINT: PASS word read/write, rollover, write priority, rejected accesses, reset");
     $finish;
 end

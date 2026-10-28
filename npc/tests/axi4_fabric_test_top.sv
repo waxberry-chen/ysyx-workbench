@@ -148,7 +148,8 @@ ysyx_axi4_arbiter arbiter (
 .m_axi_awburst(m_axi_awburst),
 .m_axi_bid(a_axi_bid)
 );
-ysyx_axi4_router router (.clk(clk), .rst_n(rst_n),
+ysyx_axi4_router router (
+    .timer_irq(),.clk(clk), .rst_n(rst_n),
 .s_axi_arvalid(a_axi_arvalid),
 .s_axi_arready(a_axi_arready),
 .s_axi_araddr(a_axi_araddr),

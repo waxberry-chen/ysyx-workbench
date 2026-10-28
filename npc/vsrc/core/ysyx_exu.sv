@@ -8,6 +8,8 @@
 module ysyx_exu (
     input              clk,
     input              rst_n,
+    input              interrupt_pending,
+    output             interrupt_taken,
 
     input              op_valid,
     output             op_ready,
@@ -82,6 +84,9 @@ module ysyx_exu (
 );
 
 reg mem_wait_q;
+// A presented request cannot be withdrawn even before READY. Once issued,
+// finish the memory instruction (including its fault) before accepting IRQ.
+reg mem_offer_q;
 
 wire        op_is_mem;
 wire        memory_operation;
@@ -149,7 +154,9 @@ assign commit_npc = exception_valid ? trap_target :
 assign control_redirect = exception_valid | op_mret_valid |
                           op_is_jal | op_is_jalr | branch_taken;
 
-assign lsu_req_valid = op_valid & memory_operation &
+assign interrupt_taken = rst_n && interrupt_pending && !mem_wait_q && !mem_offer_q &&
+                         !(op_valid && exception_valid);
+assign lsu_req_valid = op_valid & (~interrupt_taken) & memory_operation &
                        (~data_misaligned_exception) & (~mem_wait_q);
 assign lsu_req_write = op_is_store;
 assign lsu_req_addr  = alu_result;
@@ -163,7 +170,7 @@ assign lsu_rsp_fire  = lsu_rsp_valid & lsu_rsp_ready;
 assign operation_complete = op_fetch_error | op_trap_valid | data_misaligned_exception |
                             (~op_is_mem) |
                             (mem_wait_q & lsu_rsp_valid);
-assign commit_valid = op_valid & operation_complete;
+assign commit_valid = op_valid & operation_complete & (~interrupt_taken);
 assign op_ready     = commit_valid;
 assign commit_pc    = op_pc;
 assign commit_inst  = op_inst;
@@ -213,7 +220,10 @@ assign redirect_target = commit_npc;
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
         mem_wait_q <= 1'b0;
+        mem_offer_q <= 1'b0;
     end else begin
+        if (lsu_req_fire) mem_offer_q <= 1'b0;
+        else if (lsu_req_valid) mem_offer_q <= 1'b1;
         if (lsu_rsp_fire)
             mem_wait_q <= 1'b0;
         else if (lsu_req_fire)
@@ -222,6 +232,8 @@ always @(posedge clk or negedge rst_n) begin
 end
 
 `ifndef SYNTHESIS
+assert property (@(posedge clk) disable iff (!rst_n)
+    interrupt_taken |-> !commit_valid && !lsu_req_valid && !mem_wait_q && !mem_offer_q);
 property p_memory_commit_requires_lsu_response;
     @(posedge clk) disable iff (!rst_n)
         commit_mem_valid && !data_misaligned_exception

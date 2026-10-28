@@ -3,7 +3,12 @@ module npc_soc_cpu_monitor (
     input clock, reset,
     input commit_valid, input [31:0] pc, inst, a0,
     input [31:0] gpr [0:15],
-    input [31:0] mstatus, mtvec, mepc, mcause,
+    input [31:0] mstatus, mtvec, mepc, mcause, mie, mip,
+    input interrupt_taken, timer_irq,
+    input [63:0] mtime, mtimecmp,
+    input timer_valid, timer_write,
+    input [31:0] timer_addr, timer_wdata, timer_rdata,
+    input [2:0] timer_size, input [3:0] timer_strb,
     input exception, input [31:0] cause,
     input mem_valid, mem_write, mmio, input [31:0] mem_addr,
     input arvalid, arready, awvalid, awready, wvalid, wready,
@@ -25,13 +30,21 @@ function int npc_soc_state(input int index);
         18: return int'(mtvec);
         19: return int'(mepc);
         20: return int'(mcause);
+        21: return int'(mie);
+        22: return int'(mip);
         default: return 0;
     endcase
 endfunction
 import "DPI-C" function void npc_soc_commit(input int pc, inst, a0, flags, cause, addr);
+import "DPI-C" function void npc_soc_timer(input int reset_active,
+    input longint time_value,compare_value,
+    input int irq,valid,write_access,addr,size,data,strb,response,taken,pc,status,mie);
 import "DPI-C" function void npc_soc_bus(input int reset_active, flags, araddr, awaddr,
     wdata, rdata, arsize, awsize, strb, rresp, bresp);
 always @(posedge clock) begin
+    npc_soc_timer(int'(reset),mtime,mtimecmp,int'(timer_irq),int'(timer_valid),
+        int'(timer_write),timer_addr,int'(timer_size),timer_wdata,int'(timer_strb),
+        timer_rdata,int'(interrupt_taken),pc,mstatus,mie);
     npc_soc_bus(int'(reset), int'({bvalid&&bready,rvalid&&rready,wvalid&&wready,
                  awvalid&&awready,arvalid&&arready}), araddr, awaddr,
                  wdata,rdata,int'(arsize),int'(awsize),int'(strb),int'(rresp),int'(bresp));
@@ -48,6 +61,13 @@ bind ysyx_25030087 npc_soc_cpu_monitor cpu_monitor (
     .mtvec(subsystem.cpu.core.u_csr.csr_mtvec),
     .mepc(subsystem.cpu.core.u_csr.csr_mepc),
     .mcause(subsystem.cpu.core.u_csr.csr_mcause),
+    .mie(subsystem.cpu.core.u_csr.csr_mie), .mip(subsystem.cpu.core.u_csr.csr_mip),
+    .interrupt_taken(subsystem.cpu.core.interrupt_taken), .timer_irq(subsystem.timer_irq),
+    .mtime(subsystem.router.clint.mtime_q), .mtimecmp(subsystem.router.clint.mtimecmp_q),
+    .timer_valid(subsystem.router.clint.req_valid), .timer_write(subsystem.router.clint.req_write),
+    .timer_addr(subsystem.router.clint.req_addr), .timer_size(subsystem.router.clint.req_size),
+    .timer_wdata(subsystem.router.clint.req_wdata), .timer_strb(subsystem.router.clint.req_wstrb),
+    .timer_rdata(subsystem.router.clint.rsp_data),
     .exception(subsystem.commit_exception), .cause(subsystem.commit_exception_cause),
     .mem_valid(subsystem.commit_mem_valid), .mem_write(subsystem.commit_mem_write),
     .mmio(subsystem.commit_is_mmio), .mem_addr(subsystem.commit_mem_addr),

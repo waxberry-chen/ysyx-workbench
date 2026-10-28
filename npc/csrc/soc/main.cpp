@@ -3,6 +3,7 @@
 #include "VysyxSoCFull.h"
 #include "VysyxSoCFull__Dpi.h"
 #include "difftest.h"
+#include "timer.h"
 #include "svdpi.h"
 #include "verilated.h"
 #include "verilated_fst_c.h"
@@ -30,7 +31,7 @@ uint64_t psram_reads=0,psram_writes=0;
 uint32_t min_psram_sp=0x80400000;
 std::vector<uint8_t> rom(4096,0),flash;
 VerilatedContext *context=nullptr;
-std::ofstream commits,bus,uart_events;
+std::ofstream commits,bus,uart_events,irq_events;
 std::string error,tx_bytes;
 uint64_t commit_count=0,exceptions=0,ar_count=0,aw_count=0,w_count=0,r_count=0,b_count=0;
 uint64_t cpu_release_ps=0,first_ar_ps=0,first_commit_ps=0,mrom_calls=0,flash_calls=0;
@@ -41,6 +42,10 @@ bool stopped=false,seen_release=false,read_pending=false,aw_pending=false,w_pend
 svScope state_scope=nullptr,sram_scope=nullptr;
 bool commit_pending=false;
 SocCommit pending{};
+SocTimer timer;
+bool irq_pending=false;
+uint32_t irq_pc=0;
+uint64_t irq_count=0;
 uint8_t uart_lcr=0;
 void fail(const std::string &why) {if(error.empty())error=why;}
 uint64_t now() {return context->time();}
@@ -63,6 +68,19 @@ uint64_t number(const std::string &s) {
 }
 }
 extern "C" void npc_soc_state_scope() { state_scope=svGetScope(); }
+extern "C" void npc_soc_timer(int reset_active,long long time_value,long long compare_value,
+    int irq,int valid,int write_access,int addr,int size,int data,int strb,int response,
+    int taken,int pc,int status,int mie) {
+    try {timer.edge(reset_active,uint64_t(time_value),uint64_t(compare_value),irq,
+        valid,write_access,uint32_t(addr),unsigned(size),uint32_t(data),unsigned(strb),uint32_t(response));}
+    catch(const std::exception &e){fail(e.what());}
+    if(!reset_active && taken) {
+        if(irq_pending)fail("Unconsumed IRQ event");
+        if(!timer.pre || !(status&8) || !(mie&128))fail("Masked/unpending IRQ accepted");
+        irq_pending=true;irq_pc=uint32_t(pc);++irq_count;
+        if(irq_events.is_open())irq_events<<std::dec<<now()<<','<<std::hex<<irq_pc<<','<<time_value<<','<<compare_value<<'\n';
+    }
+}
 extern "C" void npc_soc_sram_scope() { sram_scope=svGetScope(); }
 extern "C" void mrom_read(int raddr,int *rdata) {
     ++mrom_calls;uint32_t a=uint32_t(raddr)&~3u;
@@ -120,13 +138,13 @@ extern "C" void npc_soc_uart(int write_access,int addr,int data) {
 int main(int argc,char **argv) {
     try {
         std::string image,flash_image,wave_path,uart_path,summary_path,diff_path;
-        uint64_t max_cycles=2000000,bit_cycles=16,inject_at=0;
+        uint64_t max_cycles=2000000,bit_cycles=16,inject_at=0,irq_inject_at=0;
         SocDiff diff;
         auto output=[](std::ofstream &f,const std::string &path){f.open(path);if(!f)throw std::runtime_error("Cannot write: "+path);};
         for(int i=1;i<argc;++i) {
             std::string opt=argv[i];
             if(opt=="--help") {std::cout<<"Boot profile is fixed at build time; reset PC=0x"<<std::hex<<ResetPC
-                <<"\n[--mrom FILE] [--flash FILE] [--diff REF.so] [--diff-inject-at COMMIT] [--max-cycles N] [--trace FST] [--commit-trace CSV] [--bus-trace CSV] [--uart-events CSV] [--uart-log FILE] [--summary JSON] [--uart-bit-cycles N]\n";return 0;}
+                <<"\n[--mrom FILE] [--flash FILE] [--diff REF.so] [--diff-inject-at COMMIT] [--irq-inject-at EVENT] [--max-cycles N] [--trace FST] [--commit-trace CSV] [--bus-trace CSV] [--irq-trace CSV] [--uart-events CSV] [--uart-log FILE] [--summary JSON] [--uart-bit-cycles N]\n";return 0;}
             if(i+1>=argc)throw std::runtime_error("Missing argument for "+opt);
             std::string val=argv[++i];
             if(opt=="--mrom")image=val;else if(opt=="--flash")flash_image=val;
@@ -134,10 +152,12 @@ int main(int argc,char **argv) {
             else if(opt=="--uart-bit-cycles")bit_cycles=number(val);
             else if(opt=="--diff")diff_path=val;
             else if(opt=="--diff-inject-at")inject_at=number(val);
+            else if(opt=="--irq-inject-at")irq_inject_at=number(val);
             else if(opt=="--trace")wave_path=val;else if(opt=="--uart-log")uart_path=val;
             else if(opt=="--summary")summary_path=val;
             else if(opt=="--commit-trace")output(commits,val);
             else if(opt=="--bus-trace")output(bus,val);
+            else if(opt=="--irq-trace")output(irq_events,val);
             else if(opt=="--uart-events")output(uart_events,val);
             else throw std::runtime_error("Unknown option: "+opt);
         }
@@ -145,7 +165,7 @@ int main(int argc,char **argv) {
         if(ResetPC!=RomBase && flash_image.empty())throw std::runtime_error("--flash image is required");
         if(!image.empty())load(image,rom,4096,0);
         if(!flash_image.empty())load(flash_image,flash,16*1024*1024,0xff);
-        if(inject_at && diff_path.empty())throw std::runtime_error("--diff-inject-at requires --diff");
+        if((inject_at || irq_inject_at) && diff_path.empty())throw std::runtime_error("DiffTest injection requires --diff");
         if(!diff_path.empty())diff.init(diff_path,rom,flash,ResetPC);
         auto ctx=std::make_unique<VerilatedContext>();context=ctx.get();ctx->commandArgs(argc,argv);
         ctx->traceEverOn(!wave_path.empty());
@@ -172,7 +192,7 @@ int main(int argc,char **argv) {
                 edge+=HalfPeriod;
             }
             dut->eval();if(!wave_path.empty())wave.dump(now());
-            if(commit_pending) {
+            if(commit_pending || irq_pending) {
                 // All NBA updates are now visible. Never compare the pre-edge
                 // state observed by the commit callback with the stepped ref.
                 svSetScope(state_scope);
@@ -184,9 +204,15 @@ int main(int argc,char **argv) {
                     min_psram_sp=std::min(min_psram_sp,state[2]);
                 if(diff.active()) {
                     if(commit_count==inject_at)state[5]^=1; // comparator negative test only
-                    try {diff.step(pending,state);}catch(const std::exception &e){fail(e.what());}
+                    if(irq_pending && irq_count==irq_inject_at)state[19]^=4; // corrupt sampled EPC only
+                    try {
+                        if(commit_pending && irq_pending)throw std::runtime_error("IRQ and instruction committed together");
+                        if(irq_pending)diff.interrupt(irq_pc,state,timer.pre,timer.post);
+                        else diff.step(pending,state,timer);
+                    }catch(const std::exception &e){fail(e.what());}
                 }
                 commit_pending=false;
+                irq_pending=false;
             }
             bool tx=dut->externalPins_uart_tx;
             if(!dut->reset) {
@@ -221,6 +247,7 @@ int main(int argc,char **argv) {
              <<",\n  \"cpu_release_ps\": "<<cpu_release_ps<<",\n  \"first_ar_ps\": "<<first_ar_ps<<",\n  \"first_commit_ps\": "<<first_commit_ps
              <<",\n  \"mrom_dpi_calls\": "<<mrom_calls<<",\n  \"flash_dpi_calls\": "<<flash_calls
              <<",\n  \"uart_thr_writes\": "<<thr_writes<<",\n  \"uart_register_reads\": "<<uart_reads<<",\n  \"uart_serial_bytes\": "<<tx_bytes.size()
+             <<",\n  \"interrupts\": "<<irq_count<<",\n  \"diff_interrupts\": "<<diff.interrupts<<",\n  \"timer_checks\": "<<timer.checks
              <<",\n  \"diff_steps\": "<<diff.steps<<",\n  \"diff_device_reads\": "<<diff.device_reads
              <<",\n  \"diff_device_writes\": "<<diff.device_writes<<",\n  \"diff_sram_checks\": "<<diff.memory_checks
              <<",\n  \"min_sram_sp\": "<<min_sram_sp

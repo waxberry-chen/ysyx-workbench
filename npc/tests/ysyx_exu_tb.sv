@@ -2,6 +2,8 @@
 
 
 module ysyx_exu_tb;
+reg interrupt_pending=0;
+wire interrupt_taken;
 
 reg         clk = 1'b0;
 reg         rst_n = 1'b0;
@@ -404,7 +406,30 @@ initial begin
     check(!commit_valid && !gpr_write_valid && !csr_write_valid,
           "empty EXU produced an architectural side effect");
 
-    $display("ysyx_exu directed test: PASS");
+    interrupt_pending=1; settle;
+    check(interrupt_taken && !commit_valid, "idle IRQ");
+    op_valid=1;op_gpr_wen=1;op_csr_wen=1; settle;
+    check(interrupt_taken && !gpr_write_valid && !csr_write_valid && !commit_valid,
+          "IRQ preempts unexecuted ALU/CSR");
+    op_is_branch=1;op_branch_type=0;settle;
+    check(interrupt_taken && !redirect_valid, "IRQ preempts branch redirect");
+    op_trap_valid=1;op_trap_cause=2;settle;
+    check(!interrupt_taken && trap_commit && trap_cause==2, "synchronous fault priority");
+    // Do not clock the synthetic traps above; the test owns the op context.
+    interrupt_pending=0;clear_op;op_valid=1;op_is_store=1;op_mem_type=2;
+    op_alu_rhs_imm=1;op_rs1_data='h80001000;lsu_req_ready=0;tick;
+    interrupt_pending=1;settle;
+    check(!interrupt_taken && lsu_req_valid, "stalled offer must survive IRQ");
+    repeat(4)tick;
+    lsu_req_ready=1;tick;lsu_req_ready=0;settle;
+    check(!interrupt_taken && !lsu_req_valid && !commit_valid, "accepted LSU must drain");
+    repeat(4)tick;
+    lsu_rsp_valid=1;lsu_rsp_error=1;settle;
+    check(!interrupt_taken && trap_commit && trap_cause==7, "LSU error before IRQ");
+    tick;lsu_rsp_valid=0;lsu_rsp_error=0;clear_op;settle;
+    check(interrupt_taken && !commit_valid, "IRQ available after LSU boundary");
+    interrupt_pending=0;
+    $display("ysyx_exu directed test: PASS (including IRQ priority and LSU drain)");
     $finish;
 end
 

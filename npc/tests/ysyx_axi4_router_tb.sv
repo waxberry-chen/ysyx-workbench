@@ -1,5 +1,6 @@
 `timescale 1ns/1ps
 module ysyx_axi4_router_tb;
+wire timer_irq;
 reg clk = '0;
 reg rst_n = '0;
 reg s_axi_arvalid = '0;
@@ -110,7 +111,9 @@ initial begin
         assert(data>=20) else $fatal(1,"write replayed under B backpressure");
     end
     read_word(32'h0200bff8,0,data,1);
-    read_word(32'h02004000,2,data,1);
+    read_word(32'h02004000,2,data,0);
+    assert(data==32'hffffffff && !timer_irq) else $fatal(1,"compare reset/read");
+    read_word(32'h02004008,2,data,1);
     // Reset an unconsumed local response; no stale R after release.
     @(negedge clk);s_axi_araddr=32'h0200bff8;s_axi_arsize=2;s_axi_arvalid=1;
     tick();@(negedge clk);s_axi_arvalid=0;

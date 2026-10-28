@@ -89,7 +89,9 @@ always @(posedge clk or negedge rst_n) begin
         request_pc_q <= PC_RST;
     end else if (redirect_valid) begin
         fetch_pc_q <= redirect_target;
-        if ((state_q == WAIT) && !rsp_fire)
+        // A second redirect (e.g. MRET immediately followed by pending IRQ)
+        // changes the destination but does not cancel the outstanding read.
+        if (((state_q == WAIT) || (state_q == DROP)) && !rsp_fire)
             state_q <= DROP;
         else
             state_q <= REQ;

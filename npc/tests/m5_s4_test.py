@@ -49,12 +49,14 @@ def build(name,sources,boot='mrom',extra=''):
         stack_reserved=sym['_stack_top']-sym['_stack_bottom'])
     return img
 
-def simulate(name,image,boot='mrom',flash=None,uart=None,trace=False,expected=None):
+def simulate(name,image,boot='mrom',flash=None,uart=None,trace=False,expected=None,
+             max_cycles=300000000,thread_stacks=False):
     exe=NPC/f'build/ysyxsoc{"-flash" if boot!="mrom" else ""}/VysyxSoCFull'
     args=[exe,'--mrom' if boot=='mrom' else '--flash',image,'--diff',REF,
-          '--max-cycles',300000000,'--summary',OUT/f'{name}.json','--uart-log',OUT/f'{name}.tx']
+          '--max-cycles',max_cycles,'--summary',OUT/f'{name}.json','--uart-log',OUT/f'{name}.tx']
     if flash: args+=['--flash',flash]
-    if trace: args+=['--commit-trace',OUT/f'{name}.commit.csv','--bus-trace',OUT/f'{name}.bus.csv']
+    if trace: args+=['--commit-trace',OUT/f'{name}.commit.csv','--bus-trace',OUT/f'{name}.bus.csv',
+                    '--irq-trace',OUT/f'{name}.irq.csv']
     run(name,args,expected=expected)
     if expected:return
     s=json.loads((OUT/f'{name}.json').read_text())
@@ -63,8 +65,12 @@ def simulate(name,image,boot='mrom',flash=None,uart=None,trace=False,expected=No
     if name in IMAGES:
         syms=IMAGES[name]['symbols']
         low=s['min_psram_sp'] if boot=='flash-psram' else s['min_sram_sp']
-        assert low>=syms['_stack_bottom'] or name=='rtthread-capacity'
-        IMAGES[name]['stack_used']=syms['_stack_top']-low
+        if thread_stacks:
+            # Minimum SP may belong to a thread's bss stack, not the main stack.
+            IMAGES[name]['lowest_observed_sp']=low
+        else:
+            assert low>=syms['_stack_bottom']
+            IMAGES[name]['stack_used']=syms['_stack_top']-low
     print(f'{name}: PASS ({s["commits"]} commits, {s["cycles"]} cycles)',flush=True)
     return s
 
@@ -174,11 +180,9 @@ def capacity():
     image=build('rtthread-capacity',sources,'flash-psram',
                 f'INC_PATH += {rtt}/include {NPC}/tests/b1-rtthread/include\nCFLAGS += -D__RTTHREAD__ -Wno-nonnull-compare')
     expected=b'RTTHREAD BEGIN cooperative\n'+b'AB'*100+b'\nRTTHREAD PASS iterations=100,100 heap_restored=1\n'
-    s=simulate('rtthread-capacity',image,'flash-psram',uart=expected)
+    s=simulate('rtthread-capacity',image,'flash-psram',uart=expected,thread_stacks=True)
     assert s['exceptions']>=200 and IMAGES['rtthread-capacity']['static_ram_bytes']>8192
     # Thread stacks live in bss: the global minimum SP is not main-stack usage.
-    IMAGES['rtthread-capacity'].pop('stack_used')
-    IMAGES['rtthread-capacity']['lowest_observed_sp']=s['min_psram_sp']
     IMAGES['rtthread-capacity']['thread_stack_reservation']=2*8192
 
 def main():

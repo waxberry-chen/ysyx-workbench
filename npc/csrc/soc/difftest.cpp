@@ -22,20 +22,23 @@ void SocDiff::init(const std::string &path,const std::vector<uint8_t> &rom,
   handle=dlopen(path.c_str(),RTLD_NOW|RTLD_LOCAL);
   if(!handle)throw std::runtime_error(dlerror());
   auto abi=symbol<uint32_t(*)()>(handle,"difftest_soc_abi");
-  if(abi()!=0x534f4315)throw std::runtime_error("Incompatible SoC reference ABI");
+  if(abi()!=0x534f4317)throw std::runtime_error("Incompatible SoC reference ABI");
   copy=symbol<decltype(copy)>(handle,"difftest_memcpy");
   regs=symbol<decltype(regs)>(handle,"difftest_regcpy");
   execute=symbol<decltype(execute)>(handle,"difftest_exec");
   feed=symbol<decltype(feed)>(handle,"difftest_soc_feed");
   status=symbol<decltype(status)>(handle,"difftest_soc_status");
+  timer=symbol<decltype(timer)>(handle,"difftest_soc_timer");
+  take_interrupt=symbol<decltype(take_interrupt)>(handle,"difftest_soc_interrupt");
   symbol<void(*)(int)>(handle,"difftest_init")(0);
   // Only nonvolatile images are loaded. Both machines execute RAM startup.
   copy(0x20000000,const_cast<uint8_t*>(rom.data()),rom.size(),true);
   if(!flash.empty())copy(0x30000000,const_cast<uint8_t*>(flash.data()),flash.size(),true);
   SocState state{};regs(state.data(),false);state[16]=reset_pc;regs(state.data(),true);
 }
-void SocDiff::step(const SocCommit &c,const SocState &actual) {
+void SocDiff::step(const SocCommit &c,const SocState &actual,const SocTimer &clock) {
   SocState before{},expected{};
+  timer(clock.pre);
   regs(before.data(),false);
   if(before[16]!=c.pc)mismatch("commit PC",c.pc,16,before[16],c.pc);
   uint32_t ins=0;
@@ -52,9 +55,10 @@ void SocDiff::step(const SocCommit &c,const SocState &actual) {
       int32_t imm=wr ? int32_t((ins&0xfe000000)|((ins>>7&31)<<20))>>20 : int32_t(ins)>>20;
       uint32_t addr=before[rs1]+imm;
       int len=1<<(f3&3);
+      bool clint=(addr==0x0200bff8 || addr==0x0200bffc || addr==0x02004000 || addr==0x02004004) && len==4;
       bool device=(addr>=0x10000000 && addr<=0x10000007 && len==1) ||
                   (addr>=0x10001000 && addr<=0x10001018 && len==4) ||
-                  ((addr==0x0200bff8 || addr==0x0200bffc) && len==4 && !wr);
+                  clint;
       if(device && !(addr&(len-1))) {
         if(c.flags&1)throw std::runtime_error("Unexpected device access exception");
         if(!(c.flags&8) || !(c.flags&2) || bool(c.flags&4)!=wr || c.addr!=addr)
@@ -64,17 +68,37 @@ void SocDiff::step(const SocCommit &c,const SocState &actual) {
         unsigned rs2=(ins>>20)&31;
         if(rd>=16 && !wr)throw std::runtime_error("Invalid RV32E device destination");
         if(rs2>=16 && wr)throw std::runtime_error("Invalid RV32E device source");
-        feed(addr,len,wr,wr ? before[rs2] : actual[rd]);
+        if(clint) {
+          if(clock.accesses!=timer_accesses+1 || clock.access_addr!=addr || clock.access_write!=wr)
+            throw std::runtime_error("CLINT transaction disagrees with reference instruction");
+          ++timer_accesses;
+          // Writes use actual bus data; NEMU checks it against its own source
+          // register. Feeding before[rs2] here would merely compare REF to REF.
+          if(wr && clock.access_data!=before[rs2])
+            throw std::runtime_error("CLINT write data disagrees with reference source");
+        }
+        feed(addr,len,wr,clint ? clock.access_data : wr ? before[rs2] : actual[rd]);
         if(wr)++device_writes;else ++device_reads;
       }
     }
   }
   execute(1);
   if(status())throw std::runtime_error("Reference aborted");
+  timer(clock.post);
   regs(expected.data(),false);
   for(unsigned i=0;i<expected.size();++i)
     if(expected[i]!=actual[i])mismatch(i<16?"GPR":i==16?"next PC":"CSR",c.pc,i,expected[i],actual[i]);
   ++steps;
+}
+void SocDiff::interrupt(uint32_t pc,const SocState &actual,bool pre_mtip,bool post_mtip) {
+  SocState before{},expected{};
+  timer(pre_mtip); regs(before.data(),false);
+  if(before[16]!=pc)mismatch("IRQ boundary PC",pc,16,before[16],pc);
+  if(take_interrupt())throw std::runtime_error("Reference rejects masked/unpending timer IRQ");
+  timer(post_mtip); regs(expected.data(),false);
+  for(unsigned i=0;i<expected.size();++i)
+    if(expected[i]!=actual[i])mismatch("IRQ state",pc,i,expected[i],actual[i]);
+  ++interrupts;
 }
 void SocDiff::psram_memory(const std::vector<uint8_t> &actual) {
   std::vector<uint8_t> expected(actual.size());

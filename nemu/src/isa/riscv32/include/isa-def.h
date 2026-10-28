@@ -23,6 +23,10 @@ typedef struct {
   word_t mtvec;   // 0x305
   word_t mepc;    // 0x341
   word_t mcause;  // 0x342
+#ifdef CONFIG_YSYXSOC
+  word_t mie;     // 0x304: MTIE only
+  word_t mip;     // 0x344: externally synchronized MTIP, read-only
+#endif
 } CSR;
 
 // define registers

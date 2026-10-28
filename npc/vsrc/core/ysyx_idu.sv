@@ -45,6 +45,7 @@ module
     // Base FENCE ignores fm/rs1/rd, including reserved configurations. No FENCE.I.
     wire is_fence = opcode == 7'h0f && funct3 == 3'b000;
     wire csr_exists = inst[31:20] == 12'h300 || inst[31:20] == 12'h305 ||
+                      inst[31:20] == 12'h304 || inst[31:20] == 12'h344 ||
                       inst[31:20] == 12'h341 || inst[31:20] == 12'h342;
     wire uses_rd = is_r_type || is_i_basic || is_load || is_lui || is_auipc ||
                    is_jal || is_jalr || is_csr;

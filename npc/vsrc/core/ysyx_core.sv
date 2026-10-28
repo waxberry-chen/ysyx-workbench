@@ -6,6 +6,7 @@ module ysyx_core #(
 ) (
     input              clk,
     input              rst_n,
+    input              timer_irq,
     output     [31:0]  commit_pc,
     output     [31:0]  commit_inst,
     output             commit_valid,
@@ -151,6 +152,12 @@ wire [31:0] exu_commit_inst;
 wire [31:0] commit_npc;
 wire        redirect_valid;
 wire [31:0] redirect_target;
+wire        exu_redirect_valid;
+wire [31:0] exu_redirect_target;
+wire        interrupt_pending;
+wire        interrupt_taken;
+assign redirect_valid = interrupt_taken || exu_redirect_valid;
+assign redirect_target = interrupt_taken ? trap_target : exu_redirect_target;
 wire [31:0] commit_mem_wdata;
 
 // CSR architectural interface.
@@ -194,8 +201,8 @@ ysyx_gnrl_dfflrs #(
     .DW (32),
     .RST(PC_RST)
 ) u_arch_pc (
-    .lden (commit_valid),
-    .dnxt (commit_npc),
+    .lden (commit_valid || interrupt_taken),
+    .dnxt (interrupt_taken ? trap_target : commit_npc),
     .qout (commit_pc),
     .clk  (clk),
     .rst_n(rst_n)
@@ -323,7 +330,10 @@ ysyx_opbuf u_opbuf (
     .in_rs2_data     (dec_rs2_data),
     // rv_reg out 
     .out_valid       (op_valid),
-    .out_ready       (op_ready),
+    // IRQ discards the unexecuted context at the edge. Do not connect IRQ
+    // to combinational flush: IRQ priority itself inspects op_valid/faults.
+    // IFU redirect suppresses in_valid, so no replacement enters this slot.
+    .out_ready       (op_ready || interrupt_taken),
     .out_pc          (op_pc),
     .out_inst        (op_inst),
     .out_fetch_error (op_fetch_error),
@@ -357,6 +367,8 @@ ysyx_opbuf u_opbuf (
 ysyx_exu u_exu (
     .clk              (clk),
     .rst_n            (rst_n),
+    .interrupt_pending(interrupt_pending),
+    .interrupt_taken  (interrupt_taken),
     // opbuf out without rs1, rs2 idx
     .op_valid         (op_valid),
     .op_ready         (op_ready),
@@ -426,8 +438,8 @@ ysyx_exu u_exu (
     .commit_exception (commit_exception),
     .commit_exception_cause(commit_exception_cause),
     // redirect channel 
-    .redirect_valid   (redirect_valid),
-    .redirect_target  (redirect_target)
+    .redirect_valid   (exu_redirect_valid),
+    .redirect_target  (exu_redirect_target)
 );
 
 assign commit_inst = exu_commit_inst;
@@ -435,14 +447,16 @@ assign commit_inst = exu_commit_inst;
 ysyx_csr u_csr (
     .clk        (clk),
     .rst_n      (rst_n),
+    .timer_irq  (timer_irq),
+    .interrupt_pending(interrupt_pending),
 
     .csr_addr   (exu_csr_addr),
     .csr_wdata  (exu_csr_wdata),
     .csr_we     (exu_csr_write_valid),
     .csr_rdata  (csr_rdata),
-    .trap_valid (exu_trap_commit),
-    .trap_epc   (exu_trap_epc),
-    .trap_cause (exu_trap_cause),
+    .trap_valid (exu_trap_commit || interrupt_taken),
+    .trap_epc   (interrupt_taken ? commit_pc : exu_trap_epc),
+    .trap_cause (interrupt_taken ? 32'h80000007 : exu_trap_cause),
     .mret_valid (exu_mret_commit),
     .trap_target(trap_target),
     .mret_target(mret_target)
@@ -534,7 +548,7 @@ ysyx_lsu_axi4_adapter u_lsu_axi4_adapter (
 
 assign if_ctx_fire = if_ctx_valid & if_ctx_ready;
 assign commit_redirect_valid = redirect_valid;
-assign commit_redirect_reason = commit_exception ? REDIRECT_EXCEPTION :
+assign commit_redirect_reason = (commit_exception || interrupt_taken) ? REDIRECT_EXCEPTION :
                                 (exu_mret_commit ? REDIRECT_MRET :
                                 (redirect_valid ? REDIRECT_CONTROL :
                                                   REDIRECT_NONE));
@@ -562,7 +576,7 @@ assert property (p_incoming_context_matches_next_architectural_pc);
 property p_opbuf_stable_when_stalled;
     @(posedge clk) disable iff (!rst_n)
         op_valid && !op_ready
-        |=> op_valid &&
+        |=> $past(interrupt_taken) || (op_valid &&
             $stable({op_pc, op_inst, op_fetch_error,
                      op_pred_taken, op_pred_npc, op_imm,
                      op_alu_lhs_pc, op_alu_rhs_imm, op_alu_ctrl,
@@ -571,7 +585,7 @@ property p_opbuf_stable_when_stalled;
                      op_mem_type, op_csr_wen, op_csr_addr,
                      op_trap_valid, op_trap_cause, op_mret_valid,
                      op_rs1_idx, op_rs2_idx, op_rd_idx,
-                     op_rs1_data, op_rs2_data});
+                     op_rs1_data, op_rs2_data}));
 endproperty
 assert property (p_opbuf_stable_when_stalled);
 

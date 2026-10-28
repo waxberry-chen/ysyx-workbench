@@ -8,12 +8,17 @@ Context* __am_irq_handle(Context *c) {
   if (user_handler) {
     Event ev = {0};
     switch (c->mcause) {
+      // An interrupt suspends the next instruction. Unlike ECALL, its saved
+      // PC must not advance: MRET must execute that instruction exactly once.
+      case 0x80000007u: ev.event = EVENT_IRQ_TIMER; break;
       case 11: if((intptr_t)c->GPR1 == -1) {ev.event = EVENT_YIELD;} else {ev.event = EVENT_SYSCALL;}; c->mepc += 4; break;
       default: ev.event = EVENT_ERROR; break;
     }
 
     c = user_handler(ev, c);
-    assert(c != NULL);
+    // Keep the minimal trap runtime usable in the 4 KiB MROM profile without
+    // pulling the formatted-printing implementation into every CTE program.
+    if (c == NULL) halt(1);
   }
 
   return c;
@@ -53,8 +58,12 @@ void yield() {
 }
 
 bool ienabled() {
-  return false;
+  uintptr_t status;
+  asm volatile("csrr %0, mstatus" : "=r"(status));
+  return (status & 8u) != 0;
 }
 
 void iset(bool enable) {
+  if (enable) asm volatile("csrsi mstatus, 8" ::: "memory");
+  else asm volatile("csrci mstatus, 8" ::: "memory");
 }

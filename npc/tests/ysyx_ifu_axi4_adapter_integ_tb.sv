@@ -187,6 +187,13 @@ initial begin
     settle;
     check(m_axi_arvalid && m_axi_araddr == PC_RST && !if_ctx_valid,
           "pre-AR redirect cancelled or corrupted the accepted request");
+    // MRET + a still-pending IRQ can redirect on consecutive cycles while
+    // the older fetch has not even completed AR. Preserve DROP ownership.
+    redirect_target = 32'h8000_0080; redirect_valid = 1'b1;
+    tick; redirect_valid = 1'b0; settle;
+    check(!imem_req_valid && imem_rsp_ready, "second redirect lost pending read");
+    redirect_target = 32'h8000_0100; redirect_valid = 1'b1;
+    tick; redirect_valid = 1'b0; settle;
     accept_ar(PC_RST);
     return_axi_data(32'hdead_0000);
     consume_stale_response(32'h8000_0100);

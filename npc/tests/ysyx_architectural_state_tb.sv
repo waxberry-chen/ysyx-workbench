@@ -1,5 +1,7 @@
 `timescale 1ns/1ps
 module ysyx_architectural_state_tb;
+    logic timer_irq=0;
+    wire interrupt_pending;
     logic clk = 0, rst_n = 1;
     logic [4:0] rf_rs1 = 0, rf_rs2 = 0, rf_rd = 0;
     logic rf_we = 0;
@@ -62,6 +64,19 @@ module ysyx_architectural_state_tb;
         write_csr('h300, 'h1808); write_csr('h305, 'h80000100);
         write_csr('h341, 'h80000200); write_csr('h342, 'h11);
         if (trap_target !== 'h80000100 || mret_target !== 'h80000200) $fatal(1, "CSR targets");
+        // MTIP is hardware-owned; MTIE and MIE independently gate delivery.
+        check_csr('h304, 0); check_csr('h344, 0);
+        timer_irq=1; #1; check_csr('h344, 'h80);
+        if(interrupt_pending) $fatal(1, "MTIE mask");
+        csr_we=1; csr_addr='h344; csr_wdata=0; tick(); csr_we=0;
+        check_csr('h344, 'h80);
+        csr_we=1; csr_addr='h304; csr_wdata='1; tick(); csr_we=0;
+        check_csr('h304, 'h80);
+        if(!interrupt_pending) $fatal(1, "enabled timer pending");
+        write_csr('h300, 'h1800);
+        if(interrupt_pending) $fatal(1, "MIE mask");
+        write_csr('h300, 'h1808); timer_irq=0; #1;
+        if(interrupt_pending) $fatal(1, "cleared timer");
         // Trap wins against ordinary writes to each affected CSR.
         csr_we = 1; csr_addr = 'h341; csr_wdata = '1;
         trap_valid = 1; trap_epc = 'h80000300; trap_cause = 5; tick();
