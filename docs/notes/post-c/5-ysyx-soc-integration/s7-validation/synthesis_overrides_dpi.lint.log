@@ -1,0 +1,153 @@
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:93:6: Cell pin connected by name with empty reference: 'commit_pc'
+   93 |     .commit_pc(),
+      |      ^~~~~~~~~
+                          ... For warning description see https://verilator.org/warn/PINCONNECTEMPTY?v=5.008
+                          ... Use "/* verilator lint_off PINCONNECTEMPTY */" and lint_on around source to disable this message.
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:94:6: Cell pin connected by name with empty reference: 'commit_inst'
+   94 |     .commit_inst(),
+      |      ^~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:95:6: Cell pin connected by name with empty reference: 'commit_valid'
+   95 |     .commit_valid(),
+      |      ^~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:96:6: Cell pin connected by name with empty reference: 'commit_is_mmio'
+   96 |     .commit_is_mmio(),
+      |      ^~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:97:6: Cell pin connected by name with empty reference: 'commit_exception'
+   97 |     .commit_exception(),
+      |      ^~~~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:98:6: Cell pin connected by name with empty reference: 'commit_exception_cause'
+   98 |     .commit_exception_cause(),
+      |      ^~~~~~~~~~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:99:6: Cell pin connected by name with empty reference: 'commit_redirect_valid'
+   99 |     .commit_redirect_valid(),
+      |      ^~~~~~~~~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:100:6: Cell pin connected by name with empty reference: 'commit_redirect_reason'
+  100 |     .commit_redirect_reason(),
+      |      ^~~~~~~~~~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:101:6: Cell pin connected by name with empty reference: 'commit_mem_valid'
+  101 |     .commit_mem_valid(),
+      |      ^~~~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:102:6: Cell pin connected by name with empty reference: 'commit_mem_write'
+  102 |     .commit_mem_write(),
+      |      ^~~~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:103:6: Cell pin connected by name with empty reference: 'commit_mem_addr'
+  103 |     .commit_mem_addr(),
+      |      ^~~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:104:6: Cell pin connected by name with empty reference: 'commit_mem_error'
+  104 |     .commit_mem_error(),
+      |      ^~~~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:126:6: Cell pin connected by name with empty reference: 'monitor_bus'
+  126 |     .monitor_bus(),
+      |      ^~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:12:11: Signal is not used: 'io_interrupt'
+                                                      : ... In instance ysyx_25030087
+   12 |     input io_interrupt,
+      |           ^~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:16:11: Signal is not used: 'io_slave_awvalid'
+                                                      : ... In instance ysyx_25030087
+   16 |     input io_slave_awvalid,
+      |           ^~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:18:18: Signal is not used: 'io_slave_awaddr'
+                                                      : ... In instance ysyx_25030087
+   18 |     input [31:0] io_slave_awaddr,
+      |                  ^~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:20:17: Signal is not used: 'io_slave_awid'
+                                                      : ... In instance ysyx_25030087
+   20 |     input [3:0] io_slave_awid,
+      |                 ^~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:22:17: Signal is not used: 'io_slave_awlen'
+                                                      : ... In instance ysyx_25030087
+   22 |     input [7:0] io_slave_awlen,
+      |                 ^~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:24:17: Signal is not used: 'io_slave_awsize'
+                                                      : ... In instance ysyx_25030087
+   24 |     input [2:0] io_slave_awsize,
+      |                 ^~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:26:17: Signal is not used: 'io_slave_awburst'
+                                                      : ... In instance ysyx_25030087
+   26 |     input [1:0] io_slave_awburst,
+      |                 ^~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:30:11: Signal is not used: 'io_slave_wvalid'
+                                                      : ... In instance ysyx_25030087
+   30 |     input io_slave_wvalid,
+      |           ^~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:32:18: Signal is not used: 'io_slave_wdata'
+                                                      : ... In instance ysyx_25030087
+   32 |     input [31:0] io_slave_wdata,
+      |                  ^~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:34:17: Signal is not used: 'io_slave_wstrb'
+                                                      : ... In instance ysyx_25030087
+   34 |     input [3:0] io_slave_wstrb,
+      |                 ^~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:36:11: Signal is not used: 'io_slave_wlast'
+                                                      : ... In instance ysyx_25030087
+   36 |     input io_slave_wlast,
+      |           ^~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:38:11: Signal is not used: 'io_slave_bready'
+                                                      : ... In instance ysyx_25030087
+   38 |     input io_slave_bready,
+      |           ^~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:48:11: Signal is not used: 'io_slave_arvalid'
+                                                      : ... In instance ysyx_25030087
+   48 |     input io_slave_arvalid,
+      |           ^~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:50:18: Signal is not used: 'io_slave_araddr'
+                                                      : ... In instance ysyx_25030087
+   50 |     input [31:0] io_slave_araddr,
+      |                  ^~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:52:17: Signal is not used: 'io_slave_arid'
+                                                      : ... In instance ysyx_25030087
+   52 |     input [3:0] io_slave_arid,
+      |                 ^~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:54:17: Signal is not used: 'io_slave_arlen'
+                                                      : ... In instance ysyx_25030087
+   54 |     input [7:0] io_slave_arlen,
+      |                 ^~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:56:17: Signal is not used: 'io_slave_arsize'
+                                                      : ... In instance ysyx_25030087
+   56 |     input [2:0] io_slave_arsize,
+      |                 ^~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:58:17: Signal is not used: 'io_slave_arburst'
+                                                      : ... In instance ysyx_25030087
+   58 |     input [1:0] io_slave_arburst,
+      |                 ^~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:60:11: Signal is not used: 'io_slave_rready'
+                                                      : ... In instance ysyx_25030087
+   60 |     input io_slave_rready,
+      |           ^~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:75:13: Signal is not used: 'if_ctx_fire'
+                                                   : ... In instance ysyx_25030087.subsystem.cpu.core
+   75 | wire        if_ctx_fire;
+      |             ^~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:140:13: Signal is not used: 'op_rs1_idx'
+                                                    : ... In instance ysyx_25030087.subsystem.cpu.core
+  140 | wire [4:0]  op_rs1_idx;
+      |             ^~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:141:13: Signal is not used: 'op_rs2_idx'
+                                                    : ... In instance ysyx_25030087.subsystem.cpu.core
+  141 | wire [4:0]  op_rs2_idx;
+      |             ^~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:150:13: Signal is not used: 'exu_commit_pc'
+                                                    : ... In instance ysyx_25030087.subsystem.cpu.core
+  150 | wire [31:0] exu_commit_pc;
+      |             ^~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:161:13: Signal is not used: 'commit_mem_wdata'
+                                                    : ... In instance ysyx_25030087.subsystem.cpu.core
+  161 | wire [31:0] commit_mem_wdata;
+      |             ^~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_gen_imm.sv:12:49: Bits of signal are not used: 'inst'[6:0]
+                                                      : ... In instance ysyx_25030087.subsystem.cpu.core.u_decode_imm
+   12 |         input                   [31 : 0]        inst,
+      |                                                 ^~~~
+%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_exu.sv:19:24: Signal is not used: 'op_pred_taken'
+                                                  : ... In instance ysyx_25030087.subsystem.cpu.core.u_exu
+   19 |     input              op_pred_taken,
+      |                        ^~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_exu.sv:20:24: Signal is not used: 'op_pred_npc'
+                                                  : ... In instance ysyx_25030087.subsystem.cpu.core.u_exu
+   20 |     input      [31:0]  op_pred_npc,
+      |                        ^~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/bus/ysyx_lsu_axi4_adapter.sv:70:13: Signal is not used: 'local_request_aligned'
+                                                              : ... In instance ysyx_25030087.subsystem.cpu.core.u_lsu_axi4_adapter
+   70 | wire        local_request_aligned;
+      |             ^~~~~~~~~~~~~~~~~~~~~

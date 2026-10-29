@@ -1,0 +1,107 @@
+make: Entering directory '/home/cym/prj/ysyx-workbench/npc/flow'
+python3 01_common/flow.py check --config "00_indata/configs/npc_soc_cpu.tcl" --site "00_indata/configs/site.example.tcl"
+SDC_CONTRACT_PASS: 1 clock, 11 data inputs, 29 outputs, 19 inactive inputs; only reset false path; reset timing deferred
+LOCAL_CHECK_PASS: 20 SV sources; Tcl structure/SDC contract checked; EDA syntax/libraries/license NOT checked
+python3 -m unittest discover -s 04_tests -v
+test_bad_delay_order (test_flow.FlowTests) ... ok
+test_capacitance_core_report_failure_is_not_optional (test_flow.FlowTests) ... ok
+test_capacitance_mapping_without_enable_pins_is_explicit (test_flow.FlowTests) ... ok
+test_case_analysis_cannot_hide_active_or_reset_paths (test_flow.FlowTests) ... ok
+test_changed_library (test_flow.FlowTests) ... ok
+test_changed_netlist (test_flow.FlowTests) ... ok
+test_changed_snapshot (test_flow.FlowTests) ... ok
+test_clean_failed_run_and_reuse_id (test_flow.FlowTests) ... ok
+test_clean_rejects_unsafe_targets (test_flow.FlowTests) ... ok
+test_clock_drc_command_failure_is_not_optional (test_flow.FlowTests) ... ok
+test_complete_is_not_signoff (test_flow.FlowTests) ... ok
+test_diagnostic_reports_are_required (test_flow.FlowTests) ... ok
+test_dpi_define_rejected (test_flow.FlowTests) ... ok
+test_duplicate_run (test_flow.FlowTests) ... ok
+test_electrical_violations_fail_despite_zero_wns (test_flow.FlowTests) ... ok
+test_empty_high_fanout_is_valid (test_flow.FlowTests) ... ok
+test_empty_library (test_flow.FlowTests) ... ok
+test_inspect_requires_matching_archived_runner (test_flow.FlowTests) ... ok
+test_local_contract (test_flow.FlowTests) ... ok
+test_lost_fanout_or_clock_protection_stops_synthesis (test_flow.FlowTests) ... ok
+test_m5_scope_manifest_and_flash_profile (test_flow.FlowTests) ... ok
+test_missing_complete_marker (test_flow.FlowTests) ... ok
+test_missing_db_local_ok_server_fails (test_flow.FlowTests) ... ok
+test_missing_filelist (test_flow.FlowTests) ... ok
+test_missing_report_and_zero_area (test_flow.FlowTests) ... ok
+test_missing_sdc (test_flow.FlowTests) ... ok
+test_missing_tool (test_flow.FlowTests) ... ok
+test_missing_variable (test_flow.FlowTests) ... ok
+test_negative_slack_and_untested (test_flow.FlowTests) ... ok
+test_nested_reports_are_hashed_and_verified (test_flow.FlowTests) ... ok
+test_nested_violation_report_is_required_and_errors_fail (test_flow.FlowTests) ... ok
+test_nonfinite_budget (test_flow.FlowTests) ... ok
+test_nonzero_tool_exit (test_flow.FlowTests) ... ok
+test_probe_report_errors_despite_successful_exit (test_flow.FlowTests) ... ok
+test_real_tcl_wiring_with_mock_commands (test_flow.FlowTests) ... ok
+test_reset_exception_cannot_hide_data_paths (test_flow.FlowTests) ... ok
+test_retired_m4_scope_requires_old_revision (test_flow.FlowTests) ... ok
+test_sdc_missing_output_min (test_flow.FlowTests) ... ok
+test_snapshot_excludes_build_and_pdk (test_flow.FlowTests) ... ok
+test_sta_requires_synthesis (test_flow.FlowTests) ... ok
+test_stage_cannot_rerun (test_flow.FlowTests) ... ok
+test_tcl_path_quoting (test_flow.FlowTests) ... ok
+test_tool_symlink_dispatch (test_flow.FlowTests) ... ok
+test_unknown_coverage_format (test_flow.FlowTests) ... ok
+test_unreviewed_library (test_flow.FlowTests) ... ok
+test_wrong_netlist_top_is_rejected (test_flow.FlowTests) ... ok
+test_wrong_top (test_flow.FlowTests) ... ok
+test_zero_exit_error_text (test_flow.FlowTests) ... ok
+
+----------------------------------------------------------------------
+Ran 48 tests in 5.302s
+
+OK
+syn: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-uw5iocyq/runs/test
+sta: COMPLETE; TIMING_FAIL; /tmp/npc-flow-test-uw5iocyq/runs/test
+syn: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-_xhdb1p8/runs/test
+probe: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-pmsx6dtq/runs/retry
+CLEAN_SKIP: run does not exist: /tmp/npc-flow-test-16oklvbe/runs/absent
+syn: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-mts3fmoa/runs/test
+sta: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-mts3fmoa/runs/test
+syn: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-bd9z7m6y/runs/test
+sta: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-bd9z7m6y/runs/test
+syn: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-pn06qhgh/runs/test
+sta: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-pn06qhgh/runs/test
+syn: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-vgrfcghp/runs/test
+syn: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-ppybbxxy/runs/test
+{
+  "syn": {
+    "execution": "COMPLETE",
+    "signoff": "REVIEW_REQUIRED",
+    "warnings": [],
+    "reported_constraint_violation_rows": 0,
+    "cell_area": 12.5,
+    "power": "NOT_EVALUATED: disabled"
+  }
+}
+SDC_CONTRACT_PASS: 1 clock, 11 data inputs, 29 outputs, 19 inactive inputs; only reset false path; reset timing deferred
+LOCAL_CHECK_PASS: 20 SV sources; Tcl structure/SDC contract checked; EDA syntax/libraries/license NOT checked
+syn: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-cygbbu_n/runs/test
+syn: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-1xmgcxh8/runs/test
+syn: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-h6aopmay/runs/test
+sta: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-h6aopmay/runs/test
+syn: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-izzdozwn/runs/test
+sta: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-izzdozwn/runs/test
+syn: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-j6rnsa2v/runs/test
+probe: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-x5ggg7ig/runs/probe
+syn: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-x5ggg7ig/runs/test
+sta: COMPLETE; TIMING_FAIL; /tmp/npc-flow-test-x5ggg7ig/runs/test
+syn: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-8onyv_p9/runs/test
+probe: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-9lchpp_p/runs/test
+syn: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-9lchpp_p/runs/test
+sta: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-9lchpp_p/runs/test
+syn: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-wlxra0qo/runs/test
+sta: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-wlxra0qo/runs/test
+syn: COMPLETE; REVIEW_REQUIRED; /tmp/npc-flow-test-b4yqgywb/runs/test
+python3 ../tests/synthesis_scope_check.py
+synthesis: PASS (41 reviewed warnings)
+synthesis_overrides_dpi: PASS (41 reviewed warnings)
+simulation_no_dpi: PASS (30 reviewed warnings)
+simulation_dpi: PASS (30 reviewed warnings)
+Synthesis scope check: PASS; evidence: /home/cym/prj/ysyx-workbench/npc/flow/build/s7-scope-check
+make: Leaving directory '/home/cym/prj/ysyx-workbench/npc/flow'

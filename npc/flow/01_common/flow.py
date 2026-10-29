@@ -24,6 +24,18 @@ SOURCE_DIRS = ('00_indata/configs', '00_indata/constraints', '00_indata/filelist
                '01_common', '02_syn', '03_sta', '04_tests')
 CFG_KEYS = set('top filelist sdc defines period input_min input_max output_min output_max uncertainty_setup uncertainty_hold clock_transition input_transition output_load source_latency_min source_latency_max max_cores power_enable power_toggle power_probability'.split())
 SITE_KEYS = set('dc_shell pt_shell target_db library_name operating_condition corner vt time_unit capacitance_unit area_unit wire_load_model library_reviewed'.split())
+# Frozen scope profiles also enter run.tcl/manifest, so shared Tcl does not guess
+# clock/reset names or a historical LSU hierarchy. M4 requires its old revision.
+SCOPES = {
+    'ysyx_core_axi4lite': dict(
+        description='Core + adapters + Arbiter; observation ports retained; IFQ_DEPTH=2; PC_RST=0x80000000',
+        defines='SYNTHESIS', clock_port='clk', reset_port='rst_n', reset_inactive='1',
+        lsu_path='core/u_lsu'),
+    'ysyx_25030087': dict(
+        description='M5 CPU wrapper + core + AXI adapters/arbiter/router + CLINT; observation outputs unconnected; IFQ_DEPTH=2; PC_RST=0x30000000; external IRQ/ChipLink disabled; no upstream SoC/memory models',
+        defines='SYNTHESIS NPC_FLASH_BOOT', clock_port='clock', reset_port='reset', reset_inactive='0',
+        lsu_path='subsystem/cpu/core/u_lsu'),
+}
 
 
 class FlowError(RuntimeError):
@@ -77,8 +89,8 @@ def load_config(config, site):
     cfg, site_data = data['cfg'], data['site']
     for label, values, keys in [('design', cfg, CFG_KEYS), ('site', site_data, SITE_KEYS)]:
         require(set(values) == keys, f'{label} keys: missing={keys-set(values)}, unexpected={set(values)-keys}')
-    require(cfg['top'] == 'ysyx_core_axi4lite', 'Wrong top: S1 scope is ysyx_core_axi4lite')
-    require(cfg['defines'] == 'SYNTHESIS', 'Implementation defines must be exactly SYNTHESIS')
+    require(cfg['top'] in SCOPES, 'Wrong top: select a reviewed scope profile')
+    require(cfg['defines'] == SCOPES[cfg['top']]['defines'], 'Implementation defines must match the frozen scope profile')
     for key in CFG_KEYS - {'top', 'filelist', 'sdc', 'defines'}:
         try:
             number = float(cfg[key])
@@ -107,7 +119,7 @@ def load_config(config, site):
 def source_inputs(cfg):
     if cfg['top'] == 'ysyx_core_axi4lite' and not (NPC / 'vsrc/top/ysyx_core_axi4lite.sv').is_file():
         raise FlowError('M4 Lite scope retired by M5 S1. Reproduce M4 using its pinned Git revision; '
-                        'the new SoC CPU scope/SDC is scheduled for M5 S7. Existing run inspection remains available.')
+                        'select npc_soc_cpu.tcl for M5 S7. Existing runs require their archived runner.')
     def local(name):
         path = (NPC / name).resolve()
         require(path.is_relative_to(NPC), f'Input escapes npc/: {name}')
@@ -170,7 +182,8 @@ def local_check(config, site):
     data, sources, files = preflight(config, site)
     # Tcl's parser checks balanced syntax; the SDC mock verifies all port budgets.
     script = 'foreach p $argv {set f [open $p]; set s [read $f]; close $f; if {![info complete $s]} {error "Incomplete Tcl: $p"}}'
-    proc = subprocess.run(['tclsh', str(FLOW / '04_tests/sdc_check.tcl'), str(config), str(NPC / data['cfg']['sdc']), str(NPC / 'vsrc/top/ysyx_core_axi4lite.sv')], text=True, capture_output=True)
+    top_source = next(p for p in sources if re.search(r'\bmodule\s+'+re.escape(data['cfg']['top'])+r'\b', p.read_text()))
+    proc = subprocess.run(['tclsh', str(FLOW / '04_tests/sdc_check.tcl'), str(config), str(NPC / data['cfg']['sdc']), str(top_source)], text=True, capture_output=True)
     require(proc.returncode == 0, proc.stdout + proc.stderr)
     # stdin-mode Tcl otherwise may print errors and still exit 0; explicit catch/exit.
     code = 'set argv [list '+ ' '.join(tcl_word(p) for p in sorted(files) if p.suffix in ('.tcl', '.sdc')) + ']\nif {[catch {'+script+'} m]} {puts stderr $m; exit 1}\n'
@@ -202,6 +215,8 @@ def create_run(data, sources, files, config, site_path, run_root, run_id):
     lines = ['set run '+tcl_word(run)]
     for name, values in data.items():
         lines.append('set '+name+' [dict create '+' '.join(tcl_word(k)+' '+tcl_word(v) for k,v in values.items())+']')
+    scope = SCOPES[data['cfg']['top']]
+    lines.append('set scope [dict create '+' '.join(tcl_word(k)+' '+tcl_word(v) for k,v in scope.items())+']')
     lines.append('set rtl_sources [list '+' '.join(tcl_word(p.relative_to(NPC)) for p in sources)+']')
     (run / 'inputs/run.tcl').write_text('\n'.join(lines)+'\n')
     def git(*args):
@@ -227,7 +242,7 @@ def create_run(data, sources, files, config, site_path, run_root, run_id):
             external[str(path.resolve())] = sha(path)
     manifest = {'schema': 1, 'run': str(run), 'created_utc': datetime.now(timezone.utc).isoformat(),
                 'git_head': git('rev-parse', 'HEAD').strip(), 'config': data,
-                'scope': 'Core + adapters + Arbiter; observation ports retained; IFQ_DEPTH=2; PC_RST=0x80000000',
+                'scope': scope['description'], 'scope_contract': scope,
                 'environment': {'SYNOPSYS': os.environ.get('SYNOPSYS', ''), 'dc_startup': 'installation + user setups; launch cwd is isolated', 'pt_startup': '-no_init'},
                 'inputs': {str(p.relative_to(run)): sha(p) for p in (run/'inputs').rglob('*') if p.is_file()},
                 'external_inputs': external, 'stages': {}, 'signoff': 'NOT_EVALUATED'}
@@ -337,7 +352,8 @@ def inspect_stage(run, stage):
         area = re.search(r'Total cell area:\s*([0-9.eE+-]+)', (report/'area/area.rpt').read_text())
         require(area and math.isfinite(float(area[1])) and float(area[1]) > 0, 'Missing/zero/invalid mapped cell area')
         netlist = (run/'outputs/core.v').read_text()
-        require(re.search(r'\bmodule\s+ysyx_core_axi4lite\b', netlist), 'Netlist top absent')
+        top = json.loads((run/'manifest.json').read_text())['config']['cfg']['top']
+        require(re.search(r'\bmodule\s+'+re.escape(top)+r'\b', netlist), 'Netlist top absent')
         require(not re.search(r'\b(?:GTECH_\w*|SEQGEN)\b', netlist), 'Unmapped primitive in exported netlist')
         result['cell_area'] = float(area[1])
         result['power'] = (report/'power/power_status.txt').read_text().strip()
@@ -409,7 +425,7 @@ def execute(run, stage):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('action', choices=['check', 'preflight', 'probe', 'synth', 'sta', 'all', 'inspect', 'clean'])
-    parser.add_argument('--config', type=Path, default=FLOW/'00_indata/configs/npc_core.tcl')
+    parser.add_argument('--config', type=Path, default=FLOW/'00_indata/configs/npc_soc_cpu.tcl')
     parser.add_argument('--site', type=Path, default=FLOW/'00_indata/configs/site.example.tcl')
     parser.add_argument('--run-root', type=Path, default=FLOW/'build')
     parser.add_argument('--run-id')

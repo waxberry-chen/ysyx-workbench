@@ -76,7 +76,7 @@ if {[catch {
         # -clock_pins 指发起数据的寄存器时钟引脚，不是只分析时钟树。
         # -data_pins 限定寄存器数据端，故这四类报告不能替代全局 recovery/removal
         # coverage；reset release 检查仍要在全局时序/coverage 报告里审查。
-        set external_inputs [remove_from_collection [all_inputs] [get_ports clk]]
+        set external_inputs [remove_from_collection [all_inputs] [get_ports $clock_port]]
         foreach {group from to} [list Reg2Reg [all_registers -clock_pins] [all_registers -data_pins] \
                 In2Reg $external_inputs [all_registers -data_pins] \
                 Reg2Out [all_registers -clock_pins] [all_outputs] In2Out $external_inputs [all_outputs]] {

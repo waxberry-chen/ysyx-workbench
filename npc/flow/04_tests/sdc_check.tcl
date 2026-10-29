@@ -7,11 +7,19 @@ if {[catch {
     source [lindex $argv 0]
     set f [open [lindex $argv 2]]; set rtl [read $f]; close $f
     set inputs {}; set outputs {}; set all {}
-    foreach {whole direction range name} [regexp -all -inline {(input|output) wire\s*(\[[0-9]+:0\])?\s*([a-zA-Z_][a-zA-Z_0-9]*)} $rtl] {
+    foreach {whole direction name} [regexp -all -inline {(input|output)\s+(?:wire\s+)?(?:\[[0-9]+:0\]\s*)?([a-zA-Z_][a-zA-Z_0-9]*)} $rtl] {
         if {$direction eq "input"} {lappend inputs $name} else {lappend outputs $name}
         lappend all $name
     }
-    if {[llength $all] != 34} {error "S1 top port count changed"}
+    set clock_port clk; set reset_port rst_n; set inactive {}; set expected_count 34
+    if {[dict get $cfg top] eq "ysyx_25030087"} {
+        set clock_port clock; set reset_port reset; set expected_count 61
+        foreach p $inputs {
+            if {$p eq "io_interrupt" || [string match io_slave_* $p]} {lappend inactive $p}
+        }
+        if {[llength $inactive] != 19} {error "Inactive interface contract changed"}
+    }
+    if {[llength $all] != $expected_count} {error "Scope top port count changed"}
     set clock_count 0
     set assigned [dict create]
     proc get_ports {names} {
@@ -29,7 +37,7 @@ if {[catch {
         return $name
     }
     proc create_clock {args} {
-        if {$args ne [list -name core_clk -period [dict get $::cfg period] clk]} {error "Clock contract changed"}
+        if {$args ne [list -name core_clk -period [dict get $::cfg period] $::clock_port]} {error "Clock contract changed"}
         incr ::clock_count
     }
     proc record {command args} {
@@ -45,18 +53,27 @@ if {[catch {
         proc $command {args} "record $command {*}\$args"
     }
     proc set_false_path {args} {
-        if {$args ne [list -from rst_n]} {error "Only -from rst_n may be excluded"}
+        if {$args ne [list -from $::reset_port]} {error "Only -from $::reset_port may be excluded"}
         record set_false_path {*}$args
+    }
+    proc set_case_analysis {value objects} {
+        if {$value ne "0"} {error "Inactive interfaces must be tied to zero"}
+        foreach p $objects {
+            if {$p ni $::inactive} {error "Case analysis may only target disabled interfaces: $p"}
+        }
+        record set_case_analysis $value $objects
     }
     source [lindex $argv 1]
     if {$clock_count != 1} {error "Expected one clock"}
     foreach p $inputs {
-        if {$p eq "clk"} {continue}
-        if {$p eq "rst_n"} {
+        if {$p eq $clock_port} {continue}
+        if {$p eq $reset_port || $p in $inactive} {
             foreach mode {-min -max} {
-                if {[dict exists $assigned "set_input_delay:$mode:$p"]} {error "Reset delay must remain unspecified"}
+                if {[dict exists $assigned "set_input_delay:$mode:$p"]} {error "Reset/inactive delay must remain unspecified"}
             }
-            foreach command {set_false_path: set_input_transition:} {
+            set commands {set_input_transition:}
+            if {$p eq $reset_port} {lappend commands set_false_path:} else {lappend commands set_case_analysis:}
+            foreach command $commands {
                 if {![dict exists $assigned "$command:$p"]} {error "Missing $command for $p"}
             }
             continue
@@ -73,5 +90,6 @@ if {[catch {
     foreach command {set_clock_uncertainty:-setup set_clock_uncertainty:-hold set_clock_transition: set_clock_latency:-min set_clock_latency:-max} {
         if {![dict exists $assigned "$command:core_clk"]} {error "Missing $command"}
     }
-    puts "SDC_CONTRACT_PASS: 1 clock, 8 data inputs, 24 outputs; only rst_n false path; reset timing deferred"
+    set active [expr {[llength $inputs] - 2 - [llength $inactive]}]
+    puts "SDC_CONTRACT_PASS: 1 clock, $active data inputs, [llength $outputs] outputs, [llength $inactive] inactive inputs; only $reset_port false path; reset timing deferred"
 } message]} {puts stderr $message; exit 1}

@@ -1,22 +1,18 @@
-# NPC DC/PT baseline flow
+# NPC DC/PT pre-layout evaluation flow
 
-> M5 S1（2026-10-20）：当前 RTL 已升级，M4 的 `ysyx_core_axi4lite` scope 不再存在。
-> 本页原命令/配置用于历史复现，请使用 M4 对应 Git revision；当前新建 run 的 preflight 会明确拒绝旧 scope。
-> 已存在 run 的 `inspect` 不受影响。新的 CPU + router/CLINT/wrapper scope 与 SDC 在 M5 S7 建立。
+> 2026-10-29：M5 S7 本地准备完成，默认配置为 `npc_soc_cpu.tcl`。真实 DC/PT 和 M17 验收待服务器运行回传。
+> M4 的 `npc_core.tcl/core.f/core.sdc` 保留为历史配置；该 RTL top 已退役，复现 M4 必须使用其固定 Git revision。
 
+当前 top 是实际接入 SoC 的 `ysyx_25030087`：**core + AXI adapters/arbiter/router + 内部 CLINT + wrapper**。
+采用 `SYNTHESIS NPC_FLASH_BOOT`，`PC_RST=0x30000000`，`IFQ_DEPTH=2`；RV32E 的 16 个 GPR，无 M/C。
+wrapper 的 commit/monitor 输出没有连到顶层，允许综合裁剪观察逻辑。与 M4 保留观察端口的范围不同。
 
-M4 S2 provides a small **wire-load DC → pre-layout PT** flow for
-`ysyx_core_axi4lite`: Core + IFU/LSU adapters + Arbiter. All commit/monitor ports remain in scope. M4 S2.5 reduces the register file to
-16 entries and removes M arithmetic; illegal encodings raise cause 2.
-No parameter overrides: `PC_RST=0x80000000`, `IFQ_DEPTH=2`.
-No B1 SRAM/peripherals, Xbar, memory compiler, PnR, SPEF, GLS or PTPX dependency.
+`00_indata/filelists/soc_cpu.f` 包含 20 个有序 SV 源文件，路径相对 **npc/**；primitive include 的
+`ysyx_global.sv` 也进入快照。上游完整 SoC、SRAM/Flash/PSRAM 模型、仿真 monitor 和 AXI 延迟模块
+均不在该范围内，无 memory compiler、PnR、SPEF、GLS 或 PTPX 依赖。
 
-`00_indata/filelists/core.f` contains 16 ordered SystemVerilog sources, relative to **npc/**.
-The primitive also includes `vsrc/gnrl/ysyx_global.sv`. Implementation defines
-only `SYNTHESIS`; normal NPC simulation separately enables `NPC_SIM_DPI`.
-GPR x1–x15 reset to zero and x0 reads zero. See the current
-[ISA/CSR contract](../../docs/notes/post-c/4-pre-soc-signoff/2.5-isa-contract.md);
-S1 and first-synthesis reports describe the historical 32-entry/M implementation.
+设计边界、逐端口预算、例外和服务器交接见 [M5 S7](../../docs/notes/post-c/5-ysyx-soc-integration/7-synthesis-sta.md)。
+这是普通 wire-load DC → pre-layout PT 面积/时序评估，不是完整 SoC 的物理实现结果。
 
 ## 目录与输入
 
@@ -45,9 +41,9 @@ flow 的配置和外部输入统一放在 `00_indata`；RTL 的唯一维护位�
 | 阅读顺序 | 文件 | 重点问题 |
 | --- | --- | --- |
 | 1 | [Makefile](Makefile) | 哪些入口在本地检查，哪些会启动服务器 EDA？新 run 与已有 RUN 怎样区分？ |
-| 2 | [设计配置](00_indata/configs/npc_core.tcl)、[site 配置](00_indata/configs/site.example.tcl) | 什么是 top、PVT/Vt、周期、slew/load？哪些数值是假设，哪些必须读库确认？ |
+| 2 | [设计配置](00_indata/configs/npc_soc_cpu.tcl)、[site 配置](00_indata/configs/site.example.tcl) | 什么是 top、PVT/Vt、周期、slew/load？哪些数值是假设，哪些必须读库确认？ |
 | 3 | [共享初始化](01_common/setup.tcl) | target/link/synthetic 库各做什么？`.db` 与 WLM 如何参与分析？ |
-| 4 | [SDC](00_indata/constraints/core.sdc) | 时钟和 I/O min/max 怎样定义时序预算？早期 reset 例外排除了哪些检查、何时撤销？ |
+| 4 | [SDC](00_indata/constraints/soc_cpu.sdc) | 时钟和 I/O min/max 怎样定义时序预算？早期 reset 例外排除了哪些检查、何时撤销？ |
 | 5 | [DC 综合](02_syn/run.tcl) | analyze、elaborate、link、compile 分别完成什么？`.v`、`.ddc`、`.sdc` 各交给谁？ |
 | 6 | [PT 分析](03_sta/run.tcl) | setup/hold、arrival/required time、slack、WNS/TNS、coverage 怎样解读？ |
 | 7 | [Python driver](01_common/flow.py) | 快照/hash 如何防止误用旧结果？为什么进程退出 0 还不够？ |
@@ -57,18 +53,20 @@ flow 的配置和外部输入统一放在 `00_indata`；RTL 的唯一维护位�
 
 ## Local checks
 
-Requires Python **3.9+** and Tcl **8.6**. No EDA executable or PDK is needed:
+Requires Python **3.9+**, Tcl **8.6**, and Verilator for `scope-check`. No EDA executable or PDK is needed:
 
 ```bash
-make -C npc/flow check test
+make -C npc/flow check test scope-check
 ```
 
 `check` validates config/source closure, Tcl completeness and the SDC object
 contract. `test` exercises failure handling/provenance with explicitly fake tools,
 and sources the actual Tcl scripts against a mock command surface. Passing these
 checks **does not establish DC/PT command compatibility, library/license readiness,
-synthesis, STA, or timing PASS**. Current functional evidence includes the S2.5
-ISA contract and the [S6 final local regressions](../../docs/notes/post-c/4-pre-soc-signoff/6-reproduction.md#2-本地最终回归本次重新执行的证据).
+synthesis, STA, or timing PASS**. `scope-check` checks four macro profiles with
+Verilator, rejects synthesis DPI/assertions/latches/unreviewed warnings, and saves
+results under `build/s7-scope-check/`. Functional evidence is the
+[M5 S6 system regression](../../docs/notes/post-c/5-ysyx-soc-integration/s6-validation/README.md).
 
 ## Server execution
 
@@ -76,6 +74,7 @@ First enter the server environment that provides DC/PT and licenses. Do not run
 these stages locally to reproduce ref-flow. Run from this repository's root:
 
 ```bash
+# 首次配置时才复制；已有核对过的 site.local.tcl 应直接复用，不覆盖。
 cp npc/flow/00_indata/configs/site.example.tcl npc/flow/00_indata/configs/site.local.tcl
 make -C npc/flow probe SITE=00_indata/configs/site.local.tcl RUN_ID=lib-probe
 ```
@@ -104,20 +103,17 @@ so it cannot silently become a measured NPC corner based only on a filename. Pri
 
 ```bash
 make -C npc/flow preflight SITE=00_indata/configs/site.local.tcl
-make -C npc/flow all SITE=00_indata/configs/site.local.tcl RUN_ID=core-tt-200mhz
+make -C npc/flow all SITE=00_indata/configs/site.local.tcl RUN_ID=soc-cpu-tt-5ns-s7
 # Or split DC and PT without regenerating inputs:
-make -C npc/flow synth SITE=00_indata/configs/site.local.tcl RUN_ID=core-tt-200mhz-split
-make -C npc/flow sta RUN=build/core-tt-200mhz-split
-make -C npc/flow inspect RUN=build/core-tt-200mhz
+make -C npc/flow synth SITE=00_indata/configs/site.local.tcl RUN_ID=soc-cpu-tt-5ns-s7-split
+make -C npc/flow sta RUN=build/soc-cpu-tt-5ns-s7-split
+make -C npc/flow inspect RUN=build/soc-cpu-tt-5ns-s7
 ```
 
-当前默认周期为 **5 ns / 200 MHz**，数据 I/O 的 min/max 为 0.2/2.0 ns；
-reset 无 input delay，仅按当前 scope 设置精确 false path。
-[04 实验](../../docs/notes/post-c/4-pre-soc-signoff/synthesis-results/04-200mhz-baseline/README.md)
-已建立该条件下的 S3 面积/数据时序基线。
-[S6 复现与交接](../../docs/notes/post-c/4-pre-soc-signoff/6-reproduction.md)包含最终回归、
-服务器新 run 命令及复现对照标准；05 已独立复现 04，
-[M4 本轮验收完成](../../docs/notes/post-c/4-pre-soc-signoff/signoff.md)。后续复现继续使用新目录，不覆盖历史 run。
+当前默认周期为 **5 ns / 200 MHz**，活动数据 I/O 的 min/max 为 0.2/2.0 ns；
+reset 无 input delay，仅对高有效 `reset` 发起的路径设置 false path。
+这是新范围的待验证目标，不能把 M4 04/05 的通过结论套到当前设计。
+5 ns 不改变功能仿真 100 MHz 的时钟或 AM timer 时间单位；实际改变运行频率时须同步软件配置。
 
 `preflight` checks paths/config/tool executability, not license checkout or Tcl
 command support. `probe`/`synth`/`all` always create a **new** run; existing IDs
@@ -162,61 +158,35 @@ failed run before retrying; existing runs retain their original inputs.
 
 ## Constraints and models
 
-`00_indata/configs/npc_core.tcl` freezes the **pre-layout baseline** 5 ns target (200 MHz), not a
-measured silicon frequency or a demonstrated Fmax. Inputs and outputs have 0.2/2.0 ns min/max delay;
-setup/hold uncertainty is 0.2/0.05 ns; clock/input transition 0.1 ns; output load
-0.01 pF; source latency min/max 0 ns. All observation outputs are included.
-These are explicit initial interface assumptions, not extracted from a board or
-SoC. The accepted S3 run satisfies timing under these assumptions. Failed runs
-remain diagnostic records; frequency exploration is a separate configuration/run
-with the other assumptions held fixed.
+`npc_soc_cpu.tcl` 冻结初始接口假设，`soc_cpu.sdc` 将其施加到实际 wrapper：
 
-For early core-only evaluation, `set_false_path -from [get_ports rst_n]` defers
-reset timing until the actual SoC/reset source and IO contract are defined. The old
-`reset_min/reset_max` configuration keys and reset input delays are removed; update
-custom design configs accordingly. Recovery/removal and reset-to-data/output paths
-are excluded. This does not prove pulse-width safety or guarantee that untested
-checks disappear. Keep coverage and all diagnostic reports for review.
-No reset case analysis, RTL reset removal or internal synchronizer is added.
-The timing clock stays ideal; uncertainty does not model CTS. See the explicit
-[reset TODO and scope](../../docs/notes/post-c/4-pre-soc-signoff/reset-timing-todo.md).
-Historical runs retain their frozen configurations; use a new RUN_ID.
+- 一个理想时钟 `clock`，5 ns；setup/hold uncertainty 0.2/0.05 ns，clock slew 0.1 ns，source latency 0。
+- 11 个 AXI master 输入字段施加 min/max=0.2/2.0 ns，全部非时钟输入 slew=0.1 ns。
+- 29 个输出字段（含常量 slave tie-off）施加 min/max=0.2/2.0 ns 和 0.01 pF load。
+- 19 个禁用接口输入字段（外部 IRQ + slave 输入）显式 `set_case_analysis 0`；内部 CLINT timer IRQ 保持活动。
+- 只有高有效 `reset` 发起路径设置 false path。保留真实复位逻辑，无 reset case analysis；物理脉宽和释放待实际 reset 设计评估。
 
-The single selected library is shared by DC and PT. Automatic area-based wire
-load selection is disabled and mode is `top`. `wire_load_model=library_default`
-is an **explicit policy**: inspect the actual default model in library/design/
-wire-load reports. If the library has no model, do not relabel the result as a
-physical interconnect estimate. Alternatively specify an exact named library
-model, applied identically in both tools. The current example is not a claim of
-zero RC or of a particular WLM name. No SPEF or C906 wire model is substituted.
+以上字段数按命名端口计，不是展平后的 bit 数。RID/BID/RLAST、常量 ID/LEN/其他固定输出等
+可能没有功能时序路径；必须按网表/coverage 分类，不能据此忽略活动端点。
+上游 reset 延长链不在本 scope 内；M4 的 reset untested 数量/处置不能直接复用。
 
-DC uses ordinary `compile -map_effort medium`, without `compile_ultra`, gating,
-scan, UPF, physical optimization or additional DesignWare Foundation libraries.
-The current policy omits the explicit
-`set_fix_multiple_port_nets -all -buffer_constants` request; the 66 min-capacitance
-violations from experiment 03 no longer appear in accepted run 04. Feedthrough assigns may remain;
-ordinary timing-driven buffering is still allowed. Electrical checks stay enabled.
-See [the original diagnostic procedure and acceptance checks](../../docs/notes/post-c/4-pre-soc-signoff/s3-buffer-check.md).
-The accepted baseline sets **DC-only `max_fanout 32` on the synthesis
-top**, replacing the extra 0.075 pF capacitance target. This is a sum of library
-`fanout_load` weights, not necessarily 32 pins. All library capacitance and slew
-limits remain applicable to ordinary data/control nets. DC explicitly disables
-clock-network DRC fixing with `set_auto_disable_drc_nets -on_clock_network true`;
-the shared SDC retains ideal-clock timing. Pre/post compile checks require the
-top fanout attribute to remain present. The clock source net's
-`auto_disable_drc_nets` flag is an optional query: DC 2023 reports it unavailable,
-so the report records `UNAVAILABLE`, not a verified true/false result. Check the
-mapped clock connectivity; failures of the policy command itself still stop the flow.
-PT continues to check the original SDC and library rules. Other high-fanout control
-nets, including reset, are subject to this optimization policy. Run 04 has no
-DC/PT constraint violations; S6 checks reproduction against its area, timing and
-coverage rather than treating the policy alone as proof of passing.
-See [fanout policy and clock handling](../../docs/notes/post-c/4-pre-soc-signoff/s3-capacitance-check.md#7-改用-max_fanout-32-并排除时钟-drc-修复).
-The built-in standard synthetic library supports HDL operators. Server mapping
-and resource reports must confirm that the large arithmetic really maps.
-PT reads `outputs/core.v` and replays the **same frozen design SDC/config** as DC;
-DC's exported `dc.sdc` is also retained/hashed for cross-checks. PT does not source
-DC-specific environment commands from that export.
+DC/PT 使用同一 site 工艺库、PVT 和 WLM 策略：`auto_wire_load_selection=false`、mode=`top`，
+`wire_load_model=library_default` 时必须核对报告中的实际默认模型。没有 SPEF/布局信息，
+不能将其解释为真实布线寄生。全芯片时序、CTS、全 PVT、reset 物理保证不属于本轮结论。
+
+DC 继续使用普通 `compile -map_effort medium`；不请求 `compile_ultra`、scan、clock gating 或物理优化。
+DC-only `set_max_fanout 32` 作用于当前顶层（库 fanout_load 之和，不一定是 32 个引脚），
+`set_auto_disable_drc_nets -on_clock_network true` 保护时钟不按普通数据网络做 DRC 修复。
+库电容和 slew 检查保留；没有额外 0.075 pF 目标，也不强制 `set_fix_multiple_port_nets` 插 buffer。
+
+高扇出和 LSU enable 电容诊断复用 M4 方法，但时钟端口和 LSU 层次取自冻结 scope：
+`clock`、`subsystem/cpu/core/u_lsu`。DC 2023 的 clock net 属性不可查询时仍明确记录
+`UNAVAILABLE`，不冒充保护已验证；需要审查 mapped clock connectivity。
+历史策略依据见 [M4 fanout 诊断](../../docs/notes/post-c/4-pre-soc-signoff/s3-capacitance-check.md#7-改用-max_fanout-32-并排除时钟-drc-修复)。
+
+产物名称继续使用 `outputs/core.v/core.ddc/dc.sdc`，其中 **core.v 的顶层为 ysyx_25030087**。
+PT 读取该 run 的网表，重放相同冻结的设计 SDC/config；导出的 `dc.sdc` 保留作核对。
+manifest 同时记录新 scope、宏、时钟/reset 名称和 LSU 层次，防止套用旧范围说明。
 
 ## 报告目录与阅读顺序
 
@@ -297,7 +267,7 @@ before PT can consume them; mutation fails both before and after tool execution.
 DC startup files discovered in HOME/install/SYNOPSYS are hashed; the launch cwd
 is empty and isolated. PT uses `-no_init`. DC startup scripts may themselves source
 other files: review any site customization and add its dependencies to the run
-record for S3. This is reproducible input accounting, not a hermetic EDA container.
+record for S7. This is reproducible input accounting, not a hermetic EDA container.
 No script changes HOME or license variables.
 
 A successful shell exit alone is insufficient: the driver checks completion
@@ -316,16 +286,16 @@ failure already takes priority. Zero rows never imply automatic constraint PASS.
 A negative baseline is retained for analysis, not discarded or called timing PASS.
 Unknown coverage format, missing outputs and tool errors fail execution. Warnings,
 untested checks (including constants), loops, disabled/unconstrained paths, clock
-and DRV coverage require S3 review; **this driver never awards automatic signoff
+and DRV coverage require S7 review; **this driver never awards automatic signoff
 PASS**, even for zero WNS. Raw reports take precedence over the small summary.
 
 Optional `power_enable=1` attempts DC power reports with input activity 0.1 toggles
 per core clock period and static probability 0.5; clock is 2 toggles/period,
-reset inactive with zero toggles/probability 1. Internal activity is default or
+reset inactive with zero toggles/probability 0 (M5 active-high reset). Internal activity is default or
 propagated, not workload-derived. The attempt runs after netlist/SDC export,
 without changing timing constraints, and is separately logged. Unsupported
 commands/models are `NOT_EVALUATED` and do not block area/timing; apparently
 successful estimates still require unit/activity/coverage review. Default is off.
 
-Design decisions, manual pages, local results and server handoff:
-[M4 S2](../../docs/notes/post-c/4-pre-soc-signoff/2-flow.md).
+Current scope and server handoff: [M5 S7](../../docs/notes/post-c/5-ysyx-soc-integration/7-synthesis-sta.md).
+Original flow design/manual references: [M4 S2](../../docs/notes/post-c/4-pre-soc-signoff/2-flow.md).

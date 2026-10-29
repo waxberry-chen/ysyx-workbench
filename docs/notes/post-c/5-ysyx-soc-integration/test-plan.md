@@ -1,6 +1,6 @@
 # M5 验收矩阵
 
-> 2026-10-28：S0–S6 完成，M01–M16 的对应阶段范围通过。S5 的 timer/IRQ/AM 见[精选归档](s5-validation/README.md)；S6 的完整有限抢占/唤醒、资源、UART 与系统回归见[实施记录](6-system-validation.md)和[精选归档](s6-validation/README.md)。M17/M18 待 S7/S8。
+> 2026-10-28：S0–S6 完成，M01–M16 的对应阶段范围通过。S5 的 timer/IRQ/AM 见[精选归档](s5-validation/README.md)；S6 的完整有限抢占/唤醒、资源、UART 与系统回归见[实施记录](6-system-validation.md)和[精选归档](s6-validation/README.md)。M17 已完成 [S7 本地准备](s7-validation/README.md)，真实 DC/PT 待验；M18 待 S8。
 
 S0 证据：[manifest](s0-validation/manifest.json)、[61-port 表](s0-validation/cpu-ports.csv)、[生成日志](s0-validation/generation.log)、[静态展开诊断](s0-validation/elaboration-diagnostics.txt)、[容量检查](s0-validation/rtt-budget.txt)。空 CPU stub 只用于静态展开，没有运行指令；242 条上游诊断已分类，不构成全 SoC lint clean。
 
@@ -26,7 +26,7 @@ S0 证据：[manifest](s0-validation/manifest.json)、[61-port 表](s0-validatio
 | M14 / S6：PASS | 有限 RT-Thread：至少两线程无需主动 yield 也能在 tick 下交替取得进展，阻塞/唤醒、上下文、heap/stack 正确；退出有固定 PASS 与超时 | [S6 证据](s6-validation/README.md)：正常/随机等待两种 RTT 运行各 15 IRQ，六轮忙等待交替、sleep 4/6 tick 后唤醒；四个栈独立 SP/图案检查、heap 峰值与归还 |
 | M15 / S6：PASS | UART 配置波特率、轮询发送状态；实际 serial TX 解码长字符串，字符数量/顺序一致；系统在固定与随机总线延迟下完成 | [S6 证据](s6-validation/README.md)：divisor=8，正常/固定/随机等待各精确解码 528 字节，THRE 忙轮询与帧采样时间通过；错误接收波特率负例失败 |
 | M16 / S1–S6：PASS | 在升级后的 AXI4 接口上验证原有 CPU 语义；S6 已运行 34 个适用 CPU tests、sieve/fib；hello/memory 各固定等待及 10 个随机 seed，实际 SoC 错误路径与独立注入分别验收 | [S1 迁移表](1-axi4-interface.md#6-旧检查点与入口迁移)与[S6 归档](s6-validation/README.md)：协议/CPU/responder 错误/guard 回归、CPU 分类、全部实际命令/seed/超时；unalign 明确排除 |
-| M17 / S7 | 真实 DC/PT 对冻结的新 scope 完成；无未解析引用、非预期 latch/loop/未约束功能端点，setup/hold 与电气规则通过，coverage/告警有逐类处置 | manifest、SDC/端口预算、area/qor/timing/DRV/coverage、reset 例外和主要路径；未达标为诊断结果 |
+| M17 / S7：本地准备完成，EDA 待验 | 真实 DC/PT 对冻结的新 scope 完成；无未解析引用、非预期 latch/loop/未约束功能端点，setup/hold 与电气规则通过，coverage/告警有逐类处置 | [S7 本地检查](s7-validation/README.md)及[交接命令](7-synthesis-sta.md)；服务器 manifest、area/qor/timing/DRV/coverage 待回传；未达标为诊断结果 |
 | M18 / S8 | 干净运行目录重建镜像/SoC 仿真；S0–S7 证据对应最终版本；M6 的存储、程序、频率与统计口径固定 | signoff、复现命令、版本/hash、剩余风险、精选波形与 bug case |
 
 ## 执行组织

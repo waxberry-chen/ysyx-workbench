@@ -16,6 +16,7 @@ help:
 	@echo 'M5 S4: make s4-test; make run SOC_BOOT=flash IMG=/path/to/flash.bin'
 	@echo 'M5 S5: make s5-test; timer IRQ, AM context and RT-Thread tick'
 	@echo 'M5 S6: make s6-test; preemption/wakeup, stack/heap, serial UART and system regression'
+	@echo 'M5 S7: make -C flow check test scope-check; server DC/PT uses configs/npc_soc_cpu.tcl under 00_indata'
 lint:
 	verilator --lint-only --sv --assert -Wall -Wno-fatal --top-module ysyx_25030087 -F filelist-soc.f
 include scripts/tests.mk

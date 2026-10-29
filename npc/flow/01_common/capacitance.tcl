@@ -16,7 +16,7 @@ proc cap_attributes {object attributes} {
 }
 
 proc report_lsu_enable_capacitance {} {
-    global reports stage site
+    global reports stage site scope
     redirect -file [file join $reports checks lsu_enable_capacitance.rpt] {
         puts "NPC_LSU_ENABLE_CAPACITANCE"
         puts "stage: $stage"
@@ -37,7 +37,9 @@ proc report_lsu_enable_capacitance {} {
         }
         # full_name 过滤跨层次匹配；get_pins 的局部名字匹配不适合带 / 的层次模式。
         # 包含 req_addr/req_wdata/req_type/req_write 各组，能找出 buffer 后的其他分支。
-        set enables [get_pins -hierarchical -quiet -filter {full_name =~ core/u_lsu/req_*_q_reg*/E}]
+        set enable_pattern "[dict get $scope lsu_path]/req_*_q_reg*/E"
+        puts "enable_pattern: $enable_pattern"
+        set enables [get_pins -hierarchical -quiet -filter "full_name =~ $enable_pattern"]
         puts "enable_pin_count: [sizeof_collection $enables]"
         if {[sizeof_collection $enables] == 0} {
             puts "Warning: NPC_CAP_NO_ENABLE_PINS: mapping has no matching LSU E pins; review netlist; no capacitance conclusion."

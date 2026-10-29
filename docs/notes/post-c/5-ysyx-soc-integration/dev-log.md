@@ -98,3 +98,12 @@
 - 正常和随机等待 RTT 各 15 IRQ，均完成六轮非主动 yield 交替、sleep 4/6 tick 后于 4/7 tick 恢复、idle 运行；heap 峰值544 B并归零。主栈/worker0/worker1/idle 最大观测使用224/448/372/268 B。UART divisor=8，在正常、固定、随机等待下各精确输出528字节，并实际出现忙轮询。
 - [实施导读](6-system-validation.md)按层次说明功能/改动位置、抢占证明、阻塞唤醒、水位、延迟模型、真实 UART 与验证分工。[精选证据](s6-validation/README.md)保存分组原始 manifest、source patch、镜像/ELF hash、汇总与关键日志；最后的帮助/provenance及栈负例补充单独注明，不将增量验收称为 S8 干净重建。
 - M14–M16 关闭，无未处置阻塞。下一步 S7 是 CPU 子系统 pre-layout 面积/时序评估，由用户执行服务器 DC/PT；不包含 whole-SoC PPA 或新增交互 shell。
+
+## 2026-10-29：S7 本地准备完成，待服务器 DC/PT
+
+- 新建 `npc_soc_cpu.tcl/soc_cpu.f/soc_cpu.sdc`，综合实际 `ysyx_25030087` Flash wrapper：20 个 SV 源及 include，包含 core、AXI adapters/arbiter/router 和内部 CLINT；排除完整 SoC、memory/仿真模型。观察输出按真实未连接关系处理，不将 M4 面积差称为优化收益。
+- 初始目标沿用 TT / 5 ns，11 个活动 AXI 输入和 29 个输出施加完整 min/max、slew/load；19 个禁用外部 IRQ/slave 输入显式置零；仅 reset false path，内部 timer IRQ 保持活动。上游 reset 延长链在 scope 外，物理释放/脉宽仍待实际机制评估。
+- flow 默认选择新配置，修正 top/clock/reset、manifest 范围、网表 top 检查和 LSU 电容诊断的层次；保留旧 M4 输入/产物，历史 RTL 通过固定 revision 复现。
+- `make -C npc/flow check test scope-check` 通过：48 项 flow 测试、4 种宏配置预处理/lint；SDC 对象与禁止错误例外检查通过。[本地证据](s7-validation/README.md)只记录脚本/展开检查，没有真实 PPA 数字。
+- [S7 实施文档](7-synthesis-sta.md)说明范围、逐组端口预算、修改位置、检查边界和服务器命令。本次未修改功能 RTL、未重跑 S6 长系统回归；既有嵌套 Rocket Chip 工作区状态保留。
+- 无本地准备阻塞；用户手工同步并运行 DC/PT 后回传。M17/S7 尚未完成，不能提前进入 S8 总验收。

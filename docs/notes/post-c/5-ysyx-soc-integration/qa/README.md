@@ -147,3 +147,9 @@ S6 的两个同优先级线程在一段没有函数调用、ECALL、yield 或 sl
 不能。VALID 已经展示且 READY 未接收时，VALID 和 payload 必须保持；每周期随机清 VALID 会让测试环境本身违反协议。S6 在展示 VALID 之前选取等待周期，展示后保持到握手完成，AW/W 分别处理，R/B 也独立延迟。
 
 验证模型同样要检查：独立数据序列验证丢失/重复/乱序，计数验证缓冲占用，断言验证保持；再接真实 SoC 跑软件。`max=7` 是每道等待门的附加周期上限，不是整次 PSRAM 访问的延迟上限。
+
+## Q26：SoC 集成后的 PPA 为什么不能只换 filelist，也不能直接与旧 core 面积相减？
+
+filelist 只决定读取哪些源文件。综合范围还取决于 top、宏/参数、哪些观察输出对外可见，以及端口的时序/负载假设。M5 的实际 wrapper 改用 `clock/reset`，Flash PC 为 `0x30000000`，内部增加 router/CLINT/IRQ，commit/monitor 输出不再对外连接；驱动脚本的 top 校验、时钟 DRC 查询、reset 极性、LSU 层次诊断和 manifest 也必须同步。
+
+因此新结果首先是新功能边界的基线。相对 M4 的变化混合了功能增加和观察逻辑裁剪，不能直接称为面积优化或接口升级开销。后续 GShare 使用相同 M5 scope、库和约束做前后比较，才便于归因。见 [S7](../7-synthesis-sta.md)。

@@ -43,11 +43,11 @@ proc analyze {args} {
 }
 proc read_verilog {path} {if {![file exists $path]} {error "Missing netlist"}}
 # Deliberately different names and two enable branches: discovery must not depend on U13/n3.
-set cap_a core/u_lsu/enable_renamed_a
-set cap_b core/u_lsu/enable_renamed_b
-set cap_driver core/u_lsu/renamed_driver
-set cap_buffer core/u_lsu/renamed_buffer
-set cap_enables {core/u_lsu/req_addr_q_reg_0_/E core/u_lsu/req_wdata_q_reg_1_/E core/u_lsu/req_type_q_reg_0_/E}
+set cap_a subsystem/cpu/core/u_lsu/enable_renamed_a
+set cap_b subsystem/cpu/core/u_lsu/enable_renamed_b
+set cap_driver subsystem/cpu/core/u_lsu/renamed_driver
+set cap_buffer subsystem/cpu/core/u_lsu/renamed_buffer
+set cap_enables {subsystem/cpu/core/u_lsu/req_addr_q_reg_0_/E subsystem/cpu/core/u_lsu/req_wdata_q_reg_1_/E subsystem/cpu/core/u_lsu/req_type_q_reg_0_/E}
 set cap_connections [dict create $cap_a [concat [list $cap_driver/ZN] [lrange $cap_enables 0 1] [list $cap_buffer/I]] \
     $cap_b [list $cap_buffer/Z [lindex $cap_enables 2]]]
 if {$::env(NPC_STAGE) eq "sta"} {
@@ -88,12 +88,12 @@ proc all_registers {args} {
 }
 proc get_ports {args} {return [lindex $args 0]}
 proc get_clocks {args} {return core_clk}
-proc all_inputs {} {return {clk rst_n data}}
+proc all_inputs {} {return {clock reset io_interrupt io_master_rdata}}
 proc all_outputs {} {return result}
 proc get_pins {args} {
     if {[lindex $args 0] eq "-of_objects"} {return [dict get $::cap_connections [lindex $args 1]]}
     if {[lsearch -exact $args -filter] >= 0} {
-        if {[lindex $args end] ne {full_name =~ core/u_lsu/req_*_q_reg*/E}} {error "Unexpected enable selection"}
+        if {[lindex $args end] ne {full_name =~ subsystem/cpu/core/u_lsu/req_*_q_reg*/E}} {error "Unexpected enable selection"}
         if {[info exists ::env(NPC_MOCK_NO_ENABLE_PINS)]} {return {}}
         return $::cap_enables
     }
@@ -102,7 +102,7 @@ proc get_pins {args} {
 proc get_nets {args} {
     if {[lindex $args 0] ne "-of_objects"} {error "Enable nets must be discovered from pins"}
     set pin [lindex $args 1]
-    if {$pin eq "clk"} {return clk_net}
+    if {$pin eq $::clock_port} {return clk_net}
     dict for {net pins} $::cap_connections {if {$pin in $pins} {return $net}}
     error "Unknown mock net for $pin"
 }
@@ -150,7 +150,7 @@ proc get_attribute {args} {
 }
 proc write {args} {
     set path [lindex $args end]; set f [open $path w]
-    if {[lindex $args 1] eq "verilog"} {puts $f "module ysyx_core_axi4lite(); endmodule"} else {puts $f "MOCK DDC"}
+    if {[lindex $args 1] eq "verilog"} {puts $f "module ${::top}(); endmodule"} else {puts $f "MOCK DDC"}
     close $f
 }
 proc write_sdc {path} {set f [open $path w]; puts $f "MOCK EXPORTED SDC"; close $f}
@@ -181,12 +181,12 @@ proc report_area {args} {puts "Total cell area: 12.5"}
 proc report_analysis_coverage {args} {puts "All Checks 10 8 (80%) 2 (20%) 0 (0%)"}
 proc check_design {} {puts "MOCK check_design"; return 1}
 proc set_false_path {args} {
-    if {$args ne [list -from rst_n]} {error "Only -from rst_n may be excluded"}
+    if {$args ne [list -from $::reset_port]} {error "Only the scope reset may be excluded"}
     return 1
 }
 # 本次诊断不执行 set_fix_multiple_port_nets；不提供该命令的无操作替身，
 # 防止真实 Tcl 在测试中悄悄恢复强制 buffer 策略。是否消除电气违例需真实 EDA 验证。
-foreach command {set_host_options define_design_lib elaborate link link_design set_operating_conditions set_wire_load_mode set_wire_load_model change_names update_timing create_clock set_clock_uncertainty set_clock_transition set_clock_latency set_input_delay set_input_transition set_output_delay set_load} {
+foreach command {set_host_options define_design_lib elaborate link link_design set_operating_conditions set_wire_load_mode set_wire_load_model change_names update_timing create_clock set_clock_uncertainty set_clock_transition set_clock_latency set_input_delay set_input_transition set_output_delay set_load set_case_analysis} {
     proc $command {args} {return 1}
 }
 foreach command {report_qor report_resources report_reference report_design check_timing report_disable_timing report_units report_wire_load} {

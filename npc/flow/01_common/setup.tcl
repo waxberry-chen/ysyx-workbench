@@ -8,6 +8,10 @@ source $::env(NPC_RUN_CONFIG)
 set npc_root [file join $run inputs npc]
 set flow [file join $npc_root flow]
 set top [dict get $cfg top]
+# scope 来自 driver 的已审查 profile，随 run 冻结；M5 wrapper 使用 clock/reset。
+set clock_port [dict get $scope clock_port]
+set reset_port [dict get $scope reset_port]
+set reset_inactive [dict get $scope reset_inactive]
 set stage $::env(NPC_STAGE)
 set reports [file join $run reports $stage]
 set outputs [file join $run outputs]

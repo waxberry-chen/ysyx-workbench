@@ -41,7 +41,7 @@ if {[catch {
     # 顶层 max_fanout 必须保留。clock net 属性在 DC 2023 实测不可查询，
     # 仅作为可选诊断；UNAVAILABLE 不等于设置失败，也不等于已经验证保护生效。
     proc check_syn_fanout_policy {phase expected} {
-        global top
+        global top clock_port
         set design [current_design]
         if {[get_object_name $design] ne $top} {error "Fanout policy check is not at synthesis top"}
         if {[catch {get_attribute $design max_fanout} actual] ||
@@ -49,7 +49,7 @@ if {[catch {
             error "Synthesis max_fanout missing at $phase"
         }
         if {abs($actual - $expected) > 1e-9} {error "Synthesis max_fanout changed at $phase: $actual"}
-        set clock_nets [get_nets -of_objects [get_ports clk]]
+        set clock_nets [get_nets -of_objects [get_ports $clock_port]]
         if {[sizeof_collection $clock_nets] == 0} {error "Clock source net missing at $phase"}
         foreach_in_collection net $clock_nets {
             if {[catch {get_attribute -quiet $net auto_disable_drc_nets} disabled] || $disabled eq ""} {
@@ -139,8 +139,8 @@ if {[catch {
             redirect -file [file join $reports power power_attempt.rpt] {
                 set_switching_activity -base_clock core_clk -toggle_rate [dict get $cfg power_toggle] \
                     -static_probability [dict get $cfg power_probability] $data_inputs
-                set_switching_activity -base_clock core_clk -toggle_rate 2.0 -static_probability 0.5 [get_ports clk]
-                set_switching_activity -base_clock core_clk -toggle_rate 0.0 -static_probability 1.0 [get_ports rst_n]
+                set_switching_activity -base_clock core_clk -toggle_rate 2.0 -static_probability 0.5 [get_ports $clock_port]
+                set_switching_activity -base_clock core_clk -toggle_rate 0.0 -static_probability $reset_inactive [get_ports $reset_port]
                 report_switching_activity
                 report_power
                 report_power -hierarchy

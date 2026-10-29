@@ -35,7 +35,7 @@ if stage=='syn':
   report(name+'.rpt')
  report('area/area.rpt','Total cell area: 12.5\\n')
  report('power/power_status.txt','NOT_EVALUATED: disabled\\n')
- for name,content in [('core.v','module ysyx_core_axi4lite(); endmodule'),('core.ddc','MOCK DDC'),('dc.sdc','MOCK SDC')]:
+ for name,content in [('core.v','module ysyx_25030087(); endmodule'),('core.ddc','MOCK DDC'),('dc.sdc','MOCK SDC')]:
   (run/'outputs'/name).write_text(content)
 if stage=='sta':
  for name in ['environment/units','environment/design','environment/wire_load','checks/check_timing','checks/coverage_untested','checks/constraint_violations','checks/disable_timing','timing/timing_max','timing/timing_min']:
@@ -54,7 +54,7 @@ class FlowTests(unittest.TestCase):
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name)
         self.config = self.root/'design.tcl'
-        self.config.write_text((FLOW/'00_indata/configs/npc_core.tcl').read_text())
+        self.config.write_text((FLOW/'00_indata/configs/npc_soc_cpu.tcl').read_text())
         self.db = self.root/'library with spaces.db'
         self.db.write_text('MOCK NOT A LIBRARY')
         self.tool = self.root/'fake tool'
@@ -158,6 +158,48 @@ dict set site library_reviewed 1
         with self.assertRaisesRegex(f.FlowError, 'Wrong top'):
             f.preflight(self.config, self.site)
 
+    def test_m5_scope_manifest_and_flash_profile(self):
+        run = self.new_run()
+        manifest = json.loads((run/'manifest.json').read_text())
+        scope = manifest['scope_contract']
+        self.assertEqual(scope['clock_port'], 'clock')
+        self.assertEqual(scope['reset_inactive'], '0')
+        self.assertEqual(scope['lsu_path'], 'subsystem/cpu/core/u_lsu')
+        self.assertIn('PC_RST=0x30000000', manifest['scope'])
+        self.assertIn('observation outputs unconnected', manifest['scope'])
+        self.append_cfg('dict set cfg defines SYNTHESIS')
+        with self.assertRaisesRegex(f.FlowError, 'defines'):
+            f.preflight(self.config, self.site)
+
+    def test_retired_m4_scope_requires_old_revision(self):
+        self.config.write_text((FLOW/'00_indata/configs/npc_core.tcl').read_text())
+        with self.assertRaisesRegex(f.FlowError, 'M4 Lite scope retired'):
+            f.preflight(self.config, self.site)
+
+    def test_wrong_netlist_top_is_rejected(self):
+        run = self.syn()
+        (run/'outputs/core.v').write_text('module ysyx_core_axi4lite(); endmodule\n')
+        with self.assertRaisesRegex(f.FlowError, 'Netlist top absent'):
+            f.inspect_stage(run, 'syn')
+
+    def test_case_analysis_cannot_hide_active_or_reset_paths(self):
+        sdc = (FLOW/'00_indata/constraints/soc_cpu.sdc').read_text()
+        cases = [
+            (sdc.replace('set_case_analysis 0 $inactive_inputs', ''), 'Missing set_case_analysis'),
+            (sdc+'\nset_case_analysis 0 [get_ports io_master_rvalid]\n', 'only target disabled'),
+            (sdc+'\nset_case_analysis 0 [get_ports reset]\n', 'only target disabled'),
+            (sdc.replace('set_case_analysis 0', 'set_case_analysis 1'), 'tied to zero'),
+        ]
+        for text, diagnostic in cases:
+            with self.subTest(diagnostic=diagnostic):
+                path = self.root/'bad-case.sdc'
+                path.write_text(text)
+                p = subprocess.run(['tclsh', str(FLOW/'04_tests/sdc_check.tcl'),
+                                    str(self.config), str(path),
+                                    str(f.NPC/'vsrc/top/ysyx_25030087.sv')], capture_output=True, text=True)
+                self.assertNotEqual(p.returncode, 0)
+                self.assertIn(diagnostic, p.stderr)
+
     def test_missing_sdc(self):
         self.append_cfg('dict set cfg sdc flow/00_indata/constraints/missing.sdc')
         with self.assertRaisesRegex(f.FlowError, 'Missing input'):
@@ -240,7 +282,7 @@ dict set site library_reviewed 1
 
     def test_changed_snapshot(self):
         run = self.new_run()
-        (run/'inputs/npc/flow/00_indata/constraints/core.sdc').write_text('corrupt')
+        (run/'inputs/npc/flow/00_indata/constraints/soc_cpu.sdc').write_text('corrupt')
         with self.assertRaisesRegex(f.FlowError, 'hash mismatch'):
             f.execute(run, 'syn')
 
@@ -321,19 +363,19 @@ dict set site library_reviewed 1
 
     def test_sdc_missing_output_min(self):
         broken = self.root/'broken.sdc'
-        broken.write_text('\n'.join(line for line in (FLOW/'00_indata/constraints/core.sdc').read_text().splitlines() if not line.startswith('set_output_delay -clock core_clk -min')))
-        p = subprocess.run(['tclsh', str(FLOW/'04_tests/sdc_check.tcl'), str(self.config), str(broken), str(f.NPC/'vsrc/top/ysyx_core_axi4lite.sv')], capture_output=True, text=True)
+        broken.write_text('\n'.join(line for line in (FLOW/'00_indata/constraints/soc_cpu.sdc').read_text().splitlines() if not line.startswith('set_output_delay -clock core_clk -min')))
+        p = subprocess.run(['tclsh', str(FLOW/'04_tests/sdc_check.tcl'), str(self.config), str(broken), str(f.NPC/'vsrc/top/ysyx_25030087.sv')], capture_output=True, text=True)
         self.assertNotEqual(p.returncode, 0)
         self.assertIn('Missing set_output_delay:-min', p.stderr)
 
     def test_reset_exception_cannot_hide_data_paths(self):
-        sdc = (FLOW/'00_indata/constraints/core.sdc').read_text()
-        exception = 'set_false_path -from [get_ports rst_n]'
+        sdc = (FLOW/'00_indata/constraints/soc_cpu.sdc').read_text()
+        exception = 'set_false_path -from [get_ports reset]'
         mutations = [
             (sdc.replace(exception, ''), 'Missing set_false_path'),
-            (sdc.replace(exception, 'set_false_path -from [all_inputs]'), 'Only -from rst_n'),
-            (sdc.replace(exception, 'set_false_path -from [get_ports m_axi_arready]'), 'Only -from rst_n'),
-            (sdc + '\nset_input_delay -clock core_clk -min 0.2 [get_ports rst_n]\n', 'Reset delay must remain unspecified'),
+            (sdc.replace(exception, 'set_false_path -from [all_inputs]'), 'Only -from reset'),
+            (sdc.replace(exception, 'set_false_path -from [get_ports io_master_arready]'), 'Only -from reset'),
+            (sdc + '\nset_input_delay -clock core_clk -min 0.2 [get_ports reset]\n', 'Reset/inactive delay must remain unspecified'),
         ]
         for text, diagnostic in mutations:
             with self.subTest(diagnostic=diagnostic):
@@ -341,7 +383,7 @@ dict set site library_reviewed 1
                 broken.write_text(text)
                 p = subprocess.run(['tclsh', str(FLOW/'04_tests/sdc_check.tcl'),
                                     str(self.config), str(broken),
-                                    str(f.NPC/'vsrc/top/ysyx_core_axi4lite.sv')],
+                                    str(f.NPC/'vsrc/top/ysyx_25030087.sv')],
                                    capture_output=True, text=True)
                 self.assertNotEqual(p.returncode, 0)
                 self.assertIn(diagnostic, p.stderr)
@@ -376,8 +418,8 @@ dict set site library_reviewed 1
             capacitance = (run/f'reports/{stage}/checks/lsu_enable_capacitance.rpt').read_text()
             self.assertIn('enable_pin_count: 3', capacitance)
             self.assertIn('enable_net_count: 2', capacitance)
-            self.assertEqual(capacitance.count('NET: core/u_lsu/enable_renamed_a'), 1)
-            self.assertIn('NET: core/u_lsu/enable_renamed_b', capacitance)
+            self.assertEqual(capacitance.count('NET: subsystem/cpu/core/u_lsu/enable_renamed_a'), 1)
+            self.assertIn('NET: subsystem/cpu/core/u_lsu/enable_renamed_b', capacitance)
             self.assertIn('direct_input_pin_count: 3', capacitance)
             self.assertIn('reference=INVD1', capacitance)
             self.assertIn('capacitance: 0.001', capacitance)
@@ -393,7 +435,7 @@ dict set site library_reviewed 1
         self.assertNotIn('MOCK DC capacitance view', capacitance)
         syn_log = (run/'logs/syn.log').read_text()
         for phase in ['pre_compile', 'post_compile']:
-            self.assertIn(f'NPC_SYN_FANOUT: {phase} design=ysyx_core_axi4lite max_fanout=32', syn_log)
+            self.assertIn(f'NPC_SYN_FANOUT: {phase} design=ysyx_25030087 max_fanout=32', syn_log)
             self.assertIn(f'NPC_SYN_CLOCK_DRC: {phase} net=clk_net auto_disable_drc_nets=UNAVAILABLE', syn_log)
         self.assertNotIn('UID-101', syn_log)
         self.assertIn('auto_disable_drc_nets=UNAVAILABLE', fanout)
