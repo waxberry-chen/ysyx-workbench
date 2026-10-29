@@ -1,0 +1,324 @@
+****************************************
+Report : timing
+	-path_type full
+	-delay_type min
+	-slack_lesser_than 1000000015047466219876688855040.000000
+	-max_paths 10
+	-sort_by slack
+Design : ysyx_25030087
+Version: T-2022.03-SP5
+Date   : Thu Oct 29 21:36:42 2026
+****************************************
+
+
+  Startpoint: subsystem/cpu/core/u_ifu/u_ifq/count_q_reg_0_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu/u_ifq/count_q_reg_0_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                  Incr       Path
+  -------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                         0.000000   0.000000
+  clock network delay (ideal)                                                        0.000000   0.000000
+  subsystem/cpu/core/u_ifu/u_ifq/count_q_reg_0_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  subsystem/cpu/core/u_ifu/u_ifq/count_q_reg_0_/Q (DFCNQD1BWP12T40P140)              0.070649   0.070649 r
+  subsystem/cpu/core/u_ifu/u_ifq/U229/ZN (MAOI22D1BWP12T40P140)                      0.013721   0.084371 f
+  subsystem/cpu/core/u_ifu/u_ifq/count_q_reg_0_/D (DFCNQD1BWP12T40P140)              0.000000   0.084371 f
+  data arrival time                                                                             0.084371
+
+  clock core_clk (rise edge)                                                         0.000000   0.000000
+  clock network delay (ideal)                                                        0.000000   0.000000
+  clock reconvergence pessimism                                                      0.000000   0.000000
+  clock uncertainty                                                                  0.050000   0.050000
+  subsystem/cpu/core/u_ifu/u_ifq/count_q_reg_0_/CP (DFCNQD1BWP12T40P140)                        0.050000 r
+  library hold time                                                                  0.024677   0.074677
+  data required time                                                                            0.074677
+  -------------------------------------------------------------------------------------------------------------
+  data required time                                                                            0.074677
+  data arrival time                                                                             -0.084371
+  -------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                   0.009693
+
+
+  Startpoint: subsystem/router/clint/mtime_q_reg_58_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/router/clint/mtime_q_reg_58_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                           Incr       Path
+  ------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                  0.000000   0.000000
+  clock network delay (ideal)                                                 0.000000   0.000000
+  subsystem/router/clint/mtime_q_reg_58_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  subsystem/router/clint/mtime_q_reg_58_/Q (DFCNQD1BWP12T40P140)              0.070513   0.070513 r
+  subsystem/router/clint/U451/ZN (OAI21D0BWP12T40P140)                        0.014861   0.085374 f
+  subsystem/router/clint/mtime_q_reg_58_/D (DFCNQD1BWP12T40P140)              0.000000   0.085374 f
+  data arrival time                                                                      0.085374
+
+  clock core_clk (rise edge)                                                  0.000000   0.000000
+  clock network delay (ideal)                                                 0.000000   0.000000
+  clock reconvergence pessimism                                               0.000000   0.000000
+  clock uncertainty                                                           0.050000   0.050000
+  subsystem/router/clint/mtime_q_reg_58_/CP (DFCNQD1BWP12T40P140)                        0.050000 r
+  library hold time                                                           0.023474   0.073474
+  data required time                                                                     0.073474
+  ------------------------------------------------------------------------------------------------------
+  data required time                                                                     0.073474
+  data arrival time                                                                      -0.085374
+  ------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                            0.011901
+
+
+  Startpoint: subsystem/router/clint/mtime_q_reg_60_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/router/clint/mtime_q_reg_60_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                           Incr       Path
+  ------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                  0.000000   0.000000
+  clock network delay (ideal)                                                 0.000000   0.000000
+  subsystem/router/clint/mtime_q_reg_60_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  subsystem/router/clint/mtime_q_reg_60_/Q (DFCNQD1BWP12T40P140)              0.071428   0.071428 r
+  subsystem/router/clint/U460/ZN (OAI21D0BWP12T40P140)                        0.015185   0.086613 f
+  subsystem/router/clint/mtime_q_reg_60_/D (DFCNQD1BWP12T40P140)              0.000000   0.086613 f
+  data arrival time                                                                      0.086613
+
+  clock core_clk (rise edge)                                                  0.000000   0.000000
+  clock network delay (ideal)                                                 0.000000   0.000000
+  clock reconvergence pessimism                                               0.000000   0.000000
+  clock uncertainty                                                           0.050000   0.050000
+  subsystem/router/clint/mtime_q_reg_60_/CP (DFCNQD1BWP12T40P140)                        0.050000 r
+  library hold time                                                           0.023468   0.073468
+  data required time                                                                     0.073468
+  ------------------------------------------------------------------------------------------------------
+  data required time                                                                     0.073468
+  data arrival time                                                                      -0.086613
+  ------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                            0.013145
+
+
+  Startpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_9_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_9_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                               Incr       Path
+  ----------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                      0.000000   0.000000
+  clock network delay (ideal)                                                     0.000000   0.000000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_9_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_9_/Q (DFCNQD1BWP12T40P140)              0.071872   0.071872 r
+  subsystem/cpu/core/u_ifu/U105/ZN (OAI21D0BWP12T40P140)                          0.015342   0.087214 f
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_9_/D (DFCNQD1BWP12T40P140)              0.000000   0.087214 f
+  data arrival time                                                                          0.087214
+
+  clock core_clk (rise edge)                                                      0.000000   0.000000
+  clock network delay (ideal)                                                     0.000000   0.000000
+  clock reconvergence pessimism                                                   0.000000   0.000000
+  clock uncertainty                                                               0.050000   0.050000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_9_/CP (DFCNQD1BWP12T40P140)                        0.050000 r
+  library hold time                                                               0.023466   0.073466
+  data required time                                                                         0.073466
+  ----------------------------------------------------------------------------------------------------------
+  data required time                                                                         0.073466
+  data arrival time                                                                          -0.087214
+  ----------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                0.013748
+
+
+  Startpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_21_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_21_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                Incr       Path
+  -----------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                       0.000000   0.000000
+  clock network delay (ideal)                                                      0.000000   0.000000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_21_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_21_/Q (DFCNQD1BWP12T40P140)              0.071872   0.071872 r
+  subsystem/cpu/core/u_ifu/U118/ZN (OAI21D0BWP12T40P140)                           0.015342   0.087214 f
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_21_/D (DFCNQD1BWP12T40P140)              0.000000   0.087214 f
+  data arrival time                                                                           0.087214
+
+  clock core_clk (rise edge)                                                       0.000000   0.000000
+  clock network delay (ideal)                                                      0.000000   0.000000
+  clock reconvergence pessimism                                                    0.000000   0.000000
+  clock uncertainty                                                                0.050000   0.050000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_21_/CP (DFCNQD1BWP12T40P140)                        0.050000 r
+  library hold time                                                                0.023466   0.073466
+  data required time                                                                          0.073466
+  -----------------------------------------------------------------------------------------------------------
+  data required time                                                                          0.073466
+  data arrival time                                                                           -0.087214
+  -----------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                 0.013748
+
+
+  Startpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_13_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_13_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                Incr       Path
+  -----------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                       0.000000   0.000000
+  clock network delay (ideal)                                                      0.000000   0.000000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_13_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_13_/Q (DFCNQD1BWP12T40P140)              0.071872   0.071872 r
+  subsystem/cpu/core/u_ifu/U88/ZN (OAI21D0BWP12T40P140)                            0.015342   0.087214 f
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_13_/D (DFCNQD1BWP12T40P140)              0.000000   0.087214 f
+  data arrival time                                                                           0.087214
+
+  clock core_clk (rise edge)                                                       0.000000   0.000000
+  clock network delay (ideal)                                                      0.000000   0.000000
+  clock reconvergence pessimism                                                    0.000000   0.000000
+  clock uncertainty                                                                0.050000   0.050000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_13_/CP (DFCNQD1BWP12T40P140)                        0.050000 r
+  library hold time                                                                0.023466   0.073466
+  data required time                                                                          0.073466
+  -----------------------------------------------------------------------------------------------------------
+  data required time                                                                          0.073466
+  data arrival time                                                                           -0.087214
+  -----------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                 0.013748
+
+
+  Startpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_5_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_5_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                               Incr       Path
+  ----------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                      0.000000   0.000000
+  clock network delay (ideal)                                                     0.000000   0.000000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_5_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_5_/Q (DFCNQD1BWP12T40P140)              0.071872   0.071872 r
+  subsystem/cpu/core/u_ifu/U83/ZN (OAI21D0BWP12T40P140)                           0.015342   0.087214 f
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_5_/D (DFCNQD1BWP12T40P140)              0.000000   0.087214 f
+  data arrival time                                                                          0.087214
+
+  clock core_clk (rise edge)                                                      0.000000   0.000000
+  clock network delay (ideal)                                                     0.000000   0.000000
+  clock reconvergence pessimism                                                   0.000000   0.000000
+  clock uncertainty                                                               0.050000   0.050000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_5_/CP (DFCNQD1BWP12T40P140)                        0.050000 r
+  library hold time                                                               0.023466   0.073466
+  data required time                                                                         0.073466
+  ----------------------------------------------------------------------------------------------------------
+  data required time                                                                         0.073466
+  data arrival time                                                                          -0.087214
+  ----------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                0.013748
+
+
+  Startpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_25_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_25_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                Incr       Path
+  -----------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                       0.000000   0.000000
+  clock network delay (ideal)                                                      0.000000   0.000000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_25_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_25_/Q (DFCNQD1BWP12T40P140)              0.071872   0.071872 r
+  subsystem/cpu/core/u_ifu/U78/ZN (OAI21D0BWP12T40P140)                            0.015342   0.087214 f
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_25_/D (DFCNQD1BWP12T40P140)              0.000000   0.087214 f
+  data arrival time                                                                           0.087214
+
+  clock core_clk (rise edge)                                                       0.000000   0.000000
+  clock network delay (ideal)                                                      0.000000   0.000000
+  clock reconvergence pessimism                                                    0.000000   0.000000
+  clock uncertainty                                                                0.050000   0.050000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_25_/CP (DFCNQD1BWP12T40P140)                        0.050000 r
+  library hold time                                                                0.023466   0.073466
+  data required time                                                                          0.073466
+  -----------------------------------------------------------------------------------------------------------
+  data required time                                                                          0.073466
+  data arrival time                                                                           -0.087214
+  -----------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                 0.013748
+
+
+  Startpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_17_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_17_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                Incr       Path
+  -----------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                       0.000000   0.000000
+  clock network delay (ideal)                                                      0.000000   0.000000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_17_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_17_/Q (DFCNQD1BWP12T40P140)              0.071872   0.071872 r
+  subsystem/cpu/core/u_ifu/U123/ZN (OAI21D0BWP12T40P140)                           0.015342   0.087214 f
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_17_/D (DFCNQD1BWP12T40P140)              0.000000   0.087214 f
+  data arrival time                                                                           0.087214
+
+  clock core_clk (rise edge)                                                       0.000000   0.000000
+  clock network delay (ideal)                                                      0.000000   0.000000
+  clock reconvergence pessimism                                                    0.000000   0.000000
+  clock uncertainty                                                                0.050000   0.050000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_17_/CP (DFCNQD1BWP12T40P140)                        0.050000 r
+  library hold time                                                                0.023466   0.073466
+  data required time                                                                          0.073466
+  -----------------------------------------------------------------------------------------------------------
+  data required time                                                                          0.073466
+  data arrival time                                                                           -0.087214
+  -----------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                 0.013748
+
+
+  Startpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_19_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_19_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                Incr       Path
+  -----------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                       0.000000   0.000000
+  clock network delay (ideal)                                                      0.000000   0.000000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_19_/CP (DFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_19_/Q (DFCNQD1BWP12T40P140)              0.072786   0.072786 r
+  subsystem/cpu/core/u_ifu/U127/ZN (OAI21D0BWP12T40P140)                           0.015665   0.088451 f
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_19_/D (DFCNQD1BWP12T40P140)              0.000000   0.088451 f
+  data arrival time                                                                           0.088451
+
+  clock core_clk (rise edge)                                                       0.000000   0.000000
+  clock network delay (ideal)                                                      0.000000   0.000000
+  clock reconvergence pessimism                                                    0.000000   0.000000
+  clock uncertainty                                                                0.050000   0.050000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_19_/CP (DFCNQD1BWP12T40P140)                        0.050000 r
+  library hold time                                                                0.023464   0.073464
+  data required time                                                                          0.073464
+  -----------------------------------------------------------------------------------------------------------
+  data required time                                                                          0.073464
+  data arrival time                                                                           -0.088451
+  -----------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                 0.014987
+
+
+1

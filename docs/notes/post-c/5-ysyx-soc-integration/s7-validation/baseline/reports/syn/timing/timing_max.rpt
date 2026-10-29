@@ -1,0 +1,854 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 20
+Design : ysyx_25030087
+Version: V-2023.12-SP5
+Date   : Thu Oct 29 21:36:25 2026
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: tt0p9v25c   Library: tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+Wire Load Model Mode: top
+
+  Startpoint: io_master_rvalid
+              (input port clocked by core_clk)
+  Endpoint: subsystem/router/rdata_q_reg_18_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                         Incr       Path
+  --------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                0.000000   0.000000
+  clock network delay (ideal)                               0.000000   0.000000
+  input external delay                                      2.000000   2.000000 r
+  io_master_rvalid (in)                                     0.000000   2.000000 r
+  subsystem/m_axi_rvalid (ysyx_soc_cpu_30000000)            0.000000   2.000000 r
+  subsystem/router/m_axi_rvalid (ysyx_axi4_router)          0.000000   2.000000 r
+  subsystem/router/U118/ZN (ND2D0BWP12T40P140)              0.034969   2.034969 f
+  subsystem/router/U119/ZN (OAI21D0BWP12T40P140)            0.022452   2.057420 r
+  subsystem/router/U154/ZN (INVD0BWP12T40P140)              0.062699   2.120119 f
+  subsystem/router/U9/Z (BUFFD1BWP12T40P140)                0.043205   2.163325 f
+  subsystem/router/U155/ZN (NR2D0BWP12T40P140)              0.084402   2.247726 r
+  subsystem/router/U173/Z (BUFFD1BWP12T40P140)              0.049788   2.297514 r
+  subsystem/router/U189/Z (AO222D0BWP12T40P140)             0.044717   2.342231 r
+  subsystem/router/rdata_q_reg_18_/D (DFCNQD1BWP12T40P140)  0.000000   2.342231 r
+  data arrival time                                                    2.342231
+
+  clock core_clk (rise edge)                                5.000000   5.000000
+  clock network delay (ideal)                               0.000000   5.000000
+  clock uncertainty                                         -0.200000  4.800000
+  subsystem/router/rdata_q_reg_18_/CP (DFCNQD1BWP12T40P140) 0.000000   4.800000 r
+  library setup time                                        -0.013043  4.786957
+  data required time                                                   4.786957
+  --------------------------------------------------------------------------------
+  data required time                                                   4.786957
+  data arrival time                                                    -2.342231
+  --------------------------------------------------------------------------------
+  slack (MET)                                                          2.444726
+
+
+  Startpoint: io_master_rvalid
+              (input port clocked by core_clk)
+  Endpoint: subsystem/router/rdata_q_reg_21_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                         Incr       Path
+  --------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                0.000000   0.000000
+  clock network delay (ideal)                               0.000000   0.000000
+  input external delay                                      2.000000   2.000000 r
+  io_master_rvalid (in)                                     0.000000   2.000000 r
+  subsystem/m_axi_rvalid (ysyx_soc_cpu_30000000)            0.000000   2.000000 r
+  subsystem/router/m_axi_rvalid (ysyx_axi4_router)          0.000000   2.000000 r
+  subsystem/router/U118/ZN (ND2D0BWP12T40P140)              0.034969   2.034969 f
+  subsystem/router/U119/ZN (OAI21D0BWP12T40P140)            0.022452   2.057420 r
+  subsystem/router/U154/ZN (INVD0BWP12T40P140)              0.062699   2.120119 f
+  subsystem/router/U9/Z (BUFFD1BWP12T40P140)                0.043205   2.163325 f
+  subsystem/router/U155/ZN (NR2D0BWP12T40P140)              0.084402   2.247726 r
+  subsystem/router/U173/Z (BUFFD1BWP12T40P140)              0.049788   2.297514 r
+  subsystem/router/U187/Z (AO222D0BWP12T40P140)             0.044717   2.342231 r
+  subsystem/router/rdata_q_reg_21_/D (DFCNQD1BWP12T40P140)  0.000000   2.342231 r
+  data arrival time                                                    2.342231
+
+  clock core_clk (rise edge)                                5.000000   5.000000
+  clock network delay (ideal)                               0.000000   5.000000
+  clock uncertainty                                         -0.200000  4.800000
+  subsystem/router/rdata_q_reg_21_/CP (DFCNQD1BWP12T40P140) 0.000000   4.800000 r
+  library setup time                                        -0.013043  4.786957
+  data required time                                                   4.786957
+  --------------------------------------------------------------------------------
+  data required time                                                   4.786957
+  data arrival time                                                    -2.342231
+  --------------------------------------------------------------------------------
+  slack (MET)                                                          2.444726
+
+
+  Startpoint: io_master_rvalid
+              (input port clocked by core_clk)
+  Endpoint: subsystem/router/rdata_q_reg_22_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                         Incr       Path
+  --------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                0.000000   0.000000
+  clock network delay (ideal)                               0.000000   0.000000
+  input external delay                                      2.000000   2.000000 r
+  io_master_rvalid (in)                                     0.000000   2.000000 r
+  subsystem/m_axi_rvalid (ysyx_soc_cpu_30000000)            0.000000   2.000000 r
+  subsystem/router/m_axi_rvalid (ysyx_axi4_router)          0.000000   2.000000 r
+  subsystem/router/U118/ZN (ND2D0BWP12T40P140)              0.034969   2.034969 f
+  subsystem/router/U119/ZN (OAI21D0BWP12T40P140)            0.022452   2.057420 r
+  subsystem/router/U154/ZN (INVD0BWP12T40P140)              0.062699   2.120119 f
+  subsystem/router/U9/Z (BUFFD1BWP12T40P140)                0.043205   2.163325 f
+  subsystem/router/U155/ZN (NR2D0BWP12T40P140)              0.084402   2.247726 r
+  subsystem/router/U173/Z (BUFFD1BWP12T40P140)              0.049788   2.297514 r
+  subsystem/router/U185/Z (AO222D0BWP12T40P140)             0.044717   2.342231 r
+  subsystem/router/rdata_q_reg_22_/D (DFCNQD1BWP12T40P140)  0.000000   2.342231 r
+  data arrival time                                                    2.342231
+
+  clock core_clk (rise edge)                                5.000000   5.000000
+  clock network delay (ideal)                               0.000000   5.000000
+  clock uncertainty                                         -0.200000  4.800000
+  subsystem/router/rdata_q_reg_22_/CP (DFCNQD1BWP12T40P140) 0.000000   4.800000 r
+  library setup time                                        -0.013043  4.786957
+  data required time                                                   4.786957
+  --------------------------------------------------------------------------------
+  data required time                                                   4.786957
+  data arrival time                                                    -2.342231
+  --------------------------------------------------------------------------------
+  slack (MET)                                                          2.444726
+
+
+  Startpoint: io_master_rvalid
+              (input port clocked by core_clk)
+  Endpoint: subsystem/router/rdata_q_reg_23_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                         Incr       Path
+  --------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                0.000000   0.000000
+  clock network delay (ideal)                               0.000000   0.000000
+  input external delay                                      2.000000   2.000000 r
+  io_master_rvalid (in)                                     0.000000   2.000000 r
+  subsystem/m_axi_rvalid (ysyx_soc_cpu_30000000)            0.000000   2.000000 r
+  subsystem/router/m_axi_rvalid (ysyx_axi4_router)          0.000000   2.000000 r
+  subsystem/router/U118/ZN (ND2D0BWP12T40P140)              0.034969   2.034969 f
+  subsystem/router/U119/ZN (OAI21D0BWP12T40P140)            0.022452   2.057420 r
+  subsystem/router/U154/ZN (INVD0BWP12T40P140)              0.062699   2.120119 f
+  subsystem/router/U9/Z (BUFFD1BWP12T40P140)                0.043205   2.163325 f
+  subsystem/router/U155/ZN (NR2D0BWP12T40P140)              0.084402   2.247726 r
+  subsystem/router/U173/Z (BUFFD1BWP12T40P140)              0.049788   2.297514 r
+  subsystem/router/U183/Z (AO222D0BWP12T40P140)             0.044717   2.342231 r
+  subsystem/router/rdata_q_reg_23_/D (DFCNQD1BWP12T40P140)  0.000000   2.342231 r
+  data arrival time                                                    2.342231
+
+  clock core_clk (rise edge)                                5.000000   5.000000
+  clock network delay (ideal)                               0.000000   5.000000
+  clock uncertainty                                         -0.200000  4.800000
+  subsystem/router/rdata_q_reg_23_/CP (DFCNQD1BWP12T40P140) 0.000000   4.800000 r
+  library setup time                                        -0.013043  4.786957
+  data required time                                                   4.786957
+  --------------------------------------------------------------------------------
+  data required time                                                   4.786957
+  data arrival time                                                    -2.342231
+  --------------------------------------------------------------------------------
+  slack (MET)                                                          2.444726
+
+
+  Startpoint: io_master_rvalid
+              (input port clocked by core_clk)
+  Endpoint: subsystem/router/rdata_q_reg_24_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                         Incr       Path
+  --------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                0.000000   0.000000
+  clock network delay (ideal)                               0.000000   0.000000
+  input external delay                                      2.000000   2.000000 r
+  io_master_rvalid (in)                                     0.000000   2.000000 r
+  subsystem/m_axi_rvalid (ysyx_soc_cpu_30000000)            0.000000   2.000000 r
+  subsystem/router/m_axi_rvalid (ysyx_axi4_router)          0.000000   2.000000 r
+  subsystem/router/U118/ZN (ND2D0BWP12T40P140)              0.034969   2.034969 f
+  subsystem/router/U119/ZN (OAI21D0BWP12T40P140)            0.022452   2.057420 r
+  subsystem/router/U154/ZN (INVD0BWP12T40P140)              0.062699   2.120119 f
+  subsystem/router/U9/Z (BUFFD1BWP12T40P140)                0.043205   2.163325 f
+  subsystem/router/U155/ZN (NR2D0BWP12T40P140)              0.084402   2.247726 r
+  subsystem/router/U173/Z (BUFFD1BWP12T40P140)              0.049788   2.297514 r
+  subsystem/router/U188/Z (AO222D0BWP12T40P140)             0.044717   2.342231 r
+  subsystem/router/rdata_q_reg_24_/D (DFCNQD1BWP12T40P140)  0.000000   2.342231 r
+  data arrival time                                                    2.342231
+
+  clock core_clk (rise edge)                                5.000000   5.000000
+  clock network delay (ideal)                               0.000000   5.000000
+  clock uncertainty                                         -0.200000  4.800000
+  subsystem/router/rdata_q_reg_24_/CP (DFCNQD1BWP12T40P140) 0.000000   4.800000 r
+  library setup time                                        -0.013043  4.786957
+  data required time                                                   4.786957
+  --------------------------------------------------------------------------------
+  data required time                                                   4.786957
+  data arrival time                                                    -2.342231
+  --------------------------------------------------------------------------------
+  slack (MET)                                                          2.444726
+
+
+  Startpoint: io_master_rvalid
+              (input port clocked by core_clk)
+  Endpoint: subsystem/router/rdata_q_reg_25_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                         Incr       Path
+  --------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                0.000000   0.000000
+  clock network delay (ideal)                               0.000000   0.000000
+  input external delay                                      2.000000   2.000000 r
+  io_master_rvalid (in)                                     0.000000   2.000000 r
+  subsystem/m_axi_rvalid (ysyx_soc_cpu_30000000)            0.000000   2.000000 r
+  subsystem/router/m_axi_rvalid (ysyx_axi4_router)          0.000000   2.000000 r
+  subsystem/router/U118/ZN (ND2D0BWP12T40P140)              0.034969   2.034969 f
+  subsystem/router/U119/ZN (OAI21D0BWP12T40P140)            0.022452   2.057420 r
+  subsystem/router/U154/ZN (INVD0BWP12T40P140)              0.062699   2.120119 f
+  subsystem/router/U9/Z (BUFFD1BWP12T40P140)                0.043205   2.163325 f
+  subsystem/router/U155/ZN (NR2D0BWP12T40P140)              0.084402   2.247726 r
+  subsystem/router/U173/Z (BUFFD1BWP12T40P140)              0.049788   2.297514 r
+  subsystem/router/U186/Z (AO222D0BWP12T40P140)             0.044717   2.342231 r
+  subsystem/router/rdata_q_reg_25_/D (DFCNQD1BWP12T40P140)  0.000000   2.342231 r
+  data arrival time                                                    2.342231
+
+  clock core_clk (rise edge)                                5.000000   5.000000
+  clock network delay (ideal)                               0.000000   5.000000
+  clock uncertainty                                         -0.200000  4.800000
+  subsystem/router/rdata_q_reg_25_/CP (DFCNQD1BWP12T40P140) 0.000000   4.800000 r
+  library setup time                                        -0.013043  4.786957
+  data required time                                                   4.786957
+  --------------------------------------------------------------------------------
+  data required time                                                   4.786957
+  data arrival time                                                    -2.342231
+  --------------------------------------------------------------------------------
+  slack (MET)                                                          2.444726
+
+
+  Startpoint: io_master_rvalid
+              (input port clocked by core_clk)
+  Endpoint: subsystem/router/rdata_q_reg_26_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                         Incr       Path
+  --------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                0.000000   0.000000
+  clock network delay (ideal)                               0.000000   0.000000
+  input external delay                                      2.000000   2.000000 r
+  io_master_rvalid (in)                                     0.000000   2.000000 r
+  subsystem/m_axi_rvalid (ysyx_soc_cpu_30000000)            0.000000   2.000000 r
+  subsystem/router/m_axi_rvalid (ysyx_axi4_router)          0.000000   2.000000 r
+  subsystem/router/U118/ZN (ND2D0BWP12T40P140)              0.034969   2.034969 f
+  subsystem/router/U119/ZN (OAI21D0BWP12T40P140)            0.022452   2.057420 r
+  subsystem/router/U154/ZN (INVD0BWP12T40P140)              0.062699   2.120119 f
+  subsystem/router/U9/Z (BUFFD1BWP12T40P140)                0.043205   2.163325 f
+  subsystem/router/U155/ZN (NR2D0BWP12T40P140)              0.084402   2.247726 r
+  subsystem/router/U173/Z (BUFFD1BWP12T40P140)              0.049788   2.297514 r
+  subsystem/router/U184/Z (AO222D0BWP12T40P140)             0.044717   2.342231 r
+  subsystem/router/rdata_q_reg_26_/D (DFCNQD1BWP12T40P140)  0.000000   2.342231 r
+  data arrival time                                                    2.342231
+
+  clock core_clk (rise edge)                                5.000000   5.000000
+  clock network delay (ideal)                               0.000000   5.000000
+  clock uncertainty                                         -0.200000  4.800000
+  subsystem/router/rdata_q_reg_26_/CP (DFCNQD1BWP12T40P140) 0.000000   4.800000 r
+  library setup time                                        -0.013043  4.786957
+  data required time                                                   4.786957
+  --------------------------------------------------------------------------------
+  data required time                                                   4.786957
+  data arrival time                                                    -2.342231
+  --------------------------------------------------------------------------------
+  slack (MET)                                                          2.444726
+
+
+  Startpoint: io_master_rvalid
+              (input port clocked by core_clk)
+  Endpoint: subsystem/router/rdata_q_reg_27_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                         Incr       Path
+  --------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                0.000000   0.000000
+  clock network delay (ideal)                               0.000000   0.000000
+  input external delay                                      2.000000   2.000000 r
+  io_master_rvalid (in)                                     0.000000   2.000000 r
+  subsystem/m_axi_rvalid (ysyx_soc_cpu_30000000)            0.000000   2.000000 r
+  subsystem/router/m_axi_rvalid (ysyx_axi4_router)          0.000000   2.000000 r
+  subsystem/router/U118/ZN (ND2D0BWP12T40P140)              0.034969   2.034969 f
+  subsystem/router/U119/ZN (OAI21D0BWP12T40P140)            0.022452   2.057420 r
+  subsystem/router/U154/ZN (INVD0BWP12T40P140)              0.062699   2.120119 f
+  subsystem/router/U9/Z (BUFFD1BWP12T40P140)                0.043205   2.163325 f
+  subsystem/router/U155/ZN (NR2D0BWP12T40P140)              0.084402   2.247726 r
+  subsystem/router/U173/Z (BUFFD1BWP12T40P140)              0.049788   2.297514 r
+  subsystem/router/U182/Z (AO222D0BWP12T40P140)             0.044717   2.342231 r
+  subsystem/router/rdata_q_reg_27_/D (DFCNQD1BWP12T40P140)  0.000000   2.342231 r
+  data arrival time                                                    2.342231
+
+  clock core_clk (rise edge)                                5.000000   5.000000
+  clock network delay (ideal)                               0.000000   5.000000
+  clock uncertainty                                         -0.200000  4.800000
+  subsystem/router/rdata_q_reg_27_/CP (DFCNQD1BWP12T40P140) 0.000000   4.800000 r
+  library setup time                                        -0.013043  4.786957
+  data required time                                                   4.786957
+  --------------------------------------------------------------------------------
+  data required time                                                   4.786957
+  data arrival time                                                    -2.342231
+  --------------------------------------------------------------------------------
+  slack (MET)                                                          2.444726
+
+
+  Startpoint: io_master_rvalid
+              (input port clocked by core_clk)
+  Endpoint: subsystem/router/rdata_q_reg_28_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                         Incr       Path
+  --------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                0.000000   0.000000
+  clock network delay (ideal)                               0.000000   0.000000
+  input external delay                                      2.000000   2.000000 r
+  io_master_rvalid (in)                                     0.000000   2.000000 r
+  subsystem/m_axi_rvalid (ysyx_soc_cpu_30000000)            0.000000   2.000000 r
+  subsystem/router/m_axi_rvalid (ysyx_axi4_router)          0.000000   2.000000 r
+  subsystem/router/U118/ZN (ND2D0BWP12T40P140)              0.034969   2.034969 f
+  subsystem/router/U119/ZN (OAI21D0BWP12T40P140)            0.022452   2.057420 r
+  subsystem/router/U154/ZN (INVD0BWP12T40P140)              0.062699   2.120119 f
+  subsystem/router/U9/Z (BUFFD1BWP12T40P140)                0.043205   2.163325 f
+  subsystem/router/U155/ZN (NR2D0BWP12T40P140)              0.084402   2.247726 r
+  subsystem/router/U173/Z (BUFFD1BWP12T40P140)              0.049788   2.297514 r
+  subsystem/router/U180/Z (AO222D0BWP12T40P140)             0.044717   2.342231 r
+  subsystem/router/rdata_q_reg_28_/D (DFCNQD1BWP12T40P140)  0.000000   2.342231 r
+  data arrival time                                                    2.342231
+
+  clock core_clk (rise edge)                                5.000000   5.000000
+  clock network delay (ideal)                               0.000000   5.000000
+  clock uncertainty                                         -0.200000  4.800000
+  subsystem/router/rdata_q_reg_28_/CP (DFCNQD1BWP12T40P140) 0.000000   4.800000 r
+  library setup time                                        -0.013043  4.786957
+  data required time                                                   4.786957
+  --------------------------------------------------------------------------------
+  data required time                                                   4.786957
+  data arrival time                                                    -2.342231
+  --------------------------------------------------------------------------------
+  slack (MET)                                                          2.444726
+
+
+  Startpoint: io_master_rvalid
+              (input port clocked by core_clk)
+  Endpoint: subsystem/router/rdata_q_reg_29_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                         Incr       Path
+  --------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                0.000000   0.000000
+  clock network delay (ideal)                               0.000000   0.000000
+  input external delay                                      2.000000   2.000000 r
+  io_master_rvalid (in)                                     0.000000   2.000000 r
+  subsystem/m_axi_rvalid (ysyx_soc_cpu_30000000)            0.000000   2.000000 r
+  subsystem/router/m_axi_rvalid (ysyx_axi4_router)          0.000000   2.000000 r
+  subsystem/router/U118/ZN (ND2D0BWP12T40P140)              0.034969   2.034969 f
+  subsystem/router/U119/ZN (OAI21D0BWP12T40P140)            0.022452   2.057420 r
+  subsystem/router/U154/ZN (INVD0BWP12T40P140)              0.062699   2.120119 f
+  subsystem/router/U9/Z (BUFFD1BWP12T40P140)                0.043205   2.163325 f
+  subsystem/router/U155/ZN (NR2D0BWP12T40P140)              0.084402   2.247726 r
+  subsystem/router/U173/Z (BUFFD1BWP12T40P140)              0.049788   2.297514 r
+  subsystem/router/U179/Z (AO222D0BWP12T40P140)             0.044717   2.342231 r
+  subsystem/router/rdata_q_reg_29_/D (DFCNQD1BWP12T40P140)  0.000000   2.342231 r
+  data arrival time                                                    2.342231
+
+  clock core_clk (rise edge)                                5.000000   5.000000
+  clock network delay (ideal)                               0.000000   5.000000
+  clock uncertainty                                         -0.200000  4.800000
+  subsystem/router/rdata_q_reg_29_/CP (DFCNQD1BWP12T40P140) 0.000000   4.800000 r
+  library setup time                                        -0.013043  4.786957
+  data required time                                                   4.786957
+  --------------------------------------------------------------------------------
+  data required time                                                   4.786957
+  data arrival time                                                    -2.342231
+  --------------------------------------------------------------------------------
+  slack (MET)                                                          2.444726
+
+
+  Startpoint: io_master_rvalid
+              (input port clocked by core_clk)
+  Endpoint: subsystem/router/rdata_q_reg_30_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                         Incr       Path
+  --------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                0.000000   0.000000
+  clock network delay (ideal)                               0.000000   0.000000
+  input external delay                                      2.000000   2.000000 r
+  io_master_rvalid (in)                                     0.000000   2.000000 r
+  subsystem/m_axi_rvalid (ysyx_soc_cpu_30000000)            0.000000   2.000000 r
+  subsystem/router/m_axi_rvalid (ysyx_axi4_router)          0.000000   2.000000 r
+  subsystem/router/U118/ZN (ND2D0BWP12T40P140)              0.034969   2.034969 f
+  subsystem/router/U119/ZN (OAI21D0BWP12T40P140)            0.022452   2.057420 r
+  subsystem/router/U154/ZN (INVD0BWP12T40P140)              0.062699   2.120119 f
+  subsystem/router/U9/Z (BUFFD1BWP12T40P140)                0.043205   2.163325 f
+  subsystem/router/U155/ZN (NR2D0BWP12T40P140)              0.084402   2.247726 r
+  subsystem/router/U173/Z (BUFFD1BWP12T40P140)              0.049788   2.297514 r
+  subsystem/router/U181/Z (AO222D0BWP12T40P140)             0.044717   2.342231 r
+  subsystem/router/rdata_q_reg_30_/D (DFCNQD1BWP12T40P140)  0.000000   2.342231 r
+  data arrival time                                                    2.342231
+
+  clock core_clk (rise edge)                                5.000000   5.000000
+  clock network delay (ideal)                               0.000000   5.000000
+  clock uncertainty                                         -0.200000  4.800000
+  subsystem/router/rdata_q_reg_30_/CP (DFCNQD1BWP12T40P140) 0.000000   4.800000 r
+  library setup time                                        -0.013043  4.786957
+  data required time                                                   4.786957
+  --------------------------------------------------------------------------------
+  data required time                                                   4.786957
+  data arrival time                                                    -2.342231
+  --------------------------------------------------------------------------------
+  slack (MET)                                                          2.444726
+
+
+  Startpoint: io_master_rvalid
+              (input port clocked by core_clk)
+  Endpoint: subsystem/router/rdata_q_reg_1_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                        Incr       Path
+  -------------------------------------------------------------------------------
+  clock core_clk (rise edge)                               0.000000   0.000000
+  clock network delay (ideal)                              0.000000   0.000000
+  input external delay                                     2.000000   2.000000 r
+  io_master_rvalid (in)                                    0.000000   2.000000 r
+  subsystem/m_axi_rvalid (ysyx_soc_cpu_30000000)           0.000000   2.000000 r
+  subsystem/router/m_axi_rvalid (ysyx_axi4_router)         0.000000   2.000000 r
+  subsystem/router/U118/ZN (ND2D0BWP12T40P140)             0.034969   2.034969 f
+  subsystem/router/U119/ZN (OAI21D0BWP12T40P140)           0.022452   2.057420 r
+  subsystem/router/U154/ZN (INVD0BWP12T40P140)             0.062699   2.120119 f
+  subsystem/router/U9/Z (BUFFD1BWP12T40P140)               0.043205   2.163325 f
+  subsystem/router/U155/ZN (NR2D0BWP12T40P140)             0.084402   2.247726 r
+  subsystem/router/U173/Z (BUFFD1BWP12T40P140)             0.049788   2.297514 r
+  subsystem/router/U175/Z (AO222D0BWP12T40P140)            0.044717   2.342231 r
+  subsystem/router/rdata_q_reg_1_/D (DFCNQD1BWP12T40P140)  0.000000   2.342231 r
+  data arrival time                                                   2.342231
+
+  clock core_clk (rise edge)                               5.000000   5.000000
+  clock network delay (ideal)                              0.000000   5.000000
+  clock uncertainty                                        -0.200000  4.800000
+  subsystem/router/rdata_q_reg_1_/CP (DFCNQD1BWP12T40P140) 0.000000   4.800000 r
+  library setup time                                       -0.012982  4.787018
+  data required time                                                  4.787018
+  -------------------------------------------------------------------------------
+  data required time                                                  4.787018
+  data arrival time                                                   -2.342231
+  -------------------------------------------------------------------------------
+  slack (MET)                                                         2.444787
+
+
+  Startpoint: io_master_rvalid
+              (input port clocked by core_clk)
+  Endpoint: subsystem/router/rdata_q_reg_2_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                        Incr       Path
+  -------------------------------------------------------------------------------
+  clock core_clk (rise edge)                               0.000000   0.000000
+  clock network delay (ideal)                              0.000000   0.000000
+  input external delay                                     2.000000   2.000000 r
+  io_master_rvalid (in)                                    0.000000   2.000000 r
+  subsystem/m_axi_rvalid (ysyx_soc_cpu_30000000)           0.000000   2.000000 r
+  subsystem/router/m_axi_rvalid (ysyx_axi4_router)         0.000000   2.000000 r
+  subsystem/router/U118/ZN (ND2D0BWP12T40P140)             0.034969   2.034969 f
+  subsystem/router/U119/ZN (OAI21D0BWP12T40P140)           0.022452   2.057420 r
+  subsystem/router/U154/ZN (INVD0BWP12T40P140)             0.062699   2.120119 f
+  subsystem/router/U9/Z (BUFFD1BWP12T40P140)               0.043205   2.163325 f
+  subsystem/router/U155/ZN (NR2D0BWP12T40P140)             0.084402   2.247726 r
+  subsystem/router/U173/Z (BUFFD1BWP12T40P140)             0.049788   2.297514 r
+  subsystem/router/U176/Z (AO222D0BWP12T40P140)            0.044717   2.342231 r
+  subsystem/router/rdata_q_reg_2_/D (DFCNQD1BWP12T40P140)  0.000000   2.342231 r
+  data arrival time                                                   2.342231
+
+  clock core_clk (rise edge)                               5.000000   5.000000
+  clock network delay (ideal)                              0.000000   5.000000
+  clock uncertainty                                        -0.200000  4.800000
+  subsystem/router/rdata_q_reg_2_/CP (DFCNQD1BWP12T40P140) 0.000000   4.800000 r
+  library setup time                                       -0.012982  4.787018
+  data required time                                                  4.787018
+  -------------------------------------------------------------------------------
+  data required time                                                  4.787018
+  data arrival time                                                   -2.342231
+  -------------------------------------------------------------------------------
+  slack (MET)                                                         2.444787
+
+
+  Startpoint: io_master_rvalid
+              (input port clocked by core_clk)
+  Endpoint: subsystem/router/rdata_q_reg_4_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                        Incr       Path
+  -------------------------------------------------------------------------------
+  clock core_clk (rise edge)                               0.000000   0.000000
+  clock network delay (ideal)                              0.000000   0.000000
+  input external delay                                     2.000000   2.000000 r
+  io_master_rvalid (in)                                    0.000000   2.000000 r
+  subsystem/m_axi_rvalid (ysyx_soc_cpu_30000000)           0.000000   2.000000 r
+  subsystem/router/m_axi_rvalid (ysyx_axi4_router)         0.000000   2.000000 r
+  subsystem/router/U118/ZN (ND2D0BWP12T40P140)             0.034969   2.034969 f
+  subsystem/router/U119/ZN (OAI21D0BWP12T40P140)           0.022452   2.057420 r
+  subsystem/router/U154/ZN (INVD0BWP12T40P140)             0.062699   2.120119 f
+  subsystem/router/U9/Z (BUFFD1BWP12T40P140)               0.043205   2.163325 f
+  subsystem/router/U155/ZN (NR2D0BWP12T40P140)             0.084402   2.247726 r
+  subsystem/router/U173/Z (BUFFD1BWP12T40P140)             0.049788   2.297514 r
+  subsystem/router/U174/Z (AO222D0BWP12T40P140)            0.044717   2.342231 r
+  subsystem/router/rdata_q_reg_4_/D (DFCNQD1BWP12T40P140)  0.000000   2.342231 r
+  data arrival time                                                   2.342231
+
+  clock core_clk (rise edge)                               5.000000   5.000000
+  clock network delay (ideal)                              0.000000   5.000000
+  clock uncertainty                                        -0.200000  4.800000
+  subsystem/router/rdata_q_reg_4_/CP (DFCNQD1BWP12T40P140) 0.000000   4.800000 r
+  library setup time                                       -0.012869  4.787131
+  data required time                                                  4.787131
+  -------------------------------------------------------------------------------
+  data required time                                                  4.787131
+  data arrival time                                                   -2.342231
+  -------------------------------------------------------------------------------
+  slack (MET)                                                         2.444900
+
+
+  Startpoint: io_master_rvalid
+              (input port clocked by core_clk)
+  Endpoint: subsystem/router/rdata_q_reg_19_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                         Incr       Path
+  --------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                0.000000   0.000000
+  clock network delay (ideal)                               0.000000   0.000000
+  input external delay                                      2.000000   2.000000 r
+  io_master_rvalid (in)                                     0.000000   2.000000 r
+  subsystem/m_axi_rvalid (ysyx_soc_cpu_30000000)            0.000000   2.000000 r
+  subsystem/router/m_axi_rvalid (ysyx_axi4_router)          0.000000   2.000000 r
+  subsystem/router/U118/ZN (ND2D0BWP12T40P140)              0.034969   2.034969 f
+  subsystem/router/U119/ZN (OAI21D0BWP12T40P140)            0.022452   2.057420 r
+  subsystem/router/U154/ZN (INVD0BWP12T40P140)              0.062699   2.120119 f
+  subsystem/router/U9/Z (BUFFD1BWP12T40P140)                0.043205   2.163325 f
+  subsystem/router/U155/ZN (NR2D0BWP12T40P140)              0.084402   2.247726 r
+  subsystem/router/U173/Z (BUFFD1BWP12T40P140)              0.049788   2.297514 r
+  subsystem/router/U177/Z (AO222D0BWP12T40P140)             0.044717   2.342231 r
+  subsystem/router/rdata_q_reg_19_/D (DFCNQD1BWP12T40P140)  0.000000   2.342231 r
+  data arrival time                                                    2.342231
+
+  clock core_clk (rise edge)                                5.000000   5.000000
+  clock network delay (ideal)                               0.000000   5.000000
+  clock uncertainty                                         -0.200000  4.800000
+  subsystem/router/rdata_q_reg_19_/CP (DFCNQD1BWP12T40P140) 0.000000   4.800000 r
+  library setup time                                        -0.012869  4.787131
+  data required time                                                   4.787131
+  --------------------------------------------------------------------------------
+  data required time                                                   4.787131
+  data arrival time                                                    -2.342231
+  --------------------------------------------------------------------------------
+  slack (MET)                                                          2.444900
+
+
+  Startpoint: io_master_rvalid
+              (input port clocked by core_clk)
+  Endpoint: subsystem/router/rdata_q_reg_20_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                         Incr       Path
+  --------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                0.000000   0.000000
+  clock network delay (ideal)                               0.000000   0.000000
+  input external delay                                      2.000000   2.000000 r
+  io_master_rvalid (in)                                     0.000000   2.000000 r
+  subsystem/m_axi_rvalid (ysyx_soc_cpu_30000000)            0.000000   2.000000 r
+  subsystem/router/m_axi_rvalid (ysyx_axi4_router)          0.000000   2.000000 r
+  subsystem/router/U118/ZN (ND2D0BWP12T40P140)              0.034969   2.034969 f
+  subsystem/router/U119/ZN (OAI21D0BWP12T40P140)            0.022452   2.057420 r
+  subsystem/router/U154/ZN (INVD0BWP12T40P140)              0.062699   2.120119 f
+  subsystem/router/U9/Z (BUFFD1BWP12T40P140)                0.043205   2.163325 f
+  subsystem/router/U155/ZN (NR2D0BWP12T40P140)              0.084402   2.247726 r
+  subsystem/router/U173/Z (BUFFD1BWP12T40P140)              0.049788   2.297514 r
+  subsystem/router/U178/Z (AO222D0BWP12T40P140)             0.044717   2.342231 r
+  subsystem/router/rdata_q_reg_20_/D (DFCNQD1BWP12T40P140)  0.000000   2.342231 r
+  data arrival time                                                    2.342231
+
+  clock core_clk (rise edge)                                5.000000   5.000000
+  clock network delay (ideal)                               0.000000   5.000000
+  clock uncertainty                                         -0.200000  4.800000
+  subsystem/router/rdata_q_reg_20_/CP (DFCNQD1BWP12T40P140) 0.000000   4.800000 r
+  library setup time                                        -0.012869  4.787131
+  data required time                                                   4.787131
+  --------------------------------------------------------------------------------
+  data required time                                                   4.787131
+  data arrival time                                                    -2.342231
+  --------------------------------------------------------------------------------
+  slack (MET)                                                          2.444900
+
+
+  Startpoint: io_master_rvalid
+              (input port clocked by core_clk)
+  Endpoint: subsystem/router/last_q_reg
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                    Incr       Path
+  ---------------------------------------------------------------------------
+  clock core_clk (rise edge)                           0.000000   0.000000
+  clock network delay (ideal)                          0.000000   0.000000
+  input external delay                                 2.000000   2.000000 r
+  io_master_rvalid (in)                                0.000000   2.000000 r
+  subsystem/m_axi_rvalid (ysyx_soc_cpu_30000000)       0.000000   2.000000 r
+  subsystem/router/m_axi_rvalid (ysyx_axi4_router)     0.000000   2.000000 r
+  subsystem/router/U118/ZN (ND2D0BWP12T40P140)         0.034969   2.034969 f
+  subsystem/router/U119/ZN (OAI21D0BWP12T40P140)       0.022452   2.057420 r
+  subsystem/router/U154/ZN (INVD0BWP12T40P140)         0.062699   2.120119 f
+  subsystem/router/U9/Z (BUFFD1BWP12T40P140)           0.043205   2.163325 f
+  subsystem/router/U155/ZN (NR2D0BWP12T40P140)         0.084402   2.247726 r
+  subsystem/router/U173/Z (BUFFD1BWP12T40P140)         0.049788   2.297514 r
+  subsystem/router/U194/ZN (IND2D1BWP12T40P140)        0.024172   2.321686 r
+  subsystem/router/last_q_reg/D (DFSNQD1BWP12T40P140)  0.000000   2.321686 r
+  data arrival time                                               2.321686
+
+  clock core_clk (rise edge)                           5.000000   5.000000
+  clock network delay (ideal)                          0.000000   5.000000
+  clock uncertainty                                    -0.200000  4.800000
+  subsystem/router/last_q_reg/CP (DFSNQD1BWP12T40P140) 0.000000   4.800000 r
+  library setup time                                   -0.012682  4.787318
+  data required time                                              4.787318
+  ---------------------------------------------------------------------------
+  data required time                                              4.787318
+  data arrival time                                               -2.321686
+  ---------------------------------------------------------------------------
+  slack (MET)                                                     2.465632
+
+
+  Startpoint: io_master_rvalid
+              (input port clocked by core_clk)
+  Endpoint: subsystem/router/rdata_q_reg_8_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                        Incr       Path
+  -------------------------------------------------------------------------------
+  clock core_clk (rise edge)                               0.000000   0.000000
+  clock network delay (ideal)                              0.000000   0.000000
+  input external delay                                     2.000000   2.000000 r
+  io_master_rvalid (in)                                    0.000000   2.000000 r
+  subsystem/m_axi_rvalid (ysyx_soc_cpu_30000000)           0.000000   2.000000 r
+  subsystem/router/m_axi_rvalid (ysyx_axi4_router)         0.000000   2.000000 r
+  subsystem/router/U118/ZN (ND2D0BWP12T40P140)             0.034969   2.034969 f
+  subsystem/router/U119/ZN (OAI21D0BWP12T40P140)           0.022452   2.057420 r
+  subsystem/router/U154/ZN (INVD0BWP12T40P140)             0.062699   2.120119 f
+  subsystem/router/U9/Z (BUFFD1BWP12T40P140)               0.043205   2.163325 f
+  subsystem/router/U155/ZN (NR2D0BWP12T40P140)             0.084402   2.247726 r
+  subsystem/router/U165/Z (AO222D0BWP12T40P140)            0.058606   2.306333 r
+  subsystem/router/rdata_q_reg_8_/D (DFCNQD1BWP12T40P140)  0.000000   2.306333 r
+  data arrival time                                                   2.306333
+
+  clock core_clk (rise edge)                               5.000000   5.000000
+  clock network delay (ideal)                              0.000000   5.000000
+  clock uncertainty                                        -0.200000  4.800000
+  subsystem/router/rdata_q_reg_8_/CP (DFCNQD1BWP12T40P140) 0.000000   4.800000 r
+  library setup time                                       -0.013043  4.786957
+  data required time                                                  4.786957
+  -------------------------------------------------------------------------------
+  data required time                                                  4.786957
+  data arrival time                                                   -2.306333
+  -------------------------------------------------------------------------------
+  slack (MET)                                                         2.480624
+
+
+  Startpoint: io_master_rvalid
+              (input port clocked by core_clk)
+  Endpoint: subsystem/router/rdata_q_reg_9_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                        Incr       Path
+  -------------------------------------------------------------------------------
+  clock core_clk (rise edge)                               0.000000   0.000000
+  clock network delay (ideal)                              0.000000   0.000000
+  input external delay                                     2.000000   2.000000 r
+  io_master_rvalid (in)                                    0.000000   2.000000 r
+  subsystem/m_axi_rvalid (ysyx_soc_cpu_30000000)           0.000000   2.000000 r
+  subsystem/router/m_axi_rvalid (ysyx_axi4_router)         0.000000   2.000000 r
+  subsystem/router/U118/ZN (ND2D0BWP12T40P140)             0.034969   2.034969 f
+  subsystem/router/U119/ZN (OAI21D0BWP12T40P140)           0.022452   2.057420 r
+  subsystem/router/U154/ZN (INVD0BWP12T40P140)             0.062699   2.120119 f
+  subsystem/router/U9/Z (BUFFD1BWP12T40P140)               0.043205   2.163325 f
+  subsystem/router/U155/ZN (NR2D0BWP12T40P140)             0.084402   2.247726 r
+  subsystem/router/U168/Z (AO222D0BWP12T40P140)            0.058606   2.306333 r
+  subsystem/router/rdata_q_reg_9_/D (DFCNQD1BWP12T40P140)  0.000000   2.306333 r
+  data arrival time                                                   2.306333
+
+  clock core_clk (rise edge)                               5.000000   5.000000
+  clock network delay (ideal)                              0.000000   5.000000
+  clock uncertainty                                        -0.200000  4.800000
+  subsystem/router/rdata_q_reg_9_/CP (DFCNQD1BWP12T40P140) 0.000000   4.800000 r
+  library setup time                                       -0.013043  4.786957
+  data required time                                                  4.786957
+  -------------------------------------------------------------------------------
+  data required time                                                  4.786957
+  data arrival time                                                   -2.306333
+  -------------------------------------------------------------------------------
+  slack (MET)                                                         2.480624
+
+
+  Startpoint: io_master_rvalid
+              (input port clocked by core_clk)
+  Endpoint: subsystem/router/rdata_q_reg_10_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                         Incr       Path
+  --------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                0.000000   0.000000
+  clock network delay (ideal)                               0.000000   0.000000
+  input external delay                                      2.000000   2.000000 r
+  io_master_rvalid (in)                                     0.000000   2.000000 r
+  subsystem/m_axi_rvalid (ysyx_soc_cpu_30000000)            0.000000   2.000000 r
+  subsystem/router/m_axi_rvalid (ysyx_axi4_router)          0.000000   2.000000 r
+  subsystem/router/U118/ZN (ND2D0BWP12T40P140)              0.034969   2.034969 f
+  subsystem/router/U119/ZN (OAI21D0BWP12T40P140)            0.022452   2.057420 r
+  subsystem/router/U154/ZN (INVD0BWP12T40P140)              0.062699   2.120119 f
+  subsystem/router/U9/Z (BUFFD1BWP12T40P140)                0.043205   2.163325 f
+  subsystem/router/U155/ZN (NR2D0BWP12T40P140)              0.084402   2.247726 r
+  subsystem/router/U171/Z (AO222D0BWP12T40P140)             0.058606   2.306333 r
+  subsystem/router/rdata_q_reg_10_/D (DFCNQD1BWP12T40P140)  0.000000   2.306333 r
+  data arrival time                                                    2.306333
+
+  clock core_clk (rise edge)                                5.000000   5.000000
+  clock network delay (ideal)                               0.000000   5.000000
+  clock uncertainty                                         -0.200000  4.800000
+  subsystem/router/rdata_q_reg_10_/CP (DFCNQD1BWP12T40P140) 0.000000   4.800000 r
+  library setup time                                        -0.013043  4.786957
+  data required time                                                   4.786957
+  --------------------------------------------------------------------------------
+  data required time                                                   4.786957
+  data arrival time                                                    -2.306333
+  --------------------------------------------------------------------------------
+  slack (MET)                                                          2.480624
+
+
+1

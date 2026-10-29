@@ -1,0 +1,103 @@
+****************************************
+Report : disable_timing
+Design : ysyx_25030087
+Version: T-2022.03-SP5
+Date   : Thu Oct 29 21:36:42 2026
+****************************************
+
+Flags :     c  case-analysis
+            C  Conditional arc
+            d  default conditional arc
+            f  false net-arc
+            l  loop breaking
+            L  db inherited loop breaking
+	    m  mode
+            p  propagated constant
+            u  user-defined
+            U  User-defined library arcs
+
+Cell or Port                From    To      Sense           Flag  Reason
+--------------------------------------------------------------------------------
+io_slave_awready                                            p     io_slave_awready = 0
+io_master_awid[3]                                           p     io_master_awid[3] = 0
+io_master_awid[2]                                           p     io_master_awid[2] = 0
+io_master_awid[1]                                           p     io_master_awid[1] = 0
+io_master_awid[0]                                           p     io_master_awid[0] = 0
+io_master_awlen[7]                                          p     io_master_awlen[7] = 0
+io_master_awlen[6]                                          p     io_master_awlen[6] = 0
+io_master_awlen[5]                                          p     io_master_awlen[5] = 0
+io_master_awlen[4]                                          p     io_master_awlen[4] = 0
+io_master_awlen[3]                                          p     io_master_awlen[3] = 0
+io_master_awlen[2]                                          p     io_master_awlen[2] = 0
+io_master_awlen[1]                                          p     io_master_awlen[1] = 0
+io_master_awlen[0]                                          p     io_master_awlen[0] = 0
+io_master_awsize[2]                                         p     io_master_awsize[2] = 0
+io_master_awburst[1]                                        p     io_master_awburst[1] = 0
+io_master_awburst[0]                                        p     io_master_awburst[0] = 1
+io_slave_wready                                             p     io_slave_wready = 0
+io_master_wlast                                             p     io_master_wlast = 1
+io_slave_bvalid                                             p     io_slave_bvalid = 0
+io_slave_bresp[1]                                           p     io_slave_bresp[1] = 0
+io_slave_bresp[0]                                           p     io_slave_bresp[0] = 0
+io_slave_bid[3]                                             p     io_slave_bid[3] = 0
+io_slave_bid[2]                                             p     io_slave_bid[2] = 0
+io_slave_bid[1]                                             p     io_slave_bid[1] = 0
+io_slave_bid[0]                                             p     io_slave_bid[0] = 0
+io_slave_arready                                            p     io_slave_arready = 0
+io_master_arid[3]                                           p     io_master_arid[3] = 0
+io_master_arid[2]                                           p     io_master_arid[2] = 0
+io_master_arid[1]                                           p     io_master_arid[1] = 0
+io_master_arid[0]                                           p     io_master_arid[0] = 0
+io_master_arlen[7]                                          p     io_master_arlen[7] = 0
+io_master_arlen[6]                                          p     io_master_arlen[6] = 0
+io_master_arlen[5]                                          p     io_master_arlen[5] = 0
+io_master_arlen[4]                                          p     io_master_arlen[4] = 0
+io_master_arlen[3]                                          p     io_master_arlen[3] = 0
+io_master_arlen[2]                                          p     io_master_arlen[2] = 0
+io_master_arlen[1]                                          p     io_master_arlen[1] = 0
+io_master_arlen[0]                                          p     io_master_arlen[0] = 0
+io_master_arsize[2]                                         p     io_master_arsize[2] = 0
+io_master_arburst[1]                                        p     io_master_arburst[1] = 0
+io_master_arburst[0]                                        p     io_master_arburst[0] = 1
+io_slave_rvalid                                             p     io_slave_rvalid = 0
+io_slave_rresp[1]                                           p     io_slave_rresp[1] = 0
+io_slave_rresp[0]                                           p     io_slave_rresp[0] = 0
+io_slave_rdata[31]                                          p     io_slave_rdata[31] = 0
+io_slave_rdata[30]                                          p     io_slave_rdata[30] = 0
+io_slave_rdata[29]                                          p     io_slave_rdata[29] = 0
+io_slave_rdata[28]                                          p     io_slave_rdata[28] = 0
+io_slave_rdata[27]                                          p     io_slave_rdata[27] = 0
+io_slave_rdata[26]                                          p     io_slave_rdata[26] = 0
+io_slave_rdata[25]                                          p     io_slave_rdata[25] = 0
+io_slave_rdata[24]                                          p     io_slave_rdata[24] = 0
+io_slave_rdata[23]                                          p     io_slave_rdata[23] = 0
+io_slave_rdata[22]                                          p     io_slave_rdata[22] = 0
+io_slave_rdata[21]                                          p     io_slave_rdata[21] = 0
+io_slave_rdata[20]                                          p     io_slave_rdata[20] = 0
+io_slave_rdata[19]                                          p     io_slave_rdata[19] = 0
+io_slave_rdata[18]                                          p     io_slave_rdata[18] = 0
+io_slave_rdata[17]                                          p     io_slave_rdata[17] = 0
+io_slave_rdata[16]                                          p     io_slave_rdata[16] = 0
+io_slave_rdata[15]                                          p     io_slave_rdata[15] = 0
+io_slave_rdata[14]                                          p     io_slave_rdata[14] = 0
+io_slave_rdata[13]                                          p     io_slave_rdata[13] = 0
+io_slave_rdata[12]                                          p     io_slave_rdata[12] = 0
+io_slave_rdata[11]                                          p     io_slave_rdata[11] = 0
+io_slave_rdata[10]                                          p     io_slave_rdata[10] = 0
+io_slave_rdata[9]                                           p     io_slave_rdata[9] = 0
+io_slave_rdata[8]                                           p     io_slave_rdata[8] = 0
+io_slave_rdata[7]                                           p     io_slave_rdata[7] = 0
+io_slave_rdata[6]                                           p     io_slave_rdata[6] = 0
+io_slave_rdata[5]                                           p     io_slave_rdata[5] = 0
+io_slave_rdata[4]                                           p     io_slave_rdata[4] = 0
+io_slave_rdata[3]                                           p     io_slave_rdata[3] = 0
+io_slave_rdata[2]                                           p     io_slave_rdata[2] = 0
+io_slave_rdata[1]                                           p     io_slave_rdata[1] = 0
+io_slave_rdata[0]                                           p     io_slave_rdata[0] = 0
+io_slave_rlast                                              p     io_slave_rlast = 0
+io_slave_rid[3]                                             p     io_slave_rid[3] = 0
+io_slave_rid[2]                                             p     io_slave_rid[2] = 0
+io_slave_rid[1]                                             p     io_slave_rid[1] = 0
+io_slave_rid[0]                                             p     io_slave_rid[0] = 0
+
+1

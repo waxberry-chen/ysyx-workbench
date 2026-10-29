@@ -1,0 +1,1374 @@
+
+****************************************
+Report : library
+Library: tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+Version: V-2023.12-SP3
+Date   : Thu Oct 29 21:34:16 2026
+****************************************
+
+Library Type            : Technology, PG pin Based
+Tool Created            : G-2012.06-SP3
+Date Created            : Wed Feb 17 01:23:16 2016 
+Library Version         : 170
+Comments                : Copyright TSMC
+Time Unit               : 1ns
+
+Capacitive Load Unit    : 1.000000pf
+Pulling Resistance Unit : 1kilo-ohm
+Voltage Unit            : 1V
+Current Unit            : 1mA
+Dynamic Energy Unit     : 1.000000pJ   (derived from V,C units)
+Leakage Power Unit      : 1nW
+Bus Naming Style        : %s[%d] (default)
+
+Operating Conditions:
+
+
+    Operating Condition Name : tt0p9v25c
+    Library : tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+    Process :   1.00
+    Temperature :  25.00
+    Voltage :   0.90
+    Interconnect Model : balanced_tree
+
+Input Voltages:
+
+    Name                Vil         Vih         Vimin       Vimax
+    -----------------------------------------------------------------
+    cmos                0.300 * VDD 0.700 * VDD -0.50       VDD + 0.500
+    cmos_schmitt        0.300 * VDD 0.700 * VDD -0.50       VDD + 0.500
+    schmitt             0.300 * VDD 0.700 * VDD -0.50       VDD + 0.500
+    ttl                 0.80        2.00        -0.50       VDD + 0.500
+    ttl_schmitt         0.80        2.00        -0.50       VDD + 0.500
+    pci                 0.80        2.00        -0.50       VDD + 0.500
+
+Output Voltages:
+
+    Name                Vol         Voh         Vomin       Vomax
+    -----------------------------------------------------------------
+    cmos                0.300 * VDD 0.700 * VDD -0.50       VDD + 0.500
+    cmos_schmitt        0.300 * VDD 0.700 * VDD -0.50       VDD + 0.500
+    schmitt             0.300 * VDD 0.700 * VDD -0.50       VDD + 0.500
+    ttl                 0.80        2.00        -0.50       VDD + 0.500
+    ttl_schmitt         0.80        2.00        -0.50       VDD + 0.500
+    pci                 0.80        2.00        -0.50       VDD + 0.500
+
+nom_voltage : 0.9
+Voltage Map: Voltage Name   : Voltage Value
+             COREVDD1         0.9
+             COREGND1         0
+
+Wire Loading Model:
+
+Name           :   ZeroWireload
+Location       :   tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+Resistance     :   1e-05
+Capacitance    :   1
+Area           :   0
+Slope          :   0
+Fanout   Length   Points Average Cap Std Deviation
+--------------------------------------------------------------
+     1     0.00
+     2     0.00
+     3     0.00
+     4     0.00
+     5     0.00
+     6     0.00
+     7     0.00
+     8     0.00
+     9     0.00
+    10     0.00
+    11     0.00
+    12     0.00
+    13     0.00
+    14     0.00
+    15     0.00
+    16     0.00
+    17     0.00
+    18     0.00
+    19     0.00
+    20     0.00
+
+
+Wire Loading Model Selection Group:
+
+   Name           : WireAreaForZero
+
+        Selection             Wire load name
+    min area   max area
+   -------------------------------------------
+        0.00   113034.00         ZeroWireload
+
+
+Wire Loading Model Mode: segmented.
+
+
+Wire Loading Model Selection Group: WireAreaForZero.
+
+Porosity information:
+
+    No porosity information specified.
+
+In_place optimization mode:  match_footprint
+
+Timing Ranges:
+
+    No timing ranges specified.
+
+
+Delay Threshold Trip-Points:
+
+	input_threshold_pct_rise:	50
+	output_threshold_pct_rise:	50
+	input_threshold_pct_fall:	50
+	output_threshold_pct_fall:	50
+
+
+Slew Threshold Trip-Points:
+
+	slew_lower_threshold_pct_rise:	30
+	slew_upper_threshold_pct_rise:	70
+	slew_lower_threshold_pct_fall:	30
+	slew_upper_threshold_pct_fall:	70
+
+	slew_derate_from_library:	0.5
+
+
+Components:
+
+    Attributes:
+       af - active falling
+       ah - active high
+       al - active low
+       ar - active rising
+        b - black box (function unknown)
+       ce - clock enable
+       cg - clock gating integrated cell
+    short - has shorted pin
+       ub - unbuffered
+      pgt - pass gate
+      ctl - has CTL test model
+        d - dont_touch
+      iso - isolation cell
+  clk_iso - clock isolation cell
+   ne_iso - no enable isolation cell
+       ls - level shifter
+      dls - differential level shifter
+    ne-ls - no enable level shifter
+       mo - map_only
+     1p0g - power only, no ground
+     0p1g - ground only, no power
+     0p0g - no power/ground
+        p - preferred
+      pad - pad cell
+       hp - hold_preferred
+     pwrg - power gating cell
+        r - removable
+        s - statetable
+      sa0 - dont_fault stuck-at-0
+      sa1 - dont_fault stuck-at-1
+     sa01 - dont_fault both stuck-at-0 and stuck-at-1
+       sz - use_for_size_only
+      soi - silicon on insulator
+        t - test cell. t(scan_type) as
+          t(mux_ff) - muxed flip-flop
+          t(mux_ld) - muxed latch
+          t(clk_scan) - clocked scan
+          t(clk_scan_ld) - clocked scan latch
+          t(lssd_dld) - double latch LSSD
+          t(lssd_sld) - single latch LSSD
+          t(lssd_clk) - clocked LSSD
+          t(lssd_auxclk) - auxiliary clock LSSD
+          t(lssd_se) - scan enabled LSSD
+        u - dont_use
+      udp - usable for datapath generators
+      ufc - user_function_class. ufc(type) as
+          ufc(u) - user-defined
+          ufc(a) - automatically generated
+      ccs - composite current source
+    c_ccs - compact ccs timing modeling
+     ccsn - ccs noise data modeling
+     ccsp - ccs power data modeling
+     recv - receiver model
+      lvf - lvf modeling
+      imc - macro cell 
+switch_cg - switch cell (coarse grain)
+      ret - retention cell
+ ret(zpr) - zero pin retention cell
+    sprpg - using same pg_pin as related power and ground
+       ao - always on cell
+     gicg - generic integrated clock gating
+       va - variation-aware ccs timing modeling
+      val - variation-aware ccs leakage power modeling
+      fil - filler cell
+      tap - tap cell
+    decap - decap cell
+      pll - pll cell
+      mem - memory cell
+      adt - antenna diode type. adt(type) as
+  adt(pg) - power_and_ground
+   adt(p) - power
+   adt(g) - ground
+       ss - synchronizer_stage
+      gfc - glitch filter cell
+
+
+Pin Attributes:
+       ao - always on pin
+      lse - level shifter enable pin
+     isoe - isolation cell enable pin
+     scmr - standard cell main rail
+    short - shorted pin
+       uc - unconnected pin
+
+
+   Cell                Footprint    Attributes
+   -------------------------------------------
+   AN2D0BWP12T40P140   "an2d1"          
+   AN2D1BWP12T40P140   "an2d1"          
+   AN2D2BWP12T40P140   "an2d1"          
+   AN2D4BWP12T40P140   "an2d1"          
+   AN2D8BWP12T40P140   "an2d1"          
+   AN2D16BWP12T40P140  "an2d1"          
+   AN2XD8BWP12T40P140  "an2d1"          
+   AN2XD16BWP12T40P140 "an2d1"          
+   AN3D0BWP12T40P140   "an3d1"          
+   AN3D1BWP12T40P140   "an3d1"          
+   AN3D2BWP12T40P140   "an3d1"          
+   AN3D4BWP12T40P140   "an3d1"          
+   AN3D8BWP12T40P140   "an3d1"          
+   AN3D16BWP12T40P140  "an3d1"          
+   AN3XD8BWP12T40P140  "an3d1"          
+   AN3XD16BWP12T40P140 "an3d1"          
+   AN4D0BWP12T40P140   "an4d1"          
+   AN4D1BWP12T40P140   "an4d1"          
+   AN4D2BWP12T40P140   "an4d1"          
+   AN4D4BWP12T40P140   "an4d1"          
+   AN4D8BWP12T40P140   "an4d1"          
+   ANTENNABWP12T40P140                  b
+   AO21D0BWP12T40P140  "ao21d1"         
+   AO21D1BWP12T40P140  "ao21d1"         
+   AO21D2BWP12T40P140  "ao21d1"         
+   AO21D4BWP12T40P140  "ao21d1"         
+   AO22D0BWP12T40P140  "ao22d1"         
+   AO22D1BWP12T40P140  "ao22d1"         
+   AO22D2BWP12T40P140  "ao22d1"         
+   AO22D4BWP12T40P140  "ao22d1"         
+   AO22D8BWP12T40P140  "ao22d1"         
+   AO22D16BWP12T40P140 "ao22d1"         
+   AO22XD8BWP12T40P140 "ao22d1"         
+   AO22XD16BWP12T40P140 "ao22d1"        
+   AO31D0BWP12T40P140  "ao31d1"         
+   AO31D1BWP12T40P140  "ao31d1"         
+   AO31D2BWP12T40P140  "ao31d1"         
+   AO31D4BWP12T40P140  "ao31d1"         
+   AO31D8BWP12T40P140  "ao31d1"         
+   AO31D16BWP12T40P140 "ao31d1"         
+   AO31XD8BWP12T40P140 "ao31d1"         
+   AO31XD16BWP12T40P140 "ao31d1"        
+   AO32D0BWP12T40P140  "ao32d1"         
+   AO32D1BWP12T40P140  "ao32d1"         
+   AO32D2BWP12T40P140  "ao32d1"         
+   AO32D4BWP12T40P140  "ao32d1"         
+   AO33D0BWP12T40P140  "ao33d1"         
+   AO33D1BWP12T40P140  "ao33d1"         
+   AO33D2BWP12T40P140  "ao33d1"         
+   AO33D4BWP12T40P140  "ao33d1"         
+   AO211D0BWP12T40P140 "ao211d1"        
+   AO211D1BWP12T40P140 "ao211d1"        
+   AO211D2BWP12T40P140 "ao211d1"        
+   AO211D4BWP12T40P140 "ao211d1"        
+   AO221D0BWP12T40P140 "ao221d1"        
+   AO221D1BWP12T40P140 "ao221d1"        
+   AO221D2BWP12T40P140 "ao221d1"        
+   AO221D4BWP12T40P140 "ao221d1"        
+   AO222D0BWP12T40P140 "ao222d1"        
+   AO222D1BWP12T40P140 "ao222d1"        
+   AO222D2BWP12T40P140 "ao222d1"        
+   AO222D4BWP12T40P140 "ao222d1"        
+   AOI21D0BWP12T40P140 "aoi21d1"        
+   AOI21D1BWP12T40P140 "aoi21d1"        
+   AOI21D2BWP12T40P140 "aoi21d1"        
+   AOI21D4BWP12T40P140 "aoi21d1"        
+   AOI21D8BWP12T40P140 "aoi21d1"        
+   AOI21D16BWP12T40P140 "aoi21d1"       
+   AOI21OPTPBD1BWP12T40P140 "aoi21d1"   
+   AOI21OPTPBD2BWP12T40P140 "aoi21d1"   
+   AOI21OPTPBD4BWP12T40P140 "aoi21d1"   
+   AOI21OPTPBD6BWP12T40P140 "aoi21d1"   
+   AOI21OPTPBD8BWP12T40P140 "aoi21d1"   
+   AOI21OPTPBD12BWP12T40P140 "aoi21d1"  
+   AOI21OPTPBD16BWP12T40P140 "aoi21d1"  
+   AOI21OPTREPBD1BWP12T40P140 "aoi21d1" 
+   AOI21OPTREPBD2BWP12T40P140 "aoi21d1" 
+   AOI21OPTREPBD4BWP12T40P140 "aoi21d1" 
+   AOI21OPTREPBD6BWP12T40P140 "aoi21d1" 
+   AOI21OPTREPBD8BWP12T40P140 "aoi21d1" 
+   AOI21OPTREPBD12BWP12T40P140 "aoi21d1"
+   AOI21OPTREPBD16BWP12T40P140 "aoi21d1"
+   AOI22D0BWP12T40P140 "aoi22d1"        
+   AOI22D1BWP12T40P140 "aoi22d1"        
+   AOI22D2BWP12T40P140 "aoi22d1"        
+   AOI22D4BWP12T40P140 "aoi22d1"        
+   AOI22D8BWP12T40P140 "aoi22d1"        
+   AOI22D16BWP12T40P140 "aoi22d1"       
+   AOI22OPTPBD1BWP12T40P140 "aoi22d1"   
+   AOI22OPTPBD2BWP12T40P140 "aoi22d1"   
+   AOI22OPTPBD4BWP12T40P140 "aoi22d1"   
+   AOI22OPTPBD6BWP12T40P140 "aoi22d1"   
+   AOI22OPTPBD8BWP12T40P140 "aoi22d1"   
+   AOI22OPTPBD12BWP12T40P140 "aoi22d1"  
+   AOI22OPTPBD16BWP12T40P140 "aoi22d1"  
+   AOI31D0BWP12T40P140 "aoi31d1"        
+   AOI31D1BWP12T40P140 "aoi31d1"        
+   AOI31D2BWP12T40P140 "aoi31d1"        
+   AOI31D4BWP12T40P140 "aoi31d1"        
+   AOI31D8BWP12T40P140 "aoi31d1"        
+   AOI31D16BWP12T40P140 "aoi31d1"       
+   AOI32D0BWP12T40P140 "aoi32d1"        
+   AOI32D1BWP12T40P140 "aoi32d1"        
+   AOI32D2BWP12T40P140 "aoi32d1"        
+   AOI32D4BWP12T40P140 "aoi32d1"        
+   AOI32XD4BWP12T40P140 "aoi32d1"       
+   AOI33D0BWP12T40P140 "aoi33d1"        
+   AOI33D1BWP12T40P140 "aoi33d1"        
+   AOI33D2BWP12T40P140 "aoi33d1"        
+   AOI33D4BWP12T40P140 "aoi33d1"        
+   AOI33XD4BWP12T40P140 "aoi33d1"       
+   AOI211D0BWP12T40P140 "aoi211d1"      
+   AOI211D1BWP12T40P140 "aoi211d1"      
+   AOI211D2BWP12T40P140 "aoi211d1"      
+   AOI211D4BWP12T40P140 "aoi211d1"      
+   AOI211D8BWP12T40P140 "aoi211d1"      
+   AOI211D16BWP12T40P140 "aoi211d1"     
+   AOI211OPTREPBD1BWP12T40P140 "aoi211d1"
+   AOI211OPTREPBD2BWP12T40P140 "aoi211d1"
+   AOI211OPTREPBD4BWP12T40P140 "aoi211d1"
+   AOI211OPTREPBD6BWP12T40P140 "aoi211d1"
+   AOI211OPTREPBD8BWP12T40P140 "aoi211d1"
+   AOI211OPTREPBD12BWP12T40P140 "aoi211d1"
+   AOI211OPTREPBD16BWP12T40P140 "aoi211d1"
+   AOI221D0BWP12T40P140 "aoi221d1"      
+   AOI221D1BWP12T40P140 "aoi221d1"      
+   AOI221D2BWP12T40P140 "aoi221d1"      
+   AOI221D4BWP12T40P140 "aoi221d1"      
+   AOI221XD4BWP12T40P140 "aoi221d1"     
+   AOI222D0BWP12T40P140 "aoi222d1"      
+   AOI222D1BWP12T40P140 "aoi222d1"      
+   AOI222D2BWP12T40P140 "aoi222d1"      
+   AOI222D4BWP12T40P140 "aoi222d1"      
+   AOI222D8BWP12T40P140 "aoi222d1"      
+   AOI222D16BWP12T40P140 "aoi222d1"     
+   AOI222XD4BWP12T40P140 "aoi222d1"     
+   BHDBWP12T40P140                      b, d, u
+   BOUNDARY_LEFTBWP12T40P140            b
+   BOUNDARY_RIGHTBWP12T40P140           b
+   BUFFD0BWP12T40P140  "buffd1"         
+   BUFFD1BWP12T40P140  "buffd1"         
+   BUFFD2BWP12T40P140  "buffd1"         
+   BUFFD3BWP12T40P140  "buffd1"         
+   BUFFD4BWP12T40P140  "buffd1"         
+   BUFFD6BWP12T40P140  "buffd1"         
+   BUFFD8BWP12T40P140  "buffd1"         
+   BUFFD12BWP12T40P140 "buffd1"         
+   BUFFD16BWP12T40P140 "buffd1"         
+   BUFFD20BWP12T40P140 "buffd1"         d, u
+   BUFFD24BWP12T40P140 "buffd1"         d, u
+   BUFFXD3BWP12T40P140 "buffd1"         
+   BUFFXD6BWP12T40P140 "buffd1"         
+   BUFFXD8BWP12T40P140 "buffd1"         
+   BUFFXD12BWP12T40P140 "buffd1"        
+   BUFFXD16BWP12T40P140 "buffd1"        
+   BUFTD4BWP12T40P140  "buftd1"         
+   BUFTD6BWP12T40P140  "buftd1"         
+   BUFTD8BWP12T40P140  "buftd1"         
+   BUFTD12BWP12T40P140 "buftd1"         
+   BUFTD16BWP12T40P140 "buftd1"         
+   BUFTD20BWP12T40P140 "buftd1"         d, u
+   BUFTD24BWP12T40P140 "buftd1"         d, u
+   CKAN2D0BWP12T40P140 "ckan2d1"        
+   CKAN2D1BWP12T40P140 "ckan2d1"        
+   CKAN2D2BWP12T40P140 "ckan2d1"        
+   CKAN2D4BWP12T40P140 "ckan2d1"        
+   CKAN2D8BWP12T40P140 "ckan2d1"        
+   CKAN2D16BWP12T40P140 "ckan2d1"       
+   CKBD0BWP12T40P140   "ckbd1"          
+   CKBD1BWP12T40P140   "ckbd1"          
+   CKBD2BWP12T40P140   "ckbd1"          
+   CKBD3BWP12T40P140   "ckbd1"          
+   CKBD4BWP12T40P140   "ckbd1"          
+   CKBD6BWP12T40P140   "ckbd1"          
+   CKBD8BWP12T40P140   "ckbd1"          
+   CKBD12BWP12T40P140  "ckbd1"          
+   CKBD16BWP12T40P140  "ckbd1"          
+   CKBD20BWP12T40P140  "ckbd1"          d, u
+   CKBD24BWP12T40P140  "ckbd1"          d, u
+   CKBD32BWP12T40P140  "ckbd1"          d, u
+   CKLHQD1BWP12T40P140 "cklhqd1"        b, s, cg
+   CKLHQD2BWP12T40P140 "cklhqd1"        b, s, cg
+   CKLHQD3BWP12T40P140 "cklhqd1"        b, s, cg
+   CKLHQD4BWP12T40P140 "cklhqd1"        b, s, cg
+   CKLHQD6BWP12T40P140 "cklhqd1"        b, s, cg
+   CKLHQD8BWP12T40P140 "cklhqd1"        b, s, cg
+   CKLHQD12BWP12T40P140 "cklhqd1"       b, s, cg
+   CKLHQD16BWP12T40P140 "cklhqd1"       b, s, cg
+   CKLHQD20BWP12T40P140 "cklhqd1"       b, d, s, u, cg
+   CKLHQD24BWP12T40P140 "cklhqd1"       b, d, s, u, cg
+   CKLNQD1BWP12T40P140 "cklnqd1"        b, s, cg
+   CKLNQD2BWP12T40P140 "cklnqd1"        b, s, cg
+   CKLNQD3BWP12T40P140 "cklnqd1"        b, s, cg
+   CKLNQD4BWP12T40P140 "cklnqd1"        b, s, cg
+   CKLNQD6BWP12T40P140 "cklnqd1"        b, s, cg
+   CKLNQD8BWP12T40P140 "cklnqd1"        b, s, cg
+   CKLNQD12BWP12T40P140 "cklnqd1"       b, s, cg
+   CKLNQD16BWP12T40P140 "cklnqd1"       b, s, cg
+   CKLNQD20BWP12T40P140 "cklnqd1"       b, d, s, u, cg
+   CKLNQD24BWP12T40P140 "cklnqd1"       b, d, s, u, cg
+   CKLNQOPTMAD1BWP12T40P140 "cklnqd1"   b, s, cg
+   CKLNQOPTMAD2BWP12T40P140 "cklnqd1"   b, s, cg
+   CKLNQOPTMAD4BWP12T40P140 "cklnqd1"   b, s, cg
+   CKLNQOPTMAD8BWP12T40P140 "cklnqd1"   b, s, cg
+   CKLNQOPTMAD16BWP12T40P140 "cklnqd1"  b, s, cg
+   CKMUX2D0BWP12T40P140 "ckmux2d1"      
+   CKMUX2D1BWP12T40P140 "ckmux2d1"      
+   CKMUX2D2BWP12T40P140 "ckmux2d1"      
+   CKMUX2D4BWP12T40P140 "ckmux2d1"      
+   CKMUX2D8BWP12T40P140 "ckmux2d1"      
+   CKND0BWP12T40P140   "cknd1"          
+   CKND1BWP12T40P140   "cknd1"          
+   CKND2BWP12T40P140   "cknd1"          
+   CKND2D0BWP12T40P140 "cknd2d1"        
+   CKND2D1BWP12T40P140 "cknd2d1"        
+   CKND2D2BWP12T40P140 "cknd2d1"        
+   CKND2D3BWP12T40P140 "cknd2d1"        
+   CKND2D4BWP12T40P140 "cknd2d1"        
+   CKND2D8BWP12T40P140 "cknd2d1"        
+   CKND2D16BWP12T40P140 "cknd2d1"       
+   CKND3BWP12T40P140   "cknd1"          
+   CKND4BWP12T40P140   "cknd1"          
+   CKND6BWP12T40P140   "cknd1"          
+   CKND8BWP12T40P140   "cknd1"          
+   CKND12BWP12T40P140  "cknd1"          
+   CKND16BWP12T40P140  "cknd1"          
+   CKND20BWP12T40P140  "cknd1"          d, u
+   CKND24BWP12T40P140  "cknd1"          d, u
+   CKND32BWP12T40P140  "cknd1"          d, u
+   CKXOR2D0BWP12T40P140 "ckxor2d1"      
+   CKXOR2D1BWP12T40P140 "ckxor2d1"      
+   CKXOR2D2BWP12T40P140 "ckxor2d1"      
+   CKXOR2D4BWP12T40P140 "ckxor2d1"      
+   CKXOR2D8BWP12T40P140 "ckxor2d1"      
+   DCAP4BWP12T40P140                    b
+   DCAP8BWP12T40P140                    b
+   DCAP16BWP12T40P140                   b
+   DCAP32BWP12T40P140                   b
+   DCAP64BWP12T40P140                   b
+   DCAPBWP12T40P140                     b
+   DCCKBD4BWP12T40P140 "ckbd1"          
+   DCCKBD8BWP12T40P140 "ckbd1"          
+   DCCKBD12BWP12T40P140 "ckbd1"         
+   DCCKBD16BWP12T40P140 "ckbd1"         
+   DCCKBD20BWP12T40P140 "ckbd1"         d, u
+   DCCKND4BWP12T40P140 "cknd1"          
+   DCCKND8BWP12T40P140 "cknd1"          
+   DCCKND12BWP12T40P140 "cknd1"         
+   DCCKND16BWP12T40P140 "cknd1"         
+   DCCKND20BWP12T40P140 "cknd1"         d, u
+   DEL025D1BWP12T40P140 "del1"          
+   DEL050D1BWP12T40P140 "del1"          
+   DEL075D1BWP12T40P140 "del1"          
+   DEL100D1BWP12T40P140 "del1"          
+   DEL150D1BWP12T40P140 "del1"          
+   DEL200D1BWP12T40P140 "del1"          
+   DEL250D1BWP12T40P140 "del1"          
+   DFCND1BWP12T40P140  "dfcnd1"         s
+   DFCND2BWP12T40P140  "dfcnd1"         s
+   DFCND4BWP12T40P140  "dfcnd1"         s
+   DFCNOPTMAD8BWP12T40P140 "dfcnd1"     s
+   DFCNOPTSADD8BWP12T40P140 "dfcnd1"    s
+   DFCNQD1BWP12T40P140 "dfcnqd1"        s
+   DFCNQD2BWP12T40P140 "dfcnqd1"        s
+   DFCNQD4BWP12T40P140 "dfcnqd1"        s
+   DFCNQOPTMAD8BWP12T40P140 "dfcnqd1"   s
+   DFCNQOPTSADD8BWP12T40P140 "dfcnqd1"  s
+   DFCSND1BWP12T40P140 "dfcsnd1"        s
+   DFCSND2BWP12T40P140 "dfcsnd1"        s
+   DFCSND4BWP12T40P140 "dfcsnd1"        s
+   DFCSNQD1BWP12T40P140 "dfcsnqd1"      s
+   DFCSNQD2BWP12T40P140 "dfcsnqd1"      s
+   DFCSNQD4BWP12T40P140 "dfcsnqd1"      s
+   DFD1BWP12T40P140    "dfd1"           s
+   DFD2BWP12T40P140    "dfd1"           s
+   DFD4BWP12T40P140    "dfd1"           s
+   DFKCND1BWP12T40P140 "dfkcnd1"        s
+   DFKCND2BWP12T40P140 "dfkcnd1"        s
+   DFKCND4BWP12T40P140 "dfkcnd1"        s
+   DFKCNOPTMAD8BWP12T40P140 "dfkcnd1"   s
+   DFKCNOPTSADD8BWP12T40P140 "dfkcnd1"  s
+   DFKCNQD1BWP12T40P140 "dfkcnqd1"      s
+   DFKCNQD2BWP12T40P140 "dfkcnqd1"      s
+   DFKCNQD4BWP12T40P140 "dfkcnqd1"      s
+   DFKCNQOPTMAD8BWP12T40P140 "dfkcnqd1" s
+   DFKCNQOPTSADD8BWP12T40P140 "dfkcnqd1" s
+   DFKCSND1BWP12T40P140 "dfkcsnd1"      s
+   DFKCSND2BWP12T40P140 "dfkcsnd1"      s
+   DFKCSND4BWP12T40P140 "dfkcsnd1"      s
+   DFKSND1BWP12T40P140 "dfksnd1"        s
+   DFKSND2BWP12T40P140 "dfksnd1"        s
+   DFKSND4BWP12T40P140 "dfksnd1"        s
+   DFMD1BWP12T40P140   "dfmd1"          s
+   DFMD2BWP12T40P140   "dfmd1"          s
+   DFMD4BWP12T40P140   "dfmd1"          s
+   DFMQD1BWP12T40P140  "dfmqd1"         s
+   DFMQD2BWP12T40P140  "dfmqd1"         s
+   DFMQD4BWP12T40P140  "dfmqd1"         s
+   DFNCND1BWP12T40P140 "dfncnd1"        s
+   DFNCND2BWP12T40P140 "dfncnd1"        s
+   DFNCND4BWP12T40P140 "dfncnd1"        s
+   DFNCSND1BWP12T40P140 "dfncsnd1"      s
+   DFNCSND2BWP12T40P140 "dfncsnd1"      s
+   DFNCSND4BWP12T40P140 "dfncsnd1"      s
+   DFND1BWP12T40P140   "dfnd1"          s
+   DFND2BWP12T40P140   "dfnd1"          s
+   DFND4BWP12T40P140   "dfnd1"          s
+   DFNSND1BWP12T40P140 "dfnsnd1"        s
+   DFNSND2BWP12T40P140 "dfnsnd1"        s
+   DFNSND4BWP12T40P140 "dfnsnd1"        s
+   DFOPTMAD8BWP12T40P140 "dfd1"         s
+   DFOPTSADD8BWP12T40P140 "dfd1"        s
+   DFQD1BWP12T40P140   "dfqd1"          s
+   DFQD2BWP12T40P140   "dfqd1"          s
+   DFQD4BWP12T40P140   "dfqd1"          s
+   DFQOPTMAD8BWP12T40P140 "dfqd1"       s
+   DFQOPTSADD8BWP12T40P140 "dfqd1"      s
+   DFSND1BWP12T40P140  "dfsnd1"         s
+   DFSND2BWP12T40P140  "dfsnd1"         s
+   DFSND4BWP12T40P140  "dfsnd1"         s
+   DFSNOPTMAD8BWP12T40P140 "dfsnd1"     s
+   DFSNOPTSADD8BWP12T40P140 "dfsnd1"    s
+   DFSNQD1BWP12T40P140 "dfsnqd1"        s
+   DFSNQD2BWP12T40P140 "dfsnqd1"        s
+   DFSNQD4BWP12T40P140 "dfsnqd1"        s
+   DFSNQOPTMAD8BWP12T40P140 "dfsnqd1"   s
+   DFSNQOPTSADD8BWP12T40P140 "dfsnqd1"  s
+   EDFCND1BWP12T40P140 "edfcnd1"        s
+   EDFCND2BWP12T40P140 "edfcnd1"        s
+   EDFCND4BWP12T40P140 "edfcnd1"        s
+   EDFCNQD1BWP12T40P140 "edfcnqd1"      s
+   EDFCNQD2BWP12T40P140 "edfcnqd1"      s
+   EDFCNQD4BWP12T40P140 "edfcnqd1"      s
+   EDFD1BWP12T40P140   "edfd1"          s
+   EDFD2BWP12T40P140   "edfd1"          s
+   EDFD4BWP12T40P140   "edfd1"          s
+   EDFKCND1BWP12T40P140 "edfkcnd1"      s
+   EDFKCND2BWP12T40P140 "edfkcnd1"      s
+   EDFKCND4BWP12T40P140 "edfkcnd1"      s
+   EDFKCNQD1BWP12T40P140 "edfkcnqd1"    s
+   EDFKCNQD2BWP12T40P140 "edfkcnqd1"    s
+   EDFKCNQD4BWP12T40P140 "edfkcnqd1"    s
+   EDFQD1BWP12T40P140  "edfqd1"         s
+   EDFQD2BWP12T40P140  "edfqd1"         s
+   EDFQD4BWP12T40P140  "edfqd1"         s
+   FA1D0BWP12T40P140   "fa1d1"          r
+   FA1D1BWP12T40P140   "fa1d1"          r
+   FA1D2BWP12T40P140   "fa1d1"          r
+   FA1D4BWP12T40P140   "fa1d1"          r
+   FA1OPTCD1BWP12T40P140 "fa1d1"        r
+   FA1OPTCD2BWP12T40P140 "fa1d1"        r
+   FA1OPTSD1BWP12T40P140 "fa1d1"        r
+   FA1OPTSD2BWP12T40P140 "fa1d1"        r
+   FILL2BWP12T40P140                    b
+   FILL3BWP12T40P140                    b
+   FILL4BWP12T40P140                    b
+   FILL8BWP12T40P140                    b
+   FILL16BWP12T40P140                   b
+   FILL32BWP12T40P140                   b
+   FILL64BWP12T40P140                   b
+   GAN2MCOD1BWP12T30P140 "an2d1"        d, u
+   GAN2MCOD2BWP12T30P140 "an2d1"        d, u
+   GAOI21MCOD1BWP12T30P140 "aoi21d1"    d, u
+   GAOI21MCOD2BWP12T30P140 "aoi21d1"    d, u
+   GAOI22MCOD1BWP12T30P140 "aoi22d1"    d, u
+   GBUFFMCOD1BWP12T30P140 "buffd1"      d, u
+   GBUFFMCOD2BWP12T30P140 "buffd1"      d, u
+   GBUFFMCOD3BWP12T30P140 "buffd1"      d, u
+   GBUFFMCOD4BWP12T30P140 "buffd1"      d, u
+   GBUFFMCOD8BWP12T30P140 "buffd1"      d, u
+   GDCAP2MCOBWP12T30P140                b, d, u
+   GDCAP3MCOBWP12T30P140                b, d, u
+   GDCAP4MCOBWP12T30P140                b, d, u
+   GDCAP10MCOBWP12T30P140               b, d, u
+   GDCAP12MCOBWP12T30P140               b, d, u
+   GDCAPMCOBWP12T30P140                 b, d, u
+   GDFCNQMCOD1BWP12T30P140 "dfcnqd1"    d, s, u
+   GDFQMCOD1BWP12T30P140 "dfqd1"        d, s, u
+   GFILL2MCOBWP12T30P140                b, d, u
+   GFILL3MCOBWP12T30P140                b, d, u
+   GFILL4MCOBWP12T30P140                b, d, u
+   GFILL10MCOBWP12T30P140               b, d, u
+   GFILL12MCOBWP12T30P140               b, d, u
+   GFILLMCOBWP12T30P140                 b, d, u
+   GINVMCOD1BWP12T30P140 "invd1"        d, u
+   GINVMCOD2BWP12T30P140 "invd1"        d, u
+   GINVMCOD3BWP12T30P140 "invd1"        d, u
+   GINVMCOD4BWP12T30P140 "invd1"        d, u
+   GINVMCOD8BWP12T30P140 "invd1"        d, u
+   GMUX2MCOD1BWP12T30P140 "mux2d1"      d, u
+   GMUX2MCOD2BWP12T30P140 "mux2d1"      d, u
+   GMUX2NMCOD1BWP12T30P140 "mux2nd1"    d, u
+   GMUX2NMCOD2BWP12T30P140 "mux2nd1"    d, u
+   GND2MCOD1BWP12T30P140 "nd2d1"        d, u
+   GND2MCOD2BWP12T30P140 "nd2d1"        d, u
+   GND2MCOD3BWP12T30P140 "nd2d1"        d, u
+   GND2MCOD4BWP12T30P140 "nd2d1"        d, u
+   GND3MCOD1BWP12T30P140 "nd3d1"        d, u
+   GND3MCOD2BWP12T30P140 "nd3d1"        d, u
+   GNR2MCOD1BWP12T30P140 "nr2d1"        d, u
+   GNR2MCOD2BWP12T30P140 "nr2d1"        d, u
+   GNR3MCOD1BWP12T30P140 "nr3d1"        d, u
+   GNR3MCOD2BWP12T30P140 "nr3d1"        d, u
+   GOAI21MCOD1BWP12T30P140 "oai21d1"    d, u
+   GOAI21MCOD2BWP12T30P140 "oai21d1"    d, u
+   GOR2MCOD1BWP12T30P140 "or2d1"        d, u
+   GOR2MCOD2BWP12T30P140 "or2d1"        d, u
+   GSDFCNQMCOD1BWP12T30P140 "sdfcnqd1"  d, s, u, t(mux_ff)
+   GTIEHMCOBWP12T30P140 "tieh"          d, u
+   GTIELMCOBWP12T30P140 "tiel"          d, u
+   GXNR2MCOD1BWP12T30P140 "xnr2d1"      d, u
+   GXNR2MCOD2BWP12T30P140 "xnr2d1"      d, u
+   GXOR2MCOD1BWP12T30P140 "xor2d1"      d, u
+   GXOR2MCOD2BWP12T30P140 "xor2d1"      d, u
+   HA1D0BWP12T40P140   "ha1d1"          r
+   HA1D1BWP12T40P140   "ha1d1"          r
+   HA1D2BWP12T40P140   "ha1d1"          r
+   HA1D4BWP12T40P140   "ha1d1"          r
+   IAO21D0BWP12T40P140 "iao21d1"        
+   IAO21D1BWP12T40P140 "iao21d1"        
+   IAO21D2BWP12T40P140 "iao21d1"        
+   IAO21D4BWP12T40P140 "iao21d1"        
+   IAO22D0BWP12T40P140 "iao22d1"        
+   IAO22D1BWP12T40P140 "iao22d1"        
+   IAO22D2BWP12T40P140 "iao22d1"        
+   IAO22D4BWP12T40P140 "iao22d1"        
+   IIND4D0BWP12T40P140 "iind4d1"        
+   IIND4D1BWP12T40P140 "iind4d1"        
+   IIND4D2BWP12T40P140 "iind4d1"        
+   IIND4D4BWP12T40P140 "iind4d1"        
+   IINR4D0BWP12T40P140 "iinr4d1"        
+   IINR4D1BWP12T40P140 "iinr4d1"        
+   IINR4D2BWP12T40P140 "iinr4d1"        
+   IINR4D4BWP12T40P140 "iinr4d1"        
+   IND2D0BWP12T40P140  "ind2d1"         
+   IND2D1BWP12T40P140  "ind2d1"         
+   IND2D2BWP12T40P140  "ind2d1"         
+   IND2D4BWP12T40P140  "ind2d1"         
+   IND2D8BWP12T40P140  "ind2d1"         
+   IND2D16BWP12T40P140 "ind2d1"         
+   IND3D0BWP12T40P140  "ind3d1"         
+   IND3D1BWP12T40P140  "ind3d1"         
+   IND3D2BWP12T40P140  "ind3d1"         
+   IND3D4BWP12T40P140  "ind3d1"         
+   IND3D8BWP12T40P140  "ind3d1"         
+   IND3D16BWP12T40P140 "ind3d1"         
+   IND4D0BWP12T40P140  "ind4d1"         
+   IND4D1BWP12T40P140  "ind4d1"         
+   IND4D2BWP12T40P140  "ind4d1"         
+   IND4D4BWP12T40P140  "ind4d1"         
+   INR2D0BWP12T40P140  "inr2d1"         
+   INR2D1BWP12T40P140  "inr2d1"         
+   INR2D2BWP12T40P140  "inr2d1"         
+   INR2D4BWP12T40P140  "inr2d1"         
+   INR2D8BWP12T40P140  "inr2d1"         
+   INR2D16BWP12T40P140 "inr2d1"         
+   INR3D0BWP12T40P140  "inr3d1"         
+   INR3D1BWP12T40P140  "inr3d1"         
+   INR3D2BWP12T40P140  "inr3d1"         
+   INR3D4BWP12T40P140  "inr3d1"         
+   INR3D8BWP12T40P140  "inr3d1"         
+   INR3D16BWP12T40P140 "inr3d1"         
+   INR4D0BWP12T40P140  "inr4d1"         
+   INR4D1BWP12T40P140  "inr4d1"         
+   INR4D2BWP12T40P140  "inr4d1"         
+   INR4D4BWP12T40P140  "inr4d1"         
+   INVD0BWP12T40P140   "invd1"          
+   INVD1BWP12T40P140   "invd1"          
+   INVD1P25BWP12T40P140 "invd1"         
+   INVD1P75BWP12T40P140 "invd1"         
+   INVD2BWP12T40P140   "invd1"          
+   INVD2P3BWP12T40P140 "invd1"          
+   INVD3BWP12T40P140   "invd1"          
+   INVD4BWP12T40P140   "invd1"          
+   INVD6BWP12T40P140   "invd1"          
+   INVD8BWP12T40P140   "invd1"          
+   INVD9BWP12T40P140   "invd1"          
+   INVD12BWP12T40P140  "invd1"          
+   INVD15BWP12T40P140  "invd1"          
+   INVD16BWP12T40P140  "invd1"          
+   INVD18BWP12T40P140  "invd1"          
+   INVD20BWP12T40P140  "invd1"          d, u
+   INVD21BWP12T40P140  "invd1"          d, u
+   INVD24BWP12T40P140  "invd1"          d, u
+   INVD32BWP12T40P140  "invd1"          d, u
+   IOA21D0BWP12T40P140 "ioa21d1"        
+   IOA21D1BWP12T40P140 "ioa21d1"        
+   IOA21D2BWP12T40P140 "ioa21d1"        
+   IOA21D4BWP12T40P140 "ioa21d1"        
+   IOA22D0BWP12T40P140 "ioa22d1"        
+   IOA22D1BWP12T40P140 "ioa22d1"        
+   IOA22D2BWP12T40P140 "ioa22d1"        
+   IOA22D4BWP12T40P140 "ioa22d1"        
+   LHCNDD1BWP12T40P140 "lhcnd1"         s
+   LHCNDD2BWP12T40P140 "lhcnd1"         s
+   LHCNDD4BWP12T40P140 "lhcnd1"         s
+   LHCNDQD1BWP12T40P140 "lhcnqd1"       s
+   LHCNDQD2BWP12T40P140 "lhcnqd1"       s
+   LHCNDQD4BWP12T40P140 "lhcnqd1"       s
+   LHCSNDD1BWP12T40P140 "lhcsnd1"       s
+   LHCSNDD2BWP12T40P140 "lhcsnd1"       s
+   LHCSNDD4BWP12T40P140 "lhcsnd1"       s
+   LHCSNDQD1BWP12T40P140 "lhcsnqd1"     s
+   LHCSNDQD2BWP12T40P140 "lhcsnqd1"     s
+   LHCSNDQD4BWP12T40P140 "lhcsnqd1"     s
+   LHD1BWP12T40P140    "lhd1"           s
+   LHD2BWP12T40P140    "lhd1"           s
+   LHD4BWP12T40P140    "lhd1"           s
+   LHQD1BWP12T40P140   "lhqd1"          s
+   LHQD2BWP12T40P140   "lhqd1"          s
+   LHQD4BWP12T40P140   "lhqd1"          s
+   LHQOPTDAD1BWP12T40P140 "lhqd1"       s
+   LHQOPTDAD2BWP12T40P140 "lhqd1"       s
+   LHQOPTDAD4BWP12T40P140 "lhqd1"       s
+   LHQOPTDAD8BWP12T40P140 "lhqd1"       s
+   LHSNDD1BWP12T40P140 "lhsnd1"         s
+   LHSNDD2BWP12T40P140 "lhsnd1"         s
+   LHSNDD4BWP12T40P140 "lhsnd1"         s
+   LHSNDQD1BWP12T40P140 "lhsnqd1"       s
+   LHSNDQD2BWP12T40P140 "lhsnqd1"       s
+   LHSNDQD4BWP12T40P140 "lhsnqd1"       s
+   LNCNDD1BWP12T40P140 "lncnd1"         s
+   LNCNDD2BWP12T40P140 "lncnd1"         s
+   LNCNDD4BWP12T40P140 "lncnd1"         s
+   LNCNDQD1BWP12T40P140 "lncnqd1"       s
+   LNCNDQD2BWP12T40P140 "lncnqd1"       s
+   LNCNDQD4BWP12T40P140 "lncnqd1"       s
+   LNCSNDD1BWP12T40P140 "lncsnd1"       s
+   LNCSNDD2BWP12T40P140 "lncsnd1"       s
+   LNCSNDD4BWP12T40P140 "lncsnd1"       s
+   LNCSNDQD1BWP12T40P140 "lncsnqd1"     s
+   LNCSNDQD2BWP12T40P140 "lncsnqd1"     s
+   LNCSNDQD4BWP12T40P140 "lncsnqd1"     s
+   LND1BWP12T40P140    "lnd1"           s
+   LND2BWP12T40P140    "lnd1"           s
+   LND4BWP12T40P140    "lnd1"           s
+   LNQD1BWP12T40P140   "lnqd1"          s
+   LNQD2BWP12T40P140   "lnqd1"          s
+   LNQD4BWP12T40P140   "lnqd1"          s
+   LNSNDD1BWP12T40P140 "lnsnd1"         s
+   LNSNDD2BWP12T40P140 "lnsnd1"         s
+   LNSNDD4BWP12T40P140 "lnsnd1"         s
+   LNSNDQD1BWP12T40P140 "lnsnqd1"       s
+   LNSNDQD2BWP12T40P140 "lnsnqd1"       s
+   LNSNDQD4BWP12T40P140 "lnsnqd1"       s
+   MAOI22D0BWP12T40P140 "maoi22d1"      
+   MAOI22D1BWP12T40P140 "maoi22d1"      
+   MAOI22D2BWP12T40P140 "maoi22d1"      
+   MAOI22D4BWP12T40P140 "maoi22d1"      
+   MAOI222D0BWP12T40P140 "maoi222d1"    
+   MAOI222D1BWP12T40P140 "maoi222d1"    
+   MAOI222D2BWP12T40P140 "maoi222d1"    
+   MAOI222D4BWP12T40P140 "maoi222d1"    
+   MOAI22D0BWP12T40P140 "moai22d1"      
+   MOAI22D1BWP12T40P140 "moai22d1"      
+   MOAI22D2BWP12T40P140 "moai22d1"      
+   MOAI22D4BWP12T40P140 "moai22d1"      
+   MUX2D0BWP12T40P140  "mux2d1"         
+   MUX2D1BWP12T40P140  "mux2d1"         
+   MUX2D2BWP12T40P140  "mux2d1"         
+   MUX2D4BWP12T40P140  "mux2d1"         
+   MUX2D8BWP12T40P140  "mux2d1"         
+   MUX2D16BWP12T40P140 "mux2d1"         
+   MUX2ND0BWP12T40P140 "mux2nd1"        
+   MUX2ND1BWP12T40P140 "mux2nd1"        
+   MUX2ND2BWP12T40P140 "mux2nd1"        
+   MUX2ND4BWP12T40P140 "mux2nd1"        
+   MUX2ND8BWP12T40P140 "mux2nd1"        
+   MUX2ND16BWP12T40P140 "mux2nd1"       
+   MUX2NOPTD2BWP12T40P140 "mux2nd1"     
+   MUX2NOPTD4BWP12T40P140 "mux2nd1"     
+   MUX2NOPTD6BWP12T40P140 "mux2nd1"     
+   MUX2NOPTD8BWP12T40P140 "mux2nd1"     
+   MUX2OPTD2BWP12T40P140 "mux2d1"       
+   MUX2OPTD4BWP12T40P140 "mux2d1"       
+   MUX2OPTD6BWP12T40P140 "mux2d1"       
+   MUX2OPTD8BWP12T40P140 "mux2d1"       
+   MUX2OPTD12BWP12T40P140 "mux2d1"      
+   MUX3D0BWP12T40P140  "mux3d1"         
+   MUX3D1BWP12T40P140  "mux3d1"         
+   MUX3D2BWP12T40P140  "mux3d1"         
+   MUX3D4BWP12T40P140  "mux3d1"         
+   MUX3D8BWP12T40P140  "mux3d1"         
+   MUX3D16BWP12T40P140 "mux3d1"         
+   MUX3ND0BWP12T40P140 "mux3nd1"        
+   MUX3ND1BWP12T40P140 "mux3nd1"        
+   MUX3ND2BWP12T40P140 "mux3nd1"        
+   MUX3ND4BWP12T40P140 "mux3nd1"        
+   MUX4D0BWP12T40P140  "mux4d1"         
+   MUX4D1BWP12T40P140  "mux4d1"         
+   MUX4D2BWP12T40P140  "mux4d1"         
+   MUX4D4BWP12T40P140  "mux4d1"         
+   MUX4D8BWP12T40P140  "mux4d1"         
+   MUX4D16BWP12T40P140 "mux4d1"         
+   MUX4ND0BWP12T40P140 "mux4nd1"        
+   MUX4ND1BWP12T40P140 "mux4nd1"        
+   MUX4ND2BWP12T40P140 "mux4nd1"        
+   MUX4ND4BWP12T40P140 "mux4nd1"        
+   ND2D0BWP12T40P140   "nd2d1"          
+   ND2D1BWP12T40P140   "nd2d1"          
+   ND2D2BWP12T40P140   "nd2d1"          
+   ND2D3BWP12T40P140   "nd2d1"          
+   ND2D4BWP12T40P140   "nd2d1"          
+   ND2D8BWP12T40P140   "nd2d1"          
+   ND2D16BWP12T40P140  "nd2d1"          
+   ND2OPTD6BWP12T40P140 "nd2d1"         
+   ND2OPTD12BWP12T40P140 "nd2d1"        
+   ND2OPTD20BWP12T40P140 "nd2d1"        d, u
+   ND2OPTFAD4BWP12T40P140 "nd2d1"       
+   ND2OPTFAD6BWP12T40P140 "nd2d1"       
+   ND2OPTFAD8BWP12T40P140 "nd2d1"       
+   ND2OPTFAD12BWP12T40P140 "nd2d1"      
+   ND2OPTFAD16BWP12T40P140 "nd2d1"      
+   ND2OPTFAD20BWP12T40P140 "nd2d1"      d, u
+   ND2OPTPAD1BWP12T40P140 "nd2d1"       
+   ND2OPTPAD2BWP12T40P140 "nd2d1"       
+   ND2OPTPAD4BWP12T40P140 "nd2d1"       
+   ND2OPTPAD6BWP12T40P140 "nd2d1"       
+   ND2OPTPAD8BWP12T40P140 "nd2d1"       
+   ND2OPTPAD12BWP12T40P140 "nd2d1"      
+   ND2OPTPAD16BWP12T40P140 "nd2d1"      
+   ND2OPTPAD20BWP12T40P140 "nd2d1"      d, u
+   ND3D0BWP12T40P140   "nd3d1"          
+   ND3D1BWP12T40P140   "nd3d1"          
+   ND3D2BWP12T40P140   "nd3d1"          
+   ND3D3BWP12T40P140   "nd3d1"          
+   ND3D4BWP12T40P140   "nd3d1"          
+   ND3D8BWP12T40P140   "nd3d1"          
+   ND3D16BWP12T40P140  "nd3d1"          
+   ND3OPTD6BWP12T40P140 "nd3d1"         
+   ND3OPTD12BWP12T40P140 "nd3d1"        
+   ND3OPTFAD4BWP12T40P140 "nd3d1"       
+   ND3OPTFAD6BWP12T40P140 "nd3d1"       
+   ND3OPTFAD8BWP12T40P140 "nd3d1"       
+   ND3OPTFAD12BWP12T40P140 "nd3d1"      
+   ND3OPTFAD16BWP12T40P140 "nd3d1"      
+   ND3OPTPAD1BWP12T40P140 "nd3d1"       
+   ND3OPTPAD2BWP12T40P140 "nd3d1"       
+   ND3OPTPAD4BWP12T40P140 "nd3d1"       
+   ND3OPTPAD6BWP12T40P140 "nd3d1"       
+   ND3OPTPAD8BWP12T40P140 "nd3d1"       
+   ND3OPTPAD12BWP12T40P140 "nd3d1"      
+   ND3OPTPAD16BWP12T40P140 "nd3d1"      
+   ND4D0BWP12T40P140   "nd4d1"          
+   ND4D1BWP12T40P140   "nd4d1"          
+   ND4D2BWP12T40P140   "nd4d1"          
+   ND4D3BWP12T40P140   "nd4d1"          
+   ND4D4BWP12T40P140   "nd4d1"          
+   ND4D8BWP12T40P140   "nd4d1"          
+   NR2D0BWP12T40P140   "nr2d1"          
+   NR2D1BWP12T40P140   "nr2d1"          
+   NR2D2BWP12T40P140   "nr2d1"          
+   NR2D3BWP12T40P140   "nr2d1"          
+   NR2D4BWP12T40P140   "nr2d1"          
+   NR2D8BWP12T40P140   "nr2d1"          
+   NR2D16BWP12T40P140  "nr2d1"          
+   NR2OPTD6BWP12T40P140 "nr2d1"         
+   NR2OPTD12BWP12T40P140 "nr2d1"        
+   NR2OPTD20BWP12T40P140 "nr2d1"        d, u
+   NR2OPTFAD4BWP12T40P140 "nr2d1"       
+   NR2OPTFAD6BWP12T40P140 "nr2d1"       
+   NR2OPTFAD8BWP12T40P140 "nr2d1"       
+   NR2OPTFAD12BWP12T40P140 "nr2d1"      
+   NR2OPTFAD16BWP12T40P140 "nr2d1"      
+   NR2OPTFAD20BWP12T40P140 "nr2d1"      d, u
+   NR2OPTPAD1BWP12T40P140 "nr2d1"       
+   NR2OPTPAD2BWP12T40P140 "nr2d1"       
+   NR2OPTPAD4BWP12T40P140 "nr2d1"       
+   NR2OPTPAD6BWP12T40P140 "nr2d1"       
+   NR2OPTPAD8BWP12T40P140 "nr2d1"       
+   NR2OPTPAD12BWP12T40P140 "nr2d1"      
+   NR2OPTPAD16BWP12T40P140 "nr2d1"      
+   NR2OPTPAD20BWP12T40P140 "nr2d1"      d, u
+   NR3D0BWP12T40P140   "nr3d1"          
+   NR3D1BWP12T40P140   "nr3d1"          
+   NR3D2BWP12T40P140   "nr3d1"          
+   NR3D3BWP12T40P140   "nr3d1"          
+   NR3D4BWP12T40P140   "nr3d1"          
+   NR3D8BWP12T40P140   "nr3d1"          
+   NR3D16BWP12T40P140  "nr3d1"          
+   NR3OPTD6BWP12T40P140 "nr3d1"         
+   NR3OPTD12BWP12T40P140 "nr3d1"        
+   NR3OPTFAD4BWP12T40P140 "nr3d1"       
+   NR3OPTFAD6BWP12T40P140 "nr3d1"       
+   NR3OPTFAD8BWP12T40P140 "nr3d1"       
+   NR3OPTFAD12BWP12T40P140 "nr3d1"      
+   NR3OPTFAD16BWP12T40P140 "nr3d1"      
+   NR3OPTPAD1BWP12T40P140 "nr3d1"       
+   NR3OPTPAD2BWP12T40P140 "nr3d1"       
+   NR3OPTPAD4BWP12T40P140 "nr3d1"       
+   NR3OPTPAD6BWP12T40P140 "nr3d1"       
+   NR3OPTPAD8BWP12T40P140 "nr3d1"       
+   NR3OPTPAD12BWP12T40P140 "nr3d1"      
+   NR3OPTPAD16BWP12T40P140 "nr3d1"      
+   NR4D0BWP12T40P140   "nr4d1"          
+   NR4D1BWP12T40P140   "nr4d1"          
+   NR4D2BWP12T40P140   "nr4d1"          
+   NR4D3BWP12T40P140   "nr4d1"          
+   NR4D4BWP12T40P140   "nr4d1"          
+   NR4D8BWP12T40P140   "nr4d1"          
+   OA21D0BWP12T40P140  "oa21d1"         
+   OA21D1BWP12T40P140  "oa21d1"         
+   OA21D2BWP12T40P140  "oa21d1"         
+   OA21D4BWP12T40P140  "oa21d1"         
+   OA21D8BWP12T40P140  "oa21d1"         
+   OA21D16BWP12T40P140 "oa21d1"         
+   OA21XD8BWP12T40P140 "oa21d1"         
+   OA21XD16BWP12T40P140 "oa21d1"        
+   OA22D0BWP12T40P140  "oa22d1"         
+   OA22D1BWP12T40P140  "oa22d1"         
+   OA22D2BWP12T40P140  "oa22d1"         
+   OA22D4BWP12T40P140  "oa22d1"         
+   OA22D8BWP12T40P140  "oa22d1"         
+   OA22D16BWP12T40P140 "oa22d1"         
+   OA22XD8BWP12T40P140 "oa22d1"         
+   OA22XD16BWP12T40P140 "oa22d1"        
+   OA31D0BWP12T40P140  "oa31d1"         
+   OA31D1BWP12T40P140  "oa31d1"         
+   OA31D2BWP12T40P140  "oa31d1"         
+   OA31D4BWP12T40P140  "oa31d1"         
+   OA31D8BWP12T40P140  "oa31d1"         
+   OA31D16BWP12T40P140 "oa31d1"         
+   OA31XD8BWP12T40P140 "oa31d1"         
+   OA31XD16BWP12T40P140 "oa31d1"        
+   OA32D0BWP12T40P140  "oa32d1"         
+   OA32D1BWP12T40P140  "oa32d1"         
+   OA32D2BWP12T40P140  "oa32d1"         
+   OA32D4BWP12T40P140  "oa32d1"         
+   OA33D0BWP12T40P140  "oa33d1"         
+   OA33D1BWP12T40P140  "oa33d1"         
+   OA33D2BWP12T40P140  "oa33d1"         
+   OA33D4BWP12T40P140  "oa33d1"         
+   OA211D0BWP12T40P140 "oa211d1"        
+   OA211D1BWP12T40P140 "oa211d1"        
+   OA211D2BWP12T40P140 "oa211d1"        
+   OA211D4BWP12T40P140 "oa211d1"        
+   OA221D0BWP12T40P140 "oa221d1"        
+   OA221D1BWP12T40P140 "oa221d1"        
+   OA221D2BWP12T40P140 "oa221d1"        
+   OA221D4BWP12T40P140 "oa221d1"        
+   OA222D0BWP12T40P140 "oa222d1"        
+   OA222D1BWP12T40P140 "oa222d1"        
+   OA222D2BWP12T40P140 "oa222d1"        
+   OA222D4BWP12T40P140 "oa222d1"        
+   OAI21D0BWP12T40P140 "oai21d1"        
+   OAI21D1BWP12T40P140 "oai21d1"        
+   OAI21D2BWP12T40P140 "oai21d1"        
+   OAI21D4BWP12T40P140 "oai21d1"        
+   OAI21D8BWP12T40P140 "oai21d1"        
+   OAI21D16BWP12T40P140 "oai21d1"       
+   OAI21OPTPBD1BWP12T40P140 "oai21d1"   
+   OAI21OPTPBD2BWP12T40P140 "oai21d1"   
+   OAI21OPTPBD4BWP12T40P140 "oai21d1"   
+   OAI21OPTPBD6BWP12T40P140 "oai21d1"   
+   OAI21OPTPBD8BWP12T40P140 "oai21d1"   
+   OAI21OPTPBD12BWP12T40P140 "oai21d1"  
+   OAI21OPTPBD16BWP12T40P140 "oai21d1"  
+   OAI21OPTREPBD1BWP12T40P140 "oai21d1" 
+   OAI21OPTREPBD2BWP12T40P140 "oai21d1" 
+   OAI21OPTREPBD4BWP12T40P140 "oai21d1" 
+   OAI21OPTREPBD6BWP12T40P140 "oai21d1" 
+   OAI21OPTREPBD8BWP12T40P140 "oai21d1" 
+   OAI21OPTREPBD12BWP12T40P140 "oai21d1"
+   OAI21OPTREPBD16BWP12T40P140 "oai21d1"
+   OAI22D0BWP12T40P140 "oai22d1"        
+   OAI22D1BWP12T40P140 "oai22d1"        
+   OAI22D2BWP12T40P140 "oai22d1"        
+   OAI22D4BWP12T40P140 "oai22d1"        
+   OAI22D8BWP12T40P140 "oai22d1"        
+   OAI22D16BWP12T40P140 "oai22d1"       
+   OAI22OPTPBD1BWP12T40P140 "oai22d1"   
+   OAI22OPTPBD2BWP12T40P140 "oai22d1"   
+   OAI22OPTPBD4BWP12T40P140 "oai22d1"   
+   OAI22OPTPBD6BWP12T40P140 "oai22d1"   
+   OAI22OPTPBD8BWP12T40P140 "oai22d1"   
+   OAI22OPTPBD12BWP12T40P140 "oai22d1"  
+   OAI22OPTPBD16BWP12T40P140 "oai22d1"  
+   OAI31D0BWP12T40P140 "oai31d1"        
+   OAI31D1BWP12T40P140 "oai31d1"        
+   OAI31D2BWP12T40P140 "oai31d1"        
+   OAI31D4BWP12T40P140 "oai31d1"        
+   OAI31D8BWP12T40P140 "oai31d1"        
+   OAI31D16BWP12T40P140 "oai31d1"       
+   OAI32D0BWP12T40P140 "oai32d1"        
+   OAI32D1BWP12T40P140 "oai32d1"        
+   OAI32D2BWP12T40P140 "oai32d1"        
+   OAI32D4BWP12T40P140 "oai32d1"        
+   OAI32XD4BWP12T40P140 "oai32d1"       
+   OAI33D0BWP12T40P140 "oai33d1"        
+   OAI33D1BWP12T40P140 "oai33d1"        
+   OAI33D2BWP12T40P140 "oai33d1"        
+   OAI33D4BWP12T40P140 "oai33d1"        
+   OAI33XD4BWP12T40P140 "oai33d1"       
+   OAI211D0BWP12T40P140 "oai211d1"      
+   OAI211D1BWP12T40P140 "oai211d1"      
+   OAI211D2BWP12T40P140 "oai211d1"      
+   OAI211D4BWP12T40P140 "oai211d1"      
+   OAI211OPTD6BWP12T40P140 "oai211d1"   
+   OAI211OPTD8BWP12T40P140 "oai211d1"   
+   OAI211OPTREPBD1BWP12T40P140 "oai211d1"
+   OAI211OPTREPBD2BWP12T40P140 "oai211d1"
+   OAI211OPTREPBD4BWP12T40P140 "oai211d1"
+   OAI211OPTREPBD6BWP12T40P140 "oai211d1"
+   OAI211OPTREPBD8BWP12T40P140 "oai211d1"
+   OAI211OPTREPBD12BWP12T40P140 "oai211d1"
+   OAI211OPTREPBD16BWP12T40P140 "oai211d1"
+   OAI221D0BWP12T40P140 "oai221d1"      
+   OAI221D1BWP12T40P140 "oai221d1"      
+   OAI221D2BWP12T40P140 "oai221d1"      
+   OAI221D4BWP12T40P140 "oai221d1"      
+   OAI221XD4BWP12T40P140 "oai221d1"     
+   OAI222D0BWP12T40P140 "oai222d1"      
+   OAI222D1BWP12T40P140 "oai222d1"      
+   OAI222D2BWP12T40P140 "oai222d1"      
+   OAI222D4BWP12T40P140 "oai222d1"      
+   OAI222D8BWP12T40P140 "oai222d1"      
+   OAI222D16BWP12T40P140 "oai222d1"     
+   OAI222XD4BWP12T40P140 "oai222d1"     
+   OD18DCAP16BWP12T40P140               b
+   OD18DCAP32BWP12T40P140               b
+   OD18DCAP64BWP12T40P140               b
+   OR2D0BWP12T40P140   "or2d1"          
+   OR2D1BWP12T40P140   "or2d1"          
+   OR2D2BWP12T40P140   "or2d1"          
+   OR2D4BWP12T40P140   "or2d1"          
+   OR2D8BWP12T40P140   "or2d1"          
+   OR2D16BWP12T40P140  "or2d1"          
+   OR2XD8BWP12T40P140  "or2d1"          
+   OR2XD16BWP12T40P140 "or2d1"          
+   OR3D0BWP12T40P140   "or3d1"          
+   OR3D1BWP12T40P140   "or3d1"          
+   OR3D2BWP12T40P140   "or3d1"          
+   OR3D4BWP12T40P140   "or3d1"          
+   OR3D8BWP12T40P140   "or3d1"          
+   OR3D16BWP12T40P140  "or3d1"          
+   OR3XD8BWP12T40P140  "or3d1"          
+   OR3XD16BWP12T40P140 "or3d1"          
+   OR4D0BWP12T40P140   "or4d1"          
+   OR4D1BWP12T40P140   "or4d1"          
+   OR4D2BWP12T40P140   "or4d1"          
+   OR4D4BWP12T40P140   "or4d1"          
+   OR4D8BWP12T40P140   "or4d1"          
+   SDFCND0BWP12T40P140 "sdfcnd1"        s, t(mux_ff)
+   SDFCND1BWP12T40P140 "sdfcnd1"        s, t(mux_ff)
+   SDFCND2BWP12T40P140 "sdfcnd1"        s, t(mux_ff)
+   SDFCND4BWP12T40P140 "sdfcnd1"        s, t(mux_ff)
+   SDFCND8BWP12T40P140 "sdfcnd1"        s, t(mux_ff)
+   SDFCNOPTBD1BWP12T40P140 "sdfcnd1"    s, t(mux_ff)
+   SDFCNOPTBD2BWP12T40P140 "sdfcnd1"    s, t(mux_ff)
+   SDFCNOPTBD4BWP12T40P140 "sdfcnd1"    s, t(mux_ff)
+   SDFCNOPTMAD4BWP12T40P140 "sdfcnd1"   s, t(mux_ff)
+   SDFCNOPTMAD8BWP12T40P140 "sdfcnd1"   s, t(mux_ff)
+   SDFCNOPTMAD12BWP12T40P140 "sdfcnd1"  s, t(mux_ff)
+   SDFCNOPTMCD8BWP12T40P140 "sdfcnd1"   s, t(mux_ff)
+   SDFCNOPTMCD12BWP12T40P140 "sdfcnd1"  s, t(mux_ff)
+   SDFCNOPTSADD4BWP12T40P140 "sdfcnd1"  s, t(mux_ff)
+   SDFCNOPTSADD8BWP12T40P140 "sdfcnd1"  s, t(mux_ff)
+   SDFCNOPTSADD12BWP12T40P140 "sdfcnd1" s, t(mux_ff)
+   SDFCNQD0BWP12T40P140 "sdfcnqd1"      s, t(mux_ff)
+   SDFCNQD1BWP12T40P140 "sdfcnqd1"      s, t(mux_ff)
+   SDFCNQD2BWP12T40P140 "sdfcnqd1"      s, t(mux_ff)
+   SDFCNQD4BWP12T40P140 "sdfcnqd1"      s, t(mux_ff)
+   SDFCNQNOPTBD1BWP12T40P140 "sdfcnqnd1" s, t(mux_ff)
+   SDFCNQNOPTBD2BWP12T40P140 "sdfcnqnd1" s, t(mux_ff)
+   SDFCNQNOPTBD4BWP12T40P140 "sdfcnqnd1" s, t(mux_ff)
+   SDFCNQNOPTMAD4BWP12T40P140 "sdfcnqnd1" s, t(mux_ff)
+   SDFCNQNOPTMAD8BWP12T40P140 "sdfcnqnd1" s, t(mux_ff)
+   SDFCNQNOPTMAD12BWP12T40P140 "sdfcnqnd1" s, t(mux_ff)
+   SDFCNQNOPTMCD8BWP12T40P140 "sdfcnqnd1" s, t(mux_ff)
+   SDFCNQNOPTMCD12BWP12T40P140 "sdfcnqnd1" s, t(mux_ff)
+   SDFCNQNOPTSADD4BWP12T40P140 "sdfcnqnd1" s, t(mux_ff)
+   SDFCNQNOPTSADD8BWP12T40P140 "sdfcnqnd1" s, t(mux_ff)
+   SDFCNQNOPTSADD12BWP12T40P140 "sdfcnqnd1" s, t(mux_ff)
+   SDFCNQOPTBD1BWP12T40P140 "sdfcnqd1"  s, t(mux_ff)
+   SDFCNQOPTBD2BWP12T40P140 "sdfcnqd1"  s, t(mux_ff)
+   SDFCNQOPTBD4BWP12T40P140 "sdfcnqd1"  s, t(mux_ff)
+   SDFCNQOPTMAD4BWP12T40P140 "sdfcnqd1" s, t(mux_ff)
+   SDFCNQOPTMAD8BWP12T40P140 "sdfcnqd1" s, t(mux_ff)
+   SDFCNQOPTMAD12BWP12T40P140 "sdfcnqd1" s, t(mux_ff)
+   SDFCNQOPTMCD8BWP12T40P140 "sdfcnqd1" s, t(mux_ff)
+   SDFCNQOPTMCD12BWP12T40P140 "sdfcnqd1" s, t(mux_ff)
+   SDFCNQOPTSADD4BWP12T40P140 "sdfcnqd1" s, t(mux_ff)
+   SDFCNQOPTSADD8BWP12T40P140 "sdfcnqd1" s, t(mux_ff)
+   SDFCNQOPTSADD12BWP12T40P140 "sdfcnqd1" s, t(mux_ff)
+   SDFCSND0BWP12T40P140 "sdfcsnd1"      s, t(mux_ff)
+   SDFCSND1BWP12T40P140 "sdfcsnd1"      s, t(mux_ff)
+   SDFCSND2BWP12T40P140 "sdfcsnd1"      s, t(mux_ff)
+   SDFCSND4BWP12T40P140 "sdfcsnd1"      s, t(mux_ff)
+   SDFCSND8BWP12T40P140 "sdfcsnd1"      s, t(mux_ff)
+   SDFCSNQD0BWP12T40P140 "sdfcsnqd1"    s, t(mux_ff)
+   SDFCSNQD1BWP12T40P140 "sdfcsnqd1"    s, t(mux_ff)
+   SDFCSNQD2BWP12T40P140 "sdfcsnqd1"    s, t(mux_ff)
+   SDFCSNQD4BWP12T40P140 "sdfcsnqd1"    s, t(mux_ff)
+   SDFD0BWP12T40P140   "sdfd1"          s, t(mux_ff)
+   SDFD1BWP12T40P140   "sdfd1"          s, t(mux_ff)
+   SDFD2BWP12T40P140   "sdfd1"          s, t(mux_ff)
+   SDFD4BWP12T40P140   "sdfd1"          s, t(mux_ff)
+   SDFD8BWP12T40P140   "sdfd1"          s, t(mux_ff)
+   SDFKCND0BWP12T40P140 "sdfkcnd1"      s, t(mux_ff)
+   SDFKCND1BWP12T40P140 "sdfkcnd1"      s, t(mux_ff)
+   SDFKCND2BWP12T40P140 "sdfkcnd1"      s, t(mux_ff)
+   SDFKCND4BWP12T40P140 "sdfkcnd1"      s, t(mux_ff)
+   SDFKCNOPTMAD4BWP12T40P140 "sdfkcnd1" s, t(mux_ff)
+   SDFKCNOPTMAD8BWP12T40P140 "sdfkcnd1" s, t(mux_ff)
+   SDFKCNOPTMAD12BWP12T40P140 "sdfkcnd1" s, t(mux_ff)
+   SDFKCNOPTSADD4BWP12T40P140 "sdfkcnd1" s, t(mux_ff)
+   SDFKCNOPTSADD8BWP12T40P140 "sdfkcnd1" s, t(mux_ff)
+   SDFKCNOPTSADD12BWP12T40P140 "sdfkcnd1" s, t(mux_ff)
+   SDFKCNQD0BWP12T40P140 "sdfkcnqd1"    s, t(mux_ff)
+   SDFKCNQD1BWP12T40P140 "sdfkcnqd1"    s, t(mux_ff)
+   SDFKCNQD2BWP12T40P140 "sdfkcnqd1"    s, t(mux_ff)
+   SDFKCNQD4BWP12T40P140 "sdfkcnqd1"    s, t(mux_ff)
+   SDFKCNQOPTMAD4BWP12T40P140 "sdfkcnqd1" s, t(mux_ff)
+   SDFKCNQOPTMAD8BWP12T40P140 "sdfkcnqd1" s, t(mux_ff)
+   SDFKCNQOPTMAD12BWP12T40P140 "sdfkcnqd1" s, t(mux_ff)
+   SDFKCNQOPTSADD4BWP12T40P140 "sdfkcnqd1" s, t(mux_ff)
+   SDFKCNQOPTSADD8BWP12T40P140 "sdfkcnqd1" s, t(mux_ff)
+   SDFKCNQOPTSADD12BWP12T40P140 "sdfkcnqd1" s, t(mux_ff)
+   SDFKCSND0BWP12T40P140 "sdfkcsnd1"    s, t(mux_ff)
+   SDFKCSND1BWP12T40P140 "sdfkcsnd1"    s, t(mux_ff)
+   SDFKCSND2BWP12T40P140 "sdfkcsnd1"    s, t(mux_ff)
+   SDFKCSND4BWP12T40P140 "sdfkcsnd1"    s, t(mux_ff)
+   SDFKCSNQD0BWP12T40P140 "sdfkcsnqd1"  s, t(mux_ff)
+      PIN:             Q                ub
+   SDFKCSNQD1BWP12T40P140 "sdfkcsnqd1"  s, t(mux_ff)
+   SDFKCSNQD2BWP12T40P140 "sdfkcsnqd1"  s, t(mux_ff)
+   SDFKCSNQD4BWP12T40P140 "sdfkcsnqd1"  s, t(mux_ff)
+   SDFKSND0BWP12T40P140 "sdfksnd1"      s, t(mux_ff)
+   SDFKSND1BWP12T40P140 "sdfksnd1"      s, t(mux_ff)
+   SDFKSND2BWP12T40P140 "sdfksnd1"      s, t(mux_ff)
+   SDFKSND4BWP12T40P140 "sdfksnd1"      s, t(mux_ff)
+   SDFKSNQD0BWP12T40P140 "sdfksnqd1"    s, t(mux_ff)
+      PIN:             Q                ub
+   SDFKSNQD1BWP12T40P140 "sdfksnqd1"    s, t(mux_ff)
+   SDFKSNQD2BWP12T40P140 "sdfksnqd1"    s, t(mux_ff)
+   SDFKSNQD4BWP12T40P140 "sdfksnqd1"    s, t(mux_ff)
+   SDFMD0BWP12T40P140  "sdfmd1"         s, t(mux_ff)
+   SDFMD1BWP12T40P140  "sdfmd1"         s, t(mux_ff)
+   SDFMD2BWP12T40P140  "sdfmd1"         s, t(mux_ff)
+   SDFMD4BWP12T40P140  "sdfmd1"         s, t(mux_ff)
+   SDFMQD0BWP12T40P140 "sdfmqd1"        s, t(mux_ff)
+      PIN:             Q                ub
+   SDFMQD1BWP12T40P140 "sdfmqd1"        s, t(mux_ff)
+   SDFMQD2BWP12T40P140 "sdfmqd1"        s, t(mux_ff)
+   SDFMQD4BWP12T40P140 "sdfmqd1"        s, t(mux_ff)
+   SDFNCND0BWP12T40P140 "sdfncnd1"      s, t(mux_ff)
+   SDFNCND1BWP12T40P140 "sdfncnd1"      s, t(mux_ff)
+   SDFNCND2BWP12T40P140 "sdfncnd1"      s, t(mux_ff)
+   SDFNCND4BWP12T40P140 "sdfncnd1"      s, t(mux_ff)
+   SDFNCSND0BWP12T40P140 "sdfncsnd1"    s, t(mux_ff)
+   SDFNCSND1BWP12T40P140 "sdfncsnd1"    s, t(mux_ff)
+   SDFNCSND2BWP12T40P140 "sdfncsnd1"    s, t(mux_ff)
+   SDFNCSND4BWP12T40P140 "sdfncsnd1"    s, t(mux_ff)
+   SDFND0BWP12T40P140  "sdfnd1"         s, t(mux_ff)
+   SDFND1BWP12T40P140  "sdfnd1"         s, t(mux_ff)
+   SDFND2BWP12T40P140  "sdfnd1"         s, t(mux_ff)
+   SDFND4BWP12T40P140  "sdfnd1"         s, t(mux_ff)
+   SDFNSND0BWP12T40P140 "sdfnsnd1"      s, t(mux_ff)
+   SDFNSND1BWP12T40P140 "sdfnsnd1"      s, t(mux_ff)
+   SDFNSND2BWP12T40P140 "sdfnsnd1"      s, t(mux_ff)
+   SDFNSND4BWP12T40P140 "sdfnsnd1"      s, t(mux_ff)
+   SDFNSYNCND1BWP12T40P140 "sdfncnd1"   s, t(mux_ff)
+   SDFNSYNCND2BWP12T40P140 "sdfncnd1"   s, t(mux_ff)
+   SDFNSYNCND4BWP12T40P140 "sdfncnd1"   s, t(mux_ff)
+   SDFNSYNCSND1BWP12T40P140 "sdfncsnd1" s, t(mux_ff)
+   SDFNSYNCSND2BWP12T40P140 "sdfncsnd1" s, t(mux_ff)
+   SDFNSYNCSND4BWP12T40P140 "sdfncsnd1" s, t(mux_ff)
+   SDFNSYND1BWP12T40P140 "sdfnd1"       s, t(mux_ff)
+   SDFNSYND2BWP12T40P140 "sdfnd1"       s, t(mux_ff)
+   SDFNSYND4BWP12T40P140 "sdfnd1"       s, t(mux_ff)
+   SDFNSYNSND1BWP12T40P140 "sdfnsnd1"   s, t(mux_ff)
+   SDFNSYNSND2BWP12T40P140 "sdfnsnd1"   s, t(mux_ff)
+   SDFNSYNSND4BWP12T40P140 "sdfnsnd1"   s, t(mux_ff)
+   SDFOPTBD1BWP12T40P140 "sdfd1"        s, t(mux_ff)
+   SDFOPTBD2BWP12T40P140 "sdfd1"        s, t(mux_ff)
+   SDFOPTBD4BWP12T40P140 "sdfd1"        s, t(mux_ff)
+   SDFOPTMAD4BWP12T40P140 "sdfd1"       s, t(mux_ff)
+   SDFOPTMAD8BWP12T40P140 "sdfd1"       s, t(mux_ff)
+   SDFOPTMAD12BWP12T40P140 "sdfd1"      s, t(mux_ff)
+   SDFOPTMCD8BWP12T40P140 "sdfd1"       s, t(mux_ff)
+   SDFOPTMCD12BWP12T40P140 "sdfd1"      s, t(mux_ff)
+   SDFOPTSADD4BWP12T40P140 "sdfd1"      s, t(mux_ff)
+   SDFOPTSADD8BWP12T40P140 "sdfd1"      s, t(mux_ff)
+   SDFOPTSADD12BWP12T40P140 "sdfd1"     s, t(mux_ff)
+   SDFQD0BWP12T40P140  "sdfqd1"         s, t(mux_ff)
+   SDFQD1BWP12T40P140  "sdfqd1"         s, t(mux_ff)
+   SDFQD2BWP12T40P140  "sdfqd1"         s, t(mux_ff)
+   SDFQD4BWP12T40P140  "sdfqd1"         s, t(mux_ff)
+   SDFQND0BWP12T40P140 "sdfqnd1"        s, t(mux_ff)
+   SDFQND1BWP12T40P140 "sdfqnd1"        s, t(mux_ff)
+   SDFQND2BWP12T40P140 "sdfqnd1"        s, t(mux_ff)
+   SDFQND4BWP12T40P140 "sdfqnd1"        s, t(mux_ff)
+   SDFQNOPTBD1BWP12T40P140 "sdfqnd1"    s, t(mux_ff)
+   SDFQNOPTBD2BWP12T40P140 "sdfqnd1"    s, t(mux_ff)
+   SDFQNOPTBD4BWP12T40P140 "sdfqnd1"    s, t(mux_ff)
+   SDFQNOPTMAD4BWP12T40P140 "sdfqnd1"   s, t(mux_ff)
+   SDFQNOPTMAD8BWP12T40P140 "sdfqnd1"   s, t(mux_ff)
+   SDFQNOPTMAD12BWP12T40P140 "sdfqnd1"  s, t(mux_ff)
+   SDFQNOPTMCD8BWP12T40P140 "sdfqnd1"   s, t(mux_ff)
+   SDFQNOPTMCD12BWP12T40P140 "sdfqnd1"  s, t(mux_ff)
+   SDFQNOPTSADD4BWP12T40P140 "sdfqnd1"  s, t(mux_ff)
+   SDFQNOPTSADD8BWP12T40P140 "sdfqnd1"  s, t(mux_ff)
+   SDFQNOPTSADD12BWP12T40P140 "sdfqnd1" s, t(mux_ff)
+   SDFQOPTBD1BWP12T40P140 "sdfqd1"      s, t(mux_ff)
+   SDFQOPTBD2BWP12T40P140 "sdfqd1"      s, t(mux_ff)
+   SDFQOPTBD4BWP12T40P140 "sdfqd1"      s, t(mux_ff)
+   SDFQOPTMAD4BWP12T40P140 "sdfqd1"     s, t(mux_ff)
+   SDFQOPTMAD8BWP12T40P140 "sdfqd1"     s, t(mux_ff)
+   SDFQOPTMAD12BWP12T40P140 "sdfqd1"    s, t(mux_ff)
+   SDFQOPTMCD8BWP12T40P140 "sdfqd1"     s, t(mux_ff)
+   SDFQOPTMCD12BWP12T40P140 "sdfqd1"    s, t(mux_ff)
+   SDFQOPTSADD4BWP12T40P140 "sdfqd1"    s, t(mux_ff)
+   SDFQOPTSADD8BWP12T40P140 "sdfqd1"    s, t(mux_ff)
+   SDFQOPTSADD12BWP12T40P140 "sdfqd1"   s, t(mux_ff)
+   SDFSND0BWP12T40P140 "sdfsnd1"        s, t(mux_ff)
+   SDFSND1BWP12T40P140 "sdfsnd1"        s, t(mux_ff)
+   SDFSND2BWP12T40P140 "sdfsnd1"        s, t(mux_ff)
+   SDFSND4BWP12T40P140 "sdfsnd1"        s, t(mux_ff)
+   SDFSND8BWP12T40P140 "sdfsnd1"        s, t(mux_ff)
+   SDFSNOPTMAD4BWP12T40P140 "sdfsnd1"   s, t(mux_ff)
+   SDFSNOPTMAD8BWP12T40P140 "sdfsnd1"   s, t(mux_ff)
+   SDFSNOPTMAD12BWP12T40P140 "sdfsnd1"  s, t(mux_ff)
+   SDFSNOPTSADD4BWP12T40P140 "sdfsnd1"  s, t(mux_ff)
+   SDFSNOPTSADD8BWP12T40P140 "sdfsnd1"  s, t(mux_ff)
+   SDFSNOPTSADD12BWP12T40P140 "sdfsnd1" s, t(mux_ff)
+   SDFSNQD0BWP12T40P140 "sdfsnqd1"      s, t(mux_ff)
+   SDFSNQD1BWP12T40P140 "sdfsnqd1"      s, t(mux_ff)
+   SDFSNQD2BWP12T40P140 "sdfsnqd1"      s, t(mux_ff)
+   SDFSNQD4BWP12T40P140 "sdfsnqd1"      s, t(mux_ff)
+   SDFSNQOPTMAD4BWP12T40P140 "sdfsnqd1" s, t(mux_ff)
+   SDFSNQOPTMAD8BWP12T40P140 "sdfsnqd1" s, t(mux_ff)
+   SDFSNQOPTMAD12BWP12T40P140 "sdfsnqd1" s, t(mux_ff)
+   SDFSNQOPTSADD4BWP12T40P140 "sdfsnqd1" s, t(mux_ff)
+   SDFSNQOPTSADD8BWP12T40P140 "sdfsnqd1" s, t(mux_ff)
+   SDFSNQOPTSADD12BWP12T40P140 "sdfsnqd1" s, t(mux_ff)
+   SDFSYNCND1BWP12T40P140 "sdfcnd1"     s, t(mux_ff)
+   SDFSYNCND2BWP12T40P140 "sdfcnd1"     s, t(mux_ff)
+   SDFSYNCND4BWP12T40P140 "sdfcnd1"     s, t(mux_ff)
+   SDFSYNCNQD1BWP12T40P140 "sdfcnqd1"   s, t(mux_ff)
+   SDFSYNCNQD2BWP12T40P140 "sdfcnqd1"   s, t(mux_ff)
+   SDFSYNCNQD4BWP12T40P140 "sdfcnqd1"   s, t(mux_ff)
+   SDFSYNCSND1BWP12T40P140 "sdfcsnd1"   s, t(mux_ff)
+   SDFSYNCSND2BWP12T40P140 "sdfcsnd1"   s, t(mux_ff)
+   SDFSYNCSND4BWP12T40P140 "sdfcsnd1"   s, t(mux_ff)
+   SDFSYNCSNQD1BWP12T40P140 "sdfcsnqd1" s, t(mux_ff)
+   SDFSYNCSNQD2BWP12T40P140 "sdfcsnqd1" s, t(mux_ff)
+   SDFSYNCSNQD4BWP12T40P140 "sdfcsnqd1" s, t(mux_ff)
+   SDFSYND1BWP12T40P140 "sdfd1"         s, t(mux_ff)
+   SDFSYND2BWP12T40P140 "sdfd1"         s, t(mux_ff)
+   SDFSYND4BWP12T40P140 "sdfd1"         s, t(mux_ff)
+   SDFSYNQD1BWP12T40P140 "sdfqd1"       s, t(mux_ff)
+   SDFSYNQD2BWP12T40P140 "sdfqd1"       s, t(mux_ff)
+   SDFSYNQD4BWP12T40P140 "sdfqd1"       s, t(mux_ff)
+   SDFSYNQND1BWP12T40P140 "sdfqnd1"     s, t(mux_ff)
+   SDFSYNQND2BWP12T40P140 "sdfqnd1"     s, t(mux_ff)
+   SDFSYNQND4BWP12T40P140 "sdfqnd1"     s, t(mux_ff)
+   SDFSYNSND1BWP12T40P140 "sdfsnd1"     s, t(mux_ff)
+   SDFSYNSND2BWP12T40P140 "sdfsnd1"     s, t(mux_ff)
+   SDFSYNSND4BWP12T40P140 "sdfsnd1"     s, t(mux_ff)
+   SDFSYNSNQD1BWP12T40P140 "sdfsnqd1"   s, t(mux_ff)
+   SDFSYNSNQD2BWP12T40P140 "sdfsnqd1"   s, t(mux_ff)
+   SDFSYNSNQD4BWP12T40P140 "sdfsnqd1"   s, t(mux_ff)
+   SEDFCND0BWP12T40P140 "sedfcnd1"      s, t(mux_ff)
+   SEDFCND1BWP12T40P140 "sedfcnd1"      s, t(mux_ff)
+   SEDFCND2BWP12T40P140 "sedfcnd1"      s, t(mux_ff)
+   SEDFCND4BWP12T40P140 "sedfcnd1"      s, t(mux_ff)
+   SEDFCNQD0BWP12T40P140 "sedfcnqd1"    s, t(mux_ff)
+   SEDFCNQD1BWP12T40P140 "sedfcnqd1"    s, t(mux_ff)
+   SEDFCNQD2BWP12T40P140 "sedfcnqd1"    s, t(mux_ff)
+   SEDFCNQD4BWP12T40P140 "sedfcnqd1"    s, t(mux_ff)
+   SEDFD0BWP12T40P140  "sedfd1"         s, t(mux_ff)
+   SEDFD1BWP12T40P140  "sedfd1"         s, t(mux_ff)
+   SEDFD2BWP12T40P140  "sedfd1"         s, t(mux_ff)
+   SEDFD4BWP12T40P140  "sedfd1"         s, t(mux_ff)
+   SEDFKCND0BWP12T40P140 "sedfkcnd1"    s, t(mux_ff)
+   SEDFKCND1BWP12T40P140 "sedfkcnd1"    s, t(mux_ff)
+   SEDFKCND2BWP12T40P140 "sedfkcnd1"    s, t(mux_ff)
+   SEDFKCND4BWP12T40P140 "sedfkcnd1"    s, t(mux_ff)
+   SEDFKCNQD0BWP12T40P140 "sedfkcnqd1"  s, t(mux_ff)
+      PIN:             Q                ub
+   SEDFKCNQD1BWP12T40P140 "sedfkcnqd1"  s, t(mux_ff)
+   SEDFKCNQD2BWP12T40P140 "sedfkcnqd1"  s, t(mux_ff)
+   SEDFKCNQD4BWP12T40P140 "sedfkcnqd1"  s, t(mux_ff)
+   SEDFQD0BWP12T40P140 "sedfqd1"        s, t(mux_ff)
+   SEDFQD1BWP12T40P140 "sedfqd1"        s, t(mux_ff)
+   SEDFQD2BWP12T40P140 "sedfqd1"        s, t(mux_ff)
+   SEDFQD4BWP12T40P140 "sedfqd1"        s, t(mux_ff)
+   SEDFQND0BWP12T40P140 "sedfqnd1"      s, t(mux_ff)
+   SEDFQND1BWP12T40P140 "sedfqnd1"      s, t(mux_ff)
+   SEDFQND2BWP12T40P140 "sedfqnd1"      s, t(mux_ff)
+   SEDFQND4BWP12T40P140 "sedfqnd1"      s, t(mux_ff)
+   TAPCELLBWP12T40P140                  b
+   TIEHBWP12T40P140    "tieh"           
+   TIELBWP12T40P140    "tiel"           
+   XNR2D0BWP12T40P140  "xnr2d1"         
+   XNR2D1BWP12T40P140  "xnr2d1"         
+   XNR2D2BWP12T40P140  "xnr2d1"         
+   XNR2D4BWP12T40P140  "xnr2d1"         
+   XNR2D8BWP12T40P140  "xnr2d1"         
+   XNR2D16BWP12T40P140 "xnr2d1"         
+   XNR2OPTND2BWP12T40P140 "xnr2d1"      
+   XNR2OPTND4BWP12T40P140 "xnr2d1"      
+   XNR2OPTND6BWP12T40P140 "xnr2d1"      
+   XNR2OPTND8BWP12T40P140 "xnr2d1"      
+   XNR3D0BWP12T40P140  "xnr3d1"         
+   XNR3D1BWP12T40P140  "xnr3d1"         
+   XNR3D2BWP12T40P140  "xnr3d1"         
+   XNR3D4BWP12T40P140  "xnr3d1"         
+   XNR3D8BWP12T40P140  "xnr3d1"         
+   XNR3D16BWP12T40P140 "xnr3d1"         
+   XNR3OPTND2BWP12T40P140 "xnr3d1"      
+   XNR3OPTND4BWP12T40P140 "xnr3d1"      
+   XNR3OPTND6BWP12T40P140 "xnr3d1"      
+   XNR3OPTND8BWP12T40P140 "xnr3d1"      
+   XNR4D0BWP12T40P140  "xnr4d1"         
+   XNR4D1BWP12T40P140  "xnr4d1"         
+   XNR4D2BWP12T40P140  "xnr4d1"         
+   XNR4D4BWP12T40P140  "xnr4d1"         
+   XNR4D8BWP12T40P140  "xnr4d1"         
+   XNR4D16BWP12T40P140 "xnr4d1"         
+   XOR2D0BWP12T40P140  "xor2d1"         
+   XOR2D1BWP12T40P140  "xor2d1"         
+   XOR2D2BWP12T40P140  "xor2d1"         
+   XOR2D4BWP12T40P140  "xor2d1"         
+   XOR2D8BWP12T40P140  "xor2d1"         
+   XOR2D16BWP12T40P140 "xor2d1"         
+   XOR2OPTND2BWP12T40P140 "xor2d1"      
+   XOR2OPTND4BWP12T40P140 "xor2d1"      
+   XOR2OPTND6BWP12T40P140 "xor2d1"      
+   XOR2OPTND8BWP12T40P140 "xor2d1"      
+   XOR3D0BWP12T40P140  "xor3d1"         
+   XOR3D1BWP12T40P140  "xor3d1"         
+   XOR3D2BWP12T40P140  "xor3d1"         
+   XOR3D4BWP12T40P140  "xor3d1"         
+   XOR3D8BWP12T40P140  "xor3d1"         
+   XOR3D16BWP12T40P140 "xor3d1"         
+   XOR3OPTND2BWP12T40P140 "xor3d1"      
+   XOR3OPTND4BWP12T40P140 "xor3d1"      
+   XOR3OPTND6BWP12T40P140 "xor3d1"      
+   XOR3OPTND8BWP12T40P140 "xor3d1"      
+   XOR4D0BWP12T40P140  "xor4d1"         
+   XOR4D1BWP12T40P140  "xor4d1"         
+   XOR4D2BWP12T40P140  "xor4d1"         
+   XOR4D4BWP12T40P140  "xor4d1"         
+   XOR4D8BWP12T40P140  "xor4d1"         
+   XOR4D16BWP12T40P140 "xor4d1"         
+1
+1

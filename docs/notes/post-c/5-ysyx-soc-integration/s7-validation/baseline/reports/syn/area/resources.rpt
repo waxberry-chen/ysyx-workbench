@@ -1,0 +1,380 @@
+ 
+****************************************
+Report : resources
+Design : ysyx_25030087
+Version: V-2023.12-SP5
+Date   : Thu Oct 29 21:36:25 2026
+****************************************
+
+
+No resource sharing information to report.
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_soc_cpu_30000000
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_axi4_router
+****************************************
+
+No implementations to report
+ 
+****************************************
+Design : ysyx_clint
+****************************************
+
+Resource Report for this hierarchy in file ./vsrc/periph/ysyx_clint.sv
+=============================================================================
+| Cell           | Module         | Parameters | Contained Operations       |
+=============================================================================
+| gte_x_2        | DW_cmp         | width=64   | gte_24 (ysyx_clint.sv:24)  |
+| add_x_3        | DW01_inc       | width=64   | add_31 (ysyx_clint.sv:31)  |
+=============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| gte_x_2            | DW_cmp           | apparch (area)     |                |
+| add_x_3            | DW01_inc         | apparch (area)     |                |
+===============================================================================
+
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_core_axi4_30000000
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_axi4_arbiter
+****************************************
+
+No implementations to report
+ 
+****************************************
+Design : ysyx_core_30000000
+****************************************
+
+Resource Report for this hierarchy in file ./vsrc/core/ysyx_core.sv
+=============================================================================
+| Cell           | Module         | Parameters | Contained Operations       |
+=============================================================================
+| eq_x_3         | DW_cmp         | width=5    | eq_287_2 (ysyx_core.sv:287) |
+| eq_x_5         | DW_cmp         | width=5    | eq_291_2 (ysyx_core.sv:291) |
+=============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| eq_x_3             | DW_cmp           | apparch (area)     |                |
+| eq_x_5             | DW_cmp           | apparch (area)     |                |
+===============================================================================
+
+ 
+****************************************
+Design : ysyx_lsu_axi4_adapter
+****************************************
+
+Resource Report for this hierarchy in file ./vsrc/bus/ysyx_lsu_axi4_adapter.sv
+=============================================================================
+| Cell           | Module         | Parameters | Contained Operations       |
+=============================================================================
+| ashr_1         | DW_rightsh     | A_width=32 | srl_80 (ysyx_lsu_axi4_adapter.sv:80) |
+       |                | SH_width=5 |                            |
+| ash_3          | DW_leftsh      | A_width=32 | sll_115 (ysyx_lsu_axi4_adapter.sv:115) |
+     |                | SH_width=5 |                            |
+| ash_4          | DW_leftsh      | A_width=4  | sll_116 (ysyx_lsu_axi4_adapter.sv:116) |
+     |                | SH_width=2 |                            |
+=============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| ashr_1             | DW_rightsh       | astr (area)        |                |
+| ash_3              | DW_leftsh        | astr (area)        |                |
+| ash_4              | DW_leftsh        | astr (area)        |                |
+===============================================================================
+
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_ifu_axi4_adapter
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_lsu
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_csr
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_gnrl_dfflrs_DW32_312242
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_gnrl_dfflrs_DW32_197242
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_gnrl_dfflrs_DW32_393242
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_gnrl_dfflrs_DW32_856242
+****************************************
+
+No implementations to report
+ 
+****************************************
+Design : ysyx_exu
+****************************************
+
+Resource Report for this hierarchy in file ./vsrc/core/ysyx_exu.sv
+=============================================================================
+| Cell           | Module         | Parameters | Contained Operations       |
+=============================================================================
+| add_x_3        | DW01_add       | width=32   | add_131 (ysyx_exu.sv:131)  |
+=============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| add_x_3            | DW01_add         | apparch (area)     |                |
+===============================================================================
+
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_gnrl_data_mux_DW32_N4
+****************************************
+
+No implementations to report
+ 
+****************************************
+Design : ysyx_branch
+****************************************
+
+Resource Report for this hierarchy in file ./vsrc/core/ysyx_branch.sv
+=============================================================================
+| Cell           | Module         | Parameters | Contained Operations       |
+=============================================================================
+| eq_x_1         | DW_cmp         | width=32   | eq_20 (ysyx_branch.sv:20)  |
+| ne_x_2         | DW_cmp         | width=32   | ne_22 (ysyx_branch.sv:22)  |
+| lt_x_3         | DW_cmp         | width=32   | lt_24 (ysyx_branch.sv:24)  |
+| gte_x_4        | DW_cmp         | width=32   | gte_26 (ysyx_branch.sv:26) |
+| lt_x_5         | DW_cmp         | width=32   | lt_28 (ysyx_branch.sv:28)  |
+| gte_x_6        | DW_cmp         | width=32   | gte_30 (ysyx_branch.sv:30) |
+=============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| eq_x_1             | DW_cmp           | apparch (area)     |                |
+| ne_x_2             | DW_cmp           | apparch (area)     |                |
+| lt_x_3             | DW_cmp           | apparch (area)     |                |
+| gte_x_4            | DW_cmp           | apparch (area)     |                |
+| lt_x_5             | DW_cmp           | apparch (area)     |                |
+| gte_x_6            | DW_cmp           | apparch (area)     |                |
+===============================================================================
+
+ 
+****************************************
+Design : ysyx_alu
+****************************************
+
+Resource Report for this hierarchy in file ./vsrc/core/ysyx_alu.sv
+=============================================================================
+| Cell           | Module         | Parameters | Contained Operations       |
+=============================================================================
+| ash_1          | DW_leftsh      | A_width=32 | sll_18 (ysyx_alu.sv:18)    |
+|                |                | SH_width=5 |                            |
+| lt_x_2         | DW_cmp         | width=32   | lt_20 (ysyx_alu.sv:20)     |
+| lt_x_3         | DW_cmp         | width=32   | lt_22 (ysyx_alu.sv:22)     |
+| ashr_4         | DW_rightsh     | A_width=32 | srl_26 (ysyx_alu.sv:26)    |
+|                |                | SH_width=5 |                            |
+| ashr_5         | DW_rightsh     | A_width=32 | sra_28 (ysyx_alu.sv:28)    |
+|                |                | SH_width=5 |                            |
+| DP_OP_22J5_122_5665             |            |                            |
+|                | DP_OP_22J5_122_5665 |       |                            |
+=============================================================================
+
+Datapath Report for DP_OP_22J5_122_5665
+==============================================================================
+| Cell                 | Contained Operations                                |
+==============================================================================
+| DP_OP_22J5_122_5665  | add_14 (ysyx_alu.sv:14) sub_16 (ysyx_alu.sv:16)     |
+==============================================================================
+
+==============================================================================
+|       |      | Data     |       |                                          |
+| Var   | Type | Class    | Width | Expression                               |
+==============================================================================
+| I1    | PI   | Signed   | 32    |                                          |
+| I2    | PI   | Signed   | 32    |                                          |
+| I3    | PI   | Unsigned | 1     |                                          |
+| O1    | PO   | Signed   | 32    | addsub(I1,I2,I3) ( ysyx_alu.sv:14 ysyx_alu.sv:16 ) |
+==============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| ash_1              | DW_leftsh        | astr (area)        |                |
+| lt_x_2             | DW_cmp           | apparch (area)     |                |
+| lt_x_3             | DW_cmp           | apparch (area)     |                |
+| ashr_4             | DW_rightsh       | astr (area)        |                |
+| ashr_5             | DW_rightsh       | astr (area)        |                |
+| DP_OP_22J5_122_5665                   |                    |                |
+|                    | DP_OP_22J5_122_5665 | str (area)      |                |
+===============================================================================
+
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_opbuf
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_gnrl_rv_reg_DW277
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_regfile
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_gen_imm
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_idu
+****************************************
+
+No implementations to report
+ 
+****************************************
+Design : ysyx_ifu_30000000_2
+****************************************
+
+Resource Report for this hierarchy in file ./vsrc/core/ysyx_ifu.sv
+=============================================================================
+| Cell           | Module         | Parameters | Contained Operations       |
+=============================================================================
+| add_x_1        | DW01_add       | width=32   | add_103 (ysyx_ifu.sv:103)  |
+=============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| add_x_1            | DW01_add         | apparch (area)     |                |
+===============================================================================
+
+ 
+****************************************
+Design : ysyx_gnrl_fifo_DW65_DEPTH2
+****************************************
+
+Resource Report for this hierarchy in file ./vsrc/gnrl/ysyx_gnrl_primitive.sv
+=============================================================================
+| Cell           | Module         | Parameters | Contained Operations       |
+=============================================================================
+| add_x_132      | DW01_inc       | width=2    | add_356 (ysyx_gnrl_primitive.sv:356) |
+| sub_x_133      | DW01_dec       | width=2    | sub_357 (ysyx_gnrl_primitive.sv:357) |
+=============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| add_x_132          | DW01_inc         | apparch (area)     |                |
+| sub_x_133          | DW01_dec         | apparch (area)     |                |
+===============================================================================
+
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_gnrl_dfflrs_32_30000000
+****************************************
+
+No implementations to report
+1

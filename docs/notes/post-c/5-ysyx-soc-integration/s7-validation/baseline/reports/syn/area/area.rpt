@@ -1,0 +1,78 @@
+ 
+****************************************
+Report : area
+Design : ysyx_25030087
+Version: V-2023.12-SP5
+Date   : Thu Oct 29 21:36:24 2026
+****************************************
+
+Information: Updating design information... (UID-85)
+Warning: Design 'ysyx_25030087' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+Library(s) Used:
+
+    tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs (File: /home/cym/prj/ysyx-workbench/npc/flow/00_indata/DB/STD_NEW/tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.db)
+
+Number of ports:                         6435
+Number of nets:                         11654
+Number of cells:                         7284
+Number of combinational cells:           5635
+Number of sequential cells:              1623
+Number of macros/black boxes:               0
+Number of buf/inv:                        662
+Number of references:                       3
+
+Combinational area:               4687.703964
+Buf/Inv area:                      238.055998
+Noncombinational area:            4842.431892
+Macro/Black Box area:                0.000000
+Net Interconnect area:      undefined  (Wire load has zero net area)
+
+Total cell area:                  9530.135856
+Total area:                 undefined
+
+Hierarchical area distribution
+------------------------------
+
+                                  Global cell area          Local cell area
+                                  ------------------  ---------------------------- 
+Hierarchical cell                 Absolute   Percent  Combi-     Noncombi-  Black-
+                                  Total      Total    national   national   boxes   Design
+--------------------------------  ---------  -------  ---------  ---------  ------  ----------------------------
+ysyx_25030087                     9530.1359    100.0     0.6720     0.0000  0.0000  ysyx_25030087
+subsystem                         9529.4639    100.0     0.0000     0.0000  0.0000  ysyx_soc_cpu_30000000
+subsystem/cpu                     8104.1519     85.0     0.0000     0.0000  0.0000  ysyx_core_axi4_30000000
+subsystem/cpu/arbiter              538.1040      5.6   190.3440   347.7600  0.0000  ysyx_axi4_arbiter
+subsystem/cpu/core                7566.0479     79.4   161.7840     0.0000  0.0000  ysyx_core_30000000
+subsystem/cpu/core/u_arch_pc       126.3360      1.3    35.6160    90.7200  0.0000  ysyx_gnrl_dfflrs_32_30000000
+subsystem/cpu/core/u_csr           520.8000      5.5   121.6320     3.0240  0.0000  ysyx_csr
+subsystem/cpu/core/u_csr/gen_csr_0__csr_dfflr
+                                     8.7360      0.1     2.6880     6.0480  0.0000  ysyx_gnrl_dfflrs_DW32_856242
+subsystem/cpu/core/u_csr/gen_csr_1__csr_dfflr
+                                   126.3360      1.3    35.6160    90.7200  0.0000  ysyx_gnrl_dfflrs_DW32_393242
+subsystem/cpu/core/u_csr/gen_csr_2__csr_dfflr
+                                   126.3360      1.3    35.6160    90.7200  0.0000  ysyx_gnrl_dfflrs_DW32_197242
+subsystem/cpu/core/u_csr/gen_csr_3__csr_dfflr
+                                   134.7360      1.4    37.9680    96.7680  0.0000  ysyx_gnrl_dfflrs_DW32_312242
+subsystem/cpu/core/u_decode_imm     34.6080      0.4    34.6080     0.0000  0.0000  ysyx_gen_imm
+subsystem/cpu/core/u_decoder        70.5600      0.7    70.5600     0.0000  0.0000  ysyx_idu
+subsystem/cpu/core/u_exu          1128.9600     11.8   277.7040     6.0480  0.0000  ysyx_exu
+subsystem/cpu/core/u_exu/u_alu     662.4240      7.0   662.4240     0.0000  0.0000  ysyx_alu
+subsystem/cpu/core/u_exu/u_branch  110.3760      1.2   110.3760     0.0000  0.0000  ysyx_branch
+subsystem/cpu/core/u_exu/u_wb_mux   72.4080      0.8    72.4080     0.0000  0.0000  ysyx_gnrl_data_mux_DW32_N4
+subsystem/cpu/core/u_gpr          2555.2800     26.8  1103.7600  1451.5200  0.0000  ysyx_regfile
+subsystem/cpu/core/u_ifu           921.3120      9.7   144.3120   199.5840  0.0000  ysyx_ifu_30000000_2
+subsystem/cpu/core/u_ifu/u_ifq     577.4160      6.1   237.7200   339.6960  0.0000  ysyx_gnrl_fifo_DW65_DEPTH2
+subsystem/cpu/core/u_ifu_axi4_adapter
+                                   288.9600      3.0    86.3520   202.6080  0.0000  ysyx_ifu_axi4_adapter
+subsystem/cpu/core/u_lsu           451.0800      4.7   139.6080   311.4720  0.0000  ysyx_lsu
+subsystem/cpu/core/u_lsu_axi4_adapter
+                                   538.2720      5.6   223.7760   314.4960  0.0000  ysyx_lsu_axi4_adapter
+subsystem/cpu/core/u_opbuf         768.0960      8.1     0.0000     0.0000  0.0000  ysyx_opbuf
+subsystem/cpu/core/u_opbuf/u_context_reg
+                                   768.0960      8.1   217.7280   550.3680  0.0000  ysyx_gnrl_rv_reg_DW277
+subsystem/router                  1425.3120     15.0   193.8720   353.8080  0.0000  ysyx_axi4_router
+subsystem/router/clint             877.6320      9.2   490.5600   387.0720  0.0000  ysyx_clint
+--------------------------------  ---------  -------  ---------  ---------  ------  ----------------------------
+Total                                                 4687.7040  4842.4319  0.0000
+
+1

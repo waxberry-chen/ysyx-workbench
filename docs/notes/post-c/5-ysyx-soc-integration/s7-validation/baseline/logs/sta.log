@@ -1,0 +1,130 @@
+
+                                 PrimeTime (R)
+
+               Version T-2022.03-SP5 for linux64 - Oct 05, 2022 
+
+                    Copyright (c) 1988 - 2022 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+   or distribution of this software is strictly prohibited.  Licensed Products
+     communicate with Synopsys servers for the purpose of providing software
+    updates, detecting software piracy and verifying that customers are using
+    Licensed Products in conformity with the applicable License Key for such
+  Licensed Products. Synopsys will use information gathered in connection with
+    this process to deliver software updates and pursue software pirates and
+                                   infringers.
+
+ Inclusivity & Diversity - Visit SolvNetPlus to read the "Synopsys Statement on
+            Inclusivity and Diversity" (Refer to article 000036315 at
+                        https://solvnetplus.synopsys.com)
+# PT 静态时序入口：同一 run 的映射网表 + 同一工艺库 + 同一设计 SDC。
+# 本轮是 pre-layout、单角、ideal-clock 基线；不是布局布线后的 sign-off。
+# library/units/WLM 报告用于核对模型，timing/coverage 用于核对路径及检查是否完整。
+if {[catch {
+    source [file join $::env(NPC_FLOW_SNAPSHOT) 01_common setup.tcl]
+    source [file join $::env(NPC_FLOW_SNAPSHOT) 01_common capacitance.tcl]
+    libraries
+    library_reports
+    # 阶段 1：只读本 run 的综合网表。PT 根据库中的单元时序模型构建分析图，
+    # 不执行程序、不需要 testbench，也不在这里重新综合或替换逻辑。
+    read_verilog [file join $outputs core.v]
+    require_true [link_design $top] "PT link_design failed"
+    environment
+    # Replay the same frozen design SDC, not DC-specific exported environment commands.
+    # dc.sdc is still retained and hashed for cross-checking; no C906 SDC is used.
+    source [file join $npc_root [dict get $cfg sdc]]
+    # 阶段 2：在网表/库/约束齐备后更新时序图，计算 arrival/required time 和 slack。
+    # arrival time 是信号预计到达时间，required time 是约束要求的到达边界。
+    # setup 要求数据在捕获时钟沿之前足够早地稳定；hold 要求沿之后继续保持一段时间。
+    # 晚到检查的 slack 通常是 required - arrival，早到检查则是 arrival - required；
+    # 两者均以负值表示违例，所以“数据越快越好”并不适用于 hold 检查。
+    # 无 SPEF，且未传播时钟树；数据路径仍使用单元延迟及配置的互连估算。
+    update_timing
+    redirect -file [file join $reports environment units.rpt] {report_units}
+    redirect -file [file join $reports environment design.rpt] {report_design}
+    redirect -file [file join $reports environment wire_load.rpt] {report_wire_load}
+    # 阶段 3：先确认“分析了什么”，再看“是否满足目标”。
+    # coverage 的 met/violated/untested 分别是通过、违例、未测试的 timing checks。
+    # untested 不可当作通过；常量、例外、无时钟等原因需要逐项解释。
+    # 该 coverage 不是 RTL 仿真覆盖率。依据：PT L-2016.06 正文 17-25 / PDF 657。
+    redirect -file [file join $reports checks check_timing.rpt] {check_timing -verbose}
+    redirect -file [file join $reports checks coverage.rpt] {report_analysis_coverage}
+    redirect -file [file join $reports checks coverage_untested.rpt] {report_analysis_coverage -status_details {untested}}
+    # PTE-003 可能来自常量传播，也可能来自环；保留被禁用弧的对象/原因供审查。
+    redirect -file [file join $reports checks disable_timing.rpt] {report_disable_timing}
+    # 小电容/小 slack 在两位小数下可能打印成 0.00，但依然是违例。
+    redirect -file [file join $reports checks constraint_violations.rpt] {report_constraint -all_violators -significant_digits 6 -nosplit}
+    report_lsu_enable_capacitance
+    # 阶段 4：max/min 分别保存晚到/早到分析；全局报告包含实际可分析的 check。
+    # 先输出代表路径供人阅读，再独立提取全部负 slack 端点，避免只用前 20 条算 TNS。
+    foreach delay {max min} {
+        # PT 的 -max_paths > 1 默认只列负 slack（UG PDF 637）。显式使用很大的
+        # 有限阈值纳入正常正裕量路径；这只是报告筛选，不放宽任何时序约束。
+        redirect -file [file join $reports timing timing_${delay}.rpt] {
+            report_timing -delay_type $delay -slack_lesser_than 1.0e30 -max_paths 20 -significant_digits 6 -nosplit
+        }
+        # One worst path per endpoint; bounded to a count above all pins + ports.
+        set limit [expr {[sizeof_collection [get_pins -hierarchical *]] + [sizeof_collection [all_outputs]] + 1}]
+        set paths [get_timing_paths -delay_type $delay -slack_lesser_than 0.0 -nworst 1 -max_paths $limit]
+        if {[sizeof_collection $paths] >= $limit} {error "Timing path enumeration may be truncated"}
+        # 同一 endpoint 可能在返回路径中重复出现，只保留该端点最坏的 slack，
+        # 否则 TNS 和 violating_endpoints 会重复计数。
+        set endpoints [dict create]
+        foreach_in_collection path $paths {
+            set slack [get_attribute $path slack]
+            set endpoint [get_object_name [get_attribute $path endpoint]]
+            if {![dict exists $endpoints $endpoint] || $slack < [dict get $endpoints $endpoint]} {
+                dict set endpoints $endpoint $slack
+            }
+        }
+        # WNS（Worst Negative Slack）= 最坏负裕量；无违例时这里取 0。
+        # TNS（Total Negative Slack）= 每个违例端点最坏负裕量之和。
+        # 正裕量不会抵消负裕量；WNS=0 也不证明所有功能端点均已受约束。
+        set tns 0.0; set wns 0.0; set count 0
+        dict for {endpoint slack} $endpoints {
+            set tns [expr {$tns + $slack}]
+            set wns [expr {min($wns, $slack)}]
+            incr count
+        }
+        set f [open [file join $reports timing metrics_${delay}.tsv] w]
+        puts $f "wns\t$wns\ntns\t$tns\nviolating_endpoints\t$count"
+        close $f
+        # 阶段 5：按边界保存四类路径，方便定位是内部逻辑还是接口预算限制频率。
+        # Reg2Reg：寄存器→寄存器；In2Reg：输入→寄存器；
+        # Reg2Out：寄存器→输出；In2Out：组合穿越（含 monitor 观察路径）。
+        # -clock_pins 指发起数据的寄存器时钟引脚，不是只分析时钟树。
+        # -data_pins 限定寄存器数据端，故这四类报告不能替代全局 recovery/removal
+        # coverage；reset release 检查仍要在全局时序/coverage 报告里审查。
+        set external_inputs [remove_from_collection [all_inputs] [get_ports $clock_port]]
+        foreach {group from to} [list Reg2Reg [all_registers -clock_pins] [all_registers -data_pins] \
+                In2Reg $external_inputs [all_registers -data_pins] \
+                Reg2Out [all_registers -clock_pins] [all_outputs] In2Out $external_inputs [all_outputs]] {
+            redirect -file [file join $reports timing ${group}_${delay}.rpt] {
+                report_timing -from $from -to $to -delay_type $delay -slack_lesser_than 1.0e30 -max_paths 10 -significant_digits 6 -nosplit
+            }
+        }
+    }
+    complete
+} message]} {puts stderr "NPC_FLOW_ERROR: $message"; exit 1}
+Loading db file '/home/cym/prj/ysyx-workbench/npc/flow/00_indata/DB/STD_NEW/tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.db'
+Loading verilog file '/home/cym/prj/ysyx-workbench/npc/flow/build/soc-cpu-tt-5ns-s7-cap90/outputs/core.v'
+Linking design ysyx_25030087...
+Information: Removing 26 unneeded designs..... (LNK-034)
+Information: 1078 (94.40%) library cells are unused in library tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs..... (LNK-045)
+Information: total 1078 library cells are unused (LNK-046)
+Design 'ysyx_25030087' was successfully linked.
+Information: There are 7668 leaf cells, ports, hiers and 15472 nets in the design (LNK-047)
+Information: Building multi voltage information for entire design. (MV-022)
+Warning: Some timing arcs have been disabled for breaking timing loops or because of constant propagation. Use the 'report_disable_timing' command to get the list of these disabled timing arcs. (PTE-003)
+exit 0
+
+Timing updates: 1 (0 implicit, 1 explicit) (0 incremental, 1 full, 0 logical)
+Noise updates: 0 (0 implicit, 0 explicit) (0 incremental, 0 full)
+Maximum memory usage for this session: 2766.66 MB
+CPU usage for this session: 6 seconds 
+Elapsed time for this session: 16 seconds
+Elapsed time spent in memory sampling: 0 seconds
+Diagnostics summary: 3 warnings, 5 informationals
+
+Thank you for using pt_shell!

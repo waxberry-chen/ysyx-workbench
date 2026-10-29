@@ -1,0 +1,1843 @@
+
+****************************************
+Report : library
+Library: standard.sldb
+Version: V-2023.12-SP5
+Date   : Thu Oct 29 21:34:16 2026
+****************************************
+
+Library Type            : Synthetic
+Tool Created            : U-2022.12-SP2-VAL-20231118
+Date Created            : 07.12.24
+Library Version         : D-2010.03:V-2023.12-DWBB_202312.5:2ff07d8f
+
+Operator Types:
+
+   Operator Name    Type
+   ----------------------------------------------------------------------
+   ABS_OP           abs
+
+   ADD_TC_CI_OP     add
+
+   ADD_TC_OP        add
+
+   ADD_UNS_CI_OP    add
+
+   ADD_UNS_OP       add
+
+   ASHR_TC_TC_OP    bidir_right_shift
+
+   ASHR_TC_UNS_OP   unidir_arith_right_shift
+
+   ASHR_UNS_TC_OP   bidir_right_shift
+
+   ASHR_UNS_UNS_OP  unidir_logical_right_shift
+
+   ASH_TC_TC_OP     bidir_left_shift
+
+   ASH_TC_UNS_OP    unidir_left_shift
+
+   ASH_UNS_TC_OP    bidir_left_shift
+
+   ASH_UNS_UNS_OP   unidir_left_shift
+
+   BSHL_TC_OP       left_rotate
+
+   BSHR_UNS_OP      right_rotate
+
+   BSH_TC_OP        unidir_left_rotate
+
+   BSH_UNS_OP       unidir_left_rotate
+
+   EQ_TC_OP         compare_eq
+
+   EQ_UNS_OP        compare_eq
+
+   GEQ_TC_OP        compare_ge
+
+   GEQ_UNS_OP       compare_ge
+
+   GT_TC_OP         compare_gt
+
+   GT_UNS_OP        compare_gt
+
+   LEQ_TC_OP        compare_le
+
+   LEQ_UNS_OP       compare_le
+
+   LT_TC_OP         compare_lt
+
+   LT_UNS_OP        compare_lt
+
+   MULT_TC_OP       mult
+
+   MULT_UNS_OP      mult
+
+   NE_TC_OP         compare_ne
+
+   NE_UNS_OP        compare_ne
+
+   SLA_TC_OP        sla_shift
+
+   SLA_UNS_OP       sla_shift
+
+   SRA_TC_OP        sra_shift
+
+   SRA_UNS_OP       sra_shift
+
+   SUB_TC_CI_OP     sub
+
+   SUB_TC_OP        sub
+
+   SUB_UNS_CI_OP    sub
+
+   SUB_UNS_OP       sub
+
+
+
+Operators:
+
+   Operator         Ports    Dir
+   ----------------------------------------------------------------------
+   ABS_OP           A        in
+                    Z        out
+
+   ADD_TC_CI_OP     A        in
+                    B        in
+                    CI       in
+                    Z        out
+
+   ADD_TC_OP        A        in
+                    B        in
+                    Z        out
+
+   ADD_UNS_CI_OP    A        in
+                    B        in
+                    CI       in
+                    Z        out
+
+   ADD_UNS_OP       A        in
+                    B        in
+                    Z        out
+
+   ASHR_TC_TC_OP    A        in
+                    SH       in
+                    Z        out
+
+   ASHR_TC_UNS_OP   A        in
+                    SH       in
+                    Z        out
+
+   ASHR_UNS_TC_OP   A        in
+                    SH       in
+                    Z        out
+
+   ASHR_UNS_UNS_OP  A        in
+                    SH       in
+                    Z        out
+
+   ASH_TC_TC_OP     A        in
+                    SH       in
+                    Z        out
+
+   ASH_TC_UNS_OP    A        in
+                    SH       in
+                    Z        out
+
+   ASH_UNS_TC_OP    A        in
+                    SH       in
+                    Z        out
+
+   ASH_UNS_UNS_OP   A        in
+                    SH       in
+                    Z        out
+
+   BINDEC_STD_LOGIC_OP A     in
+                    Z        out
+
+   BINDEC_TC_OP     A        in
+                    Z        out
+
+   BINDEC_UNS_OP    A        in
+                    Z        out
+
+   BSHL_TC_OP       A        in
+                    SH       in
+                    Z        out
+
+   BSHR_TC_OP       A        in
+                    SH       in
+                    Z        out
+
+   BSHR_UNS_OP      A        in
+                    SH       in
+                    Z        out
+
+   BSH_TC_OP        A        in
+                    SH       in
+                    Z        out
+
+   BSH_UNS_OP       A        in
+                    SH       in
+                    Z        out
+
+   CMP6_TC_OP       A        in
+                    B        in
+                    LT       out
+                    GT       out
+                    EQ       out
+                    LE       out
+                    GE       out
+                    NE       out
+
+   CMP6_UNS_OP      A        in
+                    B        in
+                    LT       out
+                    GT       out
+                    EQ       out
+                    LE       out
+                    GE       out
+                    NE       out
+
+   DECODE_OP        A        in
+                    Z        out
+
+   DIVMOD_TC_OP     A        in
+                    B        in
+                    QUOTIENT out
+                    REMAINDER out
+
+   DIVMOD_UNS_OP    A        in
+                    B        in
+                    QUOTIENT out
+                    REMAINDER out
+
+   DIVREM_TC_OP     A        in
+                    B        in
+                    QUOTIENT out
+                    REMAINDER out
+
+   DIVREM_UNS_OP    A        in
+                    B        in
+                    QUOTIENT out
+                    REMAINDER out
+
+   DIV_TC_OP        A        in
+                    B        in
+                    QUOTIENT out
+
+   DIV_UNS_OP       A        in
+                    B        in
+                    QUOTIENT out
+
+   EQ_TC_OP         A        in
+                    B        in
+                    Z        out
+
+   EQ_UNS_OP        A        in
+                    B        in
+                    Z        out
+
+   GEQ_TC_OP        A        in
+                    B        in
+                    Z        out
+
+   GEQ_UNS_OP       A        in
+                    B        in
+                    Z        out
+
+   GT_TC_OP         A        in
+                    B        in
+                    Z        out
+
+   GT_UNS_OP        A        in
+                    B        in
+                    Z        out
+
+   LEQ_TC_OP        A        in
+                    B        in
+                    Z        out
+
+   LEQ_UNS_OP       A        in
+                    B        in
+                    Z        out
+
+   LT_TC_OP         A        in
+                    B        in
+                    Z        out
+
+   LT_UNS_OP        A        in
+                    B        in
+                    Z        out
+
+   MEM_READ_SEQ_OP  ADDR     in
+                    CLK      in
+                    Q        out
+
+   MEM_WRITE_SEQ_OP ADDR     in
+                    D        in
+                    CLK      in
+
+   MOD_TC_OP        A        in
+                    B        in
+                    REMAINDER out
+
+   MOD_UNS_OP       A        in
+                    B        in
+                    REMAINDER out
+
+   MULT_TC_OP       A        in
+                    B        in
+                    Z        out
+
+   MULT_UNS_OP      A        in
+                    B        in
+                    Z        out
+
+   MUX_ANY_OP       A        in
+                    SEL      in
+                    MUX      out
+
+   MUX_OP           D        in
+                    S        in
+                    Z        out
+
+   NE_TC_OP         A        in
+                    B        in
+                    Z        out
+
+   NE_UNS_OP        A        in
+                    B        in
+                    Z        out
+
+   PRICOD_STD_LOGIC_OP A     in
+                    COD      out
+
+   PRICOD_TC_OP     A        in
+                    COD      out
+
+   PRICOD_UNS_OP    A        in
+                    COD      out
+
+   REM_TC_OP        A        in
+                    B        in
+                    REMAINDER out
+
+   REM_UNS_OP       A        in
+                    B        in
+                    REMAINDER out
+
+   SELECT_OP        DATA     in
+                    CONTROL  in
+                    Z        out
+
+   SLA_TC_OP        A        in
+                    SH       in
+                    Z        out
+
+   SLA_UNS_OP       A        in
+                    SH       in
+                    Z        out
+
+   SRA_TC_OP        A        in
+                    SH       in
+                    Z        out
+
+   SRA_UNS_OP       A        in
+                    SH       in
+                    Z        out
+
+   SUB_TC_CI_OP     A        in
+                    B        in
+                    CI       in
+                    Z        out
+
+   SUB_TC_OP        A        in
+                    B        in
+                    Z        out
+
+   SUB_UNS_CI_OP    A        in
+                    B        in
+                    CI       in
+                    Z        out
+
+   SUB_UNS_OP       A        in
+                    B        in
+                    Z        out
+
+
+
+Synthetic Modules:
+
+   Module
+   ----------------------------------------------------------------------
+   DW01_ADD_AB      design_library: DW01
+
+   DW01_ADD_AB1     design_library: DW01
+
+   DW01_ADD_ABC     design_library: DW01
+
+   DW01_AND2        design_library: DW01
+
+   DW01_AO21        design_library: DW01
+
+   DW01_CL_DEC      design_library: DW01
+
+   DW01_GP_DEC      design_library: DW01
+
+   DW01_GP_NODE     design_library: DW01
+
+   DW01_GP_SUM      design_library: DW01
+
+   DW01_MUX         design_library: DW01
+
+   DW01_NAND2       design_library: DW01
+
+   DW01_NOT         design_library: DW01
+
+   DW01_OR2         design_library: DW01
+
+   DW01_OR_NOT      design_library: DW01
+
+   DW01_SUB_ABC     design_library: DW01
+
+   DW01_XOR2        design_library: DW01
+
+   DW01_absval      design_library: DW01
+                    HDL parameter: width = max( width('A'), width('ABSVAL'))
+                    module type: abs
+
+   DW01_add         design_library: DW01
+                    HDL parameter: width = max( width('A'),  width('B'), width('SUM') )
+                    module type: add
+
+   DW01_addsub      design_library: DW01
+                    HDL parameter: width = max( width('A'),  width('B'), width('SUM') )
+                    module type: addsub
+
+   DW01_ash         design_library: DW01
+                    HDL parameter: A_width = width('A')
+                    HDL parameter: SH_width = width('SH')
+                    module type: bidir_left_shift
+
+   DW01_cmp2        design_library: DW01
+                    HDL parameter: width = max( width('A'),  width('B') )
+                    module type: compare_ge_gt_le_lt
+
+   DW01_cmp6        design_library: DW01
+                    HDL parameter: width = max( width('A'),  width('B') )
+                    module type: compare_all
+
+   DW01_dec         design_library: DW01
+                    HDL parameter: width = max( width('A'), width('SUM') )
+                    module type: dec
+
+   DW01_decode      design_library: DW01
+                    HDL parameter: width = width('A')
+                    Parameter: dec_width = 2**width
+                    module type: DECODE
+
+   DW01_dhmux       design_library: DW01
+                    HDL parameter: n = width('CONTROL')
+                    HDL parameter: m = width('Z')
+                    Parameter: data_width = n * m
+
+   DW01_dlmux       design_library: DW01
+                    HDL parameter: n = width('CONTROL')
+                    HDL parameter: m = width('Z')
+                    Parameter: data_width = n * m
+
+   DW01_inc         design_library: DW01
+                    HDL parameter: width = max( width('A'), width('SUM') )
+                    module type: inc
+
+   DW01_incdec      design_library: DW01
+                    HDL parameter: width = max( width('A'), width('SUM') )
+                    module type: incdec
+
+   DW01_le_reg      design_library: DW01
+                    clocking_scheme: positive_edge
+                    resource: P1
+                    HDL parameter: data_width = max( width('datain'), width('dataout') )
+
+   DW01_mmux        design_library: DW01
+                    HDL parameter: width = max( width('A'), width('B'), width('Z') )
+
+   DW01_mselector   design_library: DW01
+                    HDL parameter: n = width('CONTROL')
+                    HDL parameter: m = width('Z')
+                    Parameter: data_width = n * m
+
+   DW01_selector    design_library: DW01
+                    HDL parameter: n = width('CONTROL')
+
+   DW01_sub         design_library: DW01
+                    HDL parameter: width = max( width('A'),  width('B'), width('DIFF') )
+                    module type: sub
+
+   DW02_mult        design_library: DW02
+                    HDL parameter: A_width = width('A')
+                    HDL parameter: B_width = width('B')
+                    Parameter: PRODUCT_width = B_width + A_width
+                    module type: mult
+
+   DW_Z_control_force design_library: DW04
+                    module type: Z_CONTROL_FORCE
+
+   DW_control_force design_library: DW04
+                    module type: CONTROL_FORCE
+
+   DW_div           design_library: DW02
+                    HDL parameter: a_width = width('a')
+                    HDL parameter: b_width = width('b')
+                    HDL parameter: tc_mode = 0
+                    HDL parameter: rem_mode = 1
+                    Parameter: quotient_width = a_width
+                    Parameter: remainder_width = b_width
+                    Parameter: b_is_const = is_const('b')
+                    Parameter: const_b_value = const_value_of('b')
+
+   DW_div_tc        design_library: DW02
+                    HDL parameter: a_width = max(width('a'),width('quotient'))
+                    HDL parameter: b_width = max(width('b'),width('remainder'))
+                    Parameter: quotient_width = max(width('a'),width('quotient'))
+                    Parameter: remainder_width = max(width('b'),width('remainder'))
+                    Parameter: b_is_const = is_const('b')
+                    Parameter: const_b_value = const_value_of('b')
+
+   DW_div_uns       design_library: DW02
+                    HDL parameter: a_width = max(width('a'),width('quotient'))
+                    HDL parameter: b_width = max(width('b'),width('remainder'))
+                    Parameter: quotient_width = max(width('a'),width('quotient'))
+                    Parameter: remainder_width = max(width('b'),width('remainder'))
+                    Parameter: b_is_const = is_const('b')
+                    Parameter: const_b_value = const_value_of('b')
+
+   DW_lbsh          design_library: DW01
+                    HDL parameter: A_width = width('A')
+                    HDL parameter: SH_width = width('SH')
+                    module type: left_rotate
+
+   DW_mod_tc        design_library: DW02
+                    HDL parameter: a_width = max(width('a'),width('quotient'))
+                    HDL parameter: b_width = max(width('b'),width('remainder'))
+                    Parameter: quotient_width = max(width('a'),width('quotient'))
+                    Parameter: remainder_width = max(width('b'),width('remainder'))
+                    Parameter: b_is_const = is_const('b')
+                    Parameter: const_b_value = const_value_of('b')
+
+   DW_mod_uns       design_library: DW02
+                    HDL parameter: a_width = max(width('a'),width('quotient'))
+                    HDL parameter: b_width = max(width('b'),width('remainder'))
+                    Parameter: quotient_width = max(width('a'),width('quotient'))
+                    Parameter: remainder_width = max(width('b'),width('remainder'))
+                    Parameter: b_is_const = is_const('b')
+                    Parameter: const_b_value = const_value_of('b')
+
+   DW_observ_dgen   design_library: DW04
+                    module type: OBSERV_DGEN
+
+   DW_pricod        design_library: DW01
+                    HDL parameter: a_width = width('a')
+
+   DW_rash          design_library: DW01
+                    HDL parameter: A_width = width('A')
+                    HDL parameter: SH_width = width('SH')
+                    module type: bidir_right_shift
+
+   DW_rbsh          design_library: DW01
+                    HDL parameter: A_width = width('A')
+                    HDL parameter: SH_width = width('SH')
+                    module type: right_rotate
+
+   DW_sla           design_library: DW01
+                    HDL parameter: A_width = width('A')
+                    HDL parameter: SH_width = width('SH')
+                    module type: sla_shift
+
+   DW_sra           design_library: DW01
+                    HDL parameter: A_width = width('A')
+                    HDL parameter: SH_width = width('SH')
+                    module type: sra_shift
+
+
+Module Pins:
+
+     Attributes:
+       c - clock_pin
+                                             Default Stall      Pin
+   Module           Pins     Dir  Width      Value   Pin        Attributes
+   ----------------------------------------------------------------------
+   DW01_ADD_AB      A        in   1                             
+                    B        in   1                             
+                    S        out  1                             
+                    COUT     out  1                             
+
+   DW01_ADD_AB1     A        in   1                             
+                    B        in   1                             
+                    S        out  1                             
+                    COUT     out  1                             
+
+   DW01_ADD_ABC     A        in   1                             
+                    B        in   1                             
+                    C        in   1                             
+                    S        out  1                             
+                    COUT     out  1                             
+
+   DW01_AND2        A        in   1                             
+                    B        in   1                             
+                    Z        out  1                             
+
+   DW01_AO21        A        in   1                             
+                    B        in   1                             
+                    C        in   1                             
+                    Z        out  1                             
+
+   DW01_CL_DEC      A        in   1                             
+                    C        in   1                             
+                    Z        out  1                             
+                    P        out  1                             
+
+   DW01_GP_DEC      CD       in   1                             
+                    P1       in   1                             
+                    P2       in   1                             
+                    PU       out  1                             
+                    C1       out  1                             
+                    C2       out  1                             
+
+   DW01_GP_NODE     G        in   1                             
+                    P        in   1                             
+                    G1       in   1                             
+                    P1       in   1                             
+                    G2       out  1                             
+                    P2       out  1                             
+
+   DW01_GP_SUM      G        in   1                             
+                    P        in   1                             
+                    C        in   1                             
+                    Z        out  1                             
+
+   DW01_MUX         A        in   1                             
+                    B        in   1                             
+                    S        in   1                             
+                    Z        out  1                             
+
+   DW01_NAND2       A        in   1                             
+                    B        in   1                             
+                    Z        out  1                             
+
+   DW01_NOT         A        in   1                             
+                    Z        out  1                             
+
+   DW01_OR2         A        in   1                             
+                    B        in   1                             
+                    Z        out  1                             
+
+   DW01_OR_NOT      A        in   1                             
+                    B        in   1                             
+                    Z        out  1                             
+
+   DW01_SUB_ABC     A        in   1                             
+                    B        in   1                             
+                    C        in   1                             
+                    S        out  1                             
+                    COUT     out  1                             
+
+   DW01_XOR2        A        in   1                             
+                    B        in   1                             
+                    Z        out  1                             
+
+   DW01_absval      A        in   width                         
+                    ABSVAL   out  width                         
+
+   DW01_add         A        in   width                         
+                    B        in   width                         
+                    CI       in   1                             
+                    SUM      out  width                         
+                    CO       out  1                             
+
+   DW01_addsub      A        in   width                         
+                    B        in   width                         
+                    CI       in   1                             
+                    ADD_SUB  in   1                             
+                    SUM      out  width                         
+                    CO       out  1                             
+
+   DW01_ash         A        in   A_width                       
+                    DATA_TC  in   1                             
+                    SH       in   SH_width                      
+                    SH_TC    in   1                             
+                    B        out  A_width                       
+
+   DW01_cmp2        A        in   width                         
+                    B        in   width                         
+                    LEQ      in   1                             
+                    TC       in   1                             
+                    LT_LE    out  1                             
+                    GE_GT    out  1                             
+
+   DW01_cmp6        A        in   width                         
+                    B        in   width                         
+                    TC       in   1                             
+                    LT       out  1                             
+                    GT       out  1                             
+                    EQ       out  1                             
+                    LE       out  1                             
+                    GE       out  1                             
+                    NE       out  1                             
+
+   DW01_dec         A        in   width                         
+                    SUM      out  width                         
+
+   DW01_decode      A        in   width                         
+                    B        out  dec_width                     
+
+   DW01_dhmux       DATA     in   data_width                    
+                    CONTROL  in   n                             
+                    Z        out  m                             
+
+   DW01_dlmux       DATA     in   data_width                    
+                    CONTROL  in   n                             
+                    Z        out  m                             
+
+   DW01_inc         A        in   width                         
+                    SUM      out  width                         
+
+   DW01_incdec      A        in   width                         
+                    INC_DEC  in   1                             
+                    SUM      out  width                         
+
+   DW01_le_reg      datain   in   data_width                    
+                    le       in   1                  active_high
+                    clk      in   1                             c
+                    dataout  out  data_width                    
+
+   DW01_mmux        A        in   width                         
+                    B        in   width                         
+                    S        in   1                             
+                    Z        out  width                         
+
+   DW01_mselector   DATA     in   data_width                    
+                    CONTROL  in   n                             
+                    Z        out  m                             
+
+   DW01_selector    DATA     in   n                             
+                    CONTROL  in   n                             
+                    Z        out  1                             
+
+   DW01_sub         A        in   width                         
+                    B        in   width                         
+                    CI       in   1                             
+                    DIFF     out  width                         
+                    CO       out  1                             
+
+   DW02_mult        A        in   A_width                       
+                    B        in   B_width                       
+                    TC       in   1                             
+                    PRODUCT  out  PRODUCT_width                 
+
+   DW_Z_control_force TD     in   1                             
+                    TM       in   1                             
+                    TPE      in   1                             
+                    DRVR     out  1                             
+
+   DW_control_force DIN      in   1                             
+                    TD       in   1                             
+                    TM       in   1                             
+                    TPE      in   1                             
+                    DOUT     out  1                             
+
+   DW_div           a        in   a_width                       
+                    b        in   b_width                       
+                    quotient out  quotient_width                
+                    remainder out remainder_width               
+                    divide_by_0 out 1                           
+
+   DW_div_tc        a        in   a_width                       
+                    b        in   b_width                       
+                    quotient out  quotient_width                
+                    remainder out remainder_width               
+                    divide_by_0 out 1                           
+
+   DW_div_uns       a        in   a_width                       
+                    b        in   b_width                       
+                    quotient out  quotient_width                
+                    remainder out remainder_width               
+                    divide_by_0 out 1                           
+
+   DW_lbsh          A        in   A_width                       
+                    SH       in   SH_width                      
+                    SH_TC    in   1                             
+                    B        out  A_width                       
+
+   DW_mod_tc        a        in   a_width                       
+                    b        in   b_width                       
+                    quotient out  quotient_width                
+                    remainder out remainder_width               
+                    divide_by_0 out 1                           
+
+   DW_mod_uns       a        in   a_width                       
+                    b        in   b_width                       
+                    quotient out  quotient_width                
+                    remainder out remainder_width               
+                    divide_by_0 out 1                           
+
+   DW_observ_dgen   OBIN     in   1                             
+                    CLK      in   1                             
+                    TDGO     out  1                             
+
+   DW_pricod        a        in   a_width                       
+                    cod      out  a_width                       
+                    zero     out  1                             
+
+   DW_rash          A        in   A_width                       
+                    DATA_TC  in   1                             
+                    SH       in   SH_width                      
+                    SH_TC    in   1                             
+                    B        out  A_width                       
+
+   DW_rbsh          A        in   A_width                       
+                    SH       in   SH_width                      
+                    SH_TC    in   1                             
+                    B        out  A_width                       
+
+   DW_sla           A        in   A_width                       
+                    SH       in   SH_width                      
+                    SH_TC    in   1                             
+                    B        out  A_width                       
+
+   DW_sra           A        in   A_width                       
+                    SH       in   SH_width                      
+                    SH_TC    in   1                             
+                    B        out  A_width                       
+
+
+Module Implementations:
+
+     Attributes/Parameters:
+       v - verify_only
+       V - verification implementation
+       u - dont_use
+       r - regular_licenses
+       l - limited_licenses
+       d - design_library
+       s - priority_set_id
+       p - priority
+       leg - legal
+
+   Module           Implementations      Attributes/Parameters
+   ----------------------------------------------------------------------
+   DW01_ADD_AB      str                  
+
+   DW01_ADD_AB1     str                  
+
+   DW01_ADD_ABC     str                  
+
+   DW01_AND2        str                  
+
+   DW01_AO21        str                  
+
+   DW01_CL_DEC      str                  
+
+   DW01_GP_DEC      str                  
+
+   DW01_GP_NODE     str                  
+
+   DW01_GP_SUM      str                  
+
+   DW01_MUX         str                  
+
+   DW01_NAND2       str                  
+
+   DW01_NOT         str                  
+
+   DW01_OR2         str                  
+
+   DW01_OR_NOT      str                  
+
+   DW01_SUB_ABC     str                  
+
+   DW01_XOR2        str                  
+
+   DW01_absval      verif                v
+
+                    rpl                  leg = "(width>=1)"
+
+                    cla                  leg = "(width>=1)"
+
+   DW01_add         verif                v
+
+                    rpl                  leg = "(width>=1)"
+
+                    cla                  leg = "(width>=1)"
+
+   DW01_addsub      verif                v
+
+                    rpl                  leg = "(width>=1)"
+
+                    cla                  leg = "(width>=1)"
+
+   DW01_ash         verif                v
+
+                    mx2                  leg = "(A_width >= 2) && (SH_width>=1)"
+
+   DW01_cmp2        verif                v
+
+                    rpl                  leg = "(width>=1)"
+
+   DW01_cmp6        verif                v
+
+                    rpl                  leg = "(width>=1)"
+
+   DW01_dec         verif                v
+
+                    rpl                  leg = "(width>=1)"
+
+                    cla                  leg = "(width>=1)"
+
+   DW01_decode      verif                v
+
+                    str                  leg = "width>=1"
+
+   DW01_dhmux       dh_mselector         
+
+   DW01_dlmux       dl_mselector         
+
+   DW01_inc         verif                v
+
+                    rpl                  leg = "(width>=1)"
+
+                    cla                  leg = "(width>=1)"
+
+   DW01_incdec      verif                v
+
+                    rpl                  leg = "(width>=1)"
+
+                    cla                  leg = "(width>=1)"
+
+   DW01_le_reg      str                  
+
+   DW01_mmux        str                  
+
+   DW01_mselector   mselector            
+
+   DW01_sub         verif                v
+
+                    rpl                  leg = "(width>=1)"
+
+                    cla                  leg = "(width>=1)"
+
+   DW02_mult        verif                v
+
+                    csa                  leg = "(A_width>=1) && (B_width>=1)"
+
+   DW_Z_control_force str                
+
+   DW_control_force str                  
+
+   DW_div           rpl                  leg = "(a_width >= 1) && (b_width >= 1) && 	     (tc_mode >= 0) && (tc_mode <= 1) && 	     (rem_mode >= 0) && (rem_mode <= 1)"
+
+   DW_div_tc        rpl                  leg = "(a_width >= 1) && (b_width >= 1)"
+
+   DW_div_uns       rpl                  leg = "(a_width >= 1) && (b_width >= 1)"
+
+   DW_lbsh          mx2                  leg = "(SH_width>=1) && (A_width>=2) && (SH_width<32)"
+
+   DW_mod_tc        rpl                  leg = "(a_width >= 1) && (b_width >= 1)"
+
+   DW_mod_uns       rpl                  leg = "(a_width >= 1) && (b_width >= 1)"
+
+   DW_observ_dgen   str                  
+
+   DW_rash          verif                v
+
+                    mx2                  leg = "(A_width >= 2) && (SH_width>=1)"
+
+   DW_rbsh          mx2                  leg = "(SH_width>=1) && (A_width>=2) && (SH_width<32)"
+
+   DW_sla           mx2                  leg = "(SH_width>=1) && (A_width>=2)"
+
+   DW_sra           mx2                  leg = "(SH_width>=1) && (A_width>=2)"
+
+
+Module Bindings:
+
+Module              Binding
+--------------------------------------------------------------------------------
+DW01_absval         b1       bound_operator: ABS_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 ABSVAL, Z
+
+DW01_add            b1       bound_operator: ADD_UNS_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 B, B
+                                 CI,"0"
+                                 SUM, Z
+
+                    b2       bound_operator: ADD_TC_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 B, B
+                                 CI,"0"
+                                 SUM, Z
+
+                    b3       bound_operator: ADD_UNS_OP
+                             Pin Associations (module, oper):
+                                 A, B
+                                 B, A
+                                 CI,"0"
+                                 SUM, Z
+
+                    b4       bound_operator: ADD_TC_OP
+                             Pin Associations (module, oper):
+                                 A, B
+                                 B, A
+                                 CI,"0"
+                                 SUM, Z
+
+                    b5       bound_operator: ADD_UNS_CI_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 B, B
+                                 CI, CI
+                                 SUM, Z
+
+                    b6       bound_operator: ADD_TC_CI_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 B, B
+                                 CI, CI
+                                 SUM, Z
+
+                    b7       bound_operator: ADD_UNS_CI_OP
+                             Pin Associations (module, oper):
+                                 A, B
+                                 B, A
+                                 CI, CI
+                                 SUM, Z
+
+                    b8       bound_operator: ADD_TC_CI_OP
+                             Pin Associations (module, oper):
+                                 A, B
+                                 B, A
+                                 CI, CI
+                                 SUM, Z
+
+DW01_addsub         b1       bound_operator: ADD_UNS_OP
+                             Pin Associations (module, oper):
+                                 ADD_SUB,"0"
+                                 A, A
+                                 B, B
+                                 CI,"0"
+                                 SUM, Z
+
+                    b2       bound_operator: ADD_TC_OP
+                             Pin Associations (module, oper):
+                                 ADD_SUB,"0"
+                                 A, A
+                                 B, B
+                                 CI,"0"
+                                 SUM, Z
+
+                    b3       bound_operator: ADD_UNS_OP
+                             Pin Associations (module, oper):
+                                 ADD_SUB,"0"
+                                 A, B
+                                 B, A
+                                 CI,"0"
+                                 SUM, Z
+
+                    b4       bound_operator: ADD_TC_OP
+                             Pin Associations (module, oper):
+                                 ADD_SUB,"0"
+                                 A, B
+                                 B, A
+                                 CI,"0"
+                                 SUM, Z
+
+                    b5       bound_operator: SUB_UNS_OP
+                             Pin Associations (module, oper):
+                                 ADD_SUB,"1"
+                                 A, A
+                                 B, B
+                                 CI,"0"
+                                 SUM, Z
+
+                    b6       bound_operator: SUB_TC_OP
+                             Pin Associations (module, oper):
+                                 ADD_SUB,"1"
+                                 A, A
+                                 B, B
+                                 CI,"0"
+                                 SUM, Z
+
+                    b7       bound_operator: ADD_UNS_CI_OP
+                             Pin Associations (module, oper):
+                                 ADD_SUB,"0"
+                                 A, A
+                                 B, B
+                                 CI, CI
+                                 SUM, Z
+
+                    b8       bound_operator: ADD_TC_CI_OP
+                             Pin Associations (module, oper):
+                                 ADD_SUB,"0"
+                                 A, A
+                                 B, B
+                                 CI, CI
+                                 SUM, Z
+
+                    b9       bound_operator: ADD_UNS_CI_OP
+                             Pin Associations (module, oper):
+                                 ADD_SUB,"0"
+                                 A, B
+                                 B, A
+                                 CI, CI
+                                 SUM, Z
+
+                    b10      bound_operator: ADD_TC_CI_OP
+                             Pin Associations (module, oper):
+                                 ADD_SUB,"0"
+                                 A, B
+                                 B, A
+                                 CI, CI
+                                 SUM, Z
+
+                    b11      bound_operator: SUB_UNS_CI_OP
+                             Pin Associations (module, oper):
+                                 ADD_SUB,"1"
+                                 A, A
+                                 B, B
+                                 CI, CI
+                                 SUM, Z
+
+                    b12      bound_operator: SUB_TC_CI_OP
+                             Pin Associations (module, oper):
+                                 ADD_SUB,"1"
+                                 A, A
+                                 B, B
+                                 CI, CI
+                                 SUM, Z
+
+DW01_ash            b1       bound_operator: ASH_UNS_UNS_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 DATA_TC,"0"
+                                 SH, SH
+                                 SH_TC,"0"
+                                 B, Z
+
+                    b2       bound_operator: ASH_UNS_TC_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 DATA_TC,"0"
+                                 SH, SH
+                                 SH_TC,"1"
+                                 B, Z
+
+                    b3       bound_operator: ASH_TC_UNS_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 DATA_TC,"1"
+                                 SH, SH
+                                 SH_TC,"0"
+                                 B, Z
+
+                    b4       bound_operator: ASH_TC_TC_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 DATA_TC,"1"
+                                 SH, SH
+                                 SH_TC,"1"
+                                 B, Z
+
+DW01_cmp2           b1       bound_operator: LT_UNS_OP
+                             Pin Associations (module, oper):
+                                 TC,"0"
+                                 A, A
+                                 B, B
+                                 LEQ,"0"
+                                 LT_LE, Z
+
+                    b2       bound_operator: GT_UNS_OP
+                             Pin Associations (module, oper):
+                                 TC,"0"
+                                 A, B
+                                 B, A
+                                 LEQ,"0"
+                                 LT_LE, Z
+
+                    b3       bound_operator: LEQ_UNS_OP
+                             Pin Associations (module, oper):
+                                 TC,"0"
+                                 A, A
+                                 B, B
+                                 LEQ,"1"
+                                 LT_LE, Z
+
+                    b4       bound_operator: GEQ_UNS_OP
+                             Pin Associations (module, oper):
+                                 TC,"0"
+                                 A, B
+                                 B, A
+                                 LEQ,"1"
+                                 LT_LE, Z
+
+                    b5       bound_operator: LT_TC_OP
+                             Pin Associations (module, oper):
+                                 TC,"1"
+                                 A, A
+                                 B, B
+                                 LEQ,"0"
+                                 LT_LE, Z
+
+                    b6       bound_operator: GT_TC_OP
+                             Pin Associations (module, oper):
+                                 TC,"1"
+                                 A, B
+                                 B, A
+                                 LEQ,"0"
+                                 LT_LE, Z
+
+                    b7       bound_operator: LEQ_TC_OP
+                             Pin Associations (module, oper):
+                                 TC,"1"
+                                 A, A
+                                 B, B
+                                 LEQ,"1"
+                                 LT_LE, Z
+
+                    b8       bound_operator: GEQ_TC_OP
+                             Pin Associations (module, oper):
+                                 TC,"1"
+                                 A, B
+                                 B, A
+                                 LEQ,"1"
+                                 LT_LE, Z
+
+                    b11      bound_operator: GEQ_UNS_OP
+                             Pin Associations (module, oper):
+                                 TC,"0"
+                                 A, A
+                                 B, B
+                                 LEQ,"0"
+                                 GE_GT, Z
+
+                    b12      bound_operator: LEQ_UNS_OP
+                             Pin Associations (module, oper):
+                                 TC,"0"
+                                 A, B
+                                 B, A
+                                 LEQ,"0"
+                                 GE_GT, Z
+
+                    b13      bound_operator: GT_UNS_OP
+                             Pin Associations (module, oper):
+                                 TC,"0"
+                                 A, A
+                                 B, B
+                                 LEQ,"1"
+                                 GE_GT, Z
+
+                    b14      bound_operator: LT_UNS_OP
+                             Pin Associations (module, oper):
+                                 TC,"0"
+                                 A, B
+                                 B, A
+                                 LEQ,"1"
+                                 GE_GT, Z
+
+                    b15      bound_operator: GEQ_TC_OP
+                             Pin Associations (module, oper):
+                                 TC,"1"
+                                 A, A
+                                 B, B
+                                 LEQ,"0"
+                                 GE_GT, Z
+
+                    b16      bound_operator: LEQ_TC_OP
+                             Pin Associations (module, oper):
+                                 TC,"1"
+                                 A, B
+                                 B, A
+                                 LEQ,"0"
+                                 GE_GT, Z
+
+                    b17      bound_operator: GT_TC_OP
+                             Pin Associations (module, oper):
+                                 TC,"1"
+                                 A, A
+                                 B, B
+                                 LEQ,"1"
+                                 GE_GT, Z
+
+                    b18      bound_operator: LT_TC_OP
+                             Pin Associations (module, oper):
+                                 TC,"1"
+                                 A, B
+                                 B, A
+                                 LEQ,"1"
+                                 GE_GT, Z
+
+DW01_cmp6           b1       bound_operator: GT_TC_OP
+                             Pin Associations (module, oper):
+                                 TC,"1"
+                                 A, A
+                                 B, B
+                                 GT, Z
+
+                    b2       bound_operator: LT_TC_OP
+                             Pin Associations (module, oper):
+                                 TC,"1"
+                                 A, A
+                                 B, B
+                                 LT, Z
+
+                    b3       bound_operator: GEQ_TC_OP
+                             Pin Associations (module, oper):
+                                 TC,"1"
+                                 A, A
+                                 B, B
+                                 GE, Z
+
+                    b4       bound_operator: LEQ_TC_OP
+                             Pin Associations (module, oper):
+                                 TC,"1"
+                                 A, A
+                                 B, B
+                                 LE, Z
+
+                    b5       bound_operator: LEQ_TC_OP
+                             Pin Associations (module, oper):
+                                 TC,"1"
+                                 A, B
+                                 B, A
+                                 GE, Z
+
+                    b6       bound_operator: GEQ_TC_OP
+                             Pin Associations (module, oper):
+                                 TC,"1"
+                                 A, B
+                                 B, A
+                                 LE, Z
+
+                    b7       bound_operator: LT_TC_OP
+                             Pin Associations (module, oper):
+                                 TC,"1"
+                                 A, B
+                                 B, A
+                                 GT, Z
+
+                    b8       bound_operator: GT_TC_OP
+                             Pin Associations (module, oper):
+                                 TC,"1"
+                                 A, B
+                                 B, A
+                                 LT, Z
+
+                    b9       bound_operator: EQ_TC_OP
+                             Pin Associations (module, oper):
+                                 TC,"1"
+                                 A, A
+                                 B, B
+                                 EQ, Z
+
+                    b10      bound_operator: EQ_TC_OP
+                             Pin Associations (module, oper):
+                                 TC,"1"
+                                 A, B
+                                 B, A
+                                 EQ, Z
+
+                    b11      bound_operator: NE_TC_OP
+                             Pin Associations (module, oper):
+                                 TC,"1"
+                                 A, A
+                                 B, B
+                                 NE, Z
+
+                    b12      bound_operator: NE_TC_OP
+                             Pin Associations (module, oper):
+                                 TC,"1"
+                                 A, B
+                                 B, A
+                                 NE, Z
+
+                    b13      bound_operator: GT_UNS_OP
+                             Pin Associations (module, oper):
+                                 TC,"0"
+                                 A, A
+                                 B, B
+                                 GT, Z
+
+                    b14      bound_operator: LT_UNS_OP
+                             Pin Associations (module, oper):
+                                 TC,"0"
+                                 A, A
+                                 B, B
+                                 LT, Z
+
+                    b15      bound_operator: GEQ_UNS_OP
+                             Pin Associations (module, oper):
+                                 TC,"0"
+                                 A, A
+                                 B, B
+                                 GE, Z
+
+                    b16      bound_operator: LEQ_UNS_OP
+                             Pin Associations (module, oper):
+                                 TC,"0"
+                                 A, A
+                                 B, B
+                                 LE, Z
+
+                    b17      bound_operator: LEQ_UNS_OP
+                             Pin Associations (module, oper):
+                                 TC,"0"
+                                 A, B
+                                 B, A
+                                 GE, Z
+
+                    b18      bound_operator: GEQ_UNS_OP
+                             Pin Associations (module, oper):
+                                 TC,"0"
+                                 A, B
+                                 B, A
+                                 LE, Z
+
+                    b19      bound_operator: LT_UNS_OP
+                             Pin Associations (module, oper):
+                                 TC,"0"
+                                 A, B
+                                 B, A
+                                 GT, Z
+
+                    b20      bound_operator: GT_UNS_OP
+                             Pin Associations (module, oper):
+                                 TC,"0"
+                                 A, B
+                                 B, A
+                                 LT, Z
+
+                    b21      bound_operator: EQ_UNS_OP
+                             Pin Associations (module, oper):
+                                 TC,"0"
+                                 A, A
+                                 B, B
+                                 EQ, Z
+
+                    b22      bound_operator: EQ_UNS_OP
+                             Pin Associations (module, oper):
+                                 TC,"0"
+                                 A, B
+                                 B, A
+                                 EQ, Z
+
+                    b23      bound_operator: NE_UNS_OP
+                             Pin Associations (module, oper):
+                                 TC,"0"
+                                 A, A
+                                 B, B
+                                 NE, Z
+
+                    b24      bound_operator: NE_UNS_OP
+                             Pin Associations (module, oper):
+                                 TC,"0"
+                                 A, B
+                                 B, A
+                                 NE, Z
+
+                    b25      bound_operator: CMP6_UNS_OP
+                             Pin Associations (module, oper):
+                                 TC,"0"
+                                 A, A
+                                 B, B
+                                 LT, LT
+                                 GT, GT
+                                 EQ, EQ
+                                 LE, LE
+                                 GE, GE
+                                 NE, NE
+
+                    b26      bound_operator: CMP6_TC_OP
+                             Pin Associations (module, oper):
+                                 TC,"1"
+                                 A, A
+                                 B, B
+                                 LT, LT
+                                 GT, GT
+                                 EQ, EQ
+                                 LE, LE
+                                 GE, GE
+                                 NE, NE
+
+DW01_dec            b1       bound_operator: SUB_UNS_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 SUM, Z
+                             Oper pin 'B' constrained to "1"
+
+                    b2       bound_operator: SUB_TC_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 SUM, Z
+                             Oper pin 'B' constrained to "01"
+
+                    b3       bound_operator: ADD_TC_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 SUM, Z
+                             Oper pin 'B' constrained to "1"
+
+                    b4       bound_operator: ADD_TC_OP
+                             Pin Associations (module, oper):
+                                 A, B
+                                 SUM, Z
+                             Oper pin 'A' constrained to "1"
+
+DW01_decode         b1       bound_operator: BINDEC_TC_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 B, Z
+
+                    b2       bound_operator: BINDEC_UNS_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 B, Z
+
+                    b3       bound_operator: BINDEC_STD_LOGIC_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 B, Z
+
+                    b4       bound_operator: DECODE_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 B, Z
+
+DW01_inc            b1       bound_operator: ADD_UNS_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 SUM, Z
+                             Oper pin 'B' constrained to "1"
+
+                    b2       bound_operator: ADD_UNS_OP
+                             Pin Associations (module, oper):
+                                 A, B
+                                 SUM, Z
+                             Oper pin 'A' constrained to "1"
+
+                    b3       bound_operator: ADD_TC_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 SUM, Z
+                             Oper pin 'B' constrained to "01"
+
+                    b4       bound_operator: ADD_TC_OP
+                             Pin Associations (module, oper):
+                                 A, B
+                                 SUM, Z
+                             Oper pin 'A' constrained to "01"
+
+                    b5       bound_operator: SUB_TC_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 SUM, Z
+                             Oper pin 'B' constrained to "1"
+
+DW01_incdec         b1       bound_operator: ADD_UNS_OP
+                             Pin Associations (module, oper):
+                                 INC_DEC,"0"
+                                 A, A
+                                 SUM, Z
+                             Oper pin 'B' constrained to "1"
+
+                    b2       bound_operator: ADD_UNS_OP
+                             Pin Associations (module, oper):
+                                 INC_DEC,"0"
+                                 A, B
+                                 SUM, Z
+                             Oper pin 'A' constrained to "1"
+
+                    b3       bound_operator: ADD_TC_OP
+                             Pin Associations (module, oper):
+                                 INC_DEC,"0"
+                                 A, A
+                                 SUM, Z
+                             Oper pin 'B' constrained to "01"
+
+                    b4       bound_operator: ADD_TC_OP
+                             Pin Associations (module, oper):
+                                 INC_DEC,"0"
+                                 A, B
+                                 SUM, Z
+                             Oper pin 'A' constrained to "01"
+
+                    b5       bound_operator: SUB_TC_OP
+                             Pin Associations (module, oper):
+                                 INC_DEC,"0"
+                                 A, A
+                                 SUM, Z
+                             Oper pin 'B' constrained to "1"
+
+                    b6       bound_operator: SUB_UNS_OP
+                             Pin Associations (module, oper):
+                                 INC_DEC,"1"
+                                 A, A
+                                 SUM, Z
+                             Oper pin 'B' constrained to "1"
+
+                    b7       bound_operator: SUB_TC_OP
+                             Pin Associations (module, oper):
+                                 INC_DEC,"1"
+                                 A, A
+                                 SUM, Z
+                             Oper pin 'B' constrained to "01"
+
+                    b8       bound_operator: ADD_TC_OP
+                             Pin Associations (module, oper):
+                                 INC_DEC,"1"
+                                 A, A
+                                 SUM, Z
+                             Oper pin 'B' constrained to "1"
+
+                    b9       bound_operator: ADD_TC_OP
+                             Pin Associations (module, oper):
+                                 INC_DEC,"1"
+                                 A, B
+                                 SUM, Z
+                             Oper pin 'A' constrained to "1"
+
+DW01_sub            b1       bound_operator: SUB_UNS_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 B, B
+                                 CI,"0"
+                                 DIFF, Z
+
+                    b2       bound_operator: SUB_TC_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 B, B
+                                 CI,"0"
+                                 DIFF, Z
+
+                    b3       bound_operator: SUB_UNS_CI_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 B, B
+                                 CI, CI
+                                 DIFF, Z
+
+                    b4       bound_operator: SUB_TC_CI_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 B, B
+                                 CI, CI
+                                 DIFF, Z
+
+DW02_mult           b1       bound_operator: MULT_TC_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 B, B
+                                 TC,"1"
+                                 PRODUCT, Z
+
+                    b2       bound_operator: MULT_TC_OP
+                             Pin Associations (module, oper):
+                                 A, B
+                                 B, A
+                                 TC,"1"
+                                 PRODUCT, Z
+
+                    b3       bound_operator: MULT_UNS_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 B, B
+                                 TC,"0"
+                                 PRODUCT, Z
+
+                    b4       bound_operator: MULT_UNS_OP
+                             Pin Associations (module, oper):
+                                 A, B
+                                 B, A
+                                 TC,"0"
+                                 PRODUCT, Z
+
+DW_div_tc           b1       bound_operator: DIV_TC_OP
+                             Pin Associations (module, oper):
+                                 a, A
+                                 b, B
+                                 quotient, QUOTIENT
+
+                    b2       bound_operator: REM_TC_OP
+                             Pin Associations (module, oper):
+                                 a, A
+                                 b, B
+                                 remainder, REMAINDER
+
+                    b3       bound_operator: DIVREM_TC_OP
+                             Pin Associations (module, oper):
+                                 a, A
+                                 b, B
+                                 quotient, QUOTIENT
+                                 remainder, REMAINDER
+
+DW_div_uns          b1       bound_operator: DIV_UNS_OP
+                             Pin Associations (module, oper):
+                                 a, A
+                                 b, B
+                                 quotient, QUOTIENT
+
+                    b2       bound_operator: REM_UNS_OP
+                             Pin Associations (module, oper):
+                                 a, A
+                                 b, B
+                                 remainder, REMAINDER
+
+                    b3       bound_operator: DIVREM_UNS_OP
+                             Pin Associations (module, oper):
+                                 a, A
+                                 b, B
+                                 quotient, QUOTIENT
+                                 remainder, REMAINDER
+
+DW_lbsh             b1       bound_operator: BSH_UNS_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 SH, SH
+                                 SH_TC,"0"
+                                 B, Z
+
+                    b2       bound_operator: BSH_TC_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 SH, SH
+                                 SH_TC,"0"
+                                 B, Z
+
+                    b3       bound_operator: BSHL_TC_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 SH, SH
+                                 SH_TC,"1"
+                                 B, Z
+
+DW_mod_tc           b1       bound_operator: MOD_TC_OP
+                             Pin Associations (module, oper):
+                                 a, A
+                                 b, B
+                                 remainder, REMAINDER
+
+                    b2       bound_operator: DIVMOD_TC_OP
+                             Pin Associations (module, oper):
+                                 a, A
+                                 b, B
+                                 quotient, QUOTIENT
+                                 remainder, REMAINDER
+
+DW_mod_uns          b1       bound_operator: MOD_UNS_OP
+                             Pin Associations (module, oper):
+                                 a, A
+                                 b, B
+                                 remainder, REMAINDER
+
+                    b2       bound_operator: DIVMOD_UNS_OP
+                             Pin Associations (module, oper):
+                                 a, A
+                                 b, B
+                                 quotient, QUOTIENT
+                                 remainder, REMAINDER
+
+DW_pricod           b_std    bound_operator: PRICOD_STD_LOGIC_OP
+                             Pin Associations (module, oper):
+                                 a, A
+                                 cod, COD
+
+                    b_tc     bound_operator: PRICOD_TC_OP
+                             Pin Associations (module, oper):
+                                 a, A
+                                 cod, COD
+
+                    b_uns    bound_operator: PRICOD_UNS_OP
+                             Pin Associations (module, oper):
+                                 a, A
+                                 cod, COD
+
+DW_rash             b1       bound_operator: ASHR_UNS_UNS_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 DATA_TC,"0"
+                                 SH, SH
+                                 SH_TC,"0"
+                                 B, Z
+
+                    b2       bound_operator: ASHR_UNS_TC_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 DATA_TC,"0"
+                                 SH, SH
+                                 SH_TC,"1"
+                                 B, Z
+
+                    b3       bound_operator: ASHR_TC_UNS_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 DATA_TC,"1"
+                                 SH, SH
+                                 SH_TC,"0"
+                                 B, Z
+
+                    b4       bound_operator: ASHR_TC_TC_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 DATA_TC,"1"
+                                 SH, SH
+                                 SH_TC,"1"
+                                 B, Z
+
+DW_rbsh             b1       bound_operator: BSHR_UNS_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 SH, SH
+                                 SH_TC,"0"
+                                 B, Z
+
+                    b2       bound_operator: BSHR_TC_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 SH, SH
+                                 SH_TC,"1"
+                                 B, Z
+
+DW_sla              b1       bound_operator: SLA_UNS_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 SH, SH
+                                 SH_TC,"0"
+                                 B, Z
+
+                    b2       bound_operator: SLA_TC_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 SH, SH
+                                 SH_TC,"1"
+                                 B, Z
+
+DW_sra              b1       bound_operator: SRA_UNS_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 SH, SH
+                                 SH_TC,"0"
+                                 B, Z
+
+                    b2       bound_operator: SRA_TC_OP
+                             Pin Associations (module, oper):
+                                 A, A
+                                 SH, SH
+                                 SH_TC,"1"
+                                 B, Z
+
+1

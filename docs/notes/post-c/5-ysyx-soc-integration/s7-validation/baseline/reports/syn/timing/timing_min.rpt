@@ -1,0 +1,699 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay min
+        -max_paths 20
+Design : ysyx_25030087
+Version: V-2023.12-SP5
+Date   : Thu Oct 29 21:36:25 2026
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: tt0p9v25c   Library: tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+Wire Load Model Mode: top
+
+  Startpoint: subsystem/cpu/core/u_ifu/u_ifq/count_q_reg_0_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu/u_ifq/count_q_reg_0_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                       Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                              0.000000   0.000000
+  clock network delay (ideal)                                             0.000000   0.000000
+  subsystem/cpu/core/u_ifu/u_ifq/count_q_reg_0_/CP (DFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_ifu/u_ifq/count_q_reg_0_/Q (DFCNQD1BWP12T40P140)   0.070649   0.070649 r
+  subsystem/cpu/core/u_ifu/u_ifq/U229/ZN (MAOI22D1BWP12T40P140)           0.013718   0.084367 f
+  subsystem/cpu/core/u_ifu/u_ifq/count_q_reg_0_/D (DFCNQD1BWP12T40P140)   0.000000   0.084367 f
+  data arrival time                                                                  0.084367
+
+  clock core_clk (rise edge)                                              0.000000   0.000000
+  clock network delay (ideal)                                             0.000000   0.000000
+  clock uncertainty                                                       0.050000   0.050000
+  subsystem/cpu/core/u_ifu/u_ifq/count_q_reg_0_/CP (DFCNQD1BWP12T40P140)  0.000000   0.050000 r
+  library hold time                                                       0.024672   0.074672
+  data required time                                                                 0.074672
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                 0.074672
+  data arrival time                                                                  -0.084367
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                        0.009695
+
+
+  Startpoint: subsystem/router/clint/mtime_q_reg_58_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/router/clint/mtime_q_reg_58_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                Incr       Path
+  ---------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                       0.000000   0.000000
+  clock network delay (ideal)                                      0.000000   0.000000
+  subsystem/router/clint/mtime_q_reg_58_/CP (DFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/router/clint/mtime_q_reg_58_/Q (DFCNQD1BWP12T40P140)   0.070512   0.070512 r
+  subsystem/router/clint/U451/ZN (OAI21D0BWP12T40P140)             0.014858   0.085371 f
+  subsystem/router/clint/mtime_q_reg_58_/D (DFCNQD1BWP12T40P140)   0.000000   0.085371 f
+  data arrival time                                                           0.085371
+
+  clock core_clk (rise edge)                                       0.000000   0.000000
+  clock network delay (ideal)                                      0.000000   0.000000
+  clock uncertainty                                                0.050000   0.050000
+  subsystem/router/clint/mtime_q_reg_58_/CP (DFCNQD1BWP12T40P140)  0.000000   0.050000 r
+  library hold time                                                0.023462   0.073462
+  data required time                                                          0.073462
+  ---------------------------------------------------------------------------------------
+  data required time                                                          0.073462
+  data arrival time                                                           -0.085371
+  ---------------------------------------------------------------------------------------
+  slack (MET)                                                                 0.011909
+
+
+  Startpoint: subsystem/router/clint/mtime_q_reg_60_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/router/clint/mtime_q_reg_60_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                Incr       Path
+  ---------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                       0.000000   0.000000
+  clock network delay (ideal)                                      0.000000   0.000000
+  subsystem/router/clint/mtime_q_reg_60_/CP (DFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/router/clint/mtime_q_reg_60_/Q (DFCNQD1BWP12T40P140)   0.071428   0.071428 r
+  subsystem/router/clint/U460/ZN (OAI21D0BWP12T40P140)             0.015182   0.086609 f
+  subsystem/router/clint/mtime_q_reg_60_/D (DFCNQD1BWP12T40P140)   0.000000   0.086609 f
+  data arrival time                                                           0.086609
+
+  clock core_clk (rise edge)                                       0.000000   0.000000
+  clock network delay (ideal)                                      0.000000   0.000000
+  clock uncertainty                                                0.050000   0.050000
+  subsystem/router/clint/mtime_q_reg_60_/CP (DFCNQD1BWP12T40P140)  0.000000   0.050000 r
+  library hold time                                                0.023456   0.073456
+  data required time                                                          0.073456
+  ---------------------------------------------------------------------------------------
+  data required time                                                          0.073456
+  data arrival time                                                           -0.086609
+  ---------------------------------------------------------------------------------------
+  slack (MET)                                                                 0.013153
+
+
+  Startpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_25_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_25_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                     Incr       Path
+  --------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                            0.000000   0.000000
+  clock network delay (ideal)                                           0.000000   0.000000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_25_/CP (DFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_25_/Q (DFCNQD1BWP12T40P140)   0.071871   0.071871 r
+  subsystem/cpu/core/u_ifu/U78/ZN (OAI21D0BWP12T40P140)                 0.015338   0.087210 f
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_25_/D (DFCNQD1BWP12T40P140)   0.000000   0.087210 f
+  data arrival time                                                                0.087210
+
+  clock core_clk (rise edge)                                            0.000000   0.000000
+  clock network delay (ideal)                                           0.000000   0.000000
+  clock uncertainty                                                     0.050000   0.050000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_25_/CP (DFCNQD1BWP12T40P140)  0.000000   0.050000 r
+  library hold time                                                     0.023454   0.073454
+  data required time                                                               0.073454
+  --------------------------------------------------------------------------------------------
+  data required time                                                               0.073454
+  data arrival time                                                                -0.087210
+  --------------------------------------------------------------------------------------------
+  slack (MET)                                                                      0.013755
+
+
+  Startpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_21_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_21_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                     Incr       Path
+  --------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                            0.000000   0.000000
+  clock network delay (ideal)                                           0.000000   0.000000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_21_/CP (DFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_21_/Q (DFCNQD1BWP12T40P140)   0.071871   0.071871 r
+  subsystem/cpu/core/u_ifu/U118/ZN (OAI21D0BWP12T40P140)                0.015338   0.087210 f
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_21_/D (DFCNQD1BWP12T40P140)   0.000000   0.087210 f
+  data arrival time                                                                0.087210
+
+  clock core_clk (rise edge)                                            0.000000   0.000000
+  clock network delay (ideal)                                           0.000000   0.000000
+  clock uncertainty                                                     0.050000   0.050000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_21_/CP (DFCNQD1BWP12T40P140)  0.000000   0.050000 r
+  library hold time                                                     0.023454   0.073454
+  data required time                                                               0.073454
+  --------------------------------------------------------------------------------------------
+  data required time                                                               0.073454
+  data arrival time                                                                -0.087210
+  --------------------------------------------------------------------------------------------
+  slack (MET)                                                                      0.013755
+
+
+  Startpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_17_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_17_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                     Incr       Path
+  --------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                            0.000000   0.000000
+  clock network delay (ideal)                                           0.000000   0.000000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_17_/CP (DFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_17_/Q (DFCNQD1BWP12T40P140)   0.071871   0.071871 r
+  subsystem/cpu/core/u_ifu/U123/ZN (OAI21D0BWP12T40P140)                0.015338   0.087210 f
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_17_/D (DFCNQD1BWP12T40P140)   0.000000   0.087210 f
+  data arrival time                                                                0.087210
+
+  clock core_clk (rise edge)                                            0.000000   0.000000
+  clock network delay (ideal)                                           0.000000   0.000000
+  clock uncertainty                                                     0.050000   0.050000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_17_/CP (DFCNQD1BWP12T40P140)  0.000000   0.050000 r
+  library hold time                                                     0.023454   0.073454
+  data required time                                                               0.073454
+  --------------------------------------------------------------------------------------------
+  data required time                                                               0.073454
+  data arrival time                                                                -0.087210
+  --------------------------------------------------------------------------------------------
+  slack (MET)                                                                      0.013755
+
+
+  Startpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_13_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_13_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                     Incr       Path
+  --------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                            0.000000   0.000000
+  clock network delay (ideal)                                           0.000000   0.000000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_13_/CP (DFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_13_/Q (DFCNQD1BWP12T40P140)   0.071871   0.071871 r
+  subsystem/cpu/core/u_ifu/U88/ZN (OAI21D0BWP12T40P140)                 0.015338   0.087210 f
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_13_/D (DFCNQD1BWP12T40P140)   0.000000   0.087210 f
+  data arrival time                                                                0.087210
+
+  clock core_clk (rise edge)                                            0.000000   0.000000
+  clock network delay (ideal)                                           0.000000   0.000000
+  clock uncertainty                                                     0.050000   0.050000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_13_/CP (DFCNQD1BWP12T40P140)  0.000000   0.050000 r
+  library hold time                                                     0.023454   0.073454
+  data required time                                                               0.073454
+  --------------------------------------------------------------------------------------------
+  data required time                                                               0.073454
+  data arrival time                                                                -0.087210
+  --------------------------------------------------------------------------------------------
+  slack (MET)                                                                      0.013755
+
+
+  Startpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_9_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_9_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                    Incr       Path
+  -------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                           0.000000   0.000000
+  clock network delay (ideal)                                          0.000000   0.000000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_9_/CP (DFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_9_/Q (DFCNQD1BWP12T40P140)   0.071871   0.071871 r
+  subsystem/cpu/core/u_ifu/U105/ZN (OAI21D0BWP12T40P140)               0.015338   0.087210 f
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_9_/D (DFCNQD1BWP12T40P140)   0.000000   0.087210 f
+  data arrival time                                                               0.087210
+
+  clock core_clk (rise edge)                                           0.000000   0.000000
+  clock network delay (ideal)                                          0.000000   0.000000
+  clock uncertainty                                                    0.050000   0.050000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_9_/CP (DFCNQD1BWP12T40P140)  0.000000   0.050000 r
+  library hold time                                                    0.023454   0.073454
+  data required time                                                              0.073454
+  -------------------------------------------------------------------------------------------
+  data required time                                                              0.073454
+  data arrival time                                                               -0.087210
+  -------------------------------------------------------------------------------------------
+  slack (MET)                                                                     0.013755
+
+
+  Startpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_5_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_5_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                    Incr       Path
+  -------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                           0.000000   0.000000
+  clock network delay (ideal)                                          0.000000   0.000000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_5_/CP (DFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_5_/Q (DFCNQD1BWP12T40P140)   0.071871   0.071871 r
+  subsystem/cpu/core/u_ifu/U83/ZN (OAI21D0BWP12T40P140)                0.015338   0.087210 f
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_5_/D (DFCNQD1BWP12T40P140)   0.000000   0.087210 f
+  data arrival time                                                               0.087210
+
+  clock core_clk (rise edge)                                           0.000000   0.000000
+  clock network delay (ideal)                                          0.000000   0.000000
+  clock uncertainty                                                    0.050000   0.050000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_5_/CP (DFCNQD1BWP12T40P140)  0.000000   0.050000 r
+  library hold time                                                    0.023454   0.073454
+  data required time                                                              0.073454
+  -------------------------------------------------------------------------------------------
+  data required time                                                              0.073454
+  data arrival time                                                               -0.087210
+  -------------------------------------------------------------------------------------------
+  slack (MET)                                                                     0.013755
+
+
+  Startpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_27_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_27_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                     Incr       Path
+  --------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                            0.000000   0.000000
+  clock network delay (ideal)                                           0.000000   0.000000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_27_/CP (DFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_27_/Q (DFCNQD1BWP12T40P140)   0.072785   0.072785 r
+  subsystem/cpu/core/u_ifu/U100/ZN (OAI21D0BWP12T40P140)                0.015661   0.088446 f
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_27_/D (DFCNQD1BWP12T40P140)   0.000000   0.088446 f
+  data arrival time                                                                0.088446
+
+  clock core_clk (rise edge)                                            0.000000   0.000000
+  clock network delay (ideal)                                           0.000000   0.000000
+  clock uncertainty                                                     0.050000   0.050000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_27_/CP (DFCNQD1BWP12T40P140)  0.000000   0.050000 r
+  library hold time                                                     0.023452   0.073452
+  data required time                                                               0.073452
+  --------------------------------------------------------------------------------------------
+  data required time                                                               0.073452
+  data arrival time                                                                -0.088446
+  --------------------------------------------------------------------------------------------
+  slack (MET)                                                                      0.014995
+
+
+  Startpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_23_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_23_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                     Incr       Path
+  --------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                            0.000000   0.000000
+  clock network delay (ideal)                                           0.000000   0.000000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_23_/CP (DFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_23_/Q (DFCNQD1BWP12T40P140)   0.072785   0.072785 r
+  subsystem/cpu/core/u_ifu/U96/ZN (OAI21D0BWP12T40P140)                 0.015661   0.088446 f
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_23_/D (DFCNQD1BWP12T40P140)   0.000000   0.088446 f
+  data arrival time                                                                0.088446
+
+  clock core_clk (rise edge)                                            0.000000   0.000000
+  clock network delay (ideal)                                           0.000000   0.000000
+  clock uncertainty                                                     0.050000   0.050000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_23_/CP (DFCNQD1BWP12T40P140)  0.000000   0.050000 r
+  library hold time                                                     0.023452   0.073452
+  data required time                                                               0.073452
+  --------------------------------------------------------------------------------------------
+  data required time                                                               0.073452
+  data arrival time                                                                -0.088446
+  --------------------------------------------------------------------------------------------
+  slack (MET)                                                                      0.014995
+
+
+  Startpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_19_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_19_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                     Incr       Path
+  --------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                            0.000000   0.000000
+  clock network delay (ideal)                                           0.000000   0.000000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_19_/CP (DFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_19_/Q (DFCNQD1BWP12T40P140)   0.072785   0.072785 r
+  subsystem/cpu/core/u_ifu/U127/ZN (OAI21D0BWP12T40P140)                0.015661   0.088446 f
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_19_/D (DFCNQD1BWP12T40P140)   0.000000   0.088446 f
+  data arrival time                                                                0.088446
+
+  clock core_clk (rise edge)                                            0.000000   0.000000
+  clock network delay (ideal)                                           0.000000   0.000000
+  clock uncertainty                                                     0.050000   0.050000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_19_/CP (DFCNQD1BWP12T40P140)  0.000000   0.050000 r
+  library hold time                                                     0.023452   0.073452
+  data required time                                                               0.073452
+  --------------------------------------------------------------------------------------------
+  data required time                                                               0.073452
+  data arrival time                                                                -0.088446
+  --------------------------------------------------------------------------------------------
+  slack (MET)                                                                      0.014995
+
+
+  Startpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_15_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_15_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                     Incr       Path
+  --------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                            0.000000   0.000000
+  clock network delay (ideal)                                           0.000000   0.000000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_15_/CP (DFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_15_/Q (DFCNQD1BWP12T40P140)   0.072785   0.072785 r
+  subsystem/cpu/core/u_ifu/U109/ZN (OAI21D0BWP12T40P140)                0.015661   0.088446 f
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_15_/D (DFCNQD1BWP12T40P140)   0.000000   0.088446 f
+  data arrival time                                                                0.088446
+
+  clock core_clk (rise edge)                                            0.000000   0.000000
+  clock network delay (ideal)                                           0.000000   0.000000
+  clock uncertainty                                                     0.050000   0.050000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_15_/CP (DFCNQD1BWP12T40P140)  0.000000   0.050000 r
+  library hold time                                                     0.023452   0.073452
+  data required time                                                               0.073452
+  --------------------------------------------------------------------------------------------
+  data required time                                                               0.073452
+  data arrival time                                                                -0.088446
+  --------------------------------------------------------------------------------------------
+  slack (MET)                                                                      0.014995
+
+
+  Startpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_11_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_11_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                     Incr       Path
+  --------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                            0.000000   0.000000
+  clock network delay (ideal)                                           0.000000   0.000000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_11_/CP (DFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_11_/Q (DFCNQD1BWP12T40P140)   0.072785   0.072785 r
+  subsystem/cpu/core/u_ifu/U92/ZN (OAI21D0BWP12T40P140)                 0.015661   0.088446 f
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_11_/D (DFCNQD1BWP12T40P140)   0.000000   0.088446 f
+  data arrival time                                                                0.088446
+
+  clock core_clk (rise edge)                                            0.000000   0.000000
+  clock network delay (ideal)                                           0.000000   0.000000
+  clock uncertainty                                                     0.050000   0.050000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_11_/CP (DFCNQD1BWP12T40P140)  0.000000   0.050000 r
+  library hold time                                                     0.023452   0.073452
+  data required time                                                               0.073452
+  --------------------------------------------------------------------------------------------
+  data required time                                                               0.073452
+  data arrival time                                                                -0.088446
+  --------------------------------------------------------------------------------------------
+  slack (MET)                                                                      0.014995
+
+
+  Startpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_7_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_7_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                    Incr       Path
+  -------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                           0.000000   0.000000
+  clock network delay (ideal)                                          0.000000   0.000000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_7_/CP (DFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_7_/Q (DFCNQD1BWP12T40P140)   0.072785   0.072785 r
+  subsystem/cpu/core/u_ifu/U113/ZN (OAI21D0BWP12T40P140)               0.015661   0.088446 f
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_7_/D (DFCNQD1BWP12T40P140)   0.000000   0.088446 f
+  data arrival time                                                               0.088446
+
+  clock core_clk (rise edge)                                           0.000000   0.000000
+  clock network delay (ideal)                                          0.000000   0.000000
+  clock uncertainty                                                    0.050000   0.050000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_7_/CP (DFCNQD1BWP12T40P140)  0.000000   0.050000 r
+  library hold time                                                    0.023452   0.073452
+  data required time                                                              0.073452
+  -------------------------------------------------------------------------------------------
+  data required time                                                              0.073452
+  data arrival time                                                               -0.088446
+  -------------------------------------------------------------------------------------------
+  slack (MET)                                                                     0.014995
+
+
+  Startpoint: subsystem/router/clint/mtime_q_reg_31_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/router/clint/mtime_q_reg_31_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                Incr       Path
+  ---------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                       0.000000   0.000000
+  clock network delay (ideal)                                      0.000000   0.000000
+  subsystem/router/clint/mtime_q_reg_31_/CP (DFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/router/clint/mtime_q_reg_31_/Q (DFCNQD1BWP12T40P140)   0.070523   0.070523 r
+  subsystem/router/clint/U189/ZN (OAI31D0BWP12T40P140)             0.018417   0.088940 f
+  subsystem/router/clint/mtime_q_reg_31_/D (DFCNQD1BWP12T40P140)   0.000000   0.088940 f
+  data arrival time                                                           0.088940
+
+  clock core_clk (rise edge)                                       0.000000   0.000000
+  clock network delay (ideal)                                      0.000000   0.000000
+  clock uncertainty                                                0.050000   0.050000
+  subsystem/router/clint/mtime_q_reg_31_/CP (DFCNQD1BWP12T40P140)  0.000000   0.050000 r
+  library hold time                                                0.023221   0.073221
+  data required time                                                          0.073221
+  ---------------------------------------------------------------------------------------
+  data required time                                                          0.073221
+  data arrival time                                                           -0.088940
+  ---------------------------------------------------------------------------------------
+  slack (MET)                                                                 0.015719
+
+
+  Startpoint: subsystem/cpu/core/u_ifu/u_ifq/write_ptr_q_reg_0_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu/u_ifq/write_ptr_q_reg_0_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                           Incr       Path
+  --------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                  0.000000   0.000000
+  clock network delay (ideal)                                                 0.000000   0.000000
+  subsystem/cpu/core/u_ifu/u_ifq/write_ptr_q_reg_0_/CP (DFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_ifu/u_ifq/write_ptr_q_reg_0_/Q (DFCNQD1BWP12T40P140)   0.071193   0.071193 r
+  subsystem/cpu/core/u_ifu/u_ifq/U11/ZN (OAI32D0BWP12T40P140)                 0.018451   0.089644 f
+  subsystem/cpu/core/u_ifu/u_ifq/write_ptr_q_reg_0_/D (DFCNQD1BWP12T40P140)   0.000000   0.089644 f
+  data arrival time                                                                      0.089644
+
+  clock core_clk (rise edge)                                                  0.000000   0.000000
+  clock network delay (ideal)                                                 0.000000   0.000000
+  clock uncertainty                                                           0.050000   0.050000
+  subsystem/cpu/core/u_ifu/u_ifq/write_ptr_q_reg_0_/CP (DFCNQD1BWP12T40P140)  0.000000   0.050000 r
+  library hold time                                                           0.023378   0.073378
+  data required time                                                                     0.073378
+  --------------------------------------------------------------------------------------------------
+  data required time                                                                     0.073378
+  data arrival time                                                                      -0.089644
+  --------------------------------------------------------------------------------------------------
+  slack (MET)                                                                            0.016266
+
+
+  Startpoint: subsystem/cpu/core/u_ifu_axi4_adapter/state_q_reg_1_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu_axi4_adapter/state_q_reg_1_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                              Incr       Path
+  -----------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                     0.000000   0.000000
+  clock network delay (ideal)                                                    0.000000   0.000000
+  subsystem/cpu/core/u_ifu_axi4_adapter/state_q_reg_1_/CP (DFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_ifu_axi4_adapter/state_q_reg_1_/Q (DFCNQD1BWP12T40P140)   0.070701   0.070701 r
+  subsystem/cpu/core/u_ifu_axi4_adapter/U85/ZN (MUX2ND0BWP12T40P140)             0.018197   0.088898 f
+  subsystem/cpu/core/u_ifu_axi4_adapter/state_q_reg_1_/D (DFCNQD1BWP12T40P140)   0.000000   0.088898 f
+  data arrival time                                                                         0.088898
+
+  clock core_clk (rise edge)                                                     0.000000   0.000000
+  clock network delay (ideal)                                                    0.000000   0.000000
+  clock uncertainty                                                              0.050000   0.050000
+  subsystem/cpu/core/u_ifu_axi4_adapter/state_q_reg_1_/CP (DFCNQD1BWP12T40P140)  0.000000   0.050000 r
+  library hold time                                                              0.022462   0.072462
+  data required time                                                                        0.072462
+  -----------------------------------------------------------------------------------------------------
+  data required time                                                                        0.072462
+  data arrival time                                                                         -0.088898
+  -----------------------------------------------------------------------------------------------------
+  slack (MET)                                                                               0.016436
+
+
+  Startpoint: subsystem/router/w_have_q_reg
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/router/w_have_q_reg
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                       Incr       Path
+  ------------------------------------------------------------------------------
+  clock core_clk (rise edge)                              0.000000   0.000000
+  clock network delay (ideal)                             0.000000   0.000000
+  subsystem/router/w_have_q_reg/CP (DFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/router/w_have_q_reg/Q (DFCNQD1BWP12T40P140)   0.073195   0.073195 f
+  subsystem/router/U197/Z (AO21D1BWP12T40P140)            0.018548   0.091743 f
+  subsystem/router/w_have_q_reg/D (DFCNQD1BWP12T40P140)   0.000000   0.091743 f
+  data arrival time                                                  0.091743
+
+  clock core_clk (rise edge)                              0.000000   0.000000
+  clock network delay (ideal)                             0.000000   0.000000
+  clock uncertainty                                       0.050000   0.050000
+  subsystem/router/w_have_q_reg/CP (DFCNQD1BWP12T40P140)  0.000000   0.050000 r
+  library hold time                                       0.025252   0.075252
+  data required time                                                 0.075252
+  ------------------------------------------------------------------------------
+  data required time                                                 0.075252
+  data arrival time                                                  -0.091743
+  ------------------------------------------------------------------------------
+  slack (MET)                                                        0.016491
+
+
+  Startpoint: subsystem/cpu/core/u_lsu_axi4_adapter/response_data_q_reg_0_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_lsu/response_data_reg_0_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                                      Incr       Path
+  -------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  subsystem/cpu/core/u_lsu_axi4_adapter/response_data_q_reg_0_/CP (DFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_lsu_axi4_adapter/response_data_q_reg_0_/Q (DFCNQD1BWP12T40P140)   0.072481   0.072481 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/dmem_rsp_data[0] (ysyx_lsu_axi4_adapter)         0.000000   0.072481 f
+  subsystem/cpu/core/u_lsu/dmem_rsp_data[0] (ysyx_lsu)                                   0.000000   0.072481 f
+  subsystem/cpu/core/u_lsu/U28/Z (AO22D0BWP12T40P140)                                    0.018996   0.091477 f
+  subsystem/cpu/core/u_lsu/response_data_reg_0_/D (DFCNQD1BWP12T40P140)                  0.000000   0.091477 f
+  data arrival time                                                                                 0.091477
+
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  clock uncertainty                                                                      0.050000   0.050000
+  subsystem/cpu/core/u_lsu/response_data_reg_0_/CP (DFCNQD1BWP12T40P140)                 0.000000   0.050000 r
+  library hold time                                                                      0.024773   0.074773
+  data required time                                                                                0.074773
+  -------------------------------------------------------------------------------------------------------------
+  data required time                                                                                0.074773
+  data arrival time                                                                                 -0.091477
+  -------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                       0.016704
+
+
+1
