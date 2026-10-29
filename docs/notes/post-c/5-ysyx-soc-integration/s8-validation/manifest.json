@@ -1,0 +1,209 @@
+{
+  "status": "FAIL",
+  "source": "/home/cym/prj/ysyx-workbench",
+  "workspace": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace",
+  "repositories": {
+    ".": {
+      "head": "6023de4b94a4b88488d5877ac6ba711b97491760",
+      "status": " M npc/.gitignore\n M npc/Makefile\n m ysyxSoC\n?? docs/notes/post-c/5-ysyx-soc-integration/8-reproduction-handoff.md\n?? npc/tests/m5_s8_test.py\n",
+      "patch_sha256": "9d680165c78c9a87f958e73d4badc71b0da4000fa66f338a69765e9dfd32fd96"
+    },
+    "ysyxSoC": {
+      "head": "2d365297e76661faeafb4059d3ed257d26fe8778",
+      "status": " m rocket-chip\n",
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ysyxSoC/rocket-chip": {
+      "head": "d0c6b50fdefcdbe121e9788433ea51f7efaf1d32",
+      "status": " M src/main/scala/amba/axi4/Parameters.scala\n",
+      "patch_sha256": "6609375ae30265c3add127caddcc3ef2e3bfd144dec3a81834b76794a8fc5271"
+    },
+    "ysyxSoC/rocket-chip/dependencies/cde": {
+      "head": "52768c97a27b254c0cc0ac9401feb55b29e18c28",
+      "status": "",
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ysyxSoC/rocket-chip/dependencies/chisel": {
+      "head": "e3bcc90db37f1aec9f8048813f4f0666098d9bee",
+      "status": "",
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ysyxSoC/rocket-chip/dependencies/diplomacy": {
+      "head": "edf375300d99a4c260a214d7c1553de0040771d7",
+      "status": "",
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ysyxSoC/rocket-chip/dependencies/hardfloat": {
+      "head": "d93aa570806013dea479a92ba9bb33d1f2d4f69f",
+      "status": "",
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ysyxSoC/rocket-chip/dependencies/hardfloat/berkeley-softfloat-3": {
+      "head": "5c06db33fc1e2130f67c045327b0ec949032df1d",
+      "status": "",
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ysyxSoC/rocket-chip/dependencies/hardfloat/berkeley-testfloat-3": {
+      "head": "06b20075dd3c1a5d0dd007a93643282832221612",
+      "status": "",
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "am-kernels": {
+      "head": "9804c83061d595712c0aef75c513318576480315",
+      "status": "",
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "rt-thread-am": {
+      "head": "bce7f1d509b05e53022be89a719df077e89b507b",
+      "status": "",
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "commands": [
+    {
+      "name": "soc-generation",
+      "command": [
+        "make",
+        "-C",
+        "ysyxSoC",
+        "verilog"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 50.48
+    },
+    {
+      "name": "soc-contract",
+      "command": [
+        "python3",
+        "npc/tests/ysyx_soc_contract_check.py"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.317
+    },
+    {
+      "name": "simulators-and-reference",
+      "command": [
+        "make",
+        "-C",
+        "npc",
+        "s6-build"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 39.324
+    },
+    {
+      "name": "unit-and-elaboration",
+      "command": [
+        "make",
+        "-C",
+        "npc",
+        "lint",
+        "primitive-test",
+        "ifu-test",
+        "lsu-test",
+        "exu-test",
+        "architectural-state-test",
+        "idu-contract-test",
+        "s1-elaboration-test"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 23.011
+    },
+    {
+      "name": "s2-bringup",
+      "command": [
+        "python3",
+        "npc/tests/m5_s2_test.py"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 1.872
+    },
+    {
+      "name": "s3-runtime",
+      "command": [
+        "python3",
+        "npc/tests/m5_s3_test.py"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 39.138
+    },
+    {
+      "name": "s4-boot",
+      "command": [
+        "python3",
+        "npc/tests/m5_s4_test.py",
+        "--only",
+        "boot"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 16.357
+    },
+    {
+      "name": "s4-capacity",
+      "command": [
+        "python3",
+        "npc/tests/m5_s4_test.py",
+        "--only",
+        "capacity"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 266.035
+    },
+    {
+      "name": "s5-interrupt",
+      "command": [
+        "python3",
+        "npc/tests/m5_s5_test.py"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 163.661
+    },
+    {
+      "name": "delay-unit",
+      "command": [
+        "make",
+        "-C",
+        "npc",
+        "s6-delay-test"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 2.923
+    },
+    {
+      "name": "s6-system",
+      "command": [
+        "python3",
+        "npc/tests/m5_s6_test.py"
+      ],
+      "status": "FAIL",
+      "returncode": 1,
+      "wall_seconds": 736.215
+    }
+  ],
+  "eda_rerun": false,
+  "started": "2026-10-30T00:40:16+0800",
+  "nemu_config_sha256": "6fe32fd489492360f413c2412cb4bc32d1d581f92c571af8a9358b63f8c4642f",
+  "firtool_sha256": "1621ab876eb78ac60c938d60d5cafd36652673fe6454f0fb036125298ee2a181",
+  "runner_sha256": "75965f37fc9fe3c0c27921686f966631946eccc4e96e01645492a751f99af3db",
+  "clean_before_build": {
+    "npc/build": true,
+    "nemu/build": true,
+    "ysyxSoC/build": true,
+    "ysyxSoC/out": true,
+    "abstract-machine/am/build": true,
+    "abstract-machine/klib/build": true
+  },
+  "compiler_cache": "disabled: compile objects from source",
+  "error": "s6-system: exit 1; inspect its log",
+  "finished": "2026-10-30T01:02:37+0800"
+}

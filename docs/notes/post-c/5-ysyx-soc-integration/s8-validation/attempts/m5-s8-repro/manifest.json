@@ -1,0 +1,147 @@
+{
+  "status": "FAIL",
+  "source": "/home/cym/prj/ysyx-workbench",
+  "workspace": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-repro/workspace",
+  "repositories": {
+    ".": {
+      "head": "6023de4b94a4b88488d5877ac6ba711b97491760",
+      "status": " m ysyxSoC\n",
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ysyxSoC": {
+      "head": "2d365297e76661faeafb4059d3ed257d26fe8778",
+      "status": " m rocket-chip\n",
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ysyxSoC/rocket-chip": {
+      "head": "d0c6b50fdefcdbe121e9788433ea51f7efaf1d32",
+      "status": " M src/main/scala/amba/axi4/Parameters.scala\n",
+      "patch_sha256": "6609375ae30265c3add127caddcc3ef2e3bfd144dec3a81834b76794a8fc5271"
+    },
+    "ysyxSoC/rocket-chip/dependencies/cde": {
+      "head": "52768c97a27b254c0cc0ac9401feb55b29e18c28",
+      "status": "",
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ysyxSoC/rocket-chip/dependencies/chisel": {
+      "head": "e3bcc90db37f1aec9f8048813f4f0666098d9bee",
+      "status": "",
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ysyxSoC/rocket-chip/dependencies/diplomacy": {
+      "head": "edf375300d99a4c260a214d7c1553de0040771d7",
+      "status": "",
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ysyxSoC/rocket-chip/dependencies/hardfloat": {
+      "head": "d93aa570806013dea479a92ba9bb33d1f2d4f69f",
+      "status": "",
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ysyxSoC/rocket-chip/dependencies/hardfloat/berkeley-softfloat-3": {
+      "head": "5c06db33fc1e2130f67c045327b0ec949032df1d",
+      "status": "",
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ysyxSoC/rocket-chip/dependencies/hardfloat/berkeley-testfloat-3": {
+      "head": "06b20075dd3c1a5d0dd007a93643282832221612",
+      "status": "",
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "rt-thread-am": {
+      "head": "bce7f1d509b05e53022be89a719df077e89b507b",
+      "status": "",
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "commands": [
+    {
+      "name": "soc-generation",
+      "command": [
+        "make",
+        "-C",
+        "ysyxSoC",
+        "verilog"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 50.194
+    },
+    {
+      "name": "soc-contract",
+      "command": [
+        "python3",
+        "npc/tests/ysyx_soc_contract_check.py"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.316
+    },
+    {
+      "name": "simulators-and-reference",
+      "command": [
+        "make",
+        "-C",
+        "npc",
+        "s6-build"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 19.417
+    },
+    {
+      "name": "unit-and-elaboration",
+      "command": [
+        "make",
+        "-C",
+        "npc",
+        "lint",
+        "primitive-test",
+        "ifu-test",
+        "lsu-test",
+        "exu-test",
+        "architectural-state-test",
+        "idu-contract-test",
+        "s1-elaboration-test"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 7.126
+    },
+    {
+      "name": "s2-bringup",
+      "command": [
+        "python3",
+        "npc/tests/m5_s2_test.py"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.911
+    },
+    {
+      "name": "s3-runtime",
+      "command": [
+        "python3",
+        "npc/tests/m5_s3_test.py"
+      ],
+      "status": "FAIL",
+      "returncode": 1,
+      "wall_seconds": 5.501
+    }
+  ],
+  "eda_rerun": false,
+  "started": "2026-10-30T00:35:29+0800",
+  "nemu_config_sha256": "6fe32fd489492360f413c2412cb4bc32d1d581f92c571af8a9358b63f8c4642f",
+  "firtool_sha256": "1621ab876eb78ac60c938d60d5cafd36652673fe6454f0fb036125298ee2a181",
+  "runner_sha256": "dac612a4daabe3b2b0a39e624e9f9f41e033b205a2fba067eecfd0669a16ab1d",
+  "clean_before_build": {
+    "npc/build": true,
+    "nemu/build": true,
+    "ysyxSoC/build": true,
+    "ysyxSoC/out": true,
+    "abstract-machine/am/build": true,
+    "abstract-machine/klib/build": true
+  },
+  "error": "s3-runtime: exit 1; inspect its log",
+  "finished": "2026-10-30T00:36:54+0800"
+}

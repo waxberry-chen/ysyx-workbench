@@ -1,0 +1,62 @@
+name,direction_at_cpu,width,generated_connection
+clock,input,1,clock
+reset,input,1,reset
+io_interrupt,input,1,1'h0
+io_master_awready,input,1,auto_master_out_awready
+io_slave_awready,output,1,unconnected output
+io_master_awvalid,output,1,auto_master_out_awvalid
+io_slave_awvalid,input,1,1'h0
+io_master_awaddr,output,32,auto_master_out_awaddr
+io_slave_awaddr,input,32,32'h0
+io_master_awid,output,4,auto_master_out_awid
+io_slave_awid,input,4,4'h0
+io_master_awlen,output,8,auto_master_out_awlen
+io_slave_awlen,input,8,8'h0
+io_master_awsize,output,3,auto_master_out_awsize
+io_slave_awsize,input,3,3'h0
+io_master_awburst,output,2,auto_master_out_awburst
+io_slave_awburst,input,2,2'h0
+io_master_wready,input,1,auto_master_out_wready
+io_slave_wready,output,1,unconnected output
+io_master_wvalid,output,1,auto_master_out_wvalid
+io_slave_wvalid,input,1,1'h0
+io_master_wdata,output,32,auto_master_out_wdata
+io_slave_wdata,input,32,32'h0
+io_master_wstrb,output,4,auto_master_out_wstrb
+io_slave_wstrb,input,4,4'h0
+io_master_wlast,output,1,auto_master_out_wlast
+io_slave_wlast,input,1,1'h0
+io_master_bready,output,1,auto_master_out_bready
+io_slave_bready,input,1,1'h0
+io_master_bvalid,input,1,auto_master_out_bvalid
+io_slave_bvalid,output,1,unconnected output
+io_master_bresp,input,2,auto_master_out_bresp
+io_slave_bresp,output,2,unconnected output
+io_master_bid,input,4,auto_master_out_bid
+io_slave_bid,output,4,unconnected output
+io_master_arready,input,1,auto_master_out_arready
+io_slave_arready,output,1,unconnected output
+io_master_arvalid,output,1,auto_master_out_arvalid
+io_slave_arvalid,input,1,1'h0
+io_master_araddr,output,32,auto_master_out_araddr
+io_slave_araddr,input,32,32'h0
+io_master_arid,output,4,auto_master_out_arid
+io_slave_arid,input,4,4'h0
+io_master_arlen,output,8,auto_master_out_arlen
+io_slave_arlen,input,8,8'h0
+io_master_arsize,output,3,auto_master_out_arsize
+io_slave_arsize,input,3,3'h0
+io_master_arburst,output,2,auto_master_out_arburst
+io_slave_arburst,input,2,2'h0
+io_master_rready,output,1,auto_master_out_rready
+io_slave_rready,input,1,1'h0
+io_master_rvalid,input,1,auto_master_out_rvalid
+io_slave_rvalid,output,1,unconnected output
+io_master_rresp,input,2,auto_master_out_rresp
+io_slave_rresp,output,2,unconnected output
+io_master_rdata,input,32,auto_master_out_rdata
+io_slave_rdata,output,32,unconnected output
+io_master_rlast,input,1,auto_master_out_rlast
+io_slave_rlast,output,1,unconnected output
+io_master_rid,input,4,auto_master_out_rid
+io_slave_rid,output,4,unconnected output

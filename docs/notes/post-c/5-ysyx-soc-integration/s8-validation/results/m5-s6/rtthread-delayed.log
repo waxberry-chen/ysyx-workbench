@@ -1,0 +1,24 @@
+PREEMPT progress=6,6 switches=5,5 irq_switches=10
+WAKE elapsed=4,7 idle_runs=711
+HEAP total=4080384 before=0 used=0 peak=544
+STACK worker0 size=8192 untouched=7744
+STACK worker1 size=8192 untouched=7824
+STACK idle size=4096 untouched=3832
+RTT SYSTEM PASS
+[1;34m[src/cpu/cpu-exec.c:166 cpu_exec] nemu: [1;32mHIT GOOD TRAP[0m at pc = 0x80003bc8[0m
+[1;34m[src/cpu/cpu-exec.c:130 statistic] host time spent = 19290 us[0m
+[1;34m[src/cpu/cpu-exec.c:131 statistic] total guest instructions = 336507[0m
+[1;34m[src/cpu/cpu-exec.c:132 statistic] simulation frequency = 17444634 inst/s[0m
+NPC_DELAY channel=0 accepted=481477 delivered=481477 input_waits=1684581 output_waits=1684786 seed=29 max=7 fixed=0
+NPC_DELAY channel=1 accepted=35827 delivered=35827 input_waits=124866 output_waits=125020 seed=29 max=7 fixed=0
+NPC_DELAY channel=2 accepted=35827 delivered=35827 input_waits=125407 output_waits=125635 seed=29 max=7 fixed=0
+NPC_DELAY channel=3 accepted=481477 delivered=481477 input_waits=1681640 output_waits=1682610 seed=29 max=7 fixed=0
+NPC_DELAY channel=4 accepted=35827 delivered=35827 input_waits=125586 output_waits=124967 seed=29 max=7 fixed=0
+HIT GOOD TRAP: real ysyxSoC commits=336507 cycles=78906912 UART_TX=PREEMPT progress=6,6 switches=5,5 irq_switches=10
+WAKE elapsed=4,7 idle_runs=711
+HEAP total=4080384 before=0 used=0 peak=544
+STACK worker0 size=8192 untouched=7744
+STACK worker1 size=8192 untouched=7824
+STACK idle size=4096 untouched=3832
+RTT SYSTEM PASS
+

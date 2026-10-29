@@ -1,0 +1,3 @@
+[23] %Error: ysyx_axi4_arbiter.sv:214: Assertion failed in TOP.ysyx_axi4_arbiter.axi_read_shape: AXI4 protocol: RID/RLAST mismatch
+%Error: vsrc/bus/ysyx_axi4_arbiter.sv:214: Verilog $stop
+Aborting...

@@ -1,0 +1,2266 @@
+{
+  "rtthread-normal": {
+    "summary": {
+      "pass": true,
+      "cycles": 71799451,
+      "commits": 361581,
+      "exceptions": 3,
+      "ar": 526497,
+      "aw": 36049,
+      "w": 36049,
+      "r": 526497,
+      "b": 36049,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 355000,
+      "first_commit_ps": 3285000,
+      "mrom_dpi_calls": 0,
+      "flash_dpi_calls": 140848,
+      "uart_thr_writes": 255,
+      "uart_register_reads": 256,
+      "uart_serial_bytes": 255,
+      "interrupts": 15,
+      "diff_interrupts": 15,
+      "timer_checks": 71799422,
+      "diff_steps": 361581,
+      "diff_device_reads": 304,
+      "diff_device_writes": 308,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666432,
+      "min_psram_sp": 2147518464,
+      "psram_read_bytes": 1541572,
+      "psram_write_bytes": 139887,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 16,
+      "reset_pc": 805306368,
+      "stacks": [
+        {
+          "name": "main",
+          "low": 2151612416,
+          "high": 2151677952,
+          "min_sp": 2151677728,
+          "used": 224,
+          "remaining": 65312,
+          "samples": 122399
+        },
+        {
+          "name": "worker0",
+          "low": 2147510720,
+          "high": 2147518912,
+          "min_sp": 2147518464,
+          "used": 448,
+          "remaining": 7744,
+          "samples": 170706
+        },
+        {
+          "name": "worker1",
+          "low": 2147518912,
+          "high": 2147527104,
+          "min_sp": 2147526732,
+          "used": 372,
+          "remaining": 7820,
+          "samples": 31297
+        },
+        {
+          "name": "idle",
+          "low": 2147527344,
+          "high": 2147531440,
+          "min_sp": 2147531172,
+          "used": 268,
+          "remaining": 3828,
+          "samples": 37192
+        }
+      ]
+    },
+    "boot": "flash-psram",
+    "delay": null,
+    "image": "npc/build/m5-s6/programs/rtthread-system/build/rtthread-system-riscv32e-ysyxsoc-flash-psram.bin",
+    "image_sha256": "b32927f50792773309adc262ea654d0c0f593df8fd6502223d23aee85d3c2f14",
+    "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+    "rtthread": {
+      "preempt": [
+        6,
+        6,
+        5,
+        5,
+        10
+      ],
+      "wake": [
+        4,
+        7,
+        933
+      ],
+      "heap": [
+        4080384,
+        0,
+        0,
+        544
+      ]
+    }
+  },
+  "rtthread-delayed": {
+    "summary": {
+      "pass": true,
+      "cycles": 78906912,
+      "commits": 336507,
+      "exceptions": 3,
+      "ar": 481477,
+      "aw": 35827,
+      "w": 35827,
+      "r": 481477,
+      "b": 35827,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 475000,
+      "first_commit_ps": 3445000,
+      "mrom_dpi_calls": 0,
+      "flash_dpi_calls": 140848,
+      "uart_thr_writes": 255,
+      "uart_register_reads": 256,
+      "uart_serial_bytes": 255,
+      "interrupts": 15,
+      "diff_interrupts": 15,
+      "timer_checks": 78906883,
+      "diff_steps": 336507,
+      "diff_device_reads": 304,
+      "diff_device_writes": 308,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666432,
+      "min_psram_sp": 2147518464,
+      "psram_read_bytes": 1361492,
+      "psram_write_bytes": 138999,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 16,
+      "reset_pc": 805306368,
+      "stacks": [
+        {
+          "name": "main",
+          "low": 2151612416,
+          "high": 2151677952,
+          "min_sp": 2151677728,
+          "used": 224,
+          "remaining": 65312,
+          "samples": 122399
+        },
+        {
+          "name": "worker0",
+          "low": 2147510720,
+          "high": 2147518912,
+          "min_sp": 2147518464,
+          "used": 448,
+          "remaining": 7744,
+          "samples": 160108
+        },
+        {
+          "name": "worker1",
+          "low": 2147518912,
+          "high": 2147527104,
+          "min_sp": 2147526732,
+          "used": 372,
+          "remaining": 7820,
+          "samples": 25273
+        },
+        {
+          "name": "idle",
+          "low": 2147527344,
+          "high": 2147531440,
+          "min_sp": 2147531172,
+          "used": 268,
+          "remaining": 3828,
+          "samples": 28740
+        }
+      ],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 481477,
+          "delivered": 481477,
+          "input_waits": 1684581,
+          "output_waits": 1684786
+        },
+        {
+          "channel": 1,
+          "accepted": 35827,
+          "delivered": 35827,
+          "input_waits": 124866,
+          "output_waits": 125020
+        },
+        {
+          "channel": 2,
+          "accepted": 35827,
+          "delivered": 35827,
+          "input_waits": 125407,
+          "output_waits": 125635
+        },
+        {
+          "channel": 3,
+          "accepted": 481477,
+          "delivered": 481477,
+          "input_waits": 1681640,
+          "output_waits": 1682610
+        },
+        {
+          "channel": 4,
+          "accepted": 35827,
+          "delivered": 35827,
+          "input_waits": 125586,
+          "output_waits": 124967
+        }
+      ]
+    },
+    "boot": "flash-psram",
+    "delay": [
+      29,
+      7,
+      false
+    ],
+    "image": "npc/build/m5-s6/programs/rtthread-system/build/rtthread-system-riscv32e-ysyxsoc-flash-psram.bin",
+    "image_sha256": "b32927f50792773309adc262ea654d0c0f593df8fd6502223d23aee85d3c2f14",
+    "executable_sha256": "d5e4df652a77f7130ab51c6de202378f1b40442fc0639e84fc3e444b2ff4de54",
+    "rtthread": {
+      "preempt": [
+        6,
+        6,
+        5,
+        5,
+        10
+      ],
+      "wake": [
+        4,
+        7,
+        711
+      ],
+      "heap": [
+        4080384,
+        0,
+        0,
+        544
+      ]
+    }
+  },
+  "uart-normal": {
+    "summary": {
+      "pass": true,
+      "cycles": 806033,
+      "commits": 38603,
+      "exceptions": 0,
+      "ar": 61351,
+      "aw": 2599,
+      "w": 2599,
+      "r": 61351,
+      "b": 2599,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 355000,
+      "first_commit_ps": 445000,
+      "mrom_dpi_calls": 207156,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 528,
+      "uart_register_reads": 9551,
+      "uart_serial_bytes": 528,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 806004,
+      "diff_steps": 38603,
+      "diff_device_reads": 9551,
+      "diff_device_writes": 538,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666404,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 128,
+      "reset_pc": 536870912,
+      "stacks": []
+    },
+    "boot": "mrom",
+    "delay": null,
+    "image": "npc/build/m5-s6/programs/uart-long/build/uart-long-riscv32e-ysyxsoc.bin",
+    "image_sha256": "da8cc81b4a8968de1a9921471656eec63baa102de6043b56efba039b7673ed54",
+    "executable_sha256": "db556458bd8d8616ede3375c717569a55254a062d8d88b782c2fb5925b10958f",
+    "uart": {
+      "bytes": 528,
+      "busy_polls": 9009,
+      "divisor": 8,
+      "bit_cycles": 128
+    }
+  },
+  "uart-fixed": {
+    "summary": {
+      "pass": true,
+      "cycles": 1059023,
+      "commits": 20993,
+      "exceptions": 0,
+      "ar": 32001,
+      "aw": 2599,
+      "w": 2599,
+      "r": 32001,
+      "b": 2599,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 445000,
+      "first_commit_ps": 625000,
+      "mrom_dpi_calls": 113236,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 528,
+      "uart_register_reads": 3681,
+      "uart_serial_bytes": 528,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 1058994,
+      "diff_steps": 20993,
+      "diff_device_reads": 3681,
+      "diff_device_writes": 538,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666404,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 128,
+      "reset_pc": 536870912,
+      "stacks": [],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 32001,
+          "delivered": 32001,
+          "input_waits": 96003,
+          "output_waits": 96003
+        },
+        {
+          "channel": 1,
+          "accepted": 2599,
+          "delivered": 2599,
+          "input_waits": 7797,
+          "output_waits": 7797
+        },
+        {
+          "channel": 2,
+          "accepted": 2599,
+          "delivered": 2599,
+          "input_waits": 7797,
+          "output_waits": 7797
+        },
+        {
+          "channel": 3,
+          "accepted": 32001,
+          "delivered": 32001,
+          "input_waits": 96003,
+          "output_waits": 96003
+        },
+        {
+          "channel": 4,
+          "accepted": 2599,
+          "delivered": 2599,
+          "input_waits": 7797,
+          "output_waits": 7797
+        }
+      ]
+    },
+    "boot": "mrom",
+    "delay": [
+      1,
+      3,
+      true
+    ],
+    "image": "npc/build/m5-s6/programs/uart-long/build/uart-long-riscv32e-ysyxsoc.bin",
+    "image_sha256": "da8cc81b4a8968de1a9921471656eec63baa102de6043b56efba039b7673ed54",
+    "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2",
+    "uart": {
+      "bytes": 528,
+      "busy_polls": 3151,
+      "divisor": 8,
+      "bit_cycles": 128
+    }
+  },
+  "uart-random": {
+    "summary": {
+      "pass": true,
+      "cycles": 1045528,
+      "commits": 19439,
+      "exceptions": 0,
+      "ar": 29411,
+      "aw": 2599,
+      "w": 2599,
+      "r": 29411,
+      "b": 2599,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 435000,
+      "first_commit_ps": 685000,
+      "mrom_dpi_calls": 104948,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 528,
+      "uart_register_reads": 3163,
+      "uart_serial_bytes": 528,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 1045499,
+      "diff_steps": 19439,
+      "diff_device_reads": 3163,
+      "diff_device_writes": 538,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666404,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 128,
+      "reset_pc": 536870912,
+      "stacks": [],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 29411,
+          "delivered": 29411,
+          "input_waits": 102479,
+          "output_waits": 102843
+        },
+        {
+          "channel": 1,
+          "accepted": 2599,
+          "delivered": 2599,
+          "input_waits": 8858,
+          "output_waits": 9085
+        },
+        {
+          "channel": 2,
+          "accepted": 2599,
+          "delivered": 2599,
+          "input_waits": 9068,
+          "output_waits": 9135
+        },
+        {
+          "channel": 3,
+          "accepted": 29411,
+          "delivered": 29411,
+          "input_waits": 103365,
+          "output_waits": 102313
+        },
+        {
+          "channel": 4,
+          "accepted": 2599,
+          "delivered": 2599,
+          "input_waits": 9296,
+          "output_waits": 9161
+        }
+      ]
+    },
+    "boot": "mrom",
+    "delay": [
+      19,
+      7,
+      false
+    ],
+    "image": "npc/build/m5-s6/programs/uart-long/build/uart-long-riscv32e-ysyxsoc.bin",
+    "image_sha256": "da8cc81b4a8968de1a9921471656eec63baa102de6043b56efba039b7673ed54",
+    "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2",
+    "uart": {
+      "bytes": 528,
+      "busy_polls": 2634,
+      "divisor": 8,
+      "bit_cycles": 128
+    }
+  },
+  "hello-fixed": {
+    "summary": {
+      "pass": true,
+      "cycles": 323276,
+      "commits": 6356,
+      "exceptions": 0,
+      "ar": 8491,
+      "aw": 2072,
+      "w": 2072,
+      "r": 8491,
+      "b": 2072,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 445000,
+      "first_commit_ps": 625000,
+      "mrom_dpi_calls": 33888,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 16,
+      "uart_register_reads": 17,
+      "uart_serial_bytes": 16,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 323247,
+      "diff_steps": 6356,
+      "diff_device_reads": 17,
+      "diff_device_writes": 21,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666408,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 16,
+      "reset_pc": 536870912,
+      "stacks": [],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 8491,
+          "delivered": 8491,
+          "input_waits": 25473,
+          "output_waits": 25473
+        },
+        {
+          "channel": 1,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 6216,
+          "output_waits": 6216
+        },
+        {
+          "channel": 2,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 6216,
+          "output_waits": 6216
+        },
+        {
+          "channel": 3,
+          "accepted": 8491,
+          "delivered": 8491,
+          "input_waits": 25473,
+          "output_waits": 25473
+        },
+        {
+          "channel": 4,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 6216,
+          "output_waits": 6216
+        }
+      ]
+    },
+    "boot": "mrom",
+    "delay": [
+      1,
+      3,
+      true
+    ],
+    "image": "npc/build/m5-s6/programs/hello/build/hello-riscv32e-ysyxsoc.bin",
+    "image_sha256": "1675c4529be34892f519845685efb5a79c412632c0b48e145d8c0d645eee18b2",
+    "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2"
+  },
+  "hello-seed-1": {
+    "summary": {
+      "pass": true,
+      "cycles": 345761,
+      "commits": 6356,
+      "exceptions": 0,
+      "ar": 8491,
+      "aw": 2072,
+      "w": 2072,
+      "r": 8491,
+      "b": 2072,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 385000,
+      "first_commit_ps": 605000,
+      "mrom_dpi_calls": 33888,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 16,
+      "uart_register_reads": 17,
+      "uart_serial_bytes": 16,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 345732,
+      "diff_steps": 6356,
+      "diff_device_reads": 17,
+      "diff_device_writes": 21,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666408,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 16,
+      "reset_pc": 536870912,
+      "stacks": [],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 8491,
+          "delivered": 8491,
+          "input_waits": 29593,
+          "output_waits": 29728
+        },
+        {
+          "channel": 1,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7269,
+          "output_waits": 7274
+        },
+        {
+          "channel": 2,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7228,
+          "output_waits": 7384
+        },
+        {
+          "channel": 3,
+          "accepted": 8491,
+          "delivered": 8491,
+          "input_waits": 29554,
+          "output_waits": 29520
+        },
+        {
+          "channel": 4,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7265,
+          "output_waits": 7078
+        }
+      ]
+    },
+    "boot": "mrom",
+    "delay": [
+      1,
+      7,
+      false
+    ],
+    "image": "npc/build/m5-s6/programs/hello/build/hello-riscv32e-ysyxsoc.bin",
+    "image_sha256": "1675c4529be34892f519845685efb5a79c412632c0b48e145d8c0d645eee18b2",
+    "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2"
+  },
+  "hello-seed-2": {
+    "summary": {
+      "pass": true,
+      "cycles": 347787,
+      "commits": 6356,
+      "exceptions": 0,
+      "ar": 8491,
+      "aw": 2072,
+      "w": 2072,
+      "r": 8491,
+      "b": 2072,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 445000,
+      "first_commit_ps": 685000,
+      "mrom_dpi_calls": 33888,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 16,
+      "uart_register_reads": 17,
+      "uart_serial_bytes": 16,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 347758,
+      "diff_steps": 6356,
+      "diff_device_reads": 17,
+      "diff_device_writes": 21,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666408,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 16,
+      "reset_pc": 536870912,
+      "stacks": [],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 8491,
+          "delivered": 8491,
+          "input_waits": 30202,
+          "output_waits": 29609
+        },
+        {
+          "channel": 1,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7093,
+          "output_waits": 7242
+        },
+        {
+          "channel": 2,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7212,
+          "output_waits": 7348
+        },
+        {
+          "channel": 3,
+          "accepted": 8491,
+          "delivered": 8491,
+          "input_waits": 30311,
+          "output_waits": 30065
+        },
+        {
+          "channel": 4,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7233,
+          "output_waits": 7474
+        }
+      ]
+    },
+    "boot": "mrom",
+    "delay": [
+      2,
+      7,
+      false
+    ],
+    "image": "npc/build/m5-s6/programs/hello/build/hello-riscv32e-ysyxsoc.bin",
+    "image_sha256": "1675c4529be34892f519845685efb5a79c412632c0b48e145d8c0d645eee18b2",
+    "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2"
+  },
+  "hello-seed-3": {
+    "summary": {
+      "pass": true,
+      "cycles": 345879,
+      "commits": 6356,
+      "exceptions": 0,
+      "ar": 8491,
+      "aw": 2072,
+      "w": 2072,
+      "r": 8491,
+      "b": 2072,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 425000,
+      "first_commit_ps": 685000,
+      "mrom_dpi_calls": 33888,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 16,
+      "uart_register_reads": 17,
+      "uart_serial_bytes": 16,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 345850,
+      "diff_steps": 6356,
+      "diff_device_reads": 17,
+      "diff_device_writes": 21,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666408,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 16,
+      "reset_pc": 536870912,
+      "stacks": [],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 8491,
+          "delivered": 8491,
+          "input_waits": 29410,
+          "output_waits": 29414
+        },
+        {
+          "channel": 1,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7306,
+          "output_waits": 7231
+        },
+        {
+          "channel": 2,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7063,
+          "output_waits": 7385
+        },
+        {
+          "channel": 3,
+          "accepted": 8491,
+          "delivered": 8491,
+          "input_waits": 29847,
+          "output_waits": 29668
+        },
+        {
+          "channel": 4,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7318,
+          "output_waits": 7295
+        }
+      ]
+    },
+    "boot": "mrom",
+    "delay": [
+      3,
+      7,
+      false
+    ],
+    "image": "npc/build/m5-s6/programs/hello/build/hello-riscv32e-ysyxsoc.bin",
+    "image_sha256": "1675c4529be34892f519845685efb5a79c412632c0b48e145d8c0d645eee18b2",
+    "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2"
+  },
+  "hello-seed-4": {
+    "summary": {
+      "pass": true,
+      "cycles": 346106,
+      "commits": 6356,
+      "exceptions": 0,
+      "ar": 8491,
+      "aw": 2072,
+      "w": 2072,
+      "r": 8491,
+      "b": 2072,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 485000,
+      "first_commit_ps": 605000,
+      "mrom_dpi_calls": 33888,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 16,
+      "uart_register_reads": 17,
+      "uart_serial_bytes": 16,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 346077,
+      "diff_steps": 6356,
+      "diff_device_reads": 17,
+      "diff_device_writes": 21,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666408,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 16,
+      "reset_pc": 536870912,
+      "stacks": [],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 8491,
+          "delivered": 8491,
+          "input_waits": 29761,
+          "output_waits": 29639
+        },
+        {
+          "channel": 1,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7186,
+          "output_waits": 7156
+        },
+        {
+          "channel": 2,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7389,
+          "output_waits": 7214
+        },
+        {
+          "channel": 3,
+          "accepted": 8491,
+          "delivered": 8491,
+          "input_waits": 29454,
+          "output_waits": 29827
+        },
+        {
+          "channel": 4,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7290,
+          "output_waits": 7250
+        }
+      ]
+    },
+    "boot": "mrom",
+    "delay": [
+      4,
+      7,
+      false
+    ],
+    "image": "npc/build/m5-s6/programs/hello/build/hello-riscv32e-ysyxsoc.bin",
+    "image_sha256": "1675c4529be34892f519845685efb5a79c412632c0b48e145d8c0d645eee18b2",
+    "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2"
+  },
+  "hello-seed-5": {
+    "summary": {
+      "pass": true,
+      "cycles": 345886,
+      "commits": 6356,
+      "exceptions": 0,
+      "ar": 8491,
+      "aw": 2072,
+      "w": 2072,
+      "r": 8491,
+      "b": 2072,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 465000,
+      "first_commit_ps": 605000,
+      "mrom_dpi_calls": 33888,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 16,
+      "uart_register_reads": 17,
+      "uart_serial_bytes": 16,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 345857,
+      "diff_steps": 6356,
+      "diff_device_reads": 17,
+      "diff_device_writes": 21,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666408,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 16,
+      "reset_pc": 536870912,
+      "stacks": [],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 8491,
+          "delivered": 8491,
+          "input_waits": 29785,
+          "output_waits": 29498
+        },
+        {
+          "channel": 1,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7259,
+          "output_waits": 7321
+        },
+        {
+          "channel": 2,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7332,
+          "output_waits": 7239
+        },
+        {
+          "channel": 3,
+          "accepted": 8491,
+          "delivered": 8491,
+          "input_waits": 29526,
+          "output_waits": 29864
+        },
+        {
+          "channel": 4,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7163,
+          "output_waits": 7039
+        }
+      ]
+    },
+    "boot": "mrom",
+    "delay": [
+      5,
+      7,
+      false
+    ],
+    "image": "npc/build/m5-s6/programs/hello/build/hello-riscv32e-ysyxsoc.bin",
+    "image_sha256": "1675c4529be34892f519845685efb5a79c412632c0b48e145d8c0d645eee18b2",
+    "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2"
+  },
+  "hello-seed-6": {
+    "summary": {
+      "pass": true,
+      "cycles": 345336,
+      "commits": 6356,
+      "exceptions": 0,
+      "ar": 8491,
+      "aw": 2072,
+      "w": 2072,
+      "r": 8491,
+      "b": 2072,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 525000,
+      "first_commit_ps": 685000,
+      "mrom_dpi_calls": 33888,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 16,
+      "uart_register_reads": 17,
+      "uart_serial_bytes": 16,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 345307,
+      "diff_steps": 6356,
+      "diff_device_reads": 17,
+      "diff_device_writes": 21,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666408,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 16,
+      "reset_pc": 536870912,
+      "stacks": [],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 8491,
+          "delivered": 8491,
+          "input_waits": 29530,
+          "output_waits": 29301
+        },
+        {
+          "channel": 1,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7305,
+          "output_waits": 7289
+        },
+        {
+          "channel": 2,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7102,
+          "output_waits": 7255
+        },
+        {
+          "channel": 3,
+          "accepted": 8491,
+          "delivered": 8491,
+          "input_waits": 29663,
+          "output_waits": 29267
+        },
+        {
+          "channel": 4,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7309,
+          "output_waits": 7279
+        }
+      ]
+    },
+    "boot": "mrom",
+    "delay": [
+      6,
+      7,
+      false
+    ],
+    "image": "npc/build/m5-s6/programs/hello/build/hello-riscv32e-ysyxsoc.bin",
+    "image_sha256": "1675c4529be34892f519845685efb5a79c412632c0b48e145d8c0d645eee18b2",
+    "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2"
+  },
+  "hello-seed-7": {
+    "summary": {
+      "pass": true,
+      "cycles": 346463,
+      "commits": 6356,
+      "exceptions": 0,
+      "ar": 8491,
+      "aw": 2072,
+      "w": 2072,
+      "r": 8491,
+      "b": 2072,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 505000,
+      "first_commit_ps": 685000,
+      "mrom_dpi_calls": 33888,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 16,
+      "uart_register_reads": 17,
+      "uart_serial_bytes": 16,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 346434,
+      "diff_steps": 6356,
+      "diff_device_reads": 17,
+      "diff_device_writes": 21,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666408,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 16,
+      "reset_pc": 536870912,
+      "stacks": [],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 8491,
+          "delivered": 8491,
+          "input_waits": 29234,
+          "output_waits": 29780
+        },
+        {
+          "channel": 1,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7266,
+          "output_waits": 7394
+        },
+        {
+          "channel": 2,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7393,
+          "output_waits": 7124
+        },
+        {
+          "channel": 3,
+          "accepted": 8491,
+          "delivered": 8491,
+          "input_waits": 29831,
+          "output_waits": 30192
+        },
+        {
+          "channel": 4,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7206,
+          "output_waits": 7192
+        }
+      ]
+    },
+    "boot": "mrom",
+    "delay": [
+      7,
+      7,
+      false
+    ],
+    "image": "npc/build/m5-s6/programs/hello/build/hello-riscv32e-ysyxsoc.bin",
+    "image_sha256": "1675c4529be34892f519845685efb5a79c412632c0b48e145d8c0d645eee18b2",
+    "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2"
+  },
+  "hello-seed-8": {
+    "summary": {
+      "pass": true,
+      "cycles": 346422,
+      "commits": 6356,
+      "exceptions": 0,
+      "ar": 8491,
+      "aw": 2072,
+      "w": 2072,
+      "r": 8491,
+      "b": 2072,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 405000,
+      "first_commit_ps": 605000,
+      "mrom_dpi_calls": 33888,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 16,
+      "uart_register_reads": 17,
+      "uart_serial_bytes": 16,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 346393,
+      "diff_steps": 6356,
+      "diff_device_reads": 17,
+      "diff_device_writes": 21,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666408,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 16,
+      "reset_pc": 536870912,
+      "stacks": [],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 8491,
+          "delivered": 8491,
+          "input_waits": 30044,
+          "output_waits": 29494
+        },
+        {
+          "channel": 1,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7227,
+          "output_waits": 7212
+        },
+        {
+          "channel": 2,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7084,
+          "output_waits": 7340
+        },
+        {
+          "channel": 3,
+          "accepted": 8491,
+          "delivered": 8491,
+          "input_waits": 29813,
+          "output_waits": 29808
+        },
+        {
+          "channel": 4,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7277,
+          "output_waits": 7180
+        }
+      ]
+    },
+    "boot": "mrom",
+    "delay": [
+      8,
+      7,
+      false
+    ],
+    "image": "npc/build/m5-s6/programs/hello/build/hello-riscv32e-ysyxsoc.bin",
+    "image_sha256": "1675c4529be34892f519845685efb5a79c412632c0b48e145d8c0d645eee18b2",
+    "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2"
+  },
+  "hello-seed-9": {
+    "summary": {
+      "pass": true,
+      "cycles": 346996,
+      "commits": 6356,
+      "exceptions": 0,
+      "ar": 8491,
+      "aw": 2072,
+      "w": 2072,
+      "r": 8491,
+      "b": 2072,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 385000,
+      "first_commit_ps": 605000,
+      "mrom_dpi_calls": 33888,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 16,
+      "uart_register_reads": 17,
+      "uart_serial_bytes": 16,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 346967,
+      "diff_steps": 6356,
+      "diff_device_reads": 17,
+      "diff_device_writes": 21,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666408,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 16,
+      "reset_pc": 536870912,
+      "stacks": [],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 8491,
+          "delivered": 8491,
+          "input_waits": 29774,
+          "output_waits": 29763
+        },
+        {
+          "channel": 1,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7104,
+          "output_waits": 7329
+        },
+        {
+          "channel": 2,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7287,
+          "output_waits": 7449
+        },
+        {
+          "channel": 3,
+          "accepted": 8491,
+          "delivered": 8491,
+          "input_waits": 30095,
+          "output_waits": 29731
+        },
+        {
+          "channel": 4,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7390,
+          "output_waits": 7225
+        }
+      ]
+    },
+    "boot": "mrom",
+    "delay": [
+      9,
+      7,
+      false
+    ],
+    "image": "npc/build/m5-s6/programs/hello/build/hello-riscv32e-ysyxsoc.bin",
+    "image_sha256": "1675c4529be34892f519845685efb5a79c412632c0b48e145d8c0d645eee18b2",
+    "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2"
+  },
+  "hello-seed-10": {
+    "summary": {
+      "pass": true,
+      "cycles": 346492,
+      "commits": 6356,
+      "exceptions": 0,
+      "ar": 8491,
+      "aw": 2072,
+      "w": 2072,
+      "r": 8491,
+      "b": 2072,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 445000,
+      "first_commit_ps": 685000,
+      "mrom_dpi_calls": 33888,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 16,
+      "uart_register_reads": 17,
+      "uart_serial_bytes": 16,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 346463,
+      "diff_steps": 6356,
+      "diff_device_reads": 17,
+      "diff_device_writes": 21,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666408,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 16,
+      "reset_pc": 536870912,
+      "stacks": [],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 8491,
+          "delivered": 8491,
+          "input_waits": 29897,
+          "output_waits": 29684
+        },
+        {
+          "channel": 1,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7448,
+          "output_waits": 7257
+        },
+        {
+          "channel": 2,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7227,
+          "output_waits": 7089
+        },
+        {
+          "channel": 3,
+          "accepted": 8491,
+          "delivered": 8491,
+          "input_waits": 29870,
+          "output_waits": 29728
+        },
+        {
+          "channel": 4,
+          "accepted": 2072,
+          "delivered": 2072,
+          "input_waits": 7166,
+          "output_waits": 7169
+        }
+      ]
+    },
+    "boot": "mrom",
+    "delay": [
+      10,
+      7,
+      false
+    ],
+    "image": "npc/build/m5-s6/programs/hello/build/hello-riscv32e-ysyxsoc.bin",
+    "image_sha256": "1675c4529be34892f519845685efb5a79c412632c0b48e145d8c0d645eee18b2",
+    "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2"
+  },
+  "memory-fixed": {
+    "summary": {
+      "pass": true,
+      "cycles": 1081648,
+      "commits": 24623,
+      "exceptions": 0,
+      "ar": 31660,
+      "aw": 3693,
+      "w": 3693,
+      "r": 31660,
+      "b": 3693,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 445000,
+      "first_commit_ps": 625000,
+      "mrom_dpi_calls": 119712,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 2,
+      "uart_register_reads": 3,
+      "uart_serial_bytes": 2,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 1081619,
+      "diff_steps": 24623,
+      "diff_device_reads": 3,
+      "diff_device_writes": 7,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666012,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 16,
+      "reset_pc": 536870912,
+      "stacks": [],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 31660,
+          "delivered": 31660,
+          "input_waits": 94980,
+          "output_waits": 94980
+        },
+        {
+          "channel": 1,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 11079,
+          "output_waits": 11079
+        },
+        {
+          "channel": 2,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 11079,
+          "output_waits": 11079
+        },
+        {
+          "channel": 3,
+          "accepted": 31660,
+          "delivered": 31660,
+          "input_waits": 94980,
+          "output_waits": 94980
+        },
+        {
+          "channel": 4,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 11079,
+          "output_waits": 11079
+        }
+      ]
+    },
+    "boot": "mrom",
+    "delay": [
+      1,
+      3,
+      true
+    ],
+    "image": "npc/build/m5-s6/programs/memory/build/memory-riscv32e-ysyxsoc.bin",
+    "image_sha256": "7426bf83c1cfbc7b06d4df4d6448a3f19fe03497ba3bc90c6cf9f89f2ee444e7",
+    "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2"
+  },
+  "memory-seed-1": {
+    "summary": {
+      "pass": true,
+      "cycles": 1154737,
+      "commits": 24623,
+      "exceptions": 0,
+      "ar": 31660,
+      "aw": 3693,
+      "w": 3693,
+      "r": 31660,
+      "b": 3693,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 385000,
+      "first_commit_ps": 605000,
+      "mrom_dpi_calls": 119712,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 2,
+      "uart_register_reads": 3,
+      "uart_serial_bytes": 2,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 1154708,
+      "diff_steps": 24623,
+      "diff_device_reads": 3,
+      "diff_device_writes": 7,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666012,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 16,
+      "reset_pc": 536870912,
+      "stacks": [],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 31660,
+          "delivered": 31660,
+          "input_waits": 110587,
+          "output_waits": 110581
+        },
+        {
+          "channel": 1,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 12876,
+          "output_waits": 13009
+        },
+        {
+          "channel": 2,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 12786,
+          "output_waits": 13200
+        },
+        {
+          "channel": 3,
+          "accepted": 31660,
+          "delivered": 31660,
+          "input_waits": 110392,
+          "output_waits": 110733
+        },
+        {
+          "channel": 4,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 12914,
+          "output_waits": 12782
+        }
+      ]
+    },
+    "boot": "mrom",
+    "delay": [
+      1,
+      7,
+      false
+    ],
+    "image": "npc/build/m5-s6/programs/memory/build/memory-riscv32e-ysyxsoc.bin",
+    "image_sha256": "7426bf83c1cfbc7b06d4df4d6448a3f19fe03497ba3bc90c6cf9f89f2ee444e7",
+    "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2"
+  },
+  "memory-seed-2": {
+    "summary": {
+      "pass": true,
+      "cycles": 1157229,
+      "commits": 24623,
+      "exceptions": 0,
+      "ar": 31660,
+      "aw": 3693,
+      "w": 3693,
+      "r": 31660,
+      "b": 3693,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 445000,
+      "first_commit_ps": 685000,
+      "mrom_dpi_calls": 119712,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 2,
+      "uart_register_reads": 3,
+      "uart_serial_bytes": 2,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 1157200,
+      "diff_steps": 24623,
+      "diff_device_reads": 3,
+      "diff_device_writes": 7,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666012,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 16,
+      "reset_pc": 536870912,
+      "stacks": [],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 31660,
+          "delivered": 31660,
+          "input_waits": 111291,
+          "output_waits": 110663
+        },
+        {
+          "channel": 1,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 12829,
+          "output_waits": 12935
+        },
+        {
+          "channel": 2,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 12895,
+          "output_waits": 12992
+        },
+        {
+          "channel": 3,
+          "accepted": 31660,
+          "delivered": 31660,
+          "input_waits": 110908,
+          "output_waits": 111361
+        },
+        {
+          "channel": 4,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 12827,
+          "output_waits": 13406
+        }
+      ]
+    },
+    "boot": "mrom",
+    "delay": [
+      2,
+      7,
+      false
+    ],
+    "image": "npc/build/m5-s6/programs/memory/build/memory-riscv32e-ysyxsoc.bin",
+    "image_sha256": "7426bf83c1cfbc7b06d4df4d6448a3f19fe03497ba3bc90c6cf9f89f2ee444e7",
+    "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2"
+  },
+  "memory-seed-3": {
+    "summary": {
+      "pass": true,
+      "cycles": 1155866,
+      "commits": 24623,
+      "exceptions": 0,
+      "ar": 31660,
+      "aw": 3693,
+      "w": 3693,
+      "r": 31660,
+      "b": 3693,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 425000,
+      "first_commit_ps": 685000,
+      "mrom_dpi_calls": 119712,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 2,
+      "uart_register_reads": 3,
+      "uart_serial_bytes": 2,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 1155837,
+      "diff_steps": 24623,
+      "diff_device_reads": 3,
+      "diff_device_writes": 7,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666012,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 16,
+      "reset_pc": 536870912,
+      "stacks": [],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 31660,
+          "delivered": 31660,
+          "input_waits": 110581,
+          "output_waits": 110634
+        },
+        {
+          "channel": 1,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 12914,
+          "output_waits": 12931
+        },
+        {
+          "channel": 2,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 12768,
+          "output_waits": 12926
+        },
+        {
+          "channel": 3,
+          "accepted": 31660,
+          "delivered": 31660,
+          "input_waits": 111184,
+          "output_waits": 111054
+        },
+        {
+          "channel": 4,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 12874,
+          "output_waits": 12922
+        }
+      ]
+    },
+    "boot": "mrom",
+    "delay": [
+      3,
+      7,
+      false
+    ],
+    "image": "npc/build/m5-s6/programs/memory/build/memory-riscv32e-ysyxsoc.bin",
+    "image_sha256": "7426bf83c1cfbc7b06d4df4d6448a3f19fe03497ba3bc90c6cf9f89f2ee444e7",
+    "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2"
+  },
+  "memory-seed-4": {
+    "summary": {
+      "pass": true,
+      "cycles": 1154672,
+      "commits": 24623,
+      "exceptions": 0,
+      "ar": 31660,
+      "aw": 3693,
+      "w": 3693,
+      "r": 31660,
+      "b": 3693,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 485000,
+      "first_commit_ps": 605000,
+      "mrom_dpi_calls": 119712,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 2,
+      "uart_register_reads": 3,
+      "uart_serial_bytes": 2,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 1154643,
+      "diff_steps": 24623,
+      "diff_device_reads": 3,
+      "diff_device_writes": 7,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666012,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 16,
+      "reset_pc": 536870912,
+      "stacks": [],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 31660,
+          "delivered": 31660,
+          "input_waits": 110539,
+          "output_waits": 110821
+        },
+        {
+          "channel": 1,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 12751,
+          "output_waits": 12768
+        },
+        {
+          "channel": 2,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 13235,
+          "output_waits": 12893
+        },
+        {
+          "channel": 3,
+          "accepted": 31660,
+          "delivered": 31660,
+          "input_waits": 110018,
+          "output_waits": 110849
+        },
+        {
+          "channel": 4,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 13041,
+          "output_waits": 12801
+        }
+      ]
+    },
+    "boot": "mrom",
+    "delay": [
+      4,
+      7,
+      false
+    ],
+    "image": "npc/build/m5-s6/programs/memory/build/memory-riscv32e-ysyxsoc.bin",
+    "image_sha256": "7426bf83c1cfbc7b06d4df4d6448a3f19fe03497ba3bc90c6cf9f89f2ee444e7",
+    "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2"
+  },
+  "memory-seed-5": {
+    "summary": {
+      "pass": true,
+      "cycles": 1155665,
+      "commits": 24623,
+      "exceptions": 0,
+      "ar": 31660,
+      "aw": 3693,
+      "w": 3693,
+      "r": 31660,
+      "b": 3693,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 465000,
+      "first_commit_ps": 605000,
+      "mrom_dpi_calls": 119712,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 2,
+      "uart_register_reads": 3,
+      "uart_serial_bytes": 2,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 1155636,
+      "diff_steps": 24623,
+      "diff_device_reads": 3,
+      "diff_device_writes": 7,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666012,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 16,
+      "reset_pc": 536870912,
+      "stacks": [],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 31660,
+          "delivered": 31660,
+          "input_waits": 110837,
+          "output_waits": 111098
+        },
+        {
+          "channel": 1,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 12878,
+          "output_waits": 12880
+        },
+        {
+          "channel": 2,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 13086,
+          "output_waits": 12795
+        },
+        {
+          "channel": 3,
+          "accepted": 31660,
+          "delivered": 31660,
+          "input_waits": 110798,
+          "output_waits": 110736
+        },
+        {
+          "channel": 4,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 12770,
+          "output_waits": 12789
+        }
+      ]
+    },
+    "boot": "mrom",
+    "delay": [
+      5,
+      7,
+      false
+    ],
+    "image": "npc/build/m5-s6/programs/memory/build/memory-riscv32e-ysyxsoc.bin",
+    "image_sha256": "7426bf83c1cfbc7b06d4df4d6448a3f19fe03497ba3bc90c6cf9f89f2ee444e7",
+    "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2"
+  },
+  "memory-seed-6": {
+    "summary": {
+      "pass": true,
+      "cycles": 1155505,
+      "commits": 24623,
+      "exceptions": 0,
+      "ar": 31660,
+      "aw": 3693,
+      "w": 3693,
+      "r": 31660,
+      "b": 3693,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 525000,
+      "first_commit_ps": 685000,
+      "mrom_dpi_calls": 119712,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 2,
+      "uart_register_reads": 3,
+      "uart_serial_bytes": 2,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 1155476,
+      "diff_steps": 24623,
+      "diff_device_reads": 3,
+      "diff_device_writes": 7,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666012,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 16,
+      "reset_pc": 536870912,
+      "stacks": [],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 31660,
+          "delivered": 31660,
+          "input_waits": 111021,
+          "output_waits": 110306
+        },
+        {
+          "channel": 1,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 12869,
+          "output_waits": 13050
+        },
+        {
+          "channel": 2,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 12933,
+          "output_waits": 12915
+        },
+        {
+          "channel": 3,
+          "accepted": 31660,
+          "delivered": 31660,
+          "input_waits": 110554,
+          "output_waits": 110470
+        },
+        {
+          "channel": 4,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 13121,
+          "output_waits": 13145
+        }
+      ]
+    },
+    "boot": "mrom",
+    "delay": [
+      6,
+      7,
+      false
+    ],
+    "image": "npc/build/m5-s6/programs/memory/build/memory-riscv32e-ysyxsoc.bin",
+    "image_sha256": "7426bf83c1cfbc7b06d4df4d6448a3f19fe03497ba3bc90c6cf9f89f2ee444e7",
+    "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2"
+  },
+  "memory-seed-7": {
+    "summary": {
+      "pass": true,
+      "cycles": 1155944,
+      "commits": 24623,
+      "exceptions": 0,
+      "ar": 31660,
+      "aw": 3693,
+      "w": 3693,
+      "r": 31660,
+      "b": 3693,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 505000,
+      "first_commit_ps": 685000,
+      "mrom_dpi_calls": 119712,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 2,
+      "uart_register_reads": 3,
+      "uart_serial_bytes": 2,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 1155915,
+      "diff_steps": 24623,
+      "diff_device_reads": 3,
+      "diff_device_writes": 7,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666012,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 16,
+      "reset_pc": 536870912,
+      "stacks": [],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 31660,
+          "delivered": 31660,
+          "input_waits": 110303,
+          "output_waits": 110487
+        },
+        {
+          "channel": 1,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 12956,
+          "output_waits": 13110
+        },
+        {
+          "channel": 2,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 13056,
+          "output_waits": 12725
+        },
+        {
+          "channel": 3,
+          "accepted": 31660,
+          "delivered": 31660,
+          "input_waits": 111102,
+          "output_waits": 111473
+        },
+        {
+          "channel": 4,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 12782,
+          "output_waits": 13037
+        }
+      ]
+    },
+    "boot": "mrom",
+    "delay": [
+      7,
+      7,
+      false
+    ],
+    "image": "npc/build/m5-s6/programs/memory/build/memory-riscv32e-ysyxsoc.bin",
+    "image_sha256": "7426bf83c1cfbc7b06d4df4d6448a3f19fe03497ba3bc90c6cf9f89f2ee444e7",
+    "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2"
+  },
+  "memory-seed-8": {
+    "summary": {
+      "pass": true,
+      "cycles": 1156430,
+      "commits": 24623,
+      "exceptions": 0,
+      "ar": 31660,
+      "aw": 3693,
+      "w": 3693,
+      "r": 31660,
+      "b": 3693,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 405000,
+      "first_commit_ps": 605000,
+      "mrom_dpi_calls": 119712,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 2,
+      "uart_register_reads": 3,
+      "uart_serial_bytes": 2,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 1156401,
+      "diff_steps": 24623,
+      "diff_device_reads": 3,
+      "diff_device_writes": 7,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666012,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 16,
+      "reset_pc": 536870912,
+      "stacks": [],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 31660,
+          "delivered": 31660,
+          "input_waits": 111878,
+          "output_waits": 110448
+        },
+        {
+          "channel": 1,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 12895,
+          "output_waits": 12915
+        },
+        {
+          "channel": 2,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 12759,
+          "output_waits": 12888
+        },
+        {
+          "channel": 3,
+          "accepted": 31660,
+          "delivered": 31660,
+          "input_waits": 111241,
+          "output_waits": 110766
+        },
+        {
+          "channel": 4,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 12925,
+          "output_waits": 12700
+        }
+      ]
+    },
+    "boot": "mrom",
+    "delay": [
+      8,
+      7,
+      false
+    ],
+    "image": "npc/build/m5-s6/programs/memory/build/memory-riscv32e-ysyxsoc.bin",
+    "image_sha256": "7426bf83c1cfbc7b06d4df4d6448a3f19fe03497ba3bc90c6cf9f89f2ee444e7",
+    "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2"
+  },
+  "memory-seed-9": {
+    "summary": {
+      "pass": true,
+      "cycles": 1157788,
+      "commits": 24623,
+      "exceptions": 0,
+      "ar": 31660,
+      "aw": 3693,
+      "w": 3693,
+      "r": 31660,
+      "b": 3693,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 385000,
+      "first_commit_ps": 605000,
+      "mrom_dpi_calls": 119712,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 2,
+      "uart_register_reads": 3,
+      "uart_serial_bytes": 2,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 1157759,
+      "diff_steps": 24623,
+      "diff_device_reads": 3,
+      "diff_device_writes": 7,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666012,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 16,
+      "reset_pc": 536870912,
+      "stacks": [],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 31660,
+          "delivered": 31660,
+          "input_waits": 110524,
+          "output_waits": 111247
+        },
+        {
+          "channel": 1,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 12862,
+          "output_waits": 13059
+        },
+        {
+          "channel": 2,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 13022,
+          "output_waits": 13118
+        },
+        {
+          "channel": 3,
+          "accepted": 31660,
+          "delivered": 31660,
+          "input_waits": 111297,
+          "output_waits": 111683
+        },
+        {
+          "channel": 4,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 13054,
+          "output_waits": 13060
+        }
+      ]
+    },
+    "boot": "mrom",
+    "delay": [
+      9,
+      7,
+      false
+    ],
+    "image": "npc/build/m5-s6/programs/memory/build/memory-riscv32e-ysyxsoc.bin",
+    "image_sha256": "7426bf83c1cfbc7b06d4df4d6448a3f19fe03497ba3bc90c6cf9f89f2ee444e7",
+    "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2"
+  },
+  "memory-seed-10": {
+    "summary": {
+      "pass": true,
+      "cycles": 1155343,
+      "commits": 24623,
+      "exceptions": 0,
+      "ar": 31660,
+      "aw": 3693,
+      "w": 3693,
+      "r": 31660,
+      "b": 3693,
+      "cpu_release_ps": 305000,
+      "first_ar_ps": 445000,
+      "first_commit_ps": 685000,
+      "mrom_dpi_calls": 119712,
+      "flash_dpi_calls": 0,
+      "uart_thr_writes": 2,
+      "uart_register_reads": 3,
+      "uart_serial_bytes": 2,
+      "interrupts": 0,
+      "diff_interrupts": 0,
+      "timer_checks": 1155314,
+      "diff_steps": 24623,
+      "diff_device_reads": 3,
+      "diff_device_writes": 7,
+      "diff_sram_checks": 1,
+      "min_sram_sp": 251666012,
+      "min_psram_sp": 2151677952,
+      "psram_read_bytes": 0,
+      "psram_write_bytes": 0,
+      "diff_psram_checks": 1,
+      "uart_bit_cycles": 16,
+      "reset_pc": 536870912,
+      "stacks": [],
+      "delay_channels": [
+        {
+          "channel": 0,
+          "accepted": 31660,
+          "delivered": 31660,
+          "input_waits": 111136,
+          "output_waits": 111025
+        },
+        {
+          "channel": 1,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 13071,
+          "output_waits": 12957
+        },
+        {
+          "channel": 2,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 12983,
+          "output_waits": 12622
+        },
+        {
+          "channel": 3,
+          "accepted": 31660,
+          "delivered": 31660,
+          "input_waits": 110737,
+          "output_waits": 110123
+        },
+        {
+          "channel": 4,
+          "accepted": 3693,
+          "delivered": 3693,
+          "input_waits": 12799,
+          "output_waits": 12844
+        }
+      ]
+    },
+    "boot": "mrom",
+    "delay": [
+      10,
+      7,
+      false
+    ],
+    "image": "npc/build/m5-s6/programs/memory/build/memory-riscv32e-ysyxsoc.bin",
+    "image_sha256": "7426bf83c1cfbc7b06d4df4d6448a3f19fe03497ba3bc90c6cf9f89f2ee444e7",
+    "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2"
+  }
+}

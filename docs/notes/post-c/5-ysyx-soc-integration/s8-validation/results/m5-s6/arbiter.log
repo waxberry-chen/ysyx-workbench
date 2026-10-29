@@ -1,0 +1,14 @@
+T01-T04 directed scoreboard: PASS
+T08 reset epochs (13 phases): PASS
+Arbiter random seed 1: 1000/1000 PASS
+Arbiter random seed 2: 1000/1000 PASS
+Arbiter random seed 3: 1000/1000 PASS
+Arbiter random seed 4: 1000/1000 PASS
+Arbiter random seed 5: 1000/1000 PASS
+Arbiter random seed 6: 1000/1000 PASS
+Arbiter random seed 7: 1000/1000 PASS
+Arbiter random seed 8: 1000/1000 PASS
+Arbiter random seed 9: 1000/1000 PASS
+Arbiter random seed 10: 1000/1000 PASS
+accepted=10143 completed=10132 reset_aborted=11 slave_write_effects=887 coverage_bins=74
+M5 S1 transaction scoreboard: PASS

@@ -1,0 +1,14 @@
+hello: PASS (6356 commits)
+memory: PASS (24626 commits)
+traps: PASS (6323 commits)
+timer: PASS (7062 commits)
+Traceback (most recent call last):
+  File "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-repro/workspace/npc/tests/m5_s3_test.py", line 221, in <module>
+    main()
+  File "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-repro/workspace/npc/tests/m5_s3_test.py", line 193, in main
+    image=build("micro-"+bench,[FIX/"microbench.c",BENCH/f"src/{bench}/{bench}.c"],
+  File "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-repro/workspace/npc/tests/m5_s3_test.py", line 64, in build
+    rc, text = run(name+"-build", ["make", "ARCH=riscv32e-ysyxsoc", "insert-arg"],
+  File "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-repro/workspace/npc/tests/m5_s3_test.py", line 38, in run
+    assert result.returncode == 0, (name, result.returncode, text[-4000:])
+AssertionError: ('micro-sieve-build', 2, '# Building micro-sieve-insert-arg [riscv32e-ysyxsoc]\n# Building am-archive [riscv32e-ysyxsoc]\n# Building klib-archive [riscv32e-ysyxsoc]\n+ CC source0.c\n/home/cym/prj/ysyx-workbench/npc/build/m5-s8-repro/workspace/npc/tests/soc-runtime/microbench.c:1:10: fatal error: benchmark.h: No such file or directory\n    1 | #include <benchmark.h>\n      |          ^~~~~~~~~~~~~\ncompilation terminated.\nmake: *** [/home/cym/prj/ysyx-workbench/npc/build/m5-s8-repro/workspace/abstract-machine/Makefile:129: /home/cym/prj/ysyx-workbench/npc/build/m5-s8-repro/workspace/npc/build/m5-s3/programs/micro-sieve/build/riscv32e-ysyxsoc/source0.o] Error 1\n')

@@ -1,0 +1,10 @@
+[1;34m[src/cpu/cpu-exec.c:166 cpu_exec] nemu: [1;32mHIT GOOD TRAP[0m at pc = 0x200000ec[0m
+[1;34m[src/cpu/cpu-exec.c:130 statistic] host time spent = 11 us[0m
+[1;34m[src/cpu/cpu-exec.c:131 statistic] total guest instructions = 116[0m
+[1;34m[src/cpu/cpu-exec.c:132 statistic] simulation frequency = 10545454 inst/s[0m
+NPC_DELAY channel=0 accepted=141 delivered=141 input_waits=496 output_waits=423 seed=17 max=7 fixed=0
+NPC_DELAY channel=1 accepted=3 delivered=3 input_waits=13 output_waits=10 seed=17 max=7 fixed=0
+NPC_DELAY channel=2 accepted=3 delivered=3 input_waits=14 output_waits=6 seed=17 max=7 fixed=0
+NPC_DELAY channel=3 accepted=141 delivered=141 input_waits=514 output_waits=509 seed=17 max=7 fixed=0
+NPC_DELAY channel=4 accepted=3 delivered=3 input_waits=9 output_waits=10 seed=17 max=7 fixed=0
+HIT GOOD TRAP: real ysyxSoC commits=116 cycles=4721 UART_TX=

@@ -1,0 +1,16 @@
+{
+  "cpu_port_count": 61,
+  "cpu_abi": "PASS",
+  "lint_exit_code": 0,
+  "warnings": {
+    "BLKSEQ": 16,
+    "DECLFILENAME": 5,
+    "DEFPARAM": 2,
+    "PINCONNECTEMPTY": 13,
+    "SYNCASYNCNET": 3,
+    "TIMESCALEMOD": 44,
+    "UNUSEDPARAM": 1,
+    "UNUSEDSIGNAL": 140
+  }
+}
+S0 interface/elaboration check passed; evidence: /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s0/contract-check

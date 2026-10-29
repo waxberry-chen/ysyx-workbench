@@ -1,0 +1,21 @@
+guard-build: PASS
+guard: PASS
+ebreak-build: PASS
+ebreak-objcopy: PASS
+ebreak: PASS
+uart-build: PASS
+uart-objcopy: PASS
+uart: PASS
+memory-build: PASS
+memory-objcopy: PASS
+memory: PASS
+faults-build: PASS
+faults-objcopy: PASS
+faults-symbols: PASS
+faults: PASS
+empty: PASS
+oversized: PASS
+timeout: PASS
+bad-exit: PASS
+missing-image: PASS
+S2: PASS; evidence: /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s2

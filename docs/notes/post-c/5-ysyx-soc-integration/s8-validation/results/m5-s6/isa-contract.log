@@ -1,0 +1,5 @@
+axi4-illegal-1: PASS (97 independently expected traps)
+axi4-illegal-7: PASS (97 independently expected traps)
+axi4-legal-1: PASS (0 independently expected traps)
+axi4-legal-7: PASS (0 independently expected traps)
+ISA contract: PASS; evidence: /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/isa-contract-test

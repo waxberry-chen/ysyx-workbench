@@ -1,0 +1,3 @@
+boot-flash-sram: PASS (1892 commits, 574831 cycles)
+boot-flash-psram: PASS (1889 commits, 625228 cycles)
+S4 selected groups: PASS

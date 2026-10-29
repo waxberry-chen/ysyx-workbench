@@ -1,0 +1,12 @@
+[
+  {
+    "name": "rtthread-capacity-build",
+    "status": "PASS",
+    "negative": false
+  },
+  {
+    "name": "rtthread-capacity",
+    "status": "PASS",
+    "negative": false
+  }
+]

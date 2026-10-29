@@ -1,0 +1,22 @@
+clint-build: PASS
+clint: PASS
+timer-registers: PASS (6249 commits, 130713 cycles)
+trap: PASS (83 commits, 1216 cycles)
+am-timer-mrom: PASS (9121 commits, 181823 cycles)
+am-timer-flash-sram: PASS (6526 commits, 1441164 cycles)
+am-timer-flash-psram: PASS (4618 commits, 1532108 cycles)
+rtthread-tick: PASS (112959 commits, 35251121 cycles)
+latency-cpu-build: PASS
+latency-build: PASS
+latency-objcopy: PASS
+latency-1: PASS
+latency-2: PASS
+latency-3: PASS
+latency-4: PASS
+latency-5: PASS
+latency-6: PASS
+latency-7: PASS
+latency-8: PASS
+latency-9: PASS
+latency-10: PASS
+S5: PASS; evidence: /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s5

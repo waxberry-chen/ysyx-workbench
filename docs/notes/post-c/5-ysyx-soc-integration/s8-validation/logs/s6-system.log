@@ -1,0 +1,103 @@
+rtt-bsp-check: running
+rtthread-system-build: running
+rtthread-normal: running
+rtthread-normal: PASS commits=361581 IRQs=15 cycles=71799451
+rtthread-delayed: running
+rtthread-delayed: PASS commits=336507 IRQs=15 cycles=78906912
+uart-long-build: running
+uart-normal: running
+uart-normal: PASS commits=38603 IRQs=0 cycles=806033
+uart-fixed: running
+uart-fixed: PASS commits=20993 IRQs=0 cycles=1059023
+uart-random: running
+uart-random: PASS commits=19439 IRQs=0 cycles=1045528
+uart-wrong-baud: running
+hello-build: running
+memory-build: running
+hello-fixed: running
+hello-fixed: PASS commits=6356 IRQs=0 cycles=323276
+hello-seed-1: running
+hello-seed-1: PASS commits=6356 IRQs=0 cycles=345761
+hello-seed-2: running
+hello-seed-2: PASS commits=6356 IRQs=0 cycles=347787
+hello-seed-3: running
+hello-seed-3: PASS commits=6356 IRQs=0 cycles=345879
+hello-seed-4: running
+hello-seed-4: PASS commits=6356 IRQs=0 cycles=346106
+hello-seed-5: running
+hello-seed-5: PASS commits=6356 IRQs=0 cycles=345886
+hello-seed-6: running
+hello-seed-6: PASS commits=6356 IRQs=0 cycles=345336
+hello-seed-7: running
+hello-seed-7: PASS commits=6356 IRQs=0 cycles=346463
+hello-seed-8: running
+hello-seed-8: PASS commits=6356 IRQs=0 cycles=346422
+hello-seed-9: running
+hello-seed-9: PASS commits=6356 IRQs=0 cycles=346996
+hello-seed-10: running
+hello-seed-10: PASS commits=6356 IRQs=0 cycles=346492
+memory-fixed: running
+memory-fixed: PASS commits=24623 IRQs=0 cycles=1081648
+memory-seed-1: running
+memory-seed-1: PASS commits=24623 IRQs=0 cycles=1154737
+memory-seed-2: running
+memory-seed-2: PASS commits=24623 IRQs=0 cycles=1157229
+memory-seed-3: running
+memory-seed-3: PASS commits=24623 IRQs=0 cycles=1155866
+memory-seed-4: running
+memory-seed-4: PASS commits=24623 IRQs=0 cycles=1154672
+memory-seed-5: running
+memory-seed-5: PASS commits=24623 IRQs=0 cycles=1155665
+memory-seed-6: running
+memory-seed-6: PASS commits=24623 IRQs=0 cycles=1155505
+memory-seed-7: running
+memory-seed-7: PASS commits=24623 IRQs=0 cycles=1155944
+memory-seed-8: running
+memory-seed-8: PASS commits=24623 IRQs=0 cycles=1156430
+memory-seed-9: running
+memory-seed-9: PASS commits=24623 IRQs=0 cycles=1157788
+memory-seed-10: running
+memory-seed-10: PASS commits=24623 IRQs=0 cycles=1155343
+stack-bound-negative: running
+ifu-adapter-build: running
+ifu-adapter: running
+lsu-adapter-build: running
+lsu-adapter: running
+ifu-integration-build: running
+ifu-integration: running
+arbiter-build: running
+arbiter: running
+fabric-build: running
+fabric: running
+arbiter-bad-rid: running
+arbiter-bad-bid: running
+arbiter-bad-rlast: running
+fabric-bad-rid: running
+fabric-bad-bid: running
+fabric-bad-rlast: running
+redirect-build: running
+redirect: running
+clint-build: running
+clint: running
+router-local-build: running
+router-local: running
+wrapper-build: running
+wrapper: running
+wrapper-badirq: running
+wrapper-badslave: running
+cpu-build: running
+isa-contract: running
+Traceback (most recent call last):
+  File "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/tests/m5_s6_test.py", line 228, in <module>
+    main()
+  File "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/tests/m5_s6_test.py", line 207, in main
+    if not args.only or args.only==name: fn()
+  File "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/tests/m5_s6_test.py", line 161, in regression
+    unit.protocol(); unit.cpu(); s2.guard()
+  File "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/tests/m5_s1_test.py", line 83, in cpu
+    run('isa-contract',['python3','tests/isa_contract_test.py'])
+  File "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/tests/m5_s6_test.py", line 159, in unit_run
+    return run(name, args, expected=negative)
+  File "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/tests/m5_s6_test.py", line 49, in run
+    assert ok, (name, p.returncode, text[-4000:])
+AssertionError: ('isa-contract', 1, 'Traceback (most recent call last):\n  File "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/tests/isa_contract_test.py", line 229, in <module>\n    log=command(tag,[ROOT/\'npc/build/m5-s1/cpu/Vaxi4_cpu_test_top\',binary,trace,seed])\n  File "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/tests/isa_contract_test.py", line 20, in command\n    result = subprocess.run(list(map(str, args)), stdout=subprocess.PIPE,\n  File "/usr/lib/python3.10/subprocess.py", line 503, in run\n    with Popen(*popenargs, **kwargs) as process:\n  File "/usr/lib/python3.10/subprocess.py", line 971, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File "/usr/lib/python3.10/subprocess.py", line 1863, in _execute_child\n    raise child_exception_type(errno_num, err_msg, err_filename)\nFileNotFoundError: [Errno 2] No such file or directory: \'/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s1/cpu/Vaxi4_cpu_test_top\'\n')

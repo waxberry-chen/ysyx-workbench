@@ -1,0 +1,8 @@
+# Building ram-overflow-insert-arg [riscv32e-ysyxsoc]
+# Building am-archive [riscv32e-ysyxsoc]
+# Building klib-archive [riscv32e-ysyxsoc]
++ AS source0.S
+# Creating image [riscv32e-ysyxsoc]
++ LD -> build/ram-overflow-riscv32e-ysyxsoc.elf
+riscv64-linux-gnu-ld: SRAM data/bss overlaps reserved 2 KiB stack
+make: *** [/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/abstract-machine/Makefile:154: /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s3/programs/ram-overflow/build/ram-overflow-riscv32e-ysyxsoc.elf] Error 1

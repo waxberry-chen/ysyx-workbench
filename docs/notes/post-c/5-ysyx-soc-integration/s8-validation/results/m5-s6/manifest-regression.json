@@ -1,0 +1,3432 @@
+{
+  "repositories": {
+    ".": {
+      "head": "6023de4b94a4b88488d5877ac6ba711b97491760",
+      "status": "M npc/.gitignore\n M npc/Makefile\n M npc/tests/isa_contract_test.py\n M npc/tests/m5_s1_test.py\n m ysyxSoC",
+      "diff_sha256": "535a053693648cbc92e1b8498936eb3cb96ec0683b51e811b947bf86adb4db2b"
+    },
+    "ysyxSoC": {
+      "head": "2d365297e76661faeafb4059d3ed257d26fe8778",
+      "status": "m rocket-chip",
+      "diff_sha256": "d2693fd0dd650b16eafe5a0907bfade07d436ac8d2f3dd344f21e8119cbd2ae8"
+    },
+    "ysyxSoC/rocket-chip": {
+      "head": "d0c6b50fdefcdbe121e9788433ea51f7efaf1d32",
+      "status": "M src/main/scala/amba/axi4/Parameters.scala",
+      "diff_sha256": "6609375ae30265c3add127caddcc3ef2e3bfd144dec3a81834b76794a8fc5271"
+    },
+    "rt-thread-am": {
+      "head": "bce7f1d509b05e53022be89a719df077e89b507b",
+      "status": "",
+      "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "source_sha256": {
+    "abstract-machine/am/include/am.h": "214c331a58cc90dd9dfaa4a6de6e4db461489cb1be4e53e49653e05c0b0cdc1e",
+    "abstract-machine/am/include/amdev.h": "d8ef1a79675dfd8c64697b06656063ae6d380a7fc83f6f4236b317415c3b0254",
+    "abstract-machine/am/include/arch/loongarch32r-nemu.h": "8ba28248c4c8cacdeeacf755d8184b951d14436f2814069d2339b9e1f3a97e86",
+    "abstract-machine/am/include/arch/mips32-nemu.h": "66cedfa7049d21b2b75f849188cb982db34868ae5f9a901cda21f1341e07f092",
+    "abstract-machine/am/include/arch/native.h": "a05816c3cdfe05b4bf5c011e05165db22582b07f2c23f70962023c711b5964f0",
+    "abstract-machine/am/include/arch/riscv.h": "832a93d17db5c3e38df63a79b7a6f19cb19d83604d4a7abe032afae8ad43c5bf",
+    "abstract-machine/am/include/arch/x86-nemu.h": "8da7c230aa41bc4b12187cc4a912ecb78f9260c1b3a32d134836ed0c35e200d0",
+    "abstract-machine/am/include/arch/x86-qemu.h": "59080f187cdb91b3d5cdd3392fe18cc9050882e80355787ddc9f9b764211b405",
+    "abstract-machine/am/include/arch/x86_64-qemu.h": "5e63d551b042eedecbfc736066f8d864f3d0b11caf3be2e04f76bfb19dbff2f9",
+    "abstract-machine/am/include/ysyxsoc.h": "95b8229ab53d902a89f658d65ebf8e45119a3e0e45096d819651521534a23a35",
+    "abstract-machine/am/src/loongarch/loongarch32r.h": "c16fdcb8ba38ea6784009855ad7d86e8cd4ca2d3d4d91141ef53382dcdd3e638",
+    "abstract-machine/am/src/loongarch/nemu/cte.c": "eb070817f74cc0940e1465f7780566f15c280ba277d42637bb92984f558b4f2a",
+    "abstract-machine/am/src/loongarch/nemu/start.S": "b0738fa7ce892b0563d75d32b9d2f4cab5cb728c217c01026519c7e9f5aec1d1",
+    "abstract-machine/am/src/loongarch/nemu/trap.S": "4cc7b15c23629c876e667243ee8c10390299810493b38a561ce7ff132876e2dc",
+    "abstract-machine/am/src/loongarch/nemu/vme.c": "e83b242142140258a8aafc581c5c8d7a8a6a17d136220044019266958f81297d",
+    "abstract-machine/am/src/mips/mips32.h": "a03bdaa0097d216018b62356ff3f18daf3a969c24d7a9aad3c6fdae4faa83e7d",
+    "abstract-machine/am/src/mips/nemu/cte.c": "c7d4dd2ef990263b6ab17ee16aeed875afce3f4272a814ee8e21ff3e9b1354a9",
+    "abstract-machine/am/src/mips/nemu/start.S": "890ce6aaba991dae40bd4b863ec5c6d3ca6bf2b58bf8fb5b897b8a1fc0c79406",
+    "abstract-machine/am/src/mips/nemu/trap.S": "9a99691c71708e3ccf19a5f90cef6190dba260e48cc4c854e345a2a0ecc0c315",
+    "abstract-machine/am/src/mips/nemu/vme.c": "e83b242142140258a8aafc581c5c8d7a8a6a17d136220044019266958f81297d",
+    "abstract-machine/am/src/native/cte.c": "2f35621a63e8e9220aab61e2a387cec3cda79c0e0ed8a160e3349eb6da4373c0",
+    "abstract-machine/am/src/native/ioe/audio.c": "e44c77f64ce9a37d85bdd725b01ca1e4dcae4fe33c7de017b1c22abf84837e95",
+    "abstract-machine/am/src/native/ioe/disk.c": "af37086e3f2f33d5e6c66c000527c47e426436baa03e5da08d52efe42489ebd6",
+    "abstract-machine/am/src/native/ioe/gpu.c": "2ac6c385300ab66afe33b55a0c60c9183d705ebe6a63d95db38b1007f23f4d25",
+    "abstract-machine/am/src/native/ioe/input.c": "fb04113819ecff432c27e2cc73bdce1cf78383e56901f69ac5d12b6a69dfb805",
+    "abstract-machine/am/src/native/ioe/timer.c": "4f22234c0037a59e569539e574ddaadf9aad75f38fa2648ae0a6f9e0dd0ad1a9",
+    "abstract-machine/am/src/native/ioe/uart.c": "f3c469a8928d4c6f169e355808f2cac5b079043d8f608cc0b10b2cc491251d6b",
+    "abstract-machine/am/src/native/ioe.c": "e1d58c4daf119060d8de40f1d561d8f7bace67ca4dfa654ff807a3bd3d72fca9",
+    "abstract-machine/am/src/native/mpe.c": "07537fc3cfc07d9cfdf6ea9cf559fff0e0758debc6767ae676062c310db5b39f",
+    "abstract-machine/am/src/native/platform.c": "dd1f2e3d2e004df686cf1ba3e0df991672cb31428c069a50fff913fd58d3f4f5",
+    "abstract-machine/am/src/native/platform.h": "3a6d30f51a6a2fc1220f9f2c8214f77e31ee304d0eaf1d595e9fee5a7cc2b055",
+    "abstract-machine/am/src/native/trap.S": "007c1fc1cb24af01c59af66b230c1921ae0be18752c562979146f9f47092de2e",
+    "abstract-machine/am/src/native/trm.c": "c8f6f7d8b9310bdf96e0d3c1316f554e8d7c7f51a20e7cbf81dd44094d9b9677",
+    "abstract-machine/am/src/native/vme.c": "65aeae90571acf92506c6ed74bfc31277f66aa4da57b22f3281bb9c99c87499d",
+    "abstract-machine/am/src/platform/dummy/cte.c": "b2932dd96f39a31fbe616ef17621c40332c112007a9b05f999b8409754763527",
+    "abstract-machine/am/src/platform/dummy/ioe.c": "9b00d7724c30cd93c9c4b1e08c4ce368d202d824f966d640791445a5b7664e39",
+    "abstract-machine/am/src/platform/dummy/mpe.c": "d85a54fb3b6900d19bf251b0ca5ac67cfba293b8937f49d6b3d41733d769f1ee",
+    "abstract-machine/am/src/platform/dummy/trm.c": "945784e149cb12e9f88044e44e3e59db1e03ce6decb6928cdaf9cda3f08d4e7f",
+    "abstract-machine/am/src/platform/dummy/vme.c": "71883c708b687b65d4a9c5d400f45f7c04b60c2aa80628834e29ec7406e294bd",
+    "abstract-machine/am/src/platform/nemu/include/nemu.h": "35a6f47b7483a22caabc98f97592602c2d0f36c8bf31ee1a31c7fa1e86132767",
+    "abstract-machine/am/src/platform/nemu/ioe/audio.c": "6aeb89f63ff93cefeb988d311c545985589180aa31cc023d65efdf9cec3bdabd",
+    "abstract-machine/am/src/platform/nemu/ioe/disk.c": "e01014f8193ab276bb6401224410b6b5f7449e198098ade3f36e5154e7bf1427",
+    "abstract-machine/am/src/platform/nemu/ioe/gpu.c": "a1f9b4d735e720d8dcd4b59ef04dc61265ba086086abd093266698dfbc2e3fd1",
+    "abstract-machine/am/src/platform/nemu/ioe/input.c": "1a41226827ffee2332e9335173c6dd571695c55cbe914ccbd1b68d43cef54da7",
+    "abstract-machine/am/src/platform/nemu/ioe/ioe.c": "88f82128a53ed0ec71d2dd9353801e32d421b7fa3b32c12f514600dcb498507a",
+    "abstract-machine/am/src/platform/nemu/ioe/timer.c": "7e84f0c5afef1fd6adde2ea0c64df523c843508c7a39bfcf35318f540434a74c",
+    "abstract-machine/am/src/platform/nemu/mpe.c": "ffed82a8be47822b5ef5f582608aa8fda0fb07bc17cb1181c6960e552df06dd5",
+    "abstract-machine/am/src/platform/nemu/trm.c": "91bdc572c870d9e1e29dc5121122186b3f1c26e21ddc2cfbca5bc7e923f3ed62",
+    "abstract-machine/am/src/riscv/nemu/cte.c": "54fdaf450d050a41e6e59b25a7ef449150f4544cc4001f0b38043fc3a79ad6a0",
+    "abstract-machine/am/src/riscv/nemu/start.S": "39e990d0fb3aeb065309cf40dd25d069d8a6bd8660319bf6513f9cc88943112a",
+    "abstract-machine/am/src/riscv/nemu/trap.S": "543fb48b213b2426d34368957d354b1c6e35fce8f9f97ab730621a0fa4b3e6cf",
+    "abstract-machine/am/src/riscv/nemu/vme.c": "89c189cfb729f49ca0ebd7bed89069b562f9d460131d7ee17baec98193ecb61c",
+    "abstract-machine/am/src/riscv/npc/cte.c": "b99b7c07006a4736f7a5b36b95cdbdff8c39de799e71a2e2698d423eb17989e5",
+    "abstract-machine/am/src/riscv/npc/include/npc.h": "dbed351bf9e6b74430806e7fe9ba045f0fb90ca2f3c40ecbed0733a135868ae5",
+    "abstract-machine/am/src/riscv/npc/input.c": "0251a26e60f62c00d71fbed7d8571ccba5c6348caf2fc3424cc37b141d9fb7bb",
+    "abstract-machine/am/src/riscv/npc/ioe.c": "37cb6987aa0a5dd3c0bf7ead1a9eadfb108410d860d2ea6dfb7b540a63921298",
+    "abstract-machine/am/src/riscv/npc/libgcc/ashldi3.c": "f61eafebd4d7ba9972f1f9c97efd90a96b7ea5fa776607914c76a67d4d7c2f85",
+    "abstract-machine/am/src/riscv/npc/libgcc/div.S": "a0cda751f63de5079efd63c774e42632f223a9017c9e6f40821a7d4f03505bd5",
+    "abstract-machine/am/src/riscv/npc/libgcc/libgcc2.h": "6bbfef1bcfc5be7f8f98f4229d2975012878d691e30cca3a8304ace5f808227d",
+    "abstract-machine/am/src/riscv/npc/libgcc/longlong.h": "efaa9996996a392ebd2e6c132baac411687955d98241845db128d7f6afc4515b",
+    "abstract-machine/am/src/riscv/npc/libgcc/muldi3.S": "dea2a4142cfc471b1a690b2ba928fe31e6033cb8be6c9e01e8894951f6cc1e48",
+    "abstract-machine/am/src/riscv/npc/libgcc/multi3.c": "a56f472e28a0980f69e3616260d2a95e47c6be826d3d06ca1f026d49fd2e95d0",
+    "abstract-machine/am/src/riscv/npc/libgcc/riscv-asm.h": "ce39c6fd2cf6a672281c4bc78c0b0eba1d4177070edefcb1b3a5ac29370b722f",
+    "abstract-machine/am/src/riscv/npc/libgcc/unused.c": "f1ce7c80ece535460122bcaa131cf66120584007d6d879740cc3c319282c8b5b",
+    "abstract-machine/am/src/riscv/npc/mpe.c": "d85a54fb3b6900d19bf251b0ca5ac67cfba293b8937f49d6b3d41733d769f1ee",
+    "abstract-machine/am/src/riscv/npc/start.S": "6d8019f6a7fe42e3f9bf012c09abb41ebdf9002d13e3eaa79dd23b86f14ab564",
+    "abstract-machine/am/src/riscv/npc/timer.c": "eb0aea8f1728dac7d8ed866dea13154385d3b9f4861b48e0b7bd98e15e21e779",
+    "abstract-machine/am/src/riscv/npc/trap.S": "e2574a07ca48c8cb2b48afc00783894530da28ca96b131482b12c206955ba64b",
+    "abstract-machine/am/src/riscv/npc/trm.c": "e89db7207cd361e4548744422198ce681c4c70429f4d7418e68288a75da46e26",
+    "abstract-machine/am/src/riscv/npc/vme.c": "71883c708b687b65d4a9c5d400f45f7c04b60c2aa80628834e29ec7406e294bd",
+    "abstract-machine/am/src/riscv/riscv.h": "1c834763277e1dcc64f489abf4b154c96017b5391710ad470ba3a6bab5ed29c2",
+    "abstract-machine/am/src/riscv/spike/atomic.h": "0f6b74ff4c82d1b4c6a079575c1214675ebc728ac0ec7dbbc93727864b225f63",
+    "abstract-machine/am/src/riscv/spike/htif.c": "effee79f7309e183fddeef89e9dcf42e37515e87a9963c3b90380c8295ae130e",
+    "abstract-machine/am/src/riscv/spike/htif.h": "5ddd701e722f6dc8c54a445454a7f42f20e5225355d69efe000e2a3b94d2450f",
+    "abstract-machine/am/src/riscv/spike/ioe.c": "b034b225559a8d3cb9416f169e3d23b293d6d773e706cc30ed5bf71544ef8a5e",
+    "abstract-machine/am/src/riscv/spike/linker.ld": "daa14221a0b201b1dc9dd5c257f496612c973efb37ce03f0eb326587193b2c5a",
+    "abstract-machine/am/src/riscv/spike/start.S": "4ebfd044e11083e2326b0a3ebf5c3b93eca10eb70d1b69e356235158a8e09cb5",
+    "abstract-machine/am/src/riscv/spike/timer.c": "0c69eb65e17839cff9ebd2f500f4952fca8179a5422f0d85946bb7a13acaa230",
+    "abstract-machine/am/src/riscv/spike/trm.c": "ed42cf525439a2d7b78efce872677d5d815465d0417dd8f4c5cc51dda785928b",
+    "abstract-machine/am/src/riscv/ysyxsoc/flash-start.S": "6ece328de4ed3e386150299b4c74e4ab4aea06280996cd526b5ee4709923a828",
+    "abstract-machine/am/src/riscv/ysyxsoc/ioe.c": "36d5fb358f640c3ed6adfc0ecea93375f65e857253d7a3b1e1a791d2a0983eda",
+    "abstract-machine/am/src/riscv/ysyxsoc/start.S": "c8de71b32f0f06ecaff3b24ca7cd306f300aefdec713db3811af52e66ae23d97",
+    "abstract-machine/am/src/riscv/ysyxsoc/trm.c": "dd2b681b15001f9cd9a1e19b98a98f0e8d2dabbb81b45fc1d8080e7bf34fd5e1",
+    "abstract-machine/am/src/x86/nemu/cte.c": "5f9e704b8e37b86e0e13dc8d451d00acab42c55347d52be11bce2d4d207e2320",
+    "abstract-machine/am/src/x86/nemu/start.S": "e86af34b60feed9fe126e944825db22dda75d81361e198a4782c8224ab8097ae",
+    "abstract-machine/am/src/x86/nemu/trap.S": "4bb78aa8cdb7eedf274530a5a6e808cef0a0f51c2c766dedb924e288fc8f1d30",
+    "abstract-machine/am/src/x86/nemu/vme.c": "05304f00f0fa6c71538fdff53b30714a16dc64b3eb6d9e6e96234aeddbf4ba4b",
+    "abstract-machine/am/src/x86/qemu/boot/genboot.py": "9347de11d9125d7278b844326795106419d412801d99ad57e823aaccf1a4c168",
+    "abstract-machine/am/src/x86/qemu/boot/main.c": "6e9c8e2a8c94fd99e2333a4ec917aa130a0b67c2c076ba38d9f4393f15f847f4",
+    "abstract-machine/am/src/x86/qemu/boot/start.S": "07b553ce1ce9925885c3932443b1685704259807970ea6a4a3e434011a19d0c0",
+    "abstract-machine/am/src/x86/qemu/cte.c": "c10bac908f469b23f2fdf16bcfc81ba2fff141bf3448dc820989ec2b60a4bc52",
+    "abstract-machine/am/src/x86/qemu/ioe.c": "6084883ae27f3bd294f0ea8a385bd77dec283490ee67e24774bd307b9e9111ca",
+    "abstract-machine/am/src/x86/qemu/mpe.c": "3db4684fe1c7c53acc346416062e19798106981ca2d68825d3a2d635ca17df68",
+    "abstract-machine/am/src/x86/qemu/start32.S": "791cf3e99bb2ed1aef2f958c71ff729736cbacc442ff89415bbc5d911312168e",
+    "abstract-machine/am/src/x86/qemu/start64.S": "cb25154efb27c64cb1770561f1c5164af2105ff10bec9332abe44465e3c52df9",
+    "abstract-machine/am/src/x86/qemu/trap32.S": "a8aef1d9829bcfd46a65ef30e842c9e8f206ab157774344e5b87d9ea8398af6f",
+    "abstract-machine/am/src/x86/qemu/trap64.S": "ccf603eca9732af5b5d7831157ce70ce94ca86e3e2117633ab93a17cad0eeb6e",
+    "abstract-machine/am/src/x86/qemu/trm.c": "57238a7eaa4f56e6f925ddff91b5bd74185db043d8bb4c770a6f3e6e463550a0",
+    "abstract-machine/am/src/x86/qemu/vme.c": "18887e25234fc86d4efd2afd12ad6ee260cdd0c7fee9a711d02c5e202d69c9ef",
+    "abstract-machine/am/src/x86/qemu/x86-qemu.h": "c5003e1e3ea03b7f2a2b7accaa88f5dae3d2721f0d723c773ddfedc41f4f226f",
+    "abstract-machine/am/src/x86/x86.h": "cc3f271870553d8dcf2d3daf922ec89ca704dbe7039b2270e6b386f2bcc3a6f4",
+    "abstract-machine/scripts/isa/loongarch32r.mk": "4f46539204c441abc55e99d65f119a37c831c03efd953622ff8e2c521d5ca298",
+    "abstract-machine/scripts/isa/mips32.mk": "1be23ffab15396762a9ae4ddd93e91cdee35203ac58a65b0ad51211a2d85c9fc",
+    "abstract-machine/scripts/isa/riscv.mk": "c107076e1fb45733bc7a8023c87197d7037012b663c004e579e054102d89c281",
+    "abstract-machine/scripts/isa/x86.mk": "cc3e6b4d6deeedf153be8d67ffe4543538e138da5debaff6380c4ffd79f4da22",
+    "abstract-machine/scripts/isa/x86_64.mk": "1d4f01ff04d540a2be2a88cab3de96a4d8bac323607b3e91aaa9097bd267fff1",
+    "abstract-machine/scripts/linker.ld": "a4cd958290657ad4faef13b0026bc91c0706973396689f1f296b0300232271ab",
+    "abstract-machine/scripts/loongarch32r-nemu.mk": "56d19ae079030ed8c9389cbe71bc54032f5a154c32b044ea8eb4c1db83fdff9f",
+    "abstract-machine/scripts/mips32-nemu.mk": "d7036bf8c9852862b06c1c44cf4e75c0d0d1ba437455f00a25038119b2d453eb",
+    "abstract-machine/scripts/native.mk": "74c67090f1e2f923e8eb6d5445b8f6f58f433c535b0e14576a43c40e4796d1a1",
+    "abstract-machine/scripts/npc-b1.ld": "8b1ac5127b5a39e9d4aad71cc930e8fed7085336407d008ca94e7e7a37719f1a",
+    "abstract-machine/scripts/platform/nemu.mk": "8ed643c7e03e20773d659f4f323eb4a851ad518a2580ff70149904a4f59bd0c4",
+    "abstract-machine/scripts/platform/npc.mk": "d75ac6411523031213dd3bf073d0e5275120e7da9ee15635e2cf9bc2416af7e6",
+    "abstract-machine/scripts/platform/qemu.mk": "5d199902d1775da18681c175af26c36e395c29700aa142666e107c25bc3c28de",
+    "abstract-machine/scripts/platform/ysyxsoc.mk": "9623e28de741c811f21c658ceb14465bb69b6a227a60dd3d7c8a26f765e2c82d",
+    "abstract-machine/scripts/riscv32-nemu.mk": "fbdf261eafb5158014375c833d2e1245c93fafe6024d2210f54f2775aa4f4a5a",
+    "abstract-machine/scripts/riscv32e-nemu.mk": "14026c9f2f6509f94e9ec16ba4dfef05a950195fab1cefbee66eca7360ee1a3e",
+    "abstract-machine/scripts/riscv32e-npc.mk": "d034047a3c9daffadc54633406d69bb3be5ba8b77875c1d50c542373173374ef",
+    "abstract-machine/scripts/riscv32e-ysyxsoc.mk": "97d5357d608a1c7d9865a332d4728450a90bf48fcf2bbe5311b44179cb704104",
+    "abstract-machine/scripts/riscv32mini-nemu.mk": "26017ba58c00ef06779577a901ddf3adb94f9204316e023a693f9099e58428b8",
+    "abstract-machine/scripts/riscv64-nemu.mk": "ef4419be4be6d2402776c89ba0253a0a3a5b9156f233ffeeee9ffbfae5e81795",
+    "abstract-machine/scripts/spike.mk": "d6de20c1c177a3c6e74b4b80a8805a55d760bd7e0dc985d866ff51ba61a00ec8",
+    "abstract-machine/scripts/x86-nemu.mk": "9c67e9a8daf18cff333074e9b2d48e98a27aed516a69661211cfca7bf8ba0268",
+    "abstract-machine/scripts/x86-qemu.mk": "6221998946cf04c49b95c1876141ff19aa3c78840c385a2f5691d00093431f49",
+    "abstract-machine/scripts/x86_64-qemu.mk": "3dd1f47c9987bf555780cf5f4aaf60ae11489a8a234ebe638a308d2958bc8513",
+    "abstract-machine/scripts/ysyxsoc-flash-psram.ld": "98a64da2d6490445f7535e4ba59d57369cafb8783e600d6241e5fdcd048e34c6",
+    "abstract-machine/scripts/ysyxsoc-flash-sram.ld": "3dd1cb206fcf7e7507aa89210d3323f3ead99e0a27f3711968daa246ca5682aa",
+    "abstract-machine/scripts/ysyxsoc.ld": "cedc6e4badf10de6d64965f4f9eb258b7b39667e1e1eb0ff3dcfe5b2b83f61bb",
+    "nemu/include/common.h": "70d3c092b3196d786dc6936d58f06f7c6d470c7bb1e4af4373f9199084cb63d2",
+    "nemu/include/cpu/cpu.h": "099b787e7636882a2f93ca284244df25549d4e6ed44e363df8e52c071677a3ff",
+    "nemu/include/cpu/decode.h": "8621fd5ea1610981415cecc217ac2ba600d58156caa5bbcb998f9c6432efe7de",
+    "nemu/include/cpu/difftest.h": "c8b036168373ffbaecc082473d5a71ce55197675dbd15bc0228394414fb526bb",
+    "nemu/include/cpu/ifetch.h": "32a7eba8da91bdb59167ff97983d4c5c999f5339cbfd8ef1cdd820f828dbcba2",
+    "nemu/include/cpu/iringbuf.h": "873982696ad33199df087ed23972057032defc046ac09b8a100ed04abba1df29",
+    "nemu/include/debug.h": "b8f59be7e4d17c05ada8a87bbaf2a00810dead83a39811dcf3f38ab9a3a46bdf",
+    "nemu/include/device/alarm.h": "d0470e340127ca856e867645e498a391001a2e930d82675df9d896039e646ae4",
+    "nemu/include/device/map.h": "8f48d8327d7741206174f332ce35f94d617c92f7bcd5be99e6cb1c6384cde74e",
+    "nemu/include/device/mmio.h": "9ab4322b228d1356ba4902ea1925fabb9284bb68692b4ff12299602bba6ac6d7",
+    "nemu/include/difftest-def.h": "71aae7904d0b37eeb1df1af6b5b24124083e0bb42177978de60fdaf313c5c9b0",
+    "nemu/include/ftrace.h": "1fd21b2a5c9025ef114f033ed646f6a7371d82d5569db906b7239401491777d9",
+    "nemu/include/isa.h": "10bb90b6cbc378ceed981892550707fe2690414d11ee8c3283cded76d21c84ad",
+    "nemu/include/macro.h": "359bf1fb336228861e0376af41d8a14b74ca387b11dae1c32a2055debbd37569",
+    "nemu/include/memory/host.h": "26939250fc14611c65c845a88768d5417e9b429134a03b0a63b2ff885bc2a3eb",
+    "nemu/include/memory/paddr.h": "9f9a9a01f315f4bd46f3c8e63f2a761e083e07a0f43aa50c7d3a12f7b3429865",
+    "nemu/include/memory/vaddr.h": "36ecf28e4ab52ca1931a6a2c4a1b205505e3711e3395495771b2b4d098657b69",
+    "nemu/include/memory/ysyxsoc.h": "6bb71103df6cd9182a07fc4a15f8a0a9a1cc1808700435f6c448a513f6395d31",
+    "nemu/include/utils.h": "9badd7bf81abc0a415333cbc8dcbc6e4ab6ddb435a926df79f286dfdecc4fe71",
+    "nemu/scripts/build.mk": "6831961f5894ebc6a8bbe874cf6382eed6da21bbdee524604178d09b2caf4951",
+    "nemu/scripts/config.mk": "dc0c4950680b56e9b13fcbb570f719a177ee71c951b97ba2dd06ff3dcf5cde2b",
+    "nemu/scripts/native.mk": "d10eef155570035266dccef7b3d67d7e770d55ab1974ea397c6351d07662e3a8",
+    "nemu/scripts/ysyxsoc.mk": "f81911282d241be393ad3c90ae094ffac5ca7680a7fc89f8446543de2cff087c",
+    "nemu/src/cpu/cpu-exec.c": "c9bae3740731d9c5e2f0694eb5e409a672904f15ccc4604a822b2cf54bb83597",
+    "nemu/src/cpu/difftest/dut.c": "c78962160cbf48304927cb7579965e2103bbaa1675b8664cfa82ecc6c9fad8c7",
+    "nemu/src/cpu/difftest/ref.c": "9d30e8e1c8160c0bce4d37a68d30cb93850987787c404a2cf969840a6a88bcbd",
+    "nemu/src/cpu/iringbuf/iringbuf.c": "381dd93a78c990d8bd73d807ed05ce3bd8c13abec0a0dff22011cba9f551bfe4",
+    "nemu/src/device/alarm.c": "4fe9e5cee05690ef4fbe3516f5ddefbbcbd3e5ddab6ec3bb7b3fb8cc91fba085",
+    "nemu/src/device/audio.c": "b2006cdf7472eaa39b6c663dedc16cf6614b66c9f45303b9105cecc3e052c1e5",
+    "nemu/src/device/device.c": "39a30a130f2d544e8f49d1345d024abd2c0e99ef640d4976968fd5ea161112d0",
+    "nemu/src/device/disk.c": "6e09afd54d23d8e1b44c239703d4c68164041e7c6b030f614cdd051feca9977d",
+    "nemu/src/device/filelist.mk": "7b4b30566c982a2f27525487186f1215661b40f3bb3d9920f754b33b6e3edba1",
+    "nemu/src/device/intr.c": "9bc973eb2453f454416db2e408ebe1f15a6f6a3f88337a4a1f90d387c4d50111",
+    "nemu/src/device/io/map.c": "e2d5d05b8dd549d0ceae7344b9ea37a8b868cd7d93464027d8c1b7e548582d32",
+    "nemu/src/device/io/mmio.c": "d9e56a269bd9e36b40fb96e7a683f30314aa9638df27c1c6b69c2418c815e79b",
+    "nemu/src/device/io/port-io.c": "3c992dc470c64b6af9f8fa234107a93c0dbdecabe13c60e7bc228ca60cee8527",
+    "nemu/src/device/keyboard.c": "2863d641eb72267289e0c75e3f53f164edafeb03bb328163c323842621e46b15",
+    "nemu/src/device/mmc.h": "74e709ebeef0750cd95355ac984cd995d98bd5ef9ff2d7f5c001265f4433bd32",
+    "nemu/src/device/sdcard.c": "4d36c1013e7f79bbcf4179b6aba93fc03f1f99e8b7ccceb0a2d31897f9929b17",
+    "nemu/src/device/serial.c": "04a74bf8981565e1f388ea1edf6fb1a3a8b1b16490f371b9bf5ce8cb516483a3",
+    "nemu/src/device/timer.c": "02e9f85c656a980efc6751c5e7713b053da2b31b55adcf752b5bb1f7196844fa",
+    "nemu/src/device/vga.c": "f0905cdbe4f9089e54c275aa552c462738b79108459b7562468d3f27f644f76e",
+    "nemu/src/engine/filelist.mk": "e65555cf57294d2d919f6c94e927f08662ee2a47696e0195c30f491847b9f974",
+    "nemu/src/engine/interpreter/hostcall.c": "1e447640f5fafe662b8d1fbf479a2f6bfd11dc3574345f8d23fbbe7c8f930836",
+    "nemu/src/engine/interpreter/init.c": "96f9d7d39914389157160a3ce0f7fbea8a8d23f35707082ccacf3f55707773e1",
+    "nemu/src/filelist.mk": "56352ae07521b9d9c2812c01a699d91fe01498a24791e89705d85d8dd3f17a5e",
+    "nemu/src/isa/filelist.mk": "b7d0ea1690647d060e31e657d68581a792fefe782d4a8b485c549ff4ecc4cd34",
+    "nemu/src/isa/loongarch32r/difftest/dut.c": "13a13f8e072654dba15998e888de128d3297e105c9b17bad57a445fbd277b507",
+    "nemu/src/isa/loongarch32r/include/isa-def.h": "461f5241c5ce4bcf7bde4b49e95ad9283fc2a3aba5cbc5a113251628f2f5ce7f",
+    "nemu/src/isa/loongarch32r/init.c": "c8c27a87450eb171377f0c3d0a549e6931567e09e4003e7824f04fa28b93b0a9",
+    "nemu/src/isa/loongarch32r/inst.c": "b87885969a7cc8c3debe93df1015fd0043e979ea79f24329b9749d298520430f",
+    "nemu/src/isa/loongarch32r/local-include/reg.h": "5b75548e5991dc007dbbabacaaa9b02bcb4d2d3952eca693216327fae50d5d63",
+    "nemu/src/isa/loongarch32r/logo.c": "418991297f04c868801e89196934bc51a23ce5d1ca0891d23eded86ff99ce39b",
+    "nemu/src/isa/loongarch32r/reg.c": "0ceb8dc73bad240c44013890fea13e804581043fd0dacdc38a530111682330b3",
+    "nemu/src/isa/loongarch32r/system/intr.c": "6225fe680746ba71f7e167ec744f43d87306711d73ce9735e101026c5aeaeb67",
+    "nemu/src/isa/loongarch32r/system/mmu.c": "74c510faf7b8afbfba4a45ef17f375a42e533d1986b9c8292d4b4331c97ed914",
+    "nemu/src/isa/mips32/difftest/dut.c": "13a13f8e072654dba15998e888de128d3297e105c9b17bad57a445fbd277b507",
+    "nemu/src/isa/mips32/include/isa-def.h": "ebff57f686a70dc88f5459a5ee4ca7228b754865a2c417c05c3c0dbb51e4e42f",
+    "nemu/src/isa/mips32/init.c": "c9c8814798bbe94f393e8677fea123c65fe8210d60e0a8b97a6fe08bfa5ade32",
+    "nemu/src/isa/mips32/inst.c": "ec0307cce2dc68cbd9d5bc67f06668e8ea355044186a1cc6a70ae42154dade42",
+    "nemu/src/isa/mips32/local-include/reg.h": "4a38216f3aee61ea6ec5f9153a62682cfbddb3fab76ae7cd81088d163c1f8d55",
+    "nemu/src/isa/mips32/logo.c": "7d5e88f5aafe8b8a7bdd36b0a4594daa963f38da75cc42b41c81f999e14f20e2",
+    "nemu/src/isa/mips32/reg.c": "c3ec68b4adb0fd9a404f842a6830023a7b2a582ad2cff8f2408dc5e66282ef6e",
+    "nemu/src/isa/mips32/system/intr.c": "6225fe680746ba71f7e167ec744f43d87306711d73ce9735e101026c5aeaeb67",
+    "nemu/src/isa/mips32/system/mmu.c": "74c510faf7b8afbfba4a45ef17f375a42e533d1986b9c8292d4b4331c97ed914",
+    "nemu/src/isa/riscv32/difftest/dut.c": "9b47d94d217f430e0b119d3d28aaff96f444ecdc0f9b8b1c6496a15c0f77fa6b",
+    "nemu/src/isa/riscv32/include/isa-def.h": "b111d6aaacc66c78f1bcba8cd41d0c953d7567fe4c90df558dbcb1e5916fcf73",
+    "nemu/src/isa/riscv32/init.c": "e69e5da01c437280c1d0cdae927eeb3c0f144c056f991956bd8cb920fd174656",
+    "nemu/src/isa/riscv32/inst.c": "ba4d3655a87813b6d814161513939751485da70f1d00a99d4839ed905b977dd4",
+    "nemu/src/isa/riscv32/local-include/reg.h": "6d4a5936c492ebbd38020fc30076d1a646620f5170023407b263092a7b9fa11c",
+    "nemu/src/isa/riscv32/logo.c": "e9c62cb61357ce8e4a5c0c6ca61b150cc2583f3421cf4df8b3876e159b4fb5a4",
+    "nemu/src/isa/riscv32/reg.c": "d5581f11593dcdee9f019202a06abef494bb2a3dfe3d3f5850a63d1fb16f3701",
+    "nemu/src/isa/riscv32/system/intr.c": "ee2f183241a46ac728be8b6b59d41d1d6843e364002e19a6fa47344c0ede1cd4",
+    "nemu/src/isa/riscv32/system/mmu.c": "8f8cc85f225bf6a67d68439426c8a84f9aff5ccdbd019bf35b783589b6299d5c",
+    "nemu/src/isa/x86/difftest/dut.c": "13a13f8e072654dba15998e888de128d3297e105c9b17bad57a445fbd277b507",
+    "nemu/src/isa/x86/include/isa-def.h": "94b2d3538263f930d2a6b3994d301ab421e07c0dd3ec8ecc383e557564989295",
+    "nemu/src/isa/x86/init.c": "ba8ed19127199bdbdf7b747c8cc2950c0beb1cfe2ff1a7051ab6e1156b091cb1",
+    "nemu/src/isa/x86/inst.c": "1eff95fd3c9dbc545a9fb494ba8ff7c3448b252ca82799b82915ce59770b24c3",
+    "nemu/src/isa/x86/local-include/reg.h": "2ae6b6705775eadb0f3d199984e4d052d8aa9c575df13ec6b343e91d900026ef",
+    "nemu/src/isa/x86/logo.c": "fc0d2e2e6358a1122377b23b817b27fd533401c43394d303124e1b2df75ee351",
+    "nemu/src/isa/x86/reg.c": "4bc43981a9ccee69ae97a3dcf134ed1dce803e84fa8eec93e961cf01bfd4e843",
+    "nemu/src/isa/x86/system/intr.c": "5f6ea07cc20768c50abf29f9ec3afdb670367b1e314296e7820155816b9b0379",
+    "nemu/src/isa/x86/system/mmu.c": "74c510faf7b8afbfba4a45ef17f375a42e533d1986b9c8292d4b4331c97ed914",
+    "nemu/src/memory/paddr.c": "45b2746ec381b20fa4d818ebb430fa92ecaf9aaa68e6f444fee8328ebaf81706",
+    "nemu/src/memory/vaddr.c": "b67ebf83b4550c8e4f38ff6d84d9ebf786dfe6b0ac330ef202a9a9933fe650a0",
+    "nemu/src/memory/ysyxsoc.c": "520e738792385ae00d2f4fbba7a0e3de382654b9a728e73effb13cef65ce3656",
+    "nemu/src/monitor/monitor.c": "583da263a5cc5ac4fc01864d0121f97b7085cc640e4da04f44ac2bab8ea4d008",
+    "nemu/src/monitor/sdb/expr.c": "bf4485932b3234135eaaba5b1e4f42b56ad61f3627d1e0cbce7a216a27b5a972",
+    "nemu/src/monitor/sdb/expr.h": "e898cbfc954cf33639f99314a40ea3d9c43d26f621609e279d7153d4a25f18b8",
+    "nemu/src/monitor/sdb/sdb.c": "6fba87f4c0309267e9ef8dfff6cad07e83117f72f99299bc2774d09c26496b67",
+    "nemu/src/monitor/sdb/sdb.h": "e3e11071c233a80fd688993af8b0035f25ca76f78bb79526991a5994379150ca",
+    "nemu/src/monitor/sdb/watchpoint.c": "67f050d6ed7fe2269364ae1e911eb90b94292f73a581fd04a3b14e174b076932",
+    "nemu/src/nemu-main.c": "cb2a31acc99a0d516f6f402fb5c37487f6cf6778f3dba6d9acfd558c65acba8e",
+    "nemu/src/utils/disasm.c": "990d58ce5aa329d1595c6469fa2b3305b25197b5e601c683749b03a0b0e86759",
+    "nemu/src/utils/filelist.mk": "af2e42ce28c5c557c895307e3aa852d81becfd6a1657550597ecd33646c552cb",
+    "nemu/src/utils/ftrace.c": "4387cacdbac009474a80df0223cfff0bdea69fbb7976904601014fe79bdfc1e8",
+    "nemu/src/utils/log.c": "12045f85eb9878b1ec8473ed7d9b83ecf716c9eaa844486c603f0e8d0d0e2c06",
+    "nemu/src/utils/state.c": "63aae58db474f7c9637276e862344a78038dd0c3a52b651744fd60b0b77b4fc2",
+    "nemu/src/utils/timer.c": "1d25a7ec9365b007f29abea40d98067a4adc4cf9c8ef1e5a0fcc9494247129a0",
+    "npc/csrc/soc/difftest.cpp": "91b48371d559b3e1aa4730dbcdc1a6a171cff58fc9cfd6956d1144b0333c28c6",
+    "npc/csrc/soc/difftest.h": "f92ac87c7f715e673088b626b873e246a4cfc51cc0f7b5344ba10470705ba7bc",
+    "npc/csrc/soc/main.cpp": "0db20dc9a9ca7fa4e0cda66311f33d7c6f68b72dc4365fdeab75411baa8eb664",
+    "npc/csrc/soc/timer.h": "944e0a381b3acff3036c17ed91be99d9b9890555759a67e76645ef0d0067cd0a",
+    "npc/scripts/build.mk": "3b3baf10d355925b81ea514c43c86cd216d7afd8853d254e3ed6b7b9bb692623",
+    "npc/scripts/rewrite.mk": "cb9c2349d4e0336ce4fd723eecf9c9f93f5a0e793125d5e473bad2d6b2316f57",
+    "npc/scripts/soc.mk": "066e481140c00ff9f57f234ee588ca794415ecc18e11e9e8d6045a629f50f252",
+    "npc/scripts/soc_delay.py": "cbb0672dc1e3bc9f5cf73a339153ceb25fb921cf6d51f7b038a9be8c5cba4acf",
+    "npc/scripts/tests.mk": "27d547a1affc071aa9bf755762720527ef8afef9ab97a78009ae8c6f12d3bcfe",
+    "npc/sim/soc_delay_channel.sv": "a15573ed514cc035319578cc79f877739c9304c5ff4e8d412279abd773dffd3f",
+    "npc/sim/soc_monitor.sv": "f0f3d3279b6c0cb6c8938faef36b071915a23fd4a46254e2b72902f382232ca7",
+    "npc/tests/access_fault.S": "65a23435b7cc5c7f1acf5ccdf19fd0fce7c152eb47930b8cf001ca06d6407e11",
+    "npc/tests/address_misaligned.S": "32330c914ca8470a9733251e8e7cceec568fcb97a89862fae99cb53f88574a51",
+    "npc/tests/axi4_arbiter_tb.cpp": "d851ef4a78666499edd5d099a67f793ea6b481e3f2d95724cb5dbc8777f07367",
+    "npc/tests/axi4_cpu_tb.cpp": "006a709b1844edcdd3c42cbb106968ec513202ec03d33b0cde0d401622daba69",
+    "npc/tests/axi4_cpu_test_top.sv": "9303dab314abaed8844d78274658ff811abe8b490a06cda6421abb1011329818",
+    "npc/tests/axi4_fabric_test_top.sv": "8bad869ecc3d41d8d84c71eba401b6c25eb66b477d4379f93953f2271646c11c",
+    "npc/tests/axi4_redirect_tb.cpp": "815418965ad4b2d42f38ad062bd7f65fb3fe9db4a69d5fde445640e429b8bc3c",
+    "npc/tests/axi4_redirect_test_top.sv": "4a7c431b239dd1b161591d554ed5f4a13bc1222665bb88e5967c1aa9f9a1130a",
+    "npc/tests/axi4lite_decerr_tb.cpp": "7136f688ea267fde48cae029083810852e3565dd9a1908c8c52ca82f2c3fab89",
+    "npc/tests/axi4lite_delay_shim.sv": "c7597970e9d4f99de487540b64820d832a43f025cbe5d88d0f33c281cdf0f0be",
+    "npc/tests/axi4lite_fabric_tb.cpp": "d84e22ec53d73642fe0f9f43068a05b737a48eb352ff8cd8bab9e800738fd7ad",
+    "npc/tests/axi4lite_fabric_test_top.sv": "54e1cda08ee0b022f57461f8222d355b86a713688264ff46a33e2735bce70493",
+    "npc/tests/axi4lite_slaves_config_tb.cpp": "a3f999b789da045861237db038d7ca5133f925e2773fb739b5199420e621133b",
+    "npc/tests/axi4lite_slaves_config_test.py": "bd8a5255e6c73d7f641b50f106f4ba78384f1c0c83e805ee1b7e711e0802440b",
+    "npc/tests/axi4lite_slaves_tb.cpp": "bfcd96976b9443f0ba096602e7f1051d6f1c67c862d7ce615b97e5f7df7c5253",
+    "npc/tests/axi4lite_slaves_test_top.sv": "caa3af9567febefcaaffca1fa80fbeb250df69e015f5f6adc0901aff343881b4",
+    "npc/tests/axi4lite_xbar_config_tb.cpp": "b641d4df9db7165a83967f349c8a2df62f5249754c4618a527d21c704c0dcf3a",
+    "npc/tests/axi4lite_xbar_config_test.py": "a010d0de03da142198f909ab07864bd29ca5c3e5d6fb421f1d81719edb930be2",
+    "npc/tests/axi4lite_xbar_tb.cpp": "2d63bc52952230ebda468424c01543747d68c8eb959e66a7dcfca925a128ab74",
+    "npc/tests/axi4lite_xbar_test_top.sv": "0f048631cbe3a25b44eff39f398de4797c6ea685eaf3bedd64b7698d13718e25",
+    "npc/tests/b1-am/lanes.c": "41d8c332aa9914b9993a6caea2b8ae13ee49f14eb229d458660187e5de3b0bd1",
+    "npc/tests/b1-am/uptime.c": "d31d9410d0debf218aed26efa84deb9056ab673f8b5821646497776d3eaf2f88",
+    "npc/tests/b1-am/yield-os.c": "d0f9edfb2d903d0844d86421267331ef875b53d97c0ec2dbe9a68ea9da775370",
+    "npc/tests/b1-rtthread/include/rtconfig.h": "8705350fbc7dd7f422dd7dfee098337a6fb4d7fc4ed3e3d9bfb2fd1f397681b7",
+    "npc/tests/b1-rtthread/workload.c": "a445e04ac739d2c092f8aade7ae909fb769deca2106ddb62cf2be761f752ee50",
+    "npc/tests/b1_closure_test.py": "f3bbfad9a16e81695af1d8ae0aaf41a9b1b369da13f342138eab451d72dd5f8b",
+    "npc/tests/b1_coverage_check.py": "a1cd3c667aadab46132cf14c0ea1e6358a14cfbeaf5380acf1831552c74e8bee",
+    "npc/tests/b1_fault.S": "36735b135f479ccaf5188ab54e8440c4d98a7ed03be6b31f12676a0b8fe6ee47",
+    "npc/tests/b1_redirect.S": "8e5b924d8a7115ecc5e9d0def61810bcf94417597bfeed1a8b2b4cc9373c8a6e",
+    "npc/tests/b1_system_test.py": "547b47bdb9250ab6b11a53871c3ac542249a1edd6179f80c8967fff62857ad51",
+    "npc/tests/b1_waveforms.py": "57f7eddbf36385ccd18b521954f8b4e860042d1c5cc73aa671b5e22c35c33fce",
+    "npc/tests/idu_contract_tb.cpp": "4ba4b2d6d51842bb0aa6f7077c24b29fc7b93e410a6ec7fa657422b8231fc3a6",
+    "npc/tests/isa_contract_test.py": "6a82dbbd587a58864c12c1b6177dd916f49fa38f3fa70be3df6ea8848b50dde9",
+    "npc/tests/m5_s1_memory.S": "511c6244c33e141aa6ce00b83f0d85012e3f90f5a741307d0a382d0011a77127",
+    "npc/tests/m5_s1_test.py": "57fa99c0d3fe568adeebe0c5208543ff9c3a71ecc89d86f8c089a3fbcee36696",
+    "npc/tests/m5_s2_test.py": "e77bf9519b92a36cdb7fcdb2a4836af99caaf1fbd7ee858b5f6602af1ea0cfdd",
+    "npc/tests/m5_s3_test.py": "d252d133078160eae0347ae348c6f2eba7ad9e1e43e350952b1170c17e11c8e1",
+    "npc/tests/m5_s4_test.py": "6e5975237b6c44747e3ade36f4475afc3f46ee50bc4db51e1f881974ba5c1450",
+    "npc/tests/m5_s5_test.py": "78b506ad273607db09533035b4176fc4224f314ba050d8e4ca33dcf16e90d470",
+    "npc/tests/m5_s6_test.py": "4d10e3f2ba34bcee586e143403cbe1d2e699a7638796939dbfb4c59abee8ee3a",
+    "npc/tests/soc/ebreak.S": "0ddd1dda8ad03252bbc0e049d6526361f1553533760eae5be0d9f4cc0c4ea7d0",
+    "npc/tests/soc/guard_tb.cpp": "1b39bee2ac2487408aa84d0968c283c0519ad2510f5771c1f68bcedb4fdefce4",
+    "npc/tests/soc/memory.S": "15bd805a5f8c1dd41461ca0bd8b715b48eda7a60ca05b61b2d87a8091dead6df",
+    "npc/tests/soc/uart.S": "b06627b5ee4dbbbe983b92f28389be29abd6666931239710e09ae0ed33306921",
+    "npc/tests/soc-boot/psram.c": "6294f32cb504248eb23821638315011313d8e2506247b66ada766342025cca4a",
+    "npc/tests/soc-boot/runtime.c": "c48e40c448e8c67895d3a098454e05df827620450e81b782bb5e20ac94a1df61",
+    "npc/tests/soc-boot/spi.c": "2c3c81c092e80272fb5ad8db2f11b1bc7d3c104b418b04d3bd890e4696daa44e",
+    "npc/tests/soc-runtime/hello.c": "70c50ab7945770fa639ae07f6ca9d2629dac1268917441360dfe01967c55ead5",
+    "npc/tests/soc-runtime/memory.c": "62bbe750085b5aa99601bcca6342789d51776928d04937d11a05b6eec949dfc8",
+    "npc/tests/soc-runtime/microbench.c": "cb7d5f06ab019d7c2fff50233cac79a85902e03274a7212499b344bf2579fcb5",
+    "npc/tests/soc-runtime/timer.c": "362fbdf71a626569eb83da81c03afd82a52abf4c528281b16210f726799b5d61",
+    "npc/tests/soc-runtime/traps.S": "8b0aa4cc6051406d6b1463f26dc0fd34be043e49500b5f1376eb989c709d3a14",
+    "npc/tests/soc-system/include/rtconfig.h": "e41fd500b13b2060cfef448838179ed1409a4ee1796aeb18c44d7989002458ea",
+    "npc/tests/soc-system/preempt.S": "2ba5e2189bf7ccef375cdbaa910ebcc5edaff5d4ed3910739b4a9ba833eb2037",
+    "npc/tests/soc-system/rtthread-system.c": "4b7c0900ea1068dfad41bf83057c96e74234baf117cbff67afb3b71a6e466407",
+    "npc/tests/soc-system/uart-long.c": "727e4369dfa85975da54dc7d86f2150258e0af6bf53b798fc6f102278bb2de99",
+    "npc/tests/soc-timer/am-timer.c": "c338feaf7e42d7d453e0206dbd9bfb46b01c8984ce1c6b38afe2104fbfb2c392",
+    "npc/tests/soc-timer/latency.S": "2c9fd36f220022f3264cff6eb24c2ac152542450467fc5a4c51d2dd5c3fe7fa3",
+    "npc/tests/soc-timer/registers.S": "46a7e493fa1185e964c2fc282c05f6f7309979220d04be9997da9c686ad76fd3",
+    "npc/tests/soc-timer/rtthread-tick.c": "69b51d3688ee8af2fcf4ead3956eac0019b491be792c78d26a31d13be608cafa",
+    "npc/tests/soc-timer/timer-registers.c": "3771592c7a0269effd7d2fdea5d65bbf3c61624615e2ce858bfcae9a491d96a7",
+    "npc/tests/soc-timer/trap.S": "64826f82f6dc57e89c33dd3c174ef7fdd33d99b37d53da88a300742ba4a88966",
+    "npc/tests/soc_delay_channel_tb.sv": "d3a0acbfd0625a279a0c4b23166445e7f1056989b30a388c1d2ed604797f0388",
+    "npc/tests/synthesis_scope_check.py": "aad39fe01ef7da1ec86563a8b7f4f3574fac05f53639b9209cfd8154af0f4f88",
+    "npc/tests/ysyx_architectural_state_tb.sv": "dcf100957045b830fb8f279e39fc63f1f20cc984893275883fedab000f1092a3",
+    "npc/tests/ysyx_axi4_router_tb.sv": "8acf42a9959c8a32a8f51e763c307503f794eda39aab7dce493f823b84571029",
+    "npc/tests/ysyx_clint_tb.sv": "832a19d4277fdf3b85fc84c25c417cb5e885d9628660e4028780a5932cbb1a68",
+    "npc/tests/ysyx_exu_tb.sv": "694ff903ea401e2d4841e0b7a473b797402c0c17341e85008406716876f5242c",
+    "npc/tests/ysyx_gnrl_buffer_tb.sv": "3d619b5e177379f855b6dc2160eb0faec6e6b1d0f0240d67cc515f7c1a88403a",
+    "npc/tests/ysyx_ifu_axi4_adapter_integ_tb.sv": "a4de1ef96fd752c8911df38f3dcae82ac247e9d478b78ea2c70ac7e3c50545d2",
+    "npc/tests/ysyx_ifu_axi4_adapter_tb.sv": "f74b7b709cbb5ff9eafff2abff2768861c191e4751e90c96efe03615343c1861",
+    "npc/tests/ysyx_ifu_tb.sv": "ffce76c67b14fb1105de9c8f5aed8d6795518d31468cd2ed15601d95c0df601e",
+    "npc/tests/ysyx_lsu_axi4_adapter_tb.sv": "b027e7a6180a1110606a4f2d15007a99da2ca1c0df3d033c0cf1271912af3616",
+    "npc/tests/ysyx_lsu_tb.sv": "93547f47aa2d52295a98151e765f01b4048250dc2a2594f441e2f10fb15f665e",
+    "npc/tests/ysyx_soc_contract_check.py": "66bc318b5e11a1bf8e7d710be6b52eb372dd14c999206b9268ae701cc1de32da",
+    "npc/tests/ysyx_soc_wrapper_tb.sv": "627e9b59025e64589eabef1b879ebe3170b68591c948867b59515dd731205821",
+    "npc/vsrc/bus/ysyx_axi4_arbiter.sv": "57b407a5f38bd14979b51c8e52feb106168393ae38d3879269811726aae4b750",
+    "npc/vsrc/bus/ysyx_axi4_router.sv": "6738000570613379fff8a19f37964f6dc7ee0079c088e7e7d2f3669ddcf2abc0",
+    "npc/vsrc/bus/ysyx_axi4lite_decerr.sv": "79b6621cf1a483da2812f01e42afb57385969b3a9dd3509123400d4226c9d961",
+    "npc/vsrc/bus/ysyx_axi4lite_slave_frontend.sv": "2bba2d42251d318e5c3258927f681604aecf9b420a58fd582fe6d84d5f8c4ed2",
+    "npc/vsrc/bus/ysyx_axi4lite_xbar.sv": "7e30955773c9c4b30cf950627400db44a45d50d28f18ec4c1363755c134e27ab",
+    "npc/vsrc/bus/ysyx_ifu_axi4_adapter.sv": "9643e9b1f6212c3ebaf1acc8c3f1d84efc896cf3971aae401898a0da8552fd76",
+    "npc/vsrc/bus/ysyx_lsu_axi4_adapter.sv": "309ea53b7418bb6779cfcb5490294b2aaf0785f9f4ba00f9097b947a096c966e",
+    "npc/vsrc/core/ysyx_alu.sv": "cbe707eb49dbe9eb30ed8a496dc628866eb4f888a1210d77f3ceef0374f470a1",
+    "npc/vsrc/core/ysyx_branch.sv": "6cc2d908aeb37572de4cb026a578a452d46ca3e11d59be69d6023e29d2195537",
+    "npc/vsrc/core/ysyx_core.sv": "7a7c4ec68510f926497a53bb70ed63715a51357d3f816a56c40a888505b75252",
+    "npc/vsrc/core/ysyx_csr.sv": "5dc4113d83a2935bbeb04fc65eac7b3fc55d8eab5cd85b11ebae6d78a9acc949",
+    "npc/vsrc/core/ysyx_exu.sv": "49c6af81ab516ca96a156d36890c3c6aa36f54277c22d8c487fea754bda34060",
+    "npc/vsrc/core/ysyx_gen_imm.sv": "7b72f39d8bc17eee2ffb186d6183855c0075776a8505084e0204f147c6192d1a",
+    "npc/vsrc/core/ysyx_i_ram.sv": "22e81a4e674cc43b0741e207cb66a000002b53103953b4d68a72b636926f910f",
+    "npc/vsrc/core/ysyx_idu.sv": "d3802667e58390e23075af8000b4231a37721d2fd88c55dcf4f675c484f29642",
+    "npc/vsrc/core/ysyx_ifu.sv": "ddf28fefd61b1f425c6353ef165e444f5194fcbfe7e4715fffb30fe493016370",
+    "npc/vsrc/core/ysyx_lsu.sv": "1ec2463ade5aa1bd5c01a4dc15519be42be2d8104689c43579fcda81d2bd1654",
+    "npc/vsrc/core/ysyx_opbuf.sv": "11e6880f0b2118bacf9df9dcf0a4012dd6b3fd1192f02d490c46aa87d1cd7ae3",
+    "npc/vsrc/core/ysyx_regfile.sv": "80c66dc0a1fcf39133e5287d9befe0670dceccc9f4237135b8c53ff310cc3eab",
+    "npc/vsrc/gnrl/ysyx_global.sv": "39dc2658d350ab8293953b819346339cac640f377b4bfa3bec30ed5b9828d2f9",
+    "npc/vsrc/gnrl/ysyx_gnrl_primitive.sv": "69e7f79f3636533b0d10016fd04097dbdf92c13f342c7e12c0f25402188f7c15",
+    "npc/vsrc/periph/ysyx_axi4lite_clint.sv": "59f9e992d0199f6f65ad541c3b7d0f491f4f8b9b16d4593ea06de50e5e5a072b",
+    "npc/vsrc/periph/ysyx_axi4lite_sram.sv": "c2515eda8438e9baf570e3765e1ef7a86c0cfd06bb9f3881c3693a845f994419",
+    "npc/vsrc/periph/ysyx_axi4lite_uart.sv": "7f7e5beb3c2ae016180fae35c0c0c9bf0f98023aee23d3952fcd3335e3eef4d0",
+    "npc/vsrc/periph/ysyx_clint.sv": "e9026df843f999c371bf56c9c0f555f88db50331b6f8f79260bc0ec6950b3fde",
+    "npc/vsrc/top/ysyx_25030087.sv": "2e4dacc6d1af5c995f2eea95bf5c2544187ab9aa7a57d5fa451bb9e94d104767",
+    "npc/vsrc/top/ysyx_b1_top.sv": "a0ec90d532b3ab8aee82d262a8c1a6e2c14d63e1e6b137669e37c9f5c1e0600f",
+    "npc/vsrc/top/ysyx_core_axi4.sv": "19fc073b740072e3b6bbda89f5dd60927c299112b2da860c60064b59896db22e",
+    "npc/vsrc/top/ysyx_soc_cpu.sv": "f5a6fbebb45ddcec9503c0cb5e891b013b877a5dec3539767542f4d95c092b1c",
+    "rt-thread-am/bsp/abstract-machine/src/context.c": "9ce13eb63bd2b19bae9a36fe47b6d978e45904e07de607f6767a77743779c8d5",
+    "rt-thread-am/bsp/abstract-machine/src/hello.c": "44d67bb957ab8f483a11b29874eeb114c5890572c93a592964130a2eb03875fb",
+    "rt-thread-am/bsp/abstract-machine/src/init.c": "e97a414131483db23e57d8e70fada4be4d7613df08888feb2eb712404f5b4806",
+    "rt-thread-am/bsp/abstract-machine/src/interrupt.c": "ebc3b2f9b6555683212b9a47e4a1f84559000cfe4a65f0e071a62ccc6a48d7dd",
+    "rt-thread-am/bsp/abstract-machine/src/libc.c": "125ddae2339e78148eec855daca7e877fb456592f97f467094769ec6b0338f5b",
+    "rt-thread-am/bsp/abstract-machine/src/uart.c": "c2f34e37a832d2e05e34f5f3e4e368fe41502a7182de89688211974d3801d4d4",
+    "rt-thread-am/include/rtatomic.h": "31eb35eb761b242c4fdb8a1d17ca9517eac080c4d576bd6b28ce2a9403225eb3",
+    "rt-thread-am/include/rtdbg.h": "1ff1a4f03f8f4d4753e3e0181baddffbdc315e8ae6a122ad1103d45a279c22a2",
+    "rt-thread-am/include/rtdebug.h": "3aabd54408ca6662edb421d3902244ef2a4c51f18b0ccaaa8b2e3c68e3f8ba5a",
+    "rt-thread-am/include/rtdef.h": "1f298a7dffecb45f9dfc352420c2c313247d2ebf0202419693aafda2e586ef4a",
+    "rt-thread-am/include/rthw.h": "b430e6da8c941db022a8b7cd50873e543b9fba461dde46a19a161a19281ef08d",
+    "rt-thread-am/include/rtm.h": "e0d23e231a46a54323f12ce5d8862fbaacdc40a3492737e7188904eafe69f755",
+    "rt-thread-am/include/rtservice.h": "e17933e01946e67680ff8573e269cfc98c637d5a97dc63ce6beb45d54df8bffb",
+    "rt-thread-am/include/rtthread.h": "23f80aa42c51e70d6c6c9a51bb1105dfa7a286f3b95f518de8c40c39be763e65",
+    "rt-thread-am/src/clock.c": "a52343d086ddab2dad43aa5acef2d2f49d7ac1ad3e814a87eaef9c6f927fddab",
+    "rt-thread-am/src/components.c": "65fa2f6d94a7732e9c0dfde22c0a9f136f5b246f384be37f66c0bfa1d69efd18",
+    "rt-thread-am/src/cpu.c": "3172f291bce7ff3c6016ce27de3978057de4917bb998db096c6e361c4ae44465",
+    "rt-thread-am/src/device.c": "e0b221a846c134f7f874241440c0ab297e9208db9dc805278b6a570e0af8d558",
+    "rt-thread-am/src/driver.c": "1585a1aea7ed68c61e4aa185c044cf673b443e9c035bacaa0271879782f6e20f",
+    "rt-thread-am/src/idle.c": "6626eea6fa21def18f0ceca0f2bd83dbb42e8d047305f4cccd95b9e705aa5b33",
+    "rt-thread-am/src/ipc.c": "a1483b6f30a3ea89b0d5ad2300b8d4a9776e8d16345bd541c8a706aca769bf9e",
+    "rt-thread-am/src/irq.c": "26d9c5eac5960e3fb9e494821a5b525302e314fc8b7b48b414465ad80329eb18",
+    "rt-thread-am/src/kservice.c": "af1a9cf08b6d6db1fc782ddec5100730879810fb399a2aed8e2fd22a9badad48",
+    "rt-thread-am/src/mem.c": "3de557cf593fb309d786ff250b78a8c8fef3c70e20a5b1e53438cd4c9e1324e7",
+    "rt-thread-am/src/memheap.c": "ad4bb948e8fce76de65444c0be47ae1ccfc96bc1ed3ff05c3f713b8bf4fd01f9",
+    "rt-thread-am/src/mempool.c": "1bb236ba7b686c4d77fe1bffe3414ef4365f9c3ed9daf3931e004459ed197967",
+    "rt-thread-am/src/object.c": "780c2b73784c3ed8014ecdd8b481c1b8abc942b17e004311ccf3918b67433b4f",
+    "rt-thread-am/src/scheduler_mp.c": "786bb55367945284c20d9fa65c8b26fc33d83543433fc6c048d36209a1569950",
+    "rt-thread-am/src/scheduler_up.c": "deccabff8094deb4c29d6e1901d8ec509b4efc33fdc75ceaed5bec27e703944a",
+    "rt-thread-am/src/signal.c": "f7de19f242eb635764be7f45feda6e15149f27c01565726b8ee9715bfd35ba3b",
+    "rt-thread-am/src/slab.c": "e12cac490f1abb5cf4f5380fe93958b724cfdbe3260019eb8f70cf170c00411e",
+    "rt-thread-am/src/thread.c": "56cf114daf2aed8bed6d8b63c00748f8633a8b7ee3cb0674a0a7462c54f0b926",
+    "rt-thread-am/src/timer.c": "4eadf53e0c436f4c557907199a704e7f548441bf9dce9b4e82ca0b988800e732",
+    "ysyxSoC/perip/amba/apb_delayer.v": "8e7e8590000d70cda7761ee483fbd02c6ca68abb593312fbe9024914f82e17f1",
+    "ysyxSoC/perip/amba/axi4_delayer.v": "c9aead74838479b37c77c335d85f8df6d2a5b546998cc69e809736a77d1dcdc4",
+    "ysyxSoC/perip/amba/npc_axi4_guard.v": "ca2312d9f5e8635bf5f845ee80224f0884c5f88592511d7046c99774cd52e222",
+    "ysyxSoC/perip/bitrev/bitrev.v": "46a6a0e52770cc9692d8ea9bd2089a948217a050f5125d849bbb8d4f346f7e88",
+    "ysyxSoC/perip/flash/flash.v": "02a2262b290fe95357551e5a6858295cee763da5040071b851169e4501ab39d3",
+    "ysyxSoC/perip/gpio/gpio_top_apb.v": "56d795fd6d319ec639bf6ec3fd5c39e29557a4565048fe175d13e66ffe98b342",
+    "ysyxSoC/perip/ps2/ps2_top_apb.v": "71701bbda0d0d0ee5ab8e2ec3ea54955fd7fefe90488f9c927408822300e2dfd",
+    "ysyxSoC/perip/psram/efabless/EF_PSRAM_CTRL.v": "7d3f4bde59903b07b211936b65ad3c72f3738b7294c5d18187105ef5362de85f",
+    "ysyxSoC/perip/psram/efabless/EF_PSRAM_CTRL_wb.v": "68c5afd8424700338934a52bb9ac759a2d1985995e88f37910205bcf2593d204",
+    "ysyxSoC/perip/psram/psram.v": "abd7fca08b70bf78a397176aed99ac2426e2128e3d99ee7e6e7e4ad07b24f26c",
+    "ysyxSoC/perip/psram/psram_top_apb.v": "949e3c1e7dc24221e1ca75663933650b589628e0241d50aadca3a75aad0ae1c6",
+    "ysyxSoC/perip/sdram/core_sdram_axi4/sdram_axi.v": "a3d9dede294ab2880f9bf9ae6bdb6850874bc387429fdbdc338dc7a179f0e07e",
+    "ysyxSoC/perip/sdram/core_sdram_axi4/sdram_axi_core.v": "167c8591c7e5da6c2554c91bb40d6c997cfc1fe7bef2d8fd9b2e42569a9f5fce",
+    "ysyxSoC/perip/sdram/core_sdram_axi4/sdram_axi_pmem.v": "7eccfb37b4a91451f2da4e3932b4fcca9287db1126a7ed6fd0a31c9442d5d23a",
+    "ysyxSoC/perip/sdram/sdram.v": "74addc5c41645e1e56d2e10de085dfdcd0c6c979193e794f9bf51240766e72ca",
+    "ysyxSoC/perip/sdram/sdram_top_apb.v": "528925de530260ee0a6a4b9509dd6ca215469715eb88c4651f5b789f597977d6",
+    "ysyxSoC/perip/sdram/sdram_top_axi.v": "8e11be9b87e179ad951c2be06f97d3d5876d1162a014720c169216713d57d282",
+    "ysyxSoC/perip/spi/rtl/spi_clgen.v": "1102570f0fd72585bc346db4d45eee50126c340e56a7460fc563dedef4dcac21",
+    "ysyxSoC/perip/spi/rtl/spi_defines.v": "cc8927463596a0465d9ee60261d041d4317d0362f44aafa7fed792f899bc1bea",
+    "ysyxSoC/perip/spi/rtl/spi_shift.v": "72d3d23573c40eff781a4e24d01a595756b4a32293e51f818fe3fe60304fc4b6",
+    "ysyxSoC/perip/spi/rtl/spi_top.v": "b5f64ecbc87e87f56d10507e3472217c1b6076b8fa456d66c3f752bc4c200d42",
+    "ysyxSoC/perip/spi/rtl/spi_top_apb.v": "1e933e86cf227d64526abf4dff6096b7012a504305ed850736577794d7eb66c4",
+    "ysyxSoC/perip/uart16550/rtl/raminfr.v": "81720eb4e55256f815e8f7430d3b20076e4fdf900b855313d4e8da9ad8bcbc61",
+    "ysyxSoC/perip/uart16550/rtl/uart_defines.v": "0cdb9f10a4b932b172fa5f653b4bf28ffd196fcf257b280a393514637b05f91f",
+    "ysyxSoC/perip/uart16550/rtl/uart_receiver.v": "c3120ca172f75120cee11869ffd7925b69729d3a64493c83c03d7e559c84fed3",
+    "ysyxSoC/perip/uart16550/rtl/uart_regs.v": "f986457a1c64543705e5e2c344c093be0813f9b0af9d0a18083b809cbb73bb2a",
+    "ysyxSoC/perip/uart16550/rtl/uart_rfifo.v": "a6fbf97b1d0cccc3b1590a7d80f3f1447d2788eff1d250dbaaef210e1324b9f4",
+    "ysyxSoC/perip/uart16550/rtl/uart_sync_flops.v": "73b64f79472dabe34cad11adf4313fecfaa51e8708626a931cf756aea58836aa",
+    "ysyxSoC/perip/uart16550/rtl/uart_tfifo.v": "62b499b3dc928eb93424b893f5da107c96897f6476b31918576c8bdd9b62b69d",
+    "ysyxSoC/perip/uart16550/rtl/uart_top_apb.v": "1c2ff4cae5e7f4773d2ccadf433094f7f38fc05aef8d704c4113325f3775b566",
+    "ysyxSoC/perip/uart16550/rtl/uart_transmitter.v": "1a89e65ba290f8e605297d8f8a7784d3799a6a0bc9d1617af39b304f0d06f712",
+    "ysyxSoC/perip/vga/vga_top_apb.v": "c8fa30d1d8f39cd1d2eadf1ed5d935ddc7192f6c77e488455e30aa306c42c8be",
+    "npc/Makefile": "aff72fd482574d1749d825dc3fbb4e4344d068ec10bb92b364b276f59d8ff46f",
+    "npc/filelist-soc.f": "0106fa13f3e325cb578026110a3620df528e4f89db26d21d3f34972637d2d2f8",
+    "abstract-machine/Makefile": "0c7e18f23d83faa611d9c468d1fea2ed427f7e7d2da90e1ee7fe1ea0ad480e99",
+    "nemu/.config": "6fe32fd489492360f413c2412cb4bc32d1d581f92c571af8a9358b63f8c4642f",
+    "ysyxSoC/build/ysyxSoCFull.v": "8034c3a5ecf06918aac18c4b40a226968864eba61a7ffe8a7a9c686eaab9cf8a",
+    "ysyxSoC/build.sc": "e047751c0001b752d60ef4ac7f0c9c19b136651486db1b1e74d8c49095039fd0"
+  },
+  "tools": {
+    "verilator": "Verilator 5.008 2023-03-04 rev v5.008",
+    "riscv64-linux-gnu-gcc": "riscv64-linux-gnu-gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0",
+    "python3": "Python 3.10.12"
+  },
+  "reference_sha256": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0",
+  "status": "PASS",
+  "group": "regression",
+  "commands": [
+    {
+      "name": "ifu-adapter-build",
+      "command": [
+        "verilator",
+        "--sv",
+        "--assert",
+        "-Wall",
+        "-Wno-fatal",
+        "-Wno-SYNCASYNCNET",
+        "-Wno-TIMESCALEMOD",
+        "-Werror-WIDTH",
+        "-Werror-PINMISSING",
+        "-Werror-PINNOTFOUND",
+        "-Werror-LATCH",
+        "-Werror-UNOPTFLAT",
+        "--binary",
+        "--timing",
+        "--top-module",
+        "ysyx_ifu_axi4_adapter_tb",
+        "--Mdir",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/ifu-adapter",
+        "vsrc/bus/ysyx_ifu_axi4_adapter.sv",
+        "tests/ysyx_ifu_axi4_adapter_tb.sv"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.064
+    },
+    {
+      "name": "ifu-adapter",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/ifu-adapter/Vysyx_ifu_axi4_adapter_tb"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "c4c6abbe8a6858a4f74bf29071a0396b4623c02065df3bcfca3e7b790bf440b7",
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.009
+    },
+    {
+      "name": "lsu-adapter-build",
+      "command": [
+        "verilator",
+        "--sv",
+        "--assert",
+        "-Wall",
+        "-Wno-fatal",
+        "-Wno-SYNCASYNCNET",
+        "-Wno-TIMESCALEMOD",
+        "-Werror-WIDTH",
+        "-Werror-PINMISSING",
+        "-Werror-PINNOTFOUND",
+        "-Werror-LATCH",
+        "-Werror-UNOPTFLAT",
+        "--binary",
+        "--timing",
+        "--top-module",
+        "ysyx_lsu_axi4_adapter_tb",
+        "--Mdir",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/lsu-adapter",
+        "vsrc/bus/ysyx_lsu_axi4_adapter.sv",
+        "tests/ysyx_lsu_axi4_adapter_tb.sv"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.065
+    },
+    {
+      "name": "lsu-adapter",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/lsu-adapter/Vysyx_lsu_axi4_adapter_tb"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "51dbf6c9707cfd0ce4a34d6161b07f6c7e4b226b676f6a132839701df889e636",
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.009
+    },
+    {
+      "name": "ifu-integration-build",
+      "command": [
+        "verilator",
+        "--sv",
+        "--assert",
+        "-Wall",
+        "-Wno-fatal",
+        "-Wno-SYNCASYNCNET",
+        "-Wno-TIMESCALEMOD",
+        "-Werror-WIDTH",
+        "-Werror-PINMISSING",
+        "-Werror-PINNOTFOUND",
+        "-Werror-LATCH",
+        "-Werror-UNOPTFLAT",
+        "--binary",
+        "--timing",
+        "--top-module",
+        "ysyx_ifu_axi4_adapter_integ_tb",
+        "--Mdir",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/ifu-integration",
+        "vsrc/gnrl/ysyx_gnrl_primitive.sv",
+        "vsrc/core/ysyx_ifu.sv",
+        "vsrc/bus/ysyx_ifu_axi4_adapter.sv",
+        "tests/ysyx_ifu_axi4_adapter_integ_tb.sv"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.065
+    },
+    {
+      "name": "ifu-integration",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/ifu-integration/Vysyx_ifu_axi4_adapter_integ_tb"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "5910d44187e3ed5ace320b75f5606c1493f44f6fbe91a4c73f8486feff6b479e",
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "arbiter-build",
+      "command": [
+        "verilator",
+        "--sv",
+        "--assert",
+        "-Wall",
+        "-Wno-fatal",
+        "-Wno-SYNCASYNCNET",
+        "-Wno-TIMESCALEMOD",
+        "-Werror-WIDTH",
+        "-Werror-PINMISSING",
+        "-Werror-PINNOTFOUND",
+        "-Werror-LATCH",
+        "-Werror-UNOPTFLAT",
+        "--cc",
+        "--exe",
+        "--build",
+        "-j",
+        "2",
+        "--top-module",
+        "ysyx_axi4_arbiter",
+        "--Mdir",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/arbiter",
+        "-CFLAGS",
+        "-std=c++17",
+        "vsrc/bus/ysyx_axi4_arbiter.sv",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/tests/axi4_arbiter_tb.cpp"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.064
+    },
+    {
+      "name": "arbiter",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/arbiter/Vysyx_axi4_arbiter",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/arbiter/coverage.csv"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "f998303e2f31800358b1af8cc0b4c712d03a9eec6f37a311be3afa65121a5510",
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.166
+    },
+    {
+      "name": "fabric-build",
+      "command": [
+        "verilator",
+        "--sv",
+        "--assert",
+        "-Wall",
+        "-Wno-fatal",
+        "-Wno-SYNCASYNCNET",
+        "-Wno-TIMESCALEMOD",
+        "-Werror-WIDTH",
+        "-Werror-PINMISSING",
+        "-Werror-PINNOTFOUND",
+        "-Werror-LATCH",
+        "-Werror-UNOPTFLAT",
+        "--cc",
+        "--exe",
+        "--build",
+        "-j",
+        "2",
+        "--top-module",
+        "axi4_fabric_test_top",
+        "--Mdir",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fabric",
+        "-CFLAGS",
+        "-std=c++17",
+        "-CFLAGS",
+        "-DTEST_ROUTER",
+        "vsrc/bus/ysyx_axi4_arbiter.sv",
+        "vsrc/bus/ysyx_axi4_router.sv",
+        "vsrc/periph/ysyx_clint.sv",
+        "tests/axi4_fabric_test_top.sv",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/tests/axi4_arbiter_tb.cpp"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.064
+    },
+    {
+      "name": "fabric",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fabric/Vaxi4_fabric_test_top",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fabric/coverage.csv"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "f950941ae1826ff7d62d1d3785979f4729d29b296d488551d8de1a2c0443e160",
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.215
+    },
+    {
+      "name": "arbiter-bad-rid",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/arbiter/Vysyx_axi4_arbiter",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/arbiter/unused.csv",
+        "rid"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": "AXI4 protocol:",
+      "executable_sha256": "f998303e2f31800358b1af8cc0b4c712d03a9eec6f37a311be3afa65121a5510",
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": -6,
+      "wall_seconds": 0.066
+    },
+    {
+      "name": "arbiter-bad-bid",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/arbiter/Vysyx_axi4_arbiter",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/arbiter/unused.csv",
+        "bid"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": "AXI4 protocol:",
+      "executable_sha256": "f998303e2f31800358b1af8cc0b4c712d03a9eec6f37a311be3afa65121a5510",
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": -6,
+      "wall_seconds": 0.064
+    },
+    {
+      "name": "arbiter-bad-rlast",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/arbiter/Vysyx_axi4_arbiter",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/arbiter/unused.csv",
+        "rlast"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": "AXI4 protocol:",
+      "executable_sha256": "f998303e2f31800358b1af8cc0b4c712d03a9eec6f37a311be3afa65121a5510",
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": -6,
+      "wall_seconds": 0.064
+    },
+    {
+      "name": "fabric-bad-rid",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fabric/Vaxi4_fabric_test_top",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fabric/unused.csv",
+        "rid"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": "AXI4 protocol:",
+      "executable_sha256": "f950941ae1826ff7d62d1d3785979f4729d29b296d488551d8de1a2c0443e160",
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": -6,
+      "wall_seconds": 0.064
+    },
+    {
+      "name": "fabric-bad-bid",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fabric/Vaxi4_fabric_test_top",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fabric/unused.csv",
+        "bid"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": "AXI4 protocol:",
+      "executable_sha256": "f950941ae1826ff7d62d1d3785979f4729d29b296d488551d8de1a2c0443e160",
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": -6,
+      "wall_seconds": 0.064
+    },
+    {
+      "name": "fabric-bad-rlast",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fabric/Vaxi4_fabric_test_top",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fabric/unused.csv",
+        "rlast"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": "AXI4 protocol:",
+      "executable_sha256": "f950941ae1826ff7d62d1d3785979f4729d29b296d488551d8de1a2c0443e160",
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": -6,
+      "wall_seconds": 0.064
+    },
+    {
+      "name": "redirect-build",
+      "command": [
+        "verilator",
+        "--sv",
+        "--assert",
+        "-Wall",
+        "-Wno-fatal",
+        "-Wno-SYNCASYNCNET",
+        "-Wno-TIMESCALEMOD",
+        "-Werror-WIDTH",
+        "-Werror-PINMISSING",
+        "-Werror-PINNOTFOUND",
+        "-Werror-LATCH",
+        "-Werror-UNOPTFLAT",
+        "--cc",
+        "--exe",
+        "--build",
+        "-j",
+        "2",
+        "--top-module",
+        "axi4_redirect_test_top",
+        "--Mdir",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/redirect",
+        "-CFLAGS",
+        "-std=c++17",
+        "vsrc/gnrl/ysyx_gnrl_primitive.sv",
+        "vsrc/core/ysyx_ifu.sv",
+        "vsrc/bus/ysyx_ifu_axi4_adapter.sv",
+        "vsrc/bus/ysyx_axi4_arbiter.sv",
+        "tests/axi4_redirect_test_top.sv",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/tests/axi4_redirect_tb.cpp"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.064
+    },
+    {
+      "name": "redirect",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/redirect/Vaxi4_redirect_test_top",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/redirect/coverage.csv"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "36d67117918217749435716d9adfb1da204362194417c301131ff10fa3bb9d4d",
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.01
+    },
+    {
+      "name": "clint-build",
+      "command": [
+        "verilator",
+        "--sv",
+        "--assert",
+        "-Wall",
+        "-Wno-fatal",
+        "-Wno-SYNCASYNCNET",
+        "-Wno-TIMESCALEMOD",
+        "-Werror-WIDTH",
+        "-Werror-PINMISSING",
+        "-Werror-PINNOTFOUND",
+        "-Werror-LATCH",
+        "-Werror-UNOPTFLAT",
+        "--binary",
+        "--timing",
+        "--top-module",
+        "ysyx_clint_tb",
+        "--Mdir",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/clint",
+        "vsrc/periph/ysyx_clint.sv",
+        "tests/ysyx_clint_tb.sv"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.065
+    },
+    {
+      "name": "clint",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/clint/Vysyx_clint_tb"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "2e26a3fc08bbee908050fecba8bfce156d7bb7cf7d584a429fff928812024c5a",
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "router-local-build",
+      "command": [
+        "verilator",
+        "--sv",
+        "--assert",
+        "-Wall",
+        "-Wno-fatal",
+        "-Wno-SYNCASYNCNET",
+        "-Wno-TIMESCALEMOD",
+        "-Werror-WIDTH",
+        "-Werror-PINMISSING",
+        "-Werror-PINNOTFOUND",
+        "-Werror-LATCH",
+        "-Werror-UNOPTFLAT",
+        "--binary",
+        "--timing",
+        "--top-module",
+        "ysyx_axi4_router_tb",
+        "--Mdir",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/router-local",
+        "vsrc/bus/ysyx_axi4_router.sv",
+        "vsrc/periph/ysyx_clint.sv",
+        "tests/ysyx_axi4_router_tb.sv"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.064
+    },
+    {
+      "name": "router-local",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/router-local/Vysyx_axi4_router_tb"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "4fa4687601c4a25b3b67dc651c09d9c3f34dcc072a47d1e88536880c0cc83a64",
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.009
+    },
+    {
+      "name": "wrapper-build",
+      "command": [
+        "verilator",
+        "--sv",
+        "--assert",
+        "-Wall",
+        "-Wno-fatal",
+        "-Wno-SYNCASYNCNET",
+        "-Wno-TIMESCALEMOD",
+        "-Werror-WIDTH",
+        "-Werror-PINMISSING",
+        "-Werror-PINNOTFOUND",
+        "-Werror-LATCH",
+        "-Werror-UNOPTFLAT",
+        "--binary",
+        "--timing",
+        "--top-module",
+        "ysyx_soc_wrapper_tb",
+        "--Mdir",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/wrapper",
+        "-F",
+        "filelist-soc.f",
+        "tests/ysyx_soc_wrapper_tb.sv"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.065
+    },
+    {
+      "name": "wrapper",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/wrapper/Vysyx_soc_wrapper_tb"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "b9a16bbca30ec17be5c57f63c1a4aa04e1d2ab213d344c2e15018ea0a8a61b26",
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.008
+    },
+    {
+      "name": "wrapper-badirq",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/wrapper/Vysyx_soc_wrapper_tb",
+        "+badirq"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": "External IRQ is outside",
+      "executable_sha256": "b9a16bbca30ec17be5c57f63c1a4aa04e1d2ab213d344c2e15018ea0a8a61b26",
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": -6,
+      "wall_seconds": 0.116
+    },
+    {
+      "name": "wrapper-badslave",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/wrapper/Vysyx_soc_wrapper_tb",
+        "+badslave"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": "ChipLink/slave request",
+      "executable_sha256": "b9a16bbca30ec17be5c57f63c1a4aa04e1d2ab213d344c2e15018ea0a8a61b26",
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": -6,
+      "wall_seconds": 0.117
+    },
+    {
+      "name": "cpu-build",
+      "command": [
+        "verilator",
+        "--sv",
+        "--assert",
+        "-Wall",
+        "-Wno-fatal",
+        "-Wno-SYNCASYNCNET",
+        "-Wno-TIMESCALEMOD",
+        "-Werror-WIDTH",
+        "-Werror-PINMISSING",
+        "-Werror-PINNOTFOUND",
+        "-Werror-LATCH",
+        "-Werror-UNOPTFLAT",
+        "--cc",
+        "--exe",
+        "--build",
+        "-j",
+        "2",
+        "--top-module",
+        "axi4_cpu_test_top",
+        "--Mdir",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu",
+        "-CFLAGS",
+        "-std=c++17",
+        "--trace-fst",
+        "-F",
+        "filelist-soc.f",
+        "tests/axi4_cpu_test_top.sv",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/tests/axi4_cpu_tb.cpp"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.066
+    },
+    {
+      "name": "isa-contract",
+      "command": [
+        "python3",
+        "tests/isa_contract_test.py",
+        "--cpu-exe",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu/Vaxi4_cpu_test_top"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.165
+    },
+    {
+      "name": "fault-fetch-build",
+      "command": [
+        "riscv64-linux-gnu-gcc",
+        "-nostdlib",
+        "-static",
+        "-fno-pic",
+        "-no-pie",
+        "-march=rv32e_zicsr",
+        "-mabi=ilp32e",
+        "-Wl,-Ttext=0x80000000",
+        "-Wl,--build-id=none",
+        "-Wl,--no-relax",
+        "-DFAULT_KIND=1",
+        "-DFAULT_CAUSE=1",
+        "tests/access_fault.S",
+        "-o",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-fetch.elf"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.034
+    },
+    {
+      "name": "fault-fetch-objcopy",
+      "command": [
+        "riscv64-linux-gnu-objcopy",
+        "-O",
+        "binary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-fetch.elf",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-fetch.bin"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-fetch.elf": "a8330888e660136460444e25a20a22dfabaf27f80c510b30511982e2777f97ef"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.005
+    },
+    {
+      "name": "fault-fetch-2",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu/Vaxi4_cpu_test_top",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-fetch.bin",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-fetch-2.trace",
+        "17",
+        "2"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "6efb2fabaa5f1b6d4f3f6726b563273e41807ec46bd08ecc1374f4750f1a2e11",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-fetch.bin": "58dc630316e7d0e532190ef1921dfbde8dbb60de536f040c38be1e61f1c523c1"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.018
+    },
+    {
+      "name": "fault-fetch-3",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu/Vaxi4_cpu_test_top",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-fetch.bin",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-fetch-3.trace",
+        "17",
+        "3"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "6efb2fabaa5f1b6d4f3f6726b563273e41807ec46bd08ecc1374f4750f1a2e11",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-fetch.bin": "58dc630316e7d0e532190ef1921dfbde8dbb60de536f040c38be1e61f1c523c1"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.018
+    },
+    {
+      "name": "fault-load-build",
+      "command": [
+        "riscv64-linux-gnu-gcc",
+        "-nostdlib",
+        "-static",
+        "-fno-pic",
+        "-no-pie",
+        "-march=rv32e_zicsr",
+        "-mabi=ilp32e",
+        "-Wl,-Ttext=0x80000000",
+        "-Wl,--build-id=none",
+        "-Wl,--no-relax",
+        "-DFAULT_KIND=2",
+        "-DFAULT_CAUSE=5",
+        "tests/access_fault.S",
+        "-o",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-load.elf"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.065
+    },
+    {
+      "name": "fault-load-objcopy",
+      "command": [
+        "riscv64-linux-gnu-objcopy",
+        "-O",
+        "binary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-load.elf",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-load.bin"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-load.elf": "9ad626118ce4796f09ec8f589ac9cca9b810ec850713b883a065ebf47157a987"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.009
+    },
+    {
+      "name": "fault-load-2",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu/Vaxi4_cpu_test_top",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-load.bin",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-load-2.trace",
+        "17",
+        "2"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "6efb2fabaa5f1b6d4f3f6726b563273e41807ec46bd08ecc1374f4750f1a2e11",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-load.bin": "83594873857949746ef54c4989a89a0a622c3d05da84568308c6eef04fc35878"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.019
+    },
+    {
+      "name": "fault-load-3",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu/Vaxi4_cpu_test_top",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-load.bin",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-load-3.trace",
+        "17",
+        "3"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "6efb2fabaa5f1b6d4f3f6726b563273e41807ec46bd08ecc1374f4750f1a2e11",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-load.bin": "83594873857949746ef54c4989a89a0a622c3d05da84568308c6eef04fc35878"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.01
+    },
+    {
+      "name": "fault-store-build",
+      "command": [
+        "riscv64-linux-gnu-gcc",
+        "-nostdlib",
+        "-static",
+        "-fno-pic",
+        "-no-pie",
+        "-march=rv32e_zicsr",
+        "-mabi=ilp32e",
+        "-Wl,-Ttext=0x80000000",
+        "-Wl,--build-id=none",
+        "-Wl,--no-relax",
+        "-DFAULT_KIND=3",
+        "-DFAULT_CAUSE=7",
+        "tests/access_fault.S",
+        "-o",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-store.elf"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.016
+    },
+    {
+      "name": "fault-store-objcopy",
+      "command": [
+        "riscv64-linux-gnu-objcopy",
+        "-O",
+        "binary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-store.elf",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-store.bin"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-store.elf": "594a9a5cf5e5aa4e871773addb2847dd96c80475092f9a7cab9d77a3c232d5ed"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "fault-store-2",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu/Vaxi4_cpu_test_top",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-store.bin",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-store-2.trace",
+        "17",
+        "2"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "6efb2fabaa5f1b6d4f3f6726b563273e41807ec46bd08ecc1374f4750f1a2e11",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-store.bin": "9d9ff9a82e87b037d77e5e18660dfdb1002e1dde0690ee288773ce651a9f927f"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.009
+    },
+    {
+      "name": "fault-store-3",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu/Vaxi4_cpu_test_top",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-store.bin",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-store-3.trace",
+        "17",
+        "3"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "6efb2fabaa5f1b6d4f3f6726b563273e41807ec46bd08ecc1374f4750f1a2e11",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/fault-store.bin": "9d9ff9a82e87b037d77e5e18660dfdb1002e1dde0690ee288773ce651a9f927f"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.008
+    },
+    {
+      "name": "misaligned-load-build",
+      "command": [
+        "riscv64-linux-gnu-gcc",
+        "-nostdlib",
+        "-static",
+        "-fno-pic",
+        "-no-pie",
+        "-march=rv32e_zicsr",
+        "-mabi=ilp32e",
+        "-Wl,-Ttext=0x80000000",
+        "-Wl,--build-id=none",
+        "-Wl,--no-relax",
+        "-DFAULT_KIND=2",
+        "-DFAULT_CAUSE=4",
+        "tests/address_misaligned.S",
+        "-o",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/misaligned-load.elf"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.032
+    },
+    {
+      "name": "misaligned-load-objcopy",
+      "command": [
+        "riscv64-linux-gnu-objcopy",
+        "-O",
+        "binary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/misaligned-load.elf",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/misaligned-load.bin"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/misaligned-load.elf": "3af5c93c7518333c46dc974c536b1118aca8238eab5cca4b379f49d5f4bb6670"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.009
+    },
+    {
+      "name": "misaligned-load",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu/Vaxi4_cpu_test_top",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/misaligned-load.bin",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/misaligned-load.trace",
+        "19"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "6efb2fabaa5f1b6d4f3f6726b563273e41807ec46bd08ecc1374f4750f1a2e11",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/misaligned-load.bin": "6504fcbac9cc9a6fcaf2792e2d28cb38578bfea4c9c78fb41344c75228cc225b"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.018
+    },
+    {
+      "name": "misaligned-store-build",
+      "command": [
+        "riscv64-linux-gnu-gcc",
+        "-nostdlib",
+        "-static",
+        "-fno-pic",
+        "-no-pie",
+        "-march=rv32e_zicsr",
+        "-mabi=ilp32e",
+        "-Wl,-Ttext=0x80000000",
+        "-Wl,--build-id=none",
+        "-Wl,--no-relax",
+        "-DFAULT_KIND=3",
+        "-DFAULT_CAUSE=6",
+        "tests/address_misaligned.S",
+        "-o",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/misaligned-store.elf"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.065
+    },
+    {
+      "name": "misaligned-store-objcopy",
+      "command": [
+        "riscv64-linux-gnu-objcopy",
+        "-O",
+        "binary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/misaligned-store.elf",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/misaligned-store.bin"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/misaligned-store.elf": "db1bd1c583d501ac791d6f364a739e17ed7124d84c4c173eddec35d2a449a136"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.006
+    },
+    {
+      "name": "misaligned-store",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu/Vaxi4_cpu_test_top",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/misaligned-store.bin",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/misaligned-store.trace",
+        "19"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "6efb2fabaa5f1b6d4f3f6726b563273e41807ec46bd08ecc1374f4750f1a2e11",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/misaligned-store.bin": "0c147b10155b2730b6fc410d73bd85ad02e49e0f40dc33164fb91de3f00b87f3"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.019
+    },
+    {
+      "name": "memory-build",
+      "command": [
+        "riscv64-linux-gnu-gcc",
+        "-nostdlib",
+        "-static",
+        "-fno-pic",
+        "-no-pie",
+        "-march=rv32e_zicsr",
+        "-mabi=ilp32e",
+        "-Wl,-Ttext=0x80000000",
+        "-Wl,--build-id=none",
+        "-Wl,--no-relax",
+        "tests/m5_s1_memory.S",
+        "-o",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory.elf"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.065
+    },
+    {
+      "name": "memory-objcopy",
+      "command": [
+        "riscv64-linux-gnu-objcopy",
+        "-O",
+        "binary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory.elf",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory.bin"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory.elf": "6967588f425327b02bd0c382908eb5577216b829b27aecceab61c471844a1fcf"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.009
+    },
+    {
+      "name": "memory-1",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu/Vaxi4_cpu_test_top",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory.bin",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory-1.trace",
+        "1",
+        "3",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory-1.fst"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "6efb2fabaa5f1b6d4f3f6726b563273e41807ec46bd08ecc1374f4750f1a2e11",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory.bin": "ce67e185f646d01384b058077f3a71ffac7f25d1a9f63872b8dd9f487cc99b49"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.034
+    },
+    {
+      "name": "memory-2",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu/Vaxi4_cpu_test_top",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory.bin",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory-2.trace",
+        "2",
+        "3"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "6efb2fabaa5f1b6d4f3f6726b563273e41807ec46bd08ecc1374f4750f1a2e11",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory.bin": "ce67e185f646d01384b058077f3a71ffac7f25d1a9f63872b8dd9f487cc99b49"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.017
+    },
+    {
+      "name": "memory-3",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu/Vaxi4_cpu_test_top",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory.bin",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory-3.trace",
+        "3",
+        "3"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "6efb2fabaa5f1b6d4f3f6726b563273e41807ec46bd08ecc1374f4750f1a2e11",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory.bin": "ce67e185f646d01384b058077f3a71ffac7f25d1a9f63872b8dd9f487cc99b49"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.018
+    },
+    {
+      "name": "memory-4",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu/Vaxi4_cpu_test_top",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory.bin",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory-4.trace",
+        "4",
+        "3"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "6efb2fabaa5f1b6d4f3f6726b563273e41807ec46bd08ecc1374f4750f1a2e11",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory.bin": "ce67e185f646d01384b058077f3a71ffac7f25d1a9f63872b8dd9f487cc99b49"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.018
+    },
+    {
+      "name": "memory-5",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu/Vaxi4_cpu_test_top",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory.bin",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory-5.trace",
+        "5",
+        "3"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "6efb2fabaa5f1b6d4f3f6726b563273e41807ec46bd08ecc1374f4750f1a2e11",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory.bin": "ce67e185f646d01384b058077f3a71ffac7f25d1a9f63872b8dd9f487cc99b49"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.018
+    },
+    {
+      "name": "memory-6",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu/Vaxi4_cpu_test_top",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory.bin",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory-6.trace",
+        "6",
+        "3"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "6efb2fabaa5f1b6d4f3f6726b563273e41807ec46bd08ecc1374f4750f1a2e11",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory.bin": "ce67e185f646d01384b058077f3a71ffac7f25d1a9f63872b8dd9f487cc99b49"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.018
+    },
+    {
+      "name": "memory-7",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu/Vaxi4_cpu_test_top",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory.bin",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory-7.trace",
+        "7",
+        "3"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "6efb2fabaa5f1b6d4f3f6726b563273e41807ec46bd08ecc1374f4750f1a2e11",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory.bin": "ce67e185f646d01384b058077f3a71ffac7f25d1a9f63872b8dd9f487cc99b49"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.018
+    },
+    {
+      "name": "memory-8",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu/Vaxi4_cpu_test_top",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory.bin",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory-8.trace",
+        "8",
+        "3"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "6efb2fabaa5f1b6d4f3f6726b563273e41807ec46bd08ecc1374f4750f1a2e11",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory.bin": "ce67e185f646d01384b058077f3a71ffac7f25d1a9f63872b8dd9f487cc99b49"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.018
+    },
+    {
+      "name": "memory-9",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu/Vaxi4_cpu_test_top",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory.bin",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory-9.trace",
+        "9",
+        "3"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "6efb2fabaa5f1b6d4f3f6726b563273e41807ec46bd08ecc1374f4750f1a2e11",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory.bin": "ce67e185f646d01384b058077f3a71ffac7f25d1a9f63872b8dd9f487cc99b49"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.018
+    },
+    {
+      "name": "memory-10",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu/Vaxi4_cpu_test_top",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory.bin",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory-10.trace",
+        "10",
+        "3"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "6efb2fabaa5f1b6d4f3f6726b563273e41807ec46bd08ecc1374f4750f1a2e11",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory.bin": "ce67e185f646d01384b058077f3a71ffac7f25d1a9f63872b8dd9f487cc99b49"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.018
+    },
+    {
+      "name": "guard-build",
+      "command": [
+        "verilator",
+        "--cc",
+        "--exe",
+        "--build",
+        "-j",
+        "2",
+        "--assert",
+        "-Wall",
+        "-Wno-fatal",
+        "-Wno-SYNCASYNCNET",
+        "-Werror-WIDTH",
+        "-Werror-LATCH",
+        "-Werror-UNOPTFLAT",
+        "--top-module",
+        "npc_axi4_guard",
+        "--Mdir",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/guard",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/perip/amba/npc_axi4_guard.v",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/tests/soc/guard_tb.cpp"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 1.719
+    },
+    {
+      "name": "guard",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/guard/Vnpc_axi4_guard"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "b72a41309fc9a8fdafcf3550db58830c604e34c25d8d8b8c049bf6c263fa143b",
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.034
+    },
+    {
+      "name": "cpu-add-longlong-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-add-longlong",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.265
+    },
+    {
+      "name": "cpu-add-longlong",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-add-longlong/build/cpu-add-longlong-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-add-longlong.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-add-longlong.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-add-longlong/build/cpu-add-longlong-riscv32e-ysyxsoc-flash-psram.bin": "74c8b059b63e9d33f7eacdc82be221c051dd61795b749cb94e3ddab492074dc4",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 4.73
+    },
+    {
+      "name": "cpu-add-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-add",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.316
+    },
+    {
+      "name": "cpu-add",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-add/build/cpu-add-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-add.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-add.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-add/build/cpu-add-riscv32e-ysyxsoc-flash-psram.bin": "b7fae47b669ab68cc0d2c2b2fa83593d09c8dc3622024927d4cfe49e90bcbe1c",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 3.227
+    },
+    {
+      "name": "cpu-bit-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-bit",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.316
+    },
+    {
+      "name": "cpu-bit",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-bit/build/cpu-bit-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-bit.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-bit.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-bit/build/cpu-bit-riscv32e-ysyxsoc-flash-psram.bin": "65819cbe7004fb405d326be5e43a98ce358d6b64ccab64cdc4472861c59575c5",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 2.827
+    },
+    {
+      "name": "cpu-bubble-sort-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-bubble-sort",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.165
+    },
+    {
+      "name": "cpu-bubble-sort",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-bubble-sort/build/cpu-bubble-sort-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-bubble-sort.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-bubble-sort.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-bubble-sort/build/cpu-bubble-sort-riscv32e-ysyxsoc-flash-psram.bin": "235ed75cdcc2b700234d6d5b8029f51439e7f457562a014f80023d20a9234554",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 3.477
+    },
+    {
+      "name": "cpu-crc32-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-crc32",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.316
+    },
+    {
+      "name": "cpu-crc32",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-crc32/build/cpu-crc32-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-crc32.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-crc32.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-crc32/build/cpu-crc32-riscv32e-ysyxsoc-flash-psram.bin": "6e99b59a5f7b4a13661add770bbf57ba0d55d44251c9953740f79ea456d1d02b",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 10.342
+    },
+    {
+      "name": "cpu-div-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-div",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.315
+    },
+    {
+      "name": "cpu-div",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-div/build/cpu-div-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-div.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-div.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-div/build/cpu-div-riscv32e-ysyxsoc-flash-psram.bin": "282e1cd1b0d13b449b9ae7d2fc8789d5e7983d10ca98124ab17f066350c9050e",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 9.238
+    },
+    {
+      "name": "cpu-dummy-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-dummy",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.265
+    },
+    {
+      "name": "cpu-dummy",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-dummy/build/cpu-dummy-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-dummy.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-dummy.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-dummy/build/cpu-dummy-riscv32e-ysyxsoc-flash-psram.bin": "e312cc5c1d7756cdb5de59a9f6c469024b7d67a2a3c15019b0408eba4c12ab46",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.768
+    },
+    {
+      "name": "cpu-fact-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-fact",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.215
+    },
+    {
+      "name": "cpu-fact",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-fact/build/cpu-fact-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-fact.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-fact.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-fact/build/cpu-fact-riscv32e-ysyxsoc-flash-psram.bin": "76ed97e8f92f1e52d734086c83e87079bd1bbb0628005b90295f395cae03700e",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 2.827
+    },
+    {
+      "name": "cpu-fib-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-fib",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.315
+    },
+    {
+      "name": "cpu-fib",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-fib/build/cpu-fib-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-fib.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-fib.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-fib/build/cpu-fib-riscv32e-ysyxsoc-flash-psram.bin": "eb5a945e66d1f5278dd80f215652149bfcc8dc35b95a9ba8129b6560cc70e1bd",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 2.876
+    },
+    {
+      "name": "cpu-goldbach-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-goldbach",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.315
+    },
+    {
+      "name": "cpu-goldbach",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-goldbach/build/cpu-goldbach-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-goldbach.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-goldbach.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-goldbach/build/cpu-goldbach-riscv32e-ysyxsoc-flash-psram.bin": "b11202b13cc01cd4f640b5988cc6b7352a75e6226666905dbeb96084d076b2c6",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 5.932
+    },
+    {
+      "name": "cpu-hello-str-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-hello-str",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.315
+    },
+    {
+      "name": "cpu-hello-str",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-hello-str/build/cpu-hello-str-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-hello-str.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-hello-str.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-hello-str/build/cpu-hello-str-riscv32e-ysyxsoc-flash-psram.bin": "183d68f319687f7dc44adc6e5da11af9bbf363dc1303bc3a00e40c033dec02d1",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 33.084
+    },
+    {
+      "name": "cpu-if-else-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-if-else",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.265
+    },
+    {
+      "name": "cpu-if-else",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-if-else/build/cpu-if-else-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-if-else.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-if-else.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-if-else/build/cpu-if-else-riscv32e-ysyxsoc-flash-psram.bin": "c027dc415af5548aacdc6c9ae5c38073376875e53c9a02825cb4ccff8d6bbc6c",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 2.024
+    },
+    {
+      "name": "cpu-leap-year-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-leap-year",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.316
+    },
+    {
+      "name": "cpu-leap-year",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-leap-year/build/cpu-leap-year-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-leap-year.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-leap-year.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-leap-year/build/cpu-leap-year-riscv32e-ysyxsoc-flash-psram.bin": "312243d2ec28c83ff2835d3cb42fa44305cc6b705179590736cb75912e6137da",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 7.235
+    },
+    {
+      "name": "cpu-load-store-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-load-store",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.265
+    },
+    {
+      "name": "cpu-load-store",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-load-store/build/cpu-load-store-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-load-store.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-load-store.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-load-store/build/cpu-load-store-riscv32e-ysyxsoc-flash-psram.bin": "d30d1b64e303d9804c2866e3bea8dd921778e77c51b9618c36936b6973a8fe29",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 3.276
+    },
+    {
+      "name": "cpu-matrix-mul-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-matrix-mul",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.266
+    },
+    {
+      "name": "cpu-matrix-mul",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-matrix-mul/build/cpu-matrix-mul-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-matrix-mul.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-matrix-mul.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-matrix-mul/build/cpu-matrix-mul-riscv32e-ysyxsoc-flash-psram.bin": "1cfce57dc586c41c3ef71b86ebdf333c44f4f1e4dd5a0213ef5efe8689c6d1cb",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 58.063
+    },
+    {
+      "name": "cpu-max-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-max",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.265
+    },
+    {
+      "name": "cpu-max",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-max/build/cpu-max-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-max.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-max.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-max/build/cpu-max-riscv32e-ysyxsoc-flash-psram.bin": "590a05458c1a23523d45f4f50082f6ccbb5e2ad5fe3816eb79b0140993e1ef23",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 3.277
+    },
+    {
+      "name": "cpu-mersenne-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-mersenne",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.266
+    },
+    {
+      "name": "cpu-mersenne",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-mersenne/build/cpu-mersenne-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-mersenne.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-mersenne.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-mersenne/build/cpu-mersenne-riscv32e-ysyxsoc-flash-psram.bin": "e2cc51b8a40fdedf7a1f59a0a64376459248b44ea567a60606a13531f4869ea8",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 18.955
+    },
+    {
+      "name": "cpu-min3-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-min3",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.315
+    },
+    {
+      "name": "cpu-min3",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-min3/build/cpu-min3-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-min3.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-min3.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-min3/build/cpu-min3-riscv32e-ysyxsoc-flash-psram.bin": "d83a3c54cc135b234645094fff847a371d91a18f7af9c891bf7df8d78fb94293",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 3.628
+    },
+    {
+      "name": "cpu-mov-c-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-mov-c",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.215
+    },
+    {
+      "name": "cpu-mov-c",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-mov-c/build/cpu-mov-c-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-mov-c.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-mov-c.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-mov-c/build/cpu-mov-c-riscv32e-ysyxsoc-flash-psram.bin": "ff497a61e9e1509051820961ce09915a68a7de2e294767820a84c46ea9222436",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 1.876
+    },
+    {
+      "name": "cpu-movsx-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-movsx",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.316
+    },
+    {
+      "name": "cpu-movsx",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-movsx/build/cpu-movsx-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-movsx.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-movsx.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-movsx/build/cpu-movsx-riscv32e-ysyxsoc-flash-psram.bin": "70ba51e2b9af6b8300aaf1f79a384f50c314e299069c6583ea54d7638ff8918f",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 2.575
+    },
+    {
+      "name": "cpu-mul-longlong-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-mul-longlong",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.265
+    },
+    {
+      "name": "cpu-mul-longlong",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-mul-longlong/build/cpu-mul-longlong-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-mul-longlong.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-mul-longlong.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-mul-longlong/build/cpu-mul-longlong-riscv32e-ysyxsoc-flash-psram.bin": "d634a3bacee412b17fa59cd4577ee0e5094edd9b6cb6030e2bed215659250e43",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 5.531
+    },
+    {
+      "name": "cpu-pascal-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-pascal",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.315
+    },
+    {
+      "name": "cpu-pascal",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-pascal/build/cpu-pascal-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-pascal.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-pascal.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-pascal/build/cpu-pascal-riscv32e-ysyxsoc-flash-psram.bin": "433ca367a6f576fca410e0f729d6c43e240fa8e6d841a8ac1b528ffd6c4bbd1f",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 3.979
+    },
+    {
+      "name": "cpu-prime-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-prime",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.266
+    },
+    {
+      "name": "cpu-prime",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-prime/build/cpu-prime-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-prime.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-prime.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-prime/build/cpu-prime-riscv32e-ysyxsoc-flash-psram.bin": "5b4e128213397dacb03b8a0baf58a8f9ea91e8bde2a29d7ba89afc7cef0590a6",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 22.965
+    },
+    {
+      "name": "cpu-quick-sort-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-quick-sort",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.265
+    },
+    {
+      "name": "cpu-quick-sort",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-quick-sort/build/cpu-quick-sort-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-quick-sort.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-quick-sort.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-quick-sort/build/cpu-quick-sort-riscv32e-ysyxsoc-flash-psram.bin": "e4c29e0c53d2ff3175d1b4e117a9ac1a5a2070d52d2bb704665dbdd2522d25b1",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 6.284
+    },
+    {
+      "name": "cpu-recursion-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-recursion",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.315
+    },
+    {
+      "name": "cpu-recursion",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-recursion/build/cpu-recursion-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-recursion.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-recursion.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-recursion/build/cpu-recursion-riscv32e-ysyxsoc-flash-psram.bin": "4f6f4b270a476d9abe3a9a6e78a6f201326f0898c05d75bcea6536b78010270f",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 6.639
+    },
+    {
+      "name": "cpu-select-sort-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-select-sort",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.316
+    },
+    {
+      "name": "cpu-select-sort",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-select-sort/build/cpu-select-sort-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-select-sort.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-select-sort.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-select-sort/build/cpu-select-sort-riscv32e-ysyxsoc-flash-psram.bin": "e28d1873852bf2b5e72cc734f82e7d1c484342556dc05a8f50bbfb2e8a803494",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 3.63
+    },
+    {
+      "name": "cpu-shift-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-shift",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.316
+    },
+    {
+      "name": "cpu-shift",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-shift/build/cpu-shift-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-shift.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-shift.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-shift/build/cpu-shift-riscv32e-ysyxsoc-flash-psram.bin": "69212bb7ae3451b9b3c3f4b86398c32abf04fd2941dad67223a6687499d81238",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 2.575
+    },
+    {
+      "name": "cpu-shuixianhua-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-shuixianhua",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.316
+    },
+    {
+      "name": "cpu-shuixianhua",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-shuixianhua/build/cpu-shuixianhua-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-shuixianhua.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-shuixianhua.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-shuixianhua/build/cpu-shuixianhua-riscv32e-ysyxsoc-flash-psram.bin": "fcea1645862cbf8d198947a1c8d34c842401f50adaff0552430ad1fb5bcdf047",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 54.623
+    },
+    {
+      "name": "cpu-string-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-string",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.316
+    },
+    {
+      "name": "cpu-string",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-string/build/cpu-string-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-string.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-string.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-string/build/cpu-string-riscv32e-ysyxsoc-flash-psram.bin": "ac32c10e288929d9285e48892e8d71140a23d55829f8949e7ba36361e4a1dba4",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 4.53
+    },
+    {
+      "name": "cpu-sub-longlong-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-sub-longlong",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.316
+    },
+    {
+      "name": "cpu-sub-longlong",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-sub-longlong/build/cpu-sub-longlong-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-sub-longlong.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-sub-longlong.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-sub-longlong/build/cpu-sub-longlong-riscv32e-ysyxsoc-flash-psram.bin": "c052187fa2e80ff72f92b405692f2435bb944cc8a7a195511e710fafd9a5897c",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 4.78
+    },
+    {
+      "name": "cpu-sum-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-sum",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.265
+    },
+    {
+      "name": "cpu-sum",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-sum/build/cpu-sum-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-sum.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-sum.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-sum/build/cpu-sum-riscv32e-ysyxsoc-flash-psram.bin": "e9deaa8de01c1c6562061ce25fe1fdc63a87bce9ce686e217fd41f03ec8b507a",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 1.424
+    },
+    {
+      "name": "cpu-switch-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-switch",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.215
+    },
+    {
+      "name": "cpu-switch",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-switch/build/cpu-switch-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-switch.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-switch.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-switch/build/cpu-switch-riscv32e-ysyxsoc-flash-psram.bin": "5fd832267b7cf8518c0d31bcbc6c9bacaafa1b84c370f71a513869f817e36cc7",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 1.919
+    },
+    {
+      "name": "cpu-to-lower-case-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-to-lower-case",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.316
+    },
+    {
+      "name": "cpu-to-lower-case",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-to-lower-case/build/cpu-to-lower-case-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-to-lower-case.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-to-lower-case.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-to-lower-case/build/cpu-to-lower-case-riscv32e-ysyxsoc-flash-psram.bin": "280b433a033285c631749d44563ad14faa8072b4635903de4acf05104b78fcd1",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 2.572
+    },
+    {
+      "name": "cpu-wanshu-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=flash-psram",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-wanshu",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.365
+    },
+    {
+      "name": "cpu-wanshu",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-wanshu/build/cpu-wanshu-riscv32e-ysyxsoc-flash-psram.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-wanshu.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu-wanshu.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-wanshu/build/cpu-wanshu-riscv32e-ysyxsoc-flash-psram.bin": "d0a862c30cc992e241fd54b7e8ac8443141758b08064e19985a4055be735f53d",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 9.392
+    },
+    {
+      "name": "micro-sieve-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=mrom",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/micro-sieve",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.315
+    },
+    {
+      "name": "micro-sieve",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc/VysyxSoCFull",
+        "--mrom",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/micro-sieve/build/micro-sieve-riscv32e-ysyxsoc.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "20000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/micro-sieve.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/micro-sieve.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "db556458bd8d8616ede3375c717569a55254a062d8d88b782c2fb5925b10958f",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/micro-sieve/build/micro-sieve-riscv32e-ysyxsoc.bin": "153d16b76e651f615c193f4891cc40e9a4e95fd2746060c482c9ab667139fb1d",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.821
+    },
+    {
+      "name": "micro-fib-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=mrom",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/micro-fib",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.315
+    },
+    {
+      "name": "micro-fib",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc/VysyxSoCFull",
+        "--mrom",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/micro-fib/build/micro-fib-riscv32e-ysyxsoc.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "20000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/micro-fib.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/micro-fib.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "db556458bd8d8616ede3375c717569a55254a062d8d88b782c2fb5925b10958f",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/micro-fib/build/micro-fib-riscv32e-ysyxsoc.bin": "f15ac659b4292e7154afe4341b86603081c2e526745e9dbadd5c95f3dfa7469b",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 7.03
+    },
+    {
+      "name": "spi-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=mrom",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/spi",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.265
+    },
+    {
+      "name": "spi",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc/VysyxSoCFull",
+        "--mrom",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/spi/build/spi-riscv32e-ysyxsoc.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/spi.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/spi.tx",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/pattern.bin"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "db556458bd8d8616ede3375c717569a55254a062d8d88b782c2fb5925b10958f",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/spi/build/spi-riscv32e-ysyxsoc.bin": "b6d0660bf88c2f4d0bea2bc1f1e2e5068e62190daaf7406d41888b09c2b82c1e",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/pattern.bin": "4b1c8b3b3b6005262b3ae47c45627f1cc39e74cc62d2ee6462b6f17e30ca1526"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.568
+    },
+    {
+      "name": "psram-build",
+      "command": [
+        "make",
+        "ARCH=riscv32e-ysyxsoc",
+        "SOC_BOOT=mrom",
+        "insert-arg"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/psram",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.164
+    },
+    {
+      "name": "psram",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc/VysyxSoCFull",
+        "--mrom",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/psram/build/psram-riscv32e-ysyxsoc.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/psram.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/psram.tx"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "db556458bd8d8616ede3375c717569a55254a062d8d88b782c2fb5925b10958f",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/psram/build/psram-riscv32e-ysyxsoc.bin": "303666b2fb306028fef6804e3aa12ba18a29d4b74853628c170082b0c44c7b5a",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 4.03
+    },
+    {
+      "name": "xip-build",
+      "command": [
+        "riscv64-linux-gnu-gcc",
+        "-nostdlib",
+        "-static",
+        "-fno-pic",
+        "-no-pie",
+        "-march=rv32e_zicsr",
+        "-mabi=ilp32e",
+        "-Wl,-Ttext=0x30000000",
+        "-Wl,--build-id=none",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/xip.S",
+        "-o",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/xip.elf"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.016
+    },
+    {
+      "name": "xip-image",
+      "command": [
+        "riscv64-linux-gnu-objcopy",
+        "-O",
+        "binary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/xip.elf",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/xip.bin"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/xip.elf": "ab21dc5c5b5c69007d8de4506ae0037a5d53a1df38aa7a57b40fc1f4cd7871f9"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.005
+    },
+    {
+      "name": "xip",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-flash/VysyxSoCFull",
+        "--flash",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/xip.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/xip.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/xip.tx",
+        "--commit-trace",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/xip.commit.csv",
+        "--bus-trace",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/xip.bus.csv",
+        "--irq-trace",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/xip.irq.csv"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "82614b3298da0c5cf55f62a243dd9e059239f22f938a637104aaae3d5fe12d4e",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/xip.bin": "93ddfbd4794edb18ab2d59a9abe5a6e1d826db5094be2bd55f37ea633346838d",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.038
+    },
+    {
+      "name": "storage-faults-build",
+      "command": [
+        "riscv64-linux-gnu-gcc",
+        "-nostdlib",
+        "-static",
+        "-fno-pic",
+        "-no-pie",
+        "-march=rv32e_zicsr",
+        "-mabi=ilp32e",
+        "-Wl,-Ttext=0x20000000",
+        "-Wl,--build-id=none",
+        "-Wl,--no-relax",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/storage-faults.S",
+        "-o",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/storage-faults.elf"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {},
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.016
+    },
+    {
+      "name": "storage-faults-image",
+      "command": [
+        "riscv64-linux-gnu-objcopy",
+        "-O",
+        "binary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/storage-faults.elf",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/storage-faults.bin"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/storage-faults.elf": "62c3bb9ed772d3a26e3c90a3bf8ded1a4ef0679a3e780b7e29913d4798664eb6"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "storage-faults",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc/VysyxSoCFull",
+        "--mrom",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/storage-faults.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "300000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/storage-faults.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/storage-faults.tx",
+        "--commit-trace",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/storage-faults.commit.csv",
+        "--bus-trace",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/storage-faults.bus.csv",
+        "--irq-trace",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/storage-faults.irq.csv"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "db556458bd8d8616ede3375c717569a55254a062d8d88b782c2fb5925b10958f",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/storage-faults.bin": "f38c42b4459701ede83ee3fbdf5fe6c770a7c3ae0b2b3dabeebe012fa68d2d98",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.068
+    },
+    {
+      "name": "storage-faults-delayed",
+      "command": [
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/ysyxsoc-delay/VysyxSoCFull",
+        "--mrom",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/storage-faults.bin",
+        "--diff",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so",
+        "--max-cycles",
+        "20000000",
+        "--summary",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/storage-faults-delayed.json",
+        "--uart-log",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/storage-faults-delayed.tx",
+        "+npc_delay_seed=17",
+        "+npc_delay_max=7",
+        "+npc_delay_fixed=0"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc",
+      "expected_failure": null,
+      "executable_sha256": "2d46b1c38e9d20ecfb97bb6c2723c864b4117f65eff36c02e8a9b9cbb23c87e2",
+      "input_sha256": {
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/storage-faults.bin": "f38c42b4459701ede83ee3fbdf5fe6c770a7c3ae0b2b3dabeebe012fa68d2d98",
+        "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/nemu/build/ysyxsoc/nemu-ref.so": "e3f57d37166bbfba00f525c0b4b2b2324d6ba3422e5be4eed6a73774f679faa0"
+      },
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 0.07
+    }
+  ]
+}

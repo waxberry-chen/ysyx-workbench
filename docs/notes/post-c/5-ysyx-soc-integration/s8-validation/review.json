@@ -1,0 +1,565 @@
+{
+  "date": "2026-10-30",
+  "status": "PASS_AFTER_TEST_RUNNER_FIX",
+  "groups": {
+    "m5-s2": {
+      "positive_soc_runs": 4,
+      "commits": 561,
+      "diff_soc_runs": 0,
+      "diff_commits": 0,
+      "diff_interrupts": 0,
+      "workloads": [
+        "ebreak",
+        "faults",
+        "memory",
+        "uart"
+      ]
+    },
+    "m5-s3": {
+      "positive_soc_runs": 31,
+      "commits": 363861,
+      "diff_soc_runs": 31,
+      "diff_commits": 363861,
+      "diff_interrupts": 0,
+      "workloads": [
+        "cpu-add-longlong",
+        "cpu-add",
+        "cpu-bit",
+        "cpu-bubble-sort",
+        "cpu-div",
+        "cpu-dummy",
+        "cpu-fib",
+        "cpu-if-else",
+        "cpu-leap-year",
+        "cpu-load-store",
+        "cpu-max",
+        "cpu-min3",
+        "cpu-mov-c",
+        "cpu-movsx",
+        "cpu-mul-longlong",
+        "cpu-quick-sort",
+        "cpu-recursion",
+        "cpu-select-sort",
+        "cpu-shift",
+        "cpu-string",
+        "cpu-sub-longlong",
+        "cpu-sum",
+        "cpu-switch",
+        "cpu-to-lower-case",
+        "endpoints",
+        "hello",
+        "memory",
+        "micro-fib",
+        "micro-sieve",
+        "timer",
+        "traps"
+      ]
+    },
+    "m5-s4": {
+      "positive_soc_runs": 3,
+      "commits": 367650,
+      "diff_soc_runs": 3,
+      "diff_commits": 367650,
+      "diff_interrupts": 0,
+      "workloads": [
+        "boot-flash-psram",
+        "boot-flash-sram",
+        "rtthread-capacity"
+      ]
+    },
+    "m5-s5": {
+      "positive_soc_runs": 6,
+      "commits": 139556,
+      "diff_soc_runs": 6,
+      "diff_commits": 139556,
+      "diff_interrupts": 17,
+      "workloads": [
+        "am-timer-flash-psram",
+        "am-timer-flash-sram",
+        "am-timer-mrom",
+        "rtthread-tick",
+        "timer-registers",
+        "trap"
+      ]
+    },
+    "m5-s6": {
+      "positive_soc_runs": 68,
+      "commits": 1824241,
+      "diff_soc_runs": 68,
+      "diff_commits": 1824241,
+      "diff_interrupts": 30,
+      "workloads": [
+        "cpu-add-longlong",
+        "cpu-add",
+        "cpu-bit",
+        "cpu-bubble-sort",
+        "cpu-crc32",
+        "cpu-div",
+        "cpu-dummy",
+        "cpu-fact",
+        "cpu-fib",
+        "cpu-goldbach",
+        "cpu-hello-str",
+        "cpu-if-else",
+        "cpu-leap-year",
+        "cpu-load-store",
+        "cpu-matrix-mul",
+        "cpu-max",
+        "cpu-mersenne",
+        "cpu-min3",
+        "cpu-mov-c",
+        "cpu-movsx",
+        "cpu-mul-longlong",
+        "cpu-pascal",
+        "cpu-prime",
+        "cpu-quick-sort",
+        "cpu-recursion",
+        "cpu-select-sort",
+        "cpu-shift",
+        "cpu-shuixianhua",
+        "cpu-string",
+        "cpu-sub-longlong",
+        "cpu-sum",
+        "cpu-switch",
+        "cpu-to-lower-case",
+        "cpu-wanshu",
+        "hello-fixed",
+        "hello-seed-1",
+        "hello-seed-10",
+        "hello-seed-2",
+        "hello-seed-3",
+        "hello-seed-4",
+        "hello-seed-5",
+        "hello-seed-6",
+        "hello-seed-7",
+        "hello-seed-8",
+        "hello-seed-9",
+        "memory-fixed",
+        "memory-seed-1",
+        "memory-seed-10",
+        "memory-seed-2",
+        "memory-seed-3",
+        "memory-seed-4",
+        "memory-seed-5",
+        "memory-seed-6",
+        "memory-seed-7",
+        "memory-seed-8",
+        "memory-seed-9",
+        "micro-fib",
+        "micro-sieve",
+        "psram",
+        "rtthread-delayed",
+        "rtthread-normal",
+        "spi",
+        "storage-faults-delayed",
+        "storage-faults",
+        "uart-fixed",
+        "uart-normal",
+        "uart-random",
+        "xip"
+      ]
+    }
+  },
+  "negative_checks": {
+    "m5-s2": [
+      "empty",
+      "oversized",
+      "timeout",
+      "bad-exit",
+      "missing-image"
+    ],
+    "m5-s3": [
+      "diff-negative",
+      "missing-data-copy",
+      "missing-bss-clear",
+      "rom-overflow",
+      "ram-overflow"
+    ],
+    "m5-s4": [
+      "boot-flash-sram-missing-__am_data_copy",
+      "boot-flash-sram-missing-__am_bss_clear",
+      "boot-flash-psram-missing-__am_data_copy",
+      "boot-flash-psram-missing-__am_bss_clear",
+      "flash-empty",
+      "flash-oversized",
+      "overflow-flash-sram",
+      "overflow-flash-psram",
+      "overflow-flash"
+    ],
+    "m5-s5": [
+      "irq-epc-negative",
+      "context-negative"
+    ],
+    "m5-s6": [
+      "uart-wrong-baud",
+      "stack-bound-negative",
+      "arbiter-bad-rid",
+      "arbiter-bad-bid",
+      "arbiter-bad-rlast",
+      "fabric-bad-rid",
+      "fabric-bad-bid",
+      "fabric-bad-rlast",
+      "wrapper-badirq",
+      "wrapper-badslave"
+    ]
+  },
+  "s6_prior_count_differences": {
+    "rtthread-normal": {
+      "commits": [
+        361495,
+        361581
+      ],
+      "cycles": [
+        71767432,
+        71799451
+      ]
+    },
+    "rtthread-delayed": {
+      "commits": [
+        336421,
+        336507
+      ],
+      "cycles": [
+        78872523,
+        78906912
+      ]
+    }
+  },
+  "s6_cpu_tests": {
+    "pass": 34,
+    "excluded": [
+      "unalign"
+    ]
+  },
+  "s7_archive_files_verified": 72,
+  "s7_input_comparison": [
+    {
+      "path": "npc/vsrc/core/ysyx_opbuf.sv",
+      "s7_sha256": "11e6880f0b2118bacf9df9dcf0a4012dd6b3fd1192f02d490c46aa87d1cd7ae3",
+      "s8_sha256": "11e6880f0b2118bacf9df9dcf0a4012dd6b3fd1192f02d490c46aa87d1cd7ae3",
+      "exact": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_regfile.sv",
+      "s7_sha256": "80c66dc0a1fcf39133e5287d9befe0670dceccc9f4237135b8c53ff310cc3eab",
+      "s8_sha256": "80c66dc0a1fcf39133e5287d9befe0670dceccc9f4237135b8c53ff310cc3eab",
+      "exact": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_core.sv",
+      "s7_sha256": "7a7c4ec68510f926497a53bb70ed63715a51357d3f816a56c40a888505b75252",
+      "s8_sha256": "7a7c4ec68510f926497a53bb70ed63715a51357d3f816a56c40a888505b75252",
+      "exact": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_exu.sv",
+      "s7_sha256": "49c6af81ab516ca96a156d36890c3c6aa36f54277c22d8c487fea754bda34060",
+      "s8_sha256": "49c6af81ab516ca96a156d36890c3c6aa36f54277c22d8c487fea754bda34060",
+      "exact": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_gen_imm.sv",
+      "s7_sha256": "7b72f39d8bc17eee2ffb186d6183855c0075776a8505084e0204f147c6192d1a",
+      "s8_sha256": "7b72f39d8bc17eee2ffb186d6183855c0075776a8505084e0204f147c6192d1a",
+      "exact": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_idu.sv",
+      "s7_sha256": "d3802667e58390e23075af8000b4231a37721d2fd88c55dcf4f675c484f29642",
+      "s8_sha256": "d3802667e58390e23075af8000b4231a37721d2fd88c55dcf4f675c484f29642",
+      "exact": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_branch.sv",
+      "s7_sha256": "6cc2d908aeb37572de4cb026a578a452d46ca3e11d59be69d6023e29d2195537",
+      "s8_sha256": "6cc2d908aeb37572de4cb026a578a452d46ca3e11d59be69d6023e29d2195537",
+      "exact": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_ifu.sv",
+      "s7_sha256": "ddf28fefd61b1f425c6353ef165e444f5194fcbfe7e4715fffb30fe493016370",
+      "s8_sha256": "ddf28fefd61b1f425c6353ef165e444f5194fcbfe7e4715fffb30fe493016370",
+      "exact": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_alu.sv",
+      "s7_sha256": "cbe707eb49dbe9eb30ed8a496dc628866eb4f888a1210d77f3ceef0374f470a1",
+      "s8_sha256": "cbe707eb49dbe9eb30ed8a496dc628866eb4f888a1210d77f3ceef0374f470a1",
+      "exact": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_lsu.sv",
+      "s7_sha256": "1ec2463ade5aa1bd5c01a4dc15519be42be2d8104689c43579fcda81d2bd1654",
+      "s8_sha256": "1ec2463ade5aa1bd5c01a4dc15519be42be2d8104689c43579fcda81d2bd1654",
+      "exact": true
+    },
+    {
+      "path": "npc/vsrc/core/ysyx_csr.sv",
+      "s7_sha256": "2562b476d11cb57b5e8f51e8c4d85646289893246c7ee2a3a4289abd1f6765bb",
+      "s8_sha256": "5dc4113d83a2935bbeb04fc65eac7b3fc55d8eab5cd85b11ebae6d78a9acc949",
+      "exact": false,
+      "disposition": "comment-only; non-comment text identical"
+    },
+    {
+      "path": "npc/vsrc/top/ysyx_25030087.sv",
+      "s7_sha256": "2e4dacc6d1af5c995f2eea95bf5c2544187ab9aa7a57d5fa451bb9e94d104767",
+      "s8_sha256": "2e4dacc6d1af5c995f2eea95bf5c2544187ab9aa7a57d5fa451bb9e94d104767",
+      "exact": true
+    },
+    {
+      "path": "npc/vsrc/top/ysyx_soc_cpu.sv",
+      "s7_sha256": "f5a6fbebb45ddcec9503c0cb5e891b013b877a5dec3539767542f4d95c092b1c",
+      "s8_sha256": "f5a6fbebb45ddcec9503c0cb5e891b013b877a5dec3539767542f4d95c092b1c",
+      "exact": true
+    },
+    {
+      "path": "npc/vsrc/top/ysyx_core_axi4.sv",
+      "s7_sha256": "19fc073b740072e3b6bbda89f5dd60927c299112b2da860c60064b59896db22e",
+      "s8_sha256": "19fc073b740072e3b6bbda89f5dd60927c299112b2da860c60064b59896db22e",
+      "exact": true
+    },
+    {
+      "path": "npc/vsrc/bus/ysyx_axi4_arbiter.sv",
+      "s7_sha256": "57b407a5f38bd14979b51c8e52feb106168393ae38d3879269811726aae4b750",
+      "s8_sha256": "57b407a5f38bd14979b51c8e52feb106168393ae38d3879269811726aae4b750",
+      "exact": true
+    },
+    {
+      "path": "npc/vsrc/bus/ysyx_lsu_axi4_adapter.sv",
+      "s7_sha256": "309ea53b7418bb6779cfcb5490294b2aaf0785f9f4ba00f9097b947a096c966e",
+      "s8_sha256": "309ea53b7418bb6779cfcb5490294b2aaf0785f9f4ba00f9097b947a096c966e",
+      "exact": true
+    },
+    {
+      "path": "npc/vsrc/bus/ysyx_axi4_router.sv",
+      "s7_sha256": "6738000570613379fff8a19f37964f6dc7ee0079c088e7e7d2f3669ddcf2abc0",
+      "s8_sha256": "6738000570613379fff8a19f37964f6dc7ee0079c088e7e7d2f3669ddcf2abc0",
+      "exact": true
+    },
+    {
+      "path": "npc/vsrc/bus/ysyx_ifu_axi4_adapter.sv",
+      "s7_sha256": "9643e9b1f6212c3ebaf1acc8c3f1d84efc896cf3971aae401898a0da8552fd76",
+      "s8_sha256": "9643e9b1f6212c3ebaf1acc8c3f1d84efc896cf3971aae401898a0da8552fd76",
+      "exact": true
+    },
+    {
+      "path": "npc/vsrc/gnrl/ysyx_global.sv",
+      "s7_sha256": "39dc2658d350ab8293953b819346339cac640f377b4bfa3bec30ed5b9828d2f9",
+      "s8_sha256": "39dc2658d350ab8293953b819346339cac640f377b4bfa3bec30ed5b9828d2f9",
+      "exact": true
+    },
+    {
+      "path": "npc/vsrc/gnrl/ysyx_gnrl_primitive.sv",
+      "s7_sha256": "69e7f79f3636533b0d10016fd04097dbdf92c13f342c7e12c0f25402188f7c15",
+      "s8_sha256": "69e7f79f3636533b0d10016fd04097dbdf92c13f342c7e12c0f25402188f7c15",
+      "exact": true
+    },
+    {
+      "path": "npc/vsrc/periph/ysyx_clint.sv",
+      "s7_sha256": "e9026df843f999c371bf56c9c0f555f88db50331b6f8f79260bc0ec6950b3fde",
+      "s8_sha256": "e9026df843f999c371bf56c9c0f555f88db50331b6f8f79260bc0ec6950b3fde",
+      "exact": true
+    },
+    {
+      "path": "npc/flow/Makefile",
+      "s7_sha256": "3b9624f62b121cf668df57b0cc21db68521a234c9badc51e8ca307b589e00867",
+      "s8_sha256": "3b9624f62b121cf668df57b0cc21db68521a234c9badc51e8ca307b589e00867",
+      "exact": true
+    },
+    {
+      "path": "npc/flow/00_indata/filelists/core.f",
+      "s7_sha256": "78eb35ab7614d72a663fe17f8bb6cec175ae20b66b352ef0d3f84106b46b018d",
+      "s8_sha256": "78eb35ab7614d72a663fe17f8bb6cec175ae20b66b352ef0d3f84106b46b018d",
+      "exact": true
+    },
+    {
+      "path": "npc/flow/00_indata/filelists/soc_cpu.f",
+      "s7_sha256": "7ff895e684b5d35cc4308036f724aee481f29844be11aef97f07b5426e08cf0a",
+      "s8_sha256": "7ff895e684b5d35cc4308036f724aee481f29844be11aef97f07b5426e08cf0a",
+      "exact": true
+    },
+    {
+      "path": "npc/flow/00_indata/configs/npc_core.tcl",
+      "s7_sha256": "9f86f0e90ae97e732c6e472c778e73a85b1c10c50c995eaa36d7c71619ef4239",
+      "s8_sha256": "9f86f0e90ae97e732c6e472c778e73a85b1c10c50c995eaa36d7c71619ef4239",
+      "exact": true
+    },
+    {
+      "path": "npc/flow/00_indata/configs/site.example.tcl",
+      "s7_sha256": "7c18afebe97914855677fe53a0dd28a9e1a4030fde6820e5d5df4f0457e76128",
+      "s8_sha256": "7c18afebe97914855677fe53a0dd28a9e1a4030fde6820e5d5df4f0457e76128",
+      "exact": true
+    },
+    {
+      "path": "npc/flow/00_indata/configs/npc_soc_cpu.tcl",
+      "s7_sha256": "1176718688db442ef0f7659dab161230b453245854235b523ab694e13e9da131",
+      "s8_sha256": "1176718688db442ef0f7659dab161230b453245854235b523ab694e13e9da131",
+      "exact": true
+    },
+    {
+      "path": "npc/flow/00_indata/constraints/soc_cpu.sdc",
+      "s7_sha256": "09dbb90b31b0793848b2b6d0d6b62351a8a37e8dbd78211a1fb988668b4e3bf8",
+      "s8_sha256": "09dbb90b31b0793848b2b6d0d6b62351a8a37e8dbd78211a1fb988668b4e3bf8",
+      "exact": true
+    },
+    {
+      "path": "npc/flow/00_indata/constraints/core.sdc",
+      "s7_sha256": "63af4ff50972c2bffc53c1d706266da3b538027c3ae58f9a3acc361ba6f32688",
+      "s8_sha256": "63af4ff50972c2bffc53c1d706266da3b538027c3ae58f9a3acc361ba6f32688",
+      "exact": true
+    },
+    {
+      "path": "npc/flow/04_tests/sdc_check.tcl",
+      "s7_sha256": "982a38e13de9cdb10fbc31ad9159675602ed3d23289fe81c3feb86ab7c120f0b",
+      "s8_sha256": "982a38e13de9cdb10fbc31ad9159675602ed3d23289fe81c3feb86ab7c120f0b",
+      "exact": true
+    },
+    {
+      "path": "npc/flow/04_tests/eda_mock.tcl",
+      "s7_sha256": "baea67e461b7d6c07ac9941fcd18dd1cf770ba6a9305f37dcb64c37a96c3087a",
+      "s8_sha256": "baea67e461b7d6c07ac9941fcd18dd1cf770ba6a9305f37dcb64c37a96c3087a",
+      "exact": true
+    },
+    {
+      "path": "npc/flow/04_tests/test_flow.py",
+      "s7_sha256": "9780dca53bfb18a6257b5cf2b8805da6d213cb60bdedbcd64cd505a159a6c1fb",
+      "s8_sha256": "9780dca53bfb18a6257b5cf2b8805da6d213cb60bdedbcd64cd505a159a6c1fb",
+      "exact": true
+    },
+    {
+      "path": "npc/flow/01_common/setup.tcl",
+      "s7_sha256": "d5d28c9c71ff3cb625678de2ff63fb8730e6a5fc512700083d429940ef06f3b6",
+      "s8_sha256": "d5d28c9c71ff3cb625678de2ff63fb8730e6a5fc512700083d429940ef06f3b6",
+      "exact": true
+    },
+    {
+      "path": "npc/flow/01_common/flow.py",
+      "s7_sha256": "1644777fa9d21e32e8d99aebfb4816c6d24091bb55c696b5e66045f320458607",
+      "s8_sha256": "1644777fa9d21e32e8d99aebfb4816c6d24091bb55c696b5e66045f320458607",
+      "exact": true
+    },
+    {
+      "path": "npc/flow/01_common/config_dump.tcl",
+      "s7_sha256": "e6dbf4ba202391a3199fe2a152fa9766ad456e37988ab5ea9903eb7f81e28101",
+      "s8_sha256": "e6dbf4ba202391a3199fe2a152fa9766ad456e37988ab5ea9903eb7f81e28101",
+      "exact": true
+    },
+    {
+      "path": "npc/flow/01_common/capacitance.tcl",
+      "s7_sha256": "af497217e6589ce561160362728f6a9338b36cf150d69e270ab9de1c4217a051",
+      "s8_sha256": "af497217e6589ce561160362728f6a9338b36cf150d69e270ab9de1c4217a051",
+      "exact": true
+    },
+    {
+      "path": "npc/flow/02_syn/run.tcl",
+      "s7_sha256": "7c6a9724e45aaf7656bb62d9b1d7d8aa7c628827f075b596d1fd21f0cda45985",
+      "s8_sha256": "7c6a9724e45aaf7656bb62d9b1d7d8aa7c628827f075b596d1fd21f0cda45985",
+      "exact": true
+    },
+    {
+      "path": "npc/flow/02_syn/probe.tcl",
+      "s7_sha256": "434a59c8be8e73744c6f46195a6c384ac686615a888b7c109216275ae3a2bc9d",
+      "s8_sha256": "434a59c8be8e73744c6f46195a6c384ac686615a888b7c109216275ae3a2bc9d",
+      "exact": true
+    },
+    {
+      "path": "npc/flow/02_syn/max_capacitance_margin.tcl",
+      "s7_sha256": "8c19ead03f88e4cc418e729c6c9ed6a2bfeb8fcc9d8b1689bb0bea010f1a5190",
+      "s8_sha256": "8c19ead03f88e4cc418e729c6c9ed6a2bfeb8fcc9d8b1689bb0bea010f1a5190",
+      "exact": true
+    },
+    {
+      "path": "npc/flow/03_sta/run.tcl",
+      "s7_sha256": "e2e5252e6da157cf77d3e9d11362d1e32901d285c8e13526b03ee43d5bd398e0",
+      "s8_sha256": "e2e5252e6da157cf77d3e9d11362d1e32901d285c8e13526b03ee43d5bd398e0",
+      "exact": true
+    }
+  ],
+  "eda_rerun": false,
+  "source_note": "HEAD 6023de4 plus recorded S8 entry changes and continuation/test-runner-fix.patch; original full-run FAIL preserved, three completed S6 groups retained and affected regression rerun; runner hash in manifest; CSR comment-only difference versus cap90.",
+  "continuation": {
+    "status": "PASS",
+    "initial_run": "npc/build/m5-s8-final",
+    "initial_manifest_sha256": "2d7f78bd5af5ee9f364ad1216842d86896d9e4b85b33303816513adcd94f9245",
+    "source_changes": {
+      "npc/tests/isa_contract_test.py": {
+        "before": "eb8bafecbe19e25f4e4c87e8cd59c561aa0b28c3567bb1977af5030e64e1d7b9",
+        "after": "6a82dbbd587a58864c12c1b6177dd916f49fa38f3fa70be3df6ea8848b50dde9"
+      },
+      "npc/tests/m5_s1_test.py": {
+        "before": "c4849721214519722a372e896c9fd3e2a14bac3bb71b233cf1b45ce3261c2e56",
+        "after": "57fa99c0d3fe568adeebe0c5208543ff9c3a71ecc89d86f8c089a3fbcee36696"
+      }
+    },
+    "patch_sha256": "2ae8752e98041c99fe8ada3a52c0bccb32c3825175057adaf692ba855eabf4f8",
+    "commands": [
+      {
+        "name": "s6-regression",
+        "command": [
+          "python3",
+          "npc/tests/m5_s6_test.py",
+          "--only",
+          "regression"
+        ],
+        "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace",
+        "status": "PASS",
+        "returncode": 0,
+        "wall_seconds": 339.311
+      },
+      {
+        "name": "flow-local",
+        "command": [
+          "make",
+          "-C",
+          "npc/flow",
+          "check",
+          "test",
+          "scope-check"
+        ],
+        "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace",
+        "status": "PASS",
+        "returncode": 0,
+        "wall_seconds": 8.365
+      }
+    ],
+    "reused_passed_s6_groups": [
+      "rtthread",
+      "uart",
+      "random"
+    ],
+    "obsolete_s1_cpu_executable_absent": true,
+    "eda_rerun": false,
+    "isa_executable": {
+      "path": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu/Vaxi4_cpu_test_top",
+      "sha256": "6efb2fabaa5f1b6d4f3f6726b563273e41807ec46bd08ecc1374f4750f1a2e11"
+    }
+  },
+  "generated_soc": {
+    "sha256": "8034c3a5ecf06918aac18c4b40a226968864eba61a7ffe8a7a9c686eaab9cf8a",
+    "prior_sha256": "0b56421ba159ae31913de62169d8c22082d8e3b9d74388e28638dd5218b9c9de",
+    "non_comment_text_matches": true
+  },
+  "simulator_warnings_four_builds": {
+    "PINCONNECTEMPTY": 104,
+    "DECLFILENAME": 24,
+    "DEFPARAM": 8,
+    "UNUSEDSIGNAL": 496,
+    "UNUSEDPARAM": 4,
+    "BLKSEQ": 64
+  },
+  "generation_tools": {
+    "java": "OpenJDK 17.0.20.1",
+    "mill_version_pin": "0.12.4",
+    "firtool": "1.105.0",
+    "host_cxx": "g++ 11.4.0"
+  },
+  "s5_rebuild_path_effect": {
+    "workload": "rtthread-tick",
+    "old_binary_bytes": 21436,
+    "new_binary_bytes": 21500,
+    "old_commits": 112799,
+    "new_commits": 112959,
+    "interrupts_each": 3,
+    "explanation": "Two __FILE__ strings each grow by 32 bytes; poison 16 extra words x4 instructions plus text copy 16 extra words x6 instructions =160 extra commits."
+  }
+}

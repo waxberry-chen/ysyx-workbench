@@ -1,0 +1,87 @@
+{
+  "artifacts/m5-s8-20261030/comparison/micro-sieve/micro-sieve-riscv32e-ysyxsoc.bin": {
+    "source": "npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/micro-sieve/build/micro-sieve-riscv32e-ysyxsoc.bin",
+    "sha256": "153d16b76e651f615c193f4891cc40e9a4e95fd2746060c482c9ab667139fb1d",
+    "bytes": 1000
+  },
+  "artifacts/m5-s8-20261030/comparison/micro-sieve/micro-sieve-riscv32e-ysyxsoc.elf": {
+    "source": "npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/micro-sieve/build/micro-sieve-riscv32e-ysyxsoc.elf",
+    "sha256": "c52a59e25ea13055ce3d916b8246c82e643c7021f4e35f183ce7396a634feea5",
+    "bytes": 9860
+  },
+  "artifacts/m5-s8-20261030/comparison/micro-fib/micro-fib-riscv32e-ysyxsoc.bin": {
+    "source": "npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/micro-fib/build/micro-fib-riscv32e-ysyxsoc.bin",
+    "sha256": "f15ac659b4292e7154afe4341b86603081c2e526745e9dbadd5c95f3dfa7469b",
+    "bytes": 1640
+  },
+  "artifacts/m5-s8-20261030/comparison/micro-fib/micro-fib-riscv32e-ysyxsoc.elf": {
+    "source": "npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/micro-fib/build/micro-fib-riscv32e-ysyxsoc.elf",
+    "sha256": "13f31a6abc0f7d25f78a7f338dfe50fa4379d2a4c89e7cae55ac45d09ea69cfc",
+    "bytes": 9884
+  },
+  "artifacts/m5-s8-20261030/comparison/cpu-if-else/cpu-if-else-riscv32e-ysyxsoc-flash-psram.bin": {
+    "source": "npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-if-else/build/cpu-if-else-riscv32e-ysyxsoc-flash-psram.bin",
+    "sha256": "c027dc415af5548aacdc6c9ae5c38073376875e53c9a02825cb4ccff8d6bbc6c",
+    "bytes": 640
+  },
+  "artifacts/m5-s8-20261030/comparison/cpu-if-else/cpu-if-else-riscv32e-ysyxsoc-flash-psram.elf": {
+    "source": "npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-if-else/build/cpu-if-else-riscv32e-ysyxsoc-flash-psram.elf",
+    "sha256": "97a97962b678c265960394a7dc67adf23ca8ff84d76917865309dbbf3f08cb3d",
+    "bytes": 10044
+  },
+  "artifacts/m5-s8-20261030/comparison/cpu-recursion/cpu-recursion-riscv32e-ysyxsoc-flash-psram.bin": {
+    "source": "npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-recursion/build/cpu-recursion-riscv32e-ysyxsoc-flash-psram.bin",
+    "sha256": "4f6f4b270a476d9abe3a9a6e78a6f201326f0898c05d75bcea6536b78010270f",
+    "bytes": 1160
+  },
+  "artifacts/m5-s8-20261030/comparison/cpu-recursion/cpu-recursion-riscv32e-ysyxsoc-flash-psram.elf": {
+    "source": "npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-recursion/build/cpu-recursion-riscv32e-ysyxsoc-flash-psram.elf",
+    "sha256": "0ab3e9c8c14b0178d7d2ca805a31376c176a967eb1ee460380be3875b9c6ce83",
+    "bytes": 10904
+  },
+  "artifacts/m5-s8-20261030/comparison/cpu-bubble-sort/cpu-bubble-sort-riscv32e-ysyxsoc-flash-psram.bin": {
+    "source": "npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-bubble-sort/build/cpu-bubble-sort-riscv32e-ysyxsoc-flash-psram.bin",
+    "sha256": "235ed75cdcc2b700234d6d5b8029f51439e7f457562a014f80023d20a9234554",
+    "bytes": 688
+  },
+  "artifacts/m5-s8-20261030/comparison/cpu-bubble-sort/cpu-bubble-sort-riscv32e-ysyxsoc-flash-psram.elf": {
+    "source": "npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-bubble-sort/build/cpu-bubble-sort-riscv32e-ysyxsoc-flash-psram.elf",
+    "sha256": "08e3467adc7dee626ea7b79f3ee34ba46bbbb60d666741f41685cfba1c34d5f9",
+    "bytes": 10112
+  },
+  "artifacts/m5-s8-20261030/comparison/cpu-quick-sort/cpu-quick-sort-riscv32e-ysyxsoc-flash-psram.bin": {
+    "source": "npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-quick-sort/build/cpu-quick-sort-riscv32e-ysyxsoc-flash-psram.bin",
+    "sha256": "e4c29e0c53d2ff3175d1b4e117a9ac1a5a2070d52d2bb704665dbdd2522d25b1",
+    "bytes": 1420
+  },
+  "artifacts/m5-s8-20261030/comparison/cpu-quick-sort/cpu-quick-sort-riscv32e-ysyxsoc-flash-psram.elf": {
+    "source": "npc/build/m5-s8-final/workspace/npc/build/m5-s6/programs/cpu-quick-sort/build/cpu-quick-sort-riscv32e-ysyxsoc-flash-psram.elf",
+    "sha256": "e688ba97adfa3229a620978685d1f4f96d424347a8a4f7a58c1bd5ae68b41620",
+    "bytes": 10884
+  },
+  "artifacts/m5-s8-20261030/waveforms/m5-s2/ebreak.fst": {
+    "source": "npc/build/m5-s8-final/workspace/npc/build/m5-s2/ebreak.fst",
+    "sha256": "d398bb5bd4cb8682e3247ab5839657dfd47dec934db4e8632e94778c6afbd203",
+    "bytes": 27082
+  },
+  "artifacts/m5-s8-20261030/waveforms/m5-s2/uart.fst": {
+    "source": "npc/build/m5-s8-final/workspace/npc/build/m5-s2/uart.fst",
+    "sha256": "5821e34fd7d79f27b862b891aabb88a1ee2009ab7dd412d3e53d2ffbb4456d1f",
+    "bytes": 52550
+  },
+  "artifacts/m5-s8-20261030/waveforms/m5-s2/faults.fst": {
+    "source": "npc/build/m5-s8-final/workspace/npc/build/m5-s2/faults.fst",
+    "sha256": "e2db69a1e5dc72379fd66188a18c7d5ee698348b05c2a9a6f405d016425109b1",
+    "bytes": 197753
+  },
+  "artifacts/m5-s8-20261030/waveforms/m5-s5/latency-1.fst": {
+    "source": "npc/build/m5-s8-final/workspace/npc/build/m5-s5/latency-1.fst",
+    "sha256": "aeb1253aeb3a014601d2fc6c0317ee02823e39862b5e2fd10d4a7359877b12b9",
+    "bytes": 553697
+  },
+  "artifacts/m5-s8-20261030/waveforms/m5-s6/memory-1.fst": {
+    "source": "npc/build/m5-s8-final/workspace/npc/build/m5-s6/memory-1.fst",
+    "sha256": "2db9ab8d42bda2ff123c20a68e3c3d092340e2263b560de055d7191b3287cc1b",
+    "bytes": 63479
+  }
+}

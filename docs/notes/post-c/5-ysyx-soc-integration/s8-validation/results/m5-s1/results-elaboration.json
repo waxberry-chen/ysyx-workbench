@@ -1,0 +1,17 @@
+[
+  {
+    "name": "cpu-lint",
+    "status": "PASS",
+    "negative": false
+  },
+  {
+    "name": "cpu-synthesis-lint",
+    "status": "PASS",
+    "negative": false
+  },
+  {
+    "name": "soc-elaboration",
+    "status": "PASS",
+    "negative": false
+  }
+]

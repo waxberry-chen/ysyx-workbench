@@ -1,0 +1,8 @@
+{
+  "poison_words": 2048,
+  "pattern": "a5a5a5a5",
+  "data_words": 8,
+  "bss_words": 12,
+  "cpu_stores": true,
+  "harness_sram_preload": false
+}

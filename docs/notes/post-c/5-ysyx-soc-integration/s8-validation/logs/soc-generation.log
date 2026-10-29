@@ -1,0 +1,98 @@
+make: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC'
+Found existing firtool directory in /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/patch/firtool
+If you want to update firtool, please remove the existing firtool directory
+CHISEL_FIRTOOL_PATH=/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/patch/firtool/firtool-1.105.0/bin \
+mill -i ysyxsoc.runMain ysyx.Elaborate --target-dir build
+======================== ysyxsoc.runMain ysyx.Elaborate --target-dir build =======================
+[build.sc-64/68] compile[0K
+[build.sc-64] [info] compiling 5 Scala sources to /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/out/mill-build/compile.dest/classes ...[0K
+[build.sc-64] [info] done compiling[0K
+[291/321] rocketchip.cde.compile[0K
+[289/321] rocketchip.hardfloat.compile[0K
+[290/321] rocketchip.macros.compile[0K
+[289] [info] compiling 20 Scala sources to /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/out/rocketchip/hardfloat/compile.dest/classes ...[0K
+[291] [info] compiling 1 Scala source to /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/out/rocketchip/cde/compile.dest/classes ...[0K
+[290] [info] compiling 1 Scala source to /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/out/rocketchip/macros/compile.dest/classes ...[0K
+[290] [info] done compiling[0K
+[291] [info] done compiling[0K
+[299/321] rocketchip.diplomacy.compile[0K
+[299] [info] compiling 36 Scala sources to /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/out/rocketchip/diplomacy/compile.dest/classes ...[0K
+[299] [warn] /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/rocket-chip/dependencies/diplomacy/diplomacy/src/diplomacy/nodes/NodeImp.scala:62:20: parameter node in method mixI is never used[0K
+[299] [warn]   def mixI(pu: UI, node: InwardNode[DI, UI, BI]): UI = pu[0K
+[299] [warn]                    ^[0K
+[299] [warn] /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/rocket-chip/dependencies/diplomacy/diplomacy/src/diplomacy/nodes/NodeImp.scala:137:20: parameter node in method mixO is never used[0K
+[299] [warn]   def mixO(pd: DO, node: OutwardNode[DO, UO, BO]): DO = pd[0K
+[299] [warn]                    ^[0K
+[299] [warn] /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/rocket-chip/dependencies/diplomacy/diplomacy/src/diplomacy/lazymodule/LazyModuleImp.scala:5:8: Importing from firrtl is deprecated as of Chisel's 3.6.0 release.[0K
+[299] [warn] import firrtl.passes.InlineAnnotation[0K
+[299] [warn]        ^[0K
+[299] [warn] three warnings found[0K
+[299] [info] done compiling[0K
+[289] [info] done compiling[0K
+[307/321] rocketchip.compile[0K
+[307] [info] compiling 317 Scala sources to /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/out/rocketchip/compile.dest/classes ...[0K
+[307] [warn] /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/rocket-chip/src/main/scala/diplomacy/Parameters.scala:122:16: Implicit definition should have explicit type (inferred Boolean) [quickfixable][0K
+[307] [warn]   implicit def asBool(x: TransferSizes) = !x.none[0K
+[307] [warn]                ^[0K
+[307] [warn] /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/rocket-chip/src/main/scala/diplomacy/package.scala:62:16: Implicit definition should have explicit type (inferred org.chipsalliance.diplomacy.SourcecodeNameExt) [quickfixable][0K
+[307] [warn]   implicit def SourcecodeNameExt(x: sourcecode.Name) = _root_.org.chipsalliance.diplomacy.SourcecodeNameExt(x)[0K
+[307] [warn]                ^[0K
+[307] [warn] /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/rocket-chip/src/main/scala/jtag/JtagStateMachine.scala:18:18: Implicit definition should have explicit type (inferred Int) [quickfixable][0K
+[307] [warn]     implicit def toInt(x: State) = x.id[0K
+[307] [warn]                  ^[0K
+[307] [warn] /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/rocket-chip/src/main/scala/jtag/package.scala:14:16: Implicit definition should have explicit type (inferred (scala.math.BigInt, V)) [quickfixable][0K
+[307] [warn]   implicit def instructionIntKeyToBigInt[V <: Chain](x: (Int, V)) = (BigInt(x._1), x._2)[0K
+[307] [warn]                ^[0K
+[307] [warn] /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/rocket-chip/src/main/scala/regmapper/RegField.scala:21:16: Implicit definition should have explicit type (inferred freechips.rocketchip.regmapper.RegReadFn) [quickfixable][0K
+[307] [warn]   implicit def apply(x: (Bool, Bool) => (Bool, Bool, UInt)) =[0K
+[307] [warn]                ^[0K
+[307] [warn] /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/rocket-chip/src/main/scala/regmapper/RegField.scala:32:16: Implicit definition should have explicit type (inferred freechips.rocketchip.regmapper.RegReadFn) [quickfixable][0K
+[307] [warn]   implicit def apply(x: Bool => (Bool, UInt)) =[0K
+[307] [warn]                ^[0K
+[307] [warn] /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/rocket-chip/src/main/scala/regmapper/RegField.scala:53:16: Implicit definition should have explicit type (inferred freechips.rocketchip.regmapper.RegWriteFn) [quickfixable][0K
+[307] [warn]   implicit def apply(x: (Bool, Bool, UInt) => (Bool, Bool)) =[0K
+[307] [warn]                ^[0K
+[307] [warn] /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/rocket-chip/src/main/scala/regmapper/RegField.scala:65:16: Implicit definition should have explicit type (inferred freechips.rocketchip.regmapper.RegWriteFn) [quickfixable][0K
+[307] [warn]   implicit def apply(x: (Bool, UInt) => Bool) =[0K
+[307] [warn]                ^[0K
+[307] [warn] /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/rocket-chip/src/main/scala/util/PlusArg.scala:35:16: Implicit definition should have explicit type (inferred freechips.rocketchip.util.Doctypeable[Int]) [quickfixable][0K
+[307] [warn]   implicit val intToDoctype    = new Doctypeable[Int]    { def toDoctype(a: Option[Int])    = "INT"    }[0K
+[307] [warn]                ^[0K
+[307] [warn] /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/rocket-chip/src/main/scala/util/PlusArg.scala:38:16: Implicit definition should have explicit type (inferred freechips.rocketchip.util.Doctypeable[BigInt]) [quickfixable][0K
+[307] [warn]   implicit val bigIntToDoctype = new Doctypeable[BigInt] { def toDoctype(a: Option[BigInt]) = "INT"    }[0K
+[307] [warn]                ^[0K
+[307] [warn] /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/rocket-chip/src/main/scala/util/PlusArg.scala:41:16: Implicit definition should have explicit type (inferred freechips.rocketchip.util.Doctypeable[String]) [quickfixable][0K
+[307] [warn]   implicit val stringToDoctype = new Doctypeable[String] { def toDoctype(a: Option[String]) = "STRING" }[0K
+[307] [warn]                ^[0K
+[307] [warn] /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/rocket-chip/src/main/scala/util/ShiftQueue.scala:18:28: reference to entries is ambiguous;[0K
+[307] [warn] it is both defined in the enclosing class ShiftQueue and inherited in the enclosing anonymous class as value entries (defined in class QueueIO)[0K
+[307] [warn] In Scala 2, symbols inherited from a superclass shadow symbols defined in an outer scope.[0K
+[307] [warn] Such references are ambiguous in Scala 3. To continue using the inherited symbol, write `this.entries`.[0K
+[307] [warn] Or use `-Wconf:msg=legacy-binding:s` to silence this warning. [quickfixable][0K
+[307] [warn]     val mask = Output(UInt(entries.W))[0K
+[307] [warn]                            ^[0K
+[307] [warn] 7 deprecations[0K
+[307] [warn] 78 deprecations (since 2.13.0)[0K
+[307] [warn] 1 deprecation (since 2.13.7)[0K
+[307] [warn] 1 deprecation (since 9)[0K
+[307] [warn] 27 deprecations (since CDE 0.1)[0K
+[307] [warn] 10 deprecations (since diplomacy 1.0.0)[0K
+[307] [warn] 1 deprecation (since rocket-chip 1.2)[0K
+[307] [warn] 36 deprecations (since rocketchip 2.0.0)[0K
+[307] [warn] 161 deprecations in total; re-run with -deprecation for details[0K
+[307] [warn] 20 feature warnings; re-run with -feature for details[0K
+[307] [warn] 22 warnings found[0K
+[307] [info] done compiling[0K
+[314/321] ysyxsoc.compile[0K
+[314] [info] compiling 36 Scala sources to /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC/out/ysyxsoc/compile.dest/classes ...[0K
+[314] [warn] 1 deprecation (since 2.13.0)[0K
+[314] [warn] 1 deprecation (since 2.13.3)[0K
+[314] [warn] 93 deprecations (since rocketchip 2.0.0)[0K
+[314] [warn] 95 deprecations in total; re-run with -deprecation for details[0K
+[314] [warn] four warnings found[0K
+[314] [info] done compiling[0K
+[321/321] ================= ysyxsoc.runMain ysyx.Elaborate --target-dir build ================ 50s
+mv build/ysyxSoCTop.sv build/ysyxSoCFull.v
+sed -i -e 's/_\(aw\|ar\|w\|r\|b\)_\(\|bits_\)/_\1/g' build/ysyxSoCFull.v
+sed -i '/firrtl_black_box_resource_files.f/, $d' build/ysyxSoCFull.v
+make: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/ysyxSoC'

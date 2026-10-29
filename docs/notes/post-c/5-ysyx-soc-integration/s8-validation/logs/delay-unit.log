@@ -1,0 +1,34 @@
+make: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc'
+mkdir -p /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/delay-unit
+verilator --binary --timing --assert --sv -Wall -Wno-fatal -Wno-BLKSEQ -Wno-SYNCASYNCNET -Wno-TIMESCALEMOD --top-module soc_delay_channel_tb \
+ --Mdir /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/delay-unit \
+ /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/sim/soc_delay_channel.sv /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/tests/soc_delay_channel_tb.sv
+%Warning-DECLFILENAME: /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/sim/soc_delay_channel.sv:4:8: Filename 'soc_delay_channel' does not match MODULE name: 'npc_soc_delay_channel'
+    4 | module npc_soc_delay_channel #(parameter WIDTH=32, parameter CHANNEL=0) (
+      |        ^~~~~~~~~~~~~~~~~~~~~
+                       ... For warning description see https://verilator.org/warn/DECLFILENAME?v=5.008
+                       ... Use "/* verilator lint_off DECLFILENAME */" and lint_on around source to disable this message.
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/delay-unit'
+ccache g++  -I.  -MMD -I/usr/local/share/verilator/include -I/usr/local/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-shadow     -DVL_TIME_CONTEXT   -fcoroutines -Os -c -o verilated.o /usr/local/share/verilator/include/verilated.cpp
+ccache g++  -I.  -MMD -I/usr/local/share/verilator/include -I/usr/local/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-shadow     -DVL_TIME_CONTEXT   -fcoroutines -Os -c -o verilated_timing.o /usr/local/share/verilator/include/verilated_timing.cpp
+ccache g++  -I.  -MMD -I/usr/local/share/verilator/include -I/usr/local/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-shadow     -DVL_TIME_CONTEXT   -fcoroutines -Os -c -o verilated_threads.o /usr/local/share/verilator/include/verilated_threads.cpp
+/usr/bin/python3 /usr/local/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vsoc_delay_channel_tb.cpp Vsoc_delay_channel_tb___024root__DepSet_h8e1af715__0.cpp Vsoc_delay_channel_tb___024root__DepSet_h46071eb2__0.cpp Vsoc_delay_channel_tb__main.cpp Vsoc_delay_channel_tb___024root__Slow.cpp Vsoc_delay_channel_tb___024root__DepSet_h8e1af715__0__Slow.cpp Vsoc_delay_channel_tb___024root__DepSet_h46071eb2__0__Slow.cpp Vsoc_delay_channel_tb__Syms.cpp > Vsoc_delay_channel_tb__ALL.cpp
+ccache g++  -I.  -MMD -I/usr/local/share/verilator/include -I/usr/local/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-shadow     -DVL_TIME_CONTEXT   -fcoroutines -Os -c -o Vsoc_delay_channel_tb__ALL.o Vsoc_delay_channel_tb__ALL.cpp
+echo "" > Vsoc_delay_channel_tb__ALL.verilator_deplist.tmp
+Archive ar -rcs Vsoc_delay_channel_tb__ALL.a Vsoc_delay_channel_tb__ALL.o
+g++    verilated.o verilated_timing.o verilated_threads.o Vsoc_delay_channel_tb__ALL.a    -pthread -lpthread -latomic   -o Vsoc_delay_channel_tb
+rm Vsoc_delay_channel_tb__ALL.verilator_deplist.tmp
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/delay-unit'
+/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/delay-unit/Vsoc_delay_channel_tb +npc_delay_seed=1 +npc_delay_max=0
+DELAY PASS sent=1000 received=1000 cycles=7001
+- /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/tests/soc_delay_channel_tb.sv:33: Verilog $finish
+NPC_DELAY channel=0 accepted=1000 delivered=1000 input_waits=0 output_waits=0 seed=1 max=0 fixed=0
+/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/delay-unit/Vsoc_delay_channel_tb +npc_delay_seed=7 +npc_delay_max=7
+DELAY PASS sent=1000 received=1000 cycles=12405
+- /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/tests/soc_delay_channel_tb.sv:33: Verilog $finish
+NPC_DELAY channel=0 accepted=1000 delivered=1000 input_waits=3514 output_waits=3403 seed=7 max=7 fixed=0
+/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/delay-unit/Vsoc_delay_channel_tb +npc_delay_seed=1 +npc_delay_max=3 +npc_delay_fixed=1
+DELAY PASS sent=1000 received=1000 cycles=14001
+- /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/tests/soc_delay_channel_tb.sv:33: Verilog $finish
+NPC_DELAY channel=0 accepted=1000 delivered=1000 input_waits=3000 output_waits=3000 seed=1 max=3 fixed=1
+make: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc'

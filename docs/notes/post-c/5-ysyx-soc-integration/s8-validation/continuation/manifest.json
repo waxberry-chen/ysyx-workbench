@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "initial_run": "npc/build/m5-s8-final",
+  "initial_manifest_sha256": "2d7f78bd5af5ee9f364ad1216842d86896d9e4b85b33303816513adcd94f9245",
+  "source_changes": {
+    "npc/tests/isa_contract_test.py": {
+      "before": "eb8bafecbe19e25f4e4c87e8cd59c561aa0b28c3567bb1977af5030e64e1d7b9",
+      "after": "6a82dbbd587a58864c12c1b6177dd916f49fa38f3fa70be3df6ea8848b50dde9"
+    },
+    "npc/tests/m5_s1_test.py": {
+      "before": "c4849721214519722a372e896c9fd3e2a14bac3bb71b233cf1b45ce3261c2e56",
+      "after": "57fa99c0d3fe568adeebe0c5208543ff9c3a71ecc89d86f8c089a3fbcee36696"
+    }
+  },
+  "patch_sha256": "2ae8752e98041c99fe8ada3a52c0bccb32c3825175057adaf692ba855eabf4f8",
+  "commands": [
+    {
+      "name": "s6-regression",
+      "command": [
+        "python3",
+        "npc/tests/m5_s6_test.py",
+        "--only",
+        "regression"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace",
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 339.311
+    },
+    {
+      "name": "flow-local",
+      "command": [
+        "make",
+        "-C",
+        "npc/flow",
+        "check",
+        "test",
+        "scope-check"
+      ],
+      "cwd": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace",
+      "status": "PASS",
+      "returncode": 0,
+      "wall_seconds": 8.365
+    }
+  ],
+  "reused_passed_s6_groups": [
+    "rtthread",
+    "uart",
+    "random"
+  ],
+  "obsolete_s1_cpu_executable_absent": true,
+  "eda_rerun": false,
+  "isa_executable": {
+    "path": "/home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6/cpu/Vaxi4_cpu_test_top",
+    "sha256": "6efb2fabaa5f1b6d4f3f6726b563273e41807ec46bd08ecc1374f4750f1a2e11"
+  }
+}

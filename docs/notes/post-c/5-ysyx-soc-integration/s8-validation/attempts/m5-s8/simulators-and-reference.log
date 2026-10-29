@@ -1,0 +1,733 @@
+make: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/npc'
+make -C ../nemu -f scripts/ysyxsoc.mk
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu'
+mkdir -p /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/generated
+cp configs/ysyxsoc-ref.h /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/generated/autoconf.h
+mkdir -p /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/cpu
+cc -O2 -g -fPIC -Wall -Wextra -Wno-unused-parameter -D__GUEST_ISA__=riscv32 -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/include -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/src/isa/riscv32/include -MMD -MP -c src/cpu/cpu-exec.c -o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/cpu/cpu-exec.o
+mkdir -p /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/cpu/difftest
+cc -O2 -g -fPIC -Wall -Wextra -Wno-unused-parameter -D__GUEST_ISA__=riscv32 -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/include -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/src/isa/riscv32/include -MMD -MP -c src/cpu/difftest/ref.c -o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/cpu/difftest/ref.o
+mkdir -p /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/isa/riscv32
+cc -O2 -g -fPIC -Wall -Wextra -Wno-unused-parameter -D__GUEST_ISA__=riscv32 -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/include -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/src/isa/riscv32/include -MMD -MP -c src/isa/riscv32/init.c -o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/isa/riscv32/init.o
+mkdir -p /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/isa/riscv32
+cc -O2 -g -fPIC -Wall -Wextra -Wno-unused-parameter -D__GUEST_ISA__=riscv32 -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/include -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/src/isa/riscv32/include -MMD -MP -c src/isa/riscv32/inst.c -o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/isa/riscv32/inst.o
+src/isa/riscv32/inst.c: In function ‘decode_exec’:
+src/isa/riscv32/inst.c:151:164: warning: suggest braces around empty body in an ‘if’ statement [-Wempty-body]
+  151 |   INSTPAT("??????? ????? ????? ??? ????? 11011 11", jal    , J, R(rd) = s->snpc; s->dnpc = s->pc + imm; if(rd==1) IFDEF(CONFIG_FTRACE, ftrace_call(s->pc, s->dnpc));); // Jump and link
+      |                                                                                                                                                                    ^
+src/isa/riscv32/inst.c:120:3: note: in definition of macro ‘INSTPAT_MATCH’
+  120 |   __VA_ARGS__ ; \
+      |   ^~~~~~~~~~~
+src/isa/riscv32/inst.c:151:3: note: in expansion of macro ‘INSTPAT’
+  151 |   INSTPAT("??????? ????? ????? ??? ????? 11011 11", jal    , J, R(rd) = s->snpc; s->dnpc = s->pc + imm; if(rd==1) IFDEF(CONFIG_FTRACE, ftrace_call(s->pc, s->dnpc));); // Jump and link
+      |   ^~~~~~~
+mkdir -p /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/isa/riscv32
+cc -O2 -g -fPIC -Wall -Wextra -Wno-unused-parameter -D__GUEST_ISA__=riscv32 -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/include -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/src/isa/riscv32/include -MMD -MP -c src/isa/riscv32/reg.c -o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/isa/riscv32/reg.o
+mkdir -p /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/isa/riscv32
+cc -O2 -g -fPIC -Wall -Wextra -Wno-unused-parameter -D__GUEST_ISA__=riscv32 -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/include -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/src/isa/riscv32/include -MMD -MP -c src/isa/riscv32/logo.c -o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/isa/riscv32/logo.o
+mkdir -p /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/isa/riscv32/system
+cc -O2 -g -fPIC -Wall -Wextra -Wno-unused-parameter -D__GUEST_ISA__=riscv32 -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/include -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/src/isa/riscv32/include -MMD -MP -c src/isa/riscv32/system/intr.c -o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/isa/riscv32/system/intr.o
+mkdir -p /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/memory
+cc -O2 -g -fPIC -Wall -Wextra -Wno-unused-parameter -D__GUEST_ISA__=riscv32 -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/include -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/src/isa/riscv32/include -MMD -MP -c src/memory/vaddr.c -o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/memory/vaddr.o
+mkdir -p /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/memory
+cc -O2 -g -fPIC -Wall -Wextra -Wno-unused-parameter -D__GUEST_ISA__=riscv32 -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/include -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/src/isa/riscv32/include -MMD -MP -c src/memory/ysyxsoc.c -o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/memory/ysyxsoc.o
+mkdir -p /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/utils
+cc -O2 -g -fPIC -Wall -Wextra -Wno-unused-parameter -D__GUEST_ISA__=riscv32 -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/include -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/src/isa/riscv32/include -MMD -MP -c src/utils/log.c -o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/utils/log.o
+mkdir -p /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/utils
+cc -O2 -g -fPIC -Wall -Wextra -Wno-unused-parameter -D__GUEST_ISA__=riscv32 -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/include -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/src/isa/riscv32/include -MMD -MP -c src/utils/state.c -o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/utils/state.o
+mkdir -p /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/utils
+cc -O2 -g -fPIC -Wall -Wextra -Wno-unused-parameter -D__GUEST_ISA__=riscv32 -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/include -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/src/isa/riscv32/include -MMD -MP -c src/utils/timer.c -o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/utils/timer.o
+mkdir -p /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/engine/interpreter
+cc -O2 -g -fPIC -Wall -Wextra -Wno-unused-parameter -D__GUEST_ISA__=riscv32 -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/include -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/src/isa/riscv32/include -MMD -MP -c src/engine/interpreter/hostcall.c -o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/engine/interpreter/hostcall.o
+cc -shared -Wl,--no-undefined /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/cpu/cpu-exec.o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/cpu/difftest/ref.o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/isa/riscv32/init.o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/isa/riscv32/inst.o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/isa/riscv32/reg.o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/isa/riscv32/logo.o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/isa/riscv32/system/intr.o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/memory/vaddr.o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/memory/ysyxsoc.o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/utils/log.o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/utils/state.o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/utils/timer.o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/src/engine/interpreter/hostcall.o -o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu/build/ysyxsoc/nemu-ref.so
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/nemu'
+make soc-build SOC_BOOT=mrom SOC_DELAY=0
+make[1]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/npc'
+make -C /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC verilog
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC'
+make[2]: Nothing to be done for 'verilog'.
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC'
+mkdir -p /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/npc/build/ysyxsoc
+verilator --cc --exe --build -j 2 --sv --timing --assert --trace-fst --timescale-override 1ns/1ps -Wall -Wno-fatal -Wno-SYNCASYNCNET -Werror-WIDTH -Werror-PINMISSING -Werror-PINNOTFOUND -Werror-LATCH -Werror-UNOPTFLAT -Werror-UNDRIVEN --top-module ysyxSoCFull -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/spi/rtl -F filelist-soc.f /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/amba/apb_delayer.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/amba/axi4_delayer.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/amba/npc_axi4_guard.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/bitrev/bitrev.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/flash/flash.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/gpio/gpio_top_apb.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/ps2/ps2_top_apb.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/efabless/EF_PSRAM_CTRL.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/efabless/EF_PSRAM_CTRL_wb.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/psram.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/psram_top_apb.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/core_sdram_axi4/sdram_axi.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/core_sdram_axi4/sdram_axi_core.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/core_sdram_axi4/sdram_axi_pmem.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/sdram.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/sdram_top_apb.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/sdram_top_axi.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/spi/rtl/spi_clgen.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/spi/rtl/spi_defines.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/spi/rtl/spi_shift.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/spi/rtl/spi_top.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/spi/rtl/spi_top_apb.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/raminfr.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_defines.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_receiver.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_regs.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_rfifo.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_sync_flops.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_tfifo.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_top_apb.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_transmitter.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/vga/vga_top_apb.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/npc/sim/soc_monitor.sv /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/npc/csrc/soc/main.cpp /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/npc/csrc/soc/difftest.cpp  -CFLAGS '-std=c++17 -Wall -Wextra ' -LDFLAGS '-ldl' --Mdir /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/npc/build/ysyxsoc
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:93:6: Cell pin connected by name with empty reference: 'commit_pc'
+   93 |     .commit_pc(),
+      |      ^~~~~~~~~
+                          ... For warning description see https://verilator.org/warn/PINCONNECTEMPTY?v=5.008
+                          ... Use "/* verilator lint_off PINCONNECTEMPTY */" and lint_on around source to disable this message.
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:94:6: Cell pin connected by name with empty reference: 'commit_inst'
+   94 |     .commit_inst(),
+      |      ^~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:95:6: Cell pin connected by name with empty reference: 'commit_valid'
+   95 |     .commit_valid(),
+      |      ^~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:96:6: Cell pin connected by name with empty reference: 'commit_is_mmio'
+   96 |     .commit_is_mmio(),
+      |      ^~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:97:6: Cell pin connected by name with empty reference: 'commit_exception'
+   97 |     .commit_exception(),
+      |      ^~~~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:98:6: Cell pin connected by name with empty reference: 'commit_exception_cause'
+   98 |     .commit_exception_cause(),
+      |      ^~~~~~~~~~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:99:6: Cell pin connected by name with empty reference: 'commit_redirect_valid'
+   99 |     .commit_redirect_valid(),
+      |      ^~~~~~~~~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:100:6: Cell pin connected by name with empty reference: 'commit_redirect_reason'
+  100 |     .commit_redirect_reason(),
+      |      ^~~~~~~~~~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:101:6: Cell pin connected by name with empty reference: 'commit_mem_valid'
+  101 |     .commit_mem_valid(),
+      |      ^~~~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:102:6: Cell pin connected by name with empty reference: 'commit_mem_write'
+  102 |     .commit_mem_write(),
+      |      ^~~~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:103:6: Cell pin connected by name with empty reference: 'commit_mem_addr'
+  103 |     .commit_mem_addr(),
+      |      ^~~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:104:6: Cell pin connected by name with empty reference: 'commit_mem_error'
+  104 |     .commit_mem_error(),
+      |      ^~~~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:126:6: Cell pin connected by name with empty reference: 'monitor_bus'
+  126 |     .monitor_bus(),
+      |      ^~~~~~~~~~~
+%Warning-DECLFILENAME: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:20:8: Filename 'ysyxSoCFull' does not match MODULE name: 'AXI4Xbar'
+   20 | module AXI4Xbar(  
+      |        ^~~~~~~~
+%Warning-PINCONNECTEMPTY: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:1498:6: Cell pin connected by name with empty reference: 'io_slave_awready'
+ 1498 |     .io_slave_awready       ( ),
+      |      ^~~~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:1505:6: Cell pin connected by name with empty reference: 'io_slave_wready'
+ 1505 |     .io_slave_wready        ( ),
+      |      ^~~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:1511:6: Cell pin connected by name with empty reference: 'io_slave_bvalid'
+ 1511 |     .io_slave_bvalid        ( ),
+      |      ^~~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:1512:6: Cell pin connected by name with empty reference: 'io_slave_bid'
+ 1512 |     .io_slave_bid      ( ),
+      |      ^~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:1513:6: Cell pin connected by name with empty reference: 'io_slave_bresp'
+ 1513 |     .io_slave_bresp    ( ),
+      |      ^~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:1514:6: Cell pin connected by name with empty reference: 'io_slave_arready'
+ 1514 |     .io_slave_arready       ( ),
+      |      ^~~~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:1522:6: Cell pin connected by name with empty reference: 'io_slave_rvalid'
+ 1522 |     .io_slave_rvalid        ( ),
+      |      ^~~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:1523:6: Cell pin connected by name with empty reference: 'io_slave_rid'
+ 1523 |     .io_slave_rid      ( ),
+      |      ^~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:1524:6: Cell pin connected by name with empty reference: 'io_slave_rdata'
+ 1524 |     .io_slave_rdata    ( ),
+      |      ^~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:1525:6: Cell pin connected by name with empty reference: 'io_slave_rresp'
+ 1525 |     .io_slave_rresp    ( ),
+      |      ^~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:1526:6: Cell pin connected by name with empty reference: 'io_slave_rlast'
+ 1526 |     .io_slave_rlast    ( )
+      |      ^~~~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:1730:6: Cell pin connected by name with empty reference: 'spi_irq_out'
+ 1730 |     .spi_irq_out ( )
+      |      ^~~~~~~~~~~
+%Warning-DECLFILENAME: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/flash/flash.v:86:8: Filename 'flash' does not match MODULE name: 'flash_cmd'
+   86 | module flash_cmd(
+      |        ^~~~~~~~~
+%Warning-DECLFILENAME: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/efabless/EF_PSRAM_CTRL.v:44:8: Filename 'EF_PSRAM_CTRL' does not match MODULE name: 'PSRAM_READER'
+   44 | module PSRAM_READER (
+      |        ^~~~~~~~~~~~
+%Warning-PINCONNECTEMPTY: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/core_sdram_axi4/sdram_axi_pmem.v:287:6: Cell pin connected by name with empty reference: 'accept_o'
+  287 |     .accept_o(),
+      |      ^~~~~~~~
+%Warning-DECLFILENAME: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/core_sdram_axi4/sdram_axi_pmem.v:345:8: Filename 'sdram_axi_pmem' does not match MODULE name: 'sdram_axi_pmem_fifo2'
+  345 | module sdram_axi_pmem_fifo2
+      |        ^~~~~~~~~~~~~~~~~~~~
+%Warning-DECLFILENAME: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/npc/sim/soc_monitor.sv:2:8: Filename 'soc_monitor' does not match MODULE name: 'npc_soc_cpu_monitor'
+    2 | module npc_soc_cpu_monitor (
+      |        ^~~~~~~~~~~~~~~~~~~
+%Warning-DEFPARAM: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_regs.v:396:41: defparam is deprecated (IEEE 1800-2017 C.4.1)
+                                                                                                                        : ... Suggest use instantiation with #(.width(...etc...))
+  396 |   defparam i_uart_sync_flops.width      = 1;
+      |                                         ^
+%Warning-DEFPARAM: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_regs.v:397:41: defparam is deprecated (IEEE 1800-2017 C.4.1)
+                                                                                                                        : ... Suggest use instantiation with #(.init_value(...etc...))
+  397 |   defparam i_uart_sync_flops.init_value = 1'b1;
+      |                                         ^
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:5367:15: Bits of signal are not used: '_asic_spi_ss'[6:1]
+                                                                                                                 : ... In instance ysyxSoCFull
+ 5367 |   wire [7:0]  _asic_spi_ss;  
+      |               ^~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/bitrev/bitrev.v:2:10: Signal is not used: 'sck'
+                                                                                                                : ... In instance ysyxSoCFull.bitrev
+    2 |   input  sck,
+      |          ^~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/bitrev/bitrev.v:3:10: Signal is not used: 'ss'
+                                                                                                                : ... In instance ysyxSoCFull.bitrev
+    3 |   input  ss,
+      |          ^~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/bitrev/bitrev.v:4:10: Signal is not used: 'mosi'
+                                                                                                                : ... In instance ysyxSoCFull.bitrev
+    4 |   input  mosi,
+      |          ^~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/flash/flash.v:18:14: Bits of signal are not used: 'addr'[23]
+                                                                                                               : ... In instance ysyxSoCFull.flash
+   18 |   reg [23:0] addr;
+      |              ^~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/sdram.v:2:16: Signal is not used: 'clk'
+                                                                                                              : ... In instance ysyxSoCFull.sdram
+    2 |   input        clk,
+      |                ^~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/sdram.v:3:16: Signal is not used: 'cke'
+                                                                                                              : ... In instance ysyxSoCFull.sdram
+    3 |   input        cke,
+      |                ^~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/sdram.v:4:16: Signal is not used: 'cs'
+                                                                                                              : ... In instance ysyxSoCFull.sdram
+    4 |   input        cs,
+      |                ^~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/sdram.v:5:16: Signal is not used: 'ras'
+                                                                                                              : ... In instance ysyxSoCFull.sdram
+    5 |   input        ras,
+      |                ^~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/sdram.v:6:16: Signal is not used: 'cas'
+                                                                                                              : ... In instance ysyxSoCFull.sdram
+    6 |   input        cas,
+      |                ^~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/sdram.v:7:16: Signal is not used: 'we'
+                                                                                                              : ... In instance ysyxSoCFull.sdram
+    7 |   input        we,
+      |                ^~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/sdram.v:8:16: Signal is not used: 'a'
+                                                                                                              : ... In instance ysyxSoCFull.sdram
+    8 |   input [12:0] a,
+      |                ^
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/sdram.v:9:16: Signal is not used: 'ba'
+                                                                                                              : ... In instance ysyxSoCFull.sdram
+    9 |   input [ 1:0] ba,
+      |                ^~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/sdram.v:10:16: Signal is not used: 'dqm'
+                                                                                                               : ... In instance ysyxSoCFull.sdram
+   10 |   input [ 1:0] dqm,
+      |                ^~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:21:17: Signal is not used: 'clock'
+                                                                                                               : ... In instance ysyxSoCFull.asic.axi4xbar
+   21 |   input         clock,  
+      |                 ^~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:22:17: Signal is not used: 'reset'
+                                                                                                               : ... In instance ysyxSoCFull.asic.axi4xbar
+   22 |                 reset,  
+      |                 ^~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:376:15: Bits of signal are not used: '_GEN'[3:1]
+                                                                                                                : ... In instance ysyxSoCFull.asic.axi4xbar_1
+  376 |   wire [5:0]  _GEN = auto_anon_in_araddr[29:24] ^ 6'h21;  
+      |               ^~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:377:15: Bits of signal are not used: '_requestARIO_T_20'[2]
+                                                                                                                : ... In instance ysyxSoCFull.asic.axi4xbar_1
+  377 |   wire [3:0]  _requestARIO_T_20 = auto_anon_in_araddr[31:28] ^ 4'hA;  
+      |               ^~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:398:15: Bits of signal are not used: '_GEN_0'[3:1]
+                                                                                                                : ... In instance ysyxSoCFull.asic.axi4xbar_1
+  398 |   wire [5:0]  _GEN_0 = auto_anon_in_awaddr[29:24] ^ 6'h21;  
+      |               ^~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:399:15: Bits of signal are not used: '_requestAWIO_T_20'[2]
+                                                                                                                : ... In instance ysyxSoCFull.asic.axi4xbar_1
+  399 |   wire [3:0]  _requestAWIO_T_20 = auto_anon_in_awaddr[31:28] ^ 4'hA;  
+      |               ^~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:1127:30: Signal is not driven, nor used: '_RANDOM'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4xbar_1
+ 1127 |       automatic logic [31:0] _RANDOM[0:3];  
+      |                              ^~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:1334:15: Bits of signal are not used: '_GEN'[15:2]
+                                                                                                                 : ... In instance ysyxSoCFull.asic.apbxbar
+ 1334 |   wire [16:0] _GEN = auto_anon_in_paddr[28:12] ^ 17'h10001;  
+      |               ^~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:1348:15: Bits of signal are not used: '_GEN_0'[15:2]
+                                                                                                                 : ... In instance ysyxSoCFull.asic.apbxbar
+ 1348 |   wire [16:0] _GEN_0 = auto_anon_in_paddr[28:12] ^ 17'h10002;  
+      |               ^~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:1355:15: Bits of signal are not used: '_GEN_1'[15:5,3:2]
+                                                                                                                 : ... In instance ysyxSoCFull.asic.apbxbar
+ 1355 |   wire [16:0] _GEN_1 = auto_anon_in_paddr[28:12] ^ 17'h10011;  
+      |               ^~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:1363:15: Bits of signal are not used: '_sel_T_36'[2]
+                                                                                                                 : ... In instance ysyxSoCFull.asic.apbxbar
+ 1363 |   wire [3:0]  _sel_T_36 = auto_anon_in_paddr[31:28] ^ 4'hA;  
+      |               ^~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:1824:30: Signal is not driven, nor used: '_RANDOM'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.lmrom
+ 1824 |       automatic logic [31:0] _RANDOM[0:1];  
+      |                              ^~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:1911:17: Bits of signal are not used: 'auto_in_awaddr'[1:0]
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4ram
+ 1911 |   input  [27:0] auto_in_awaddr,  
+      |                 ^~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:1923:17: Bits of signal are not used: 'auto_in_araddr'[1:0]
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4ram
+ 1923 |   input  [27:0] auto_in_araddr,  
+      |                 ^~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:1978:30: Signal is not driven, nor used: '_RANDOM'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4ram
+ 1978 |       automatic logic [31:0] _RANDOM[0:1];  
+      |                              ^~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:2209:30: Signal is not driven, nor used: '_RANDOM'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi42apb
+ 2209 |       automatic logic [31:0] _RANDOM[0:4];  
+      |                              ^~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:3859:20: Bits of signal are not used: '_out_bits_addr_T_1'[8:2]
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4frag
+ 3859 |   wire [8:0]       _out_bits_addr_T_1 = 9'h3 << _deq_q_io_deq_bits_size;  
+      |                    ^~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:3866:20: Bits of signal are not used: '_out_bits_addr_T_7'[8:2]
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4frag
+ 3866 |   wire [8:0]       _out_bits_addr_T_7 = 9'h3 << _deq_q_1_io_deq_bits_size;  
+      |                    ^~~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:4008:30: Bits of signal are not used: '_wrapMask_T_1'[7:0]
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4frag
+ 4008 |       automatic logic [22:0] _wrapMask_T_1 =
+      |                              ^~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:4023:30: Bits of signal are not used: '_wrapMask_T_3'[7:0]
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4frag
+ 4023 |       automatic logic [22:0] _wrapMask_T_3 =
+      |                              ^~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:4041:30: Signal is not driven, nor used: '_RANDOM'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4frag
+ 4041 |       automatic logic [31:0] _RANDOM[0:3];  
+      |                              ^~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/amba/apb_delayer.v:2:17: Signal is not used: 'clock'
+                                                                                                                   : ... In instance ysyxSoCFull.asic.apbdelay_delayer
+    2 |   input         clock,
+      |                 ^~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/amba/apb_delayer.v:3:17: Signal is not used: 'reset'
+                                                                                                                   : ... In instance ysyxSoCFull.asic.apbdelay_delayer
+    3 |   input         reset,
+      |                 ^~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/amba/npc_axi4_guard.v:91:12: Bits of signal are not used: 'byte_mask'[7:4]
+                                                                                                                       : ... In instance ysyxSoCFull.asic.npcGuard_guard
+   91 | wire [7:0] byte_mask = ((8'd1 << (4'd1 << size_q)) - 1) << addr_q[1:0];
+      |            ^~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:18:18: Signal is not used: 'io_slave_awaddr'
+                                                      : ... In instance ysyxSoCFull.asic.cpu.cpu
+   18 |     input [31:0] io_slave_awaddr,
+      |                  ^~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:20:17: Signal is not used: 'io_slave_awid'
+                                                      : ... In instance ysyxSoCFull.asic.cpu.cpu
+   20 |     input [3:0] io_slave_awid,
+      |                 ^~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:22:17: Signal is not used: 'io_slave_awlen'
+                                                      : ... In instance ysyxSoCFull.asic.cpu.cpu
+   22 |     input [7:0] io_slave_awlen,
+      |                 ^~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:24:17: Signal is not used: 'io_slave_awsize'
+                                                      : ... In instance ysyxSoCFull.asic.cpu.cpu
+   24 |     input [2:0] io_slave_awsize,
+      |                 ^~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:26:17: Signal is not used: 'io_slave_awburst'
+                                                      : ... In instance ysyxSoCFull.asic.cpu.cpu
+   26 |     input [1:0] io_slave_awburst,
+      |                 ^~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:32:18: Signal is not used: 'io_slave_wdata'
+                                                      : ... In instance ysyxSoCFull.asic.cpu.cpu
+   32 |     input [31:0] io_slave_wdata,
+      |                  ^~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:34:17: Signal is not used: 'io_slave_wstrb'
+                                                      : ... In instance ysyxSoCFull.asic.cpu.cpu
+   34 |     input [3:0] io_slave_wstrb,
+      |                 ^~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:36:11: Signal is not used: 'io_slave_wlast'
+                                                      : ... In instance ysyxSoCFull.asic.cpu.cpu
+   36 |     input io_slave_wlast,
+      |           ^~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:38:11: Signal is not used: 'io_slave_bready'
+                                                      : ... In instance ysyxSoCFull.asic.cpu.cpu
+   38 |     input io_slave_bready,
+      |           ^~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:50:18: Signal is not used: 'io_slave_araddr'
+                                                      : ... In instance ysyxSoCFull.asic.cpu.cpu
+   50 |     input [31:0] io_slave_araddr,
+      |                  ^~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:52:17: Signal is not used: 'io_slave_arid'
+                                                      : ... In instance ysyxSoCFull.asic.cpu.cpu
+   52 |     input [3:0] io_slave_arid,
+      |                 ^~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:54:17: Signal is not used: 'io_slave_arlen'
+                                                      : ... In instance ysyxSoCFull.asic.cpu.cpu
+   54 |     input [7:0] io_slave_arlen,
+      |                 ^~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:56:17: Signal is not used: 'io_slave_arsize'
+                                                      : ... In instance ysyxSoCFull.asic.cpu.cpu
+   56 |     input [2:0] io_slave_arsize,
+      |                 ^~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:58:17: Signal is not used: 'io_slave_arburst'
+                                                      : ... In instance ysyxSoCFull.asic.cpu.cpu
+   58 |     input [1:0] io_slave_arburst,
+      |                 ^~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:60:11: Signal is not used: 'io_slave_rready'
+                                                      : ... In instance ysyxSoCFull.asic.cpu.cpu
+   60 |     input io_slave_rready,
+      |           ^~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:244:30: Signal is not driven, nor used: '_RANDOM'
+                                                                                                                : ... In instance ysyxSoCFull.asic.axi4xbar_1.awIn_0
+  244 |       automatic logic [31:0] _RANDOM[0:0];  
+      |                              ^~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:1886:16: Signal is not driven, nor used: '_RANDOM_MEM'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4ram.mem_ext
+ 1886 |     reg [31:0] _RANDOM_MEM;  
+      |                ^~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:2297:17: Signal is not used: 'io_enq_bits_burst'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4buf.nodeOut_awdeq_q
+ 2297 |   input  [1:0]  io_enq_bits_burst,  
+      |                 ^~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:2335:30: Signal is not driven, nor used: '_RANDOM'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4buf.nodeOut_awdeq_q
+ 2335 |       automatic logic [31:0] _RANDOM[0:0];  
+      |                              ^~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:2409:17: Signal is not used: 'io_enq_bits_last'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4buf.nodeOut_wdeq_q
+ 2409 |   input         io_enq_bits_last,  
+      |                 ^~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:2445:30: Signal is not driven, nor used: '_RANDOM'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4buf.nodeOut_wdeq_q
+ 2445 |       automatic logic [31:0] _RANDOM[0:0];  
+      |                              ^~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:2550:30: Signal is not driven, nor used: '_RANDOM'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4buf.nodeIn_bdeq_q
+ 2550 |       automatic logic [31:0] _RANDOM[0:0];  
+      |                              ^~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:2589:17: Signal is not used: 'io_enq_bits_burst'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4buf.nodeOut_ardeq_q
+ 2589 |   input  [1:0]  io_enq_bits_burst,  
+      |                 ^~~~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:2627:30: Signal is not driven, nor used: '_RANDOM'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4buf.nodeOut_ardeq_q
+ 2627 |       automatic logic [31:0] _RANDOM[0:0];  
+      |                              ^~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:2739:30: Signal is not driven, nor used: '_RANDOM'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4buf.nodeIn_rdeq_q
+ 2739 |       automatic logic [31:0] _RANDOM[0:0];  
+      |                              ^~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:2931:30: Signal is not driven, nor used: '_RANDOM'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4yank.Queue1_BundleMap_31
+ 2931 |       automatic logic [31:0] _RANDOM[0:0];  
+      |                              ^~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:3627:30: Signal is not driven, nor used: '_RANDOM'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4frag.deq_q
+ 3627 |       automatic logic [31:0] _RANDOM[0:1];  
+      |                              ^~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:3693:30: Signal is not driven, nor used: '_RANDOM'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4frag.deq_q_1
+ 3693 |       automatic logic [31:0] _RANDOM[0:1];  
+      |                              ^~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:3750:30: Signal is not driven, nor used: '_RANDOM'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4frag.in_wdeq_q
+ 3750 |       automatic logic [31:0] _RANDOM[0:1];  
+      |                              ^~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:4188:30: Signal is not driven, nor used: '_RANDOM'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.cpu_reset_chain.output_chain
+ 4188 |       automatic logic [31:0] _RANDOM[0:0];  
+      |                              ^~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/gpio/gpio_top_apb.v:2:17: Signal is not used: 'clock'
+                                                                                                                    : ... In instance ysyxSoCFull.asic.lgpio.mgpio
+    2 |   input         clock,
+      |                 ^~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/gpio/gpio_top_apb.v:3:17: Signal is not used: 'reset'
+                                                                                                                    : ... In instance ysyxSoCFull.asic.lgpio.mgpio
+    3 |   input         reset,
+      |                 ^~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/gpio/gpio_top_apb.v:4:17: Signal is not used: 'in_paddr'
+                                                                                                                    : ... In instance ysyxSoCFull.asic.lgpio.mgpio
+    4 |   input  [31:0] in_paddr,
+      |                 ^~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/gpio/gpio_top_apb.v:7:17: Signal is not used: 'in_pprot'
+                                                                                                                    : ... In instance ysyxSoCFull.asic.lgpio.mgpio
+    7 |   input  [2:0]  in_pprot,
+      |                 ^~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/gpio/gpio_top_apb.v:8:17: Signal is not used: 'in_pwrite'
+                                                                                                                    : ... In instance ysyxSoCFull.asic.lgpio.mgpio
+    8 |   input         in_pwrite,
+      |                 ^~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/gpio/gpio_top_apb.v:9:17: Signal is not used: 'in_pwdata'
+                                                                                                                    : ... In instance ysyxSoCFull.asic.lgpio.mgpio
+    9 |   input  [31:0] in_pwdata,
+      |                 ^~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/gpio/gpio_top_apb.v:10:17: Signal is not used: 'in_pstrb'
+                                                                                                                     : ... In instance ysyxSoCFull.asic.lgpio.mgpio
+   10 |   input  [3:0]  in_pstrb,
+      |                 ^~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/gpio/gpio_top_apb.v:16:17: Signal is not used: 'gpio_in'
+                                                                                                                     : ... In instance ysyxSoCFull.asic.lgpio.mgpio
+   16 |   input  [15:0] gpio_in,
+      |                 ^~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/ps2/ps2_top_apb.v:2:17: Signal is not used: 'clock'
+                                                                                                                  : ... In instance ysyxSoCFull.asic.lkeyboard.mps2
+    2 |   input         clock,
+      |                 ^~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/ps2/ps2_top_apb.v:3:17: Signal is not used: 'reset'
+                                                                                                                  : ... In instance ysyxSoCFull.asic.lkeyboard.mps2
+    3 |   input         reset,
+      |                 ^~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/ps2/ps2_top_apb.v:4:17: Signal is not used: 'in_paddr'
+                                                                                                                  : ... In instance ysyxSoCFull.asic.lkeyboard.mps2
+    4 |   input  [31:0] in_paddr,
+      |                 ^~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/ps2/ps2_top_apb.v:7:17: Signal is not used: 'in_pprot'
+                                                                                                                  : ... In instance ysyxSoCFull.asic.lkeyboard.mps2
+    7 |   input  [2:0]  in_pprot,
+      |                 ^~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/ps2/ps2_top_apb.v:8:17: Signal is not used: 'in_pwrite'
+                                                                                                                  : ... In instance ysyxSoCFull.asic.lkeyboard.mps2
+    8 |   input         in_pwrite,
+      |                 ^~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/ps2/ps2_top_apb.v:9:17: Signal is not used: 'in_pwdata'
+                                                                                                                  : ... In instance ysyxSoCFull.asic.lkeyboard.mps2
+    9 |   input  [31:0] in_pwdata,
+      |                 ^~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/ps2/ps2_top_apb.v:10:17: Signal is not used: 'in_pstrb'
+                                                                                                                   : ... In instance ysyxSoCFull.asic.lkeyboard.mps2
+   10 |   input  [3:0]  in_pstrb,
+      |                 ^~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/ps2/ps2_top_apb.v:15:17: Signal is not used: 'ps2_clk'
+                                                                                                                   : ... In instance ysyxSoCFull.asic.lkeyboard.mps2
+   15 |   input         ps2_clk,
+      |                 ^~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/ps2/ps2_top_apb.v:16:17: Signal is not used: 'ps2_data'
+                                                                                                                   : ... In instance ysyxSoCFull.asic.lkeyboard.mps2
+   16 |   input         ps2_data
+      |                 ^~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/psram_top_apb.v:7:17: Signal is not used: 'in_pprot'
+                                                                                                                      : ... In instance ysyxSoCFull.asic.lpsram.mpsram
+    7 |   input  [2:0]  in_pprot,
+      |                 ^~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/sdram_top_apb.v:7:17: Signal is not used: 'in_pprot'
+                                                                                                                      : ... In instance ysyxSoCFull.asic.lsdram_apb.msdram
+    7 |   input  [2:0]  in_pprot,
+      |                 ^~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/spi/rtl/spi_top_apb.v:15:17: Signal is not used: 'in_pprot'
+                                                                                                                       : ... In instance ysyxSoCFull.asic.lspi.mspi
+   15 |   input  [2:0]  in_pprot,
+      |                 ^~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_top_apb.v:6:29: Signal is not used: 'in_pprot'
+                                                                                                                             : ... In instance ysyxSoCFull.asic.luart.muart
+    6 |      , input   wire [2:0]   in_pprot
+      |                             ^~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_top_apb.v:9:28: Bits of signal are not used: 'in_paddr'[31:3]
+                                                                                                                             : ... In instance ysyxSoCFull.asic.luart.muart
+    9 |      , input   wire [31:0] in_paddr
+      |                            ^~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_top_apb.v:13:28: Signal is not used: 'in_pstrb'
+                                                                                                                              : ... In instance ysyxSoCFull.asic.luart.muart
+   13 |      , input   wire [3:0]  in_pstrb
+      |                            ^~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_top_apb.v:18:11: Signal is not used: 'rtsn'
+                                                                                                                              : ... In instance ysyxSoCFull.asic.luart.muart
+   18 |    wire   rtsn;
+      |           ^~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_top_apb.v:20:11: Signal is not used: 'dtr_pad_o'
+                                                                                                                              : ... In instance ysyxSoCFull.asic.luart.muart
+   20 |    wire   dtr_pad_o;
+      |           ^~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_top_apb.v:24:11: Signal is not used: 'interrupt'
+                                                                                                                              : ... In instance ysyxSoCFull.asic.luart.muart
+   24 |    wire   interrupt;
+      |           ^~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/vga/vga_top_apb.v:2:17: Signal is not used: 'clock'
+                                                                                                                  : ... In instance ysyxSoCFull.asic.lvga.mvga
+    2 |   input         clock,
+      |                 ^~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/vga/vga_top_apb.v:3:17: Signal is not used: 'reset'
+                                                                                                                  : ... In instance ysyxSoCFull.asic.lvga.mvga
+    3 |   input         reset,
+      |                 ^~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/vga/vga_top_apb.v:4:17: Signal is not used: 'in_paddr'
+                                                                                                                  : ... In instance ysyxSoCFull.asic.lvga.mvga
+    4 |   input  [31:0] in_paddr,
+      |                 ^~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/vga/vga_top_apb.v:7:17: Signal is not used: 'in_pprot'
+                                                                                                                  : ... In instance ysyxSoCFull.asic.lvga.mvga
+    7 |   input  [2:0]  in_pprot,
+      |                 ^~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/vga/vga_top_apb.v:8:17: Signal is not used: 'in_pwrite'
+                                                                                                                  : ... In instance ysyxSoCFull.asic.lvga.mvga
+    8 |   input         in_pwrite,
+      |                 ^~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/vga/vga_top_apb.v:9:17: Signal is not used: 'in_pwdata'
+                                                                                                                  : ... In instance ysyxSoCFull.asic.lvga.mvga
+    9 |   input  [31:0] in_pwdata,
+      |                 ^~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/vga/vga_top_apb.v:10:17: Signal is not used: 'in_pstrb'
+                                                                                                                   : ... In instance ysyxSoCFull.asic.lvga.mvga
+   10 |   input  [3:0]  in_pstrb,
+      |                 ^~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:175:16: Signal is not used: 'R0_clk'
+                                                                                                                : ... In instance ysyxSoCFull.asic.axi4xbar_1.awIn_0.ram_ext
+  175 |                R0_clk,
+      |                ^~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:189:16: Signal is not driven, nor used: '_RANDOM_MEM'
+                                                                                                                : ... In instance ysyxSoCFull.asic.axi4xbar_1.awIn_0.ram_ext
+  189 |     reg [31:0] _RANDOM_MEM;  
+      |                ^~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:2259:17: Signal is not used: 'R0_clk'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4buf.nodeOut_ardeq_q.ram_ext
+ 2259 |                 R0_clk,
+      |                 ^~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:2273:16: Signal is not driven, nor used: '_RANDOM_MEM'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4buf.nodeOut_ardeq_q.ram_ext
+ 2273 |     reg [63:0] _RANDOM_MEM;  
+      |                ^~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:2372:17: Signal is not used: 'R0_clk'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4buf.nodeOut_wdeq_q.ram_ext
+ 2372 |                 R0_clk,
+      |                 ^~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:2386:16: Signal is not driven, nor used: '_RANDOM_MEM'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4buf.nodeOut_wdeq_q.ram_ext
+ 2386 |     reg [63:0] _RANDOM_MEM;  
+      |                ^~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:2480:16: Signal is not used: 'R0_clk'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4buf.nodeIn_bdeq_q.ram_ext
+ 2480 |                R0_clk,
+      |                ^~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:2494:16: Signal is not driven, nor used: '_RANDOM_MEM'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4buf.nodeIn_bdeq_q.ram_ext
+ 2494 |     reg [31:0] _RANDOM_MEM;  
+      |                ^~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:2664:17: Signal is not used: 'R0_clk'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4buf.nodeIn_rdeq_q.ram_ext
+ 2664 |                 R0_clk,
+      |                 ^~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v:2678:16: Signal is not driven, nor used: '_RANDOM_MEM'
+                                                                                                                 : ... In instance ysyxSoCFull.asic.axi4buf.nodeIn_rdeq_q.ram_ext
+ 2678 |     reg [63:0] _RANDOM_MEM;  
+      |                ^~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/efabless/EF_PSRAM_CTRL_wb.v:25:25: Bits of signal are not used: 'adr_i'[31:24]
+                                                                                                                                   : ... In instance ysyxSoCFull.asic.lpsram.mpsram.u0
+   25 |     input   wire [31:0] adr_i,
+      |                         ^~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_regs.v:374:33: Signal is not used: 'rstate'
+                                                                                                                            : ... In instance ysyxSoCFull.asic.luart.muart.Uregs
+  374 | wire [3:0]                      rstate;
+      |                                 ^~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/core_sdram_axi4/sdram_axi_core.v:42:22: Signal is not used: 'inport_len_i'
+                                                                                                                                        : ... In instance ysyxSoCFull.asic.lsdram_apb.msdram.u_sdram_ctrl
+   42 |     ,input  [  7:0]  inport_len_i
+      |                      ^~~~~~~~~~~~
+%Warning-UNUSEDPARAM: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/core_sdram_axi4/sdram_axi_core.v:91:12: Parameter is not used: 'CMD_TERMINATE'
+                                                                                                                                       : ... In instance ysyxSoCFull.asic.lsdram_apb.msdram.u_sdram_ctrl
+   91 | localparam CMD_TERMINATE     = 4'b0110;
+      |            ^~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/core_sdram_axi4/sdram_axi_core.v:127:15: Bits of signal are not used: 'ram_addr_w'[31:25,1:0]
+                                                                                                                                         : ... In instance ysyxSoCFull.asic.lsdram_apb.msdram.u_sdram_ctrl
+  127 | wire [ 31:0]  ram_addr_w       = inport_addr_i;
+      |               ^~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/core_sdram_axi4/sdram_axi_core.v:721:12: Signal is not used: 'dbg_state'
+                                                                                                                                         : ... In instance ysyxSoCFull.asic.lsdram_apb.msdram.u_sdram_ctrl
+  721 | reg [79:0] dbg_state;
+      |            ^~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/efabless/EF_PSRAM_CTRL.v:160:29: Signal is not used: 'din'
+                                                                                                                                 : ... In instance ysyxSoCFull.asic.lpsram.mpsram.u0.MW
+  160 |     input   wire [3:0]      din,
+      |                             ^~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/spi/rtl/spi_shift.v:74:17: Bits of signal are not used: 'tx_bit_pos'[7]
+                                                                                                                     : ... In instance ysyxSoCFull.asic.lspi.mspi.u0_spi_top.shift
+   74 |   wire    [7:0] tx_bit_pos;    
+      |                 ^~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/spi/rtl/spi_shift.v:75:17: Bits of signal are not used: 'rx_bit_pos'[7]
+                                                                                                                     : ... In instance ysyxSoCFull.asic.lspi.mspi.u0_spi_top.shift
+   75 |   wire    [7:0] rx_bit_pos;    
+      |                 ^~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_receiver.v:228:6: Signal is not used: 'rbit_in'
+                                                                                                                               : ... In instance ysyxSoCFull.asic.luart.muart.Uregs.receiver
+  228 | reg  rbit_in;
+      |      ^~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_receiver.v:261:7: Signal is not used: 'rcounter16_eq_1'
+                                                                                                                               : ... In instance ysyxSoCFull.asic.luart.muart.Uregs.receiver
+  261 | wire  rcounter16_eq_1 = (rcounter16 == 4'd1);
+      |       ^~~~~~~~~~~~~~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_transmitter.v:162:35: Bits of signal are not used: 'lcr'[7]
+                                                                                                                                   : ... In instance ysyxSoCFull.asic.luart.muart.Uregs.transmitter
+  162 | input [7:0]                       lcr;
+      |                                   ^~~
+%Warning-UNUSEDSIGNAL: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_transmitter.v:187:33: Signal is not used: 'tf_overrun'
+                                                                                                                                   : ... In instance ysyxSoCFull.asic.luart.muart.Uregs.transmitter
+  187 | wire                            tf_overrun;
+      |                                 ^~~~~~~~~~
+%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_gen_imm.sv:12:49: Bits of signal are not used: 'inst'[6:0]
+                                                      : ... In instance ysyxSoCFull.asic.cpu.cpu.subsystem.cpu.core.u_decode_imm
+   12 |         input                   [31 : 0]        inst,
+      |                                                 ^~~~
+%Warning-BLKSEQ: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_top_apb.v:52:32: Blocking assignment '=' in sequential logic process
+                                                                                                                        : ... Suggest using delayed assignment '<='
+   52 |              2'b11: reg_dat8_w = #1 in_pwdata[31:24];
+      |                                ^
+%Warning-BLKSEQ: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/psram.v:22:13: Blocking assignment '=' in sequential logic process
+                                                                                                         : ... Suggest using delayed assignment '<='
+   22 |       cycle = 0; command = 0; address = 0;
+      |             ^
+%Warning-BLKSEQ: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/psram.v:22:26: Blocking assignment '=' in sequential logic process
+                                                                                                         : ... Suggest using delayed assignment '<='
+   22 |       cycle = 0; command = 0; address = 0;
+      |                          ^
+%Warning-BLKSEQ: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/psram.v:22:39: Blocking assignment '=' in sequential logic process
+                                                                                                         : ... Suggest using delayed assignment '<='
+   22 |       cycle = 0; command = 0; address = 0;
+      |                                       ^
+%Warning-BLKSEQ: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/psram.v:23:19: Blocking assignment '=' in sequential logic process
+                                                                                                         : ... Suggest using delayed assignment '<='
+   23 |       high_nibble = 0; read_nibble = 0; read_byte = 0;
+      |                   ^
+%Warning-BLKSEQ: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/psram.v:23:36: Blocking assignment '=' in sequential logic process
+                                                                                                         : ... Suggest using delayed assignment '<='
+   23 |       high_nibble = 0; read_nibble = 0; read_byte = 0;
+      |                                    ^
+%Warning-BLKSEQ: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/psram.v:23:51: Blocking assignment '=' in sequential logic process
+                                                                                                         : ... Suggest using delayed assignment '<='
+   23 |       high_nibble = 0; read_nibble = 0; read_byte = 0;
+      |                                                   ^
+%Warning-BLKSEQ: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/psram.v:26:17: Blocking assignment '=' in sequential logic process
+                                                                                                         : ... Suggest using delayed assignment '<='
+   26 |         command = {command[6:0],dio[0]};
+      |                 ^
+%Warning-BLKSEQ: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/psram.v:30:17: Blocking assignment '=' in sequential logic process
+                                                                                                         : ... Suggest using delayed assignment '<='
+   30 |         address = {address[19:0],dio};
+      |                 ^
+%Warning-BLKSEQ: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/psram.v:34:43: Blocking assignment '=' in sequential logic process
+                                                                                                         : ... Suggest using delayed assignment '<='
+   34 |         if ((cycle & 1) == 0) high_nibble = dio;
+      |                                           ^
+%Warning-BLKSEQ: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/psram.v:37:19: Blocking assignment '=' in sequential logic process
+                                                                                                         : ... Suggest using delayed assignment '<='
+   37 |           address = address + 1'b1;
+      |                   ^
+%Warning-BLKSEQ: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/psram.v:43:21: Blocking assignment '=' in sequential logic process
+                                                                                                         : ... Suggest using delayed assignment '<='
+   43 |           read_byte = psram_read(int'(address));
+      |                     ^
+%Warning-BLKSEQ: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/psram.v:44:23: Blocking assignment '=' in sequential logic process
+                                                                                                         : ... Suggest using delayed assignment '<='
+   44 |           read_nibble = 4'(read_byte >> 4);
+      |                       ^
+%Warning-BLKSEQ: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/psram.v:46:23: Blocking assignment '=' in sequential logic process
+                                                                                                         : ... Suggest using delayed assignment '<='
+   46 |           read_nibble = 4'(read_byte);
+      |                       ^
+%Warning-BLKSEQ: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/psram.v:47:19: Blocking assignment '=' in sequential logic process
+                                                                                                         : ... Suggest using delayed assignment '<='
+   47 |           address = address + 1'b1;
+      |                   ^
+%Warning-BLKSEQ: /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/psram.v:50:13: Blocking assignment '=' in sequential logic process
+                                                                                                         : ... Suggest using delayed assignment '<='
+   50 |       cycle = cycle + 1;
+      |             ^
+make[2]: Entering directory '/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/npc/build/ysyxsoc'
+ccache g++  -I.  -MMD -I/usr/local/share/verilator/include -I/usr/local/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=1 -DVM_TRACE_FST=1 -DVM_TRACE_VCD=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-shadow     -std=c++17 -Wall -Wextra   -fcoroutines -Os -c -o difftest.o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/npc/csrc/soc/difftest.cpp
+ccache g++  -I.  -MMD -I/usr/local/share/verilator/include -I/usr/local/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=1 -DVM_TRACE_FST=1 -DVM_TRACE_VCD=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-shadow     -std=c++17 -Wall -Wextra   -fcoroutines -Os -c -o main.o /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/npc/csrc/soc/main.cpp
+ccache: error: Failed to create temporary file for /run/user/1000/ccache-tmp/tmp.cpp_stdout.lOEwG0: Read-only file system
+ccache: error: Failed to create temporary file for /run/user/1000/ccache-tmp/tmp.cpp_stdout.XfvD6x: Read-only file system
+make[2]: *** [VysyxSoCFull.mk:65: difftest.o] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[2]: *** [VysyxSoCFull.mk:67: main.o] Error 1
+make[2]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/npc/build/ysyxsoc'
+%Error: make -C /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/npc/build/ysyxsoc -f VysyxSoCFull.mk -j 2 exited with 2
+%Error: Command Failed ulimit -s unlimited 2>/dev/null; exec /usr/local/bin/verilator_bin --cc --exe --build -j 2 --sv --timing --assert --trace-fst --timescale-override 1ns/1ps -Wall -Wno-fatal -Wno-SYNCASYNCNET -Werror-WIDTH -Werror-PINMISSING -Werror-PINNOTFOUND -Werror-LATCH -Werror-UNOPTFLAT -Werror-UNDRIVEN --top-module ysyxSoCFull -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl -I/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/spi/rtl -F filelist-soc.f /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/build/ysyxSoCFull.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/amba/apb_delayer.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/amba/axi4_delayer.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/amba/npc_axi4_guard.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/bitrev/bitrev.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/flash/flash.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/gpio/gpio_top_apb.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/ps2/ps2_top_apb.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/efabless/EF_PSRAM_CTRL.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/efabless/EF_PSRAM_CTRL_wb.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/psram.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/psram/psram_top_apb.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/core_sdram_axi4/sdram_axi.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/core_sdram_axi4/sdram_axi_core.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/core_sdram_axi4/sdram_axi_pmem.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/sdram.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/sdram_top_apb.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/sdram/sdram_top_axi.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/spi/rtl/spi_clgen.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/spi/rtl/spi_defines.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/spi/rtl/spi_shift.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/spi/rtl/spi_top.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/spi/rtl/spi_top_apb.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/raminfr.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_defines.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_receiver.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_regs.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_rfifo.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_sync_flops.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_tfifo.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_top_apb.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/uart16550/rtl/uart_transmitter.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/ysyxSoC/perip/vga/vga_top_apb.v /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/npc/sim/soc_monitor.sv /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/npc/csrc/soc/main.cpp /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/npc/csrc/soc/difftest.cpp -CFLAGS -std=c++17\ -Wall\ -Wextra\  -LDFLAGS -ldl --Mdir /home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/npc/build/ysyxsoc
+make[1]: *** [scripts/soc.mk:39: soc-build] Error 2
+make[1]: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/npc'
+make: *** [scripts/soc.mk:73: s6-build] Error 2
+make: Leaving directory '/home/cym/prj/ysyx-workbench/npc/build/m5-s8/workspace/npc'

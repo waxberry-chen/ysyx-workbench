@@ -1,0 +1,185 @@
+ifu-adapter-build: running
+ifu-adapter: running
+lsu-adapter-build: running
+lsu-adapter: running
+ifu-integration-build: running
+ifu-integration: running
+arbiter-build: running
+arbiter: running
+fabric-build: running
+fabric: running
+arbiter-bad-rid: running
+arbiter-bad-bid: running
+arbiter-bad-rlast: running
+fabric-bad-rid: running
+fabric-bad-bid: running
+fabric-bad-rlast: running
+redirect-build: running
+redirect: running
+clint-build: running
+clint: running
+router-local-build: running
+router-local: running
+wrapper-build: running
+wrapper: running
+wrapper-badirq: running
+wrapper-badslave: running
+cpu-build: running
+isa-contract: running
+fault-fetch-build: running
+fault-fetch-objcopy: running
+fault-fetch-2: running
+fault-fetch-3: running
+fault-load-build: running
+fault-load-objcopy: running
+fault-load-2: running
+fault-load-3: running
+fault-store-build: running
+fault-store-objcopy: running
+fault-store-2: running
+fault-store-3: running
+misaligned-load-build: running
+misaligned-load-objcopy: running
+misaligned-load: running
+misaligned-store-build: running
+misaligned-store-objcopy: running
+misaligned-store: running
+memory-build: running
+memory-objcopy: running
+memory-1: running
+memory-2: running
+memory-3: running
+memory-4: running
+memory-5: running
+memory-6: running
+memory-7: running
+memory-8: running
+memory-9: running
+memory-10: running
+guard-build: running
+guard: running
+cpu-add-longlong-build: running
+cpu-add-longlong: running
+cpu-add-longlong: PASS (4176 commits, 1166957 cycles)
+cpu-add-build: running
+cpu-add: running
+cpu-add: PASS (2816 commits, 793067 cycles)
+cpu-bit-build: running
+cpu-bit: running
+cpu-bit: PASS (1989 commits, 691214 cycles)
+cpu-bubble-sort-build: running
+cpu-bubble-sort: running
+cpu-bubble-sort: PASS (4154 commits, 842230 cycles)
+cpu-crc32-build: running
+cpu-crc32: running
+cpu-crc32: PASS (16569 commits, 2496384 cycles)
+cpu-div-build: running
+cpu-div: running
+cpu-div: PASS (18251 commits, 2242457 cycles)
+cpu-dummy-build: running
+cpu-dummy: running
+cpu-dummy: PASS (489 commits, 185068 cycles)
+cpu-fact-build: running
+cpu-fact: running
+cpu-fact: PASS (3177 commits, 681238 cycles)
+cpu-fib-build: running
+cpu-fib: running
+cpu-fib: PASS (2197 commits, 692820 cycles)
+cpu-goldbach-build: running
+cpu-goldbach: running
+cpu-goldbach: PASS (9861 commits, 1436684 cycles)
+cpu-hello-str-build: running
+cpu-hello-str: running
+cpu-hello-str: PASS (23315 commits, 8293837 cycles)
+cpu-if-else-build: running
+cpu-if-else: running
+cpu-if-else: PASS (1521 commits, 489253 cycles)
+cpu-leap-year-build: running
+cpu-leap-year: running
+cpu-leap-year: PASS (10991 commits, 1780332 cycles)
+cpu-load-store-build: running
+cpu-load-store: running
+cpu-load-store: PASS (2390 commits, 805279 cycles)
+cpu-matrix-mul-build: running
+cpu-matrix-mul: running
+cpu-matrix-mul: PASS (137254 commits, 13908430 cycles)
+cpu-max-build: running
+cpu-max: running
+cpu-max: PASS (2846 commits, 798626 cycles)
+cpu-mersenne-build: running
+cpu-mersenne: running
+cpu-mersenne: PASS (30950 commits, 4594312 cycles)
+cpu-min3-build: running
+cpu-min3: running
+cpu-min3: PASS (3327 commits, 894460 cycles)
+cpu-mov-c-build: running
+cpu-mov-c: running
+cpu-mov-c: PASS (1215 commits, 453756 cycles)
+cpu-movsx-build: running
+cpu-movsx: running
+cpu-movsx: PASS (1704 commits, 632818 cycles)
+cpu-mul-longlong-build: running
+cpu-mul-longlong: running
+cpu-mul-longlong: PASS (8388 commits, 1344449 cycles)
+cpu-pascal-build: running
+cpu-pascal: running
+cpu-pascal: PASS (4859 commits, 962590 cycles)
+cpu-prime-build: running
+cpu-prime: running
+cpu-prime: PASS (56530 commits, 5496869 cycles)
+cpu-quick-sort-build: running
+cpu-quick-sort: running
+cpu-quick-sort: PASS (6416 commits, 1558810 cycles)
+cpu-recursion-build: running
+cpu-recursion: running
+cpu-recursion: PASS (9030 commits, 1620552 cycles)
+cpu-select-sort-build: running
+cpu-select-sort: running
+cpu-select-sort: PASS (4378 commits, 881566 cycles)
+cpu-shift-build: running
+cpu-shift: running
+cpu-shift: PASS (1886 commits, 624378 cycles)
+cpu-shuixianhua-build: running
+cpu-shuixianhua: running
+cpu-shuixianhua: PASS (138671 commits, 13159868 cycles)
+cpu-string-build: running
+cpu-string: running
+cpu-string: PASS (4025 commits, 1101567 cycles)
+cpu-sub-longlong-build: running
+cpu-sub-longlong: running
+cpu-sub-longlong: PASS (4176 commits, 1166957 cycles)
+cpu-sum-build: running
+cpu-sum: running
+cpu-sum: PASS (1244 commits, 338492 cycles)
+cpu-switch-build: running
+cpu-switch: running
+cpu-switch: PASS (1426 commits, 467710 cycles)
+cpu-to-lower-case-build: running
+cpu-to-lower-case: running
+cpu-to-lower-case: PASS (3244 commits, 632593 cycles)
+cpu-wanshu-build: running
+cpu-wanshu: running
+cpu-wanshu: PASS (19656 commits, 2267625 cycles)
+micro-sieve-build: running
+micro-sieve: running
+micro-sieve: PASS commits=9688 IRQs=0 cycles=186362
+micro-fib-build: running
+micro-fib: running
+micro-fib: PASS commits=94717 IRQs=0 cycles=1633239
+spi-build: running
+spi: running
+spi: PASS (6295 commits, 133700 cycles)
+psram-build: running
+psram: running
+psram: PASS (52294 commits, 941974 cycles)
+xip-build: running
+xip-image: running
+xip: running
+xip: PASS (2 commits, 625 cycles)
+storage-faults-build: running
+storage-faults-image: running
+storage-faults: running
+storage-faults: PASS (116 commits, 1873 cycles)
+storage-faults-delayed: running
+storage-faults-delayed: PASS commits=116 IRQs=0 cycles=4721
+S6 regression: PASS; evidence: /home/cym/prj/ysyx-workbench/npc/build/m5-s8-final/workspace/npc/build/m5-s6

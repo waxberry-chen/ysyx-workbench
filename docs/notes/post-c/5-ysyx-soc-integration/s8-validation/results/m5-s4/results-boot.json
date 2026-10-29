@@ -1,0 +1,67 @@
+[
+  {
+    "name": "boot-flash-sram-build",
+    "status": "PASS",
+    "negative": false
+  },
+  {
+    "name": "boot-flash-sram",
+    "status": "PASS",
+    "negative": false
+  },
+  {
+    "name": "boot-flash-sram-missing-__am_data_copy",
+    "status": "PASS",
+    "negative": true
+  },
+  {
+    "name": "boot-flash-sram-missing-__am_bss_clear",
+    "status": "PASS",
+    "negative": true
+  },
+  {
+    "name": "boot-flash-psram-build",
+    "status": "PASS",
+    "negative": false
+  },
+  {
+    "name": "boot-flash-psram",
+    "status": "PASS",
+    "negative": false
+  },
+  {
+    "name": "boot-flash-psram-missing-__am_data_copy",
+    "status": "PASS",
+    "negative": true
+  },
+  {
+    "name": "boot-flash-psram-missing-__am_bss_clear",
+    "status": "PASS",
+    "negative": true
+  },
+  {
+    "name": "flash-empty",
+    "status": "PASS",
+    "negative": true
+  },
+  {
+    "name": "flash-oversized",
+    "status": "PASS",
+    "negative": true
+  },
+  {
+    "name": "overflow-flash-sram",
+    "status": "PASS",
+    "negative": true
+  },
+  {
+    "name": "overflow-flash-psram",
+    "status": "PASS",
+    "negative": true
+  },
+  {
+    "name": "overflow-flash",
+    "status": "PASS",
+    "negative": true
+  }
+]

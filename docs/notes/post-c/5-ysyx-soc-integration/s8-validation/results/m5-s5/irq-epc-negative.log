@@ -1,0 +1,1 @@
+NPC_SOC_FAIL: DiffTest mismatch IRQ state[19] pc=0x20000068 ref=0x20000068 dut=0x2000006c pc=0x20000064
