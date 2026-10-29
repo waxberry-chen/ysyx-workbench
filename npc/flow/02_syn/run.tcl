@@ -4,10 +4,14 @@
 if {[catch {
     source [file join $::env(NPC_FLOW_SNAPSHOT) 01_common setup.tcl]
     source [file join $::env(NPC_FLOW_SNAPSHOT) 01_common capacitance.tcl]
+    source [file join $::env(NPC_FLOW_SNAPSHOT) 02_syn max_capacitance_margin.tcl]
     if {[shell_is_in_topographical_mode]} {error "Baseline requires wire-load DC, not TOPO"}
     # 阶段 1：库/工作目录准备。WORK 保存 analyze 中间数据，每个 run 独立。
     libraries
+    # 保存原始库报告之后，才收紧 DC 会话中的最大电容；PT 和磁盘 DB 保持原值。
     library_reports
+    set syn_max_capacitance_scale 0.90
+    apply_syn_max_capacitance_margin $syn_max_capacitance_scale
     define_design_lib WORK -path [file join $run work]
     # Library setup precedes analyze/elaborate/link. All sources are SV.
     # 阶段 2：analyze 检查 SV 并产生 HDL 中间表示；elaborate 根据 top、参数和
@@ -70,12 +74,29 @@ if {[catch {
     # 不手工删除 U4 等实例、不伪造内部负载，也不放宽库电容限制；结果必须由新 PT 验证。
     # 后端接入若要求修复此类连接，再单独选择重连/缓冲策略并重跑，而非提前强制补 buffer。
     puts "NPC_SYN_POLICY: no explicit multiple-port-net repair; feedthrough assigns allowed"
-    # Ordinary compile avoids an implicit Ultra/Graphical/clock-gating dependency.
-    # No gate_clock, scan, UPF, datapath gating, incremental or physical options.
-    # 阶段 4：compile 优化逻辑并映射到 target_library 的具体单元。
-    # map_effort 是映射优化努力等级，不是目标频率；目标周期由 SDC 给出。
-    require_true [compile -map_effort medium] "compile failed"
+    # 阶段 4：Ultra 优化逻辑并映射到 target_library；仍为 wire-load 非物理综合。
+    # -no_autoungroup 关闭自动打平用户层次，方便按模块读报告；boundary optimization
+    # 保持启用，可跨边界传播常量/未连接信息，裁剪下游不使用的观察逻辑。
+    # Ultra 需要相应 license；不静默回退到 compile，避免同一配置产生两种流程。
+    # -map_effort 属于 compile，不传给 compile_ultra；本轮也不启用 gating/scan/TOPO。
+    # 功耗优化、功耗报告、功耗预算是三件事。本阶段只建立面积/时序基线：
+    # 显式关闭 Ultra 默认漏电优化及动态功耗优化，不设置 max_*_power 预算。
+    # cfg power_enable 只控制导出网表后的可选报告，不能改变这里的优化策略。
+    # 依据：DC P-2019.03 7-19–7-20、8-23；实际生效还须审查服务器日志/约束报告。
+    set_leakage_optimization false
+    set_dynamic_optimization false
+    puts "NPC_SYN_POWER_POLICY: requested leakage_optimization=false dynamic_optimization=false; no power budget; optional_report=[dict get $cfg power_enable]"
+    puts "NPC_SYN_COMPILE: compile_ultra -no_autoungroup; wire-load mode"
+    require_true [compile_ultra -no_autoungroup] "compile_ultra failed"
     check_syn_fanout_policy post_compile $syn_max_fanout
+    check_syn_max_capacitance_margin post_compile
+    # 在已经映射的网表上再修复 DRC（含更严格的电容目标），不重新做完整映射。
+    # -only_design_rule 必须与 -incremental 配合；DC P-2019.03 8-25。
+    # 这一步不会统一 DC/PT 电容算法；最终效果必须由原始库口径的 PT 验证。
+    puts "NPC_SYN_COMPILE: compile_ultra -incremental -only_design_rule"
+    require_true [compile_ultra -incremental -only_design_rule] "incremental DRC fixing failed"
+    check_syn_fanout_policy post_drc $syn_max_fanout
+    check_syn_max_capacitance_margin post_drc
     # 将层次内名字规范成 Verilog 可导出的形式，不改变要实现的逻辑功能。
     change_names -rules verilog -hierarchy
     redirect -file [file join $reports checks check_design_post.rpt] {set ok [check_design]}
@@ -126,7 +147,8 @@ if {[catch {
     redirect -file [file join $reports timing timing_min.rpt] {report_timing -delay_type min -max_paths 20 -significant_digits 6 -nosplit}
     report_lsu_enable_capacitance
     # Power never changes the saved timing design. Its diagnostics are isolated.
-    # 阶段 7（可选）：时序产物导出后才估算功耗，不把活动假设用于本轮优化。
+    # 阶段 7（可选）：power_enable 仅开启报告；时序产物导出后才估算功耗，
+    # 不把活动假设用于本轮优化，也不把估计值视为功耗预算的验收结果。
     # -base_clock 将 toggle rate 关联到 core_clk 周期；时钟每周期翻转两次，
     # reset 假定不激活，其余输入只给统计活动，内部活动仍有默认/传播成分。
     # BEGIN/END 供 driver 区分可选功耗诊断；没有异常也只能标为待审查。

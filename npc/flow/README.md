@@ -1,6 +1,6 @@
 # NPC DC/PT pre-layout evaluation flow
 
-> 2026-10-29：M5 S7 本地准备完成，默认配置为 `npc_soc_cpu.tcl`。真实 DC/PT 和 M17 验收待服务器运行回传。
+> 2026-10-29：M5 S7 两轮真实 DC/PT 已回传，M17 尚未通过。本地已接入 Ultra、显式关闭功耗优化，并加入 DC 最大电容 10% 裕量与增量 DRC 修复，待服务器验证。默认配置为 `npc_soc_cpu.tcl`。
 > M4 的 `npc_core.tcl/core.f/core.sdc` 保留为历史配置；该 RTL top 已退役，复现 M4 必须使用其固定 Git revision。
 
 当前 top 是实际接入 SoC 的 `ysyx_25030087`：**core + AXI adapters/arbiter/router + 内部 CLINT + wrapper**。
@@ -174,10 +174,31 @@ DC/PT 使用同一 site 工艺库、PVT 和 WLM 策略：`auto_wire_load_selecti
 `wire_load_model=library_default` 时必须核对报告中的实际默认模型。没有 SPEF/布局信息，
 不能将其解释为真实布线寄生。全芯片时序、CTS、全 PVT、reset 物理保证不属于本轮结论。
 
-DC 继续使用普通 `compile -map_effort medium`；不请求 `compile_ultra`、scan、clock gating 或物理优化。
+DC 使用 `compile_ultra -no_autoungroup`：关闭自动打平用户层次，保留边界优化，
+以便传播未连接/常量信息并裁剪冗余逻辑。仍为 wire-load 综合；不启用 scan、clock gating 或物理优化。
+需要 Ultra license，失败时直接停止，不回退到普通 compile。`-map_effort` 不属于 Ultra 选项。
+综合前显式执行 `set_leakage_optimization false`、`set_dynamic_optimization false`，
+本阶段无功耗预算；`power_enable` 仅控制可选报告，不能用它代替优化开关。
+请求的策略和实际编译命令记录于 `logs/syn.log` 的 `NPC_SYN_POWER_POLICY` / `NPC_SYN_COMPILE`；
+是否生效须结合真实 compile 日志和约束报告核对。当前修改仅通过本地 mock，待服务器验证。
 DC-only `set_max_fanout 32` 作用于当前顶层（库 fanout_load 之和，不一定是 32 个引脚），
 `set_auto_disable_drc_nets -on_clock_network true` 保护时钟不按普通数据网络做 DRC 修复。
 库电容和 slew 检查保留；没有额外 0.075 pF 目标，也不强制 `set_fix_multiple_port_nets` 插 buffer。
+
+最大电容的 DC 优化目标现为 **每个库输出/inout 引脚原上限的 90%**：
+[run.tcl](02_syn/run.tcl) 的 `syn_max_capacitance_scale=0.90` 交给
+[max_capacitance_margin.tcl](02_syn/max_capacitance_margin.tcl)，读取目标工艺库中已有的
+`max_capacitance`，通过 `set_attribute` 收紧 DC 内存中的库引脚限制，并逐项回读。
+缺少上限的输出记录为 `UNCHANGED`；没有任何可收紧上限、写入/回读失败时停止。
+原始库报告先于修改生成；不写回 DB，不改变 pin capacitance、CCS 表或最小电容限制。
+这不是给全部网络设置同一个绝对上限：例如原上限 0.049878 pF 变为约 0.0448902 pF，
+另一引脚若为 0.2 pF 则变为 0.18 pF。所有使用这些库单元的实例都会受到该优化目标影响。
+
+裕量在首次 compile 前生效；Ultra 后执行 `compile_ultra -incremental -only_design_rule`，
+再核对 margin、fanout 和 clock DRC 策略并导出网表。PT 独立读取磁盘原始 DB 和原始 SDC，
+按原库电容上限验收。此策略补偿当前接收电容估计差异，未改变 DC/PT 的电容算法。
+服务器需确认库属性写入被优化器采用，以及电气、面积、setup/hold/coverage 的实际变化。
+实现与本次 10% 数值依据见 [M5 S7 §7.6](../../docs/notes/post-c/5-ysyx-soc-integration/7-synthesis-sta.md#76-尝试-10-最大电容裕量与增量-drc-修复)。
 
 高扇出和 LSU enable 电容诊断复用 M4 方法，但时钟端口和 LSU 层次取自冻结 scope：
 `clock`、`subsystem/cpu/core/u_lsu`。DC 2023 的 clock net 属性不可查询时仍明确记录
@@ -203,6 +224,7 @@ manifest 同时记录新 scope、宏、时钟/reset 名称和 LSU 层次，防�
 | 分类 | 文件 | 阶段与用途 |
 | --- | --- | --- |
 | `environment/` | `version.rpt`、`library_*.rpt` | probe/DC/PT：工具版本、实际加载库 |
+| `environment/` | `max_capacitance_margin.rpt` | DC 必需产物：逐库引脚原上限、综合目标、回读值及未施加对象；`library_*.rpt` 保存收紧前的原库信息 |
 | `environment/` | `design.rpt`；PT 另有 `units.rpt`、`wire_load.rpt` | 核对设计环境、单位与互连模型 |
 | `summary/` | `qor.rpt` | DC：整体 QoR 快速概览 |
 | `checks/` | `check_design_pre.rpt`、`check_design_post.rpt` | DC：综合前后结构检查 |
@@ -296,6 +318,11 @@ propagated, not workload-derived. The attempt runs after netlist/SDC export,
 without changing timing constraints, and is separately logged. Unsupported
 commands/models are `NOT_EVALUATED` and do not block area/timing; apparently
 successful estimates still require unit/activity/coverage review. Default is off.
+This switch controls reporting only. Leakage and dynamic power optimization are
+explicitly disabled before Ultra compilation, independently of this switch. No
+power budget is imposed. Optimization-policy command failures are fatal; optional
+report failures remain isolated. Any power violation still present in the ordinary
+constraint report remains a `CONSTRAINT_FAIL` for review; the parser does not hide it.
 
 Current scope and server handoff: [M5 S7](../../docs/notes/post-c/5-ysyx-soc-integration/7-synthesis-sta.md).
 Original flow design/manual references: [M4 S2](../../docs/notes/post-c/4-pre-soc-signoff/2-flow.md).

@@ -35,7 +35,15 @@ proc get_object_name {value} {return $value}
 proc foreach_in_collection {var values body} {
     foreach value $values {uplevel 1 [list set $var $value]; uplevel 1 $body}
 }
-proc read_db {path} {if {![file exists $path]} {error "Missing mock DB"}; set ::mock_lib_loaded 1}
+proc read_db {path} {
+    if {![file exists $path]} {error "Missing mock DB"}
+    set ::mock_lib_loaded 1
+    set lib [dict get $::site library_name]
+    # 两个不同的输出上限，以及一个没有上限的特殊输出，防止统一绝对值/重复缩放。
+    set ::mock_lib_caps [dict create $lib/INVD1/ZN 0.084770 $lib/BUFFD1/Z 0.200000 $lib/TIE/Z ""]
+    set ::mock_original_caps $::mock_lib_caps
+    set ::mock_compile_count 0
+}
 proc analyze {args} {
     if {![info exists ::mock_lib_loaded]} {error "analyze before library setup"}
     foreach file [lindex $args end] {if {![file exists $file]} {error "Missing RTL $file"}}
@@ -75,11 +83,40 @@ proc set_auto_disable_drc_nets {args} {
     if {[info exists ::env(NPC_MOCK_CLOCK_DRC_COMMAND_ERROR)]} {error "Injected clock DRC command failure"}
     set ::mock_clock_drc_disabled true
 }
-proc compile {args} {
+proc mock_power_optimization {kind value} {
+    if {$::env(NPC_STAGE) ne "syn" || $value ne "false"} {error "Power optimization must be disabled in synthesis"}
+    if {[info exists ::env(NPC_MOCK_POWER_POLICY_ERROR)] && $::env(NPC_MOCK_POWER_POLICY_ERROR) eq $kind} {
+        error "Injected $kind policy failure"
+    }
+    dict set ::mock_power_policy $kind $value
+}
+proc set_leakage_optimization {value} {mock_power_optimization leakage $value}
+proc set_dynamic_optimization {value} {mock_power_optimization dynamic $value}
+proc compile_ultra {args} {
+    if {$::mock_compile_count == 0} {
+        if {$args ne {-no_autoungroup}} {error "Unexpected initial Ultra options"}
+    } elseif {$::mock_compile_count == 1} {
+        if {$args ne {-incremental -only_design_rule}} {error "Unexpected incremental DRC options"}
+    } else {error "Unexpected extra compile"}
+    incr ::mock_compile_count
+    dict for {pin original} $::mock_original_caps {
+        if {$original ne "" && abs([dict get $::mock_lib_caps $pin] - 0.9*$original) > 1e-9} {
+            error "Missing per-library-pin margin before compile"
+        }
+    }
+    foreach kind {leakage dynamic} {
+        if {![info exists ::mock_power_policy] || ![dict exists $::mock_power_policy $kind] ||
+            [dict get $::mock_power_policy $kind] ne "false"} {
+            error "Missing explicit $kind policy before compile_ultra"
+        }
+    }
     if {![info exists ::mock_syn_max_fanout]} {error "Missing top fanout before compile"}
     if {![info exists ::mock_clock_drc_disabled]} {error "Clock DRC protection missing before compile"}
     if {[info exists ::env(NPC_MOCK_DROP_SYN_FANOUT)]} {unset ::mock_syn_max_fanout}
     if {[info exists ::env(NPC_MOCK_DROP_CLOCK_DRC)]} {set ::mock_clock_drc_disabled false}
+    if {[info exists ::env(NPC_MOCK_ULTRA_FAILURE)]} {return 0}
+    if {[info exists ::env(NPC_MOCK_INCREMENTAL_FAILURE)] && $::mock_compile_count == 2} {return 0}
+    if {[info exists ::env(NPC_MOCK_DROP_CAP_MARGIN)]} {set ::mock_lib_caps $::mock_original_caps}
     return 1
 }
 proc all_registers {args} {
@@ -106,7 +143,24 @@ proc get_nets {args} {
     dict for {net pins} $::cap_connections {if {$pin in $pins} {return $net}}
     error "Unknown mock net for $pin"
 }
-proc get_lib_pins {args} {return [lindex $args end]}
+proc get_lib_pins {args} {
+    if {[lsearch -exact $args -filter] >= 0} {
+        set expected [list -quiet [dict get $::site library_name]/*/* -filter {direction == out || direction == inout}]
+        if {$::env(NPC_STAGE) ne "syn" || $args ne $expected} {error "Margin must select only target-library output pins"}
+        if {[info exists ::env(NPC_MOCK_NO_CAP_OUTPUTS)]} {return {}}
+        return [dict keys $::mock_lib_caps]
+    }
+    return [lindex $args end]
+}
+proc set_attribute {pin name value} {
+    if {$::env(NPC_STAGE) ne "syn" || $name ne "max_capacitance" ||
+            ![dict exists $::mock_lib_caps $pin] || [dict get $::mock_original_caps $pin] eq ""} {
+        error "Only existing target-library output max_capacitance may be changed in DC"
+    }
+    if {[info exists ::env(NPC_MOCK_CAP_SET_ERROR)]} {error "Injected library attribute write failure"}
+    if {![info exists ::env(NPC_MOCK_CAP_SET_IGNORED)]} {dict set ::mock_lib_caps $pin $value}
+    return $pin
+}
 proc remove_from_collection {from remove} {
     set result {}; foreach item $from {if {$item ni $remove} {lappend result $item}}; return $result
 }
@@ -119,6 +173,12 @@ proc get_timing_paths {args} {
 proc get_attribute {args} {
     set object [lindex $args end-1]
     set name [lindex $args end]
+    if {$name eq "max_capacitance" && [dict exists $::mock_lib_caps $object]} {
+        if {[info exists ::env(NPC_MOCK_NO_CAP_LIMITS)]} {return ""}
+        set value [dict get $::mock_lib_caps $object]
+        if {$value eq ""} {return ""}
+        return [format %.9f $value]
+    }
     if {$name eq "max_fanout" && $object eq $::top} {
         if {[info exists ::mock_syn_max_fanout]} {return $::mock_syn_max_fanout}
         error "Mock design fanout missing"
@@ -142,13 +202,16 @@ proc get_attribute {args} {
         if {$object eq $::cap_buffer} {return BUFFD1}
         return EDFCNQD1
     }
-    if {$name eq "max_capacitance" && [file tail $object] eq "ZN"} {return 0.084770}
+    if {$name eq "max_capacitance" && [file tail $object] eq "ZN"} {
+        return [format %.9f [dict get $::mock_lib_caps [dict get $::site library_name]/INVD1/ZN]]
+    }
     if {$name eq "capacitance" && [string match */EDFCNQD1/E $object]} {return 0.001}
     if {$name eq "total_ccs_capacitance_max_rise" && $::env(NPC_STAGE) eq "sta" && $object eq "$::cap_driver/ZN"} {return 0.088724}
     # Most optional attributes are intentionally unavailable in this fixture.
     error "Unknown mock attribute $name"
 }
 proc write {args} {
+    if {$::env(NPC_STAGE) eq "syn" && $::mock_compile_count != 2} {error "Export before incremental DRC fixing"}
     set path [lindex $args end]; set f [open $path w]
     if {[lindex $args 1] eq "verilog"} {puts $f "module ${::top}(); endmodule"} else {puts $f "MOCK DDC"}
     close $f
@@ -162,6 +225,7 @@ proc get_app_var {name} {
     error "Unknown mock application variable $name"
 }
 proc report_lib {name} {
+    if {$::mock_lib_caps ne $::mock_original_caps} {error "Original library report must precede margin"}
     if {[file extension $name] eq ".sldb"} {
         # 模拟 UIL-29：写 Error 并返回 0，不抛 Tcl 异常，要求 driver 检查报告。
         puts "Error: The '$name' library is a synthetic library. Use report_synlib. (UIL-29)"

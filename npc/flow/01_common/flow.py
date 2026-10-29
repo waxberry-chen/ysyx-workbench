@@ -309,7 +309,7 @@ def inspect_stage(run, stage):
     required = ['environment/version.rpt', 'complete.txt']
     if stage == 'syn':
         required += ['area/area.rpt', 'summary/qor.rpt', 'checks/check_design_pre.rpt', 'checks/check_design_post.rpt', 'checks/check_timing.rpt', 'checks/constraint_violations.rpt', 'timing/timing_max.rpt', 'timing/timing_min.rpt', 'environment/design.rpt', 'area/references.rpt', 'area/resources.rpt', 'power/power_status.txt']
-        required += ['checks/high_fanout.rpt']
+        required += ['checks/high_fanout.rpt', 'environment/max_capacitance_margin.rpt']
     elif stage == 'sta':
         required += ['environment/units.rpt', 'environment/design.rpt', 'environment/wire_load.rpt', 'checks/check_timing.rpt', 'checks/coverage.rpt', 'checks/coverage_untested.rpt', 'checks/constraint_violations.rpt', 'timing/timing_max.rpt', 'timing/timing_min.rpt', 'timing/metrics_max.tsv', 'timing/metrics_min.tsv']
         required += [f'timing/{group}_{delay}.rpt' for group in ['Reg2Reg', 'In2Reg', 'Reg2Out', 'In2Out'] for delay in ['max', 'min']]

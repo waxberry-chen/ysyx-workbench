@@ -31,7 +31,7 @@ report('complete.txt','NPC_FLOW_COMPLETE '+stage+'\\n')
 if stage in ('syn', 'sta'):
  report('checks/lsu_enable_capacitance.rpt','MOCK CAPACITANCE DIAGNOSTIC\\n')
 if stage=='syn':
- for name in ['summary/qor','checks/check_design_pre','checks/check_design_post','checks/check_timing','checks/constraint_violations','checks/high_fanout','timing/timing_max','timing/timing_min','environment/design','area/references','area/resources']:
+ for name in ['summary/qor','checks/check_design_pre','checks/check_design_post','checks/check_timing','checks/constraint_violations','checks/high_fanout','timing/timing_max','timing/timing_min','environment/design','environment/max_capacitance_margin','area/references','area/resources']:
   report(name+'.rpt')
  report('area/area.rpt','Total cell area: 12.5\\n')
  report('power/power_status.txt','NOT_EVALUATED: disabled\\n')
@@ -85,6 +85,13 @@ dict set site library_reviewed 1
         run = self.new_run()
         f.execute(run, 'syn')
         return run
+
+    def use_tcl_mock(self, **environment):
+        self.tool.write_text(
+            "#!/usr/bin/env python3\nimport os,sys\nfrom pathlib import Path\n"
+            f"os.environ.update({environment!r})\n"
+            "mock=Path(os.environ['NPC_FLOW_SNAPSHOT'])/'04_tests/eda_mock.tcl'\n"
+            "os.execvp('tclsh',['tclsh',str(mock),sys.argv[-1]])\n")
 
     def test_local_contract(self):
         f.local_check(self.config, self.site)
@@ -390,7 +397,7 @@ dict set site library_reviewed 1
 
     def test_real_tcl_wiring_with_mock_commands(self):
         self.append_cfg('dict set cfg power_enable 1')
-        self.tool.write_text("#!/usr/bin/env python3\nimport os,sys\nfrom pathlib import Path\nmock=Path(os.environ['NPC_FLOW_SNAPSHOT'])/'04_tests/eda_mock.tcl'\nos.execvp('tclsh',['tclsh',str(mock),sys.argv[-1]])\n")
+        self.use_tcl_mock()
         probe = self.new_run('probe')
         f.execute(probe, 'probe')
         run = self.syn()
@@ -423,7 +430,8 @@ dict set site library_reviewed 1
             self.assertIn('direct_input_pin_count: 3', capacitance)
             self.assertIn('reference=INVD1', capacitance)
             self.assertIn('capacitance: 0.001', capacitance)
-            self.assertIn('max_capacitance: 0.084770', capacitance)
+            limit = '0.076293' if stage == 'syn' else '0.084770'
+            self.assertIn(f'max_capacitance: {limit}', capacitance)
             self.assertIn('min_capacitance: UNAVAILABLE', capacitance)
             model = 'true' if stage == 'sta' else 'UNAVAILABLE'
             self.assertIn(f'report_capacitance_use_ccs_receiver_model: {model}', capacitance)
@@ -434,11 +442,94 @@ dict set site library_reviewed 1
         self.assertEqual(syn_cap.count('MOCK DC capacitance view Load LoadUR LoadUF'), 2)
         self.assertNotIn('MOCK DC capacitance view', capacitance)
         syn_log = (run/'logs/syn.log').read_text()
-        for phase in ['pre_compile', 'post_compile']:
+        self.assertIn('leakage_optimization=false dynamic_optimization=false; no power budget; optional_report=1', syn_log)
+        self.assertIn('NPC_SYN_COMPILE: compile_ultra -no_autoungroup', syn_log)
+        for phase in ['pre_compile', 'post_compile', 'post_drc']:
             self.assertIn(f'NPC_SYN_FANOUT: {phase} design=ysyx_25030087 max_fanout=32', syn_log)
             self.assertIn(f'NPC_SYN_CLOCK_DRC: {phase} net=clk_net auto_disable_drc_nets=UNAVAILABLE', syn_log)
         self.assertNotIn('UID-101', syn_log)
         self.assertIn('auto_disable_drc_nets=UNAVAILABLE', fanout)
+
+    def test_ultra_power_policy_with_reports_disabled(self):
+        self.use_tcl_mock()
+        run = self.syn()
+        syn_log = (run/'logs/syn.log').read_text()
+        self.assertIn('leakage_optimization=false dynamic_optimization=false; no power budget; optional_report=0', syn_log)
+        self.assertIn('NPC_SYN_COMPILE: compile_ultra -no_autoungroup', syn_log)
+        self.assertNotIn('NPC_OPTIONAL_POWER_BEGIN', syn_log)
+        self.assertEqual(f.inspect_stage(run, 'syn')['power'], 'NOT_EVALUATED: disabled')
+
+    def test_power_optimization_policy_failure_is_not_optional(self):
+        for kind in ['leakage', 'dynamic']:
+            with self.subTest(kind=kind):
+                self.use_tcl_mock(NPC_MOCK_POWER_POLICY_ERROR=kind)
+                run = self.new_run(kind)
+                with self.assertRaises(f.FlowError):
+                    f.execute(run, 'syn')
+                log = (run/'logs/syn.log').read_text()
+                self.assertIn(f'Injected {kind} policy failure', log)
+                self.assertNotIn('NPC_SYN_COMPILE:', log)
+                self.assertFalse((run/'outputs/core.v').exists())
+
+    def test_ultra_failure_stops_before_export(self):
+        self.use_tcl_mock(NPC_MOCK_ULTRA_FAILURE='1')
+        run = self.new_run()
+        with self.assertRaises(f.FlowError):
+            f.execute(run, 'syn')
+        self.assertIn('NPC_FLOW_ERROR: compile_ultra failed', (run/'logs/syn.log').read_text())
+        self.assertFalse((run/'outputs/core.v').exists())
+
+    def test_capacitance_margin_is_relative_and_dc_only(self):
+        self.use_tcl_mock()
+        run = self.syn()
+        report = run/'reports/syn/environment/max_capacitance_margin.rpt'
+        rows = [line.split('\t') for line in report.read_text().splitlines() if '\t' in line][1:]
+        changed = 0
+        for pin, original, target, readback in rows:
+            if original == 'UNAVAILABLE':
+                self.assertTrue(pin.endswith('/TIE/Z'))
+                self.assertEqual(target, 'UNCHANGED')
+                continue
+            changed += 1
+            self.assertAlmostEqual(float(target), float(original)*0.9)
+            self.assertAlmostEqual(float(readback), float(target))
+        self.assertEqual(changed, 2)
+        log = (run/'logs/syn.log').read_text()
+        self.assertIn('NPC_SYN_CAP_MARGIN_CHECK: post_drc pins=2', log)
+        self.assertIn('NPC_SYN_COMPILE: compile_ultra -incremental -only_design_rule', log)
+        self.assertEqual(self.db.read_text(), 'MOCK NOT A LIBRARY')
+        f.execute(run, 'sta')
+        self.assertFalse((run/'reports/sta/environment/max_capacitance_margin.rpt').exists())
+        self.assertIn('max_capacitance: 0.084770',
+                      (run/'reports/sta/checks/lsu_enable_capacitance.rpt').read_text())
+        report.unlink()
+        with self.assertRaisesRegex(f.FlowError, 'max_capacitance_margin'):
+            f.inspect_stage(run, 'syn')
+
+    def test_capacitance_margin_cannot_silently_skip_or_fail(self):
+        cases = [
+            ('NPC_MOCK_NO_CAP_OUTPUTS', 'No output library pins'),
+            ('NPC_MOCK_NO_CAP_LIMITS', 'No library max_capacitance limits were tightened'),
+            ('NPC_MOCK_CAP_SET_ERROR', 'Injected library attribute write failure'),
+            ('NPC_MOCK_CAP_SET_IGNORED', 'Capacitance margin readback mismatch'),
+            ('NPC_MOCK_DROP_CAP_MARGIN', 'Capacitance margin lost at post_compile'),
+        ]
+        for env, diagnostic in cases:
+            with self.subTest(env=env):
+                self.use_tcl_mock(**{env: '1'})
+                run = self.new_run(env)
+                with self.assertRaises(f.FlowError):
+                    f.execute(run, 'syn')
+                self.assertIn(diagnostic, (run/'logs/syn.log').read_text())
+                self.assertFalse((run/'outputs/core.v').exists())
+
+    def test_incremental_drc_failure_stops_before_export(self):
+        self.use_tcl_mock(NPC_MOCK_INCREMENTAL_FAILURE='1')
+        run = self.new_run()
+        with self.assertRaises(f.FlowError):
+            f.execute(run, 'syn')
+        self.assertIn('NPC_FLOW_ERROR: incremental DRC fixing failed', (run/'logs/syn.log').read_text())
+        self.assertFalse((run/'outputs/core.v').exists())
 
     def test_clock_drc_command_failure_is_not_optional(self):
         self.tool.write_text("#!/usr/bin/env python3\nimport os,sys\nfrom pathlib import Path\nos.environ['NPC_MOCK_CLOCK_DRC_COMMAND_ERROR']='1'\nmock=Path(os.environ['NPC_FLOW_SNAPSHOT'])/'04_tests/eda_mock.tcl'\nos.execvp('tclsh',['tclsh',str(mock),sys.argv[-1]])\n")
