@@ -4,6 +4,8 @@
 The program checks cause/EPC/state itself; the runner checks exact trap sites and
 memory request counts. S1 checks architectural results independently; full SoC DiffTest follows in S3. Sources/images/traces stay under build/.
 """
+import argparse
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -11,8 +13,17 @@ import re
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[2]
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--cpu-exe', type=Path,
+                    default=ROOT / 'npc/build/m5-s1/cpu/Vaxi4_cpu_test_top',
+                    help='CPU test executable built by the calling regression')
+CPU_EXE = parser.parse_args().cpu_exe.resolve()
+if not CPU_EXE.is_file():
+    parser.error(f'CPU executable absent: {CPU_EXE}; build it or pass --cpu-exe')
 OUT = ROOT / 'npc/build/isa-contract-test'
 OUT.mkdir(parents=True, exist_ok=True)
+(OUT / 'cpu-executable.json').write_text(json.dumps(dict(
+    path=str(CPU_EXE), sha256=hashlib.sha256(CPU_EXE.read_bytes()).hexdigest()), indent=2)+'\n')
 REF = ROOT / 'nemu/build/riscv32-nemu-interpreter-so'
 
 
@@ -226,7 +237,7 @@ for name,text in [('illegal',''.join(source)),('legal',legal)]:
     expected=[(addresses[f'fault_{i}'],word) for i,(_,word) in enumerate(cases)] if name=='illegal' else []
     for seed in (1, 7):
         tag=f'axi4-{name}-{seed}'; trace=OUT/f'{tag}.trace'
-        log=command(tag,[ROOT/'npc/build/m5-s1/cpu/Vaxi4_cpu_test_top',binary,trace,seed])
+        log=command(tag,[CPU_EXE,binary,trace,seed])
         assert 'HIT GOOD TRAP' in log, tag
         rows=[line.split() for line in trace.read_text().splitlines() if not line.startswith('#')]
         traps=[r for r in rows if r[5]=='1']

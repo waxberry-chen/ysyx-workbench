@@ -80,7 +80,8 @@ def compile_image(name, source, defines=()):
 
 def cpu():
     exe=cpp('cpu','axi4_cpu_test_top',['-F','filelist-soc.f','tests/axi4_cpu_test_top.sv'],'axi4_cpu_tb.cpp',flags=['--trace-fst'])
-    run('isa-contract',['python3','tests/isa_contract_test.py'])
+    # S6 relocates OUT; the ISA suite must use this freshly built DUT too.
+    run('isa-contract',['python3','tests/isa_contract_test.py','--cpu-exe',exe])
     for kind,cause in [('fetch',1),('load',5),('store',7)]:
         binary=compile_image('fault-'+kind,'tests/access_fault.S',[f'-DFAULT_KIND={dict(fetch=1,load=2,store=3)[kind]}',f'-DFAULT_CAUSE={cause}'])
         for resp in (2,3):
