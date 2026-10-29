@@ -41,6 +41,10 @@ proc read_db {path} {
     set lib [dict get $::site library_name]
     # 两个不同的输出上限，以及一个没有上限的特殊输出，防止统一绝对值/重复缩放。
     set ::mock_lib_caps [dict create $lib/INVD1/ZN 0.084770 $lib/BUFFD1/Z 0.200000 $lib/TIE/Z ""]
+    if {[info exists ::env(NPC_MOCK_CAP_SIX_DECIMALS)]} {
+        # 服务器实际误报：0.021655 * 0.90 = 0.0194895，回读为 0.019490。
+        dict set ::mock_lib_caps $lib/OAI32D0/ZN 0.021655
+    }
     set ::mock_original_caps $::mock_lib_caps
     set ::mock_compile_count 0
 }
@@ -177,6 +181,10 @@ proc get_attribute {args} {
         if {[info exists ::env(NPC_MOCK_NO_CAP_LIMITS)]} {return ""}
         set value [dict get $::mock_lib_caps $object]
         if {$value eq ""} {return ""}
+        if {[info exists ::env(NPC_MOCK_CAP_SIX_DECIMALS)]} {
+            # 半末位处给极小浮点余量，稳定复现服务器向上舍入的回读文本。
+            return [format %.6f [expr {$value + 1e-15}]]
+        }
         return [format %.9f $value]
     }
     if {$name eq "max_fanout" && $object eq $::top} {

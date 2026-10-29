@@ -5,6 +5,15 @@
 # DC P-2019.03：6-18–6-19 属性设置/查询；8-4 库 DRC 可收紧；
 # V-2023.12-SP5 对 lib_pin max_capacitance 的可写性/优化效果仍须服务器验证。
 
+proc syn_capacitance_readback_matches {expected actual} {
+    if {![string is double -strict $actual]} {return false}
+    # 当前服务器回读呈现六位小数（单位 pF）：0.0194895 → 0.019490。
+    # 固定小数位带来绝对舍入误差；单用相对容差会误拒绝较小的电容值。
+    # 取半个末位单位与原相对容差的较大者，再留极小的浮点比较余量。
+    set tolerance [expr {max(5.0e-7, abs($expected) * 1e-5) + 1e-12}]
+    return [expr {abs($actual - $expected) <= $tolerance}]
+}
+
 proc apply_syn_max_capacitance_margin {scale} {
     global stage site reports syn_cap_limits
     if {$stage ne "syn"} {error "Capacitance margin is DC synthesis only"}
@@ -37,9 +46,7 @@ proc apply_syn_max_capacitance_margin {scale} {
             # set_attribute 的返回值不是统一的布尔状态，使用实际属性回读核验。
             set_attribute $pin max_capacitance $tightened
             set actual [get_attribute $pin max_capacitance]
-            # 回读允许 0.001% 相对舍入误差，远小于本次 10% 裕量。
-            if {![string is double -strict $actual] ||
-                    !(abs($actual - $tightened) <= abs($tightened) * 1e-5)} {
+            if {![syn_capacitance_readback_matches $tightened $actual]} {
                 error "Capacitance margin readback mismatch: $name expected=$tightened actual=$actual"
             }
             dict set syn_cap_limits $name $tightened
@@ -57,8 +64,7 @@ proc check_syn_max_capacitance_margin {phase} {
     dict for {name expected} $syn_cap_limits {
         set pin [get_lib_pins $name]
         set actual [get_attribute $pin max_capacitance]
-        if {![string is double -strict $actual] ||
-                !(abs($actual - $expected) <= abs($expected) * 1e-5)} {
+        if {![syn_capacitance_readback_matches $expected $actual]} {
             error "Capacitance margin lost at $phase: $name expected=$expected actual=$actual"
         }
     }

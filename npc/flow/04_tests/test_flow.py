@@ -523,6 +523,30 @@ dict set site library_reviewed 1
                 self.assertIn(diagnostic, (run/'logs/syn.log').read_text())
                 self.assertFalse((run/'outputs/core.v').exists())
 
+    def test_capacitance_margin_accepts_server_six_decimal_readback(self):
+        self.use_tcl_mock(NPC_MOCK_CAP_SIX_DECIMALS='1')
+        run = self.syn()
+        report = (run/'reports/syn/environment/max_capacitance_margin.rpt').read_text()
+        row = next(line.split('\t') for line in report.splitlines() if '/OAI32D0/ZN\t' in line)
+        self.assertAlmostEqual(float(row[2]), 0.0194895)
+        self.assertEqual(row[3], '0.019490')
+        log = (run/'logs/syn.log').read_text()
+        for phase in ['post_compile', 'post_drc']:
+            self.assertIn(f'NPC_SYN_CAP_MARGIN_CHECK: {phase} pins=3', log)
+
+    def test_capacitance_readback_rounding_has_bounded_tolerance(self):
+        script = f'source {f.tcl_word(FLOW/"02_syn/max_capacitance_margin.tcl")}\n'
+        # 两种半末位舍入都允许；多差一个末位、未施加或重复施加裕量仍失败。
+        cases = [('0.019490', '1'), ('0.019489', '1'),
+                 ('0.019491', '0'), ('0.021655', '0'), ('0.01754055', '0'),
+                 ('UNAVAILABLE', '0')]
+        for actual, expected in cases:
+            script += f'puts [expr {{[syn_capacitance_readback_matches 0.0194895 {actual}] ? 1 : 0}}]\n'
+        result = subprocess.run(['tclsh'], input=script, capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertFalse(result.stderr)
+        self.assertEqual(result.stdout.splitlines(), [expected for _, expected in cases])
+
     def test_incremental_drc_failure_stops_before_export(self):
         self.use_tcl_mock(NPC_MOCK_INCREMENTAL_FAILURE='1')
         run = self.new_run()
