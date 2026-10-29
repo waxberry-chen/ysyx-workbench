@@ -121,3 +121,13 @@
 - 用户说明服务器上 `ysyx_core.sv` 的声明顺序导致 DC 报错：redirect_target 的连续赋值引用了后面才声明的 trap_target。`9912da3` 将两条 redirect assign 移到 wire 声明区后；这是 DC 前端兼容性修复，逻辑表达式不变，本地 lint 未发现该问题。
 - 核对 commit、当前本地 core 与 cap90 冻结快照逐字节一致；cap90 的原 dirty.patch 已包含修复，S7 结论保持有效，无需重综合。补充 [S7 §4.1](7-synthesis-sta.md#41-dc-前端兼容性先声明信号再引用2026-10-30-补记)、基线追溯说明及 Q29，原报告/manifest/review.json 保持历史状态。
 - 后续 RTL 按“声明在前、引用在后”组织；Verilator lint 通过不等于 DC 前端兼容。本次仅文档补记及 hash 核对，没有修改 RTL 或重新运行功能/EDA 测试。
+
+## 2026-10-30：S8 干净功能构建、回归入口修复与 M5 交接
+
+- 固定主仓库 `6023de4`、ysyxSoC/递归依赖、独立 am-kernels `9804c83` 和 RT-Thread `bce7f1d`。新增 `m5_s8_test.py` / `make s8-test`，新目录从源码生成 SoC、四种仿真器、ref、AM 库及镜像，关闭 C/C++ 编译缓存；没有修改功能 RTL/harness/NEMU/AM。
+- 保留三次运行状态：首次 ccache 沙箱写权限失败；第二次因漏克隆独立 am-kernels 缺 benchmark.h；补齐后在 `m5-s8-final` 完成构建及 S2–S5、S6 前三组，但 ISA runner 硬编码旧 S1 二进制路径失败。
+- 修复 `m5_s1_test.cpu()` 显式传入 `--cpu-exe`，ISA runner 保存实际测试器 hash。仅两个测试组织脚本变化，在同一干净工作区补跑 S6 regression 和 flow-local；旧 S1 文件一直不存在。原 FAIL manifest 不改写，主运行已通过组与续跑一起构成验收证据，不宣称单次全绿。
+- 汇总 112 个真实 SoC 正向运行；108 次差分/2,695,308 条提交/47 IRQ 匹配，34 个适用 CPU tests、31 项预期失败门禁通过。RTL/协议/上下文与延迟单测通过，本地 flow 测试和 scope 展开通过。
+- 新目录路径经 __FILE__ 进入 RTT 镜像，S5 tick 多 64 B，poison/text-copy 正好多 160 条提交；S6 的实际镜像/水位/计数另存，保留历史结果。固定六个无 IRQ 程序、镜像 hash 和全程计数供 GShare 对照。
+- S7 的 72 份归档 hash 核对通过；21 份 RTL/include 中 20 份相同、CSR 仅注释差异，19 份 flow 输入相同。按用户要求未运行 DC/PT；leakage 零目标及 reset 物理时序边界不变。
+- [S8 记录](8-reproduction-handoff.md)、[归档](s8-validation/README.md)、[总验收](signoff.md)完成。精选 FST/ELF/BIN 保存到 build 外的 `artifacts/m5-s8-20261030/` 并记录 hash。M18 关闭，无未处置阻塞；下一步限定 GShare 计划，后续冻结后执行 JOB-PREP-01。既有 Rocket Chip 补丁保留，未 add/commit。

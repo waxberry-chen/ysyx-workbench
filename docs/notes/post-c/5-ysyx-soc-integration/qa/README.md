@@ -171,3 +171,17 @@ filelist 只决定读取哪些源文件。综合范围还取决于 top、宏/参
 两种工具的前端和检查范围不同，lint 通过只说明该配置下没有未处置的 lint 诊断。本次 core 的 redirect_target 连续赋值引用了后面才声明的 trap_target，本地 lint 未拦截，服务器 DC 却报错；`9912da3` 将相关 assign 移到声明之后解决，表达式不变。
 
 本工程因此采用“信号先声明，assign/always/实例化再引用”的 RTL 组织约定；实际可综合性仍由 DC analyze/elaborate/link 验证。该修复早已在 cap90 快照中，补上 Git 提交和原因记录即可，不必重跑已经包含修复的基线。见 [S7 §4.1](../7-synthesis-sta.md#41-dc-前端兼容性先声明信号再引用2026-10-30-补记)。
+
+## Q30：主仓库能 clone，为什么还可能无法复现系统测试？
+
+主仓库只记录它管理的文件和 submodule 的提交指针。工作区内的独立仓库、忽略文件和生成物不一定随它复制。S8 新目录构建曾因缺少 microbench 的 `benchmark.h` 停下：`am-kernels` 是被主仓库忽略的独立 Git 仓库，并非 submodule；旧工作区一直存在它，所以此前没有暴露这个依赖。
+
+复现入口因此分别冻结主仓库、ysyxSoC/递归依赖、am-kernels、RT-Thread，并保留 Rocket Chip 的既定补丁；从没有设计生成物的目录开始构建。已有工具/下载缓存可以复用，但不能借用旧仿真器或 AM 库冒充干净重建。具体流程见 [S8](../8-reproduction-handoff.md)。
+
+同轮还发现了二进制依赖：S6 在自己的 OUT 构建 CPU，但 ISA runner 去找旧 S1 路径。修复后由调用者显式传入 `--cpu-exe`，并保留实际文件 hash；旧 S1 文件不存在时也能通过。**检查通过之前，先确认测试的是哪一份 DUT**，否则旧 build 既可能掩盖缺失依赖，也可能让测试结果对应错误版本。
+
+## Q31：为什么不直接用 RT-Thread 的 cycles/commits 比较 GShare 收益？
+
+timer IRQ 按时间到达，预测改变执行速度后，忙等待、UART 轮询和线程调度的指令次数都可能改变。这样两次运行不再是同一个动态工作量，单个 CPI 数字难以归因到分支预测。RT-Thread 仍是重要的异常/中断与系统正确性回归，但本轮预测器性能比较采用固定镜像、无 IRQ 的循环/递归/排序程序。
+
+还要固定测量区间：现有 harness 全程计数包含 reset 和启动复制；以后新增 `main` 区间计数时，关闭/开启预测器都用相同的新计数器重新测量。定义见 [GShare 交接条件](../comparison-contract.md)，不能把全程周期与局部程序周期混比。

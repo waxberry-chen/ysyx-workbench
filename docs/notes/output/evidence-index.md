@@ -1,6 +1,6 @@
 # 工程事实与证据索引
 
-> 更新：2026-10-28；早期 Core/adapters 验收快照：`5b6f29c`；各 Milestone 源码与范围见阶段 manifest。这里只索引已有证据，不替代各阶段的测试与实验记录。
+> 更新：2026-10-30；早期 Core/adapters 验收快照：`5b6f29c`；各 Milestone 源码与范围见阶段 manifest。这里只索引已有证据，不替代各阶段的测试与实验记录。
 
 ## 已有工程事实
 
@@ -17,7 +17,9 @@
 | M3 closure 与 RT-Thread | [`fabric TB`](../../../npc/tests/axi4lite_fabric_tb.cpp)、[`RT-Thread fixture`](../../../npc/tests/b1-rtthread/) | [S5](../post-c/3-axi4-lite-interconnect/5-closure.md)、[signoff](../post-c/3-axi4-lite-interconnect/signoff.md)、[manifest](../post-c/3-axi4-lite-interconnect/s5-manifest.json) | 10350 fabric 完成/160 中止、69 reset、18 redirect 组合、53+23 系统程序；有实际波形与机器可读必测覆盖，不包含 formal/EDA |
 | M4 core 综合 / STA 基线 | [`npc/flow/`](../../../npc/flow/) | [S3 结论](../post-c/4-pre-soc-signoff/3-synthesis-sta.md)、[04 原始证据](../post-c/4-pre-soc-signoff/synthesis-results/04-200mhz-baseline/README.md) | TT / 200 MHz，area 9242.855942 library_area，setup/hold +0.596843/+0.008754 ns，DC/PT 无违例；core + adapters + Arbiter，ideal clock / ZeroWireload，reset deferred；无功耗/物理 sign-off |
 | M4 最终功能回归与复现交接 | [`测试入口`](../../../npc/scripts/tests.mk)、[`flow Makefile`](../../../npc/flow/Makefile) | [S6 记录](../post-c/4-pre-soc-signoff/6-reproduction.md)、[本地验证 manifest](../post-c/4-pre-soc-signoff/s6-validation/manifest.json) | 本地 flow 44 项、ISA/异常、四组 scope、B1 和 legacy 回归通过；[05 独立复现](../post-c/4-pre-soc-signoff/synthesis-results/05-s6-reproduction/README.md)通过，[M4 本轮总验收](../post-c/4-pre-soc-signoff/signoff.md)关闭 |
-| M5 SoC 启动、timer IRQ 与有限 RT-Thread 抢占 | [`SoC CPU`](../../../npc/vsrc/top/ysyx_soc_cpu.sv)、[`系统测试`](../../../npc/tests/soc-system/) | [S4 启动](../post-c/5-ysyx-soc-integration/4-boot-memory.md)、[S5 中断](../post-c/5-ysyx-soc-integration/5-timer-interrupt.md)、[S6 系统验收](../post-c/5-ysyx-soc-integration/s6-validation/README.md) | S6 68 个真实 SoC 正向运行，1,824,069 条提交/30 次 IRQ 全部差分；双线程抢占/唤醒、四栈/heap、528 字节实际 UART、固定/随机等待通过。仅有限 RTOS workload；新 CPU 子系统 DC/PT 与最终干净复现待 S7/S8 |
+| M5 SoC 启动、timer IRQ 与有限 RT-Thread 抢占 | [`SoC CPU`](../../../npc/vsrc/top/ysyx_soc_cpu.sv)、[`系统测试`](../../../npc/tests/soc-system/) | [S4 启动](../post-c/5-ysyx-soc-integration/4-boot-memory.md)、[S5 中断](../post-c/5-ysyx-soc-integration/5-timer-interrupt.md)、[S6 系统验收](../post-c/5-ysyx-soc-integration/s6-validation/README.md) | S6 68 个真实 SoC 正向运行，1,824,069 条提交/30 次 IRQ 全部差分；双线程抢占/唤醒、四栈/heap、528 字节实际 UART、固定/随机等待通过。仅有限 RTOS workload；后续 S7/S8 验收见下两行；历史 S6 计数保留 |
+| M5 CPU 子系统 pre-layout 面积/时序 | [`npc/flow/`](../../../npc/flow/) | [S7 cap90 原始报告与审查](../post-c/5-ysyx-soc-integration/s7-validation/baseline/README.md) | TT / 200 MHz，area 9530.135856 library_area，setup/hold +2.444726/+0.009693 ns，电气违例0；记录 leakage 自动零目标与 reset deferred，未评估功耗或完整 SoC 物理实现 |
+| M5 干净功能构建、入口修复与总交接 | [`S8 入口`](../../../npc/tests/m5_s8_test.py)、[`ISA runner`](../../../npc/tests/isa_contract_test.py) | [S8 证据](../post-c/5-ysyx-soc-integration/s8-validation/README.md)、[总验收](../post-c/5-ysyx-soc-integration/signoff.md)、[GShare 比较条件](../post-c/5-ysyx-soc-integration/comparison-contract.md) | 112次真实SoC正向运行，108次差分/2695308条提交/47 IRQ；31项预期失败检查；主运行发现旧二进制依赖，修复后补测通过，失败记录保留；S7 沿用，无 DC/PT 重跑 |
 
 已有 AXI 阶段验收的 RTL 基线为 `94cf9ac`，验收提交为 `5b6f29c`。复现入口：
 
@@ -29,7 +31,7 @@ make -C npc axi4lite-signoff
 
 ## 尚未形成的证据
 
-- M5 新 CPU 子系统的综合/STA 结果与最终干净构建复现，分别待 S7/S8；已有 M4 core 单 corner 基线及独立复现，不能外推当前子系统或完整 SoC。
+- 完整 SoC 的综合/物理实现与多 corner 结果；已有 M4 与 M5 CPU 子系统单 TT 基线，不能外推完整 SoC。
 - 明确条件下的架构优化对照实验、功耗分析或 PnR 结果。
 - bounded formal 与四值仿真结果；已完成的功能 bin 覆盖不等于形式证明。
 

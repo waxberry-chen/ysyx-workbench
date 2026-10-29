@@ -1,6 +1,6 @@
 # M5 设计与验收计划
 
-> 2026-10-29；状态：S0–S7 完成；[S7 基线](s7-validation/baseline/README.md)通过并归档，Ultra 自动 leakage 零目标按用户决定记录处置，reset 物理时序仍暂缓；下一步 S8。timer/CSR、精确 IRQ、AM、完整有限 RTT 抢占/阻塞唤醒与资源水位已验证。
+> 2026-10-30；状态：S0–S8 在约定范围内完成，[总验收](signoff.md)已关闭。S8 干净构建发现并修复 ISA runner 的旧二进制路径依赖，受影响组复测通过；沿用 S7 cap90 基线，未重跑 DC/PT。下一步先制定限定 GShare 计划。
 > 本地规划输入：`d7c5b139eca8f6ffc467ecea472d4395998b1cea`；前置为 [M4 signoff](../4-pre-soc-signoff/signoff.md)。该 commit 是本地输入，不是 ysyxSoC revision。
 > 配套：[验收矩阵](test-plan.md)、[开发日志](dev-log.md)、[Q&A](qa/README.md)、[总路线](../roadmap.md)。
 
@@ -150,7 +150,7 @@ machine timer interrupt 是本工程 roadmap 的明确目标，不能用“CLINT
 
 ## 5. 实施依赖与阻塞报告
 
-**S0–S7 已完成，无未处置阻塞；cap90 面积/数据时序基线通过并归档，leakage 自动零目标和 reset 物理时序边界已记录。下一步 S8 干净复现与总交接。** 详见 [S7 第 7 节](7-synthesis-sta.md#7-服务器迭代与当前问题2026-10-29)；原前置项状态如下，后续功能缺口详见 [S0 第7节](0-upstream-contract.md#7-缺口与分阶段处置)。
+**S0–S8 已完成，无未处置阻塞；干净构建及测试入口修复后的补测完成，cap90 面积/数据时序基线沿用。leakage 自动零目标、reset 物理时序边界和复现分段证据见 [总验收](signoff.md)。** 详见 [S7 第 7 节](7-synthesis-sta.md#7-服务器迭代与当前问题2026-10-29)；原前置项状态如下，后续功能缺口详见 [S0 第7节](0-upstream-contract.md#7-缺口与分阶段处置)。
 
 | 项目 | 当前已知情况 | 关闭时点 / 无法完成时的处理 |
 | --- | --- | --- |
@@ -159,7 +159,7 @@ machine timer interrupt 是本工程 roadmap 的明确目标，不能用“CLINT
 | RT-Thread 容量 | B1 ELF 静态段42,932 B，已选4 MiB PSRAM并给出预算 | S4 实测 Flash 21,832 B、静态 RAM 42,992 B、heap 区间 4,085,776 B；协作 workload 通过；S6 双线程抢占/唤醒与主栈/线程/idle 栈水位通过，当前工作负载 heap 峰值 544 B、最终归零 |
 | ISA/CSR 与 ABI | S5 已实现 mie/mip、timer IRQ、AM/RTT tick；SoC 参考 ABI 为 23 word | M11–M16 对应功能范围通过；S6 完成有限调度/阻塞验证，仍不宣称完整特权规范合规 |
 | reset / 外部 IRQ | 外部IRQ固定0；CPU reset为外部reset OR 10级延迟，初始约定20周期共同复位 | S0 合同完成；S1/S2/S5功能测试，S7物理限制复查 |
-| 服务器 DC/PT | M5 cap90 基线已归档；电气规则及数据时序通过，Ultra 漏电零目标按用户决定记录 | S7 / M17 已关闭；原工具状态不改写，S8 干净功能复现和总交接仍待完成 |
+| 服务器 DC/PT | M5 cap90 基线已归档；电气规则及数据时序通过，Ultra 漏电零目标按用户决定记录 | S7 / M17 已关闭；原工具状态不改写，S8 功能复现和总交接已完成，本次未重跑 DC/PT |
 
 后续按有价值的进展更新 QA 和 dev-log；运行日志/网表/生成 RTL 留在构建目录，只归档必要的可展示证据。出现真实阻塞时，说明它阻塞哪一出口、已有证据、下一步需要什么，并继续不受影响的工作。
 
