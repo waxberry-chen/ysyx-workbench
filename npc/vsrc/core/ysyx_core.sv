@@ -156,8 +156,6 @@ wire        exu_redirect_valid;
 wire [31:0] exu_redirect_target;
 wire        interrupt_pending;
 wire        interrupt_taken;
-assign redirect_valid = interrupt_taken || exu_redirect_valid;
-assign redirect_target = interrupt_taken ? trap_target : exu_redirect_target;
 wire [31:0] commit_mem_wdata;
 
 // CSR architectural interface.
@@ -196,6 +194,9 @@ wire        dmem_rsp_valid;
 wire        dmem_rsp_ready;
 wire [31:0] dmem_rsp_data;
 wire        dmem_rsp_error;
+
+assign redirect_valid = interrupt_taken || exu_redirect_valid;
+assign redirect_target = interrupt_taken ? trap_target : exu_redirect_target;
 
 ysyx_gnrl_dfflrs #(
     .DW (32),
