@@ -1,6 +1,6 @@
 # Post-C Roadmap：从弹性 RV32E Core 到可展示的 SoC/RTL 项目
 
-> 规划更新：2026-10-29；M4 S2.5 ISA 收敛已完成本地验收，当前已建立 S3 范围内面积/时序基线，S6 已于 2026-10-19 完成最终回归与服务器独立复现，M4 本轮验收通过；M5 S0–S6 已完成，S7 本地准备完成、待服务器 CPU 子系统面积/时序结果；新增后期可选 RT-Thread 交互演示，M5 边界不变；M4 初始输入基线：`0fe53bf`（M3 功能/协议仿真验收后）
+> 规划更新：2026-10-29；M4 S2.5 ISA 收敛已完成本地验收，当前已建立 S3 范围内面积/时序基线，S6 已于 2026-10-19 完成最终回归与服务器独立复现，M4 本轮验收通过；M5 S0–S7 已完成，cap90 CPU 子系统 200 MHz 基线已审查归档，leakage 自动零目标按用户决定记录，下一步 S8；新增后期可选 RT-Thread 交互演示，M5 边界不变；M4 初始输入基线：`0fe53bf`（M3 功能/协议仿真验收后）
 >
 > 求职方向优先级：SoC/RTL Design > Design Verification > Physical Design  
 > 本文用于决定 post-C 阶段的投入顺序。具体接口、地址映射和考核要求仍以开始该阶段时的最新版官方讲义与上游仓库为准。
@@ -35,7 +35,7 @@
 已完成
 4-pre-soc-signoff：DC/PT 面积与时序基线；DC 功耗粗估暂缓
         ▼
-当前主线（S0–S6 完成，S7 本地准备完成、待服务器回传）
+当前主线（S0–S7 完成，下一步 S8 干净复现与交接）
 5-ysyx-soc-integration：AXI4 单拍子集封装 -> ysyxSoC 最小启动闭环
         │                    MROM/SRAM/UART/CLINT/DiffTest/RT-Thread
         ▼
@@ -349,6 +349,8 @@ interconnect system-level test plan 合并实施。
 
 2026-10-28：**[M5 S6 完成](5-ysyx-soc-integration/6-system-validation.md)**。68 个真实 SoC 正向运行、1,824,069 条提交与 30 次 IRQ 全部差分；有限双线程无主动 yield 抢占、sleep 唤醒、分栈/heap、528 字节实际 UART 和系统随机等待验收通过。无新增功能 RTL 修改或未处置功能阻塞，下一步 S7 CPU 子系统 DC/PT，随后 S8 干净复现与交接。
 
+2026-10-29：**[M5 S7 基线完成](5-ysyx-soc-integration/s7-validation/baseline/README.md)**。cap90 在 TT / 5 ns、ideal clock、ZeroWireload 下电气及数据时序通过，面积 9530.135856 library_area，setup/hold +2.444726/+0.009693 ns。9120 项 untested 和全部告警已分类处置；用户接受仅记录 Ultra 自动 leakage 零目标，保留原 CONSTRAINT_FAIL，无需为清空报告重综合。reset 物理时序仍暂缓，功耗未验收。72 份原始文件及 hash 已归档，M17 通过，下一步 S8。
+
 #### 架构建议
 
 保留 IFU/LSU 的 local req/rsp 语义边界，直接将现有 adapters、仲裁和顶层升级为面向 ysyxSoC 的 AXI4 单拍接口。当前 Lite 读接口不传 size，且 adapter 已对齐地址，必须在 adapter 内保留原始信息，不能只在最外层补端口。不新增 Lite/AXI4 模式选择或旧地址兼容层；B1 的有效测试检查点迁移到新接口，旧系统仅作历史复现。
@@ -524,7 +526,7 @@ S0 实际决策：已有RT-Thread ELF静态段42,932B，采用4MiB PSRAM；Flash
 
 #### 硬件支持与增量边界
 
-下表区分“当前已具备”与“既定计划完成后具备”：截至本记录，M5 S0–S6 已验收，有限双线程抢占/阻塞唤醒、UART TX 和资源检查通过；交互功能仍是后期选项。
+下表区分“当前已具备”与“既定计划完成后具备”：截至本记录，M5 S0–S7 已验收，有限双线程抢占/阻塞唤醒、UART TX 和资源检查通过；交互功能仍是后期选项。
 
 | 所需能力 | 当前或既定 roadmap 的覆盖 | 此可选项需要额外完成的工作 |
 | --- | --- | --- |
@@ -677,9 +679,9 @@ docs/notes/
 
 ## 9. 最近三个行动
 
-1. 按 [M5 S6 交接](5-ysyx-soc-integration/6-system-validation.md)推进 S7：冻结 CPU 子系统的 scope/filelist，补齐 AXI、clock/reset 与端口时序预算，复用 DC/PT flow；
-2. 用户在服务器执行 synth/STA 并回传，检查面积、时序、电气规则、coverage 和关键路径；M5 首个评估范围是 CPU 子系统，不是 whole-SoC；
-3. 按 M5 S8 完成冻结版本的干净构建复现和验收交接；保留 M4 04/05 历史基线，固定后续 GShare 对照所用的程序、存储和统计条件。
+1. 按 M5 S8 在冻结版本进行干净功能构建复现，核对主仓库、submodule 和各阶段证据；[S7 基线](5-ysyx-soc-integration/s7-validation/baseline/README.md)已归档，无需为 leakage 零目标重跑综合；
+2. 完成 M5 总验收与交接，明确 reset 物理时序、功耗和完整 SoC 实现边界，保留 M4 04/05 与 M5 cap90 的独立历史结论；
+3. 固定限定 GShare 的程序、存储、统计口径及相同 top/库/SDC/优化策略，撰写增量计划后实施；交接时保留 JOB-PREP-01 待办。
 
 在这三项完成前，不启动 GShare、经典五级流水重写、D-cache 或大规模外设扩展。
 

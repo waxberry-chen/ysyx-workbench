@@ -1,7 +1,7 @@
 # M5：ysyxSoC 集成与系统启动
 
-> 2026-10-29：S0–[S6 系统回归](6-system-validation.md)完成；[S7 本地准备](7-synthesis-sta.md)完成，待服务器 DC/PT 回传。
-> CLINT/CSR、精确 IRQ/MRET、AM 上下文、RTT 抢占/阻塞唤醒与栈/heap 验收通过；新 CPU 子系统范围 DC/PT 待 S7。
+> 2026-10-29：S0–S7 完成；[S7 CPU 子系统 200 MHz 基线](s7-validation/baseline/README.md)已归档，M17 在约定范围内通过；下一步 S8 干净复现与总验收。
+> CLINT/CSR、精确 IRQ/MRET、AM 上下文、RTT 抢占/阻塞唤醒与栈/heap 验收通过；新 CPU 子系统面积/数据时序基线通过；reset 物理时序仍暂缓，功耗未验收。
 
 S1 已直接升级当前 adapter/仲裁/顶层，不维护 B1/SoC 双接口。B1 仅作为历史系统测试，其有效协议与 CPU 检查已迁移；[原始结果摘要](s1-validation/README.md)。
 
@@ -15,11 +15,11 @@ S1 已直接升级当前 adapter/仲裁/顶层，不维护 B1/SoC 双接口。B1
 - [S4 Flash/PSRAM 启动与源码导读](4-boot-memory.md)：各层改动、XIP FSM、串行颗粒模型、VMA/LMA、逐条差分与容量；[精选证据](s4-validation/README.md)。
 - [S5 定时器中断与源码导读](5-timer-interrupt.md)：timer/CSR 合同、精确接受边界、AM/RTT tick、独立时间模型、IRQ 差分及连续 redirect 修复；[精选证据](s5-validation/README.md)。
 - [S6 系统验证与源码导读](6-system-validation.md)：双线程抢占/睡眠唤醒、分栈水位、AXI 等待注入与实际 UART；[精选证据](s6-validation/README.md)。
-- [S7 综合/STA 准备](7-synthesis-sta.md)：20 文件 CPU wrapper 范围、Flash PC、端口预算/reset 处置、flow 适配与服务器命令；[本地检查](s7-validation/README.md)，M17 待真实 EDA。
-- [验收矩阵](test-plan.md)：M01/M02 的 S0 范围、M03–M05 与 M16 的 S1 范围、M06–M08 的 S2/S3 范围、M09/M10 的 S4 范围与 M11–M13 的 S5 范围通过，S6 关闭 M14–M16。
+- [S7 综合/STA](7-synthesis-sta.md)：CPU wrapper 范围、端口预算、flow 适配，以及普通 compile / Ultra / cap90 三轮结果与电容对照；[检查与报告入口](s7-validation/README.md)，[最终基线](s7-validation/baseline/README.md)，M17 通过。
+- [验收矩阵](test-plan.md)：M01/M02 的 S0 范围、M03–M05 与 M16 的 S1 范围、M06–M08 的 S2/S3 范围、M09/M10 的 S4 范围与 M11–M13 的 S5 范围通过，S6 关闭 M14–M16，S7 关闭 M17。
 - [开发日志](dev-log.md)：记录实际推进、决定和阻塞。
 - [阶段 Q&A](qa/README.md)：先记录本次规划中有价值的架构选择，随有效进展更新，不要求每次修改都新增问答。
 
 执行顺序：**S0 上游契约 → S1 原生 AXI4 单拍接口 → S2 最小 SoC → S3 AM/SRAM/DiffTest → S4 Flash 启动及容量闭环 → S5 timer interrupt → S6 RT-Thread → S7 综合/STA → S8 验收归档**。
 
-下一步由用户按 [S7 命令](7-synthesis-sta.md#5-服务器执行与回传)同步并运行服务器 DC/PT；新 scope/filelist/SDC 与本地检查已准备完成，回传后审查面积、时序、电气规则和 coverage。S6 已完成 68 个真实 SoC 正向运行、34 个适用 CPU tests、30 次 IRQ 差分，当前无未处置功能阻塞；完整 SoC 物理实现与交互 shell 不在本轮范围。
+cap90 已完成 coverage/告警/路径审查并建立 [S7 基线](s7-validation/baseline/README.md)。Ultra 自动 leakage 零目标按用户决定仅记录，保留原自动状态，无需为清空报告重新综合。下一步 S8 干净复现与交接，之后再做限定 GShare 增量。S6 已完成 68 个真实 SoC 正向运行、34 个适用 CPU tests、30 次 IRQ 差分，当前无未处置功能阻塞；完整 SoC 物理实现与交互 shell 不在本轮范围。

@@ -153,3 +153,21 @@ S6 的两个同优先级线程在一段没有函数调用、ECALL、yield 或 sl
 filelist 只决定读取哪些源文件。综合范围还取决于 top、宏/参数、哪些观察输出对外可见，以及端口的时序/负载假设。M5 的实际 wrapper 改用 `clock/reset`，Flash PC 为 `0x30000000`，内部增加 router/CLINT/IRQ，commit/monitor 输出不再对外连接；驱动脚本的 top 校验、时钟 DRC 查询、reset 极性、LSU 层次诊断和 manifest 也必须同步。
 
 因此新结果首先是新功能边界的基线。相对 M4 的变化混合了功能增加和观察逻辑裁剪，不能直接称为面积优化或接口升级开销。后续 GShare 使用相同 M5 scope、库和约束做前后比较，才便于归因。见 [S7](../7-synthesis-sta.md)。
+
+## Q27：同一份网表为什么 DC 电容通过，PT 却报违例？本次如何处理？
+
+先核对同一网表、库、工作条件、网络连接和线负载。本次某个复位分支的 DC 标量电容约 0.049573 pF，PT 接收电容约 0.053513 pF，而驱动上限为 0.049878 pF。接收引脚的 Liberty 标量电容与 CCS receiver 电容口径不同，约 8% 的差异无法由末位舍入解释；两边 `report_capacitance_use_ccs_receiver_model=true` 也不保证综合 DRC 优化接口采用同样口径。
+
+本轮在 DC 会话内将每个库输出引脚的已有最大电容上限乘 0.90，再做增量 DRC 修复；PT 仍独立读取原始库。9 条违例消失，面积和最差时序基本不变。这是经过本库、本设计验证的裕量策略，没有修改接收电容、写回 DB 或证明两工具算法已统一。详见 [S7 电容迭代](../7-synthesis-sta.md#73-ultra复位网络的-dcpt-电容检查口径差异)及[最终基线](../s7-validation/baseline/README.md)。
+
+## Q28：为什么保留 CONSTRAINT_FAIL，还能将这一轮定为面积/数据时序基线？
+
+必须说清是哪一项、项目要求是什么。本次电气和数据时序违例为 0；唯一剩余的是 Ultra 自动 leakage 优化的零目标。日志 PWR-884 明确该版本不能禁用此优化，项目又没有制定零漏电预算，因此用户接受只记录该目标，不要求重综合。
+
+原始 report/manifest 的 CONSTRAINT_FAIL 保留，人工审查说明接受依据；这不等于工具全项 PASS，也不允许以后忽略真实功耗预算。类似地，8958 项 reset 物理时序 untested 明确 deferred，162 项常量输出检查逐对象解释；不能将所有 untested 一概豁免。详见[基线验收与边界](../s7-validation/baseline/README.md#6-leakage-例外与最终结论)。
+
+## Q29：为什么 Verilator lint 通过，DC 还可能报编译错误？
+
+两种工具的前端和检查范围不同，lint 通过只说明该配置下没有未处置的 lint 诊断。本次 core 的 redirect_target 连续赋值引用了后面才声明的 trap_target，本地 lint 未拦截，服务器 DC 却报错；`9912da3` 将相关 assign 移到声明之后解决，表达式不变。
+
+本工程因此采用“信号先声明，assign/always/实例化再引用”的 RTL 组织约定；实际可综合性仍由 DC analyze/elaborate/link 验证。该修复早已在 cap90 快照中，补上 Git 提交和原因记录即可，不必重跑已经包含修复的基线。见 [S7 §4.1](../7-synthesis-sta.md#41-dc-前端兼容性先声明信号再引用2026-10-30-补记)。

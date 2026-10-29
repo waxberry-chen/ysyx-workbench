@@ -1,6 +1,6 @@
 # M5 设计与验收计划
 
-> 2026-10-29；状态：S0–[S6](6-system-validation.md)完成；[S7](7-synthesis-sta.md)本地准备完成，待服务器 DC/PT 回传。timer/CSR、精确 IRQ、AM、完整有限 RTT 抢占/阻塞唤醒与资源水位已验证；新 CPU 子系统范围 DC/PT 留 S7。
+> 2026-10-29；状态：S0–S7 完成；[S7 基线](s7-validation/baseline/README.md)通过并归档，Ultra 自动 leakage 零目标按用户决定记录处置，reset 物理时序仍暂缓；下一步 S8。timer/CSR、精确 IRQ、AM、完整有限 RTT 抢占/阻塞唤醒与资源水位已验证。
 > 本地规划输入：`d7c5b139eca8f6ffc467ecea472d4395998b1cea`；前置为 [M4 signoff](../4-pre-soc-signoff/signoff.md)。该 commit 是本地输入，不是 ysyxSoC revision。
 > 配套：[验收矩阵](test-plan.md)、[开发日志](dev-log.md)、[Q&A](qa/README.md)、[总路线](../roadmap.md)。
 
@@ -134,7 +134,7 @@ machine timer interrupt 是本工程 roadmap 的明确目标，不能用“CLINT
 | **S4：Flash 启动与容量闭环（完成）** | Flash 控制器/模型读协议与只读权限审查；SPI 读、XIP、Flash → SRAM；按 S0 预算补 PSRAM 和 Flash → PSRAM | `4-boot-memory.md`：镜像/ELF/map、启动序列、预填 RAM 后的复制/清零证据；最大验收 workload 能装载并有栈/heap 余量。M09/M10 |
 | **S5：CLINT 与精确中断（完成）** | mtimecmp/IRQ、CSR/IDU/EXU、AM/NEMU/DiffTest 联动；先手写 trap 程序再接 tick | [实施导读](5-timer-interrupt.md)与[证据](s5-validation/README.md)：6 个 SoC 程序、139,396 条提交和 17 次 IRQ 差分；10 个随机延迟 seed、2 个故障检测负例；M11–M13 通过 |
 | **S6：系统回归（完成）** | RT-Thread 有限抢占/阻塞唤醒 workload，UART 实际 TX；CPU tests、microbench 子集与协议随机延迟/错误回归 | [实施导读](6-system-validation.md)与[证据](s6-validation/README.md)：68 个真实 SoC 正向运行、1,824,069 条提交和 30 次 IRQ；双线程抢占/唤醒、分栈/heap、528 字节 UART 及固定/随机延迟通过。M14–M16 |
-| **S7：新边界综合/STA（本地准备完成，EDA 待验）** | 功能 RTL 固定；另建 scope/filelist/端口预算/SDC，适配新增 AXI、IRQ/reset；用户运行 DC/PT 后审查回传结果 | [实施与命令](7-synthesis-sta.md)、[本地检查](s7-validation/README.md)：20 文件、Flash wrapper、48 项 flow 测试及 4 宏配置通过；面积/时序、DRV、coverage 待真实 DC/PT，M17 待验；不覆盖 M4 04/05 |
+| **S7：新边界综合/STA（完成）** | 功能 RTL 固定；另建 scope/filelist/端口预算/SDC，适配新增 AXI、IRQ/reset；用户运行 DC/PT 后审查回传结果 | [实施记录](7-synthesis-sta.md)、[基线与完整审查](s7-validation/baseline/README.md)：cap90 电气规则及 setup/hold 无违例，coverage/告警已处置，leakage 零目标仅记录，M17 通过；不覆盖 M4 04/05 |
 | **S8：验收与后续交接** | 干净构建复现，汇总测试、bug、图/波形、源与报告版本；固定后续优化可比较的程序和存储配置 | `signoff.md`：逐项结论、例外、未做内容与后续输入；所有本轮必做项完成且无未处置阻塞。M18 |
 
 主链 S0 → S1 → S2 → S3 → S4 → S5 → S6 → S7 → S8。S3 后可以独立开发 S5 的模块测试，但完整系统结论仍依赖 S4 的装载/容量闭环；不以并行开发跳过出口。
@@ -150,7 +150,7 @@ machine timer interrupt 是本工程 roadmap 的明确目标，不能用“CLINT
 
 ## 5. 实施依赖与阻塞报告
 
-**S0–S6 已完成，无未处置功能阻塞；S7 本地 flow 配置和检查已完成，下一步由用户执行服务器 DC/PT 并回传。** 原前置项状态如下；后续功能缺口详见 [S0 第7节](0-upstream-contract.md#7-缺口与分阶段处置)。
+**S0–S7 已完成，无未处置阻塞；cap90 面积/数据时序基线通过并归档，leakage 自动零目标和 reset 物理时序边界已记录。下一步 S8 干净复现与总交接。** 详见 [S7 第 7 节](7-synthesis-sta.md#7-服务器迭代与当前问题2026-10-29)；原前置项状态如下，后续功能缺口详见 [S0 第7节](0-upstream-contract.md#7-缺口与分阶段处置)。
 
 | 项目 | 当前已知情况 | 关闭时点 / 无法完成时的处理 |
 | --- | --- | --- |
@@ -159,7 +159,7 @@ machine timer interrupt 是本工程 roadmap 的明确目标，不能用“CLINT
 | RT-Thread 容量 | B1 ELF 静态段42,932 B，已选4 MiB PSRAM并给出预算 | S4 实测 Flash 21,832 B、静态 RAM 42,992 B、heap 区间 4,085,776 B；协作 workload 通过；S6 双线程抢占/唤醒与主栈/线程/idle 栈水位通过，当前工作负载 heap 峰值 544 B、最终归零 |
 | ISA/CSR 与 ABI | S5 已实现 mie/mip、timer IRQ、AM/RTT tick；SoC 参考 ABI 为 23 word | M11–M16 对应功能范围通过；S6 完成有限调度/阻塞验证，仍不宣称完整特权规范合规 |
 | reset / 外部 IRQ | 外部IRQ固定0；CPU reset为外部reset OR 10级延迟，初始约定20周期共同复位 | S0 合同完成；S1/S2/S5功能测试，S7物理限制复查 |
-| 服务器 DC/PT | M4 已跑通；M5 新配置与本地检查已完成，尚无真实结果 | S7 交付命令与审查清单，由用户执行回传；没有回传结果时不得宣布 S7/S8 完成 |
+| 服务器 DC/PT | M5 cap90 基线已归档；电气规则及数据时序通过，Ultra 漏电零目标按用户决定记录 | S7 / M17 已关闭；原工具状态不改写，S8 干净功能复现和总交接仍待完成 |
 
 后续按有价值的进展更新 QA 和 dev-log；运行日志/网表/生成 RTL 留在构建目录，只归档必要的可展示证据。出现真实阻塞时，说明它阻塞哪一出口、已有证据、下一步需要什么，并继续不受影响的工作。
 

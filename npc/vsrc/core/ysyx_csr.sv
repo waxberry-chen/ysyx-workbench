@@ -63,8 +63,9 @@ end
 wire [31:0] mstatus_write = (csr_wdata & 32'h00000088) | 32'h00001800;
 assign csr_d[0] = trap_valid ? mstatus_trap : (mret_valid ? mstatus_mret : mstatus_write);
 assign csr_d[1] = csr_wdata & 32'hfffffffc; // Direct mode only.
-assign csr_d[2] = ((trap_valid) ? trap_epc : csr_wdata) & 32'hfffffffc; // IALIGN=32.
+assign csr_d[2] = ((trap_valid) ? trap_epc : csr_wdata) & 32'hfffffffc; // IALIGN=32. low 2-bit may cause min capacitance
 assign csr_d[3] = (trap_valid) ? trap_cause : csr_wdata;
+// unused bits min capacitance DRC violations can be fixed by boundary optimization using compile_ultra in DC. 
 
 genvar i;
 generate

@@ -107,3 +107,17 @@
 - `make -C npc/flow check test scope-check` 通过：48 项 flow 测试、4 种宏配置预处理/lint；SDC 对象与禁止错误例外检查通过。[本地证据](s7-validation/README.md)只记录脚本/展开检查，没有真实 PPA 数字。
 - [S7 实施文档](7-synthesis-sta.md)说明范围、逐组端口预算、修改位置、检查边界和服务器命令。本次未修改功能 RTL、未重跑 S6 长系统回归；既有嵌套 Rocket Chip 工作区状态保留。
 - 无本地准备阻塞；用户手工同步并运行 DC/PT 后回传。M17/S7 尚未完成，不能提前进入 S8 总验收。
+
+## 2026-10-29：S7 基线审查与归档完成
+
+- 采用 `soc-cpu-tt-5ns-s7-cap90`，HEAD `11a2608c224f05ed46c2bee57805a5300aa35135`。普通 compile 的 7 条零负载违例经 Ultra 消除；Ultra 的 9 条最大电容违例经 DC 库引脚 10% 裕量与增量 DRC pass 消除。数据时序和电气验收通过，面积 9530.135856 library_area，setup/hold 最差 slack +2.444726/+0.009693 ns。
+- PWR-884 明确该版本 Ultra 自动漏电优化不能关闭，之前的 `set_leakage_optimization false` 请求无效。用户决定仅在文档说明零 leakage 优化目标，无需为清空报告 re-synth；保留原 DC CONSTRAINT_FAIL、PT REVIEW_REQUIRED 和完整报告，人工验收范围独立记录。
+- 完成 9120 项 untested 分类：8958 项 reset 释放/脉宽暂缓，162 项对应 81 个常量输出；无其他未解释类别和 loop-breaking 弧。1623 个 FF 的 CP 与顶层时钟直接连接集合一致；1228 条 unloaded 告警均指层次输出。其余 warning 按具体对象和原因在基线表中处置，不做全局编号豁免。
+- 逐条核对 45 个冻结输入、49 个阶段产物 hash；[baseline](s7-validation/baseline/README.md)归档 72 份原始文本、archive.json 和 review.json。21 份 RTL/include 中仅 core 的两条连续赋值位置区别于 S6，已核对表达式不变；原 dirty.patch 保留。本次不运行 EDA、功能回归或网表等价，不修改 flow 脚本、RTL 或回传结果。
+- M17 / S7 在约定范围内通过，无未处置阻塞；reset 物理时序、功耗和全 SoC 物理实现边界仍保留。下一步 S8 冻结版本干净复现与交接，随后限定 GShare；交接继续关联 JOB-PREP-01。
+
+## 2026-10-30：补记 DC 声明顺序修复的原因与提交
+
+- 用户说明服务器上 `ysyx_core.sv` 的声明顺序导致 DC 报错：redirect_target 的连续赋值引用了后面才声明的 trap_target。`9912da3` 将两条 redirect assign 移到 wire 声明区后；这是 DC 前端兼容性修复，逻辑表达式不变，本地 lint 未发现该问题。
+- 核对 commit、当前本地 core 与 cap90 冻结快照逐字节一致；cap90 的原 dirty.patch 已包含修复，S7 结论保持有效，无需重综合。补充 [S7 §4.1](7-synthesis-sta.md#41-dc-前端兼容性先声明信号再引用2026-10-30-补记)、基线追溯说明及 Q29，原报告/manifest/review.json 保持历史状态。
+- 后续 RTL 按“声明在前、引用在后”组织；Verilator lint 通过不等于 DC 前端兼容。本次仅文档补记及 hash 核对，没有修改 RTL 或重新运行功能/EDA 测试。
