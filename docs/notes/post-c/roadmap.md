@@ -1,6 +1,6 @@
 # Post-C Roadmap：从弹性 RV32E Core 到可展示的 SoC/RTL 项目
 
-> 规划更新：2026-10-30；M4 S2.5 ISA 收敛已完成本地验收，当前已建立 S3 范围内面积/时序基线，S6 已于 2026-10-19 完成最终回归与服务器独立复现，M4 本轮验收通过；M5 S0–S8 已验收，干净功能构建及测试入口修复后的补测完成，cap90 CPU 子系统 200 MHz 基线沿用；下一步限定 GShare 计划；新增后期可选 RT-Thread 交互演示，M5 边界不变；M4 初始输入基线：`0fe53bf`（M3 功能/协议仿真验收后）
+> 规划更新：2026-10-31；M4 S2.5 ISA 收敛已完成本地验收，当前已建立 S3 范围内面积/时序基线，S6 已于 2026-10-19 完成最终回归与服务器独立复现，M4 本轮验收通过；M5 S0–S8 已验收，干净功能构建及测试入口修复后的补测完成，cap90 CPU 子系统 200 MHz 基线沿用；[限定 GShare 增量](gshare-bpu/signoff.md)已实现，S0–S3 与固定六程序性能通过，S4 DC/PT 待验；新增后期可选 RT-Thread 交互演示，M5 边界不变；M4 初始输入基线：`0fe53bf`（M3 功能/协议仿真验收后）
 >
 > 求职方向优先级：SoC/RTL Design > Design Verification > Physical Design  
 > 本文用于决定 post-C 阶段的投入顺序。具体接口、地址映射和考核要求仍以开始该阶段时的最新版官方讲义与上游仓库为准。
@@ -8,6 +8,8 @@
 对外展示统一从 [`docs/notes/output/`](../output/README.md) 进入；开发与实验详录留在所属阶段。按 2026-10-25 用户决定，本轮先完成 **M5 → 限定 GShare 增量 → 版本冻结 → 理解考察与简历 v1 → 投递与回顾并行**。实现期间继续积累证据，集中求职准备不占技术 Milestone 编号。
 
 **冻结后的明确待办：[JOB-PREP-01：理解精髓与 DE/DV 能力复盘](../output/interview-readiness.md)。** M5 与 GShare 的验收交接都须保留这个入口；版本冻结后先开展该任务。下文 M6 I-cache / M7 深化是长期候选，不作为本轮简历 v1 的前置，也不自动紧接 M5 启动。
+
+2026-10-31：[`gshare-bpu/`](gshare-bpu/README.md) 已实现 GShare + predecode（branch/JAL，无 BTB）。S0–S3 通过，本地证据已归档；固定六程序 OFF/GSHARE=1.114～1.201×，面积／时序待服务器对照。实际阶段状态见 [交接](gshare-bpu/signoff.md)，不改变 M6/M7 编号。
 
 ## 1. 结论先行
 
@@ -35,11 +37,12 @@
 已完成
 4-pre-soc-signoff：DC/PT 面积与时序基线；DC 功耗粗估暂缓
         ▼
-当前主线（M5 S0–S8 已验收，下一步限定 GShare 计划）
+已完成（M5 S0–S8 已验收）
 5-ysyx-soc-integration：AXI4 单拍子集封装 -> ysyxSoC 最小启动闭环
         │                    MROM/SRAM/UART/CLINT/DiffTest/RT-Thread
         ▼
-限定 GShare 增量：功能回归 + 同条件性能/面积/时序对照
+当前主线 gshare-bpu：RTL/功能验证/性能完成，DC/PT 待验
+GShare + predecode（branch/JAL，无 BTB）：功能回归 + 性能/面积/时序对照
         │
         ▼
 本轮冻结 -> JOB-PREP-01：理解考察与简历 v1 -> 投递与回顾
@@ -133,7 +136,7 @@
 
 ### P1：量化优化，增强设计深度
 
-本轮冻结前的优化只选限定 GShare 增量，单独明确功能验收与同条件性能/面积/时序对照；下面的 cache/burst 等为后续候选，不加入本轮截止范围。具体 GShare 计划在开始实施前编写，本文不预先宣称已完成或已有收益。
+本轮冻结前的优化只选[限定 GShare 增量](gshare-bpu/plan.md)，单独明确功能验收与同条件性能/面积/时序对照；下面的 cache/burst 等为后续候选，不加入本轮截止范围。GShare 已实现并测得固定六程序周期改善，系统回归已通过，新增面积／时序验收待服务器对照。
 
 - 性能事件计数器和可重复 benchmark；
 - trace 驱动的 cache 参数探索；
@@ -667,22 +670,23 @@ docs/notes/
     ├── 3-axi4-lite-interconnect/  # Arbiter/Xbar/minimal B1 slaves
     ├── 4-pre-soc-signoff/         # DC/PT 面积时序；DC 功耗粗估为附带项
     ├── 5-ysyx-soc-integration/    # B2 wrapper/boot/interrupt/system closure
+    ├── gshare-bpu/               # 本轮限定增量：predecode + GShare，branch/JAL，无 BTB
     ├── 6-icache-performance/      # trace/cachesim/I-cache/burst/metrics
     └── 7-role-deepening/          # pipeline/BPU 或 focused DV，按证据选择
 ```
 
-目录编号与 milestone 编号严格一一对应。每个目录至少维护一份明确的 plan/spec 和独立的 `dev-log.md`；需要冻结接口、测试矩阵、sign-off 报告或性能结果时，再在该目录增加专题文件。未开始的 milestone 不预先创建空目录和空模板。
+带编号目录与 milestone 编号严格一一对应；用户指定的 `gshare-bpu/` 是 M5 后的独立限定增量，不占用 6/7。每个目录至少维护一份明确的 plan/spec 和独立的 `dev-log.md`；需要冻结接口、测试矩阵、sign-off 报告或性能结果时，再在该目录增加专题文件。未开始的 milestone 不预先创建空目录和空模板。
 
 子步骤实施文档遵循上文[“以理解与学习为目标”](#子步骤实施文档以理解与学习为目标)的要求，兼顾功能说明、源码导读与验证依据。
 
 阶段面试问答使用各 Milestone 内的 `qa/` 目录，以 `qa/README.md` 为入口，按上文“阶段面试 Q&A”规则随有价值的进展维护。
 
-原计划的独立 `6-job-ready-release` 技术目录已取消，未创建的 I-cache/深化阶段保留编号 6/7。2026-10-25 新约定的集中求职准备由 `docs/notes/output/interview-readiness.md` 承担，不恢复该技术目录；GShare 增量的目录和编号在其实施计划中确定，不在此预建空目录。
+原计划的独立 `6-job-ready-release` 技术目录已取消，未创建的 I-cache/深化阶段保留编号 6/7。2026-10-25 新约定的集中求职准备由 `docs/notes/output/interview-readiness.md` 承担，不恢复该技术目录；2026-10-31 用户确定 GShare 增量使用 `gshare-bpu/`，本目录内单独使用 S0–S5 步骤编号。
 
 ## 9. 最近三个行动
 
-1. 以 [M5 总验收](5-ysyx-soc-integration/signoff.md)及[固定比较输入](5-ysyx-soc-integration/comparison-contract.md)为起点，制定限定 GShare 的架构、预测/更新/恢复规则和验收计划；
-2. 实施限定预测器增量，完成功能/异常/IRQ/等待回归与相同程序、存储、top、库、SDC 下的性能/面积/时序对照；不同时扩展 cache、外设或重写流水线；
+1. 用户按 [GShare S4](gshare-bpu/4-performance-ppa.md) 同步并运行 OFF/GSHARE 两份 DC/PT 配置；[本地功能与性能证据](gshare-bpu/signoff.md)已归档；
+2. 回传后审查面积、时序、DRC、coverage，补齐 S4 并关闭 S5；不同时扩展 cache、外设或重写流水线；
 3. 增量验收后阶段性冻结，进入 **[JOB-PREP-01](../output/interview-readiness.md)**：理解考察、简历 v1，再投递与回顾并行。
 
-M5 的 S8 主运行与修复后补测证据均已归档，S7 PPA 沿用既有 cap90；本轮不要求再次复现 DC/PT。M4 04/05 与 M5 基线仍分别保留。每次后续交接继续检查 JOB-PREP-01，避免直接转入新的技术扩展。
+M5 的 S8 主运行与修复后补测证据均已归档，S7 PPA 沿用既有 cap90；S8 不要求再次复现旧 DC/PT 结果。GShare 新增硬件的面积/时序对照仍须按其 S4 执行。M4 04/05 与 M5 基线仍分别保留。每次后续交接继续检查 JOB-PREP-01，避免直接转入新的技术扩展。

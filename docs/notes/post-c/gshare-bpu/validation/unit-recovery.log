@@ -1,0 +1,2 @@
+ysyx_exu directed test: PASS (including IRQ priority and LSU drain)
+- tests/ysyx_exu_tb.sv:467: Verilog $finish

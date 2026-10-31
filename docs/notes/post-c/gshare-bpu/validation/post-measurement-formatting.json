@@ -1,0 +1,6 @@
+{
+  "path": "npc/vsrc/core/ysyx_core.sv",
+  "change": "Remove one trailing space from the if_ctx comment; no RTL token change",
+  "measured_sha256": "7f297604c87e4c3f902f3b6f062b2fd71a82b6f4516fe0e2b72ff2add48a4c58",
+  "current_sha256": "f4ce2dfbcabab79e60cbf24e6e246a87513fcb198ee6c8817541574126ed9109"
+}

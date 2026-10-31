@@ -1,0 +1,2190 @@
+{
+  "top": "ysyx_25030087",
+  "tool": "Verilator 5.008 2023-03-04 rev v5.008",
+  "commands": [
+    [
+      "verilator",
+      "--sv",
+      "--top-module",
+      "ysyx_25030087",
+      "-f",
+      "flow/00_indata/filelists/soc_cpu.f",
+      "-DSYNTHESIS",
+      "-DNPC_BPU_MODE=0",
+      "-DNPC_FLASH_BOOT",
+      "--lint-only",
+      "--assert",
+      "-Wall",
+      "-Wno-fatal"
+    ],
+    [
+      "verilator",
+      "--sv",
+      "--top-module",
+      "ysyx_25030087",
+      "-f",
+      "flow/00_indata/filelists/soc_cpu.f",
+      "-DSYNTHESIS",
+      "-DNPC_SIM_DPI",
+      "-DDIFF",
+      "-DNPC_BPU_MODE=0",
+      "-DNPC_FLASH_BOOT",
+      "--lint-only",
+      "--assert",
+      "-Wall",
+      "-Wno-fatal"
+    ],
+    [
+      "verilator",
+      "--sv",
+      "--top-module",
+      "ysyx_25030087",
+      "-f",
+      "flow/00_indata/filelists/soc_cpu.f",
+      "-DNPC_BPU_MODE=0",
+      "-DNPC_FLASH_BOOT",
+      "--lint-only",
+      "--assert",
+      "-Wall",
+      "-Wno-fatal"
+    ],
+    [
+      "verilator",
+      "--sv",
+      "--top-module",
+      "ysyx_25030087",
+      "-f",
+      "flow/00_indata/filelists/soc_cpu.f",
+      "-DNPC_SIM_DPI",
+      "-DDIFF",
+      "-DNPC_BPU_MODE=0",
+      "-DNPC_FLASH_BOOT",
+      "--lint-only",
+      "--assert",
+      "-Wall",
+      "-Wno-fatal"
+    ],
+    [
+      "verilator",
+      "--sv",
+      "--top-module",
+      "ysyx_25030087",
+      "-f",
+      "flow/00_indata/filelists/soc_cpu.f",
+      "-DSYNTHESIS",
+      "-DNPC_BPU_MODE=1",
+      "-DNPC_FLASH_BOOT",
+      "--lint-only",
+      "--assert",
+      "-Wall",
+      "-Wno-fatal"
+    ],
+    [
+      "verilator",
+      "--sv",
+      "--top-module",
+      "ysyx_25030087",
+      "-f",
+      "flow/00_indata/filelists/soc_cpu.f",
+      "-DSYNTHESIS",
+      "-DNPC_SIM_DPI",
+      "-DDIFF",
+      "-DNPC_BPU_MODE=1",
+      "-DNPC_FLASH_BOOT",
+      "--lint-only",
+      "--assert",
+      "-Wall",
+      "-Wno-fatal"
+    ],
+    [
+      "verilator",
+      "--sv",
+      "--top-module",
+      "ysyx_25030087",
+      "-f",
+      "flow/00_indata/filelists/soc_cpu.f",
+      "-DNPC_BPU_MODE=1",
+      "-DNPC_FLASH_BOOT",
+      "--lint-only",
+      "--assert",
+      "-Wall",
+      "-Wno-fatal"
+    ],
+    [
+      "verilator",
+      "--sv",
+      "--top-module",
+      "ysyx_25030087",
+      "-f",
+      "flow/00_indata/filelists/soc_cpu.f",
+      "-DNPC_SIM_DPI",
+      "-DDIFF",
+      "-DNPC_BPU_MODE=1",
+      "-DNPC_FLASH_BOOT",
+      "--lint-only",
+      "--assert",
+      "-Wall",
+      "-Wno-fatal"
+    ],
+    [
+      "verilator",
+      "--sv",
+      "--top-module",
+      "ysyx_25030087",
+      "-f",
+      "flow/00_indata/filelists/soc_cpu.f",
+      "-DSYNTHESIS",
+      "-DNPC_BPU_MODE=2",
+      "-DNPC_FLASH_BOOT",
+      "--lint-only",
+      "--assert",
+      "-Wall",
+      "-Wno-fatal"
+    ],
+    [
+      "verilator",
+      "--sv",
+      "--top-module",
+      "ysyx_25030087",
+      "-f",
+      "flow/00_indata/filelists/soc_cpu.f",
+      "-DSYNTHESIS",
+      "-DNPC_SIM_DPI",
+      "-DDIFF",
+      "-DNPC_BPU_MODE=2",
+      "-DNPC_FLASH_BOOT",
+      "--lint-only",
+      "--assert",
+      "-Wall",
+      "-Wno-fatal"
+    ],
+    [
+      "verilator",
+      "--sv",
+      "--top-module",
+      "ysyx_25030087",
+      "-f",
+      "flow/00_indata/filelists/soc_cpu.f",
+      "-DNPC_BPU_MODE=2",
+      "-DNPC_FLASH_BOOT",
+      "--lint-only",
+      "--assert",
+      "-Wall",
+      "-Wno-fatal"
+    ],
+    [
+      "verilator",
+      "--sv",
+      "--top-module",
+      "ysyx_25030087",
+      "-f",
+      "flow/00_indata/filelists/soc_cpu.f",
+      "-DNPC_SIM_DPI",
+      "-DDIFF",
+      "-DNPC_BPU_MODE=2",
+      "-DNPC_FLASH_BOOT",
+      "--lint-only",
+      "--assert",
+      "-Wall",
+      "-Wno-fatal"
+    ]
+  ],
+  "input_sha256": {
+    "flow/00_indata/filelists/soc_cpu.f": "dd7467468523c99c63900683896d753e3cf74e1eb081677d1c0a6892a89be3ba",
+    "flow/00_indata/configs/npc_soc_cpu.tcl": "eb8857f4cc54d2cc2f681cb29c472bdf990ae74ecd08f3bbf8cb7dff20b8f11f",
+    "flow/00_indata/constraints/soc_cpu.sdc": "09dbb90b31b0793848b2b6d0d6b62351a8a37e8dbd78211a1fb988668b4e3bf8",
+    "./vsrc/gnrl/ysyx_gnrl_primitive.sv": "69e7f79f3636533b0d10016fd04097dbdf92c13f342c7e12c0f25402188f7c15",
+    "./vsrc/core/ysyx_alu.sv": "cbe707eb49dbe9eb30ed8a496dc628866eb4f888a1210d77f3ceef0374f470a1",
+    "./vsrc/core/ysyx_branch.sv": "6cc2d908aeb37572de4cb026a578a452d46ca3e11d59be69d6023e29d2195537",
+    "./vsrc/core/ysyx_gen_imm.sv": "7b72f39d8bc17eee2ffb186d6183855c0075776a8505084e0204f147c6192d1a",
+    "./vsrc/core/ysyx_idu.sv": "d3802667e58390e23075af8000b4231a37721d2fd88c55dcf4f675c484f29642",
+    "./vsrc/core/ysyx_regfile.sv": "80c66dc0a1fcf39133e5287d9befe0670dceccc9f4237135b8c53ff310cc3eab",
+    "./vsrc/core/ysyx_csr.sv": "5dc4113d83a2935bbeb04fc65eac7b3fc55d8eab5cd85b11ebae6d78a9acc949",
+    "./vsrc/core/ysyx_predecode.sv": "68dd4c6a9f9c3d44c8b4388886a53063e52403b2d900019f4f7edbf7c65236d6",
+    "./vsrc/core/ysyx_gshare.sv": "f6761a66f7f291482c3dd44f1e4227688ae85f7cd89f17c3f2331f39ad45483f",
+    "./vsrc/core/ysyx_ifu.sv": "60fc3ff886ecbacc533a0d1387839695c78dc2de0beabf60bd39077dddcd2d7d",
+    "./vsrc/core/ysyx_opbuf.sv": "9af1d755b6d281327bd05cd992d991571268290b812ac215ca3a4d8913138e0f",
+    "./vsrc/core/ysyx_exu.sv": "278ef5518128ba88ca1c25374f8363b8b086645aee3a07cdbfabaabd8735a659",
+    "./vsrc/core/ysyx_lsu.sv": "1ec2463ade5aa1bd5c01a4dc15519be42be2d8104689c43579fcda81d2bd1654",
+    "./vsrc/bus/ysyx_ifu_axi4_adapter.sv": "9643e9b1f6212c3ebaf1acc8c3f1d84efc896cf3971aae401898a0da8552fd76",
+    "./vsrc/bus/ysyx_lsu_axi4_adapter.sv": "309ea53b7418bb6779cfcb5490294b2aaf0785f9f4ba00f9097b947a096c966e",
+    "./vsrc/core/ysyx_core.sv": "f4ce2dfbcabab79e60cbf24e6e246a87513fcb198ee6c8817541574126ed9109",
+    "./vsrc/bus/ysyx_axi4_arbiter.sv": "57b407a5f38bd14979b51c8e52feb106168393ae38d3879269811726aae4b750",
+    "./vsrc/top/ysyx_core_axi4.sv": "d643acddc1fbb6acb5f4fd5a02c0e6712f501c11019bca8623c975bb109802bc",
+    "./vsrc/periph/ysyx_clint.sv": "e9026df843f999c371bf56c9c0f555f88db50331b6f8f79260bc0ec6950b3fde",
+    "./vsrc/bus/ysyx_axi4_router.sv": "6738000570613379fff8a19f37964f6dc7ee0079c088e7e7d2f3669ddcf2abc0",
+    "./vsrc/top/ysyx_soc_cpu.sv": "842370e70e68c9371a70be55ee8e61423cec93c891df991f51129589963c6667",
+    "./vsrc/top/ysyx_25030087.sv": "79676bf91ff6e2dffa2bf814282a43c2eaf77b6c951f2a117ce4f845354aafd7",
+    "vsrc/gnrl/ysyx_global.sv": "39dc2658d350ab8293953b819346339cac640f377b4bfa3bec30ed5b9828d2f9",
+    "tests/synthesis_scope_check.py": "ec4aa8f25f2fe7498f33c21fc0f15be55ab2a8b76670dc445ea28eb6794d397d"
+  },
+  "profiles": {
+    "synthesis-bpu0": {
+      "defines": [
+        "SYNTHESIS",
+        "NPC_BPU_MODE=0",
+        "NPC_FLASH_BOOT"
+      ],
+      "bpu_mode": 0,
+      "waivers": [
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:99:6: Cell pin connected by name with empty reference: 'commit_pc'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:100:6: Cell pin connected by name with empty reference: 'commit_inst'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:101:6: Cell pin connected by name with empty reference: 'commit_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:102:6: Cell pin connected by name with empty reference: 'commit_is_mmio'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:103:6: Cell pin connected by name with empty reference: 'commit_exception'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:104:6: Cell pin connected by name with empty reference: 'commit_exception_cause'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:105:6: Cell pin connected by name with empty reference: 'commit_redirect_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:106:6: Cell pin connected by name with empty reference: 'commit_redirect_reason'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:107:6: Cell pin connected by name with empty reference: 'commit_mem_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:108:6: Cell pin connected by name with empty reference: 'commit_mem_write'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:109:6: Cell pin connected by name with empty reference: 'commit_mem_addr'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:110:6: Cell pin connected by name with empty reference: 'commit_mem_error'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:132:6: Cell pin connected by name with empty reference: 'monitor_bus'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:18:11: Signal is not used: 'io_interrupt'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:22:11: Signal is not used: 'io_slave_awvalid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:24:18: Signal is not used: 'io_slave_awaddr'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:26:17: Signal is not used: 'io_slave_awid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:28:17: Signal is not used: 'io_slave_awlen'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:30:17: Signal is not used: 'io_slave_awsize'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:32:17: Signal is not used: 'io_slave_awburst'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:36:11: Signal is not used: 'io_slave_wvalid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:38:18: Signal is not used: 'io_slave_wdata'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:40:17: Signal is not used: 'io_slave_wstrb'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:42:11: Signal is not used: 'io_slave_wlast'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:44:11: Signal is not used: 'io_slave_bready'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:54:11: Signal is not used: 'io_slave_arvalid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:56:18: Signal is not used: 'io_slave_araddr'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:58:17: Signal is not used: 'io_slave_arid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:60:17: Signal is not used: 'io_slave_arlen'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:62:17: Signal is not used: 'io_slave_arsize'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:64:17: Signal is not used: 'io_slave_arburst'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:66:11: Signal is not used: 'io_slave_rready'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:79:13: Signal is not used: 'if_ctx_fire'",
+          "reason": "Assertion-only handshake observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:148:13: Signal is not used: 'op_rs1_idx'",
+          "reason": "Assertion-only operand observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:149:13: Signal is not used: 'op_rs2_idx'",
+          "reason": "Assertion-only operand observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:158:13: Signal is not used: 'exu_commit_pc'",
+          "reason": "Assertion-only commit observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:167:13: Signal is not used: 'commit_mem_wdata'",
+          "reason": "Assertion-only store observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_gen_imm.sv:12:49: Bits of signal are not used: 'inst'[6:0]",
+          "reason": "Opcode inst[6:0] is decoded upstream"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/bus/ysyx_lsu_axi4_adapter.sv:70:13: Signal is not used: 'local_request_aligned'",
+          "reason": "Assertion-only alignment observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_ifu.sv:29:24: Signal is not used: 'bpu_train_valid'",
+          "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_ifu.sv:30:32: Signal is not used: 'bpu_train_index'",
+          "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_ifu.sv:31:24: Signal is not used: 'bpu_train_taken'",
+          "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_exu.sv:19:24: Signal is not used: 'op_pred_taken'",
+          "reason": "Assertion-only prediction observation"
+        }
+      ],
+      "result": "PASS",
+      "preprocessed_sha256": "f9bf210eb5ef81dcfb4e05c3a61de7eb22f85e13cd5e6d631a69b15bfe52eb52",
+      "lint_sha256": "2e93177dccea10dbabf079845e25daafc6792f5f4dbd85b42c5142ccfefdba6c"
+    },
+    "synthesis_overrides_dpi-bpu0": {
+      "defines": [
+        "SYNTHESIS",
+        "NPC_SIM_DPI",
+        "DIFF",
+        "NPC_BPU_MODE=0",
+        "NPC_FLASH_BOOT"
+      ],
+      "bpu_mode": 0,
+      "waivers": [
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:99:6: Cell pin connected by name with empty reference: 'commit_pc'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:100:6: Cell pin connected by name with empty reference: 'commit_inst'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:101:6: Cell pin connected by name with empty reference: 'commit_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:102:6: Cell pin connected by name with empty reference: 'commit_is_mmio'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:103:6: Cell pin connected by name with empty reference: 'commit_exception'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:104:6: Cell pin connected by name with empty reference: 'commit_exception_cause'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:105:6: Cell pin connected by name with empty reference: 'commit_redirect_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:106:6: Cell pin connected by name with empty reference: 'commit_redirect_reason'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:107:6: Cell pin connected by name with empty reference: 'commit_mem_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:108:6: Cell pin connected by name with empty reference: 'commit_mem_write'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:109:6: Cell pin connected by name with empty reference: 'commit_mem_addr'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:110:6: Cell pin connected by name with empty reference: 'commit_mem_error'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:132:6: Cell pin connected by name with empty reference: 'monitor_bus'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:18:11: Signal is not used: 'io_interrupt'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:22:11: Signal is not used: 'io_slave_awvalid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:24:18: Signal is not used: 'io_slave_awaddr'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:26:17: Signal is not used: 'io_slave_awid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:28:17: Signal is not used: 'io_slave_awlen'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:30:17: Signal is not used: 'io_slave_awsize'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:32:17: Signal is not used: 'io_slave_awburst'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:36:11: Signal is not used: 'io_slave_wvalid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:38:18: Signal is not used: 'io_slave_wdata'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:40:17: Signal is not used: 'io_slave_wstrb'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:42:11: Signal is not used: 'io_slave_wlast'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:44:11: Signal is not used: 'io_slave_bready'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:54:11: Signal is not used: 'io_slave_arvalid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:56:18: Signal is not used: 'io_slave_araddr'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:58:17: Signal is not used: 'io_slave_arid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:60:17: Signal is not used: 'io_slave_arlen'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:62:17: Signal is not used: 'io_slave_arsize'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:64:17: Signal is not used: 'io_slave_arburst'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:66:11: Signal is not used: 'io_slave_rready'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:79:13: Signal is not used: 'if_ctx_fire'",
+          "reason": "Assertion-only handshake observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:148:13: Signal is not used: 'op_rs1_idx'",
+          "reason": "Assertion-only operand observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:149:13: Signal is not used: 'op_rs2_idx'",
+          "reason": "Assertion-only operand observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:158:13: Signal is not used: 'exu_commit_pc'",
+          "reason": "Assertion-only commit observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:167:13: Signal is not used: 'commit_mem_wdata'",
+          "reason": "Assertion-only store observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_gen_imm.sv:12:49: Bits of signal are not used: 'inst'[6:0]",
+          "reason": "Opcode inst[6:0] is decoded upstream"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/bus/ysyx_lsu_axi4_adapter.sv:70:13: Signal is not used: 'local_request_aligned'",
+          "reason": "Assertion-only alignment observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_ifu.sv:29:24: Signal is not used: 'bpu_train_valid'",
+          "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_ifu.sv:30:32: Signal is not used: 'bpu_train_index'",
+          "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_ifu.sv:31:24: Signal is not used: 'bpu_train_taken'",
+          "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_exu.sv:19:24: Signal is not used: 'op_pred_taken'",
+          "reason": "Assertion-only prediction observation"
+        }
+      ],
+      "result": "PASS",
+      "preprocessed_sha256": "f9bf210eb5ef81dcfb4e05c3a61de7eb22f85e13cd5e6d631a69b15bfe52eb52",
+      "lint_sha256": "2e93177dccea10dbabf079845e25daafc6792f5f4dbd85b42c5142ccfefdba6c"
+    },
+    "simulation_no_dpi-bpu0": {
+      "defines": [
+        "NPC_BPU_MODE=0",
+        "NPC_FLASH_BOOT"
+      ],
+      "bpu_mode": 0,
+      "waivers": [
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:99:6: Cell pin connected by name with empty reference: 'commit_pc'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:100:6: Cell pin connected by name with empty reference: 'commit_inst'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:101:6: Cell pin connected by name with empty reference: 'commit_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:102:6: Cell pin connected by name with empty reference: 'commit_is_mmio'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:103:6: Cell pin connected by name with empty reference: 'commit_exception'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:104:6: Cell pin connected by name with empty reference: 'commit_exception_cause'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:105:6: Cell pin connected by name with empty reference: 'commit_redirect_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:106:6: Cell pin connected by name with empty reference: 'commit_redirect_reason'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:107:6: Cell pin connected by name with empty reference: 'commit_mem_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:108:6: Cell pin connected by name with empty reference: 'commit_mem_write'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:109:6: Cell pin connected by name with empty reference: 'commit_mem_addr'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:110:6: Cell pin connected by name with empty reference: 'commit_mem_error'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:132:6: Cell pin connected by name with empty reference: 'monitor_bus'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:24:18: Signal is not used: 'io_slave_awaddr'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:26:17: Signal is not used: 'io_slave_awid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:28:17: Signal is not used: 'io_slave_awlen'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:30:17: Signal is not used: 'io_slave_awsize'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:32:17: Signal is not used: 'io_slave_awburst'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:38:18: Signal is not used: 'io_slave_wdata'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:40:17: Signal is not used: 'io_slave_wstrb'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:42:11: Signal is not used: 'io_slave_wlast'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:44:11: Signal is not used: 'io_slave_bready'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:56:18: Signal is not used: 'io_slave_araddr'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:58:17: Signal is not used: 'io_slave_arid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:60:17: Signal is not used: 'io_slave_arlen'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:62:17: Signal is not used: 'io_slave_arsize'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:64:17: Signal is not used: 'io_slave_arburst'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:66:11: Signal is not used: 'io_slave_rready'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_gen_imm.sv:12:49: Bits of signal are not used: 'inst'[6:0]",
+          "reason": "Opcode inst[6:0] is decoded upstream"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_ifu.sv:29:24: Signal is not used: 'bpu_train_valid'",
+          "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_ifu.sv:30:32: Signal is not used: 'bpu_train_index'",
+          "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_ifu.sv:31:24: Signal is not used: 'bpu_train_taken'",
+          "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"
+        },
+        {
+          "diagnostic": "%Warning-SYNCASYNCNET: vsrc/top/ysyx_soc_cpu.sv:11:17: Signal flopped as both synchronous and async: 'ysyx_25030087.__Vcellinp__subsystem__rst_n'",
+          "reason": "SVA samples the hardware asynchronous reset"
+        }
+      ],
+      "result": "PASS",
+      "preprocessed_sha256": "71e3646a300f70e2a33e20b7d131c96fde9835611385caa50f5c047e2de16849",
+      "lint_sha256": "63826cd48d30cc9da000c972cff3742b77465a0702639c763cb8536ce5da00e9"
+    },
+    "simulation_dpi-bpu0": {
+      "defines": [
+        "NPC_SIM_DPI",
+        "DIFF",
+        "NPC_BPU_MODE=0",
+        "NPC_FLASH_BOOT"
+      ],
+      "bpu_mode": 0,
+      "waivers": [
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:99:6: Cell pin connected by name with empty reference: 'commit_pc'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:100:6: Cell pin connected by name with empty reference: 'commit_inst'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:101:6: Cell pin connected by name with empty reference: 'commit_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:102:6: Cell pin connected by name with empty reference: 'commit_is_mmio'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:103:6: Cell pin connected by name with empty reference: 'commit_exception'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:104:6: Cell pin connected by name with empty reference: 'commit_exception_cause'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:105:6: Cell pin connected by name with empty reference: 'commit_redirect_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:106:6: Cell pin connected by name with empty reference: 'commit_redirect_reason'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:107:6: Cell pin connected by name with empty reference: 'commit_mem_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:108:6: Cell pin connected by name with empty reference: 'commit_mem_write'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:109:6: Cell pin connected by name with empty reference: 'commit_mem_addr'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:110:6: Cell pin connected by name with empty reference: 'commit_mem_error'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:132:6: Cell pin connected by name with empty reference: 'monitor_bus'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:24:18: Signal is not used: 'io_slave_awaddr'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:26:17: Signal is not used: 'io_slave_awid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:28:17: Signal is not used: 'io_slave_awlen'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:30:17: Signal is not used: 'io_slave_awsize'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:32:17: Signal is not used: 'io_slave_awburst'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:38:18: Signal is not used: 'io_slave_wdata'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:40:17: Signal is not used: 'io_slave_wstrb'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:42:11: Signal is not used: 'io_slave_wlast'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:44:11: Signal is not used: 'io_slave_bready'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:56:18: Signal is not used: 'io_slave_araddr'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:58:17: Signal is not used: 'io_slave_arid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:60:17: Signal is not used: 'io_slave_arlen'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:62:17: Signal is not used: 'io_slave_arsize'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:64:17: Signal is not used: 'io_slave_arburst'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:66:11: Signal is not used: 'io_slave_rready'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_gen_imm.sv:12:49: Bits of signal are not used: 'inst'[6:0]",
+          "reason": "Opcode inst[6:0] is decoded upstream"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_ifu.sv:29:24: Signal is not used: 'bpu_train_valid'",
+          "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_ifu.sv:30:32: Signal is not used: 'bpu_train_index'",
+          "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_ifu.sv:31:24: Signal is not used: 'bpu_train_taken'",
+          "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"
+        },
+        {
+          "diagnostic": "%Warning-SYNCASYNCNET: vsrc/top/ysyx_soc_cpu.sv:11:17: Signal flopped as both synchronous and async: 'ysyx_25030087.__Vcellinp__subsystem__rst_n'",
+          "reason": "SVA samples the hardware asynchronous reset"
+        }
+      ],
+      "result": "PASS",
+      "preprocessed_sha256": "dff42118a1c1356cad7464e0be71614efb09eef2f8f44e4f5a1ab65f8ad8c47c",
+      "lint_sha256": "63826cd48d30cc9da000c972cff3742b77465a0702639c763cb8536ce5da00e9"
+    },
+    "synthesis-bpu1": {
+      "defines": [
+        "SYNTHESIS",
+        "NPC_BPU_MODE=1",
+        "NPC_FLASH_BOOT"
+      ],
+      "bpu_mode": 1,
+      "waivers": [
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:99:6: Cell pin connected by name with empty reference: 'commit_pc'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:100:6: Cell pin connected by name with empty reference: 'commit_inst'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:101:6: Cell pin connected by name with empty reference: 'commit_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:102:6: Cell pin connected by name with empty reference: 'commit_is_mmio'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:103:6: Cell pin connected by name with empty reference: 'commit_exception'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:104:6: Cell pin connected by name with empty reference: 'commit_exception_cause'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:105:6: Cell pin connected by name with empty reference: 'commit_redirect_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:106:6: Cell pin connected by name with empty reference: 'commit_redirect_reason'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:107:6: Cell pin connected by name with empty reference: 'commit_mem_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:108:6: Cell pin connected by name with empty reference: 'commit_mem_write'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:109:6: Cell pin connected by name with empty reference: 'commit_mem_addr'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:110:6: Cell pin connected by name with empty reference: 'commit_mem_error'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:132:6: Cell pin connected by name with empty reference: 'monitor_bus'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:18:11: Signal is not used: 'io_interrupt'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:22:11: Signal is not used: 'io_slave_awvalid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:24:18: Signal is not used: 'io_slave_awaddr'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:26:17: Signal is not used: 'io_slave_awid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:28:17: Signal is not used: 'io_slave_awlen'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:30:17: Signal is not used: 'io_slave_awsize'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:32:17: Signal is not used: 'io_slave_awburst'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:36:11: Signal is not used: 'io_slave_wvalid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:38:18: Signal is not used: 'io_slave_wdata'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:40:17: Signal is not used: 'io_slave_wstrb'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:42:11: Signal is not used: 'io_slave_wlast'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:44:11: Signal is not used: 'io_slave_bready'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:54:11: Signal is not used: 'io_slave_arvalid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:56:18: Signal is not used: 'io_slave_araddr'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:58:17: Signal is not used: 'io_slave_arid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:60:17: Signal is not used: 'io_slave_arlen'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:62:17: Signal is not used: 'io_slave_arsize'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:64:17: Signal is not used: 'io_slave_arburst'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:66:11: Signal is not used: 'io_slave_rready'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:79:13: Signal is not used: 'if_ctx_fire'",
+          "reason": "Assertion-only handshake observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:148:13: Signal is not used: 'op_rs1_idx'",
+          "reason": "Assertion-only operand observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:149:13: Signal is not used: 'op_rs2_idx'",
+          "reason": "Assertion-only operand observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:158:13: Signal is not used: 'exu_commit_pc'",
+          "reason": "Assertion-only commit observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:167:13: Signal is not used: 'commit_mem_wdata'",
+          "reason": "Assertion-only store observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_gen_imm.sv:12:49: Bits of signal are not used: 'inst'[6:0]",
+          "reason": "Opcode inst[6:0] is decoded upstream"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/bus/ysyx_lsu_axi4_adapter.sv:70:13: Signal is not used: 'local_request_aligned'",
+          "reason": "Assertion-only alignment observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_ifu.sv:29:24: Signal is not used: 'bpu_train_valid'",
+          "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_ifu.sv:30:32: Signal is not used: 'bpu_train_index'",
+          "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_ifu.sv:31:24: Signal is not used: 'bpu_train_taken'",
+          "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_exu.sv:19:24: Signal is not used: 'op_pred_taken'",
+          "reason": "Assertion-only prediction observation"
+        }
+      ],
+      "result": "PASS",
+      "preprocessed_sha256": "5f1d0ebbee15a5bf888dc117a8036934202d1b96e66cf768686d795cc36b9852",
+      "lint_sha256": "2e93177dccea10dbabf079845e25daafc6792f5f4dbd85b42c5142ccfefdba6c"
+    },
+    "synthesis_overrides_dpi-bpu1": {
+      "defines": [
+        "SYNTHESIS",
+        "NPC_SIM_DPI",
+        "DIFF",
+        "NPC_BPU_MODE=1",
+        "NPC_FLASH_BOOT"
+      ],
+      "bpu_mode": 1,
+      "waivers": [
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:99:6: Cell pin connected by name with empty reference: 'commit_pc'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:100:6: Cell pin connected by name with empty reference: 'commit_inst'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:101:6: Cell pin connected by name with empty reference: 'commit_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:102:6: Cell pin connected by name with empty reference: 'commit_is_mmio'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:103:6: Cell pin connected by name with empty reference: 'commit_exception'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:104:6: Cell pin connected by name with empty reference: 'commit_exception_cause'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:105:6: Cell pin connected by name with empty reference: 'commit_redirect_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:106:6: Cell pin connected by name with empty reference: 'commit_redirect_reason'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:107:6: Cell pin connected by name with empty reference: 'commit_mem_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:108:6: Cell pin connected by name with empty reference: 'commit_mem_write'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:109:6: Cell pin connected by name with empty reference: 'commit_mem_addr'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:110:6: Cell pin connected by name with empty reference: 'commit_mem_error'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:132:6: Cell pin connected by name with empty reference: 'monitor_bus'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:18:11: Signal is not used: 'io_interrupt'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:22:11: Signal is not used: 'io_slave_awvalid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:24:18: Signal is not used: 'io_slave_awaddr'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:26:17: Signal is not used: 'io_slave_awid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:28:17: Signal is not used: 'io_slave_awlen'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:30:17: Signal is not used: 'io_slave_awsize'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:32:17: Signal is not used: 'io_slave_awburst'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:36:11: Signal is not used: 'io_slave_wvalid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:38:18: Signal is not used: 'io_slave_wdata'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:40:17: Signal is not used: 'io_slave_wstrb'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:42:11: Signal is not used: 'io_slave_wlast'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:44:11: Signal is not used: 'io_slave_bready'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:54:11: Signal is not used: 'io_slave_arvalid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:56:18: Signal is not used: 'io_slave_araddr'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:58:17: Signal is not used: 'io_slave_arid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:60:17: Signal is not used: 'io_slave_arlen'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:62:17: Signal is not used: 'io_slave_arsize'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:64:17: Signal is not used: 'io_slave_arburst'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:66:11: Signal is not used: 'io_slave_rready'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:79:13: Signal is not used: 'if_ctx_fire'",
+          "reason": "Assertion-only handshake observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:148:13: Signal is not used: 'op_rs1_idx'",
+          "reason": "Assertion-only operand observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:149:13: Signal is not used: 'op_rs2_idx'",
+          "reason": "Assertion-only operand observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:158:13: Signal is not used: 'exu_commit_pc'",
+          "reason": "Assertion-only commit observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:167:13: Signal is not used: 'commit_mem_wdata'",
+          "reason": "Assertion-only store observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_gen_imm.sv:12:49: Bits of signal are not used: 'inst'[6:0]",
+          "reason": "Opcode inst[6:0] is decoded upstream"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/bus/ysyx_lsu_axi4_adapter.sv:70:13: Signal is not used: 'local_request_aligned'",
+          "reason": "Assertion-only alignment observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_ifu.sv:29:24: Signal is not used: 'bpu_train_valid'",
+          "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_ifu.sv:30:32: Signal is not used: 'bpu_train_index'",
+          "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_ifu.sv:31:24: Signal is not used: 'bpu_train_taken'",
+          "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_exu.sv:19:24: Signal is not used: 'op_pred_taken'",
+          "reason": "Assertion-only prediction observation"
+        }
+      ],
+      "result": "PASS",
+      "preprocessed_sha256": "5f1d0ebbee15a5bf888dc117a8036934202d1b96e66cf768686d795cc36b9852",
+      "lint_sha256": "2e93177dccea10dbabf079845e25daafc6792f5f4dbd85b42c5142ccfefdba6c"
+    },
+    "simulation_no_dpi-bpu1": {
+      "defines": [
+        "NPC_BPU_MODE=1",
+        "NPC_FLASH_BOOT"
+      ],
+      "bpu_mode": 1,
+      "waivers": [
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:99:6: Cell pin connected by name with empty reference: 'commit_pc'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:100:6: Cell pin connected by name with empty reference: 'commit_inst'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:101:6: Cell pin connected by name with empty reference: 'commit_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:102:6: Cell pin connected by name with empty reference: 'commit_is_mmio'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:103:6: Cell pin connected by name with empty reference: 'commit_exception'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:104:6: Cell pin connected by name with empty reference: 'commit_exception_cause'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:105:6: Cell pin connected by name with empty reference: 'commit_redirect_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:106:6: Cell pin connected by name with empty reference: 'commit_redirect_reason'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:107:6: Cell pin connected by name with empty reference: 'commit_mem_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:108:6: Cell pin connected by name with empty reference: 'commit_mem_write'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:109:6: Cell pin connected by name with empty reference: 'commit_mem_addr'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:110:6: Cell pin connected by name with empty reference: 'commit_mem_error'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:132:6: Cell pin connected by name with empty reference: 'monitor_bus'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:24:18: Signal is not used: 'io_slave_awaddr'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:26:17: Signal is not used: 'io_slave_awid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:28:17: Signal is not used: 'io_slave_awlen'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:30:17: Signal is not used: 'io_slave_awsize'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:32:17: Signal is not used: 'io_slave_awburst'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:38:18: Signal is not used: 'io_slave_wdata'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:40:17: Signal is not used: 'io_slave_wstrb'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:42:11: Signal is not used: 'io_slave_wlast'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:44:11: Signal is not used: 'io_slave_bready'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:56:18: Signal is not used: 'io_slave_araddr'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:58:17: Signal is not used: 'io_slave_arid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:60:17: Signal is not used: 'io_slave_arlen'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:62:17: Signal is not used: 'io_slave_arsize'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:64:17: Signal is not used: 'io_slave_arburst'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:66:11: Signal is not used: 'io_slave_rready'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_gen_imm.sv:12:49: Bits of signal are not used: 'inst'[6:0]",
+          "reason": "Opcode inst[6:0] is decoded upstream"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_ifu.sv:29:24: Signal is not used: 'bpu_train_valid'",
+          "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_ifu.sv:30:32: Signal is not used: 'bpu_train_index'",
+          "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_ifu.sv:31:24: Signal is not used: 'bpu_train_taken'",
+          "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"
+        },
+        {
+          "diagnostic": "%Warning-SYNCASYNCNET: vsrc/top/ysyx_soc_cpu.sv:11:17: Signal flopped as both synchronous and async: 'ysyx_25030087.__Vcellinp__subsystem__rst_n'",
+          "reason": "SVA samples the hardware asynchronous reset"
+        }
+      ],
+      "result": "PASS",
+      "preprocessed_sha256": "7156bc4368def33908f6838a98c4a358be344be6e67b97e46baecc267b4d958a",
+      "lint_sha256": "63826cd48d30cc9da000c972cff3742b77465a0702639c763cb8536ce5da00e9"
+    },
+    "simulation_dpi-bpu1": {
+      "defines": [
+        "NPC_SIM_DPI",
+        "DIFF",
+        "NPC_BPU_MODE=1",
+        "NPC_FLASH_BOOT"
+      ],
+      "bpu_mode": 1,
+      "waivers": [
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:99:6: Cell pin connected by name with empty reference: 'commit_pc'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:100:6: Cell pin connected by name with empty reference: 'commit_inst'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:101:6: Cell pin connected by name with empty reference: 'commit_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:102:6: Cell pin connected by name with empty reference: 'commit_is_mmio'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:103:6: Cell pin connected by name with empty reference: 'commit_exception'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:104:6: Cell pin connected by name with empty reference: 'commit_exception_cause'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:105:6: Cell pin connected by name with empty reference: 'commit_redirect_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:106:6: Cell pin connected by name with empty reference: 'commit_redirect_reason'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:107:6: Cell pin connected by name with empty reference: 'commit_mem_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:108:6: Cell pin connected by name with empty reference: 'commit_mem_write'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:109:6: Cell pin connected by name with empty reference: 'commit_mem_addr'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:110:6: Cell pin connected by name with empty reference: 'commit_mem_error'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:132:6: Cell pin connected by name with empty reference: 'monitor_bus'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:24:18: Signal is not used: 'io_slave_awaddr'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:26:17: Signal is not used: 'io_slave_awid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:28:17: Signal is not used: 'io_slave_awlen'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:30:17: Signal is not used: 'io_slave_awsize'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:32:17: Signal is not used: 'io_slave_awburst'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:38:18: Signal is not used: 'io_slave_wdata'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:40:17: Signal is not used: 'io_slave_wstrb'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:42:11: Signal is not used: 'io_slave_wlast'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:44:11: Signal is not used: 'io_slave_bready'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:56:18: Signal is not used: 'io_slave_araddr'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:58:17: Signal is not used: 'io_slave_arid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:60:17: Signal is not used: 'io_slave_arlen'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:62:17: Signal is not used: 'io_slave_arsize'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:64:17: Signal is not used: 'io_slave_arburst'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:66:11: Signal is not used: 'io_slave_rready'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_gen_imm.sv:12:49: Bits of signal are not used: 'inst'[6:0]",
+          "reason": "Opcode inst[6:0] is decoded upstream"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_ifu.sv:29:24: Signal is not used: 'bpu_train_valid'",
+          "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_ifu.sv:30:32: Signal is not used: 'bpu_train_index'",
+          "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_ifu.sv:31:24: Signal is not used: 'bpu_train_taken'",
+          "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"
+        },
+        {
+          "diagnostic": "%Warning-SYNCASYNCNET: vsrc/top/ysyx_soc_cpu.sv:11:17: Signal flopped as both synchronous and async: 'ysyx_25030087.__Vcellinp__subsystem__rst_n'",
+          "reason": "SVA samples the hardware asynchronous reset"
+        }
+      ],
+      "result": "PASS",
+      "preprocessed_sha256": "7dbc0b267503255d4e24b1ba8729d425f51b73baf972bcaad1ef5e820ea65cb5",
+      "lint_sha256": "63826cd48d30cc9da000c972cff3742b77465a0702639c763cb8536ce5da00e9"
+    },
+    "synthesis-bpu2": {
+      "defines": [
+        "SYNTHESIS",
+        "NPC_BPU_MODE=2",
+        "NPC_FLASH_BOOT"
+      ],
+      "bpu_mode": 2,
+      "waivers": [
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:99:6: Cell pin connected by name with empty reference: 'commit_pc'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:100:6: Cell pin connected by name with empty reference: 'commit_inst'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:101:6: Cell pin connected by name with empty reference: 'commit_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:102:6: Cell pin connected by name with empty reference: 'commit_is_mmio'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:103:6: Cell pin connected by name with empty reference: 'commit_exception'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:104:6: Cell pin connected by name with empty reference: 'commit_exception_cause'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:105:6: Cell pin connected by name with empty reference: 'commit_redirect_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:106:6: Cell pin connected by name with empty reference: 'commit_redirect_reason'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:107:6: Cell pin connected by name with empty reference: 'commit_mem_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:108:6: Cell pin connected by name with empty reference: 'commit_mem_write'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:109:6: Cell pin connected by name with empty reference: 'commit_mem_addr'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:110:6: Cell pin connected by name with empty reference: 'commit_mem_error'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:132:6: Cell pin connected by name with empty reference: 'monitor_bus'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:18:11: Signal is not used: 'io_interrupt'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:22:11: Signal is not used: 'io_slave_awvalid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:24:18: Signal is not used: 'io_slave_awaddr'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:26:17: Signal is not used: 'io_slave_awid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:28:17: Signal is not used: 'io_slave_awlen'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:30:17: Signal is not used: 'io_slave_awsize'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:32:17: Signal is not used: 'io_slave_awburst'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:36:11: Signal is not used: 'io_slave_wvalid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:38:18: Signal is not used: 'io_slave_wdata'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:40:17: Signal is not used: 'io_slave_wstrb'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:42:11: Signal is not used: 'io_slave_wlast'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:44:11: Signal is not used: 'io_slave_bready'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:54:11: Signal is not used: 'io_slave_arvalid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:56:18: Signal is not used: 'io_slave_araddr'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:58:17: Signal is not used: 'io_slave_arid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:60:17: Signal is not used: 'io_slave_arlen'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:62:17: Signal is not used: 'io_slave_arsize'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:64:17: Signal is not used: 'io_slave_arburst'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:66:11: Signal is not used: 'io_slave_rready'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:79:13: Signal is not used: 'if_ctx_fire'",
+          "reason": "Assertion-only handshake observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:148:13: Signal is not used: 'op_rs1_idx'",
+          "reason": "Assertion-only operand observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:149:13: Signal is not used: 'op_rs2_idx'",
+          "reason": "Assertion-only operand observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:158:13: Signal is not used: 'exu_commit_pc'",
+          "reason": "Assertion-only commit observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:167:13: Signal is not used: 'commit_mem_wdata'",
+          "reason": "Assertion-only store observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_gen_imm.sv:12:49: Bits of signal are not used: 'inst'[6:0]",
+          "reason": "Opcode inst[6:0] is decoded upstream"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_exu.sv:19:24: Signal is not used: 'op_pred_taken'",
+          "reason": "Assertion-only prediction observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/bus/ysyx_lsu_axi4_adapter.sv:70:13: Signal is not used: 'local_request_aligned'",
+          "reason": "Assertion-only alignment observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_gshare.sv:8:18: Bits of signal are not used: 'query_pc'[31:9,1:0]",
+          "reason": "Index uses word PC low INDEX_BITS only"
+        }
+      ],
+      "result": "PASS",
+      "preprocessed_sha256": "f1f8178214bdc8e88a7e5f5edb96898b0b805beeffad8d118c21714176d99e23",
+      "lint_sha256": "ef0a249633b6e390dfd427191d0eb122e66e91a6694ed9af84bbaafcfd125d19"
+    },
+    "synthesis_overrides_dpi-bpu2": {
+      "defines": [
+        "SYNTHESIS",
+        "NPC_SIM_DPI",
+        "DIFF",
+        "NPC_BPU_MODE=2",
+        "NPC_FLASH_BOOT"
+      ],
+      "bpu_mode": 2,
+      "waivers": [
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:99:6: Cell pin connected by name with empty reference: 'commit_pc'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:100:6: Cell pin connected by name with empty reference: 'commit_inst'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:101:6: Cell pin connected by name with empty reference: 'commit_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:102:6: Cell pin connected by name with empty reference: 'commit_is_mmio'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:103:6: Cell pin connected by name with empty reference: 'commit_exception'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:104:6: Cell pin connected by name with empty reference: 'commit_exception_cause'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:105:6: Cell pin connected by name with empty reference: 'commit_redirect_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:106:6: Cell pin connected by name with empty reference: 'commit_redirect_reason'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:107:6: Cell pin connected by name with empty reference: 'commit_mem_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:108:6: Cell pin connected by name with empty reference: 'commit_mem_write'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:109:6: Cell pin connected by name with empty reference: 'commit_mem_addr'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:110:6: Cell pin connected by name with empty reference: 'commit_mem_error'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:132:6: Cell pin connected by name with empty reference: 'monitor_bus'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:18:11: Signal is not used: 'io_interrupt'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:22:11: Signal is not used: 'io_slave_awvalid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:24:18: Signal is not used: 'io_slave_awaddr'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:26:17: Signal is not used: 'io_slave_awid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:28:17: Signal is not used: 'io_slave_awlen'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:30:17: Signal is not used: 'io_slave_awsize'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:32:17: Signal is not used: 'io_slave_awburst'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:36:11: Signal is not used: 'io_slave_wvalid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:38:18: Signal is not used: 'io_slave_wdata'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:40:17: Signal is not used: 'io_slave_wstrb'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:42:11: Signal is not used: 'io_slave_wlast'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:44:11: Signal is not used: 'io_slave_bready'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:54:11: Signal is not used: 'io_slave_arvalid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:56:18: Signal is not used: 'io_slave_araddr'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:58:17: Signal is not used: 'io_slave_arid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:60:17: Signal is not used: 'io_slave_arlen'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:62:17: Signal is not used: 'io_slave_arsize'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:64:17: Signal is not used: 'io_slave_arburst'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:66:11: Signal is not used: 'io_slave_rready'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:79:13: Signal is not used: 'if_ctx_fire'",
+          "reason": "Assertion-only handshake observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:148:13: Signal is not used: 'op_rs1_idx'",
+          "reason": "Assertion-only operand observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:149:13: Signal is not used: 'op_rs2_idx'",
+          "reason": "Assertion-only operand observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:158:13: Signal is not used: 'exu_commit_pc'",
+          "reason": "Assertion-only commit observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_core.sv:167:13: Signal is not used: 'commit_mem_wdata'",
+          "reason": "Assertion-only store observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_gen_imm.sv:12:49: Bits of signal are not used: 'inst'[6:0]",
+          "reason": "Opcode inst[6:0] is decoded upstream"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_exu.sv:19:24: Signal is not used: 'op_pred_taken'",
+          "reason": "Assertion-only prediction observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/bus/ysyx_lsu_axi4_adapter.sv:70:13: Signal is not used: 'local_request_aligned'",
+          "reason": "Assertion-only alignment observation"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_gshare.sv:8:18: Bits of signal are not used: 'query_pc'[31:9,1:0]",
+          "reason": "Index uses word PC low INDEX_BITS only"
+        }
+      ],
+      "result": "PASS",
+      "preprocessed_sha256": "f1f8178214bdc8e88a7e5f5edb96898b0b805beeffad8d118c21714176d99e23",
+      "lint_sha256": "ef0a249633b6e390dfd427191d0eb122e66e91a6694ed9af84bbaafcfd125d19"
+    },
+    "simulation_no_dpi-bpu2": {
+      "defines": [
+        "NPC_BPU_MODE=2",
+        "NPC_FLASH_BOOT"
+      ],
+      "bpu_mode": 2,
+      "waivers": [
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:99:6: Cell pin connected by name with empty reference: 'commit_pc'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:100:6: Cell pin connected by name with empty reference: 'commit_inst'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:101:6: Cell pin connected by name with empty reference: 'commit_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:102:6: Cell pin connected by name with empty reference: 'commit_is_mmio'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:103:6: Cell pin connected by name with empty reference: 'commit_exception'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:104:6: Cell pin connected by name with empty reference: 'commit_exception_cause'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:105:6: Cell pin connected by name with empty reference: 'commit_redirect_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:106:6: Cell pin connected by name with empty reference: 'commit_redirect_reason'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:107:6: Cell pin connected by name with empty reference: 'commit_mem_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:108:6: Cell pin connected by name with empty reference: 'commit_mem_write'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:109:6: Cell pin connected by name with empty reference: 'commit_mem_addr'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:110:6: Cell pin connected by name with empty reference: 'commit_mem_error'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:132:6: Cell pin connected by name with empty reference: 'monitor_bus'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:24:18: Signal is not used: 'io_slave_awaddr'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:26:17: Signal is not used: 'io_slave_awid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:28:17: Signal is not used: 'io_slave_awlen'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:30:17: Signal is not used: 'io_slave_awsize'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:32:17: Signal is not used: 'io_slave_awburst'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:38:18: Signal is not used: 'io_slave_wdata'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:40:17: Signal is not used: 'io_slave_wstrb'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:42:11: Signal is not used: 'io_slave_wlast'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:44:11: Signal is not used: 'io_slave_bready'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:56:18: Signal is not used: 'io_slave_araddr'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:58:17: Signal is not used: 'io_slave_arid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:60:17: Signal is not used: 'io_slave_arlen'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:62:17: Signal is not used: 'io_slave_arsize'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:64:17: Signal is not used: 'io_slave_arburst'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:66:11: Signal is not used: 'io_slave_rready'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_gen_imm.sv:12:49: Bits of signal are not used: 'inst'[6:0]",
+          "reason": "Opcode inst[6:0] is decoded upstream"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_gshare.sv:8:18: Bits of signal are not used: 'query_pc'[31:9,1:0]",
+          "reason": "Index uses word PC low INDEX_BITS only"
+        },
+        {
+          "diagnostic": "%Warning-SYNCASYNCNET: vsrc/top/ysyx_soc_cpu.sv:11:17: Signal flopped as both synchronous and async: 'ysyx_25030087.__Vcellinp__subsystem__rst_n'",
+          "reason": "SVA samples the hardware asynchronous reset"
+        }
+      ],
+      "result": "PASS",
+      "preprocessed_sha256": "56275778c1a0b906766254f124a628cf8938c3fd2fbbc4e88e30ab8cc35b37fa",
+      "lint_sha256": "a636da71f0dabc47f210bb1d4a286ff26f4fca8e82af77a86cacd3485fedc750"
+    },
+    "simulation_dpi-bpu2": {
+      "defines": [
+        "NPC_SIM_DPI",
+        "DIFF",
+        "NPC_BPU_MODE=2",
+        "NPC_FLASH_BOOT"
+      ],
+      "bpu_mode": 2,
+      "waivers": [
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:99:6: Cell pin connected by name with empty reference: 'commit_pc'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:100:6: Cell pin connected by name with empty reference: 'commit_inst'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:101:6: Cell pin connected by name with empty reference: 'commit_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:102:6: Cell pin connected by name with empty reference: 'commit_is_mmio'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:103:6: Cell pin connected by name with empty reference: 'commit_exception'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:104:6: Cell pin connected by name with empty reference: 'commit_exception_cause'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:105:6: Cell pin connected by name with empty reference: 'commit_redirect_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:106:6: Cell pin connected by name with empty reference: 'commit_redirect_reason'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:107:6: Cell pin connected by name with empty reference: 'commit_mem_valid'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:108:6: Cell pin connected by name with empty reference: 'commit_mem_write'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:109:6: Cell pin connected by name with empty reference: 'commit_mem_addr'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:110:6: Cell pin connected by name with empty reference: 'commit_mem_error'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-PINCONNECTEMPTY: vsrc/top/ysyx_25030087.sv:132:6: Cell pin connected by name with empty reference: 'monitor_bus'",
+          "reason": "Actual SoC wrapper leaves this observation output unconnected"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:24:18: Signal is not used: 'io_slave_awaddr'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:26:17: Signal is not used: 'io_slave_awid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:28:17: Signal is not used: 'io_slave_awlen'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:30:17: Signal is not used: 'io_slave_awsize'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:32:17: Signal is not used: 'io_slave_awburst'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:38:18: Signal is not used: 'io_slave_wdata'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:40:17: Signal is not used: 'io_slave_wstrb'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:42:11: Signal is not used: 'io_slave_wlast'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:44:11: Signal is not used: 'io_slave_bready'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:56:18: Signal is not used: 'io_slave_araddr'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:58:17: Signal is not used: 'io_slave_arid'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:60:17: Signal is not used: 'io_slave_arlen'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:62:17: Signal is not used: 'io_slave_arsize'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:64:17: Signal is not used: 'io_slave_arburst'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/top/ysyx_25030087.sv:66:11: Signal is not used: 'io_slave_rready'",
+          "reason": "Disabled external IRQ/ChipLink input; no functional consumer"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_gen_imm.sv:12:49: Bits of signal are not used: 'inst'[6:0]",
+          "reason": "Opcode inst[6:0] is decoded upstream"
+        },
+        {
+          "diagnostic": "%Warning-UNUSEDSIGNAL: vsrc/core/ysyx_gshare.sv:8:18: Bits of signal are not used: 'query_pc'[31:9,1:0]",
+          "reason": "Index uses word PC low INDEX_BITS only"
+        },
+        {
+          "diagnostic": "%Warning-SYNCASYNCNET: vsrc/top/ysyx_soc_cpu.sv:11:17: Signal flopped as both synchronous and async: 'ysyx_25030087.__Vcellinp__subsystem__rst_n'",
+          "reason": "SVA samples the hardware asynchronous reset"
+        }
+      ],
+      "result": "PASS",
+      "preprocessed_sha256": "5b0687405910620a1d6b932e352920be2601c3cf69e89131029b797677a41966",
+      "lint_sha256": "a636da71f0dabc47f210bb1d4a286ff26f4fca8e82af77a86cacd3485fedc750"
+    }
+  },
+  "scope": {
+    "description": "M5 CPU wrapper + core + AXI adapters/arbiter/router + CLINT; observation outputs unconnected",
+    "parameter_overrides": {},
+    "effective_parameters": {
+      "PC_RST": "0x30000000",
+      "IFQ_DEPTH": 2,
+      "BPU_MODE": "per profile",
+      "BPU_INDEX_BITS": 7
+    },
+    "gpr_entries": 16,
+    "m_arithmetic": "removed",
+    "dc_checked": false
+  }
+}

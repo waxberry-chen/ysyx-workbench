@@ -1,0 +1,7 @@
+PREEMPT progress=6,6 switches=5,5 irq_switches=10
+WAKE elapsed=4,7 idle_runs=1081
+HEAP total=4080416 before=0 used=0 peak=544
+STACK worker0 size=8192 untouched=7744
+STACK worker1 size=8192 untouched=7824
+STACK idle size=4096 untouched=3832
+RTT SYSTEM PASS

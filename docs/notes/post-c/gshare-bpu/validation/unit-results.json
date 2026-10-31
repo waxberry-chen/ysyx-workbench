@@ -1,0 +1,231 @@
+[
+  {
+    "name": "predecode-build",
+    "command": [
+      "verilator",
+      "--cc",
+      "--exe",
+      "--build",
+      "-j",
+      "2",
+      "--sv",
+      "--assert",
+      "-Wall",
+      "-Wno-fatal",
+      "-Wno-SYNCASYNCNET",
+      "-Werror-WIDTH",
+      "-Werror-PINMISSING",
+      "-Werror-PINNOTFOUND",
+      "-Werror-LATCH",
+      "-Werror-UNOPTFLAT",
+      "--top-module",
+      "ysyx_predecode",
+      "--Mdir",
+      "/home/cym/prj/ysyx-workbench/npc/build/gshare-bpu/unit/predecode",
+      "vsrc/core/ysyx_predecode.sv",
+      "/home/cym/prj/ysyx-workbench/npc/tests/bpu/predecode.cpp"
+    ],
+    "expected_failure": null,
+    "status": "PASS"
+  },
+  {
+    "name": "predecode",
+    "command": [
+      "/home/cym/prj/ysyx-workbench/npc/build/gshare-bpu/unit/predecode/Vysyx_predecode"
+    ],
+    "expected_failure": null,
+    "status": "PASS"
+  },
+  {
+    "name": "gshare7-build",
+    "command": [
+      "verilator",
+      "--cc",
+      "--exe",
+      "--build",
+      "-j",
+      "2",
+      "--sv",
+      "--assert",
+      "-Wall",
+      "-Wno-fatal",
+      "-Wno-SYNCASYNCNET",
+      "-Werror-WIDTH",
+      "-Werror-PINMISSING",
+      "-Werror-PINNOTFOUND",
+      "-Werror-LATCH",
+      "-Werror-UNOPTFLAT",
+      "--top-module",
+      "ysyx_gshare",
+      "--Mdir",
+      "/home/cym/prj/ysyx-workbench/npc/build/gshare-bpu/unit/gshare7",
+      "vsrc/core/ysyx_gshare.sv",
+      "/home/cym/prj/ysyx-workbench/npc/tests/bpu/predictor.cpp"
+    ],
+    "expected_failure": null,
+    "status": "PASS"
+  },
+  {
+    "name": "gshare7",
+    "command": [
+      "/home/cym/prj/ysyx-workbench/npc/build/gshare-bpu/unit/gshare7/Vysyx_gshare"
+    ],
+    "expected_failure": null,
+    "status": "PASS"
+  },
+  {
+    "name": "gshare3-build",
+    "command": [
+      "verilator",
+      "--cc",
+      "--exe",
+      "--build",
+      "-j",
+      "2",
+      "--sv",
+      "--assert",
+      "-Wall",
+      "-Wno-fatal",
+      "-Wno-SYNCASYNCNET",
+      "-Werror-WIDTH",
+      "-Werror-PINMISSING",
+      "-Werror-PINNOTFOUND",
+      "-Werror-LATCH",
+      "-Werror-UNOPTFLAT",
+      "--top-module",
+      "ysyx_gshare",
+      "--Mdir",
+      "/home/cym/prj/ysyx-workbench/npc/build/gshare-bpu/unit/gshare3",
+      "-GINDEX_BITS=3",
+      "-CFLAGS",
+      "-DINDEX_BITS=3",
+      "vsrc/core/ysyx_gshare.sv",
+      "/home/cym/prj/ysyx-workbench/npc/tests/bpu/predictor.cpp"
+    ],
+    "expected_failure": null,
+    "status": "PASS"
+  },
+  {
+    "name": "gshare3",
+    "command": [
+      "/home/cym/prj/ysyx-workbench/npc/build/gshare-bpu/unit/gshare3/Vysyx_gshare"
+    ],
+    "expected_failure": null,
+    "status": "PASS"
+  },
+  {
+    "name": "ifu-build",
+    "command": [
+      "verilator",
+      "--cc",
+      "--exe",
+      "--build",
+      "-j",
+      "2",
+      "--sv",
+      "--assert",
+      "-Wall",
+      "-Wno-fatal",
+      "-Wno-SYNCASYNCNET",
+      "-Werror-WIDTH",
+      "-Werror-PINMISSING",
+      "-Werror-PINNOTFOUND",
+      "-Werror-LATCH",
+      "-Werror-UNOPTFLAT",
+      "--top-module",
+      "ysyx_ifu",
+      "--Mdir",
+      "/home/cym/prj/ysyx-workbench/npc/build/gshare-bpu/unit/ifu",
+      "vsrc/core/ysyx_ifu.sv",
+      "vsrc/core/ysyx_predecode.sv",
+      "vsrc/core/ysyx_gshare.sv",
+      "vsrc/gnrl/ysyx_gnrl_primitive.sv",
+      "/home/cym/prj/ysyx-workbench/npc/tests/bpu/ifu.cpp"
+    ],
+    "expected_failure": null,
+    "status": "PASS"
+  },
+  {
+    "name": "ifu",
+    "command": [
+      "/home/cym/prj/ysyx-workbench/npc/build/gshare-bpu/unit/ifu/Vysyx_ifu"
+    ],
+    "expected_failure": null,
+    "status": "PASS"
+  },
+  {
+    "name": "metadata-negative",
+    "command": [
+      "/home/cym/prj/ysyx-workbench/npc/build/gshare-bpu/unit/ifu/Vysyx_ifu",
+      "corrupt-metadata"
+    ],
+    "expected_failure": "IFU_SCOREBOARD: prediction metadata mismatch",
+    "status": "PASS"
+  },
+  {
+    "name": "recovery-build",
+    "command": [
+      "verilator",
+      "--binary",
+      "--timing",
+      "--sv",
+      "--assert",
+      "-Wall",
+      "-Wno-fatal",
+      "-Werror-WIDTH",
+      "--top-module",
+      "ysyx_exu_tb",
+      "-GBPU_MODE=2",
+      "--Mdir",
+      "/home/cym/prj/ysyx-workbench/npc/build/gshare-bpu/unit/recovery",
+      "vsrc/gnrl/ysyx_gnrl_primitive.sv",
+      "vsrc/core/ysyx_alu.sv",
+      "vsrc/core/ysyx_branch.sv",
+      "/home/cym/prj/ysyx-workbench/npc/vsrc/core/ysyx_exu.sv",
+      "tests/ysyx_exu_tb.sv"
+    ],
+    "expected_failure": null,
+    "status": "PASS"
+  },
+  {
+    "name": "recovery",
+    "command": [
+      "/home/cym/prj/ysyx-workbench/npc/build/gshare-bpu/unit/recovery/Vysyx_exu_tb"
+    ],
+    "expected_failure": null,
+    "status": "PASS"
+  },
+  {
+    "name": "recovery-negative-build",
+    "command": [
+      "verilator",
+      "--binary",
+      "--timing",
+      "--sv",
+      "--assert",
+      "-Wall",
+      "-Wno-fatal",
+      "-Werror-WIDTH",
+      "--top-module",
+      "ysyx_exu_tb",
+      "-GBPU_MODE=2",
+      "--Mdir",
+      "/home/cym/prj/ysyx-workbench/npc/build/gshare-bpu/unit/recovery-negative",
+      "vsrc/gnrl/ysyx_gnrl_primitive.sv",
+      "vsrc/core/ysyx_alu.sv",
+      "vsrc/core/ysyx_branch.sv",
+      "/home/cym/prj/ysyx-workbench/npc/build/gshare-bpu/unit/ysyx_exu_no_recovery.sv",
+      "tests/ysyx_exu_tb.sv"
+    ],
+    "expected_failure": null,
+    "status": "PASS"
+  },
+  {
+    "name": "recovery-negative",
+    "command": [
+      "/home/cym/prj/ysyx-workbench/npc/build/gshare-bpu/unit/recovery-negative/Vysyx_exu_tb"
+    ],
+    "expected_failure": "EXU test failed:",
+    "status": "PASS"
+  }
+]

@@ -1,0 +1,143 @@
+[
+  {
+    "name": "add-longlong",
+    "status": "PASS"
+  },
+  {
+    "name": "add",
+    "status": "PASS"
+  },
+  {
+    "name": "bit",
+    "status": "PASS"
+  },
+  {
+    "name": "bubble-sort",
+    "status": "PASS"
+  },
+  {
+    "name": "crc32",
+    "status": "PASS"
+  },
+  {
+    "name": "div",
+    "status": "PASS"
+  },
+  {
+    "name": "dummy",
+    "status": "PASS"
+  },
+  {
+    "name": "fact",
+    "status": "PASS"
+  },
+  {
+    "name": "fib",
+    "status": "PASS"
+  },
+  {
+    "name": "goldbach",
+    "status": "PASS"
+  },
+  {
+    "name": "hello-str",
+    "status": "PASS"
+  },
+  {
+    "name": "if-else",
+    "status": "PASS"
+  },
+  {
+    "name": "leap-year",
+    "status": "PASS"
+  },
+  {
+    "name": "load-store",
+    "status": "PASS"
+  },
+  {
+    "name": "matrix-mul",
+    "status": "PASS"
+  },
+  {
+    "name": "max",
+    "status": "PASS"
+  },
+  {
+    "name": "mersenne",
+    "status": "PASS"
+  },
+  {
+    "name": "min3",
+    "status": "PASS"
+  },
+  {
+    "name": "mov-c",
+    "status": "PASS"
+  },
+  {
+    "name": "movsx",
+    "status": "PASS"
+  },
+  {
+    "name": "mul-longlong",
+    "status": "PASS"
+  },
+  {
+    "name": "pascal",
+    "status": "PASS"
+  },
+  {
+    "name": "prime",
+    "status": "PASS"
+  },
+  {
+    "name": "quick-sort",
+    "status": "PASS"
+  },
+  {
+    "name": "recursion",
+    "status": "PASS"
+  },
+  {
+    "name": "select-sort",
+    "status": "PASS"
+  },
+  {
+    "name": "shift",
+    "status": "PASS"
+  },
+  {
+    "name": "shuixianhua",
+    "status": "PASS"
+  },
+  {
+    "name": "string",
+    "status": "PASS"
+  },
+  {
+    "name": "sub-longlong",
+    "status": "PASS"
+  },
+  {
+    "name": "sum",
+    "status": "PASS"
+  },
+  {
+    "name": "switch",
+    "status": "PASS"
+  },
+  {
+    "name": "to-lower-case",
+    "status": "PASS"
+  },
+  {
+    "name": "unalign",
+    "status": "EXCLUDED",
+    "reason": "RV32E policy traps misaligned data accesses"
+  },
+  {
+    "name": "wanshu",
+    "status": "PASS"
+  }
+]

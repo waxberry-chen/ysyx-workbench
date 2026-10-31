@@ -1,0 +1,4 @@
+EXU test failed: taken branch redirect is incorrect
+[27000] %Error: ysyx_exu_tb.sv:100: Assertion failed in TOP.ysyx_exu_tb.check
+%Error: tests/ysyx_exu_tb.sv:100: Verilog $stop
+Aborting...

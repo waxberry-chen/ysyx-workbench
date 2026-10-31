@@ -1,0 +1,177 @@
+[
+  {
+    "name": "add-longlong",
+    "status": "PASS",
+    "reason": "fixed S3 subset"
+  },
+  {
+    "name": "add",
+    "status": "PASS",
+    "reason": "fixed S3 subset"
+  },
+  {
+    "name": "bit",
+    "status": "PASS",
+    "reason": "fixed S3 subset"
+  },
+  {
+    "name": "bubble-sort",
+    "status": "PASS",
+    "reason": "fixed S3 subset"
+  },
+  {
+    "name": "crc32",
+    "status": "NOT_RUN",
+    "reason": "outside fixed S3 workload subset; defer to S4/S6"
+  },
+  {
+    "name": "div",
+    "status": "PASS",
+    "reason": "fixed S3 subset"
+  },
+  {
+    "name": "dummy",
+    "status": "PASS",
+    "reason": "fixed S3 subset"
+  },
+  {
+    "name": "fact",
+    "status": "NOT_RUN",
+    "reason": "outside fixed S3 workload subset; defer to S4/S6"
+  },
+  {
+    "name": "fib",
+    "status": "PASS",
+    "reason": "fixed S3 subset"
+  },
+  {
+    "name": "goldbach",
+    "status": "NOT_RUN",
+    "reason": "outside fixed S3 workload subset; defer to S4/S6"
+  },
+  {
+    "name": "hello-str",
+    "status": "EXCLUDED",
+    "reason": "4 KiB MROM / 8 KiB SRAM linker capacity"
+  },
+  {
+    "name": "if-else",
+    "status": "PASS",
+    "reason": "fixed S3 subset"
+  },
+  {
+    "name": "leap-year",
+    "status": "PASS",
+    "reason": "fixed S3 subset"
+  },
+  {
+    "name": "load-store",
+    "status": "PASS",
+    "reason": "fixed S3 subset"
+  },
+  {
+    "name": "matrix-mul",
+    "status": "NOT_RUN",
+    "reason": "outside fixed S3 workload subset; defer to S4/S6"
+  },
+  {
+    "name": "max",
+    "status": "PASS",
+    "reason": "fixed S3 subset"
+  },
+  {
+    "name": "mersenne",
+    "status": "NOT_RUN",
+    "reason": "outside fixed S3 workload subset; defer to S4/S6"
+  },
+  {
+    "name": "min3",
+    "status": "PASS",
+    "reason": "fixed S3 subset"
+  },
+  {
+    "name": "mov-c",
+    "status": "PASS",
+    "reason": "fixed S3 subset"
+  },
+  {
+    "name": "movsx",
+    "status": "PASS",
+    "reason": "fixed S3 subset"
+  },
+  {
+    "name": "mul-longlong",
+    "status": "PASS",
+    "reason": "fixed S3 subset"
+  },
+  {
+    "name": "pascal",
+    "status": "NOT_RUN",
+    "reason": "outside fixed S3 workload subset; defer to S4/S6"
+  },
+  {
+    "name": "prime",
+    "status": "NOT_RUN",
+    "reason": "outside fixed S3 workload subset; defer to S4/S6"
+  },
+  {
+    "name": "quick-sort",
+    "status": "PASS",
+    "reason": "fixed S3 subset"
+  },
+  {
+    "name": "recursion",
+    "status": "PASS",
+    "reason": "fixed S3 subset"
+  },
+  {
+    "name": "select-sort",
+    "status": "PASS",
+    "reason": "fixed S3 subset"
+  },
+  {
+    "name": "shift",
+    "status": "PASS",
+    "reason": "fixed S3 subset"
+  },
+  {
+    "name": "shuixianhua",
+    "status": "NOT_RUN",
+    "reason": "outside fixed S3 workload subset; defer to S4/S6"
+  },
+  {
+    "name": "string",
+    "status": "PASS",
+    "reason": "fixed S3 subset"
+  },
+  {
+    "name": "sub-longlong",
+    "status": "PASS",
+    "reason": "fixed S3 subset"
+  },
+  {
+    "name": "sum",
+    "status": "PASS",
+    "reason": "fixed S3 subset"
+  },
+  {
+    "name": "switch",
+    "status": "PASS",
+    "reason": "fixed S3 subset"
+  },
+  {
+    "name": "to-lower-case",
+    "status": "PASS",
+    "reason": "fixed S3 subset"
+  },
+  {
+    "name": "unalign",
+    "status": "NOT_RUN",
+    "reason": "outside fixed S3 workload subset; defer to S4/S6"
+  },
+  {
+    "name": "wanshu",
+    "status": "NOT_RUN",
+    "reason": "outside fixed S3 workload subset; defer to S4/S6"
+  }
+]

@@ -1,0 +1,1 @@
+IFU_SCOREBOARD PASS cycles=30000 requests=5628 redirects=1311 drops=812 redirect_response=234 repeated_redirect=67 queue_flush=576 push_pop=416 unaligned_target=1865

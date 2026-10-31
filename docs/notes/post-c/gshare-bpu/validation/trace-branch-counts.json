@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "definition": "Normal committed opcode 0x63 counted directly from commit trace; matches monitor denominator in all 18 runs",
+  "counts": {
+    "0-micro-sieve": 2666,
+    "0-micro-fib": 28901,
+    "0-cpu-if-else": 295,
+    "0-cpu-recursion": 1666,
+    "0-cpu-bubble-sort": 1175,
+    "0-cpu-quick-sort": 1370,
+    "1-micro-sieve": 2666,
+    "1-micro-fib": 28901,
+    "1-cpu-if-else": 295,
+    "1-cpu-recursion": 1666,
+    "1-cpu-bubble-sort": 1175,
+    "1-cpu-quick-sort": 1370,
+    "2-micro-sieve": 2666,
+    "2-micro-fib": 28901,
+    "2-cpu-if-else": 295,
+    "2-cpu-recursion": 1666,
+    "2-cpu-bubble-sort": 1175,
+    "2-cpu-quick-sort": 1370
+  }
+}

@@ -1,0 +1,1 @@
+BPU_MODEL PASS 20000 events INDEX_BITS=7 states=0,1,2,3
