@@ -1,13 +1,14 @@
 # NPC DC/PT pre-layout evaluation flow
 
+> 2026-10-31：GShare 增量已接入，默认配置显式选择 `NPC_BPU_MODE=2`；OFF/GSHARE 新面积时序对照待服务器执行，见 [比较配置与命令](../../docs/notes/post-c/gshare-bpu/4-performance-ppa.md)。下述 M5 cap90 是历史基线，不等于新 RTL 已通过 DC/PT。
 > 2026-10-29：M5 S7 cap90 已建立 CPU 子系统面积/数据时序基线，默认配置为 `npc_soc_cpu.tcl`。10% 电容裕量及增量 DRC 修复通过真实 DC/PT；Ultra leakage 自动零目标按用户决定仅记录，原 DC CONSTRAINT_FAIL 保留，详见 [基线审查](../../docs/notes/post-c/5-ysyx-soc-integration/s7-validation/baseline/README.md)。
 > M4 的 `npc_core.tcl/core.f/core.sdc` 保留为历史配置；该 RTL top 已退役，复现 M4 必须使用其固定 Git revision。
 
 当前 top 是实际接入 SoC 的 `ysyx_25030087`：**core + AXI adapters/arbiter/router + 内部 CLINT + wrapper**。
-采用 `SYNTHESIS NPC_FLASH_BOOT`，`PC_RST=0x30000000`，`IFQ_DEPTH=2`；RV32E 的 16 个 GPR，无 M/C。
+采用 `SYNTHESIS NPC_FLASH_BOOT NPC_BPU_MODE=2`，`PC_RST=0x30000000`，`IFQ_DEPTH=2`；RV32E 的 16 个 GPR，无 M/C。
 wrapper 的 commit/monitor 输出没有连到顶层，允许综合裁剪观察逻辑。与 M4 保留观察端口的范围不同。
 
-`00_indata/filelists/soc_cpu.f` 包含 20 个有序 SV 源文件，路径相对 **npc/**；primitive include 的
+`00_indata/filelists/soc_cpu.f` 包含 22 个有序 SV 源文件，路径相对 **npc/**；primitive include 的
 `ysyx_global.sv` 也进入快照。上游完整 SoC、SRAM/Flash/PSRAM 模型、仿真 monitor 和 AXI 延迟模块
 均不在该范围内，无 memory compiler、PnR、SPEF、GLS 或 PTPX 依赖。
 
@@ -63,7 +64,7 @@ make -C npc/flow check test scope-check
 contract. `test` exercises failure handling/provenance with explicitly fake tools,
 and sources the actual Tcl scripts against a mock command surface. Passing these
 checks **does not establish DC/PT command compatibility, library/license readiness,
-synthesis, STA, or timing PASS**. `scope-check` checks four macro profiles with
+synthesis, STA, or timing PASS**. `scope-check` checks four macro profiles for each BPU mode (12 combinations) with
 Verilator, rejects synthesis DPI/assertions/latches/unreviewed warnings, and saves
 results under `build/s7-scope-check/`. Functional evidence is the
 [M5 S6 system regression](../../docs/notes/post-c/5-ysyx-soc-integration/s6-validation/README.md).

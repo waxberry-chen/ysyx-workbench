@@ -8,10 +8,11 @@
 # reset 为高有效，早期仅对 reset 发起路径设 false path；物理释放/脉宽仍待评估。
 # power_enable 仅控制可选功耗报告，默认关闭；功耗优化由综合入口显式关闭，无功耗预算。
 # DC-only 最大电容上限缩放为 0.90，参数/实现位于 02_syn/run.tcl；PT 使用原库上限。
+# GShare 增量后默认显式选择模式 2；同条件 OFF 对照使用 npc_soc_cpu_bpu_off.tcl。
 # max_cores 是 EDA 使用的宿主机并行度。
 set cfg [dict create \
     top ysyx_25030087 filelist flow/00_indata/filelists/soc_cpu.f sdc flow/00_indata/constraints/soc_cpu.sdc \
-    defines {SYNTHESIS NPC_FLASH_BOOT} period 5.0 input_min 0.2 input_max 2.0 \
+    defines {SYNTHESIS NPC_FLASH_BOOT NPC_BPU_MODE=2} period 5.0 input_min 0.2 input_max 2.0 \
     output_min 0.2 output_max 2.0 \
     uncertainty_setup 0.2 uncertainty_hold 0.05 clock_transition 0.1 \
     input_transition 0.1 output_load 0.01 source_latency_min 0.0 source_latency_max 0.0 \

@@ -183,6 +183,22 @@ dict set site library_reviewed 1
         with self.assertRaisesRegex(f.FlowError, 'M4 Lite scope retired'):
             f.preflight(self.config, self.site)
 
+    def test_bpu_modes_are_explicit_and_frozen(self):
+        for mode in range(3):
+            self.append_cfg(f'dict set cfg defines {{SYNTHESIS NPC_FLASH_BOOT NPC_BPU_MODE={mode}}}')
+            run = self.new_run(f'bpu-{mode}')
+            manifest = json.loads((run/'manifest.json').read_text())
+            self.assertEqual(manifest['scope_contract']['bpu_mode'], str(mode))
+            self.assertEqual(manifest['scope_contract']['defines'], manifest['config']['cfg']['defines'])
+            self.assertIn(f'NPC_BPU_MODE={mode}', (run/'inputs/run.tcl').read_text())
+        for bad in ['SYNTHESIS NPC_FLASH_BOOT',
+                    'SYNTHESIS NPC_FLASH_BOOT NPC_BPU_MODE=3',
+                    'SYNTHESIS NPC_FLASH_BOOT NPC_BPU_MODE=0 NPC_BPU_MODE=2',
+                    'SYNTHESIS NPC_FLASH_BOOT NPC_BPU_MODE=2 NPC_SIM_DPI']:
+            self.append_cfg(f'dict set cfg defines {{{bad}}}')
+            with self.assertRaisesRegex(f.FlowError, 'defines'):
+                f.preflight(self.config, self.site)
+
     def test_wrong_netlist_top_is_rejected(self):
         run = self.syn()
         (run/'outputs/core.v').write_text('module ysyx_core_axi4lite(); endmodule\n')

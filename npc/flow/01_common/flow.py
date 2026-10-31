@@ -90,7 +90,12 @@ def load_config(config, site):
     for label, values, keys in [('design', cfg, CFG_KEYS), ('site', site_data, SITE_KEYS)]:
         require(set(values) == keys, f'{label} keys: missing={keys-set(values)}, unexpected={set(values)-keys}')
     require(cfg['top'] in SCOPES, 'Wrong top: select a reviewed scope profile')
-    require(cfg['defines'] == SCOPES[cfg['top']]['defines'], 'Implementation defines must match the frozen scope profile')
+    base_defines = SCOPES[cfg['top']]['defines']
+    # BPU variants change only the reviewed compile-time mode. Keep rejecting
+    # simulation macros, changed reset profiles and duplicate/unknown defines.
+    allowed_defines = ({base_defines + f' NPC_BPU_MODE={mode}' for mode in range(3)}
+                       if cfg['top'] == 'ysyx_25030087' else {base_defines})
+    require(cfg['defines'] in allowed_defines, 'Implementation defines must match the frozen scope profile')
     for key in CFG_KEYS - {'top', 'filelist', 'sdc', 'defines'}:
         try:
             number = float(cfg[key])
@@ -215,7 +220,12 @@ def create_run(data, sources, files, config, site_path, run_root, run_id):
     lines = ['set run '+tcl_word(run)]
     for name, values in data.items():
         lines.append('set '+name+' [dict create '+' '.join(tcl_word(k)+' '+tcl_word(v) for k,v in values.items())+']')
-    scope = SCOPES[data['cfg']['top']]
+    scope = dict(SCOPES[data['cfg']['top']])
+    scope['defines'] = data['cfg']['defines']
+    if data['cfg']['top'] == 'ysyx_25030087':
+        scope['bpu_mode'] = data['cfg']['defines'].rsplit('=', 1)[1]
+        scope['bpu_index_bits'] = '7'
+        scope['description'] += f"; BPU_MODE={scope['bpu_mode']}; BPU_INDEX_BITS=7"
     lines.append('set scope [dict create '+' '.join(tcl_word(k)+' '+tcl_word(v) for k,v in scope.items())+']')
     lines.append('set rtl_sources [list '+' '.join(tcl_word(p.relative_to(NPC)) for p in sources)+']')
     (run / 'inputs/run.tcl').write_text('\n'.join(lines)+'\n')
