@@ -49,7 +49,7 @@ def protocol():
         top=f'ysyx_{kind}_axi4_adapter_tb'
         sv(kind+'-adapter',top,[f'vsrc/bus/ysyx_{kind}_axi4_adapter.sv',f'tests/{top}.sv'])
     sv('ifu-integration','ysyx_ifu_axi4_adapter_integ_tb',[
-       'vsrc/gnrl/ysyx_gnrl_primitive.sv','vsrc/core/ysyx_ifu.sv',
+       'vsrc/gnrl/ysyx_gnrl_primitive.sv','vsrc/core/ysyx_predecode.sv','vsrc/core/ysyx_gshare.sv','vsrc/core/ysyx_ifu.sv',
        'vsrc/bus/ysyx_ifu_axi4_adapter.sv','tests/ysyx_ifu_axi4_adapter_integ_tb.sv'])
     arb=cpp('arbiter','ysyx_axi4_arbiter',['vsrc/bus/ysyx_axi4_arbiter.sv'],'axi4_arbiter_tb.cpp')
     run('arbiter',[arb,OUT/'arbiter/coverage.csv'])
@@ -60,7 +60,7 @@ def protocol():
         for fault in ['rid','bid','rlast']:
             run(f'{name}-bad-{fault}',[exe,OUT/f'{name}/unused.csv',fault],negative='AXI4 protocol:')
     redirect=cpp('redirect','axi4_redirect_test_top',['vsrc/gnrl/ysyx_gnrl_primitive.sv',
-       'vsrc/core/ysyx_ifu.sv','vsrc/bus/ysyx_ifu_axi4_adapter.sv','vsrc/bus/ysyx_axi4_arbiter.sv',
+       'vsrc/core/ysyx_predecode.sv','vsrc/core/ysyx_gshare.sv','vsrc/core/ysyx_ifu.sv','vsrc/bus/ysyx_ifu_axi4_adapter.sv','vsrc/bus/ysyx_axi4_arbiter.sv',
        'tests/axi4_redirect_test_top.sv'],'axi4_redirect_tb.cpp')
     run('redirect',[redirect,OUT/'redirect/coverage.csv'])
     sv('clint','ysyx_clint_tb',['vsrc/periph/ysyx_clint.sv','tests/ysyx_clint_tb.sv'])

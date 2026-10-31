@@ -8,6 +8,8 @@
 ./vsrc/core/ysyx_idu.sv
 ./vsrc/core/ysyx_regfile.sv
 ./vsrc/core/ysyx_csr.sv
+./vsrc/core/ysyx_predecode.sv
+./vsrc/core/ysyx_gshare.sv
 ./vsrc/core/ysyx_ifu.sv
 ./vsrc/core/ysyx_opbuf.sv
 ./vsrc/core/ysyx_exu.sv

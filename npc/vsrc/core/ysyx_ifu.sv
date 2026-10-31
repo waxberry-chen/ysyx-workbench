@@ -7,7 +7,9 @@
 // response is consumed in DROP state and never enters the instruction queue.
 module ysyx_ifu #(
     parameter PC_RST    = 32'h8000_0000,
-    parameter IFQ_DEPTH = 2
+    parameter IFQ_DEPTH = 2,
+    parameter BPU_MODE = 2, // 0: legacy OFF, 1: JAL_ONLY, 2: GSHARE
+    parameter BPU_INDEX_BITS = 7
 ) (
     input              clk,
     input              rst_n,
@@ -22,6 +24,11 @@ module ysyx_ifu #(
     output             if_ctx_error,
     output             if_ctx_pred_taken,
     output     [31:0]  if_ctx_pred_npc,
+    output             if_ctx_pred_branch,
+    output [BPU_INDEX_BITS-1:0] if_ctx_pred_index,
+    input              bpu_train_valid,
+    input [BPU_INDEX_BITS-1:0] bpu_train_index,
+    input              bpu_train_taken,
 
     output             imem_req_valid,
     input              imem_req_ready,
@@ -42,8 +49,9 @@ reg [31:0] request_pc_q;
 
 wire        ifq_in_valid;
 wire        ifq_in_ready;
-wire [64:0] ifq_in_data;
-wire [64:0] ifq_out_data;
+localparam IFQ_DW = 99 + BPU_INDEX_BITS;
+wire [IFQ_DW-1:0] ifq_in_data;
+wire [IFQ_DW-1:0] ifq_out_data;
 wire        req_fire;
 wire        rsp_fire;
 
@@ -59,10 +67,36 @@ assign imem_rsp_ready = (state_q == DROP) |
 assign rsp_fire       = imem_rsp_valid & imem_rsp_ready;
 
 assign ifq_in_valid = (state_q == WAIT) & imem_rsp_valid & (~redirect_valid);
-assign ifq_in_data  = {imem_rsp_error, request_pc_q, imem_rsp_data};
+wire pre_branch, pre_jal;
+wire [31:0] pre_target;
+wire [BPU_INDEX_BITS-1:0] query_index;
+wire query_taken;
+ysyx_predecode u_predecode (
+    .pc(request_pc_q), .inst(imem_rsp_data), .error(imem_rsp_error),
+    .is_branch(pre_branch), .is_jal(pre_jal), .target(pre_target)
+);
+generate if (BPU_MODE == 2) begin : g_predictor
+    ysyx_gshare #(.INDEX_BITS(BPU_INDEX_BITS)) u_gshare (
+        .clk(clk), .rst_n(rst_n), .query_pc(request_pc_q),
+        .query_index(query_index), .query_taken(query_taken),
+        .train_valid(bpu_train_valid), .train_index(bpu_train_index),
+        .train_taken(bpu_train_taken)
+    );
+end else begin : g_no_predictor
+    assign query_index = '0;
+    assign query_taken = 1'b0;
+end endgenerate
+// IALIGN=32. Do not introduce a speculative halfword-aligned bus request.
+// Architectural handling of taken misaligned targets is unchanged from M5.
+wire pred_taken = (BPU_MODE != 0) && (pre_target[1:0] == 2'b00) &&
+                  (pre_jal || (BPU_MODE == 2 && pre_branch && query_taken));
+wire [31:0] pred_npc = pred_taken ? pre_target : request_pc_q + 32'd4;
+wire pred_branch = (BPU_MODE == 2) && pre_branch;
+assign ifq_in_data = {pred_branch, query_index, pred_taken, pred_npc,
+                     imem_rsp_error, request_pc_q, imem_rsp_data};
 
 ysyx_gnrl_fifo #(
-    .DW   (65),
+    .DW   (IFQ_DW),
     .DEPTH(IFQ_DEPTH)
 ) u_ifq (
     .in_valid (ifq_in_valid),
@@ -76,11 +110,8 @@ ysyx_gnrl_fifo #(
     .rst_n    (rst_n)
 );
 
-assign if_ctx_error      = ifq_out_data[64];
-assign if_ctx_pc         = ifq_out_data[63:32];
-assign if_ctx_inst       = ifq_out_data[31:0];
-assign if_ctx_pred_taken = 1'b0;
-assign if_ctx_pred_npc   = if_ctx_pc + 32'd4;
+assign {if_ctx_pred_branch, if_ctx_pred_index, if_ctx_pred_taken, if_ctx_pred_npc,
+        if_ctx_error, if_ctx_pc, if_ctx_inst} = ifq_out_data;
 
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
@@ -106,8 +137,12 @@ always @(posedge clk or negedge rst_n) begin
             end
 
             WAIT: begin
-                if (rsp_fire)
+                if (rsp_fire) begin
+                    // Prediction changes only the NEXT request; it must not
+                    // flush this instruction or older queued instructions.
+                    fetch_pc_q <= pred_npc;
                     state_q <= REQ;
+                end
             end
 
             DROP: begin
@@ -121,6 +156,7 @@ always @(posedge clk or negedge rst_n) begin
 end
 
 `ifndef SYNTHESIS
+initial assert (BPU_MODE >= 0 && BPU_MODE <= 2);
 property p_request_stable_when_stalled;
     @(posedge clk) disable iff (!rst_n)
         imem_req_valid && !imem_req_ready
@@ -135,7 +171,7 @@ property p_context_stable_when_stalled;
         |=> redirect_valid ||
             (if_ctx_valid && $stable({if_ctx_pc, if_ctx_inst,
                                       if_ctx_error, if_ctx_pred_taken,
-                                      if_ctx_pred_npc}));
+                                      if_ctx_pred_npc, if_ctx_pred_branch, if_ctx_pred_index}));
 endproperty
 assert property (p_context_stable_when_stalled);
 

@@ -2,7 +2,8 @@
 // Preserve the Core's two adapters; export the arbiter's single master port.
 // monitor_bus bits [0:13]: IF ARV/ARR/RV/RR, LSU ARV/ARR/RV/RR,
 // LSU AWV/AWR/WV/WR/BV/BR. These are passive harness observations.
-module ysyx_core_axi4 #(parameter PC_RST = 32'h20000000) (
+module ysyx_core_axi4 #(parameter PC_RST = 32'h20000000,
+    parameter BPU_MODE = 2, parameter BPU_INDEX_BITS = 7) (
     output [3:0] m_axi_arid, m_axi_awid,
     output [7:0] m_axi_arlen, m_axi_awlen,
     output [1:0] m_axi_arburst, m_axi_awburst,
@@ -78,7 +79,7 @@ wire  lsu_axi_rready;
 wire [31:0] lsu_axi_rdata;
 wire [1:0] lsu_axi_rresp;
 assign monitor_bus = {lsu_axi_bready, lsu_axi_bvalid, lsu_axi_wready, lsu_axi_wvalid, lsu_axi_awready, lsu_axi_awvalid, lsu_axi_rready, lsu_axi_rvalid, lsu_axi_arready, lsu_axi_arvalid, ifu_axi_rready, ifu_axi_rvalid, ifu_axi_arready, ifu_axi_arvalid};
-ysyx_core #(.PC_RST(PC_RST)) core (
+ysyx_core #(.PC_RST(PC_RST), .BPU_MODE(BPU_MODE), .BPU_INDEX_BITS(BPU_INDEX_BITS)) core (
     .clk(clk),
     .rst_n(rst_n),
     .timer_irq(timer_irq),

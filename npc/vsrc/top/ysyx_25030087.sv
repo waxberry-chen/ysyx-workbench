@@ -6,6 +6,12 @@ module ysyx_25030087 #(
 `else
     parameter PC_RST = 32'h20000000
 `endif
+`ifdef NPC_BPU_MODE
+    , parameter BPU_MODE = `NPC_BPU_MODE
+`else
+    , parameter BPU_MODE = 2
+`endif
+    , parameter BPU_INDEX_BITS = 7
 ) (
     input clock,
     input reset,
@@ -82,7 +88,7 @@ assign io_slave_rlast = '0;
 assign io_slave_rid = '0;
     wire [2:0] unused_arprot;
     wire [2:0] unused_awprot;
-ysyx_soc_cpu #(.PC_RST(PC_RST)) subsystem (
+ysyx_soc_cpu #(.PC_RST(PC_RST), .BPU_MODE(BPU_MODE), .BPU_INDEX_BITS(BPU_INDEX_BITS)) subsystem (
     .clk(clock), .rst_n(!reset),
     .m_axi_arid(io_master_arid),
     .m_axi_arlen(io_master_arlen),

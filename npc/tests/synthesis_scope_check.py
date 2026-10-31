@@ -23,7 +23,7 @@ WAIVERS = {
     ("ysyx_core.sv", "exu_commit_pc"): "Assertion-only commit observation",
     ("ysyx_core.sv", "commit_mem_wdata"): "Assertion-only store observation",
     ("ysyx_exu.sv", "op_pred_taken"): "Assertion-only prediction observation",
-    ("ysyx_exu.sv", "op_pred_npc"): "Assertion-only prediction observation",
+    ("ysyx_gshare.sv", "query_pc"): "Index uses word PC low INDEX_BITS only",
     ("ysyx_lsu_axi4_adapter.sv", "local_request_aligned"): "Assertion-only alignment observation",
 }
 
@@ -47,19 +47,22 @@ sources = [line.strip() for line in (ROOT / FILELIST).read_text().splitlines()
            if line.strip() and not line.lstrip().startswith("#")]
 if len(sources) != len(set(sources)):
     raise SystemExit("Duplicate source in synthesis filelist")
-if len(sources) != 20 or any(not p.startswith("./vsrc/") for p in sources):
+if len(sources) != 22 or any(not p.startswith("./vsrc/") for p in sources):
     raise SystemExit("M5 source-only scope changed; review before updating the contract")
 inputs = [FILELIST, "flow/00_indata/configs/npc_soc_cpu.tcl", "flow/00_indata/constraints/soc_cpu.sdc", *sources, "vsrc/gnrl/ysyx_global.sv", "tests/synthesis_scope_check.py"]
 manifest = {"top": "ysyx_25030087", "tool": run(["verilator", "--version"]).stdout.strip(),
             "commands": [],
             "input_sha256": {p: sha(ROOT / p) for p in inputs}, "profiles": {}}
 manifest["scope"] = {"description": "M5 CPU wrapper + core + AXI adapters/arbiter/router + CLINT; observation outputs unconnected",
-                     "parameter_overrides": {}, "effective_parameters": {"PC_RST": "0x30000000", "IFQ_DEPTH": 2},
+                     "parameter_overrides": {}, "effective_parameters": {"PC_RST": "0x30000000", "IFQ_DEPTH": 2, "BPU_MODE": "per profile", "BPU_INDEX_BITS": 7},
                      "gpr_entries": 16, "m_arithmetic": "removed", "dc_checked": False}
-profiles = {"synthesis": ["SYNTHESIS"],
+base_profiles = {"synthesis": ["SYNTHESIS"],
             "synthesis_overrides_dpi": ["SYNTHESIS", "NPC_SIM_DPI", "DIFF"],
             "simulation_no_dpi": [], "simulation_dpi": ["NPC_SIM_DPI", "DIFF"]}
+profiles = {f"{name}-bpu{mode}": [*defines, f"NPC_BPU_MODE={mode}"]
+            for mode in range(3) for name, defines in base_profiles.items()}
 for name, defines in profiles.items():
+    mode = int(defines[-1].split("=")[1])
     defines = [*defines, "NPC_FLASH_BOOT"]
     flags = [f"-D{d}" for d in defines]
     preprocessed = run(COMMON + flags + ["-E"]).stdout
@@ -99,10 +102,14 @@ for name, defines in profiles.items():
         if key and key[0] == "ysyx_25030087.sv" and key[1] in INACTIVE_INPUTS:
             waived.append({"diagnostic": line, "reason": "Disabled external IRQ/ChipLink input; no functional consumer"})
             continue
-        if key not in WAIVERS or (not synthesis and key != ("ysyx_gen_imm.sv", "inst")):
+        if mode != 2 and key and key[0] == "ysyx_ifu.sv" and key[1] in (
+                "bpu_train_valid", "bpu_train_index", "bpu_train_taken"):
+            waived.append({"diagnostic": line, "reason": "OFF/JAL_ONLY generates no PHT; training input deliberately unused"})
+            continue
+        if key not in WAIVERS or (not synthesis and key not in (("ysyx_gen_imm.sv", "inst"), ("ysyx_gshare.sv", "query_pc"))):
             raise SystemExit(f"Unreviewed lint warning in {name}: {line}")
         waived.append({"diagnostic": line, "reason": WAIVERS[key]})
-    manifest["profiles"][name] = {"defines": defines, "waivers": waived, "result": "PASS",
+    manifest["profiles"][name] = {"defines": defines, "bpu_mode": mode, "waivers": waived, "result": "PASS",
                                    "preprocessed_sha256": sha(OUT / f"{name}.sv"),
                                    "lint_sha256": sha(OUT / f"{name}.lint.log")}
     print(f"{name}: PASS ({len(waived)} reviewed warnings)")

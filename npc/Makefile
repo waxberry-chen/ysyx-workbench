@@ -18,6 +18,7 @@ help:
 	@echo 'M5 S6: make s6-test; preemption/wakeup, stack/heap, serial UART and system regression'
 	@echo 'M5 S7: make -C flow check test scope-check; server DC/PT uses configs/npc_soc_cpu.tcl under 00_indata'
 	@echo 'M5 S8: make s8-test S8_ARGS="--out /path/to/new-run"; clean local functional rebuild, no DC/PT'
+	@echo 'GShare: make bpu-test; soc-build BPU_MODE=0|1|2'
 lint:
 	verilator --lint-only --sv --assert -Wall -Wno-fatal --top-module ysyx_25030087 -F filelist-soc.f
 include scripts/tests.mk

@@ -5,7 +5,7 @@
 // Ordinary ALU/branch/CSR operations complete combinationally from the stable
 // opbuf context.  A memory operation remains in opbuf while this module owns
 // the request/response lifecycle through mem_wait_q.
-module ysyx_exu (
+module ysyx_exu #(parameter BPU_MODE = 2) (
     input              clk,
     input              rst_n,
     input              interrupt_pending,
@@ -79,6 +79,7 @@ module ysyx_exu (
     output             commit_exception,
     output     [31:0]  commit_exception_cause,
 
+    output             branch_taken,
     output             redirect_valid,
     output     [31:0]  redirect_target
 );
@@ -95,7 +96,6 @@ wire        lsu_rsp_fire;
 wire [31:0] alu_lhs;
 wire [31:0] alu_rhs;
 wire [31:0] alu_result;
-wire        branch_taken;
 wire [31:0] pc_plus4;
 wire [31:0] branch_target;
 wire [31:0] jalr_target;
@@ -151,8 +151,12 @@ assign commit_npc = exception_valid ? trap_target :
                     (op_mret_valid ? mret_target :
                     ((op_is_jal | branch_taken) ? branch_target :
                     (op_is_jalr ? jalr_target : pc_plus4)));
-assign control_redirect = exception_valid | op_mret_valid |
-                          op_is_jal | op_is_jalr | branch_taken;
+// OFF preserves M5's exact redirect policy (including target == PC+4).
+// Enabled modes recover BOTH taken->not-taken and not-taken->taken errors.
+// Trap/IRQ/MRET and unpredicted JALR retain their mandatory recovery semantics.
+assign control_redirect = exception_valid | op_mret_valid | op_is_jalr |
+    ((BPU_MODE == 0) ? (op_is_jal | branch_taken) :
+     ((op_is_branch | op_is_jal) && (commit_npc != op_pred_npc)));
 
 assign interrupt_taken = rst_n && interrupt_pending && !mem_wait_q && !mem_offer_q &&
                          !(op_valid && exception_valid);
@@ -260,7 +264,9 @@ property p_static_prediction_metadata;
     @(posedge clk) disable iff (!rst_n)
         op_valid |-> !op_pred_taken && op_pred_npc == op_pc + 32'd4;
 endproperty
-assert property (p_static_prediction_metadata);
+generate if (BPU_MODE == 0) begin : g_off_contract
+    assert property (p_static_prediction_metadata);
+end endgenerate
 
 property p_exception_has_no_normal_writeback;
     @(posedge clk) disable iff (!rst_n)

@@ -27,9 +27,12 @@ reg         imem_rsp_error = 1'b0;
 always #5 clk = ~clk;
 
 ysyx_ifu #(
+    .BPU_MODE(0),
     .PC_RST   (PC_RST),
     .IFQ_DEPTH(2)
 ) u_ifu (
+    .if_ctx_pred_branch(), .if_ctx_pred_index(),
+    .bpu_train_valid(1'b0), .bpu_train_index(7'b0), .bpu_train_taken(1'b0),
     .clk              (clk),
     .rst_n            (rst_n),
     .redirect_valid   (redirect_valid),

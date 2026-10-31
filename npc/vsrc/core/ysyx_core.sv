@@ -2,7 +2,9 @@
 
 module ysyx_core #(
     parameter PC_RST    = 32'h8000_0000,
-    parameter IFQ_DEPTH = 2
+    parameter IFQ_DEPTH = 2,
+    parameter BPU_MODE = 2,
+    parameter BPU_INDEX_BITS = 7
 ) (
     input              clk,
     input              rst_n,
@@ -72,6 +74,8 @@ wire [31:0] if_ctx_inst;
 wire        if_ctx_error;
 wire        if_ctx_pred_taken;
 wire [31:0] if_ctx_pred_npc;
+wire if_ctx_pred_branch;
+wire [BPU_INDEX_BITS-1:0] if_ctx_pred_index;
 wire        if_ctx_fire;
 
 // IFU-local memory interface.  AXI channel state is owned by the adapter.
@@ -119,6 +123,10 @@ wire [31:0] op_inst;
 wire        op_fetch_error;
 wire        op_pred_taken;
 wire [31:0] op_pred_npc;
+wire op_pred_branch;
+wire [BPU_INDEX_BITS-1:0] op_pred_index;
+wire bpu_actual_taken;
+wire bpu_train_valid;
 wire [31:0] op_imm;
 wire        op_alu_lhs_pc;
 wire        op_alu_rhs_imm;
@@ -209,16 +217,22 @@ ysyx_gnrl_dfflrs #(
     .rst_n(rst_n)
 );
 
+// Only an architecturally committed, non-faulting conditional branch trains.
+// interrupt_taken suppresses commit_valid; younger IFQ contexts never train.
+assign bpu_train_valid = (BPU_MODE == 2) && commit_valid &&
+                         !commit_exception && op_is_branch && op_pred_branch;
+
 ysyx_ifu #(
     .PC_RST   (PC_RST),
-    .IFQ_DEPTH(IFQ_DEPTH)
+    .IFQ_DEPTH(IFQ_DEPTH),
+    .BPU_MODE(BPU_MODE), .BPU_INDEX_BITS(BPU_INDEX_BITS)
 ) u_ifu (
     .clk              (clk),
     .rst_n            (rst_n),
 
     .redirect_valid   (redirect_valid),
     .redirect_target  (redirect_target),
-    // if_ctx_* (rv + inst payload: pc, inst, error, reserved pred sigs) 
+    // if_ctx_* carries the prediction sampled with this response
     .if_ctx_valid     (if_ctx_valid),
     .if_ctx_ready     (if_ctx_ready),
     .if_ctx_pc        (if_ctx_pc),
@@ -226,6 +240,9 @@ ysyx_ifu #(
     .if_ctx_error     (if_ctx_error),
     .if_ctx_pred_taken(if_ctx_pred_taken),
     .if_ctx_pred_npc  (if_ctx_pred_npc),
+    .if_ctx_pred_branch(if_ctx_pred_branch), .if_ctx_pred_index(if_ctx_pred_index),
+    .bpu_train_valid(bpu_train_valid), .bpu_train_index(op_pred_index),
+    .bpu_train_taken(bpu_actual_taken),
     // mem interface, 2 channel
     .imem_req_valid   (imem_req_valid),
     .imem_req_ready   (imem_req_ready),
@@ -293,7 +310,7 @@ assign dec_rs2_data = (dec_rs2_idx == 5'd0) ? 32'b0 :
                         (gpr_write_idx == dec_rs2_idx)) ?
                        gpr_write_data : gpr_rs2_data_raw);
 
-ysyx_opbuf u_opbuf (
+ysyx_opbuf #(.BPU_INDEX_BITS(BPU_INDEX_BITS)) u_opbuf (
     .clk             (clk),
     .rst_n           (rst_n),
     .flush           (1'b0),
@@ -305,6 +322,7 @@ ysyx_opbuf u_opbuf (
     .in_fetch_error  (if_ctx_error),
     .in_pred_taken   (if_ctx_pred_taken),
     .in_pred_npc     (if_ctx_pred_npc),
+    .in_pred_branch(if_ctx_pred_branch), .in_pred_index(if_ctx_pred_index),
     // idu out 17 sigs + rs1, rs2 data & idx + rd idx
     .in_imm          (dec_imm),
     .in_alu_lhs_pc   (dec_alu_lhs_pc),
@@ -340,6 +358,7 @@ ysyx_opbuf u_opbuf (
     .out_fetch_error (op_fetch_error),
     .out_pred_taken  (op_pred_taken),
     .out_pred_npc    (op_pred_npc),
+    .out_pred_branch(op_pred_branch), .out_pred_index(op_pred_index),
     .out_imm         (op_imm),
     .out_alu_lhs_pc  (op_alu_lhs_pc),
     .out_alu_rhs_imm (op_alu_rhs_imm),
@@ -365,7 +384,8 @@ ysyx_opbuf u_opbuf (
     .out_rs2_data    (op_rs2_data)
 );
 
-ysyx_exu u_exu (
+ysyx_exu #(.BPU_MODE(BPU_MODE)) u_exu (
+    .branch_taken(bpu_actual_taken),
     .clk              (clk),
     .rst_n            (rst_n),
     .interrupt_pending(interrupt_pending),
@@ -561,6 +581,9 @@ assign c       = commit_mem_wdata[7:0];
 `endif
 
 `ifndef SYNTHESIS
+assert property (@(posedge clk) disable iff (!rst_n)
+    BPU_MODE == 2 && commit_valid && !commit_exception && op_is_branch
+    |-> op_pred_branch);
 property p_commit_context_matches_architectural_pc;
     @(posedge clk) disable iff (!rst_n)
         commit_valid |-> exu_commit_pc == commit_pc;
@@ -579,7 +602,7 @@ property p_opbuf_stable_when_stalled;
         op_valid && !op_ready
         |=> $past(interrupt_taken) || (op_valid &&
             $stable({op_pc, op_inst, op_fetch_error,
-                     op_pred_taken, op_pred_npc, op_imm,
+                     op_pred_taken, op_pred_npc, op_pred_branch, op_pred_index, op_imm,
                      op_alu_lhs_pc, op_alu_rhs_imm, op_alu_ctrl,
                      op_branch_type, op_is_branch, op_is_jal, op_is_jalr,
                      op_gpr_wen, op_wb_sel, op_is_load, op_is_store,

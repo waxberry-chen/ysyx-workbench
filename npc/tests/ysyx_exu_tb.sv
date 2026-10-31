@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
 
 
-module ysyx_exu_tb;
+module ysyx_exu_tb #(parameter BPU_MODE = 0);
 reg interrupt_pending=0;
 wire interrupt_taken;
 
@@ -76,7 +76,7 @@ wire [31:0] redirect_target;
 always #5 clk = ~clk;
 
 // SV auto connect by names
-ysyx_exu u_exu (.*);
+ysyx_exu #(.BPU_MODE(BPU_MODE)) u_exu (.branch_taken(), .*);
 
 task tick;
 begin
@@ -429,6 +429,40 @@ initial begin
     tick;lsu_rsp_valid=0;lsu_rsp_error=0;clear_op;settle;
     check(interrupt_taken && !commit_valid, "IRQ available after LSU boundary");
     interrupt_pending=0;
+    if (BPU_MODE != 0) begin
+        // Independent actual/predicted direction matrix, including taken->NT.
+        for (integer predicted=0; predicted<2; predicted=predicted+1)
+            for (integer actual=0; actual<2; actual=actual+1) begin
+                @(negedge clk);
+                clear_op; set_pc(32'h80000100);
+                op_valid=1; op_is_branch=1; op_branch_type=0;
+                op_alu_lhs_pc=1; op_alu_rhs_imm=1; op_imm=32;
+                op_rs1_data=0; op_rs2_data=actual == 1 ? 0 : 1;
+                op_pred_taken=1'(predicted);
+                op_pred_npc=predicted == 1 ? 32'h80000120 : 32'h80000104;
+                settle;
+                check(commit_valid && redirect_valid == (predicted != actual),
+                      "BPU_RECOVERY: branch direction matrix");
+                check(commit_npc == (actual == 1 ? 32'h80000120 : 32'h80000104),
+                      "BPU_RECOVERY: actual NPC");
+                tick;
+            end
+        @(negedge clk);
+        op_imm=4; op_pred_taken=0; op_pred_npc=op_pc+4;
+        settle; check(!redirect_valid, "BPU_RECOVERY: offset4 is not an NPC error");
+        op_is_branch=0; op_is_jal=1; op_gpr_wen=1; op_wb_sel=1;
+        settle; check(!redirect_valid && gpr_write_data==op_pc+4,
+                       "BPU_RECOVERY: predicted JAL/link");
+        op_is_jal=0; op_is_jalr=1;
+        settle; check(redirect_valid, "BPU_RECOVERY: JALR must recover");
+        op_is_jalr=0; op_mret_valid=1; op_pred_npc=mret_target;
+        settle; check(redirect_valid && mret_commit, "BPU_RECOVERY: MRET must flush");
+        op_mret_valid=0; op_fetch_error=1; op_pred_npc=trap_target;
+        settle; check(redirect_valid && trap_commit, "BPU_RECOVERY: fault must flush");
+        op_fetch_error=0; op_is_branch=1; interrupt_pending=1;
+        settle; check(interrupt_taken && !commit_valid, "BPU_RECOVERY: IRQ discards branch");
+        op_valid=0; interrupt_pending=0;
+    end
     $display("ysyx_exu directed test: PASS (including IRQ priority and LSU drain)");
     $finish;
 end

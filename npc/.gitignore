@@ -41,4 +41,5 @@
 !/tests/soc-timer/rtthread-bsp.patch
 !/tests/m5_s6_test.py
 !/tests/m5_s8_test.py
+!/tests/bpu_test.py
 !/scripts/soc_delay.py

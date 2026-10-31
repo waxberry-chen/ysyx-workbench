@@ -5,6 +5,8 @@
 ./vsrc/core/ysyx_branch.sv
 ./vsrc/core/ysyx_gen_imm.sv
 ./vsrc/core/ysyx_i_ram.sv
+./vsrc/core/ysyx_predecode.sv
+./vsrc/core/ysyx_gshare.sv
 ./vsrc/core/ysyx_ifu.sv
 ./vsrc/core/ysyx_opbuf.sv
 ./vsrc/core/ysyx_exu.sv

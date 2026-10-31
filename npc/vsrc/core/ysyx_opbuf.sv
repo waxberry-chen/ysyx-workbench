@@ -5,7 +5,7 @@
 // Keeping the complete context in one ready/valid register prevents a stalled
 // execution instruction from observing decode or register-file signals that
 // already belong to a younger instruction.
-module ysyx_opbuf (
+module ysyx_opbuf #(parameter BPU_INDEX_BITS = 7) (
     input              clk,
     input              rst_n,
     input              flush,
@@ -17,6 +17,8 @@ module ysyx_opbuf (
     input              in_fetch_error,
     input              in_pred_taken,
     input      [31:0]  in_pred_npc,
+    input              in_pred_branch,
+    input [BPU_INDEX_BITS-1:0] in_pred_index,
     input      [31:0]  in_imm,
     input              in_alu_lhs_pc,
     input              in_alu_rhs_imm,
@@ -48,6 +50,8 @@ module ysyx_opbuf (
     output             out_fetch_error,
     output             out_pred_taken,
     output     [31:0]  out_pred_npc,
+    output             out_pred_branch,
+    output [BPU_INDEX_BITS-1:0] out_pred_index,
     output     [31:0]  out_imm,
     output             out_alu_lhs_pc,
     output             out_alu_rhs_imm,
@@ -73,13 +77,14 @@ module ysyx_opbuf (
     output     [31:0]  out_rs2_data
 );
 
-localparam OPBUF_DW = 277;
+localparam OPBUF_DW = 278 + BPU_INDEX_BITS;
 
 wire [OPBUF_DW-1:0] in_payload;
 wire [OPBUF_DW-1:0] out_payload;
 
 assign in_payload = {
     in_pc, in_inst, in_fetch_error, in_pred_taken, in_pred_npc,
+    in_pred_branch, in_pred_index,
     in_imm, in_alu_lhs_pc, in_alu_rhs_imm, in_alu_ctrl,
     in_branch_type, in_is_branch, in_is_jal, in_is_jalr,
     in_gpr_wen, in_wb_sel, in_is_load, in_is_store, in_mem_type,
@@ -90,6 +95,7 @@ assign in_payload = {
 
 assign {
     out_pc, out_inst, out_fetch_error, out_pred_taken, out_pred_npc,
+    out_pred_branch, out_pred_index,
     out_imm, out_alu_lhs_pc, out_alu_rhs_imm, out_alu_ctrl,
     out_branch_type, out_is_branch, out_is_jal, out_is_jalr,
     out_gpr_wen, out_wb_sel, out_is_load, out_is_store, out_mem_type,

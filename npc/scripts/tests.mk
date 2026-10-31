@@ -24,7 +24,7 @@ ifu-test:
 	verilator $(DIRECTED_TEST_FLAGS) \
 		--top-module ysyx_ifu_tb --Mdir $(IFU_TEST_OBJ) \
 		$(NPC_HOME)/vsrc/gnrl/ysyx_gnrl_primitive.sv \
-		$(VSRC_DIR)/ysyx_ifu.sv $(NPC_HOME)/tests/ysyx_ifu_tb.sv
+		$(VSRC_DIR)/ysyx_predecode.sv $(VSRC_DIR)/ysyx_gshare.sv $(VSRC_DIR)/ysyx_ifu.sv $(NPC_HOME)/tests/ysyx_ifu_tb.sv
 	$(IFU_TEST_OBJ)/Vysyx_ifu_tb
 
 .PHONY: exu-test
@@ -86,3 +86,7 @@ synthesis-scope-check:
 seed-regress:
 	@echo 'Legacy RAM harness retired; use s1-protocol-test / s1-cpu-test for fixed-seed AXI tests.'
 	@exit 2
+
+.PHONY: bpu-test
+bpu-test:
+	python3 tests/bpu_test.py

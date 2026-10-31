@@ -1,5 +1,6 @@
 // CPU subsystem: one AXI master plus CPU-local CLINT; no B1 memory devices.
-module ysyx_soc_cpu #(parameter PC_RST = 32'h20000000) (
+module ysyx_soc_cpu #(parameter PC_RST = 32'h20000000,
+    parameter BPU_MODE = 2, parameter BPU_INDEX_BITS = 7) (
     output [3:0] m_axi_arid, m_axi_awid,
     output [7:0] m_axi_arlen, m_axi_awlen,
     output [1:0] m_axi_arburst, m_axi_awburst,
@@ -68,7 +69,7 @@ module ysyx_soc_cpu #(parameter PC_RST = 32'h20000000) (
     wire a_axi_bready;
     wire [1:0] a_axi_bresp;
     wire [3:0] a_axi_bid;
-ysyx_core_axi4 #(.PC_RST(PC_RST)) cpu (
+ysyx_core_axi4 #(.PC_RST(PC_RST), .BPU_MODE(BPU_MODE), .BPU_INDEX_BITS(BPU_INDEX_BITS)) cpu (
     .m_axi_arid(m_axi_arid),
     .m_axi_arlen(m_axi_arlen),
     .m_axi_arburst(m_axi_arburst),
@@ -118,50 +119,62 @@ ysyx_core_axi4 #(.PC_RST(PC_RST)) cpu (
 );
 ysyx_axi4_router router (
     .clk(clk), .rst_n(rst_n), .timer_irq(timer_irq),
+    // upstream
+    // ar
     .s_axi_arvalid(a_axi_arvalid),
     .s_axi_arready(a_axi_arready),
     .s_axi_araddr(a_axi_araddr),
     .s_axi_arsize(a_axi_arsize),
     .s_axi_arprot(a_axi_arprot),
+    // r
     .s_axi_rvalid(a_axi_rvalid),
     .s_axi_rready(a_axi_rready),
     .s_axi_rdata(a_axi_rdata),
     .s_axi_rresp(a_axi_rresp),
     .s_axi_rid(a_axi_rid),
     .s_axi_rlast(a_axi_rlast),
+    // aw
     .s_axi_awvalid(a_axi_awvalid),
     .s_axi_awready(a_axi_awready),
     .s_axi_awaddr(a_axi_awaddr),
     .s_axi_awsize(a_axi_awsize),
     .s_axi_awprot(a_axi_awprot),
+    // w
     .s_axi_wvalid(a_axi_wvalid),
     .s_axi_wready(a_axi_wready),
     .s_axi_wdata(a_axi_wdata),
     .s_axi_wstrb(a_axi_wstrb),
+    // b
     .s_axi_bvalid(a_axi_bvalid),
     .s_axi_bready(a_axi_bready),
     .s_axi_bresp(a_axi_bresp),
     .s_axi_bid(a_axi_bid),
+    // downstream
+    // ar
     .m_axi_arvalid(m_axi_arvalid),
     .m_axi_arready(m_axi_arready),
     .m_axi_araddr(m_axi_araddr),
     .m_axi_arsize(m_axi_arsize),
     .m_axi_arprot(m_axi_arprot),
+    // r
     .m_axi_rvalid(m_axi_rvalid),
     .m_axi_rready(m_axi_rready),
     .m_axi_rdata(m_axi_rdata),
     .m_axi_rresp(m_axi_rresp),
     .m_axi_rid(m_axi_rid),
     .m_axi_rlast(m_axi_rlast),
+    // aw
     .m_axi_awvalid(m_axi_awvalid),
     .m_axi_awready(m_axi_awready),
     .m_axi_awaddr(m_axi_awaddr),
     .m_axi_awsize(m_axi_awsize),
     .m_axi_awprot(m_axi_awprot),
+    // w
     .m_axi_wvalid(m_axi_wvalid),
     .m_axi_wready(m_axi_wready),
     .m_axi_wdata(m_axi_wdata),
     .m_axi_wstrb(m_axi_wstrb),
+    // b
     .m_axi_bvalid(m_axi_bvalid),
     .m_axi_bready(m_axi_bready),
     .m_axi_bresp(m_axi_bresp),

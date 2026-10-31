@@ -1,6 +1,9 @@
 # Real SoC simulation. The peripheral models are already instantiated by Full.
 SOC_HOME := $(abspath ../ysyxSoC)
 SOC_BOOT ?= mrom
+# Explicit build selection; all modes use identical software and monitor logic.
+BPU_MODE ?= 2
+SOC_BPU_FLAGS := -DNPC_BPU_MODE=$(BPU_MODE)
 ifeq ($(SOC_BOOT),flash)
 SOC_BUILD := $(NPC_HOME)/build/ysyxsoc-flash
 SOC_BOOT_FLAGS := -DNPC_FLASH_BOOT
@@ -30,7 +33,7 @@ SOC_FLAGS := --cc --exe --build -j 2 --sv --timing --assert --trace-fst \
  -I$(SOC_HOME)/perip/uart16550/rtl -I$(SOC_HOME)/perip/spi/rtl \
  -F $(SOC_FILELIST) $(SOC_RTL) $(SOC_PERIPH) $(NPC_HOME)/sim/soc_monitor.sv \
  $(NPC_HOME)/csrc/soc/main.cpp $(NPC_HOME)/csrc/soc/difftest.cpp \
- $(SOC_BOOT_FLAGS) -CFLAGS '-std=c++17 -Wall -Wextra $(SOC_BOOT_FLAGS)' -LDFLAGS '-ldl' --Mdir $(SOC_BUILD)
+ $(SOC_BOOT_FLAGS) $(SOC_BPU_FLAGS) -CFLAGS '-std=c++17 -Wall -Wextra $(SOC_BOOT_FLAGS)' -LDFLAGS '-ldl' --Mdir $(SOC_BUILD)
 .PHONY: soc-verilog soc-build build run sim s2-test
 soc-verilog:
 	$(MAKE) -C $(SOC_HOME) verilog
