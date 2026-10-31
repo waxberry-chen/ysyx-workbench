@@ -42,4 +42,6 @@
 !/tests/m5_s6_test.py
 !/tests/m5_s8_test.py
 !/tests/bpu_test.py
+!/tests/bpu_system.py
+!/tests/bpu_performance.py
 !/scripts/soc_delay.py

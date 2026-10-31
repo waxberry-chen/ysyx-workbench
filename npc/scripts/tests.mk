@@ -87,6 +87,11 @@ seed-regress:
 	@echo 'Legacy RAM harness retired; use s1-protocol-test / s1-cpu-test for fixed-seed AXI tests.'
 	@exit 2
 
-.PHONY: bpu-test
+.PHONY: bpu-test bpu-performance bpu-system
 bpu-test:
 	python3 tests/bpu_test.py
+bpu-performance: soc-ref
+	python3 tests/bpu_performance.py --build
+bpu-system: s6-build
+	$(MAKE) soc-build SOC_BOOT=mrom BPU_MODE=0 SOC_BUILD=$(NPC_HOME)/build/gshare-bpu/mode0-mrom
+	python3 tests/bpu_system.py --full

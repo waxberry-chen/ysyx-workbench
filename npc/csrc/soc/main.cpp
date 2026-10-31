@@ -1,3 +1,4 @@
+#include "bpu_stats.h"
 // Real ysyxSoCFull driver. Only ROM/Flash receive images. PSRAM backing is
 // accessible through serial-model DPI; SRAM lives in RTL. No RAM preload.
 #include "VysyxSoCFull.h"
@@ -33,6 +34,7 @@ std::vector<uint8_t> rom(4096,0),flash;
 VerilatedContext *context=nullptr;
 std::ofstream commits,bus,uart_events,irq_events,uart_frames;
 std::string error,tx_bytes;
+BpuStats bpu;
 uint64_t commit_count=0,exceptions=0,ar_count=0,aw_count=0,w_count=0,r_count=0,b_count=0;
 uint64_t cpu_release_ps=0,first_ar_ps=0,first_commit_ps=0,mrom_calls=0,flash_calls=0;
 uint64_t thr_writes=0,uart_reads=0;
@@ -76,6 +78,7 @@ uint64_t number(const std::string &s) {
     return n;
 }
 }
+extern "C" void npc_bpu_event(int mode,int flags,int kind,int flushed) { bpu.event(mode,flags,kind,flushed); }
 extern "C" void npc_soc_state_scope() { state_scope=svGetScope(); }
 extern "C" void npc_soc_timer(int reset_active,long long time_value,long long compare_value,
     int irq,int valid,int write_access,int addr,int size,int data,int strb,int response,
@@ -294,7 +297,7 @@ int main(int argc,char **argv) {
                  <<", \"min_sp\": "<<s.minimum<<", \"used\": "<<s.high-s.minimum
                  <<", \"remaining\": "<<s.minimum-s.low<<", \"samples\": "<<s.samples<<'}';
             }
-            f<<"\n  ]\n}\n";
+            f<<"\n  ],\n  \"bpu\": "; bpu.json(f); f<<"\n}\n";
             if(!f)throw std::runtime_error("Summary write failed");
         }
         if(!error.empty()){std::cerr<<"NPC_SOC_FAIL: "<<error<<" pc=0x"<<std::hex<<last_pc<<"\n";return 1;}

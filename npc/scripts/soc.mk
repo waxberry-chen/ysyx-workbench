@@ -31,7 +31,7 @@ SOC_FLAGS := --cc --exe --build -j 2 --sv --timing --assert --trace-fst \
  -Werror-WIDTH -Werror-PINMISSING -Werror-PINNOTFOUND -Werror-LATCH \
  -Werror-UNOPTFLAT -Werror-UNDRIVEN --top-module ysyxSoCFull \
  -I$(SOC_HOME)/perip/uart16550/rtl -I$(SOC_HOME)/perip/spi/rtl \
- -F $(SOC_FILELIST) $(SOC_RTL) $(SOC_PERIPH) $(NPC_HOME)/sim/soc_monitor.sv \
+ -F $(SOC_FILELIST) $(SOC_RTL) $(SOC_PERIPH) $(NPC_HOME)/sim/soc_monitor.sv $(NPC_HOME)/sim/bpu_monitor.sv \
  $(NPC_HOME)/csrc/soc/main.cpp $(NPC_HOME)/csrc/soc/difftest.cpp \
  $(SOC_BOOT_FLAGS) $(SOC_BPU_FLAGS) -CFLAGS '-std=c++17 -Wall -Wextra $(SOC_BOOT_FLAGS)' -LDFLAGS '-ldl' --Mdir $(SOC_BUILD)
 .PHONY: soc-verilog soc-build build run sim s2-test
