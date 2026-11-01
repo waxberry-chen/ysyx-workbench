@@ -34,3 +34,10 @@
 - 全部 untested 分为 reset/set 时序 deferred 与常量输出；新增 enabled FF 引起条件检查数量变化，CP 均有时钟，无组合环打断。逐项告警及原始报告见 [PPA 审查](validation/ppa/README.md)。
 - 归档 194 份原始文本、审查统计与复制 hash；不修改回传 run，不归档 DB/alib/DDC/生成网表。未修改 RTL/SDC、未重跑功能或 EDA。
 - S4 在约定范围内完成，无新增阻塞；S5 最终冻结与 JOB-PREP-01 交接尚待执行。本次未提交文档。
+
+## 2026-11-01：S5 最小复现、冻结与求职准备交接
+
+- 固定主仓库 `4dbccf6`，默认 GSHARE；135 个交接源文件一致，194 份 PPA 原始文本与六组 ELF/BIN hash 全部匹配。当前 RocketChip 改动与 M5 S8 已归档补丁逐字节一致，作为依赖保留。
+- 复用测量时的 DUT/reference/镜像，仅执行 1 次 micro-sieve；155214 cycles、9688 次差分提交，完整 summary 与 commit trace hash 均复现。未重建或重跑全量系统、18 次性能比较、DC/PT；旧材料不覆写，仅新增小型 `validation/freeze-check.json`。
+- 在既有 `signoff.md` 集中记录冻结版本、依赖恢复、复现命令与遗留项；核对 S2 闭环图并补明确 IRQ/IFQ 清理箭头，复用已有 QA。更新 roadmap/output 的当前状态，下一项为 JOB-PREP-01；个人理解考察尚未开展。
+- S0–S5 在既定范围内验收完成，无新增阻塞。本次不修改 RTL/软件/flow，不提交或清除嵌套仓库补丁。

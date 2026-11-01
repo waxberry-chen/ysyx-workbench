@@ -1,6 +1,6 @@
 # GShare BPU 设计与实施计划
 
-> 2026-11-01；状态：S0–S4 完成，同条件 OFF/GSHARE DC/PT 已通过约定范围审查；S5 最终冻结待执行。实际进度见 [signoff.md](signoff.md)。配套：[验收矩阵](test-plan.md)、[开发日志](dev-log.md)、[术语与入口](README.md)、[Q&A](qa/README.md)。
+> 2026-11-01；状态：S0–S5 完成，默认 GSHARE 已冻结，同条件 OFF/GSHARE DC/PT 已通过约定范围审查；下一步为 JOB-PREP-01。冻结记录见 [signoff.md](signoff.md)。配套：[验收矩阵](test-plan.md)、[开发日志](dev-log.md)、[术语与入口](README.md)、[Q&A](qa/README.md)。
 > 用户确定：条件分支与 JAL，GShare + predecode，无 BTB。初始表规模、提交历史策略及实验模式按下文规划；S0 核对并固定构建参数和测量入口。
 
 ## 1. 目标、范围与设计依据
@@ -68,7 +68,7 @@ JALR 无条件 taken，目标为 `(GPR[rs1] + immediate) & ~1`。若通过前端
 
 ## 2. 从现有 RTL 接到哪里
 
-当前 [IFU](../../../../npc/vsrc/core/ysyx_ifu.sv) 在请求接受时令 `fetch_pc_q += 4`，IFQ 保存 `{error, request_pc, inst}`；`if_ctx_pred_taken=0`、`if_ctx_pred_npc=if_ctx_pc+4`。[opbuf](../../../../npc/vsrc/core/ysyx_opbuf.sv) 已传递这两个预测字段，但 [EXU](../../../../npc/vsrc/core/ysyx_exu.sv) 仍对 taken branch、JAL、JALR 直接 redirect，尚未用预测结果决定恢复。
+增量实施前的 [IFU](../../../../npc/vsrc/core/ysyx_ifu.sv) 在请求接受时令 `fetch_pc_q += 4`，IFQ 保存 `{error, request_pc, inst}`；`if_ctx_pred_taken=0`、`if_ctx_pred_npc=if_ctx_pc+4`。[opbuf](../../../../npc/vsrc/core/ysyx_opbuf.sv) 已传递这两个预测字段，但当时的 [EXU](../../../../npc/vsrc/core/ysyx_exu.sv) 对 taken branch、JAL、JALR 直接 redirect，尚未用预测结果决定恢复。下面保留改造设计；冻结实现与源码导读见 [S2](2-integration.md)。
 
 计划的数据关系：
 
@@ -188,4 +188,4 @@ DC/PT 保持 M5 S7 的 CPU 子系统 top、观察边界、TT/0.9 V/25°C、DB、
 
 功能正确、证据完整、时序/电气要求满足且结果可以解释，才可结束阶段；不设置虚构的准确率或加速百分比门槛。若真实 workload 收益小或负收益，应如实说明冷启动、历史滞后、访存等待、恢复及面积成本，允许选择保留关闭模式作为最终默认，不自动扩展 BTB/cache 来追求数字。
 
-当前实施结果见 [阶段状态](signoff.md)，S4 服务器 DC/PT 已完成审查。以下保留计划的异常处理规则：S0 若发现镜像丢失、基线不匹配或现有 ISA/恢复合同冲突，应记录具体输入与影响；S4 工具／库不可用则保留“功能／性能已验、PPA 待验”，不能填写 PASS。最终完成后进入 [JOB-PREP-01](../../output/interview-readiness.md)，开展理解考察、简历 v1 与投递。
+当前实施结果见 [阶段状态](signoff.md)，S4 服务器 DC/PT 审查与 S5 冻结均已完成。以下保留计划的异常处理规则：S0 若发现镜像丢失、基线不匹配或现有 ISA/恢复合同冲突，应记录具体输入与影响；S4 工具／库不可用则保留“功能／性能已验、PPA 待验”，不能填写 PASS。下一项为 [JOB-PREP-01](../../output/interview-readiness.md)，开展理解考察、简历 v1 与投递。

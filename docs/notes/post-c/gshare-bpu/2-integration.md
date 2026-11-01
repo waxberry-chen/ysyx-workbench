@@ -1,6 +1,6 @@
 # S2：从取指预测到提交训练的闭环
 
-> 2026-10-31；RTL 集成及局部测试通过。三种模式使用同一条数据通路，默认候选 GSHARE。
+> 2026-10-31；RTL 集成及局部测试通过。三种模式使用同一条数据通路；2026-11-01 S5 核对闭环图，冻结默认 GSHARE。
 
 **NPC**：next PC，当前指令执行后应到达的地址。**方向错误**与**NPC 错误**不同：例如 branch 偏移为 +4，taken 与 not-taken 的地址相同。**恢复延迟**：从 redirect 到第一条恢复后指令进入 opbuf 的观测周期，不等于可直接相加的性能损失。**mutant**：测试生成的故障版本，用来确认检查器能抓到指定错误，不是生产 RTL 的选项。
 
@@ -15,7 +15,10 @@ flowchart LR
   E -->|正常分支 commit: 保存的 index + 实际方向| T[PHT / committed GHR]
   T --> P
   E -->|NPC 不符 / trap / MRET / JALR| X[core redirect]
-  X -->|清 IFQ，旧请求 WAIT→DROP| N
+  I[CSR 允许的 timer IRQ] -->|EXU 安全边界接受| A[interrupt_taken]
+  A -->|优先选择 trap_target；本拍不 commit / 不训练| X
+  X -->|恢复目标；旧请求 WAIT→DROP| N
+  X -->|清除年轻上下文| F
 ```
 
 ## 1. RTL：保存预测事实，预测本身不清流水线

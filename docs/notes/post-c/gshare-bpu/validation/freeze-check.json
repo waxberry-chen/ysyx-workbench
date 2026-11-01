@@ -1,0 +1,91 @@
+{
+  "date": "2026-11-01",
+  "status": "PASS",
+  "scope": "GShare S5 freeze and handoff; reuse S0-S4 evidence, no new coverage claim",
+  "frozen_main_commit": "4dbccf6ebe9d34bc9dea2e8a1b89fa1a19cac39f",
+  "dependencies": {
+    "ysyxSoC": "2d365297e76661faeafb4059d3ed257d26fe8778",
+    "ysyxSoC/rocket-chip": "d0c6b50fdefcdbe121e9788433ea51f7efaf1d32",
+    "am-kernels": "9804c83061d595712c0aef75c513318576480315",
+    "rt-thread-am": "bce7f1d509b05e53022be89a719df077e89b507b"
+  },
+  "rocket_chip_patch": {
+    "archive": "docs/notes/post-c/5-ysyx-soc-integration/s8-validation/patches/ysyxSoC__rocket-chip.patch",
+    "sha256": "6609375ae30265c3add127caddcc3ef2e3bfd144dec3a81834b76794a8fc5271",
+    "matches_current_diff": true
+  },
+  "configuration": {
+    "default_bpu_mode": 2,
+    "comparison_modes": [
+      0,
+      1,
+      2
+    ],
+    "bpu_index_bits": 7,
+    "pht_entries": 128,
+    "counter_bits": 2,
+    "history": "committed conditional branches"
+  },
+  "checks": {
+    "source_identity": {
+      "manifest": "docs/notes/post-c/gshare-bpu/validation/handoff-source.json",
+      "manifest_sha256": "9b26eee55adf4face9ba3638c42d3b2edfcee09281756c478f6000bf13da0bd7",
+      "files_matched": 135,
+      "mismatches": []
+    },
+    "ppa_archive_integrity": {
+      "manifest": "docs/notes/post-c/gshare-bpu/validation/ppa/archive.json",
+      "manifest_sha256": "36734d2109c3711c57352ec8f65343e7f665e21f67edd6474655c5510daf4d49",
+      "files_matched": 194,
+      "check": "SHA-256 and byte count",
+      "mismatches": []
+    },
+    "frozen_comparison_inputs": {
+      "manifest": "docs/notes/post-c/5-ysyx-soc-integration/s8-validation/comparison-inputs.json",
+      "manifest_sha256": "cf157b957e5428d3fb15dc3ed3b7fb0e8bb03e21b0830fdfef110e3f32b02054",
+      "programs": 6,
+      "files_matched": 12,
+      "check": "BIN and ELF SHA-256",
+      "mismatches": []
+    }
+  },
+  "minimal_reproduction": {
+    "basis": "docs/notes/post-c/gshare-bpu/validation/performance.json",
+    "result_key": "2-micro-sieve",
+    "runs": 1,
+    "dut_reference_image_hashes_match_basis": true,
+    "command": [
+      "/home/cym/prj/ysyx-workbench/npc/build/ysyxsoc/VysyxSoCFull",
+      "--mrom",
+      "/home/cym/prj/ysyx-workbench/artifacts/m5-s8-20261030/comparison/micro-sieve/micro-sieve-riscv32e-ysyxsoc.bin",
+      "--diff",
+      "/home/cym/prj/ysyx-workbench/nemu/build/ysyxsoc/nemu-ref.so",
+      "--max-cycles",
+      "300000000",
+      "--summary",
+      "/tmp/gshare-s5-_l9pdbzh/summary.json",
+      "--uart-log",
+      "/tmp/gshare-s5-_l9pdbzh/uart.log",
+      "--commit-trace",
+      "/tmp/gshare-s5-_l9pdbzh/commit.csv"
+    ],
+    "exit_code": 0,
+    "complete_summary_matches_basis": true,
+    "commit_trace_sha256_matches_basis": true,
+    "cycles": 155214,
+    "commits": 9688,
+    "diff_steps": 9688,
+    "bpu_mode": 2,
+    "branches_trained": 2666,
+    "direction_wrong": 109,
+    "temporary_outputs": "/tmp/gshare-s5-_l9pdbzh",
+    "retention": "No duplicate log/trace archive; original matching measurement remains in performance.json"
+  },
+  "not_rerun": [
+    "full system regression",
+    "three-mode performance suite",
+    "clean SoC generation/build",
+    "DC/PT"
+  ],
+  "handoff": "docs/notes/output/interview-readiness.md; engineering prerequisites complete, personal assessment not started"
+}

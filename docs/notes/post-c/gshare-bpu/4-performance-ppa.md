@@ -81,7 +81,7 @@ make -C npc/flow all CONFIG=00_indata/configs/npc_soc_cpu_bpu_gshare.tcl \
 
 GSHARE 全局 setup 路径为 opbuf `alu_ctrl[0]` → ALU → EXU/恢复控制 → IFU/IFQ → decoder → opbuf `csr_wen`。最差路径未经过 PHT 查询，但新增方案已降低整体时序余量。两组均通过 200 MHz pre-layout 目标；不将正裕量反推物理 Fmax。8.7 ps 的最差 hold 裕量不代表 CTS 后通过。
 
-**无新增验收阻塞，S4 在约定范围内通过；S5 最终冻结与交接尚待执行。** 原始自动状态、coverage 逐项处置、告警及关键路径详见 [审查记录](validation/ppa/README.md)。功能/性能 harness 仍使用 100 MHz；周期比较与 200 MHz STA 是不同测量，未新增 200 MHz 整机运行。六程序的速度提升均小于 21.076% 面积增幅，因此应表达为性能/面积取舍，不宣称同频 throughput/area 或能效改善。
+**无新增验收阻塞，S4 在约定范围内通过；S5 已复用本页证据完成[最终冻结与交接](signoff.md)。** 原始自动状态、coverage 逐项处置、告警及关键路径详见 [审查记录](validation/ppa/README.md)。功能/性能 harness 仍使用 100 MHz；周期比较与 200 MHz STA 是不同测量，未新增 200 MHz 整机运行。六程序的速度提升均小于 21.076% 面积增幅，因此应表达为性能/面积取舍，不宣称同频 throughput/area 或能效改善。
 
 ## 4. 复现与原始证据
 

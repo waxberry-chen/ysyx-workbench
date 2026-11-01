@@ -8,7 +8,7 @@
 
 | 项目 | 实施值与边界 |
 | --- | --- |
-| `BPU_MODE` | 0=OFF，1=JAL_ONLY，2=GSHARE；当前 RTL 默认候选为 2 |
+| `BPU_MODE` | 0=OFF，1=JAL_ONLY，2=GSHARE；S0 默认候选为 2，S5 已按此默认冻结 |
 | `BPU_INDEX_BITS` | 默认 7；128 项二位二进制饱和计数器、7-bit GHR |
 | PC hash | `PC[8:2] XOR GHR`；支持 RV32E 的 4 字节指令，不实现 C 扩展 |
 | reset | PHT=01，GHR=0；trap/IRQ/MRET 保留已提交历史 |
@@ -48,4 +48,4 @@ Harness 时钟沿用 M5 的 100 MHz；DC/PT 另沿用 5 ns（200 MHz）预算。
 
 cycles 沿用 M5 的全程口径（包含 reset/启动）；六程序禁用随机 AXI delay，无 IRQ，PHT 每次冷启动，启动代码参与训练。方向错误、NPC 错误、redirect 分类分别计数。观察细节见 [S2](2-integration.md)，结果见 [S4](4-performance-ppa.md)。
 
-GSHARE 候选运行新增单元、错误路径定向、M5 S3/S4/S5/S6 的适用检查；其中 S6 包含 S1 协议／ISA、真实 SoC guard、CPU tests、随机等待、UART、RT-Thread。OFF 保留固定六程序、错误路径及 IRQ 对照。S8 不整套重跑冻结 checkout：它服务于上一阶段冻结，当前以独立输出目录、实际新二进制与 manifest 留证。完整 EDA 对照仍需服务器执行。
+GSHARE 候选运行新增单元、错误路径定向、M5 S3/S4/S5/S6 的适用检查；其中 S6 包含 S1 协议／ISA、真实 SoC guard、CPU tests、随机等待、UART、RT-Thread。OFF 保留固定六程序、错误路径及 IRQ 对照。S8 不整套重跑冻结 checkout：它服务于上一阶段冻结，当前以独立输出目录、实际新二进制与 manifest 留证。2026-11-01 补记：服务器 EDA 对照与 S5 冻结已完成，见 [最终交接](signoff.md)。

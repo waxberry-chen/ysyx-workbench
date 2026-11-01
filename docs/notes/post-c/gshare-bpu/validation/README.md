@@ -9,7 +9,7 @@
 3. [trace 分支计数校验](trace-branch-counts.json)与 [S4 结果](../4-performance-ppa.md)与 [performance.json](performance.json)：18 份 summary、命令、二进制／参考端／镜像／trace hash 和测量源文件 hash。
 4. [scope.json](scope.json)、[flow-tests.log](flow-tests.log)：三模式 × 四宏 profile 的源闭包／告警审查，以及 57 个 mock 流程检查。mock 中故意失败的日志不是实际 EDA 报告。
 5. [PPA 审查](ppa/README.md)：两组输入一致性、面积/关键路径、coverage 与告警处置，以及原始报告；S4 已通过约定范围验收。
-6. [阶段状态](../signoff.md)：当前通过范围和 S5 最终冻结待办。
+6. [最终冻结与交接](../signoff.md)及 [freeze-check.json](freeze-check.json)：S5 固定版本/依赖，核对现有源码、PPA 归档及镜像，并只运行 1 次 GSHARE micro-sieve 复现。沿用前五项证据，不另建整套归档。
 
 测量基于起点 commit `a7f4000` 加工作区实现，不能只用起点 SHA 代表最终代码。性能原始 hash 没有改写；测量后曾移除 `ysyx_core.sv` 一行注释的尾空格，已在 [post-measurement-formatting.json](post-measurement-formatting.json) 精确记录前后 hash，RTL token 未变化。
 
