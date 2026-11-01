@@ -1,6 +1,6 @@
 # GShare BPU 验收矩阵与比较口径
 
-> 2026-10-31；本文件保留验收设计；实际结果见 [单元与集成](2-integration.md)、[功能验证](3-functional-validation.md)、[性能／PPA](4-performance-ppa.md)。架构规则见 [plan.md](plan.md)。
+> 2026-11-01；本文件保留验收设计，G14 已完成同条件 DC/PT 审查；实际结果见 [单元与集成](2-integration.md)、[功能验证](3-functional-validation.md)、[性能／PPA](4-performance-ppa.md)。架构规则见 [plan.md](plan.md)。
 
 ## 1. 功能矩阵
 
@@ -70,7 +70,7 @@ PHT reset 初值固定为弱不跳转，所有程序冷启动。先报告每个�
 | G11 | PASS；M5 S3～S6 适用功能全组通过，146 次真实 SoC 正向运行；不另重复 S8 冻结发布流程 |
 | G12 | PASS；错误 metadata 与漏恢复 mutant 均给出指定诊断 |
 | G13 | PASS；22-source closure，三模式 × 四宏 profile，57 项 flow mock 检查 |
-| G14 | 性能 PASS（18 次、完整提交 trace 一致且独立核对分支分母）；面积／时序待服务器 DC/PT |
-| G15 | 本地文档、QA、闭环图与证据已归档；最终冻结／整体 sign-off 等 G14 的 PPA 审查，保留 JOB-PREP-01 |
+| G14 | PASS；18 次性能比较及同条件 OFF/GSHARE DC/PT 通过；面积 +21.076%，两组满足 5 ns，保留 leakage/reset 例外；见 [PPA 审查](validation/ppa/README.md) |
+| G15 | 功能、性能、EDA 证据已归档；待 S5 最终冻结与交接，保留 JOB-PREP-01 |
 
 以上是本轮具体覆盖范围，不宣称所有状态已穷尽或完整 ISA/物理签核。已知的指令地址对齐异常边界及早期 reset 时序边界见 S0/S4。

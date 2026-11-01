@@ -1,6 +1,6 @@
 # NPC DC/PT pre-layout evaluation flow
 
-> 2026-10-31：GShare 增量已接入，默认配置显式选择 `NPC_BPU_MODE=2`；OFF/GSHARE 新面积时序对照待服务器执行，见 [比较配置与命令](../../docs/notes/post-c/gshare-bpu/4-performance-ppa.md)。下述 M5 cap90 是历史基线，不等于新 RTL 已通过 DC/PT。
+> 2026-11-01：默认配置显式选择 `NPC_BPU_MODE=2`；同条件 OFF/GSHARE DC/PT 已回传并通过约定范围审查，CPU 子系统面积 +21.076%，两组满足 5 ns，保留 leakage 零目标和 reset 物理时序例外。见 [结果与复现命令](../../docs/notes/post-c/gshare-bpu/4-performance-ppa.md)及[原始报告归档](../../docs/notes/post-c/gshare-bpu/validation/ppa/README.md)。下述 M5 cap90 保留为历史基线。
 > 2026-10-29：M5 S7 cap90 已建立 CPU 子系统面积/数据时序基线，默认配置为 `npc_soc_cpu.tcl`。10% 电容裕量及增量 DRC 修复通过真实 DC/PT；Ultra leakage 自动零目标按用户决定仅记录，原 DC CONSTRAINT_FAIL 保留，详见 [基线审查](../../docs/notes/post-c/5-ysyx-soc-integration/s7-validation/baseline/README.md)。
 > M4 的 `npc_core.tcl/core.f/core.sdc` 保留为历史配置；该 RTL top 已退役，复现 M4 必须使用其固定 Git revision。
 

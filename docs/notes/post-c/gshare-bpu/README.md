@@ -1,6 +1,6 @@
 # GShare BPU：条件分支预测与 JAL 提前处理
 
-> 2026-10-31：RTL 已实现，S0–S3 与三模式性能实验通过，S4 的服务器 DC/PT 待验，S5 尚未关闭。本目录是 M5 之后、版本冻结之前的限定增量，不占用长期候选 M6 I-cache / M7 深化的编号。
+> 2026-11-01：S0–S4 已完成；三模式功能/性能及 OFF/GSHARE 同条件 DC/PT 审查通过，S5 最终冻结尚未关闭。本目录是 M5 之后、版本冻结之前的限定增量，不占用长期候选 M6 I-cache / M7 深化的编号。
 
 本轮采用 **GShare predictor + predecode（mini decoder）**：在取指响应返回时识别条件分支和 JAL，选择下一取指地址；执行端核对预测并训练预测器。保留当前 Fetch 单 outstanding、IFQ 两项、opbuf 单项及顺序执行／提交结构，不引入 BTB。
 
@@ -29,4 +29,4 @@
 
 输入为 [M5 sign-off](../5-ysyx-soc-integration/signoff.md)、[M5 比较合同](../5-ysyx-soc-integration/comparison-contract.md)及 [S7 cap90 基线](../5-ysyx-soc-integration/s7-validation/baseline/README.md)。本阶段完成后进入 [JOB-PREP-01：理解考察与简历 v1](../../output/interview-readiness.md)，不自动扩展 cache、BTB 或流水线。
 
-本地功能回归与精选证据归档已完成。固定六程序性能实验已完成，整体加速比 1.114～1.201×；服务器 DC/PT 由用户手动运行并回传，新硬件的面积／时序待验。入口与证据见上表及 [validation](validation/README.md)。
+本地功能回归与固定六程序性能实验完成，整体周期加速比 1.114～1.201×；服务器 DC/PT 已回传审查，CPU 子系统面积增加 21.076%，两模式均通过 5 ns 数据时序与电气检查，保留 leakage 零目标及 reset 物理时序例外。入口与证据见上表、[validation](validation/README.md)及 [PPA 审查](validation/ppa/README.md)。

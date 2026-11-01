@@ -1,6 +1,6 @@
 # GShare 本地验收证据入口
 
-这里保存小型、值得随代码维护的结果。完整日志、生成镜像、仿真器与 trace 留在 `npc/build/gshare-bpu/`，EDA 产物在 `npc/flow/build/`。没有归档或伪造服务器 DC/PT 结果。
+这里保存小型、值得随代码维护的结果。完整日志、生成镜像、仿真器与 trace 留在 `npc/build/gshare-bpu/`，EDA 产物在 `npc/flow/build/`。2026-11-01 已回传并审查的服务器 OFF/GSHARE DC/PT 结果归档于 [ppa/](ppa/README.md)，原自动状态保留。
 
 建议阅读顺序：
 
@@ -8,7 +8,8 @@
 2. [targeted.json](targeted.json)、[targeted.log](targeted.log) 与 [S3 说明](../3-functional-validation.md)：新增错误路径与复用 M5 suites 的用途；[system-summary.json](system-summary.json) 按实际 summary 汇总146次正向 SoC 运行，[system-manifest.json](system-manifest.json) 保存 S6 命令／输入追溯，[system.log](system.log) 保存全套执行输出。完整逐程序产物在 `npc/build/gshare-bpu/system/`。
 3. [trace 分支计数校验](trace-branch-counts.json)与 [S4 结果](../4-performance-ppa.md)与 [performance.json](performance.json)：18 份 summary、命令、二进制／参考端／镜像／trace hash 和测量源文件 hash。
 4. [scope.json](scope.json)、[flow-tests.log](flow-tests.log)：三模式 × 四宏 profile 的源闭包／告警审查，以及 57 个 mock 流程检查。mock 中故意失败的日志不是实际 EDA 报告。
-5. [阶段状态](../signoff.md)：当前通过范围和服务器待办。
+5. [PPA 审查](ppa/README.md)：两组输入一致性、面积/关键路径、coverage 与告警处置，以及原始报告；S4 已通过约定范围验收。
+6. [阶段状态](../signoff.md)：当前通过范围和 S5 最终冻结待办。
 
 测量基于起点 commit `a7f4000` 加工作区实现，不能只用起点 SHA 代表最终代码。性能原始 hash 没有改写；测量后曾移除 `ysyx_core.sv` 一行注释的尾空格，已在 [post-measurement-formatting.json](post-measurement-formatting.json) 精确记录前后 hash，RTL token 未变化。
 

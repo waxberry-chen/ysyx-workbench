@@ -1,6 +1,6 @@
-# S4：三模式性能与待执行的 DC/PT 对照
+# S4：三模式性能与 DC/PT 对照
 
-> 2026-10-31；固定六程序的功能／性能比较完成，DC/PT 待服务器运行。不能用周期改善推断面积、时序或功耗已经合格。
+> 2026-11-01；S4 完成。固定六程序性能与 OFF/GSHARE 同条件 DC/PT 对照通过；面积增加 21.076%，两组均满足 5 ns 数据时序与电气要求。沿用 leakage 零目标例外与 reset 物理时序 deferred，功耗未验收。完整审查及原始证据见 [PPA 归档](validation/ppa/README.md)。
 
 **加速比**：基准 cycles / 当前 cycles，大于 1 表示更快。**CPI**：cycles / 提交指令数。本页测的是固定频率下仿真周期差异；若新硬件未满足原 5 ns 时钟，不能直接宣称同等墙钟时间收益。没有用 28 nm 的经验频率代替本轮 STA。
 
@@ -45,14 +45,14 @@ JAL 不再造成恢复，JALR 的函数返回／间接跳转恢复仍存在。IF
 
 ## 3. 服务器面积／时序对照
 
-已准备两个配置，区别只在 `NPC_BPU_MODE`，沿用同一源码 filelist、`soc_cpu.sdc`、TT DB、5 ns、Ultra、max fanout 32、cap90、功耗关闭和 reset 物理时序 deferred：
+两组已回传，配置区别只在 `NPC_BPU_MODE`，沿用同一源码 filelist、`soc_cpu.sdc`、TT DB、5 ns、Ultra、max fanout 32、cap90、可选功耗报告关闭和 reset 物理时序 deferred；Ultra 自带的 leakage 优化仍自动启用：
 
 - [npc_soc_cpu_bpu_off.tcl](../../../../npc/flow/00_indata/configs/npc_soc_cpu_bpu_off.tcl)
 - [npc_soc_cpu_bpu_gshare.tcl](../../../../npc/flow/00_indata/configs/npc_soc_cpu_bpu_gshare.tcl)
 
 原 `npc_soc_cpu.tcl` 现在也显式选择模式 2；旧 M5 复现必须使用冻结源码，不把当前同名配置当成 M5 RTL。flow driver 只允许三种审查过的宏组合，拒绝缺模式、重复模式、非法值和 simulation 宏；实际模式进入 manifest、run.tcl 和 scope 描述。新增回归验证这种快照行为。本地检查验证的是源闭包／SDC 契约／driver，不等于 DC/PT PASS。
 
-服务器同步当前源码后，在工程根目录执行（SITE 路径按服务器实际位置替换）：
+本次服务器输入为 `9d7c63d`，使用以下命令；以后复现请使用新的 RUN_ID，SITE 路径按服务器实际位置替换：
 
 ```bash
 make -C npc/flow all CONFIG=00_indata/configs/npc_soc_cpu_bpu_off.tcl \
@@ -63,7 +63,25 @@ make -C npc/flow all CONFIG=00_indata/configs/npc_soc_cpu_bpu_gshare.tcl \
 
 重点比较新增 PHT、IFQ metadata、目标加法／选择和恢复比较的真实面积，以及 setup/hold、DRC、coverage、告警。不要改变约束来获得可比性表面通过；同一份 site/库必须用于两个 run。功耗仍不在验收范围。
 
-**当前阻塞项：本地没有服务器 DC/PT 结果，无法确认新增路径满足 5 ns，无法报告面积代价。** 等用户回传两个 run 后审查，才决定 S4/S5 是否可关闭。未要求复现 M5 历史 EDA，但新增硬件自身的对照不能由历史结果代替。
+### 3.1 回传实测与审查结论
+
+| 指标 | OFF | GSHARE |
+| --- | ---: | ---: |
+| Cell area（library_area） | 9583.727856 | 11603.591918 |
+| 触发器数 | 1623 | 2006 |
+| 全局最差 setup slack（ns） | +2.444726 | +1.801808 |
+| Reg2Reg 最差 setup slack（ns） | +2.591039 | +1.801808 |
+| 全局最差 hold slack（ns） | +0.009693 | +0.008700 |
+| PT 约束违例 | 0 | 0 |
+| setup / hold coverage | 各 1623 项，100% met | 各 3304 项，100% met |
+
+新增面积为 **2019.864062 library_area（+21.076%）**。实际网表保留 256 个 PHT 位和 7 个 GHR 位，预测器模块面积 1518.2160；其余成本包含 predecode、metadata、恢复逻辑及重新映射。这里是完整 OFF→GSHARE 的代价，未做 JAL_ONLY 综合，不能单独给出纯方向预测的面积增量。
+
+两组各 98 个登记输入/产物 hash 均匹配，RTL、SDC、脚本及记录的外部库/工具 hash 一致，配置仅模式不同；没有放宽约束。DC/PT 进程正常完成，主日志和报告无 Error/Fatal。原始 DC `CONSTRAINT_FAIL` 仅为已接受的 leakage 零目标；PT `REVIEW_REQUIRED` 的 9120 / 13534 项 untested 全部归入 reset/set 时序 deferred 或 81 个常量输出的 setup/hold 检查，无未解释项。
+
+GSHARE 全局 setup 路径为 opbuf `alu_ctrl[0]` → ALU → EXU/恢复控制 → IFU/IFQ → decoder → opbuf `csr_wen`。最差路径未经过 PHT 查询，但新增方案已降低整体时序余量。两组均通过 200 MHz pre-layout 目标；不将正裕量反推物理 Fmax。8.7 ps 的最差 hold 裕量不代表 CTS 后通过。
+
+**无新增验收阻塞，S4 在约定范围内通过；S5 最终冻结与交接尚待执行。** 原始自动状态、coverage 逐项处置、告警及关键路径详见 [审查记录](validation/ppa/README.md)。功能/性能 harness 仍使用 100 MHz；周期比较与 200 MHz STA 是不同测量，未新增 200 MHz 整机运行。六程序的速度提升均小于 21.076% 面积增幅，因此应表达为性能/面积取舍，不宣称同频 throughput/area 或能效改善。
 
 ## 4. 复现与原始证据
 

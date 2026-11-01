@@ -25,3 +25,12 @@
 - Flow 增加两份对照配置及模式追溯；本地 12 个 scope profile、57 个 mock 检查通过。保持 SDC、Ultra、cap90 与原 PVT/5 ns 条件。
 - **服务器 DC/PT 待用户手动执行并回传；S4 未完整关闭，S5 未最终冻结。** 本地未发现遗留功能阻塞，命令见 S4。最终关闭后交接 JOB-PREP-01，不自动扩展 cache/BTB。
 - 保留已有 `ysyx_soc_cpu.sv` 注释、roadmap 规划和 ysyxSoC 子模块工作区；本次未执行 git add/commit。
+
+## 2026-11-01：S4 服务器 DC/PT 审查与归档
+
+- 用户回传 `soc-cpu-tt-5ns-bpu-off`、`soc-cpu-tt-5ns-bpu-gshare`。两组基于 `9d7c63d`，RTL/SDC/脚本相同，配置仅 BPU 模式不同；每组 98 个登记输入/产物 hash 均匹配，快照与本地源码一致。
+- DC/PT 执行完成，无 Error/Fatal；PT 无约束违例。DC 仅有已接受的 leakage 零目标，保留原 `CONSTRAINT_FAIL` / `REVIEW_REQUIRED`，由人工审查给出约定范围通过结论。
+- 面积 OFF/GSHARE 为 9583.727856 / 11603.591918 library_area，增加 21.076%；两组满足 5 ns。GSHARE 最差 setup/hold slack 为 +1.801808/+0.008700 ns，最差 setup 仍为 EXU/恢复/IFQ/译码控制链；PHT/GHR 的 256+7 位在网表中实际保留。
+- 全部 untested 分为 reset/set 时序 deferred 与常量输出；新增 enabled FF 引起条件检查数量变化，CP 均有时钟，无组合环打断。逐项告警及原始报告见 [PPA 审查](validation/ppa/README.md)。
+- 归档 194 份原始文本、审查统计与复制 hash；不修改回传 run，不归档 DB/alib/DDC/生成网表。未修改 RTL/SDC、未重跑功能或 EDA。
+- S4 在约定范围内完成，无新增阻塞；S5 最终冻结与 JOB-PREP-01 交接尚待执行。本次未提交文档。
