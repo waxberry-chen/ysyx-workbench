@@ -1,0 +1,19 @@
+ 
+****************************************
+Report : constraint
+        -all_violators
+Design : ysyx_25030087
+Version: V-2023.12-SP5
+Date   : Sun Nov  1 00:07:24 2026
+****************************************
+
+
+   max_leakage_power
+
+                             Required        Actual
+   Design                   Leakage Power  Leakage Power     Slack
+   -----------------------------------------------------------------
+   ysyx_25030087            0.000000       7412.663086    -7412.663086 (VIOLATED)
+
+
+1

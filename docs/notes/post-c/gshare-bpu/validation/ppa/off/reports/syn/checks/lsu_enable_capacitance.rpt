@@ -1,0 +1,14 @@
+NPC_LSU_ENABLE_CAPACITANCE
+stage: syn
+tool_version: V-2023.12-SP5
+library: tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+configured_capacitance_unit: pf
+LIBRARY_FANOUT_DEFAULT: tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+  default_fanout_load: 1.000000
+Policy: read-only; UNAVAILABLE is not zero; compare report_net and constraint_violations too.
+report_capacitance_use_ccs_receiver_model: true
+timing_max_capacitance_derate: UNAVAILABLE
+enable_pattern: subsystem/cpu/core/u_lsu/req_*_q_reg*/E
+enable_pin_count: 0
+Warning: NPC_CAP_NO_ENABLE_PINS: mapping has no matching LSU E pins; review netlist; no capacitance conclusion.
+NPC_LSU_ENABLE_CAPACITANCE_END

@@ -1,0 +1,722 @@
+{
+  "review_date": "2026-11-01",
+  "scope": "CPU subsystem pre-layout area/data timing/electrical evaluation; power and physical reset deferred",
+  "runs": {
+    "off": {
+      "run": "npc/flow/build/soc-cpu-tt-5ns-bpu-off",
+      "git_head": "9d7c63d562c2298e7f00451eab37c946205733e8",
+      "config": {
+        "cfg": {
+          "top": "ysyx_25030087",
+          "filelist": "flow/00_indata/filelists/soc_cpu.f",
+          "sdc": "flow/00_indata/constraints/soc_cpu.sdc",
+          "defines": "SYNTHESIS NPC_FLASH_BOOT NPC_BPU_MODE=0",
+          "period": "5.0",
+          "input_min": "0.2",
+          "input_max": "2.0",
+          "output_min": "0.2",
+          "output_max": "2.0",
+          "uncertainty_setup": "0.2",
+          "uncertainty_hold": "0.05",
+          "clock_transition": "0.1",
+          "input_transition": "0.1",
+          "output_load": "0.01",
+          "source_latency_min": "0.0",
+          "source_latency_max": "0.0",
+          "max_cores": "4",
+          "power_enable": "0",
+          "power_toggle": "0.1",
+          "power_probability": "0.5"
+        },
+        "site": {
+          "dc_shell": "/15T/tools/synopsys/syn/V-2023.12-SP5/bin/dc_shell",
+          "pt_shell": "/15T/tools/synopsys/prime/T-2022.03-SP5/bin/pt_shell",
+          "target_db": "/home/cym/prj/ysyx-workbench/npc/flow/00_indata/DB/STD_NEW/tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.db",
+          "library_name": "tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs",
+          "operating_condition": "tt0p9v25c",
+          "corner": "TT_0p9V_25C",
+          "vt": "RVT",
+          "time_unit": "ns",
+          "capacitance_unit": "pf",
+          "area_unit": "library_area",
+          "wire_load_model": "library_default",
+          "library_reviewed": "1"
+        }
+      },
+      "scope_contract": {
+        "description": "M5 CPU wrapper + core + AXI adapters/arbiter/router + CLINT; observation outputs unconnected; IFQ_DEPTH=2; PC_RST=0x30000000; external IRQ/ChipLink disabled; no upstream SoC/memory models; BPU_MODE=0; BPU_INDEX_BITS=7",
+        "defines": "SYNTHESIS NPC_FLASH_BOOT NPC_BPU_MODE=0",
+        "clock_port": "clock",
+        "reset_port": "reset",
+        "reset_inactive": "0",
+        "lsu_path": "subsystem/cpu/core/u_lsu",
+        "bpu_mode": "0",
+        "bpu_index_bits": "7"
+      },
+      "integrity": {
+        "run_files_verified": 98,
+        "snapshot_files": 49,
+        "mismatches": [],
+        "external_inputs_recorded_not_locally_reexecuted": {
+          "/home/cym/prj/ysyx-workbench/npc/flow/00_indata/DB/STD_NEW/tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.db": "68df71edd366d68bdd49042685879f8b1653cc9a6fbc29ffdd4001944c3974de",
+          "/15T/tools/synopsys/syn/V-2023.12-SP5/bin/dc_shell": "23a4101c711fdb4747a57e6f9524d4989eb76a2b3120f0fa9766f4b25ae8e6d2",
+          "/15T/tools/synopsys/prime/T-2022.03-SP5/bin/pt_shell": "afdcfa7071f86d229ed3b4481f67adefd1c51bb0288b7e7d370213a43b70c9ef",
+          "/15T/tools/synopsys/syn/V-2023.12-SP5/admin/setup/.synopsys_dc.setup": "e26a5aa9afbdbef048c68ef80c01e2fd50cdaaa1d67ca41dd4b7ccb0557fec09"
+        }
+      },
+      "snapshot_vs_worktree": {
+        "inputs/npc/vsrc/core/ysyx_core.sv": true,
+        "inputs/npc/vsrc/core/ysyx_opbuf.sv": true,
+        "inputs/npc/vsrc/core/ysyx_exu.sv": true,
+        "inputs/npc/vsrc/core/ysyx_lsu.sv": true,
+        "inputs/npc/vsrc/core/ysyx_regfile.sv": true,
+        "inputs/npc/vsrc/core/ysyx_gshare.sv": true,
+        "inputs/npc/vsrc/core/ysyx_branch.sv": true,
+        "inputs/npc/vsrc/core/ysyx_csr.sv": true,
+        "inputs/npc/vsrc/core/ysyx_idu.sv": true,
+        "inputs/npc/vsrc/core/ysyx_gen_imm.sv": true,
+        "inputs/npc/vsrc/core/ysyx_ifu.sv": true,
+        "inputs/npc/vsrc/core/ysyx_predecode.sv": true,
+        "inputs/npc/vsrc/core/ysyx_alu.sv": true,
+        "inputs/npc/vsrc/bus/ysyx_axi4_arbiter.sv": true,
+        "inputs/npc/vsrc/bus/ysyx_axi4_router.sv": true,
+        "inputs/npc/vsrc/bus/ysyx_lsu_axi4_adapter.sv": true,
+        "inputs/npc/vsrc/bus/ysyx_ifu_axi4_adapter.sv": true,
+        "inputs/npc/vsrc/gnrl/ysyx_gnrl_primitive.sv": true,
+        "inputs/npc/vsrc/gnrl/ysyx_global.sv": true,
+        "inputs/npc/vsrc/top/ysyx_core_axi4.sv": true,
+        "inputs/npc/vsrc/top/ysyx_25030087.sv": true,
+        "inputs/npc/vsrc/top/ysyx_soc_cpu.sv": true,
+        "inputs/npc/vsrc/periph/ysyx_clint.sv": true,
+        "inputs/npc/flow/Makefile": true,
+        "inputs/npc/flow/00_indata/configs/npc_soc_cpu_bpu_off.tcl": true,
+        "inputs/npc/flow/00_indata/configs/npc_core.tcl": true,
+        "inputs/npc/flow/00_indata/configs/npc_soc_cpu_bpu_gshare.tcl": true,
+        "inputs/npc/flow/00_indata/configs/npc_soc_cpu.tcl": true,
+        "inputs/npc/flow/00_indata/configs/site.example.tcl": true,
+        "inputs/npc/flow/00_indata/constraints/core.sdc": true,
+        "inputs/npc/flow/00_indata/constraints/soc_cpu.sdc": true,
+        "inputs/npc/flow/00_indata/filelists/core.f": true,
+        "inputs/npc/flow/00_indata/filelists/soc_cpu.f": true,
+        "inputs/npc/flow/02_syn/run.tcl": true,
+        "inputs/npc/flow/02_syn/max_capacitance_margin.tcl": true,
+        "inputs/npc/flow/02_syn/probe.tcl": true,
+        "inputs/npc/flow/04_tests/sdc_check.tcl": true,
+        "inputs/npc/flow/04_tests/eda_mock.tcl": true,
+        "inputs/npc/flow/04_tests/test_flow.py": true,
+        "inputs/npc/flow/03_sta/run.tcl": true,
+        "inputs/npc/flow/01_common/capacitance.tcl": true,
+        "inputs/npc/flow/01_common/flow.py": true,
+        "inputs/npc/flow/01_common/config_dump.tcl": true,
+        "inputs/npc/flow/01_common/setup.tcl": true
+      },
+      "stages": {
+        "syn": {
+          "execution": "COMPLETE",
+          "signoff": "CONSTRAINT_FAIL",
+          "reported_constraint_violation_rows": 1,
+          "cell_area": 9583.727856,
+          "power": "NOT_EVALUATED: disabled",
+          "status": "COMPLETE",
+          "exit_code": 0,
+          "warning_counts_across_log_and_reports": {
+            "DDB-24": 1,
+            "ELAB-311": 2,
+            "LINT-1": 18,
+            "LINT-2": 1374,
+            "LINT-28": 2162,
+            "LINT-29": 273,
+            "LINT-31": 618,
+            "LINT-32": 17,
+            "LINT-33": 19,
+            "LINT-52": 203,
+            "LINT-60": 545,
+            "TIM-134": 3,
+            "TIM-135": 1,
+            "TIM-216": 1,
+            "UCN-1": 195,
+            "UCN-4": 1,
+            "UISN-40": 2,
+            "VER-318": 1,
+            "VO-4": 1,
+            "Warning: NPC_CAP_NO_ENABLE_PINS: mapping has no matching LSU E pins; review netlist; no capacitance conclusion.": 1
+          }
+        },
+        "sta": {
+          "execution": "COMPLETE",
+          "signoff": "REVIEW_REQUIRED",
+          "reported_constraint_violation_rows": 0,
+          "timing": {
+            "max": {
+              "wns": 0.0,
+              "tns": 0.0,
+              "violating_endpoints": 0.0
+            },
+            "min": {
+              "wns": 0.0,
+              "tns": 0.0,
+              "violating_endpoints": 0.0
+            }
+          },
+          "coverage": {
+            "total": 19076,
+            "met": 9956,
+            "violated": 0,
+            "untested": 9120
+          },
+          "status": "COMPLETE",
+          "exit_code": 0,
+          "warning_counts_across_log_and_reports": {
+            "PTE-003": 1,
+            "UITE-502": 2,
+            "Warning: NPC_CAP_NO_ENABLE_PINS: mapping has no matching LSU E pins; review netlist; no capacitance conclusion.": 1
+          }
+        }
+      },
+      "netlist": {
+        "leaf_cells": 7345,
+        "sequential_cells": 1623,
+        "sequential_types": {
+          "DFCNQD1BWP12T40P140": 1422,
+          "DFQD1BWP12T40P140": 130,
+          "DFSNQD1BWP12T40P140": 71
+        },
+        "clock_cp_pins": 1623,
+        "all_sequential_cp_directly_on_clock": true,
+        "all_leaves_standard_cells": true,
+        "predictor_sequential_cells": 0,
+        "predictor_pht_bits": 0,
+        "predictor_ghr_bits": 0
+      },
+      "post_check_design_warning_counts": {
+        "LINT-2": 1291,
+        "LINT-28": 1970,
+        "LINT-29": 85,
+        "LINT-31": 187,
+        "LINT-52": 81,
+        "LINT-60": 545
+      },
+      "lint2_all_hierarchical_outputs": true,
+      "lint33_messages": [],
+      "coverage_review": {
+        "type_reason_counts": {
+          "min_pulse_width/no_clock": 5972,
+          "out_hold/no_paths": 81,
+          "out_setup/no_paths": 81,
+          "recovery/no_startpoint_clock": 1493,
+          "removal/no_startpoint_clock": 1493
+        },
+        "reset_pin_counts": {
+          "min_pulse_width/CDN": 5688,
+          "min_pulse_width/SDN": 284,
+          "recovery/CDN": 1422,
+          "recovery/SDN": 71,
+          "removal/CDN": 1422,
+          "removal/SDN": 71
+        },
+        "pulse_width_counts_by_cell": {
+          "DFCNQD1BWP12T40P140": 5688,
+          "DFSNQD1BWP12T40P140": 284
+        },
+        "constant_outputs": {
+          "io_slave_awready": 0,
+          "io_master_awid[3]": 0,
+          "io_master_awid[2]": 0,
+          "io_master_awid[1]": 0,
+          "io_master_awid[0]": 0,
+          "io_master_awlen[7]": 0,
+          "io_master_awlen[6]": 0,
+          "io_master_awlen[5]": 0,
+          "io_master_awlen[4]": 0,
+          "io_master_awlen[3]": 0,
+          "io_master_awlen[2]": 0,
+          "io_master_awlen[1]": 0,
+          "io_master_awlen[0]": 0,
+          "io_master_awsize[2]": 0,
+          "io_master_awburst[1]": 0,
+          "io_master_awburst[0]": 1,
+          "io_slave_wready": 0,
+          "io_master_wlast": 1,
+          "io_slave_bvalid": 0,
+          "io_slave_bresp[1]": 0,
+          "io_slave_bresp[0]": 0,
+          "io_slave_bid[3]": 0,
+          "io_slave_bid[2]": 0,
+          "io_slave_bid[1]": 0,
+          "io_slave_bid[0]": 0,
+          "io_slave_arready": 0,
+          "io_master_arid[3]": 0,
+          "io_master_arid[2]": 0,
+          "io_master_arid[1]": 0,
+          "io_master_arid[0]": 0,
+          "io_master_arlen[7]": 0,
+          "io_master_arlen[6]": 0,
+          "io_master_arlen[5]": 0,
+          "io_master_arlen[4]": 0,
+          "io_master_arlen[3]": 0,
+          "io_master_arlen[2]": 0,
+          "io_master_arlen[1]": 0,
+          "io_master_arlen[0]": 0,
+          "io_master_arsize[2]": 0,
+          "io_master_arburst[1]": 0,
+          "io_master_arburst[0]": 1,
+          "io_slave_rvalid": 0,
+          "io_slave_rresp[1]": 0,
+          "io_slave_rresp[0]": 0,
+          "io_slave_rdata[31]": 0,
+          "io_slave_rdata[30]": 0,
+          "io_slave_rdata[29]": 0,
+          "io_slave_rdata[28]": 0,
+          "io_slave_rdata[27]": 0,
+          "io_slave_rdata[26]": 0,
+          "io_slave_rdata[25]": 0,
+          "io_slave_rdata[24]": 0,
+          "io_slave_rdata[23]": 0,
+          "io_slave_rdata[22]": 0,
+          "io_slave_rdata[21]": 0,
+          "io_slave_rdata[20]": 0,
+          "io_slave_rdata[19]": 0,
+          "io_slave_rdata[18]": 0,
+          "io_slave_rdata[17]": 0,
+          "io_slave_rdata[16]": 0,
+          "io_slave_rdata[15]": 0,
+          "io_slave_rdata[14]": 0,
+          "io_slave_rdata[13]": 0,
+          "io_slave_rdata[12]": 0,
+          "io_slave_rdata[11]": 0,
+          "io_slave_rdata[10]": 0,
+          "io_slave_rdata[9]": 0,
+          "io_slave_rdata[8]": 0,
+          "io_slave_rdata[7]": 0,
+          "io_slave_rdata[6]": 0,
+          "io_slave_rdata[5]": 0,
+          "io_slave_rdata[4]": 0,
+          "io_slave_rdata[3]": 0,
+          "io_slave_rdata[2]": 0,
+          "io_slave_rdata[1]": 0,
+          "io_slave_rdata[0]": 0,
+          "io_slave_rlast": 0,
+          "io_slave_rid[3]": 0,
+          "io_slave_rid[2]": 0,
+          "io_slave_rid[1]": 0,
+          "io_slave_rid[0]": 0
+        },
+        "only_constant_disable_flags": true,
+        "unexplained_untested": 0
+      },
+      "area": {
+        "total": 9583.727856,
+        "combinational": 4741.295964,
+        "sequential": 4842.431892
+      },
+      "timing_paths": {
+        "Reg2Reg_max": {
+          "startpoint": "subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_145_",
+          "endpoint": "subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_125_",
+          "slack_ns": 2.591039,
+          "arrival_ns": 2.195415
+        },
+        "Reg2Reg_min": {
+          "startpoint": "subsystem/cpu/core/u_ifu/u_ifq/count_q_reg_0_",
+          "endpoint": "subsystem/cpu/core/u_ifu/u_ifq/count_q_reg_0_",
+          "slack_ns": 0.009693,
+          "arrival_ns": 0.084371
+        },
+        "In2Reg_max": {
+          "startpoint": "io_master_rvalid",
+          "endpoint": "subsystem/router/rdata_q_reg_24_",
+          "slack_ns": 2.444726,
+          "arrival_ns": 2.342228
+        },
+        "In2Reg_min": {
+          "startpoint": "io_master_awready",
+          "endpoint": "subsystem/router/aw_sent_q_reg",
+          "slack_ns": 0.164472,
+          "arrival_ns": 0.239171
+        },
+        "Reg2Out_max": {
+          "startpoint": "subsystem/router/state_q_reg_3_",
+          "endpoint": "io_master_awvalid",
+          "slack_ns": 2.505592,
+          "arrival_ns": 0.294408
+        },
+        "Reg2Out_min": {
+          "startpoint": "subsystem/router/strb_q_reg_0_",
+          "endpoint": "io_master_wstrb[0]",
+          "slack_ns": 0.236882,
+          "arrival_ns": 0.086882
+        },
+        "In2Out_max": null,
+        "In2Out_min": null
+      }
+    },
+    "gshare": {
+      "run": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare",
+      "git_head": "9d7c63d562c2298e7f00451eab37c946205733e8",
+      "config": {
+        "cfg": {
+          "top": "ysyx_25030087",
+          "filelist": "flow/00_indata/filelists/soc_cpu.f",
+          "sdc": "flow/00_indata/constraints/soc_cpu.sdc",
+          "defines": "SYNTHESIS NPC_FLASH_BOOT NPC_BPU_MODE=2",
+          "period": "5.0",
+          "input_min": "0.2",
+          "input_max": "2.0",
+          "output_min": "0.2",
+          "output_max": "2.0",
+          "uncertainty_setup": "0.2",
+          "uncertainty_hold": "0.05",
+          "clock_transition": "0.1",
+          "input_transition": "0.1",
+          "output_load": "0.01",
+          "source_latency_min": "0.0",
+          "source_latency_max": "0.0",
+          "max_cores": "4",
+          "power_enable": "0",
+          "power_toggle": "0.1",
+          "power_probability": "0.5"
+        },
+        "site": {
+          "dc_shell": "/15T/tools/synopsys/syn/V-2023.12-SP5/bin/dc_shell",
+          "pt_shell": "/15T/tools/synopsys/prime/T-2022.03-SP5/bin/pt_shell",
+          "target_db": "/home/cym/prj/ysyx-workbench/npc/flow/00_indata/DB/STD_NEW/tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.db",
+          "library_name": "tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs",
+          "operating_condition": "tt0p9v25c",
+          "corner": "TT_0p9V_25C",
+          "vt": "RVT",
+          "time_unit": "ns",
+          "capacitance_unit": "pf",
+          "area_unit": "library_area",
+          "wire_load_model": "library_default",
+          "library_reviewed": "1"
+        }
+      },
+      "scope_contract": {
+        "description": "M5 CPU wrapper + core + AXI adapters/arbiter/router + CLINT; observation outputs unconnected; IFQ_DEPTH=2; PC_RST=0x30000000; external IRQ/ChipLink disabled; no upstream SoC/memory models; BPU_MODE=2; BPU_INDEX_BITS=7",
+        "defines": "SYNTHESIS NPC_FLASH_BOOT NPC_BPU_MODE=2",
+        "clock_port": "clock",
+        "reset_port": "reset",
+        "reset_inactive": "0",
+        "lsu_path": "subsystem/cpu/core/u_lsu",
+        "bpu_mode": "2",
+        "bpu_index_bits": "7"
+      },
+      "integrity": {
+        "run_files_verified": 98,
+        "snapshot_files": 49,
+        "mismatches": [],
+        "external_inputs_recorded_not_locally_reexecuted": {
+          "/home/cym/prj/ysyx-workbench/npc/flow/00_indata/DB/STD_NEW/tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.db": "68df71edd366d68bdd49042685879f8b1653cc9a6fbc29ffdd4001944c3974de",
+          "/15T/tools/synopsys/syn/V-2023.12-SP5/bin/dc_shell": "23a4101c711fdb4747a57e6f9524d4989eb76a2b3120f0fa9766f4b25ae8e6d2",
+          "/15T/tools/synopsys/prime/T-2022.03-SP5/bin/pt_shell": "afdcfa7071f86d229ed3b4481f67adefd1c51bb0288b7e7d370213a43b70c9ef",
+          "/15T/tools/synopsys/syn/V-2023.12-SP5/admin/setup/.synopsys_dc.setup": "e26a5aa9afbdbef048c68ef80c01e2fd50cdaaa1d67ca41dd4b7ccb0557fec09"
+        }
+      },
+      "snapshot_vs_worktree": {
+        "inputs/npc/vsrc/bus/ysyx_axi4_arbiter.sv": true,
+        "inputs/npc/vsrc/bus/ysyx_lsu_axi4_adapter.sv": true,
+        "inputs/npc/vsrc/bus/ysyx_ifu_axi4_adapter.sv": true,
+        "inputs/npc/vsrc/bus/ysyx_axi4_router.sv": true,
+        "inputs/npc/vsrc/core/ysyx_branch.sv": true,
+        "inputs/npc/vsrc/core/ysyx_gen_imm.sv": true,
+        "inputs/npc/vsrc/core/ysyx_csr.sv": true,
+        "inputs/npc/vsrc/core/ysyx_alu.sv": true,
+        "inputs/npc/vsrc/core/ysyx_exu.sv": true,
+        "inputs/npc/vsrc/core/ysyx_opbuf.sv": true,
+        "inputs/npc/vsrc/core/ysyx_core.sv": true,
+        "inputs/npc/vsrc/core/ysyx_gshare.sv": true,
+        "inputs/npc/vsrc/core/ysyx_ifu.sv": true,
+        "inputs/npc/vsrc/core/ysyx_idu.sv": true,
+        "inputs/npc/vsrc/core/ysyx_regfile.sv": true,
+        "inputs/npc/vsrc/core/ysyx_lsu.sv": true,
+        "inputs/npc/vsrc/core/ysyx_predecode.sv": true,
+        "inputs/npc/vsrc/top/ysyx_25030087.sv": true,
+        "inputs/npc/vsrc/top/ysyx_core_axi4.sv": true,
+        "inputs/npc/vsrc/top/ysyx_soc_cpu.sv": true,
+        "inputs/npc/vsrc/gnrl/ysyx_global.sv": true,
+        "inputs/npc/vsrc/gnrl/ysyx_gnrl_primitive.sv": true,
+        "inputs/npc/vsrc/periph/ysyx_clint.sv": true,
+        "inputs/npc/flow/Makefile": true,
+        "inputs/npc/flow/00_indata/configs/site.example.tcl": true,
+        "inputs/npc/flow/00_indata/configs/npc_soc_cpu.tcl": true,
+        "inputs/npc/flow/00_indata/configs/npc_soc_cpu_bpu_off.tcl": true,
+        "inputs/npc/flow/00_indata/configs/npc_soc_cpu_bpu_gshare.tcl": true,
+        "inputs/npc/flow/00_indata/configs/npc_core.tcl": true,
+        "inputs/npc/flow/00_indata/filelists/soc_cpu.f": true,
+        "inputs/npc/flow/00_indata/filelists/core.f": true,
+        "inputs/npc/flow/00_indata/constraints/core.sdc": true,
+        "inputs/npc/flow/00_indata/constraints/soc_cpu.sdc": true,
+        "inputs/npc/flow/03_sta/run.tcl": true,
+        "inputs/npc/flow/01_common/capacitance.tcl": true,
+        "inputs/npc/flow/01_common/setup.tcl": true,
+        "inputs/npc/flow/01_common/config_dump.tcl": true,
+        "inputs/npc/flow/01_common/flow.py": true,
+        "inputs/npc/flow/02_syn/run.tcl": true,
+        "inputs/npc/flow/02_syn/max_capacitance_margin.tcl": true,
+        "inputs/npc/flow/02_syn/probe.tcl": true,
+        "inputs/npc/flow/04_tests/eda_mock.tcl": true,
+        "inputs/npc/flow/04_tests/test_flow.py": true,
+        "inputs/npc/flow/04_tests/sdc_check.tcl": true
+      },
+      "stages": {
+        "syn": {
+          "execution": "COMPLETE",
+          "signoff": "CONSTRAINT_FAIL",
+          "reported_constraint_violation_rows": 1,
+          "cell_area": 11603.591918,
+          "power": "NOT_EVALUATED: disabled",
+          "status": "COMPLETE",
+          "exit_code": 0,
+          "warning_counts_across_log_and_reports": {
+            "DDB-24": 1,
+            "ELAB-311": 2,
+            "LINT-1": 274,
+            "LINT-2": 1214,
+            "LINT-28": 1851,
+            "LINT-29": 273,
+            "LINT-31": 618,
+            "LINT-32": 7,
+            "LINT-33": 19,
+            "LINT-52": 203,
+            "LINT-60": 410,
+            "TIM-134": 3,
+            "TIM-135": 1,
+            "TIM-216": 1,
+            "UCN-1": 195,
+            "UCN-4": 1,
+            "UISN-40": 2,
+            "VER-318": 2,
+            "VO-4": 1
+          }
+        },
+        "sta": {
+          "execution": "COMPLETE",
+          "signoff": "REVIEW_REQUIRED",
+          "reported_constraint_violation_rows": 0,
+          "timing": {
+            "max": {
+              "wns": 0.0,
+              "tns": 0.0,
+              "violating_endpoints": 0.0
+            },
+            "min": {
+              "wns": 0.0,
+              "tns": 0.0,
+              "violating_endpoints": 0.0
+            }
+          },
+          "coverage": {
+            "total": 28384,
+            "met": 14850,
+            "violated": 0,
+            "untested": 13534
+          },
+          "status": "COMPLETE",
+          "exit_code": 0,
+          "warning_counts_across_log_and_reports": {
+            "PTE-003": 1,
+            "UITE-502": 2
+          }
+        }
+      },
+      "netlist": {
+        "leaf_cells": 8461,
+        "sequential_cells": 2006,
+        "sequential_types": {
+          "DFCND1BWP12T40P140": 1,
+          "DFCNQD1BWP12T40P140": 947,
+          "DFQD1BWP12T40P140": 210,
+          "DFSNQD1BWP12T40P140": 199,
+          "EDFCNQD1BWP12T40P140": 649
+        },
+        "clock_cp_pins": 2006,
+        "all_sequential_cp_directly_on_clock": true,
+        "all_leaves_standard_cells": true,
+        "predictor_sequential_cells": 263,
+        "predictor_pht_bits": 256,
+        "predictor_ghr_bits": 7
+      },
+      "post_check_design_warning_counts": {
+        "LINT-2": 1134,
+        "LINT-28": 1675,
+        "LINT-29": 85,
+        "LINT-31": 187,
+        "LINT-33": 1,
+        "LINT-52": 81,
+        "LINT-60": 410
+      },
+      "lint2_all_hierarchical_outputs": true,
+      "lint33_messages": [
+        "Warning: In design 'ysyx_ifu_30000000_2_2_7', the same net is connected to more than one pin on submodule 'u_ifq'. (LINT-33)"
+      ],
+      "coverage_review": {
+        "type_reason_counts": {
+          "min_pulse_width/no_clock": 9780,
+          "out_hold/no_paths": 81,
+          "out_setup/no_paths": 81,
+          "recovery/no_startpoint_clock": 1796,
+          "removal/no_startpoint_clock": 1796
+        },
+        "reset_pin_counts": {
+          "min_pulse_width/CDN": 8984,
+          "min_pulse_width/SDN": 796,
+          "recovery/CDN": 1597,
+          "recovery/SDN": 199,
+          "removal/CDN": 1597,
+          "removal/SDN": 199
+        },
+        "pulse_width_counts_by_cell": {
+          "EDFCNQD1BWP12T40P140": 5192,
+          "DFCNQD1BWP12T40P140": 3788,
+          "DFCND1BWP12T40P140": 4,
+          "DFSNQD1BWP12T40P140": 796
+        },
+        "constant_outputs": {
+          "io_slave_awready": 0,
+          "io_master_awid[3]": 0,
+          "io_master_awid[2]": 0,
+          "io_master_awid[1]": 0,
+          "io_master_awid[0]": 0,
+          "io_master_awlen[7]": 0,
+          "io_master_awlen[6]": 0,
+          "io_master_awlen[5]": 0,
+          "io_master_awlen[4]": 0,
+          "io_master_awlen[3]": 0,
+          "io_master_awlen[2]": 0,
+          "io_master_awlen[1]": 0,
+          "io_master_awlen[0]": 0,
+          "io_master_awsize[2]": 0,
+          "io_master_awburst[1]": 0,
+          "io_master_awburst[0]": 1,
+          "io_slave_wready": 0,
+          "io_master_wlast": 1,
+          "io_slave_bvalid": 0,
+          "io_slave_bresp[1]": 0,
+          "io_slave_bresp[0]": 0,
+          "io_slave_bid[3]": 0,
+          "io_slave_bid[2]": 0,
+          "io_slave_bid[1]": 0,
+          "io_slave_bid[0]": 0,
+          "io_slave_arready": 0,
+          "io_master_arid[3]": 0,
+          "io_master_arid[2]": 0,
+          "io_master_arid[1]": 0,
+          "io_master_arid[0]": 0,
+          "io_master_arlen[7]": 0,
+          "io_master_arlen[6]": 0,
+          "io_master_arlen[5]": 0,
+          "io_master_arlen[4]": 0,
+          "io_master_arlen[3]": 0,
+          "io_master_arlen[2]": 0,
+          "io_master_arlen[1]": 0,
+          "io_master_arlen[0]": 0,
+          "io_master_arsize[2]": 0,
+          "io_master_arburst[1]": 0,
+          "io_master_arburst[0]": 1,
+          "io_slave_rvalid": 0,
+          "io_slave_rresp[1]": 0,
+          "io_slave_rresp[0]": 0,
+          "io_slave_rdata[31]": 0,
+          "io_slave_rdata[30]": 0,
+          "io_slave_rdata[29]": 0,
+          "io_slave_rdata[28]": 0,
+          "io_slave_rdata[27]": 0,
+          "io_slave_rdata[26]": 0,
+          "io_slave_rdata[25]": 0,
+          "io_slave_rdata[24]": 0,
+          "io_slave_rdata[23]": 0,
+          "io_slave_rdata[22]": 0,
+          "io_slave_rdata[21]": 0,
+          "io_slave_rdata[20]": 0,
+          "io_slave_rdata[19]": 0,
+          "io_slave_rdata[18]": 0,
+          "io_slave_rdata[17]": 0,
+          "io_slave_rdata[16]": 0,
+          "io_slave_rdata[15]": 0,
+          "io_slave_rdata[14]": 0,
+          "io_slave_rdata[13]": 0,
+          "io_slave_rdata[12]": 0,
+          "io_slave_rdata[11]": 0,
+          "io_slave_rdata[10]": 0,
+          "io_slave_rdata[9]": 0,
+          "io_slave_rdata[8]": 0,
+          "io_slave_rdata[7]": 0,
+          "io_slave_rdata[6]": 0,
+          "io_slave_rdata[5]": 0,
+          "io_slave_rdata[4]": 0,
+          "io_slave_rdata[3]": 0,
+          "io_slave_rdata[2]": 0,
+          "io_slave_rdata[1]": 0,
+          "io_slave_rdata[0]": 0,
+          "io_slave_rlast": 0,
+          "io_slave_rid[3]": 0,
+          "io_slave_rid[2]": 0,
+          "io_slave_rid[1]": 0,
+          "io_slave_rid[0]": 0
+        },
+        "only_constant_disable_flags": true,
+        "unexplained_untested": 0
+      },
+      "area": {
+        "total": 11603.591918,
+        "combinational": 5097.791949,
+        "sequential": 6505.799968
+      },
+      "timing_paths": {
+        "Reg2Reg_max": {
+          "startpoint": "subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_",
+          "endpoint": "subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_125_",
+          "slack_ns": 1.801808,
+          "arrival_ns": 2.96799
+        },
+        "Reg2Reg_min": {
+          "startpoint": "subsystem/cpu/core/u_ifu/fetch_pc_q_reg_28_",
+          "endpoint": "subsystem/cpu/core/u_ifu_axi4_adapter/request_addr_q_reg_28_",
+          "slack_ns": 0.0087,
+          "arrival_ns": 0.070713
+        },
+        "In2Reg_max": {
+          "startpoint": "io_master_rvalid",
+          "endpoint": "subsystem/router/rdata_q_reg_28_",
+          "slack_ns": 2.444726,
+          "arrival_ns": 2.342228
+        },
+        "In2Reg_min": {
+          "startpoint": "io_master_awready",
+          "endpoint": "subsystem/router/aw_sent_q_reg",
+          "slack_ns": 0.164472,
+          "arrival_ns": 0.239171
+        },
+        "Reg2Out_max": {
+          "startpoint": "subsystem/router/state_q_reg_3_",
+          "endpoint": "io_master_awvalid",
+          "slack_ns": 2.505592,
+          "arrival_ns": 0.294408
+        },
+        "Reg2Out_min": {
+          "startpoint": "subsystem/router/strb_q_reg_0_",
+          "endpoint": "io_master_wstrb[0]",
+          "slack_ns": 0.239585,
+          "arrival_ns": 0.089585
+        },
+        "In2Out_max": null,
+        "In2Out_min": null
+      }
+    }
+  },
+  "comparison": {
+    "different_snapshot_files": [
+      "inputs/design-config.tcl",
+      "inputs/run.tcl"
+    ],
+    "same_recorded_external_inputs": true,
+    "only_config_difference": "NPC_BPU_MODE=0 versus 2",
+    "area_delta": 2019.864062,
+    "area_increase_percent": 21.075975,
+    "sequential_cell_delta": 383,
+    "accepted_leakage_zero_target": true,
+    "physical_reset_deferred": true,
+    "blocking_errors": [],
+    "assessment": "PASS_WITH_DOCUMENTED_EXCLUSIONS"
+  }
+}

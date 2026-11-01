@@ -1,0 +1,941 @@
+ 
+****************************************
+Report : resources
+Design : ysyx_25030087
+Version: V-2023.12-SP5
+Date   : Sun Nov  1 00:03:07 2026
+****************************************
+
+
+No resource sharing information to report.
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_soc_cpu_30000000_2_7
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_axi4_router
+****************************************
+
+No implementations to report
+ 
+****************************************
+Design : ysyx_clint
+****************************************
+
+Resource Report for this hierarchy in file ./vsrc/periph/ysyx_clint.sv
+=============================================================================
+| Cell           | Module         | Parameters | Contained Operations       |
+=============================================================================
+| gte_x_2        | DW_cmp         | width=64   | gte_24 (ysyx_clint.sv:24)  |
+| add_x_3        | DW01_inc       | width=64   | add_31 (ysyx_clint.sv:31)  |
+=============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| gte_x_2            | DW_cmp           | apparch (area)     |                |
+| add_x_3            | DW01_inc         | apparch (area)     |                |
+===============================================================================
+
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_core_axi4_30000000_2_7
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_axi4_arbiter
+****************************************
+
+No implementations to report
+ 
+****************************************
+Design : ysyx_core_30000000_2_7
+****************************************
+
+Resource Report for this hierarchy in file ./vsrc/core/ysyx_core.sv
+=============================================================================
+| Cell           | Module         | Parameters | Contained Operations       |
+=============================================================================
+| eq_x_3         | DW_cmp         | width=5    | eq_304_2 (ysyx_core.sv:304) |
+| eq_x_5         | DW_cmp         | width=5    | eq_308_2 (ysyx_core.sv:308) |
+=============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| eq_x_3             | DW_cmp           | apparch (area)     |                |
+| eq_x_5             | DW_cmp           | apparch (area)     |                |
+===============================================================================
+
+ 
+****************************************
+Design : ysyx_lsu_axi4_adapter
+****************************************
+
+Resource Report for this hierarchy in file ./vsrc/bus/ysyx_lsu_axi4_adapter.sv
+=============================================================================
+| Cell           | Module         | Parameters | Contained Operations       |
+=============================================================================
+| ashr_1         | DW_rightsh     | A_width=32 | srl_80 (ysyx_lsu_axi4_adapter.sv:80) |
+       |                | SH_width=5 |                            |
+| ash_3          | DW_leftsh      | A_width=32 | sll_115 (ysyx_lsu_axi4_adapter.sv:115) |
+     |                | SH_width=5 |                            |
+| ash_4          | DW_leftsh      | A_width=4  | sll_116 (ysyx_lsu_axi4_adapter.sv:116) |
+     |                | SH_width=2 |                            |
+=============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| ashr_1             | DW_rightsh       | astr (area)        |                |
+| ash_3              | DW_leftsh        | astr (area)        |                |
+| ash_4              | DW_leftsh        | astr (area)        |                |
+===============================================================================
+
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_ifu_axi4_adapter
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_lsu
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_csr
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_gnrl_dfflrs_DW32_312242
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_gnrl_dfflrs_DW32_197242
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_gnrl_dfflrs_DW32_393242
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_gnrl_dfflrs_DW32_856242
+****************************************
+
+No implementations to report
+ 
+****************************************
+Design : ysyx_exu_BPU_MODE2
+****************************************
+
+Resource Report for this hierarchy in file ./vsrc/core/ysyx_exu.sv
+=============================================================================
+| Cell           | Module         | Parameters | Contained Operations       |
+=============================================================================
+| add_x_3        | DW01_add       | width=32   | add_131 (ysyx_exu.sv:131)  |
+| ne_x_6         | DW_cmp         | width=32   | ne_157 (ysyx_exu.sv:157)   |
+=============================================================================
+
+
+Datapath Extraction Report
+
+Information: Operator associated with resources 'add_131 (ysyx_exu.sv:131)' in design 'ysyx_exu_BPU_MODE2' breaks the datapath extraction because there is leakage due to truncation on its fanout to operator of resources 'C439 (ysyx_exu.sv:150)'.  (HDL-120)
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| add_x_3            | DW01_add         | apparch (area)     |                |
+| ne_x_6             | DW_cmp           | apparch (area)     |                |
+===============================================================================
+
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_gnrl_data_mux_DW32_N4
+****************************************
+
+No implementations to report
+ 
+****************************************
+Design : ysyx_branch
+****************************************
+
+Resource Report for this hierarchy in file ./vsrc/core/ysyx_branch.sv
+=============================================================================
+| Cell           | Module         | Parameters | Contained Operations       |
+=============================================================================
+| eq_x_1         | DW_cmp         | width=32   | eq_20 (ysyx_branch.sv:20)  |
+| ne_x_2         | DW_cmp         | width=32   | ne_22 (ysyx_branch.sv:22)  |
+| lt_x_3         | DW_cmp         | width=32   | lt_24 (ysyx_branch.sv:24)  |
+| gte_x_4        | DW_cmp         | width=32   | gte_26 (ysyx_branch.sv:26) |
+| lt_x_5         | DW_cmp         | width=32   | lt_28 (ysyx_branch.sv:28)  |
+| gte_x_6        | DW_cmp         | width=32   | gte_30 (ysyx_branch.sv:30) |
+=============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| eq_x_1             | DW_cmp           | apparch (area)     |                |
+| ne_x_2             | DW_cmp           | apparch (area)     |                |
+| lt_x_3             | DW_cmp           | apparch (area)     |                |
+| gte_x_4            | DW_cmp           | apparch (area)     |                |
+| lt_x_5             | DW_cmp           | apparch (area)     |                |
+| gte_x_6            | DW_cmp           | apparch (area)     |                |
+===============================================================================
+
+ 
+****************************************
+Design : ysyx_alu
+****************************************
+
+Resource Report for this hierarchy in file ./vsrc/core/ysyx_alu.sv
+=============================================================================
+| Cell           | Module         | Parameters | Contained Operations       |
+=============================================================================
+| ash_1          | DW_leftsh      | A_width=32 | sll_18 (ysyx_alu.sv:18)    |
+|                |                | SH_width=5 |                            |
+| lt_x_2         | DW_cmp         | width=32   | lt_20 (ysyx_alu.sv:20)     |
+| lt_x_3         | DW_cmp         | width=32   | lt_22 (ysyx_alu.sv:22)     |
+| ashr_4         | DW_rightsh     | A_width=32 | srl_26 (ysyx_alu.sv:26)    |
+|                |                | SH_width=5 |                            |
+| ashr_5         | DW_rightsh     | A_width=32 | sra_28 (ysyx_alu.sv:28)    |
+|                |                | SH_width=5 |                            |
+| DP_OP_22J3_122_5665             |            |                            |
+|                | DP_OP_22J3_122_5665 |       |                            |
+=============================================================================
+
+Datapath Report for DP_OP_22J3_122_5665
+==============================================================================
+| Cell                 | Contained Operations                                |
+==============================================================================
+| DP_OP_22J3_122_5665  | add_14 (ysyx_alu.sv:14) sub_16 (ysyx_alu.sv:16)     |
+==============================================================================
+
+==============================================================================
+|       |      | Data     |       |                                          |
+| Var   | Type | Class    | Width | Expression                               |
+==============================================================================
+| I1    | PI   | Signed   | 32    |                                          |
+| I2    | PI   | Signed   | 32    |                                          |
+| I3    | PI   | Unsigned | 1     |                                          |
+| O1    | PO   | Signed   | 32    | addsub(I1,I2,I3) ( ysyx_alu.sv:14 ysyx_alu.sv:16 ) |
+==============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| ash_1              | DW_leftsh        | astr (area)        |                |
+| lt_x_2             | DW_cmp           | apparch (area)     |                |
+| lt_x_3             | DW_cmp           | apparch (area)     |                |
+| ashr_4             | DW_rightsh       | astr (area)        |                |
+| ashr_5             | DW_rightsh       | astr (area)        |                |
+| DP_OP_22J3_122_5665                   |                    |                |
+|                    | DP_OP_22J3_122_5665 | str (area)      |                |
+===============================================================================
+
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_opbuf_BPU_INDEX_BITS7
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_gnrl_rv_reg_DW285
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_regfile
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_gen_imm
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_idu
+****************************************
+
+No implementations to report
+ 
+****************************************
+Design : ysyx_ifu_30000000_2_2_7
+****************************************
+
+Resource Report for this hierarchy in file ./vsrc/core/ysyx_ifu.sv
+=============================================================================
+| Cell           | Module         | Parameters | Contained Operations       |
+=============================================================================
+| add_x_1        | DW01_add       | width=32   | add_93 (ysyx_ifu.sv:93)    |
+| add_x_3        | DW01_add       | width=32   | add_134 (ysyx_ifu.sv:134)  |
+=============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| add_x_1            | DW01_add         | apparch (area)     |                |
+| add_x_3            | DW01_add         | apparch (area)     |                |
+===============================================================================
+
+ 
+****************************************
+Design : ysyx_gnrl_fifo_DW106_DEPTH2
+****************************************
+
+Resource Report for this hierarchy in file ./vsrc/gnrl/ysyx_gnrl_primitive.sv
+=============================================================================
+| Cell           | Module         | Parameters | Contained Operations       |
+=============================================================================
+| add_x_214      | DW01_inc       | width=2    | add_356 (ysyx_gnrl_primitive.sv:356) |
+| sub_x_215      | DW01_dec       | width=2    | sub_357 (ysyx_gnrl_primitive.sv:357) |
+=============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| add_x_214          | DW01_inc         | apparch (area)     |                |
+| sub_x_215          | DW01_dec         | apparch (area)     |                |
+===============================================================================
+
+ 
+****************************************
+Design : ysyx_gshare_INDEX_BITS7
+****************************************
+
+Resource Report for this hierarchy in file ./vsrc/core/ysyx_gshare.sv
+=============================================================================
+| Cell           | Module         | Parameters | Contained Operations       |
+=============================================================================
+| add_x_1        | DW01_inc       | width=2    | add_32 (ysyx_gshare.sv:32) |
+| sub_x_2        | DW01_dec       | width=2    | sub_34 (ysyx_gshare.sv:34) |
+| add_x_6        | DW01_inc       | width=2    | add_32_G2 (ysyx_gshare.sv:32) |
+| sub_x_7        | DW01_dec       | width=2    | sub_34_G2 (ysyx_gshare.sv:34) |
+| add_x_11       | DW01_inc       | width=2    | add_32_G3 (ysyx_gshare.sv:32) |
+| sub_x_12       | DW01_dec       | width=2    | sub_34_G3 (ysyx_gshare.sv:34) |
+| add_x_16       | DW01_inc       | width=2    | add_32_G4 (ysyx_gshare.sv:32) |
+| sub_x_17       | DW01_dec       | width=2    | sub_34_G4 (ysyx_gshare.sv:34) |
+| add_x_21       | DW01_inc       | width=2    | add_32_G5 (ysyx_gshare.sv:32) |
+| sub_x_22       | DW01_dec       | width=2    | sub_34_G5 (ysyx_gshare.sv:34) |
+| add_x_26       | DW01_inc       | width=2    | add_32_G6 (ysyx_gshare.sv:32) |
+| sub_x_27       | DW01_dec       | width=2    | sub_34_G6 (ysyx_gshare.sv:34) |
+| add_x_31       | DW01_inc       | width=2    | add_32_G7 (ysyx_gshare.sv:32) |
+| sub_x_32       | DW01_dec       | width=2    | sub_34_G7 (ysyx_gshare.sv:34) |
+| add_x_36       | DW01_inc       | width=2    | add_32_G8 (ysyx_gshare.sv:32) |
+| sub_x_37       | DW01_dec       | width=2    | sub_34_G8 (ysyx_gshare.sv:34) |
+| add_x_41       | DW01_inc       | width=2    | add_32_G9 (ysyx_gshare.sv:32) |
+| sub_x_42       | DW01_dec       | width=2    | sub_34_G9 (ysyx_gshare.sv:34) |
+| add_x_46       | DW01_inc       | width=2    | add_32_G10 (ysyx_gshare.sv:32) |
+| sub_x_47       | DW01_dec       | width=2    | sub_34_G10 (ysyx_gshare.sv:34) |
+| add_x_51       | DW01_inc       | width=2    | add_32_G11 (ysyx_gshare.sv:32) |
+| sub_x_52       | DW01_dec       | width=2    | sub_34_G11 (ysyx_gshare.sv:34) |
+| add_x_56       | DW01_inc       | width=2    | add_32_G12 (ysyx_gshare.sv:32) |
+| sub_x_57       | DW01_dec       | width=2    | sub_34_G12 (ysyx_gshare.sv:34) |
+| add_x_61       | DW01_inc       | width=2    | add_32_G13 (ysyx_gshare.sv:32) |
+| sub_x_62       | DW01_dec       | width=2    | sub_34_G13 (ysyx_gshare.sv:34) |
+| add_x_66       | DW01_inc       | width=2    | add_32_G14 (ysyx_gshare.sv:32) |
+| sub_x_67       | DW01_dec       | width=2    | sub_34_G14 (ysyx_gshare.sv:34) |
+| add_x_71       | DW01_inc       | width=2    | add_32_G15 (ysyx_gshare.sv:32) |
+| sub_x_72       | DW01_dec       | width=2    | sub_34_G15 (ysyx_gshare.sv:34) |
+| add_x_76       | DW01_inc       | width=2    | add_32_G16 (ysyx_gshare.sv:32) |
+| sub_x_77       | DW01_dec       | width=2    | sub_34_G16 (ysyx_gshare.sv:34) |
+| add_x_81       | DW01_inc       | width=2    | add_32_G17 (ysyx_gshare.sv:32) |
+| sub_x_82       | DW01_dec       | width=2    | sub_34_G17 (ysyx_gshare.sv:34) |
+| add_x_86       | DW01_inc       | width=2    | add_32_G18 (ysyx_gshare.sv:32) |
+| sub_x_87       | DW01_dec       | width=2    | sub_34_G18 (ysyx_gshare.sv:34) |
+| add_x_91       | DW01_inc       | width=2    | add_32_G19 (ysyx_gshare.sv:32) |
+| sub_x_92       | DW01_dec       | width=2    | sub_34_G19 (ysyx_gshare.sv:34) |
+| add_x_96       | DW01_inc       | width=2    | add_32_G20 (ysyx_gshare.sv:32) |
+| sub_x_97       | DW01_dec       | width=2    | sub_34_G20 (ysyx_gshare.sv:34) |
+| add_x_101      | DW01_inc       | width=2    | add_32_G21 (ysyx_gshare.sv:32) |
+| sub_x_102      | DW01_dec       | width=2    | sub_34_G21 (ysyx_gshare.sv:34) |
+| add_x_106      | DW01_inc       | width=2    | add_32_G22 (ysyx_gshare.sv:32) |
+| sub_x_107      | DW01_dec       | width=2    | sub_34_G22 (ysyx_gshare.sv:34) |
+| add_x_111      | DW01_inc       | width=2    | add_32_G23 (ysyx_gshare.sv:32) |
+| sub_x_112      | DW01_dec       | width=2    | sub_34_G23 (ysyx_gshare.sv:34) |
+| add_x_116      | DW01_inc       | width=2    | add_32_G24 (ysyx_gshare.sv:32) |
+| sub_x_117      | DW01_dec       | width=2    | sub_34_G24 (ysyx_gshare.sv:34) |
+| add_x_121      | DW01_inc       | width=2    | add_32_G25 (ysyx_gshare.sv:32) |
+| sub_x_122      | DW01_dec       | width=2    | sub_34_G25 (ysyx_gshare.sv:34) |
+| add_x_126      | DW01_inc       | width=2    | add_32_G26 (ysyx_gshare.sv:32) |
+| sub_x_127      | DW01_dec       | width=2    | sub_34_G26 (ysyx_gshare.sv:34) |
+| add_x_131      | DW01_inc       | width=2    | add_32_G27 (ysyx_gshare.sv:32) |
+| sub_x_132      | DW01_dec       | width=2    | sub_34_G27 (ysyx_gshare.sv:34) |
+| add_x_136      | DW01_inc       | width=2    | add_32_G28 (ysyx_gshare.sv:32) |
+| sub_x_137      | DW01_dec       | width=2    | sub_34_G28 (ysyx_gshare.sv:34) |
+| add_x_141      | DW01_inc       | width=2    | add_32_G29 (ysyx_gshare.sv:32) |
+| sub_x_142      | DW01_dec       | width=2    | sub_34_G29 (ysyx_gshare.sv:34) |
+| add_x_146      | DW01_inc       | width=2    | add_32_G30 (ysyx_gshare.sv:32) |
+| sub_x_147      | DW01_dec       | width=2    | sub_34_G30 (ysyx_gshare.sv:34) |
+| add_x_151      | DW01_inc       | width=2    | add_32_G31 (ysyx_gshare.sv:32) |
+| sub_x_152      | DW01_dec       | width=2    | sub_34_G31 (ysyx_gshare.sv:34) |
+| add_x_156      | DW01_inc       | width=2    | add_32_G32 (ysyx_gshare.sv:32) |
+| sub_x_157      | DW01_dec       | width=2    | sub_34_G32 (ysyx_gshare.sv:34) |
+| add_x_161      | DW01_inc       | width=2    | add_32_G33 (ysyx_gshare.sv:32) |
+| sub_x_162      | DW01_dec       | width=2    | sub_34_G33 (ysyx_gshare.sv:34) |
+| add_x_166      | DW01_inc       | width=2    | add_32_G34 (ysyx_gshare.sv:32) |
+| sub_x_167      | DW01_dec       | width=2    | sub_34_G34 (ysyx_gshare.sv:34) |
+| add_x_171      | DW01_inc       | width=2    | add_32_G35 (ysyx_gshare.sv:32) |
+| sub_x_172      | DW01_dec       | width=2    | sub_34_G35 (ysyx_gshare.sv:34) |
+| add_x_176      | DW01_inc       | width=2    | add_32_G36 (ysyx_gshare.sv:32) |
+| sub_x_177      | DW01_dec       | width=2    | sub_34_G36 (ysyx_gshare.sv:34) |
+| add_x_181      | DW01_inc       | width=2    | add_32_G37 (ysyx_gshare.sv:32) |
+| sub_x_182      | DW01_dec       | width=2    | sub_34_G37 (ysyx_gshare.sv:34) |
+| add_x_186      | DW01_inc       | width=2    | add_32_G38 (ysyx_gshare.sv:32) |
+| sub_x_187      | DW01_dec       | width=2    | sub_34_G38 (ysyx_gshare.sv:34) |
+| add_x_191      | DW01_inc       | width=2    | add_32_G39 (ysyx_gshare.sv:32) |
+| sub_x_192      | DW01_dec       | width=2    | sub_34_G39 (ysyx_gshare.sv:34) |
+| add_x_196      | DW01_inc       | width=2    | add_32_G40 (ysyx_gshare.sv:32) |
+| sub_x_197      | DW01_dec       | width=2    | sub_34_G40 (ysyx_gshare.sv:34) |
+| add_x_201      | DW01_inc       | width=2    | add_32_G41 (ysyx_gshare.sv:32) |
+| sub_x_202      | DW01_dec       | width=2    | sub_34_G41 (ysyx_gshare.sv:34) |
+| add_x_206      | DW01_inc       | width=2    | add_32_G42 (ysyx_gshare.sv:32) |
+| sub_x_207      | DW01_dec       | width=2    | sub_34_G42 (ysyx_gshare.sv:34) |
+| add_x_211      | DW01_inc       | width=2    | add_32_G43 (ysyx_gshare.sv:32) |
+| sub_x_212      | DW01_dec       | width=2    | sub_34_G43 (ysyx_gshare.sv:34) |
+| add_x_216      | DW01_inc       | width=2    | add_32_G44 (ysyx_gshare.sv:32) |
+| sub_x_217      | DW01_dec       | width=2    | sub_34_G44 (ysyx_gshare.sv:34) |
+| add_x_221      | DW01_inc       | width=2    | add_32_G45 (ysyx_gshare.sv:32) |
+| sub_x_222      | DW01_dec       | width=2    | sub_34_G45 (ysyx_gshare.sv:34) |
+| add_x_226      | DW01_inc       | width=2    | add_32_G46 (ysyx_gshare.sv:32) |
+| sub_x_227      | DW01_dec       | width=2    | sub_34_G46 (ysyx_gshare.sv:34) |
+| add_x_231      | DW01_inc       | width=2    | add_32_G47 (ysyx_gshare.sv:32) |
+| sub_x_232      | DW01_dec       | width=2    | sub_34_G47 (ysyx_gshare.sv:34) |
+| add_x_236      | DW01_inc       | width=2    | add_32_G48 (ysyx_gshare.sv:32) |
+| sub_x_237      | DW01_dec       | width=2    | sub_34_G48 (ysyx_gshare.sv:34) |
+| add_x_241      | DW01_inc       | width=2    | add_32_G49 (ysyx_gshare.sv:32) |
+| sub_x_242      | DW01_dec       | width=2    | sub_34_G49 (ysyx_gshare.sv:34) |
+| add_x_246      | DW01_inc       | width=2    | add_32_G50 (ysyx_gshare.sv:32) |
+| sub_x_247      | DW01_dec       | width=2    | sub_34_G50 (ysyx_gshare.sv:34) |
+| add_x_251      | DW01_inc       | width=2    | add_32_G51 (ysyx_gshare.sv:32) |
+| sub_x_252      | DW01_dec       | width=2    | sub_34_G51 (ysyx_gshare.sv:34) |
+| add_x_256      | DW01_inc       | width=2    | add_32_G52 (ysyx_gshare.sv:32) |
+| sub_x_257      | DW01_dec       | width=2    | sub_34_G52 (ysyx_gshare.sv:34) |
+| add_x_261      | DW01_inc       | width=2    | add_32_G53 (ysyx_gshare.sv:32) |
+| sub_x_262      | DW01_dec       | width=2    | sub_34_G53 (ysyx_gshare.sv:34) |
+| add_x_266      | DW01_inc       | width=2    | add_32_G54 (ysyx_gshare.sv:32) |
+| sub_x_267      | DW01_dec       | width=2    | sub_34_G54 (ysyx_gshare.sv:34) |
+| add_x_271      | DW01_inc       | width=2    | add_32_G55 (ysyx_gshare.sv:32) |
+| sub_x_272      | DW01_dec       | width=2    | sub_34_G55 (ysyx_gshare.sv:34) |
+| add_x_276      | DW01_inc       | width=2    | add_32_G56 (ysyx_gshare.sv:32) |
+| sub_x_277      | DW01_dec       | width=2    | sub_34_G56 (ysyx_gshare.sv:34) |
+| add_x_281      | DW01_inc       | width=2    | add_32_G57 (ysyx_gshare.sv:32) |
+| sub_x_282      | DW01_dec       | width=2    | sub_34_G57 (ysyx_gshare.sv:34) |
+| add_x_286      | DW01_inc       | width=2    | add_32_G58 (ysyx_gshare.sv:32) |
+| sub_x_287      | DW01_dec       | width=2    | sub_34_G58 (ysyx_gshare.sv:34) |
+| add_x_291      | DW01_inc       | width=2    | add_32_G59 (ysyx_gshare.sv:32) |
+| sub_x_292      | DW01_dec       | width=2    | sub_34_G59 (ysyx_gshare.sv:34) |
+| add_x_296      | DW01_inc       | width=2    | add_32_G60 (ysyx_gshare.sv:32) |
+| sub_x_297      | DW01_dec       | width=2    | sub_34_G60 (ysyx_gshare.sv:34) |
+| add_x_301      | DW01_inc       | width=2    | add_32_G61 (ysyx_gshare.sv:32) |
+| sub_x_302      | DW01_dec       | width=2    | sub_34_G61 (ysyx_gshare.sv:34) |
+| add_x_306      | DW01_inc       | width=2    | add_32_G62 (ysyx_gshare.sv:32) |
+| sub_x_307      | DW01_dec       | width=2    | sub_34_G62 (ysyx_gshare.sv:34) |
+| add_x_311      | DW01_inc       | width=2    | add_32_G63 (ysyx_gshare.sv:32) |
+| sub_x_312      | DW01_dec       | width=2    | sub_34_G63 (ysyx_gshare.sv:34) |
+| add_x_316      | DW01_inc       | width=2    | add_32_G64 (ysyx_gshare.sv:32) |
+| sub_x_317      | DW01_dec       | width=2    | sub_34_G64 (ysyx_gshare.sv:34) |
+| add_x_321      | DW01_inc       | width=2    | add_32_G65 (ysyx_gshare.sv:32) |
+| sub_x_322      | DW01_dec       | width=2    | sub_34_G65 (ysyx_gshare.sv:34) |
+| add_x_326      | DW01_inc       | width=2    | add_32_G66 (ysyx_gshare.sv:32) |
+| sub_x_327      | DW01_dec       | width=2    | sub_34_G66 (ysyx_gshare.sv:34) |
+| add_x_331      | DW01_inc       | width=2    | add_32_G67 (ysyx_gshare.sv:32) |
+| sub_x_332      | DW01_dec       | width=2    | sub_34_G67 (ysyx_gshare.sv:34) |
+| add_x_336      | DW01_inc       | width=2    | add_32_G68 (ysyx_gshare.sv:32) |
+| sub_x_337      | DW01_dec       | width=2    | sub_34_G68 (ysyx_gshare.sv:34) |
+| add_x_341      | DW01_inc       | width=2    | add_32_G69 (ysyx_gshare.sv:32) |
+| sub_x_342      | DW01_dec       | width=2    | sub_34_G69 (ysyx_gshare.sv:34) |
+| add_x_346      | DW01_inc       | width=2    | add_32_G70 (ysyx_gshare.sv:32) |
+| sub_x_347      | DW01_dec       | width=2    | sub_34_G70 (ysyx_gshare.sv:34) |
+| add_x_351      | DW01_inc       | width=2    | add_32_G71 (ysyx_gshare.sv:32) |
+| sub_x_352      | DW01_dec       | width=2    | sub_34_G71 (ysyx_gshare.sv:34) |
+| add_x_356      | DW01_inc       | width=2    | add_32_G72 (ysyx_gshare.sv:32) |
+| sub_x_357      | DW01_dec       | width=2    | sub_34_G72 (ysyx_gshare.sv:34) |
+| add_x_361      | DW01_inc       | width=2    | add_32_G73 (ysyx_gshare.sv:32) |
+| sub_x_362      | DW01_dec       | width=2    | sub_34_G73 (ysyx_gshare.sv:34) |
+| add_x_366      | DW01_inc       | width=2    | add_32_G74 (ysyx_gshare.sv:32) |
+| sub_x_367      | DW01_dec       | width=2    | sub_34_G74 (ysyx_gshare.sv:34) |
+| add_x_371      | DW01_inc       | width=2    | add_32_G75 (ysyx_gshare.sv:32) |
+| sub_x_372      | DW01_dec       | width=2    | sub_34_G75 (ysyx_gshare.sv:34) |
+| add_x_376      | DW01_inc       | width=2    | add_32_G76 (ysyx_gshare.sv:32) |
+| sub_x_377      | DW01_dec       | width=2    | sub_34_G76 (ysyx_gshare.sv:34) |
+| add_x_381      | DW01_inc       | width=2    | add_32_G77 (ysyx_gshare.sv:32) |
+| sub_x_382      | DW01_dec       | width=2    | sub_34_G77 (ysyx_gshare.sv:34) |
+| add_x_386      | DW01_inc       | width=2    | add_32_G78 (ysyx_gshare.sv:32) |
+| sub_x_387      | DW01_dec       | width=2    | sub_34_G78 (ysyx_gshare.sv:34) |
+| add_x_391      | DW01_inc       | width=2    | add_32_G79 (ysyx_gshare.sv:32) |
+| sub_x_392      | DW01_dec       | width=2    | sub_34_G79 (ysyx_gshare.sv:34) |
+| add_x_396      | DW01_inc       | width=2    | add_32_G80 (ysyx_gshare.sv:32) |
+| sub_x_397      | DW01_dec       | width=2    | sub_34_G80 (ysyx_gshare.sv:34) |
+| add_x_401      | DW01_inc       | width=2    | add_32_G81 (ysyx_gshare.sv:32) |
+| sub_x_402      | DW01_dec       | width=2    | sub_34_G81 (ysyx_gshare.sv:34) |
+| add_x_406      | DW01_inc       | width=2    | add_32_G82 (ysyx_gshare.sv:32) |
+| sub_x_407      | DW01_dec       | width=2    | sub_34_G82 (ysyx_gshare.sv:34) |
+| add_x_411      | DW01_inc       | width=2    | add_32_G83 (ysyx_gshare.sv:32) |
+| sub_x_412      | DW01_dec       | width=2    | sub_34_G83 (ysyx_gshare.sv:34) |
+| add_x_416      | DW01_inc       | width=2    | add_32_G84 (ysyx_gshare.sv:32) |
+| sub_x_417      | DW01_dec       | width=2    | sub_34_G84 (ysyx_gshare.sv:34) |
+| add_x_421      | DW01_inc       | width=2    | add_32_G85 (ysyx_gshare.sv:32) |
+| sub_x_422      | DW01_dec       | width=2    | sub_34_G85 (ysyx_gshare.sv:34) |
+| add_x_426      | DW01_inc       | width=2    | add_32_G86 (ysyx_gshare.sv:32) |
+| sub_x_427      | DW01_dec       | width=2    | sub_34_G86 (ysyx_gshare.sv:34) |
+| add_x_431      | DW01_inc       | width=2    | add_32_G87 (ysyx_gshare.sv:32) |
+| sub_x_432      | DW01_dec       | width=2    | sub_34_G87 (ysyx_gshare.sv:34) |
+| add_x_436      | DW01_inc       | width=2    | add_32_G88 (ysyx_gshare.sv:32) |
+| sub_x_437      | DW01_dec       | width=2    | sub_34_G88 (ysyx_gshare.sv:34) |
+| add_x_441      | DW01_inc       | width=2    | add_32_G89 (ysyx_gshare.sv:32) |
+| sub_x_442      | DW01_dec       | width=2    | sub_34_G89 (ysyx_gshare.sv:34) |
+| add_x_446      | DW01_inc       | width=2    | add_32_G90 (ysyx_gshare.sv:32) |
+| sub_x_447      | DW01_dec       | width=2    | sub_34_G90 (ysyx_gshare.sv:34) |
+| add_x_451      | DW01_inc       | width=2    | add_32_G91 (ysyx_gshare.sv:32) |
+| sub_x_452      | DW01_dec       | width=2    | sub_34_G91 (ysyx_gshare.sv:34) |
+| add_x_456      | DW01_inc       | width=2    | add_32_G92 (ysyx_gshare.sv:32) |
+| sub_x_457      | DW01_dec       | width=2    | sub_34_G92 (ysyx_gshare.sv:34) |
+| add_x_461      | DW01_inc       | width=2    | add_32_G93 (ysyx_gshare.sv:32) |
+| sub_x_462      | DW01_dec       | width=2    | sub_34_G93 (ysyx_gshare.sv:34) |
+| add_x_466      | DW01_inc       | width=2    | add_32_G94 (ysyx_gshare.sv:32) |
+| sub_x_467      | DW01_dec       | width=2    | sub_34_G94 (ysyx_gshare.sv:34) |
+| add_x_471      | DW01_inc       | width=2    | add_32_G95 (ysyx_gshare.sv:32) |
+| sub_x_472      | DW01_dec       | width=2    | sub_34_G95 (ysyx_gshare.sv:34) |
+| add_x_476      | DW01_inc       | width=2    | add_32_G96 (ysyx_gshare.sv:32) |
+| sub_x_477      | DW01_dec       | width=2    | sub_34_G96 (ysyx_gshare.sv:34) |
+| add_x_481      | DW01_inc       | width=2    | add_32_G97 (ysyx_gshare.sv:32) |
+| sub_x_482      | DW01_dec       | width=2    | sub_34_G97 (ysyx_gshare.sv:34) |
+| add_x_486      | DW01_inc       | width=2    | add_32_G98 (ysyx_gshare.sv:32) |
+| sub_x_487      | DW01_dec       | width=2    | sub_34_G98 (ysyx_gshare.sv:34) |
+| add_x_491      | DW01_inc       | width=2    | add_32_G99 (ysyx_gshare.sv:32) |
+| sub_x_492      | DW01_dec       | width=2    | sub_34_G99 (ysyx_gshare.sv:34) |
+| add_x_496      | DW01_inc       | width=2    | add_32_G100 (ysyx_gshare.sv:32) |
+| sub_x_497      | DW01_dec       | width=2    | sub_34_G100 (ysyx_gshare.sv:34) |
+| add_x_501      | DW01_inc       | width=2    | add_32_G101 (ysyx_gshare.sv:32) |
+| sub_x_502      | DW01_dec       | width=2    | sub_34_G101 (ysyx_gshare.sv:34) |
+| add_x_506      | DW01_inc       | width=2    | add_32_G102 (ysyx_gshare.sv:32) |
+| sub_x_507      | DW01_dec       | width=2    | sub_34_G102 (ysyx_gshare.sv:34) |
+| add_x_511      | DW01_inc       | width=2    | add_32_G103 (ysyx_gshare.sv:32) |
+| sub_x_512      | DW01_dec       | width=2    | sub_34_G103 (ysyx_gshare.sv:34) |
+| add_x_516      | DW01_inc       | width=2    | add_32_G104 (ysyx_gshare.sv:32) |
+| sub_x_517      | DW01_dec       | width=2    | sub_34_G104 (ysyx_gshare.sv:34) |
+| add_x_521      | DW01_inc       | width=2    | add_32_G105 (ysyx_gshare.sv:32) |
+| sub_x_522      | DW01_dec       | width=2    | sub_34_G105 (ysyx_gshare.sv:34) |
+| add_x_526      | DW01_inc       | width=2    | add_32_G106 (ysyx_gshare.sv:32) |
+| sub_x_527      | DW01_dec       | width=2    | sub_34_G106 (ysyx_gshare.sv:34) |
+| add_x_531      | DW01_inc       | width=2    | add_32_G107 (ysyx_gshare.sv:32) |
+| sub_x_532      | DW01_dec       | width=2    | sub_34_G107 (ysyx_gshare.sv:34) |
+| add_x_536      | DW01_inc       | width=2    | add_32_G108 (ysyx_gshare.sv:32) |
+| sub_x_537      | DW01_dec       | width=2    | sub_34_G108 (ysyx_gshare.sv:34) |
+| add_x_541      | DW01_inc       | width=2    | add_32_G109 (ysyx_gshare.sv:32) |
+| sub_x_542      | DW01_dec       | width=2    | sub_34_G109 (ysyx_gshare.sv:34) |
+| add_x_546      | DW01_inc       | width=2    | add_32_G110 (ysyx_gshare.sv:32) |
+| sub_x_547      | DW01_dec       | width=2    | sub_34_G110 (ysyx_gshare.sv:34) |
+| add_x_551      | DW01_inc       | width=2    | add_32_G111 (ysyx_gshare.sv:32) |
+| sub_x_552      | DW01_dec       | width=2    | sub_34_G111 (ysyx_gshare.sv:34) |
+| add_x_556      | DW01_inc       | width=2    | add_32_G112 (ysyx_gshare.sv:32) |
+| sub_x_557      | DW01_dec       | width=2    | sub_34_G112 (ysyx_gshare.sv:34) |
+| add_x_561      | DW01_inc       | width=2    | add_32_G113 (ysyx_gshare.sv:32) |
+| sub_x_562      | DW01_dec       | width=2    | sub_34_G113 (ysyx_gshare.sv:34) |
+| add_x_566      | DW01_inc       | width=2    | add_32_G114 (ysyx_gshare.sv:32) |
+| sub_x_567      | DW01_dec       | width=2    | sub_34_G114 (ysyx_gshare.sv:34) |
+| add_x_571      | DW01_inc       | width=2    | add_32_G115 (ysyx_gshare.sv:32) |
+| sub_x_572      | DW01_dec       | width=2    | sub_34_G115 (ysyx_gshare.sv:34) |
+| add_x_576      | DW01_inc       | width=2    | add_32_G116 (ysyx_gshare.sv:32) |
+| sub_x_577      | DW01_dec       | width=2    | sub_34_G116 (ysyx_gshare.sv:34) |
+| add_x_581      | DW01_inc       | width=2    | add_32_G117 (ysyx_gshare.sv:32) |
+| sub_x_582      | DW01_dec       | width=2    | sub_34_G117 (ysyx_gshare.sv:34) |
+| add_x_586      | DW01_inc       | width=2    | add_32_G118 (ysyx_gshare.sv:32) |
+| sub_x_587      | DW01_dec       | width=2    | sub_34_G118 (ysyx_gshare.sv:34) |
+| add_x_591      | DW01_inc       | width=2    | add_32_G119 (ysyx_gshare.sv:32) |
+| sub_x_592      | DW01_dec       | width=2    | sub_34_G119 (ysyx_gshare.sv:34) |
+| add_x_596      | DW01_inc       | width=2    | add_32_G120 (ysyx_gshare.sv:32) |
+| sub_x_597      | DW01_dec       | width=2    | sub_34_G120 (ysyx_gshare.sv:34) |
+| add_x_601      | DW01_inc       | width=2    | add_32_G121 (ysyx_gshare.sv:32) |
+| sub_x_602      | DW01_dec       | width=2    | sub_34_G121 (ysyx_gshare.sv:34) |
+| add_x_606      | DW01_inc       | width=2    | add_32_G122 (ysyx_gshare.sv:32) |
+| sub_x_607      | DW01_dec       | width=2    | sub_34_G122 (ysyx_gshare.sv:34) |
+| add_x_611      | DW01_inc       | width=2    | add_32_G123 (ysyx_gshare.sv:32) |
+| sub_x_612      | DW01_dec       | width=2    | sub_34_G123 (ysyx_gshare.sv:34) |
+| add_x_616      | DW01_inc       | width=2    | add_32_G124 (ysyx_gshare.sv:32) |
+| sub_x_617      | DW01_dec       | width=2    | sub_34_G124 (ysyx_gshare.sv:34) |
+| add_x_621      | DW01_inc       | width=2    | add_32_G125 (ysyx_gshare.sv:32) |
+| sub_x_622      | DW01_dec       | width=2    | sub_34_G125 (ysyx_gshare.sv:34) |
+| add_x_626      | DW01_inc       | width=2    | add_32_G126 (ysyx_gshare.sv:32) |
+| sub_x_627      | DW01_dec       | width=2    | sub_34_G126 (ysyx_gshare.sv:34) |
+| add_x_631      | DW01_inc       | width=2    | add_32_G127 (ysyx_gshare.sv:32) |
+| sub_x_632      | DW01_dec       | width=2    | sub_34_G127 (ysyx_gshare.sv:34) |
+| add_x_636      | DW01_inc       | width=2    | add_32_G128 (ysyx_gshare.sv:32) |
+| sub_x_637      | DW01_dec       | width=2    | sub_34_G128 (ysyx_gshare.sv:34) |
+=============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| add_x_1            | DW01_inc         | apparch (area)     |                |
+| sub_x_2            | DW01_dec         | apparch (area)     |                |
+| add_x_6            | DW01_inc         | apparch (area)     |                |
+| sub_x_7            | DW01_dec         | apparch (area)     |                |
+| add_x_11           | DW01_inc         | apparch (area)     |                |
+| sub_x_12           | DW01_dec         | apparch (area)     |                |
+| add_x_16           | DW01_inc         | apparch (area)     |                |
+| sub_x_17           | DW01_dec         | apparch (area)     |                |
+| add_x_21           | DW01_inc         | apparch (area)     |                |
+| sub_x_22           | DW01_dec         | apparch (area)     |                |
+| add_x_26           | DW01_inc         | apparch (area)     |                |
+| sub_x_27           | DW01_dec         | apparch (area)     |                |
+| add_x_31           | DW01_inc         | apparch (area)     |                |
+| sub_x_32           | DW01_dec         | apparch (area)     |                |
+| add_x_36           | DW01_inc         | apparch (area)     |                |
+| sub_x_37           | DW01_dec         | apparch (area)     |                |
+| add_x_41           | DW01_inc         | apparch (area)     |                |
+| sub_x_42           | DW01_dec         | apparch (area)     |                |
+| add_x_46           | DW01_inc         | apparch (area)     |                |
+| sub_x_47           | DW01_dec         | apparch (area)     |                |
+| add_x_51           | DW01_inc         | apparch (area)     |                |
+| sub_x_52           | DW01_dec         | apparch (area)     |                |
+| add_x_56           | DW01_inc         | apparch (area)     |                |
+| sub_x_57           | DW01_dec         | apparch (area)     |                |
+| add_x_61           | DW01_inc         | apparch (area)     |                |
+| sub_x_62           | DW01_dec         | apparch (area)     |                |
+| add_x_66           | DW01_inc         | apparch (area)     |                |
+| sub_x_67           | DW01_dec         | apparch (area)     |                |
+| add_x_71           | DW01_inc         | apparch (area)     |                |
+| sub_x_72           | DW01_dec         | apparch (area)     |                |
+| add_x_76           | DW01_inc         | apparch (area)     |                |
+| sub_x_77           | DW01_dec         | apparch (area)     |                |
+| add_x_81           | DW01_inc         | apparch (area)     |                |
+| sub_x_82           | DW01_dec         | apparch (area)     |                |
+| add_x_86           | DW01_inc         | apparch (area)     |                |
+| sub_x_87           | DW01_dec         | apparch (area)     |                |
+| add_x_91           | DW01_inc         | apparch (area)     |                |
+| sub_x_92           | DW01_dec         | apparch (area)     |                |
+| add_x_96           | DW01_inc         | apparch (area)     |                |
+| sub_x_97           | DW01_dec         | apparch (area)     |                |
+| add_x_101          | DW01_inc         | apparch (area)     |                |
+| sub_x_102          | DW01_dec         | apparch (area)     |                |
+| add_x_106          | DW01_inc         | apparch (area)     |                |
+| sub_x_107          | DW01_dec         | apparch (area)     |                |
+| add_x_111          | DW01_inc         | apparch (area)     |                |
+| sub_x_112          | DW01_dec         | apparch (area)     |                |
+| add_x_116          | DW01_inc         | apparch (area)     |                |
+| sub_x_117          | DW01_dec         | apparch (area)     |                |
+| add_x_121          | DW01_inc         | apparch (area)     |                |
+| sub_x_122          | DW01_dec         | apparch (area)     |                |
+| add_x_126          | DW01_inc         | apparch (area)     |                |
+| sub_x_127          | DW01_dec         | apparch (area)     |                |
+| add_x_131          | DW01_inc         | apparch (area)     |                |
+| sub_x_132          | DW01_dec         | apparch (area)     |                |
+| add_x_136          | DW01_inc         | apparch (area)     |                |
+| sub_x_137          | DW01_dec         | apparch (area)     |                |
+| add_x_141          | DW01_inc         | apparch (area)     |                |
+| sub_x_142          | DW01_dec         | apparch (area)     |                |
+| add_x_146          | DW01_inc         | apparch (area)     |                |
+| sub_x_147          | DW01_dec         | apparch (area)     |                |
+| add_x_151          | DW01_inc         | apparch (area)     |                |
+| sub_x_152          | DW01_dec         | apparch (area)     |                |
+| add_x_156          | DW01_inc         | apparch (area)     |                |
+| sub_x_157          | DW01_dec         | apparch (area)     |                |
+| add_x_161          | DW01_inc         | apparch (area)     |                |
+| sub_x_162          | DW01_dec         | apparch (area)     |                |
+| add_x_166          | DW01_inc         | apparch (area)     |                |
+| sub_x_167          | DW01_dec         | apparch (area)     |                |
+| add_x_171          | DW01_inc         | apparch (area)     |                |
+| sub_x_172          | DW01_dec         | apparch (area)     |                |
+| add_x_176          | DW01_inc         | apparch (area)     |                |
+| sub_x_177          | DW01_dec         | apparch (area)     |                |
+| add_x_181          | DW01_inc         | apparch (area)     |                |
+| sub_x_182          | DW01_dec         | apparch (area)     |                |
+| add_x_186          | DW01_inc         | apparch (area)     |                |
+| sub_x_187          | DW01_dec         | apparch (area)     |                |
+| add_x_191          | DW01_inc         | apparch (area)     |                |
+| sub_x_192          | DW01_dec         | apparch (area)     |                |
+| add_x_196          | DW01_inc         | apparch (area)     |                |
+| sub_x_197          | DW01_dec         | apparch (area)     |                |
+| add_x_201          | DW01_inc         | apparch (area)     |                |
+| sub_x_202          | DW01_dec         | apparch (area)     |                |
+| add_x_206          | DW01_inc         | apparch (area)     |                |
+| sub_x_207          | DW01_dec         | apparch (area)     |                |
+| add_x_211          | DW01_inc         | apparch (area)     |                |
+| sub_x_212          | DW01_dec         | apparch (area)     |                |
+| add_x_216          | DW01_inc         | apparch (area)     |                |
+| sub_x_217          | DW01_dec         | apparch (area)     |                |
+| add_x_221          | DW01_inc         | apparch (area)     |                |
+| sub_x_222          | DW01_dec         | apparch (area)     |                |
+| add_x_226          | DW01_inc         | apparch (area)     |                |
+| sub_x_227          | DW01_dec         | apparch (area)     |                |
+| add_x_231          | DW01_inc         | apparch (area)     |                |
+| sub_x_232          | DW01_dec         | apparch (area)     |                |
+| add_x_236          | DW01_inc         | apparch (area)     |                |
+| sub_x_237          | DW01_dec         | apparch (area)     |                |
+| add_x_241          | DW01_inc         | apparch (area)     |                |
+| sub_x_242          | DW01_dec         | apparch (area)     |                |
+| add_x_246          | DW01_inc         | apparch (area)     |                |
+| sub_x_247          | DW01_dec         | apparch (area)     |                |
+| add_x_251          | DW01_inc         | apparch (area)     |                |
+| sub_x_252          | DW01_dec         | apparch (area)     |                |
+| add_x_256          | DW01_inc         | apparch (area)     |                |
+| sub_x_257          | DW01_dec         | apparch (area)     |                |
+| add_x_261          | DW01_inc         | apparch (area)     |                |
+| sub_x_262          | DW01_dec         | apparch (area)     |                |
+| add_x_266          | DW01_inc         | apparch (area)     |                |
+| sub_x_267          | DW01_dec         | apparch (area)     |                |
+| add_x_271          | DW01_inc         | apparch (area)     |                |
+| sub_x_272          | DW01_dec         | apparch (area)     |                |
+| add_x_276          | DW01_inc         | apparch (area)     |                |
+| sub_x_277          | DW01_dec         | apparch (area)     |                |
+| add_x_281          | DW01_inc         | apparch (area)     |                |
+| sub_x_282          | DW01_dec         | apparch (area)     |                |
+| add_x_286          | DW01_inc         | apparch (area)     |                |
+| sub_x_287          | DW01_dec         | apparch (area)     |                |
+| add_x_291          | DW01_inc         | apparch (area)     |                |
+| sub_x_292          | DW01_dec         | apparch (area)     |                |
+| add_x_296          | DW01_inc         | apparch (area)     |                |
+| sub_x_297          | DW01_dec         | apparch (area)     |                |
+| add_x_301          | DW01_inc         | apparch (area)     |                |
+| sub_x_302          | DW01_dec         | apparch (area)     |                |
+| add_x_306          | DW01_inc         | apparch (area)     |                |
+| sub_x_307          | DW01_dec         | apparch (area)     |                |
+| add_x_311          | DW01_inc         | apparch (area)     |                |
+| sub_x_312          | DW01_dec         | apparch (area)     |                |
+| add_x_316          | DW01_inc         | apparch (area)     |                |
+| sub_x_317          | DW01_dec         | apparch (area)     |                |
+| add_x_321          | DW01_inc         | apparch (area)     |                |
+| sub_x_322          | DW01_dec         | apparch (area)     |                |
+| add_x_326          | DW01_inc         | apparch (area)     |                |
+| sub_x_327          | DW01_dec         | apparch (area)     |                |
+| add_x_331          | DW01_inc         | apparch (area)     |                |
+| sub_x_332          | DW01_dec         | apparch (area)     |                |
+| add_x_336          | DW01_inc         | apparch (area)     |                |
+| sub_x_337          | DW01_dec         | apparch (area)     |                |
+| add_x_341          | DW01_inc         | apparch (area)     |                |
+| sub_x_342          | DW01_dec         | apparch (area)     |                |
+| add_x_346          | DW01_inc         | apparch (area)     |                |
+| sub_x_347          | DW01_dec         | apparch (area)     |                |
+| add_x_351          | DW01_inc         | apparch (area)     |                |
+| sub_x_352          | DW01_dec         | apparch (area)     |                |
+| add_x_356          | DW01_inc         | apparch (area)     |                |
+| sub_x_357          | DW01_dec         | apparch (area)     |                |
+| add_x_361          | DW01_inc         | apparch (area)     |                |
+| sub_x_362          | DW01_dec         | apparch (area)     |                |
+| add_x_366          | DW01_inc         | apparch (area)     |                |
+| sub_x_367          | DW01_dec         | apparch (area)     |                |
+| add_x_371          | DW01_inc         | apparch (area)     |                |
+| sub_x_372          | DW01_dec         | apparch (area)     |                |
+| add_x_376          | DW01_inc         | apparch (area)     |                |
+| sub_x_377          | DW01_dec         | apparch (area)     |                |
+| add_x_381          | DW01_inc         | apparch (area)     |                |
+| sub_x_382          | DW01_dec         | apparch (area)     |                |
+| add_x_386          | DW01_inc         | apparch (area)     |                |
+| sub_x_387          | DW01_dec         | apparch (area)     |                |
+| add_x_391          | DW01_inc         | apparch (area)     |                |
+| sub_x_392          | DW01_dec         | apparch (area)     |                |
+| add_x_396          | DW01_inc         | apparch (area)     |                |
+| sub_x_397          | DW01_dec         | apparch (area)     |                |
+| add_x_401          | DW01_inc         | apparch (area)     |                |
+| sub_x_402          | DW01_dec         | apparch (area)     |                |
+| add_x_406          | DW01_inc         | apparch (area)     |                |
+| sub_x_407          | DW01_dec         | apparch (area)     |                |
+| add_x_411          | DW01_inc         | apparch (area)     |                |
+| sub_x_412          | DW01_dec         | apparch (area)     |                |
+| add_x_416          | DW01_inc         | apparch (area)     |                |
+| sub_x_417          | DW01_dec         | apparch (area)     |                |
+| add_x_421          | DW01_inc         | apparch (area)     |                |
+| sub_x_422          | DW01_dec         | apparch (area)     |                |
+| add_x_426          | DW01_inc         | apparch (area)     |                |
+| sub_x_427          | DW01_dec         | apparch (area)     |                |
+| add_x_431          | DW01_inc         | apparch (area)     |                |
+| sub_x_432          | DW01_dec         | apparch (area)     |                |
+| add_x_436          | DW01_inc         | apparch (area)     |                |
+| sub_x_437          | DW01_dec         | apparch (area)     |                |
+| add_x_441          | DW01_inc         | apparch (area)     |                |
+| sub_x_442          | DW01_dec         | apparch (area)     |                |
+| add_x_446          | DW01_inc         | apparch (area)     |                |
+| sub_x_447          | DW01_dec         | apparch (area)     |                |
+| add_x_451          | DW01_inc         | apparch (area)     |                |
+| sub_x_452          | DW01_dec         | apparch (area)     |                |
+| add_x_456          | DW01_inc         | apparch (area)     |                |
+| sub_x_457          | DW01_dec         | apparch (area)     |                |
+| add_x_461          | DW01_inc         | apparch (area)     |                |
+| sub_x_462          | DW01_dec         | apparch (area)     |                |
+| add_x_466          | DW01_inc         | apparch (area)     |                |
+| sub_x_467          | DW01_dec         | apparch (area)     |                |
+| add_x_471          | DW01_inc         | apparch (area)     |                |
+| sub_x_472          | DW01_dec         | apparch (area)     |                |
+| add_x_476          | DW01_inc         | apparch (area)     |                |
+| sub_x_477          | DW01_dec         | apparch (area)     |                |
+| add_x_481          | DW01_inc         | apparch (area)     |                |
+| sub_x_482          | DW01_dec         | apparch (area)     |                |
+| add_x_486          | DW01_inc         | apparch (area)     |                |
+| sub_x_487          | DW01_dec         | apparch (area)     |                |
+| add_x_491          | DW01_inc         | apparch (area)     |                |
+| sub_x_492          | DW01_dec         | apparch (area)     |                |
+| add_x_496          | DW01_inc         | apparch (area)     |                |
+| sub_x_497          | DW01_dec         | apparch (area)     |                |
+| add_x_501          | DW01_inc         | apparch (area)     |                |
+| sub_x_502          | DW01_dec         | apparch (area)     |                |
+| add_x_506          | DW01_inc         | apparch (area)     |                |
+| sub_x_507          | DW01_dec         | apparch (area)     |                |
+| add_x_511          | DW01_inc         | apparch (area)     |                |
+| sub_x_512          | DW01_dec         | apparch (area)     |                |
+| add_x_516          | DW01_inc         | apparch (area)     |                |
+| sub_x_517          | DW01_dec         | apparch (area)     |                |
+| add_x_521          | DW01_inc         | apparch (area)     |                |
+| sub_x_522          | DW01_dec         | apparch (area)     |                |
+| add_x_526          | DW01_inc         | apparch (area)     |                |
+| sub_x_527          | DW01_dec         | apparch (area)     |                |
+| add_x_531          | DW01_inc         | apparch (area)     |                |
+| sub_x_532          | DW01_dec         | apparch (area)     |                |
+| add_x_536          | DW01_inc         | apparch (area)     |                |
+| sub_x_537          | DW01_dec         | apparch (area)     |                |
+| add_x_541          | DW01_inc         | apparch (area)     |                |
+| sub_x_542          | DW01_dec         | apparch (area)     |                |
+| add_x_546          | DW01_inc         | apparch (area)     |                |
+| sub_x_547          | DW01_dec         | apparch (area)     |                |
+| add_x_551          | DW01_inc         | apparch (area)     |                |
+| sub_x_552          | DW01_dec         | apparch (area)     |                |
+| add_x_556          | DW01_inc         | apparch (area)     |                |
+| sub_x_557          | DW01_dec         | apparch (area)     |                |
+| add_x_561          | DW01_inc         | apparch (area)     |                |
+| sub_x_562          | DW01_dec         | apparch (area)     |                |
+| add_x_566          | DW01_inc         | apparch (area)     |                |
+| sub_x_567          | DW01_dec         | apparch (area)     |                |
+| add_x_571          | DW01_inc         | apparch (area)     |                |
+| sub_x_572          | DW01_dec         | apparch (area)     |                |
+| add_x_576          | DW01_inc         | apparch (area)     |                |
+| sub_x_577          | DW01_dec         | apparch (area)     |                |
+| add_x_581          | DW01_inc         | apparch (area)     |                |
+| sub_x_582          | DW01_dec         | apparch (area)     |                |
+| add_x_586          | DW01_inc         | apparch (area)     |                |
+| sub_x_587          | DW01_dec         | apparch (area)     |                |
+| add_x_591          | DW01_inc         | apparch (area)     |                |
+| sub_x_592          | DW01_dec         | apparch (area)     |                |
+| add_x_596          | DW01_inc         | apparch (area)     |                |
+| sub_x_597          | DW01_dec         | apparch (area)     |                |
+| add_x_601          | DW01_inc         | apparch (area)     |                |
+| sub_x_602          | DW01_dec         | apparch (area)     |                |
+| add_x_606          | DW01_inc         | apparch (area)     |                |
+| sub_x_607          | DW01_dec         | apparch (area)     |                |
+| add_x_611          | DW01_inc         | apparch (area)     |                |
+| sub_x_612          | DW01_dec         | apparch (area)     |                |
+| add_x_616          | DW01_inc         | apparch (area)     |                |
+| sub_x_617          | DW01_dec         | apparch (area)     |                |
+| add_x_621          | DW01_inc         | apparch (area)     |                |
+| sub_x_622          | DW01_dec         | apparch (area)     |                |
+| add_x_626          | DW01_inc         | apparch (area)     |                |
+| sub_x_627          | DW01_dec         | apparch (area)     |                |
+| add_x_631          | DW01_inc         | apparch (area)     |                |
+| sub_x_632          | DW01_dec         | apparch (area)     |                |
+| add_x_636          | DW01_inc         | apparch (area)     |                |
+| sub_x_637          | DW01_dec         | apparch (area)     |                |
+===============================================================================
+
+ 
+****************************************
+Design : ysyx_predecode
+****************************************
+
+Resource Report for this hierarchy in file ./vsrc/core/ysyx_predecode.sv
+=============================================================================
+| Cell           | Module         | Parameters | Contained Operations       |
+=============================================================================
+| add_x_1        | DW01_add       | width=32   | add_16 (ysyx_predecode.sv:16) |
+=============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| add_x_1            | DW01_add         | apparch (area)     |                |
+===============================================================================
+
+
+No resource sharing information to report.
+ 
+****************************************
+Design : ysyx_gnrl_dfflrs_32_30000000
+****************************************
+
+No implementations to report
+1

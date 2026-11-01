@@ -1,0 +1,325 @@
+****************************************
+Report : timing
+	-path_type full
+	-delay_type min
+	-slack_lesser_than 1000000015047466219876688855040.000000
+	-max_paths 10
+	-sort_by slack
+Design : ysyx_25030087
+Version: T-2022.03-SP5
+Date   : Sun Nov  1 00:03:26 2026
+****************************************
+
+
+  Startpoint: io_master_awready
+               (input port clocked by core_clk)
+  Endpoint: subsystem/router/aw_sent_q_reg
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                  Incr       Path
+  ---------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  input external delay                                               0.200000   0.200000 f
+  io_master_awready (in)                                             0.000000   0.200000 f
+  subsystem/router/U37/Z (AO22D0BWP12T40P140)                        0.039171   0.239171 f
+  subsystem/router/aw_sent_q_reg/D (DFCNQD1BWP12T40P140)             0.000000   0.239171 f
+  data arrival time                                                             0.239171
+
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  clock reconvergence pessimism                                      0.000000   0.000000
+  clock uncertainty                                                  0.050000   0.050000
+  subsystem/router/aw_sent_q_reg/CP (DFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                  0.024699   0.074699
+  data required time                                                            0.074699
+  ---------------------------------------------------------------------------------------------
+  data required time                                                            0.074699
+  data arrival time                                                             -0.239171
+  ---------------------------------------------------------------------------------------------
+  slack (MET)                                                                   0.164472
+
+
+  Startpoint: io_master_rresp[1]
+               (input port clocked by core_clk)
+  Endpoint: subsystem/router/resp_q_reg_1_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                  Incr       Path
+  ---------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  input external delay                                               0.200000   0.200000 f
+  io_master_rresp[1] (in)                                            0.000000   0.200000 f
+  subsystem/router/U129/ZN (AOI22D0BWP12T40P140)                     0.030811   0.230811 r
+  subsystem/router/U132/ZN (ND2D0BWP12T40P140)                       0.014084   0.244896 f
+  subsystem/router/resp_q_reg_1_/D (DFCNQD1BWP12T40P140)             0.000000   0.244896 f
+  data arrival time                                                             0.244896
+
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  clock reconvergence pessimism                                      0.000000   0.000000
+  clock uncertainty                                                  0.050000   0.050000
+  subsystem/router/resp_q_reg_1_/CP (DFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                  0.023085   0.073085
+  data required time                                                            0.073085
+  ---------------------------------------------------------------------------------------------
+  data required time                                                            0.073085
+  data arrival time                                                             -0.244896
+  ---------------------------------------------------------------------------------------------
+  slack (MET)                                                                   0.171811
+
+
+  Startpoint: io_master_wready
+               (input port clocked by core_clk)
+  Endpoint: subsystem/router/w_sent_q_reg
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                 Incr       Path
+  --------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                        0.000000   0.000000
+  clock network delay (ideal)                                       0.000000   0.000000
+  input external delay                                              0.200000   0.200000 f
+  io_master_wready (in)                                             0.000000   0.200000 f
+  subsystem/router/U38/Z (AO22D0BWP12T40P140)                       0.046748   0.246748 f
+  subsystem/router/w_sent_q_reg/D (DFCNQD1BWP12T40P140)             0.000000   0.246748 f
+  data arrival time                                                            0.246748
+
+  clock core_clk (rise edge)                                        0.000000   0.000000
+  clock network delay (ideal)                                       0.000000   0.000000
+  clock reconvergence pessimism                                     0.000000   0.000000
+  clock uncertainty                                                 0.050000   0.050000
+  subsystem/router/w_sent_q_reg/CP (DFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                 0.024775   0.074775
+  data required time                                                           0.074775
+  --------------------------------------------------------------------------------------------
+  data required time                                                           0.074775
+  data arrival time                                                            -0.246748
+  --------------------------------------------------------------------------------------------
+  slack (MET)                                                                  0.171973
+
+
+  Startpoint: io_master_bid[3]
+               (input port clocked by core_clk)
+  Endpoint: subsystem/router/id_q_reg_3_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                Incr       Path
+  -------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                       0.000000   0.000000
+  clock network delay (ideal)                                      0.000000   0.000000
+  input external delay                                             0.200000   0.200000 f
+  io_master_bid[3] (in)                                            0.000000   0.200000 f
+  subsystem/router/U51/Z (AO222D0BWP12T40P140)                     0.057199   0.257199 f
+  subsystem/router/id_q_reg_3_/D (DFCNQD1BWP12T40P140)             0.000000   0.257199 f
+  data arrival time                                                           0.257199
+
+  clock core_clk (rise edge)                                       0.000000   0.000000
+  clock network delay (ideal)                                      0.000000   0.000000
+  clock reconvergence pessimism                                    0.000000   0.000000
+  clock uncertainty                                                0.050000   0.050000
+  subsystem/router/id_q_reg_3_/CP (DFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                0.024342   0.074342
+  data required time                                                          0.074342
+  -------------------------------------------------------------------------------------------
+  data required time                                                          0.074342
+  data arrival time                                                           -0.257199
+  -------------------------------------------------------------------------------------------
+  slack (MET)                                                                 0.182857
+
+
+  Startpoint: io_master_bid[2]
+               (input port clocked by core_clk)
+  Endpoint: subsystem/router/id_q_reg_2_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                Incr       Path
+  -------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                       0.000000   0.000000
+  clock network delay (ideal)                                      0.000000   0.000000
+  input external delay                                             0.200000   0.200000 f
+  io_master_bid[2] (in)                                            0.000000   0.200000 f
+  subsystem/router/U52/Z (AO222D0BWP12T40P140)                     0.057199   0.257199 f
+  subsystem/router/id_q_reg_2_/D (DFCNQD1BWP12T40P140)             0.000000   0.257199 f
+  data arrival time                                                           0.257199
+
+  clock core_clk (rise edge)                                       0.000000   0.000000
+  clock network delay (ideal)                                      0.000000   0.000000
+  clock reconvergence pessimism                                    0.000000   0.000000
+  clock uncertainty                                                0.050000   0.050000
+  subsystem/router/id_q_reg_2_/CP (DFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                0.024342   0.074342
+  data required time                                                          0.074342
+  -------------------------------------------------------------------------------------------
+  data required time                                                          0.074342
+  data arrival time                                                           -0.257199
+  -------------------------------------------------------------------------------------------
+  slack (MET)                                                                 0.182857
+
+
+  Startpoint: io_master_bresp[0]
+               (input port clocked by core_clk)
+  Endpoint: subsystem/router/resp_q_reg_0_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                  Incr       Path
+  ---------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  input external delay                                               0.200000   0.200000 f
+  io_master_bresp[0] (in)                                            0.000000   0.200000 f
+  subsystem/router/U53/Z (AO222D0BWP12T40P140)                       0.057199   0.257199 f
+  subsystem/router/resp_q_reg_0_/D (DFCNQD1BWP12T40P140)             0.000000   0.257199 f
+  data arrival time                                                             0.257199
+
+  clock core_clk (rise edge)                                         0.000000   0.000000
+  clock network delay (ideal)                                        0.000000   0.000000
+  clock reconvergence pessimism                                      0.000000   0.000000
+  clock uncertainty                                                  0.050000   0.050000
+  subsystem/router/resp_q_reg_0_/CP (DFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                  0.024342   0.074342
+  data required time                                                            0.074342
+  ---------------------------------------------------------------------------------------------
+  data required time                                                            0.074342
+  data arrival time                                                             -0.257199
+  ---------------------------------------------------------------------------------------------
+  slack (MET)                                                                   0.182857
+
+
+  Startpoint: io_master_bid[1]
+               (input port clocked by core_clk)
+  Endpoint: subsystem/router/id_q_reg_1_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                Incr       Path
+  -------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                       0.000000   0.000000
+  clock network delay (ideal)                                      0.000000   0.000000
+  input external delay                                             0.200000   0.200000 f
+  io_master_bid[1] (in)                                            0.000000   0.200000 f
+  subsystem/router/U54/Z (AO222D0BWP12T40P140)                     0.057199   0.257199 f
+  subsystem/router/id_q_reg_1_/D (DFCNQD1BWP12T40P140)             0.000000   0.257199 f
+  data arrival time                                                           0.257199
+
+  clock core_clk (rise edge)                                       0.000000   0.000000
+  clock network delay (ideal)                                      0.000000   0.000000
+  clock reconvergence pessimism                                    0.000000   0.000000
+  clock uncertainty                                                0.050000   0.050000
+  subsystem/router/id_q_reg_1_/CP (DFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                0.024342   0.074342
+  data required time                                                          0.074342
+  -------------------------------------------------------------------------------------------
+  data required time                                                          0.074342
+  data arrival time                                                           -0.257199
+  -------------------------------------------------------------------------------------------
+  slack (MET)                                                                 0.182857
+
+
+  Startpoint: io_master_rid[0]
+               (input port clocked by core_clk)
+  Endpoint: subsystem/router/id_q_reg_0_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                Incr       Path
+  -------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                       0.000000   0.000000
+  clock network delay (ideal)                                      0.000000   0.000000
+  input external delay                                             0.200000   0.200000 f
+  io_master_rid[0] (in)                                            0.000000   0.200000 f
+  subsystem/router/U55/Z (AO222D0BWP12T40P140)                     0.057199   0.257199 f
+  subsystem/router/id_q_reg_0_/D (DFCNQD1BWP12T40P140)             0.000000   0.257199 f
+  data arrival time                                                           0.257199
+
+  clock core_clk (rise edge)                                       0.000000   0.000000
+  clock network delay (ideal)                                      0.000000   0.000000
+  clock reconvergence pessimism                                    0.000000   0.000000
+  clock uncertainty                                                0.050000   0.050000
+  subsystem/router/id_q_reg_0_/CP (DFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                0.024341   0.074341
+  data required time                                                          0.074341
+  -------------------------------------------------------------------------------------------
+  data required time                                                          0.074341
+  data arrival time                                                           -0.257199
+  -------------------------------------------------------------------------------------------
+  slack (MET)                                                                 0.182858
+
+
+  Startpoint: io_master_rdata[12]
+               (input port clocked by core_clk)
+  Endpoint: subsystem/router/rdata_q_reg_12_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                    Incr       Path
+  -----------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                           0.000000   0.000000
+  clock network delay (ideal)                                          0.000000   0.000000
+  input external delay                                                 0.200000   0.200000 f
+  io_master_rdata[12] (in)                                             0.000000   0.200000 f
+  subsystem/router/U93/Z (AO222D0BWP12T40P140)                         0.057199   0.257199 f
+  subsystem/router/rdata_q_reg_12_/D (DFCNQD1BWP12T40P140)             0.000000   0.257199 f
+  data arrival time                                                               0.257199
+
+  clock core_clk (rise edge)                                           0.000000   0.000000
+  clock network delay (ideal)                                          0.000000   0.000000
+  clock reconvergence pessimism                                        0.000000   0.000000
+  clock uncertainty                                                    0.050000   0.050000
+  subsystem/router/rdata_q_reg_12_/CP (DFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                    0.024337   0.074337
+  data required time                                                              0.074337
+  -----------------------------------------------------------------------------------------------
+  data required time                                                              0.074337
+  data arrival time                                                               -0.257199
+  -----------------------------------------------------------------------------------------------
+  slack (MET)                                                                     0.182862
+
+
+  Startpoint: io_master_rdata[7]
+               (input port clocked by core_clk)
+  Endpoint: subsystem/router/rdata_q_reg_7_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                   Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                          0.000000   0.000000
+  clock network delay (ideal)                                         0.000000   0.000000
+  input external delay                                                0.200000   0.200000 f
+  io_master_rdata[7] (in)                                             0.000000   0.200000 f
+  subsystem/router/U92/Z (AO222D0BWP12T40P140)                        0.057199   0.257199 f
+  subsystem/router/rdata_q_reg_7_/D (DFCNQD1BWP12T40P140)             0.000000   0.257199 f
+  data arrival time                                                              0.257199
+
+  clock core_clk (rise edge)                                          0.000000   0.000000
+  clock network delay (ideal)                                         0.000000   0.000000
+  clock reconvergence pessimism                                       0.000000   0.000000
+  clock uncertainty                                                   0.050000   0.050000
+  subsystem/router/rdata_q_reg_7_/CP (DFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                   0.024337   0.074337
+  data required time                                                             0.074337
+  ----------------------------------------------------------------------------------------------
+  data required time                                                             0.074337
+  data arrival time                                                              -0.257199
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                    0.182862
+
+
+1

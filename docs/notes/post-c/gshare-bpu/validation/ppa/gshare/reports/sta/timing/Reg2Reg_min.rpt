@@ -1,0 +1,314 @@
+****************************************
+Report : timing
+	-path_type full
+	-delay_type min
+	-slack_lesser_than 1000000015047466219876688855040.000000
+	-max_paths 10
+	-sort_by slack
+Design : ysyx_25030087
+Version: T-2022.03-SP5
+Date   : Sun Nov  1 00:03:26 2026
+****************************************
+
+
+  Startpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_28_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu_axi4_adapter/request_addr_q_reg_28_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                                 Incr       Path
+  ----------------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                                        0.000000   0.000000
+  clock network delay (ideal)                                                                       0.000000   0.000000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_28_/CP (DFSNQD1BWP12T40P140)                              0.000000   0.000000 r
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_28_/Q (DFSNQD1BWP12T40P140)                               0.070713   0.070713 f
+  subsystem/cpu/core/u_ifu_axi4_adapter/request_addr_q_reg_28_/D (EDFCNQD1BWP12T40P140)             0.000000   0.070713 f
+  data arrival time                                                                                            0.070713
+
+  clock core_clk (rise edge)                                                                        0.000000   0.000000
+  clock network delay (ideal)                                                                       0.000000   0.000000
+  clock reconvergence pessimism                                                                     0.000000   0.000000
+  clock uncertainty                                                                                 0.050000   0.050000
+  subsystem/cpu/core/u_ifu_axi4_adapter/request_addr_q_reg_28_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                                 0.012013   0.062013
+  data required time                                                                                           0.062013
+  ----------------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                           0.062013
+  data arrival time                                                                                            -0.070713
+  ----------------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                                  0.008700
+
+
+  Startpoint: subsystem/cpu/core/u_lsu/req_addr_q_reg_14_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_14_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                                 Incr       Path
+  ----------------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                                        0.000000   0.000000
+  clock network delay (ideal)                                                                       0.000000   0.000000
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_14_/CP (EDFCNQD1BWP12T40P140)                             0.000000   0.000000 r
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_14_/Q (EDFCNQD1BWP12T40P140)                              0.071387   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_14_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                            0.071387
+
+  clock core_clk (rise edge)                                                                        0.000000   0.000000
+  clock network delay (ideal)                                                                       0.000000   0.000000
+  clock reconvergence pessimism                                                                     0.000000   0.000000
+  clock uncertainty                                                                                 0.050000   0.050000
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_14_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                                 0.012632   0.062632
+  data required time                                                                                           0.062632
+  ----------------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                           0.062632
+  data arrival time                                                                                            -0.071387
+  ----------------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                                  0.008754
+
+
+  Startpoint: subsystem/cpu/core/u_lsu/req_addr_q_reg_27_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_27_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                                 Incr       Path
+  ----------------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                                        0.000000   0.000000
+  clock network delay (ideal)                                                                       0.000000   0.000000
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_27_/CP (EDFCNQD1BWP12T40P140)                             0.000000   0.000000 r
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_27_/Q (EDFCNQD1BWP12T40P140)                              0.071387   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_27_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                            0.071387
+
+  clock core_clk (rise edge)                                                                        0.000000   0.000000
+  clock network delay (ideal)                                                                       0.000000   0.000000
+  clock reconvergence pessimism                                                                     0.000000   0.000000
+  clock uncertainty                                                                                 0.050000   0.050000
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_27_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                                 0.012632   0.062632
+  data required time                                                                                           0.062632
+  ----------------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                           0.062632
+  data arrival time                                                                                            -0.071387
+  ----------------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                                  0.008754
+
+
+  Startpoint: subsystem/cpu/core/u_lsu/req_addr_q_reg_28_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_28_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                                 Incr       Path
+  ----------------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                                        0.000000   0.000000
+  clock network delay (ideal)                                                                       0.000000   0.000000
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_28_/CP (EDFCNQD1BWP12T40P140)                             0.000000   0.000000 r
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_28_/Q (EDFCNQD1BWP12T40P140)                              0.071387   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_28_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                            0.071387
+
+  clock core_clk (rise edge)                                                                        0.000000   0.000000
+  clock network delay (ideal)                                                                       0.000000   0.000000
+  clock reconvergence pessimism                                                                     0.000000   0.000000
+  clock uncertainty                                                                                 0.050000   0.050000
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_28_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                                 0.012632   0.062632
+  data required time                                                                                           0.062632
+  ----------------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                           0.062632
+  data arrival time                                                                                            -0.071387
+  ----------------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                                  0.008754
+
+
+  Startpoint: subsystem/cpu/core/u_lsu/req_addr_q_reg_29_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_29_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                                 Incr       Path
+  ----------------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                                        0.000000   0.000000
+  clock network delay (ideal)                                                                       0.000000   0.000000
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_29_/CP (EDFCNQD1BWP12T40P140)                             0.000000   0.000000 r
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_29_/Q (EDFCNQD1BWP12T40P140)                              0.071387   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_29_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                            0.071387
+
+  clock core_clk (rise edge)                                                                        0.000000   0.000000
+  clock network delay (ideal)                                                                       0.000000   0.000000
+  clock reconvergence pessimism                                                                     0.000000   0.000000
+  clock uncertainty                                                                                 0.050000   0.050000
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_29_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                                 0.012632   0.062632
+  data required time                                                                                           0.062632
+  ----------------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                           0.062632
+  data arrival time                                                                                            -0.071387
+  ----------------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                                  0.008754
+
+
+  Startpoint: subsystem/cpu/core/u_lsu/req_addr_q_reg_30_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_30_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                                 Incr       Path
+  ----------------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                                        0.000000   0.000000
+  clock network delay (ideal)                                                                       0.000000   0.000000
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_30_/CP (EDFCNQD1BWP12T40P140)                             0.000000   0.000000 r
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_30_/Q (EDFCNQD1BWP12T40P140)                              0.071387   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_30_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                            0.071387
+
+  clock core_clk (rise edge)                                                                        0.000000   0.000000
+  clock network delay (ideal)                                                                       0.000000   0.000000
+  clock reconvergence pessimism                                                                     0.000000   0.000000
+  clock uncertainty                                                                                 0.050000   0.050000
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_30_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                                 0.012632   0.062632
+  data required time                                                                                           0.062632
+  ----------------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                           0.062632
+  data arrival time                                                                                            -0.071387
+  ----------------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                                  0.008754
+
+
+  Startpoint: subsystem/cpu/core/u_lsu/req_addr_q_reg_11_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_11_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                                 Incr       Path
+  ----------------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                                        0.000000   0.000000
+  clock network delay (ideal)                                                                       0.000000   0.000000
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_11_/CP (EDFCNQD1BWP12T40P140)                             0.000000   0.000000 r
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_11_/Q (EDFCNQD1BWP12T40P140)                              0.071387   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_11_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                            0.071387
+
+  clock core_clk (rise edge)                                                                        0.000000   0.000000
+  clock network delay (ideal)                                                                       0.000000   0.000000
+  clock reconvergence pessimism                                                                     0.000000   0.000000
+  clock uncertainty                                                                                 0.050000   0.050000
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_11_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                                 0.012632   0.062632
+  data required time                                                                                           0.062632
+  ----------------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                           0.062632
+  data arrival time                                                                                            -0.071387
+  ----------------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                                  0.008754
+
+
+  Startpoint: subsystem/cpu/core/u_lsu/req_addr_q_reg_31_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_31_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                                 Incr       Path
+  ----------------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                                        0.000000   0.000000
+  clock network delay (ideal)                                                                       0.000000   0.000000
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_31_/CP (EDFCNQD1BWP12T40P140)                             0.000000   0.000000 r
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_31_/Q (EDFCNQD1BWP12T40P140)                              0.071387   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_31_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                            0.071387
+
+  clock core_clk (rise edge)                                                                        0.000000   0.000000
+  clock network delay (ideal)                                                                       0.000000   0.000000
+  clock reconvergence pessimism                                                                     0.000000   0.000000
+  clock uncertainty                                                                                 0.050000   0.050000
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_31_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                                 0.012632   0.062632
+  data required time                                                                                           0.062632
+  ----------------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                           0.062632
+  data arrival time                                                                                            -0.071387
+  ----------------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                                  0.008754
+
+
+  Startpoint: subsystem/cpu/core/u_lsu/req_addr_q_reg_13_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_13_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                                 Incr       Path
+  ----------------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                                        0.000000   0.000000
+  clock network delay (ideal)                                                                       0.000000   0.000000
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_13_/CP (EDFCNQD1BWP12T40P140)                             0.000000   0.000000 r
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_13_/Q (EDFCNQD1BWP12T40P140)                              0.071387   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_13_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                            0.071387
+
+  clock core_clk (rise edge)                                                                        0.000000   0.000000
+  clock network delay (ideal)                                                                       0.000000   0.000000
+  clock reconvergence pessimism                                                                     0.000000   0.000000
+  clock uncertainty                                                                                 0.050000   0.050000
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_13_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                                 0.012632   0.062632
+  data required time                                                                                           0.062632
+  ----------------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                           0.062632
+  data arrival time                                                                                            -0.071387
+  ----------------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                                  0.008754
+
+
+  Startpoint: subsystem/cpu/core/u_lsu/req_addr_q_reg_9_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_9_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Point                                                                                                Incr       Path
+  ---------------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                                       0.000000   0.000000
+  clock network delay (ideal)                                                                      0.000000   0.000000
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_9_/CP (EDFCNQD1BWP12T40P140)                             0.000000   0.000000 r
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_9_/Q (EDFCNQD1BWP12T40P140)                              0.071387   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_9_/D (EDFCNQD1BWP12T40P140)             0.000000   0.071387 f
+  data arrival time                                                                                           0.071387
+
+  clock core_clk (rise edge)                                                                       0.000000   0.000000
+  clock network delay (ideal)                                                                      0.000000   0.000000
+  clock reconvergence pessimism                                                                    0.000000   0.000000
+  clock uncertainty                                                                                0.050000   0.050000
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_9_/CP (EDFCNQD1BWP12T40P140)                       0.050000 r
+  library hold time                                                                                0.012632   0.062632
+  data required time                                                                                          0.062632
+  ---------------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                          0.062632
+  data arrival time                                                                                           -0.071387
+  ---------------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                                 0.008754
+
+
+1

@@ -1,0 +1,1170 @@
+{
+  "review_date": "2026-11-01",
+  "description": "Byte-for-byte copies of recorded inputs, reports and logs; excludes DB, alib, DDC and generated netlist. Original manifest statuses are preserved.",
+  "files": [
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/design-config.tcl",
+      "archive": "off/inputs/design-config.tcl",
+      "sha256": "75fce7827a5bf66029a335fdd627e8ef7d753e9e0f65f8882b2536b8d3d28411",
+      "bytes": 212
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/dirty.patch",
+      "archive": "off/inputs/dirty.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/git-status.txt",
+      "archive": "off/inputs/git-status.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/flow/00_indata/configs/npc_core.tcl",
+      "archive": "off/inputs/npc/flow/00_indata/configs/npc_core.tcl",
+      "sha256": "9f86f0e90ae97e732c6e472c778e73a85b1c10c50c995eaa36d7c71619ef4239",
+      "bytes": 2449
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/flow/00_indata/configs/npc_soc_cpu.tcl",
+      "archive": "off/inputs/npc/flow/00_indata/configs/npc_soc_cpu.tcl",
+      "sha256": "eb8857f4cc54d2cc2f681cb29c472bdf990ae74ecd08f3bbf8cb7dff20b8f11f",
+      "bytes": 1674
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/flow/00_indata/configs/npc_soc_cpu_bpu_gshare.tcl",
+      "archive": "off/inputs/npc/flow/00_indata/configs/npc_soc_cpu_bpu_gshare.tcl",
+      "sha256": "62cac47ae1de2d269d51b9753f7a4b2df7f59210b7dadf4f5af1a1017c308a4a",
+      "bytes": 212
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/flow/00_indata/configs/npc_soc_cpu_bpu_off.tcl",
+      "archive": "off/inputs/npc/flow/00_indata/configs/npc_soc_cpu_bpu_off.tcl",
+      "sha256": "75fce7827a5bf66029a335fdd627e8ef7d753e9e0f65f8882b2536b8d3d28411",
+      "bytes": 212
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/flow/00_indata/configs/site.example.tcl",
+      "archive": "off/inputs/npc/flow/00_indata/configs/site.example.tcl",
+      "sha256": "7c18afebe97914855677fe53a0dd28a9e1a4030fde6820e5d5df4f0457e76128",
+      "bytes": 2239
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/flow/00_indata/constraints/core.sdc",
+      "archive": "off/inputs/npc/flow/00_indata/constraints/core.sdc",
+      "sha256": "63af4ff50972c2bffc53c1d706266da3b538027c3ae58f9a3acc361ba6f32688",
+      "bytes": 3866
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/flow/00_indata/constraints/soc_cpu.sdc",
+      "archive": "off/inputs/npc/flow/00_indata/constraints/soc_cpu.sdc",
+      "sha256": "09dbb90b31b0793848b2b6d0d6b62351a8a37e8dbd78211a1fb988668b4e3bf8",
+      "bytes": 3378
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/flow/00_indata/filelists/core.f",
+      "archive": "off/inputs/npc/flow/00_indata/filelists/core.f",
+      "sha256": "78eb35ab7614d72a663fe17f8bb6cec175ae20b66b352ef0d3f84106b46b018d",
+      "bytes": 462
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/flow/00_indata/filelists/soc_cpu.f",
+      "archive": "off/inputs/npc/flow/00_indata/filelists/soc_cpu.f",
+      "sha256": "dd7467468523c99c63900683896d753e3cf74e1eb081677d1c0a6892a89be3ba",
+      "bytes": 861
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/flow/01_common/capacitance.tcl",
+      "archive": "off/inputs/npc/flow/01_common/capacitance.tcl",
+      "sha256": "af497217e6589ce561160362728f6a9338b36cf150d69e270ab9de1c4217a051",
+      "bytes": 5793
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/flow/01_common/config_dump.tcl",
+      "archive": "off/inputs/npc/flow/01_common/config_dump.tcl",
+      "sha256": "e6dbf4ba202391a3199fe2a152fa9766ad456e37988ab5ea9903eb7f81e28101",
+      "bytes": 877
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/flow/01_common/flow.py",
+      "archive": "off/inputs/npc/flow/01_common/flow.py",
+      "sha256": "b163ac3b5846e5a4e2fbe165ee773b6418151c0baad9b03ca8f90f5300eccc7c",
+      "bytes": 30415
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/flow/01_common/setup.tcl",
+      "archive": "off/inputs/npc/flow/01_common/setup.tcl",
+      "sha256": "d5d28c9c71ff3cb625678de2ff63fb8730e6a5fc512700083d429940ef06f3b6",
+      "bytes": 5969
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/flow/02_syn/max_capacitance_margin.tcl",
+      "archive": "off/inputs/npc/flow/02_syn/max_capacitance_margin.tcl",
+      "sha256": "8c19ead03f88e4cc418e729c6c9ed6a2bfeb8fcc9d8b1689bb0bea010f1a5190",
+      "bytes": 4305
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/flow/02_syn/probe.tcl",
+      "archive": "off/inputs/npc/flow/02_syn/probe.tcl",
+      "sha256": "434a59c8be8e73744c6f46195a6c384ac686615a888b7c109216275ae3a2bc9d",
+      "bytes": 594
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/flow/02_syn/run.tcl",
+      "archive": "off/inputs/npc/flow/02_syn/run.tcl",
+      "sha256": "7c6a9724e45aaf7656bb62d9b1d7d8aa7c628827f075b596d1fd21f0cda45985",
+      "bytes": 13491
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/flow/03_sta/run.tcl",
+      "archive": "off/inputs/npc/flow/03_sta/run.tcl",
+      "sha256": "e2e5252e6da157cf77d3e9d11362d1e32901d285c8e13526b03ee43d5bd398e0",
+      "bytes": 6542
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/flow/04_tests/eda_mock.tcl",
+      "archive": "off/inputs/npc/flow/04_tests/eda_mock.tcl",
+      "sha256": "baea67e461b7d6c07ac9941fcd18dd1cf770ba6a9305f37dcb64c37a96c3087a",
+      "bytes": 15579
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/flow/04_tests/sdc_check.tcl",
+      "archive": "off/inputs/npc/flow/04_tests/sdc_check.tcl",
+      "sha256": "982a38e13de9cdb10fbc31ad9159675602ed3d23289fe81c3feb86ab7c120f0b",
+      "bytes": 4921
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/flow/04_tests/test_flow.py",
+      "archive": "off/inputs/npc/flow/04_tests/test_flow.py",
+      "sha256": "e213f131002adb6edcf7ee7a6d7a4d75b9ca11918a256c6855efbce6d8da2065",
+      "bytes": 37387
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/flow/Makefile",
+      "archive": "off/inputs/npc/flow/Makefile",
+      "sha256": "3b9624f62b121cf668df57b0cc21db68521a234c9badc51e8ca307b589e00867",
+      "bytes": 1975
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/vsrc/bus/ysyx_axi4_arbiter.sv",
+      "archive": "off/inputs/npc/vsrc/bus/ysyx_axi4_arbiter.sv",
+      "sha256": "57b407a5f38bd14979b51c8e52feb106168393ae38d3879269811726aae4b750",
+      "bytes": 10660
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/vsrc/bus/ysyx_axi4_router.sv",
+      "archive": "off/inputs/npc/vsrc/bus/ysyx_axi4_router.sv",
+      "sha256": "6738000570613379fff8a19f37964f6dc7ee0079c088e7e7d2f3669ddcf2abc0",
+      "bytes": 7683
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/vsrc/bus/ysyx_ifu_axi4_adapter.sv",
+      "archive": "off/inputs/npc/vsrc/bus/ysyx_ifu_axi4_adapter.sv",
+      "sha256": "9643e9b1f6212c3ebaf1acc8c3f1d84efc896cf3971aae401898a0da8552fd76",
+      "bytes": 4610
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/vsrc/bus/ysyx_lsu_axi4_adapter.sv",
+      "archive": "off/inputs/npc/vsrc/bus/ysyx_lsu_axi4_adapter.sv",
+      "sha256": "309ea53b7418bb6779cfcb5490294b2aaf0785f9f4ba00f9097b947a096c966e",
+      "bytes": 8623
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/vsrc/core/ysyx_alu.sv",
+      "archive": "off/inputs/npc/vsrc/core/ysyx_alu.sv",
+      "sha256": "cbe707eb49dbe9eb30ed8a496dc628866eb4f888a1210d77f3ceef0374f470a1",
+      "bytes": 1963
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/vsrc/core/ysyx_branch.sv",
+      "archive": "off/inputs/npc/vsrc/core/ysyx_branch.sv",
+      "sha256": "6cc2d908aeb37572de4cb026a578a452d46ca3e11d59be69d6023e29d2195537",
+      "bytes": 1264
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/vsrc/core/ysyx_core.sv",
+      "archive": "off/inputs/npc/vsrc/core/ysyx_core.sv",
+      "sha256": "f4ce2dfbcabab79e60cbf24e6e246a87513fcb198ee6c8817541574126ed9109",
+      "bytes": 21732
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/vsrc/core/ysyx_csr.sv",
+      "archive": "off/inputs/npc/vsrc/core/ysyx_csr.sv",
+      "sha256": "5dc4113d83a2935bbeb04fc65eac7b3fc55d8eab5cd85b11ebae6d78a9acc949",
+      "bytes": 3669
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/vsrc/core/ysyx_exu.sv",
+      "archive": "off/inputs/npc/vsrc/core/ysyx_exu.sv",
+      "sha256": "278ef5518128ba88ca1c25374f8363b8b086645aee3a07cdbfabaabd8735a659",
+      "bytes": 11279
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/vsrc/core/ysyx_gen_imm.sv",
+      "archive": "off/inputs/npc/vsrc/core/ysyx_gen_imm.sv",
+      "sha256": "7b72f39d8bc17eee2ffb186d6183855c0075776a8505084e0204f147c6192d1a",
+      "bytes": 1335
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/vsrc/core/ysyx_gshare.sv",
+      "archive": "off/inputs/npc/vsrc/core/ysyx_gshare.sv",
+      "sha256": "f6761a66f7f291482c3dd44f1e4227688ae85f7cd89f17c3f2331f39ad45483f",
+      "bytes": 1560
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/vsrc/core/ysyx_idu.sv",
+      "archive": "off/inputs/npc/vsrc/core/ysyx_idu.sv",
+      "sha256": "d3802667e58390e23075af8000b4231a37721d2fd88c55dcf4f675c484f29642",
+      "bytes": 5149
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/vsrc/core/ysyx_ifu.sv",
+      "archive": "off/inputs/npc/vsrc/core/ysyx_ifu.sv",
+      "sha256": "60fc3ff886ecbacc533a0d1387839695c78dc2de0beabf60bd39077dddcd2d7d",
+      "bytes": 6711
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/vsrc/core/ysyx_lsu.sv",
+      "archive": "off/inputs/npc/vsrc/core/ysyx_lsu.sv",
+      "sha256": "1ec2463ade5aa1bd5c01a4dc15519be42be2d8104689c43579fcda81d2bd1654",
+      "bytes": 4829
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/vsrc/core/ysyx_opbuf.sv",
+      "archive": "off/inputs/npc/vsrc/core/ysyx_opbuf.sv",
+      "sha256": "9af1d755b6d281327bd05cd992d991571268290b812ac215ca3a4d8913138e0f",
+      "bytes": 4069
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/vsrc/core/ysyx_predecode.sv",
+      "archive": "off/inputs/npc/vsrc/core/ysyx_predecode.sv",
+      "sha256": "68dd4c6a9f9c3d44c8b4388886a53063e52403b2d900019f4f7edbf7c65236d6",
+      "bytes": 828
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/vsrc/core/ysyx_regfile.sv",
+      "archive": "off/inputs/npc/vsrc/core/ysyx_regfile.sv",
+      "sha256": "80c66dc0a1fcf39133e5287d9befe0670dceccc9f4237135b8c53ff310cc3eab",
+      "bytes": 1275
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/vsrc/gnrl/ysyx_global.sv",
+      "archive": "off/inputs/npc/vsrc/gnrl/ysyx_global.sv",
+      "sha256": "39dc2658d350ab8293953b819346339cac640f377b4bfa3bec30ed5b9828d2f9",
+      "bytes": 99
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/vsrc/gnrl/ysyx_gnrl_primitive.sv",
+      "archive": "off/inputs/npc/vsrc/gnrl/ysyx_gnrl_primitive.sv",
+      "sha256": "69e7f79f3636533b0d10016fd04097dbdf92c13f342c7e12c0f25402188f7c15",
+      "bytes": 9971
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/vsrc/periph/ysyx_clint.sv",
+      "archive": "off/inputs/npc/vsrc/periph/ysyx_clint.sv",
+      "sha256": "e9026df843f999c371bf56c9c0f555f88db50331b6f8f79260bc0ec6950b3fde",
+      "bytes": 1766
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/vsrc/top/ysyx_25030087.sv",
+      "archive": "off/inputs/npc/vsrc/top/ysyx_25030087.sv",
+      "sha256": "79676bf91ff6e2dffa2bf814282a43c2eaf77b6c951f2a117ce4f845354aafd7",
+      "bytes": 4553
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/vsrc/top/ysyx_core_axi4.sv",
+      "archive": "off/inputs/npc/vsrc/top/ysyx_core_axi4.sv",
+      "sha256": "d643acddc1fbb6acb5f4fd5a02c0e6712f501c11019bca8623c975bb109802bc",
+      "bytes": 6730
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/npc/vsrc/top/ysyx_soc_cpu.sv",
+      "archive": "off/inputs/npc/vsrc/top/ysyx_soc_cpu.sv",
+      "sha256": "842370e70e68c9371a70be55ee8e61423cec93c891df991f51129589963c6667",
+      "bytes": 5724
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/run.tcl",
+      "archive": "off/inputs/run.tcl",
+      "sha256": "7c2ac3b45eff0494c8175fcd6e7ed69a819efb95cb7ca890dfe7d62ed87145f1",
+      "bytes": 2222
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/inputs/site-config.tcl",
+      "archive": "off/inputs/site-config.tcl",
+      "sha256": "2f2dbbd23a9bb9a9d425d69a1d17bcc2ae4dd7cc54175cfcdda611aee051b676",
+      "bytes": 2239
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/logs/sta.log",
+      "archive": "off/logs/sta.log",
+      "sha256": "f5b948418a7f6f49a98955f06a11bf6a023b2d2420e1ab9d848c61340b05587b",
+      "bytes": 8997
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/logs/syn.log",
+      "archive": "off/logs/syn.log",
+      "sha256": "9e128a3c6ec93610611c073cea34eced131f8ef2aae61be7358ec3b784036266",
+      "bytes": 122932
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/manifest.json",
+      "archive": "off/manifest.json",
+      "sha256": "69dc29d4e6e5913944b0f40ff22ab1c841bbdab1e147e2001ee6a87f71f63e04",
+      "bytes": 735005
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/outputs/dc.sdc",
+      "archive": "off/outputs/dc.sdc",
+      "sha256": "097e2e5430ecfda7ef42d16e7e7f4dfee831c3408192b226e9f628fc7c25165e",
+      "bytes": 80290
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/sta/checks/check_timing.rpt",
+      "archive": "off/reports/sta/checks/check_timing.rpt",
+      "sha256": "c523fb9da6f6cbb39ec056e06ddb033286dc80b2cfd93352c7faa3c41db4c994",
+      "bytes": 1014
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/sta/checks/constraint_violations.rpt",
+      "archive": "off/reports/sta/checks/constraint_violations.rpt",
+      "sha256": "d8f25b1f1fa169ba4091d3dd4c3f595292ad9180197c4b9fb70cffbcb7b21ba2",
+      "bytes": 222
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/sta/checks/coverage.rpt",
+      "archive": "off/reports/sta/checks/coverage.rpt",
+      "sha256": "cb76db7974d711e41516aef0302c6eaaa69748c2aeaf7c47a56c414dfcbf5721",
+      "bytes": 1066
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/sta/checks/coverage_untested.rpt",
+      "archive": "off/reports/sta/checks/coverage_untested.rpt",
+      "sha256": "a80f9cf50272246506912998779800e51780f57cb96f09ce5121891be3732c2c",
+      "bytes": 2364226
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/sta/checks/disable_timing.rpt",
+      "archive": "off/reports/sta/checks/disable_timing.rpt",
+      "sha256": "c6794e9eb591e02b625af09cbd73b1be469bb60c1c2cc42284c6d226932c124e",
+      "bytes": 7814
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/sta/checks/lsu_enable_capacitance.rpt",
+      "archive": "off/reports/sta/checks/lsu_enable_capacitance.rpt",
+      "sha256": "3c102160d88ac048255e1bbe257e265f5883af50df4a672bb8631700512337f7",
+      "bytes": 638
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/sta/complete.txt",
+      "archive": "off/reports/sta/complete.txt",
+      "sha256": "011f8e831e12b897cb364cd1aaf3515b8fa8403c78309d1f44a2d299ba552cfd",
+      "bytes": 22
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/sta/environment/design.rpt",
+      "archive": "off/reports/sta/environment/design.rpt",
+      "sha256": "47eecfba55b0f62ff98ddfb8699e6019f196048e727cb09f55361af2eba45380",
+      "bytes": 2081
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/sta/environment/library_tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.rpt",
+      "archive": "off/reports/sta/environment/library_tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.rpt",
+      "sha256": "b59e6a37bacef796f6aa05662a9209fae0760454c371b3981db7173ad9da743b",
+      "bytes": 37136
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/sta/environment/units.rpt",
+      "archive": "off/reports/sta/environment/units.rpt",
+      "sha256": "3b3a460afdf09e0228251e164a94f5516be728fb6e6aa80876bf516c51288679",
+      "bytes": 433
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/sta/environment/version.rpt",
+      "archive": "off/reports/sta/environment/version.rpt",
+      "sha256": "88e56c41c2e2a9af3422664cbfc10104666065d21ca8bb552d541db0214bef0f",
+      "bytes": 14
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/sta/environment/wire_load.rpt",
+      "archive": "off/reports/sta/environment/wire_load.rpt",
+      "sha256": "d91279da86e61efc36f7705223130f9e97ad4cc997b383f510861c29c1ab8354",
+      "bytes": 881
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/sta/timing/In2Out_max.rpt",
+      "archive": "off/reports/sta/timing/In2Out_max.rpt",
+      "sha256": "5225f38fe5282f9c4782f00ff2437e8e16093cb61dba6e0a0959e988f7ec278f",
+      "bytes": 328
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/sta/timing/In2Out_min.rpt",
+      "archive": "off/reports/sta/timing/In2Out_min.rpt",
+      "sha256": "6b4203827fc1e65d5dcb605b6c4ee263b33e2488f34ea9a1457864df460a36ba",
+      "bytes": 328
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/sta/timing/In2Reg_max.rpt",
+      "archive": "off/reports/sta/timing/In2Reg_max.rpt",
+      "sha256": "249b178ca94680f9960eedae51eb7d79134abfb3b83c8a0f11ab675d0d42605f",
+      "bytes": 27686
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/sta/timing/In2Reg_min.rpt",
+      "archive": "off/reports/sta/timing/In2Reg_min.rpt",
+      "sha256": "bb44e424fd948a1cb50c6dc844c6560f53038dce9326f0abb426e91eb191c216",
+      "bytes": 21703
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/sta/timing/Reg2Out_max.rpt",
+      "archive": "off/reports/sta/timing/Reg2Out_max.rpt",
+      "sha256": "d030633b40fac3b4731d94379231f2d2b29c0b955af7f93813c95fdefd9416eb",
+      "bytes": 22644
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/sta/timing/Reg2Out_min.rpt",
+      "archive": "off/reports/sta/timing/Reg2Out_min.rpt",
+      "sha256": "3a365e8ac66dd9a27874b6b7e9435db7ead246d188e778e96e535adbb032a35b",
+      "bytes": 20222
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/sta/timing/Reg2Reg_max.rpt",
+      "archive": "off/reports/sta/timing/Reg2Reg_max.rpt",
+      "sha256": "3cf23b70572a91642b1e3a1654a38eca27822fccc73eca70cc6a6976a2ee491c",
+      "bytes": 92634
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/sta/timing/Reg2Reg_min.rpt",
+      "archive": "off/reports/sta/timing/Reg2Reg_min.rpt",
+      "sha256": "0fc58ec31a94b9262e89f5db592867d37c62229cad744bee15d8debd7e6bb94c",
+      "bytes": 26068
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/sta/timing/metrics_max.tsv",
+      "archive": "off/reports/sta/timing/metrics_max.tsv",
+      "sha256": "50b199a07257cfd0b84d201c755bd476ced9871e470baf72b1419a0ceae1e33c",
+      "bytes": 38
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/sta/timing/metrics_min.tsv",
+      "archive": "off/reports/sta/timing/metrics_min.tsv",
+      "sha256": "50b199a07257cfd0b84d201c755bd476ced9871e470baf72b1419a0ceae1e33c",
+      "bytes": 38
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/sta/timing/timing_max.rpt",
+      "archive": "off/reports/sta/timing/timing_max.rpt",
+      "sha256": "1f4118d38c1ba48440d1c24138fb946c20b1d5ab56ab6061213a3124c008c603",
+      "bytes": 54784
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/sta/timing/timing_min.rpt",
+      "archive": "off/reports/sta/timing/timing_min.rpt",
+      "sha256": "31fbb88683033124bf34d76415d7a1f6ef3a81048470aea5d898e2b859033f7d",
+      "bytes": 52684
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/syn/area/area.rpt",
+      "archive": "off/reports/syn/area/area.rpt",
+      "sha256": "69d21afdf46ddc7014f1577122455f7e1a7253694072a9d58296e3f2af9d3b14",
+      "bytes": 5090
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/syn/area/references.rpt",
+      "archive": "off/reports/syn/area/references.rpt",
+      "sha256": "440998471e0a303c58fb3ee00956d702f381464d5de3074c7c84af5d42c98581",
+      "bytes": 68900
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/syn/area/resources.rpt",
+      "archive": "off/reports/syn/area/resources.rpt",
+      "sha256": "1423eeea443ea7a374470ec06fe9a20f2cf6e15457bfef7ad44fd2b0e1f22daa",
+      "bytes": 16613
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/syn/checks/check_design_post.rpt",
+      "archive": "off/reports/syn/checks/check_design_post.rpt",
+      "sha256": "ceef585b06a7f81923f5514646c7fd45cbacfc9b5a4e50464b5e41510a7c9a3f",
+      "bytes": 559255
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/syn/checks/check_design_pre.rpt",
+      "archive": "off/reports/syn/checks/check_design_pre.rpt",
+      "sha256": "b773469397f27a134bef91645b8a02b7c7bc8bafc28d179d827eeddca34c0d41",
+      "bytes": 139836
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/syn/checks/check_timing.rpt",
+      "archive": "off/reports/syn/checks/check_timing.rpt",
+      "sha256": "bb1c0a1349355a46da74e85d65fc7a93b921f968fb51f782f8f342dbbb4f88a2",
+      "bytes": 483
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/syn/checks/constraint_violations.rpt",
+      "archive": "off/reports/syn/checks/constraint_violations.rpt",
+      "sha256": "25e15ce5153fb8214eaf7ce8b428ad983a259ac21ba9e1756a249f26d46a25c2",
+      "bytes": 505
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/syn/checks/high_fanout.rpt",
+      "archive": "off/reports/syn/checks/high_fanout.rpt",
+      "sha256": "576225d30cff0d1ff6848fe66cc8acfb8c221f4a553362de9cf89ac6335bccaf",
+      "bytes": 270816
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/syn/checks/lsu_enable_capacitance.rpt",
+      "archive": "off/reports/syn/checks/lsu_enable_capacitance.rpt",
+      "sha256": "cfb45f4401f2dda79ad60433c3ac846c29e09c112440520baf08dfb2a61937d4",
+      "bytes": 645
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/syn/complete.txt",
+      "archive": "off/reports/syn/complete.txt",
+      "sha256": "6c66dc55a113e692c9b2e3f299f773d2b96d6121909ea049633911d7371edd89",
+      "bytes": 22
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/syn/environment/design.rpt",
+      "archive": "off/reports/syn/environment/design.rpt",
+      "sha256": "cdf2b6c79bf66bf66244a52cb768304675940aa55e0084a3b1c9ab4a96654777",
+      "bytes": 1824
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/syn/environment/library_gtech.rpt",
+      "archive": "off/reports/syn/environment/library_gtech.rpt",
+      "sha256": "9986515e05659bbf956aa18ac96a62ba3f9d41e618828a388adb623913b33c32",
+      "bytes": 6806
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/syn/environment/library_standard.sldb.rpt",
+      "archive": "off/reports/syn/environment/library_standard.sldb.rpt",
+      "sha256": "c6a7dd30af01d711542021665361d6ca4974264341bc54d4bea91695af8e4186",
+      "bytes": 68828
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/syn/environment/library_tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.rpt",
+      "archive": "off/reports/syn/environment/library_tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.rpt",
+      "sha256": "8de59b17813635c0846f1cac810ac0325801a1afdc9db76ac229fb65a17ff010",
+      "bytes": 57252
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/syn/environment/max_capacitance_margin.rpt",
+      "archive": "off/reports/syn/environment/max_capacitance_margin.rpt",
+      "sha256": "4bc871778f006ef82bae417c75292c0367148fa85c2e9ab1dd5e68aca166950a",
+      "bytes": 119678
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/syn/environment/version.rpt",
+      "archive": "off/reports/syn/environment/version.rpt",
+      "sha256": "a9ae53b7befd951ea229317e14b61dcc3d6aa386a2e8e9e28967812b26b84288",
+      "bytes": 14
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/syn/power/power_status.txt",
+      "archive": "off/reports/syn/power/power_status.txt",
+      "sha256": "f81febf00488729ee9a772bbfe522514961d35cfb2f551030749a48d4daf9cf7",
+      "bytes": 24
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/syn/summary/qor.rpt",
+      "archive": "off/reports/syn/summary/qor.rpt",
+      "sha256": "e2db2670c822834e76956af1ccddc936f4657ed47b3e0623f7fc9c2598894d41",
+      "bytes": 2407
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/syn/timing/timing_max.rpt",
+      "archive": "off/reports/syn/timing/timing_max.rpt",
+      "sha256": "7288c790330daa0e90215490286b9d7116d7f3ca73b6ae3f5dbb64b74a256d0f",
+      "bytes": 53769
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-off/reports/syn/timing/timing_min.rpt",
+      "archive": "off/reports/syn/timing/timing_min.rpt",
+      "sha256": "6b5dad0b69e015fbcd16ff3c1b58187b6232f9a8ef0c6d59f21fd216cc442996",
+      "bytes": 50922
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/design-config.tcl",
+      "archive": "gshare/inputs/design-config.tcl",
+      "sha256": "62cac47ae1de2d269d51b9753f7a4b2df7f59210b7dadf4f5af1a1017c308a4a",
+      "bytes": 212
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/dirty.patch",
+      "archive": "gshare/inputs/dirty.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/git-status.txt",
+      "archive": "gshare/inputs/git-status.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/flow/00_indata/configs/npc_core.tcl",
+      "archive": "gshare/inputs/npc/flow/00_indata/configs/npc_core.tcl",
+      "sha256": "9f86f0e90ae97e732c6e472c778e73a85b1c10c50c995eaa36d7c71619ef4239",
+      "bytes": 2449
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/flow/00_indata/configs/npc_soc_cpu.tcl",
+      "archive": "gshare/inputs/npc/flow/00_indata/configs/npc_soc_cpu.tcl",
+      "sha256": "eb8857f4cc54d2cc2f681cb29c472bdf990ae74ecd08f3bbf8cb7dff20b8f11f",
+      "bytes": 1674
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/flow/00_indata/configs/npc_soc_cpu_bpu_gshare.tcl",
+      "archive": "gshare/inputs/npc/flow/00_indata/configs/npc_soc_cpu_bpu_gshare.tcl",
+      "sha256": "62cac47ae1de2d269d51b9753f7a4b2df7f59210b7dadf4f5af1a1017c308a4a",
+      "bytes": 212
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/flow/00_indata/configs/npc_soc_cpu_bpu_off.tcl",
+      "archive": "gshare/inputs/npc/flow/00_indata/configs/npc_soc_cpu_bpu_off.tcl",
+      "sha256": "75fce7827a5bf66029a335fdd627e8ef7d753e9e0f65f8882b2536b8d3d28411",
+      "bytes": 212
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/flow/00_indata/configs/site.example.tcl",
+      "archive": "gshare/inputs/npc/flow/00_indata/configs/site.example.tcl",
+      "sha256": "7c18afebe97914855677fe53a0dd28a9e1a4030fde6820e5d5df4f0457e76128",
+      "bytes": 2239
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/flow/00_indata/constraints/core.sdc",
+      "archive": "gshare/inputs/npc/flow/00_indata/constraints/core.sdc",
+      "sha256": "63af4ff50972c2bffc53c1d706266da3b538027c3ae58f9a3acc361ba6f32688",
+      "bytes": 3866
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/flow/00_indata/constraints/soc_cpu.sdc",
+      "archive": "gshare/inputs/npc/flow/00_indata/constraints/soc_cpu.sdc",
+      "sha256": "09dbb90b31b0793848b2b6d0d6b62351a8a37e8dbd78211a1fb988668b4e3bf8",
+      "bytes": 3378
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/flow/00_indata/filelists/core.f",
+      "archive": "gshare/inputs/npc/flow/00_indata/filelists/core.f",
+      "sha256": "78eb35ab7614d72a663fe17f8bb6cec175ae20b66b352ef0d3f84106b46b018d",
+      "bytes": 462
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/flow/00_indata/filelists/soc_cpu.f",
+      "archive": "gshare/inputs/npc/flow/00_indata/filelists/soc_cpu.f",
+      "sha256": "dd7467468523c99c63900683896d753e3cf74e1eb081677d1c0a6892a89be3ba",
+      "bytes": 861
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/flow/01_common/capacitance.tcl",
+      "archive": "gshare/inputs/npc/flow/01_common/capacitance.tcl",
+      "sha256": "af497217e6589ce561160362728f6a9338b36cf150d69e270ab9de1c4217a051",
+      "bytes": 5793
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/flow/01_common/config_dump.tcl",
+      "archive": "gshare/inputs/npc/flow/01_common/config_dump.tcl",
+      "sha256": "e6dbf4ba202391a3199fe2a152fa9766ad456e37988ab5ea9903eb7f81e28101",
+      "bytes": 877
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/flow/01_common/flow.py",
+      "archive": "gshare/inputs/npc/flow/01_common/flow.py",
+      "sha256": "b163ac3b5846e5a4e2fbe165ee773b6418151c0baad9b03ca8f90f5300eccc7c",
+      "bytes": 30415
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/flow/01_common/setup.tcl",
+      "archive": "gshare/inputs/npc/flow/01_common/setup.tcl",
+      "sha256": "d5d28c9c71ff3cb625678de2ff63fb8730e6a5fc512700083d429940ef06f3b6",
+      "bytes": 5969
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/flow/02_syn/max_capacitance_margin.tcl",
+      "archive": "gshare/inputs/npc/flow/02_syn/max_capacitance_margin.tcl",
+      "sha256": "8c19ead03f88e4cc418e729c6c9ed6a2bfeb8fcc9d8b1689bb0bea010f1a5190",
+      "bytes": 4305
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/flow/02_syn/probe.tcl",
+      "archive": "gshare/inputs/npc/flow/02_syn/probe.tcl",
+      "sha256": "434a59c8be8e73744c6f46195a6c384ac686615a888b7c109216275ae3a2bc9d",
+      "bytes": 594
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/flow/02_syn/run.tcl",
+      "archive": "gshare/inputs/npc/flow/02_syn/run.tcl",
+      "sha256": "7c6a9724e45aaf7656bb62d9b1d7d8aa7c628827f075b596d1fd21f0cda45985",
+      "bytes": 13491
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/flow/03_sta/run.tcl",
+      "archive": "gshare/inputs/npc/flow/03_sta/run.tcl",
+      "sha256": "e2e5252e6da157cf77d3e9d11362d1e32901d285c8e13526b03ee43d5bd398e0",
+      "bytes": 6542
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/flow/04_tests/eda_mock.tcl",
+      "archive": "gshare/inputs/npc/flow/04_tests/eda_mock.tcl",
+      "sha256": "baea67e461b7d6c07ac9941fcd18dd1cf770ba6a9305f37dcb64c37a96c3087a",
+      "bytes": 15579
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/flow/04_tests/sdc_check.tcl",
+      "archive": "gshare/inputs/npc/flow/04_tests/sdc_check.tcl",
+      "sha256": "982a38e13de9cdb10fbc31ad9159675602ed3d23289fe81c3feb86ab7c120f0b",
+      "bytes": 4921
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/flow/04_tests/test_flow.py",
+      "archive": "gshare/inputs/npc/flow/04_tests/test_flow.py",
+      "sha256": "e213f131002adb6edcf7ee7a6d7a4d75b9ca11918a256c6855efbce6d8da2065",
+      "bytes": 37387
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/flow/Makefile",
+      "archive": "gshare/inputs/npc/flow/Makefile",
+      "sha256": "3b9624f62b121cf668df57b0cc21db68521a234c9badc51e8ca307b589e00867",
+      "bytes": 1975
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/vsrc/bus/ysyx_axi4_arbiter.sv",
+      "archive": "gshare/inputs/npc/vsrc/bus/ysyx_axi4_arbiter.sv",
+      "sha256": "57b407a5f38bd14979b51c8e52feb106168393ae38d3879269811726aae4b750",
+      "bytes": 10660
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/vsrc/bus/ysyx_axi4_router.sv",
+      "archive": "gshare/inputs/npc/vsrc/bus/ysyx_axi4_router.sv",
+      "sha256": "6738000570613379fff8a19f37964f6dc7ee0079c088e7e7d2f3669ddcf2abc0",
+      "bytes": 7683
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/vsrc/bus/ysyx_ifu_axi4_adapter.sv",
+      "archive": "gshare/inputs/npc/vsrc/bus/ysyx_ifu_axi4_adapter.sv",
+      "sha256": "9643e9b1f6212c3ebaf1acc8c3f1d84efc896cf3971aae401898a0da8552fd76",
+      "bytes": 4610
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/vsrc/bus/ysyx_lsu_axi4_adapter.sv",
+      "archive": "gshare/inputs/npc/vsrc/bus/ysyx_lsu_axi4_adapter.sv",
+      "sha256": "309ea53b7418bb6779cfcb5490294b2aaf0785f9f4ba00f9097b947a096c966e",
+      "bytes": 8623
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/vsrc/core/ysyx_alu.sv",
+      "archive": "gshare/inputs/npc/vsrc/core/ysyx_alu.sv",
+      "sha256": "cbe707eb49dbe9eb30ed8a496dc628866eb4f888a1210d77f3ceef0374f470a1",
+      "bytes": 1963
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/vsrc/core/ysyx_branch.sv",
+      "archive": "gshare/inputs/npc/vsrc/core/ysyx_branch.sv",
+      "sha256": "6cc2d908aeb37572de4cb026a578a452d46ca3e11d59be69d6023e29d2195537",
+      "bytes": 1264
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/vsrc/core/ysyx_core.sv",
+      "archive": "gshare/inputs/npc/vsrc/core/ysyx_core.sv",
+      "sha256": "f4ce2dfbcabab79e60cbf24e6e246a87513fcb198ee6c8817541574126ed9109",
+      "bytes": 21732
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/vsrc/core/ysyx_csr.sv",
+      "archive": "gshare/inputs/npc/vsrc/core/ysyx_csr.sv",
+      "sha256": "5dc4113d83a2935bbeb04fc65eac7b3fc55d8eab5cd85b11ebae6d78a9acc949",
+      "bytes": 3669
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/vsrc/core/ysyx_exu.sv",
+      "archive": "gshare/inputs/npc/vsrc/core/ysyx_exu.sv",
+      "sha256": "278ef5518128ba88ca1c25374f8363b8b086645aee3a07cdbfabaabd8735a659",
+      "bytes": 11279
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/vsrc/core/ysyx_gen_imm.sv",
+      "archive": "gshare/inputs/npc/vsrc/core/ysyx_gen_imm.sv",
+      "sha256": "7b72f39d8bc17eee2ffb186d6183855c0075776a8505084e0204f147c6192d1a",
+      "bytes": 1335
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/vsrc/core/ysyx_gshare.sv",
+      "archive": "gshare/inputs/npc/vsrc/core/ysyx_gshare.sv",
+      "sha256": "f6761a66f7f291482c3dd44f1e4227688ae85f7cd89f17c3f2331f39ad45483f",
+      "bytes": 1560
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/vsrc/core/ysyx_idu.sv",
+      "archive": "gshare/inputs/npc/vsrc/core/ysyx_idu.sv",
+      "sha256": "d3802667e58390e23075af8000b4231a37721d2fd88c55dcf4f675c484f29642",
+      "bytes": 5149
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/vsrc/core/ysyx_ifu.sv",
+      "archive": "gshare/inputs/npc/vsrc/core/ysyx_ifu.sv",
+      "sha256": "60fc3ff886ecbacc533a0d1387839695c78dc2de0beabf60bd39077dddcd2d7d",
+      "bytes": 6711
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/vsrc/core/ysyx_lsu.sv",
+      "archive": "gshare/inputs/npc/vsrc/core/ysyx_lsu.sv",
+      "sha256": "1ec2463ade5aa1bd5c01a4dc15519be42be2d8104689c43579fcda81d2bd1654",
+      "bytes": 4829
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/vsrc/core/ysyx_opbuf.sv",
+      "archive": "gshare/inputs/npc/vsrc/core/ysyx_opbuf.sv",
+      "sha256": "9af1d755b6d281327bd05cd992d991571268290b812ac215ca3a4d8913138e0f",
+      "bytes": 4069
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/vsrc/core/ysyx_predecode.sv",
+      "archive": "gshare/inputs/npc/vsrc/core/ysyx_predecode.sv",
+      "sha256": "68dd4c6a9f9c3d44c8b4388886a53063e52403b2d900019f4f7edbf7c65236d6",
+      "bytes": 828
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/vsrc/core/ysyx_regfile.sv",
+      "archive": "gshare/inputs/npc/vsrc/core/ysyx_regfile.sv",
+      "sha256": "80c66dc0a1fcf39133e5287d9befe0670dceccc9f4237135b8c53ff310cc3eab",
+      "bytes": 1275
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/vsrc/gnrl/ysyx_global.sv",
+      "archive": "gshare/inputs/npc/vsrc/gnrl/ysyx_global.sv",
+      "sha256": "39dc2658d350ab8293953b819346339cac640f377b4bfa3bec30ed5b9828d2f9",
+      "bytes": 99
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/vsrc/gnrl/ysyx_gnrl_primitive.sv",
+      "archive": "gshare/inputs/npc/vsrc/gnrl/ysyx_gnrl_primitive.sv",
+      "sha256": "69e7f79f3636533b0d10016fd04097dbdf92c13f342c7e12c0f25402188f7c15",
+      "bytes": 9971
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/vsrc/periph/ysyx_clint.sv",
+      "archive": "gshare/inputs/npc/vsrc/periph/ysyx_clint.sv",
+      "sha256": "e9026df843f999c371bf56c9c0f555f88db50331b6f8f79260bc0ec6950b3fde",
+      "bytes": 1766
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/vsrc/top/ysyx_25030087.sv",
+      "archive": "gshare/inputs/npc/vsrc/top/ysyx_25030087.sv",
+      "sha256": "79676bf91ff6e2dffa2bf814282a43c2eaf77b6c951f2a117ce4f845354aafd7",
+      "bytes": 4553
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/vsrc/top/ysyx_core_axi4.sv",
+      "archive": "gshare/inputs/npc/vsrc/top/ysyx_core_axi4.sv",
+      "sha256": "d643acddc1fbb6acb5f4fd5a02c0e6712f501c11019bca8623c975bb109802bc",
+      "bytes": 6730
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/npc/vsrc/top/ysyx_soc_cpu.sv",
+      "archive": "gshare/inputs/npc/vsrc/top/ysyx_soc_cpu.sv",
+      "sha256": "842370e70e68c9371a70be55ee8e61423cec93c891df991f51129589963c6667",
+      "bytes": 5724
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/run.tcl",
+      "archive": "gshare/inputs/run.tcl",
+      "sha256": "893941ff941976165b57b511e9ddaf3742919caad3fe5669542f301691217a4e",
+      "bytes": 2225
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/inputs/site-config.tcl",
+      "archive": "gshare/inputs/site-config.tcl",
+      "sha256": "2f2dbbd23a9bb9a9d425d69a1d17bcc2ae4dd7cc54175cfcdda611aee051b676",
+      "bytes": 2239
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/logs/sta.log",
+      "archive": "gshare/logs/sta.log",
+      "sha256": "6ba2863644af4d33b88996b0aecacaca7c85339fdefffe740c2b0a3185debd49",
+      "bytes": 9000
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/logs/syn.log",
+      "archive": "gshare/logs/syn.log",
+      "sha256": "da16c96bf1796578675e202772c548f367adb1bc895eb2cebe8e9e8cb4ee8466",
+      "bytes": 112404
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/manifest.json",
+      "archive": "gshare/manifest.json",
+      "sha256": "0b764d5b71bc35e831f7eda2c6a260b99086c19be33094c1981761f28b0b22aa",
+      "bytes": 671106
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/outputs/dc.sdc",
+      "archive": "gshare/outputs/dc.sdc",
+      "sha256": "7da338ab1f4f5b69a8b421c92dd70fbfe42d650b9c7f3090528037b92ad63848",
+      "bytes": 80290
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/sta/checks/check_timing.rpt",
+      "archive": "gshare/reports/sta/checks/check_timing.rpt",
+      "sha256": "c523fb9da6f6cbb39ec056e06ddb033286dc80b2cfd93352c7faa3c41db4c994",
+      "bytes": 1014
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/sta/checks/constraint_violations.rpt",
+      "archive": "gshare/reports/sta/checks/constraint_violations.rpt",
+      "sha256": "1d8817136319ce4d85f01e8f6eb85b9aea55ede3e0d77181e70a1c61b797e780",
+      "bytes": 222
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/sta/checks/coverage.rpt",
+      "archive": "gshare/reports/sta/checks/coverage.rpt",
+      "sha256": "297a170e210e66368ac00aeb3c6d2169187aa2ea3472c6bc5eda7fcbd7a26710",
+      "bytes": 1066
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/sta/checks/coverage_untested.rpt",
+      "archive": "gshare/reports/sta/checks/coverage_untested.rpt",
+      "sha256": "257819afff03c36c69d8b9607f19267fd1bc3735909337e775cb221e37557e4e",
+      "bytes": 3561014
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/sta/checks/disable_timing.rpt",
+      "archive": "gshare/reports/sta/checks/disable_timing.rpt",
+      "sha256": "1fabdecd4ad45b20bb7b08079e23976bc547d92165a2d7161e1042dc2d7529f1",
+      "bytes": 7814
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/sta/checks/lsu_enable_capacitance.rpt",
+      "archive": "gshare/reports/sta/checks/lsu_enable_capacitance.rpt",
+      "sha256": "41ce3d10d35588839ec7b2aaf1f2665e7680d492952805154fc816ecbb41bf5e",
+      "bytes": 43914
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/sta/complete.txt",
+      "archive": "gshare/reports/sta/complete.txt",
+      "sha256": "011f8e831e12b897cb364cd1aaf3515b8fa8403c78309d1f44a2d299ba552cfd",
+      "bytes": 22
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/sta/environment/design.rpt",
+      "archive": "gshare/reports/sta/environment/design.rpt",
+      "sha256": "d3629ac7b96596ffc05e08a1ec08d3ff77d4f6fc6ef32cd369f763993f777c36",
+      "bytes": 2081
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/sta/environment/library_tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.rpt",
+      "archive": "gshare/reports/sta/environment/library_tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.rpt",
+      "sha256": "a7633659690a1e795d324ec059e5d69df4edc9eac17ec1a5e0e6b215cea771b3",
+      "bytes": 37136
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/sta/environment/units.rpt",
+      "archive": "gshare/reports/sta/environment/units.rpt",
+      "sha256": "1795658335d4deadff6c26271bee0d539279b70631bdbb2b8901a940cf2be535",
+      "bytes": 433
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/sta/environment/version.rpt",
+      "archive": "gshare/reports/sta/environment/version.rpt",
+      "sha256": "88e56c41c2e2a9af3422664cbfc10104666065d21ca8bb552d541db0214bef0f",
+      "bytes": 14
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/sta/environment/wire_load.rpt",
+      "archive": "gshare/reports/sta/environment/wire_load.rpt",
+      "sha256": "87dae7268265bac6ed6f00d25a6ff254bba17ff25dbdd08ce71e2207aba57343",
+      "bytes": 881
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/sta/timing/In2Out_max.rpt",
+      "archive": "gshare/reports/sta/timing/In2Out_max.rpt",
+      "sha256": "a5d4657984ae453c3bbbe10579216c0959ca486bda30b316580d5844d43f0c87",
+      "bytes": 328
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/sta/timing/In2Out_min.rpt",
+      "archive": "gshare/reports/sta/timing/In2Out_min.rpt",
+      "sha256": "7e4290dd21619ae04a2c509d9e62521a5070771f1f6f4ceb2741fe917f566a6e",
+      "bytes": 328
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/sta/timing/In2Reg_max.rpt",
+      "archive": "gshare/reports/sta/timing/In2Reg_max.rpt",
+      "sha256": "54c758b6e7c9827d249d91cdbcc2e7c74292ecdda57e34b249bc730aabd0f3a2",
+      "bytes": 27686
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/sta/timing/In2Reg_min.rpt",
+      "archive": "gshare/reports/sta/timing/In2Reg_min.rpt",
+      "sha256": "bad751242c40e94e81b29d85b4066abbde9aad52705eea4e0d8ed60968d799db",
+      "bytes": 21635
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/sta/timing/Reg2Out_max.rpt",
+      "archive": "gshare/reports/sta/timing/Reg2Out_max.rpt",
+      "sha256": "83fb54e015ca5568658c4c3469b6e631386590109cde405c36c4783589cf2777",
+      "bytes": 22739
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/sta/timing/Reg2Out_min.rpt",
+      "archive": "gshare/reports/sta/timing/Reg2Out_min.rpt",
+      "sha256": "39166dac67957dccd8e90898737fff747636478bf45a682a513080752e2d6cf5",
+      "bytes": 20412
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/sta/timing/Reg2Reg_max.rpt",
+      "archive": "gshare/reports/sta/timing/Reg2Reg_max.rpt",
+      "sha256": "69a1cc846a931712b8dd8bee7e2c6edfe8cf416d30c016e1095232d0ee45f627",
+      "bytes": 107669
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/sta/timing/Reg2Reg_min.rpt",
+      "archive": "gshare/reports/sta/timing/Reg2Reg_min.rpt",
+      "sha256": "846b836c19df8dd0ddf93ef8dec0ea463407b3dff0893a7290877f8adff91446",
+      "bytes": 27714
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/sta/timing/metrics_max.tsv",
+      "archive": "gshare/reports/sta/timing/metrics_max.tsv",
+      "sha256": "50b199a07257cfd0b84d201c755bd476ced9871e470baf72b1419a0ceae1e33c",
+      "bytes": 38
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/sta/timing/metrics_min.tsv",
+      "archive": "gshare/reports/sta/timing/metrics_min.tsv",
+      "sha256": "50b199a07257cfd0b84d201c755bd476ced9871e470baf72b1419a0ceae1e33c",
+      "bytes": 38
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/sta/timing/timing_max.rpt",
+      "archive": "gshare/reports/sta/timing/timing_max.rpt",
+      "sha256": "aaa3be3457af67d0dc9e6430c7fce45ccd2e4796e2f5ad3b04c3aab67bf0220b",
+      "bytes": 215755
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/sta/timing/timing_min.rpt",
+      "archive": "gshare/reports/sta/timing/timing_min.rpt",
+      "sha256": "9a407bad37774df14514f207e7f29026cc2250e8a1361ada9f67414b2e6acacf",
+      "bytes": 50556
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/syn/area/area.rpt",
+      "archive": "gshare/reports/syn/area/area.rpt",
+      "sha256": "0a0c5c3509acd8efb4c8fc0eeab92213712df7d69bad7e43ad08fe969c4fe32a",
+      "bytes": 5416
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/syn/area/references.rpt",
+      "archive": "gshare/reports/syn/area/references.rpt",
+      "sha256": "ffb592f45a37628e4f481f7f8851b19eec7ee8dd32ec69d977db47daceec566c",
+      "bytes": 74687
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/syn/area/resources.rpt",
+      "archive": "gshare/reports/syn/area/resources.rpt",
+      "sha256": "8fe5d8c15087baea831954fb2b4e3e7510789d10e1d3c36e529a865aa4c93ed6",
+      "bytes": 60569
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/syn/checks/check_design_post.rpt",
+      "archive": "gshare/reports/syn/checks/check_design_post.rpt",
+      "sha256": "2f9a194003bfd2768b4ae5a0b70571eb0f222974fef5e89d49fa8c61264c0820",
+      "bytes": 477041
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/syn/checks/check_design_pre.rpt",
+      "archive": "gshare/reports/syn/checks/check_design_pre.rpt",
+      "sha256": "ac539bfdf256c91ba11fa1ddff8aef83ebd673065b14641f8d6ed44c67226a31",
+      "bytes": 159516
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/syn/checks/check_timing.rpt",
+      "archive": "gshare/reports/syn/checks/check_timing.rpt",
+      "sha256": "bb1c0a1349355a46da74e85d65fc7a93b921f968fb51f782f8f342dbbb4f88a2",
+      "bytes": 483
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/syn/checks/constraint_violations.rpt",
+      "archive": "gshare/reports/syn/checks/constraint_violations.rpt",
+      "sha256": "4f649fd225068ca2387431c40dc22569dd327532182a70628f6bafc483928795",
+      "bytes": 505
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/syn/checks/high_fanout.rpt",
+      "archive": "gshare/reports/syn/checks/high_fanout.rpt",
+      "sha256": "e200f12376fe5e1a91c745ff7b50c757be1a4b7717f957b717c65f0852022810",
+      "bytes": 339158
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/syn/checks/lsu_enable_capacitance.rpt",
+      "archive": "gshare/reports/syn/checks/lsu_enable_capacitance.rpt",
+      "sha256": "33094f71bcbe4db73ddb812bc03ad37a7e37bef5df856d919543fc80c1eebbfa",
+      "bytes": 52648
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/syn/complete.txt",
+      "archive": "gshare/reports/syn/complete.txt",
+      "sha256": "6c66dc55a113e692c9b2e3f299f773d2b96d6121909ea049633911d7371edd89",
+      "bytes": 22
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/syn/environment/design.rpt",
+      "archive": "gshare/reports/syn/environment/design.rpt",
+      "sha256": "cdda350ae98585da89503954eb87bed1d6e6b9d21fa2bc0d3ff4721f98e960bc",
+      "bytes": 1824
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/syn/environment/library_gtech.rpt",
+      "archive": "gshare/reports/syn/environment/library_gtech.rpt",
+      "sha256": "db508a525a9d64b2044fd1ca1682f371e7447f95b4c862c33257e4b120b9c344",
+      "bytes": 6806
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/syn/environment/library_standard.sldb.rpt",
+      "archive": "gshare/reports/syn/environment/library_standard.sldb.rpt",
+      "sha256": "b02cba9a2fcd956b535f353b529346faf0cf8a60c0af136f8ebd811a78713573",
+      "bytes": 68828
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/syn/environment/library_tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.rpt",
+      "archive": "gshare/reports/syn/environment/library_tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs.rpt",
+      "sha256": "6cd3b9c757f35d70bbc7c0f68ca483a5060ce2671fee91470f0b29e3afd7b17a",
+      "bytes": 57252
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/syn/environment/max_capacitance_margin.rpt",
+      "archive": "gshare/reports/syn/environment/max_capacitance_margin.rpt",
+      "sha256": "4bc871778f006ef82bae417c75292c0367148fa85c2e9ab1dd5e68aca166950a",
+      "bytes": 119678
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/syn/environment/version.rpt",
+      "archive": "gshare/reports/syn/environment/version.rpt",
+      "sha256": "a9ae53b7befd951ea229317e14b61dcc3d6aa386a2e8e9e28967812b26b84288",
+      "bytes": 14
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/syn/power/power_status.txt",
+      "archive": "gshare/reports/syn/power/power_status.txt",
+      "sha256": "f81febf00488729ee9a772bbfe522514961d35cfb2f551030749a48d4daf9cf7",
+      "bytes": 24
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/syn/summary/qor.rpt",
+      "archive": "gshare/reports/syn/summary/qor.rpt",
+      "sha256": "287d8f2e6f78f9006d0e9bb4adeebe5455d1e4be064e21544ca12e5470bcb1f2",
+      "bytes": 2407
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/syn/timing/timing_max.rpt",
+      "archive": "gshare/reports/syn/timing/timing_max.rpt",
+      "sha256": "60ada0beb25323e79607a8f636837051a3c2fa49bada8711d2250c474f741604",
+      "bytes": 229750
+    },
+    {
+      "source": "npc/flow/build/soc-cpu-tt-5ns-bpu-gshare/reports/syn/timing/timing_min.rpt",
+      "archive": "gshare/reports/syn/timing/timing_min.rpt",
+      "sha256": "8d50b15979bf67d3cf485e949692b0f0f9485add03fb0dc59687cf956d67eab3",
+      "bytes": 52180
+    }
+  ]
+}

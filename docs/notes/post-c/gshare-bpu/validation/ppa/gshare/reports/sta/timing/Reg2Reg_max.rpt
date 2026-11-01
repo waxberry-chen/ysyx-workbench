@@ -1,0 +1,990 @@
+****************************************
+Report : timing
+	-path_type full
+	-delay_type max
+	-slack_lesser_than 1000000015047466219876688855040.000000
+	-max_paths 10
+	-sort_by slack
+Design : ysyx_25030087
+Version: T-2022.03-SP5
+Date   : Sun Nov  1 00:03:26 2026
+****************************************
+
+
+  Startpoint: subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_125_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                                              Incr       Path
+  -------------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                                     0.000000   0.000000
+  clock network delay (ideal)                                                                    0.000000   0.000000
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_/CP (EDFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_/Q (EDFCNQD1BWP12T40P140)              0.078565   0.078565 f
+  subsystem/cpu/core/u_exu/u_alu/U110/Z (OR4D1BWP12T40P140)                                      0.039862   0.118427 f
+  subsystem/cpu/core/u_exu/u_alu/U2/ZN (NR2D1BWP12T40P140)                                       0.107628   0.226055 r
+  subsystem/cpu/core/u_exu/u_alu/U571/Z (BUFFD1BWP12T40P140)                                     0.100319   0.326374 r
+  subsystem/cpu/core/u_exu/u_alu/U600/Z (XOR2D1BWP12T40P140)                                     0.036147   0.362521 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U33/CO (FA1D0BWP12T40P140)                  0.041483   0.404004 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U32/CO (FA1D0BWP12T40P140)                  0.044281   0.448285 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U31/CO (FA1D0BWP12T40P140)                  0.043784   0.492069 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U30/CO (FA1D0BWP12T40P140)                  0.044221   0.536290 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U29/CO (FA1D0BWP12T40P140)                  0.044086   0.580376 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U28/CO (FA1D0BWP12T40P140)                  0.043742   0.624118 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U27/CO (FA1D0BWP12T40P140)                  0.044042   0.668159 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U26/CO (FA1D0BWP12T40P140)                  0.043714   0.711873 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U25/CO (FA1D0BWP12T40P140)                  0.044041   0.755914 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U24/CO (FA1D0BWP12T40P140)                  0.043679   0.799593 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U23/CO (FA1D0BWP12T40P140)                  0.043911   0.843504 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U22/CO (FA1D0BWP12T40P140)                  0.043725   0.887229 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U21/CO (FA1D0BWP12T40P140)                  0.043911   0.931141 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U20/CO (FA1D0BWP12T40P140)                  0.043789   0.974930 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U19/CO (FA1D0BWP12T40P140)                  0.043999   1.018929 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U18/CO (FA1D0BWP12T40P140)                  0.043666   1.062595 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U17/CO (FA1D0BWP12T40P140)                  0.044041   1.106637 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U16/CO (FA1D0BWP12T40P140)                  0.043817   1.150454 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U15/CO (FA1D0BWP12T40P140)                  0.043824   1.194278 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U14/CO (FA1D0BWP12T40P140)                  0.043886   1.238164 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U13/CO (FA1D0BWP12T40P140)                  0.043873   1.282037 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U12/CO (FA1D0BWP12T40P140)                  0.043866   1.325903 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U11/CO (FA1D0BWP12T40P140)                  0.043955   1.369858 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U10/CO (FA1D0BWP12T40P140)                  0.043866   1.413724 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U9/CO (FA1D0BWP12T40P140)                   0.044000   1.457724 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U8/CO (FA1D0BWP12T40P140)                   0.043918   1.501642 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U7/CO (FA1D0BWP12T40P140)                   0.044085   1.545727 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U6/CO (FA1D0BWP12T40P140)                   0.043669   1.589396 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U5/CO (FA1D0BWP12T40P140)                   0.043908   1.633303 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U4/CO (FA1D0BWP12T40P140)                   0.043694   1.676998 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U3/CO (FA1D0BWP12T40P140)                   0.040495   1.717493 r
+  subsystem/cpu/core/u_exu/u_alu/U177/Z (XOR2D1BWP12T40P140)                                     0.036274   1.753767 f
+  subsystem/cpu/core/u_exu/u_alu/U197/Z (AO21D1BWP12T40P140)                                     0.018033   1.771800 f
+  subsystem/cpu/core/u_exu/u_alu/U198/ZN (AOI31D0BWP12T40P140)                                   0.022308   1.794108 r
+  subsystem/cpu/core/u_exu/u_alu/U199/ZN (OAI211D0BWP12T40P140)                                  0.045048   1.839156 f
+  subsystem/cpu/core/u_exu/U310/ZN (AOI22D0BWP12T40P140)                                         0.029968   1.869124 r
+  subsystem/cpu/core/u_exu/U312/ZN (ND2D0BWP12T40P140)                                           0.023778   1.892902 f
+  subsystem/cpu/core/u_exu/U384/ZN (INVD0BWP12T40P140)                                           0.016105   1.909007 r
+  subsystem/cpu/core/u_exu/U386/ZN (OAI22D0BWP12T40P140)                                         0.016620   1.925627 f
+  subsystem/cpu/core/u_exu/U387/ZN (AOI221D0BWP12T40P140)                                        0.030701   1.956328 r
+  subsystem/cpu/core/u_exu/U388/ZN (ND4D0BWP12T40P140)                                           0.038562   1.994890 f
+  subsystem/cpu/core/u_exu/U389/ZN (AOI221D0BWP12T40P140)                                        0.039264   2.034154 r
+  subsystem/cpu/core/u_exu/U390/ZN (AOI31D0BWP12T40P140)                                         0.028974   2.063128 f
+  subsystem/cpu/core/U133/Z (OR2D1BWP12T40P140)                                                  0.037754   2.100882 f
+  subsystem/cpu/core/u_ifu/U5/Z (BUFFD1BWP12T40P140)                                             0.056696   2.157578 f
+  subsystem/cpu/core/u_ifu/u_ifq/U10/ZN (INVD0BWP12T40P140)                                      0.036004   2.193582 r
+  subsystem/cpu/core/u_ifu/u_ifq/U16/ZN (OAI21D0BWP12T40P140)                                    0.026991   2.220573 f
+  subsystem/cpu/core/u_ifu/u_ifq/U44/ZN (NR2D0BWP12T40P140)                                      0.149098   2.369672 r
+  subsystem/cpu/core/u_ifu/u_ifq/U45/Z (BUFFD1BWP12T40P140)                                      0.073232   2.442904 r
+  subsystem/cpu/core/u_ifu/u_ifq/U197/Z (BUFFD1BWP12T40P140)                                     0.044136   2.487040 r
+  subsystem/cpu/core/u_ifu/u_ifq/U314/Z (AO22D0BWP12T40P140)                                     0.034926   2.521966 r
+  subsystem/cpu/core/u_decoder/U4/ZN (ND2D0BWP12T40P140)                                         0.018276   2.540241 f
+  subsystem/cpu/core/u_decoder/U25/ZN (INVD0BWP12T40P140)                                        0.014782   2.555023 r
+  subsystem/cpu/core/u_decoder/U26/ZN (ND3D0BWP12T40P140)                                        0.025557   2.580580 f
+  subsystem/cpu/core/u_decoder/U27/ZN (INVD0BWP12T40P140)                                        0.021865   2.602445 r
+  subsystem/cpu/core/u_decoder/U30/ZN (ND2D0BWP12T40P140)                                        0.027548   2.629993 f
+  subsystem/cpu/core/u_decoder/U35/ZN (NR2D0BWP12T40P140)                                        0.024676   2.654669 r
+  subsystem/cpu/core/u_decoder/U36/ZN (OAI21D0BWP12T40P140)                                      0.097279   2.751948 f
+  subsystem/cpu/core/u_decoder/U79/ZN (AOI211D0BWP12T40P140)                                     0.056034   2.807982 r
+  subsystem/cpu/core/u_decoder/U81/ZN (AOI211D0BWP12T40P140)                                     0.020041   2.828022 f
+  subsystem/cpu/core/u_decoder/U93/ZN (AOI31D0BWP12T40P140)                                      0.018941   2.846964 r
+  subsystem/cpu/core/u_decoder/U95/ZN (OAI211D0BWP12T40P140)                                     0.069679   2.916643 f
+  subsystem/cpu/core/u_decoder/U103/ZN (AOI211D0BWP12T40P140)                                    0.051347   2.967990 r
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_125_/D (EDFCNQD1BWP12T40P140)              0.000000   2.967990 r
+  data arrival time                                                                                         2.967990
+
+  clock core_clk (rise edge)                                                                     5.000000   5.000000
+  clock network delay (ideal)                                                                    0.000000   5.000000
+  clock reconvergence pessimism                                                                  0.000000   5.000000
+  clock uncertainty                                                                              -0.200000  4.800000
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_125_/CP (EDFCNQD1BWP12T40P140)                        4.800000 r
+  library setup time                                                                             -0.030203  4.769797
+  data required time                                                                                        4.769797
+  -------------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                        4.769797
+  data arrival time                                                                                         -2.967990
+  -------------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                               1.801808
+
+
+  Startpoint: subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_133_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                                              Incr       Path
+  -------------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                                     0.000000   0.000000
+  clock network delay (ideal)                                                                    0.000000   0.000000
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_/CP (EDFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_/Q (EDFCNQD1BWP12T40P140)              0.078565   0.078565 f
+  subsystem/cpu/core/u_exu/u_alu/U110/Z (OR4D1BWP12T40P140)                                      0.039862   0.118427 f
+  subsystem/cpu/core/u_exu/u_alu/U2/ZN (NR2D1BWP12T40P140)                                       0.107628   0.226055 r
+  subsystem/cpu/core/u_exu/u_alu/U571/Z (BUFFD1BWP12T40P140)                                     0.100319   0.326374 r
+  subsystem/cpu/core/u_exu/u_alu/U600/Z (XOR2D1BWP12T40P140)                                     0.036147   0.362521 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U33/CO (FA1D0BWP12T40P140)                  0.041483   0.404004 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U32/CO (FA1D0BWP12T40P140)                  0.044281   0.448285 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U31/CO (FA1D0BWP12T40P140)                  0.043784   0.492069 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U30/CO (FA1D0BWP12T40P140)                  0.044221   0.536290 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U29/CO (FA1D0BWP12T40P140)                  0.044086   0.580376 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U28/CO (FA1D0BWP12T40P140)                  0.043742   0.624118 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U27/CO (FA1D0BWP12T40P140)                  0.044042   0.668159 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U26/CO (FA1D0BWP12T40P140)                  0.043713   0.711873 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U25/CO (FA1D0BWP12T40P140)                  0.044041   0.755914 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U24/CO (FA1D0BWP12T40P140)                  0.043679   0.799593 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U23/CO (FA1D0BWP12T40P140)                  0.043911   0.843504 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U22/CO (FA1D0BWP12T40P140)                  0.043725   0.887229 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U21/CO (FA1D0BWP12T40P140)                  0.043911   0.931140 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U20/CO (FA1D0BWP12T40P140)                  0.043789   0.974930 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U19/CO (FA1D0BWP12T40P140)                  0.043999   1.018929 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U18/CO (FA1D0BWP12T40P140)                  0.043666   1.062595 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U17/CO (FA1D0BWP12T40P140)                  0.044041   1.106636 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U16/CO (FA1D0BWP12T40P140)                  0.043817   1.150453 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U15/CO (FA1D0BWP12T40P140)                  0.043824   1.194278 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U14/CO (FA1D0BWP12T40P140)                  0.043886   1.238163 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U13/CO (FA1D0BWP12T40P140)                  0.043873   1.282037 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U12/CO (FA1D0BWP12T40P140)                  0.043866   1.325903 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U11/CO (FA1D0BWP12T40P140)                  0.043955   1.369858 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U10/CO (FA1D0BWP12T40P140)                  0.043866   1.413724 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U9/CO (FA1D0BWP12T40P140)                   0.044000   1.457724 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U8/CO (FA1D0BWP12T40P140)                   0.043918   1.501642 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U7/CO (FA1D0BWP12T40P140)                   0.044085   1.545727 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U6/CO (FA1D0BWP12T40P140)                   0.043669   1.589395 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U5/CO (FA1D0BWP12T40P140)                   0.043908   1.633303 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U4/CO (FA1D0BWP12T40P140)                   0.043694   1.676998 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U3/CO (FA1D0BWP12T40P140)                   0.040495   1.717493 r
+  subsystem/cpu/core/u_exu/u_alu/U177/Z (XOR2D1BWP12T40P140)                                     0.036274   1.753767 f
+  subsystem/cpu/core/u_exu/u_alu/U197/Z (AO21D1BWP12T40P140)                                     0.018033   1.771800 f
+  subsystem/cpu/core/u_exu/u_alu/U198/ZN (AOI31D0BWP12T40P140)                                   0.022308   1.794108 r
+  subsystem/cpu/core/u_exu/u_alu/U199/ZN (OAI211D0BWP12T40P140)                                  0.045048   1.839156 f
+  subsystem/cpu/core/u_exu/U310/ZN (AOI22D0BWP12T40P140)                                         0.029968   1.869124 r
+  subsystem/cpu/core/u_exu/U312/ZN (ND2D0BWP12T40P140)                                           0.023778   1.892902 f
+  subsystem/cpu/core/u_exu/U384/ZN (INVD0BWP12T40P140)                                           0.016105   1.909007 r
+  subsystem/cpu/core/u_exu/U386/ZN (OAI22D0BWP12T40P140)                                         0.016620   1.925627 f
+  subsystem/cpu/core/u_exu/U387/ZN (AOI221D0BWP12T40P140)                                        0.030701   1.956328 r
+  subsystem/cpu/core/u_exu/U388/ZN (ND4D0BWP12T40P140)                                           0.038562   1.994889 f
+  subsystem/cpu/core/u_exu/U389/ZN (AOI221D0BWP12T40P140)                                        0.039264   2.034153 r
+  subsystem/cpu/core/u_exu/U390/ZN (AOI31D0BWP12T40P140)                                         0.028974   2.063128 f
+  subsystem/cpu/core/U133/Z (OR2D1BWP12T40P140)                                                  0.037754   2.100882 f
+  subsystem/cpu/core/u_ifu/U5/Z (BUFFD1BWP12T40P140)                                             0.056696   2.157578 f
+  subsystem/cpu/core/u_ifu/u_ifq/U10/ZN (INVD0BWP12T40P140)                                      0.036004   2.193582 r
+  subsystem/cpu/core/u_ifu/u_ifq/U16/ZN (OAI21D0BWP12T40P140)                                    0.026991   2.220573 f
+  subsystem/cpu/core/u_ifu/u_ifq/U44/ZN (NR2D0BWP12T40P140)                                      0.149098   2.369671 r
+  subsystem/cpu/core/u_ifu/u_ifq/U45/Z (BUFFD1BWP12T40P140)                                      0.073232   2.442904 r
+  subsystem/cpu/core/u_ifu/u_ifq/U197/Z (BUFFD1BWP12T40P140)                                     0.044136   2.487039 r
+  subsystem/cpu/core/u_ifu/u_ifq/U314/Z (AO22D0BWP12T40P140)                                     0.034926   2.521965 r
+  subsystem/cpu/core/u_decoder/U4/ZN (ND2D0BWP12T40P140)                                         0.018276   2.540241 f
+  subsystem/cpu/core/u_decoder/U25/ZN (INVD0BWP12T40P140)                                        0.014782   2.555023 r
+  subsystem/cpu/core/u_decoder/U26/ZN (ND3D0BWP12T40P140)                                        0.025557   2.580580 f
+  subsystem/cpu/core/u_decoder/U27/ZN (INVD0BWP12T40P140)                                        0.021865   2.602445 r
+  subsystem/cpu/core/u_decoder/U30/ZN (ND2D0BWP12T40P140)                                        0.027548   2.629992 f
+  subsystem/cpu/core/u_decoder/U35/ZN (NR2D0BWP12T40P140)                                        0.024676   2.654669 r
+  subsystem/cpu/core/u_decoder/U36/ZN (OAI21D0BWP12T40P140)                                      0.097279   2.751947 f
+  subsystem/cpu/core/u_decoder/U79/ZN (AOI211D0BWP12T40P140)                                     0.056034   2.807981 r
+  subsystem/cpu/core/u_decoder/U81/ZN (AOI211D0BWP12T40P140)                                     0.020041   2.828022 f
+  subsystem/cpu/core/u_decoder/U93/ZN (AOI31D0BWP12T40P140)                                      0.018941   2.846963 r
+  subsystem/cpu/core/u_decoder/U95/ZN (OAI211D0BWP12T40P140)                                     0.069679   2.916643 f
+  subsystem/cpu/core/u_decoder/U98/ZN (NR2D0BWP12T40P140)                                        0.037325   2.953967 r
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_133_/D (EDFCNQD1BWP12T40P140)              0.000000   2.953967 r
+  data arrival time                                                                                         2.953967
+
+  clock core_clk (rise edge)                                                                     5.000000   5.000000
+  clock network delay (ideal)                                                                    0.000000   5.000000
+  clock reconvergence pessimism                                                                  0.000000   5.000000
+  clock uncertainty                                                                              -0.200000  4.800000
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_133_/CP (EDFCNQD1BWP12T40P140)                        4.800000 r
+  library setup time                                                                             -0.026324  4.773676
+  data required time                                                                                        4.773676
+  -------------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                        4.773676
+  data arrival time                                                                                         -2.953967
+  -------------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                               1.819709
+
+
+  Startpoint: subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_134_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                                              Incr       Path
+  -------------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                                     0.000000   0.000000
+  clock network delay (ideal)                                                                    0.000000   0.000000
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_/CP (EDFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_/Q (EDFCNQD1BWP12T40P140)              0.078565   0.078565 f
+  subsystem/cpu/core/u_exu/u_alu/U110/Z (OR4D1BWP12T40P140)                                      0.039862   0.118427 f
+  subsystem/cpu/core/u_exu/u_alu/U2/ZN (NR2D1BWP12T40P140)                                       0.107628   0.226055 r
+  subsystem/cpu/core/u_exu/u_alu/U571/Z (BUFFD1BWP12T40P140)                                     0.100319   0.326374 r
+  subsystem/cpu/core/u_exu/u_alu/U600/Z (XOR2D1BWP12T40P140)                                     0.036147   0.362521 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U33/CO (FA1D0BWP12T40P140)                  0.041483   0.404004 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U32/CO (FA1D0BWP12T40P140)                  0.044281   0.448285 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U31/CO (FA1D0BWP12T40P140)                  0.043784   0.492069 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U30/CO (FA1D0BWP12T40P140)                  0.044221   0.536290 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U29/CO (FA1D0BWP12T40P140)                  0.044086   0.580376 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U28/CO (FA1D0BWP12T40P140)                  0.043742   0.624118 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U27/CO (FA1D0BWP12T40P140)                  0.044042   0.668159 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U26/CO (FA1D0BWP12T40P140)                  0.043713   0.711873 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U25/CO (FA1D0BWP12T40P140)                  0.044041   0.755914 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U24/CO (FA1D0BWP12T40P140)                  0.043679   0.799593 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U23/CO (FA1D0BWP12T40P140)                  0.043911   0.843504 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U22/CO (FA1D0BWP12T40P140)                  0.043725   0.887229 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U21/CO (FA1D0BWP12T40P140)                  0.043911   0.931140 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U20/CO (FA1D0BWP12T40P140)                  0.043789   0.974930 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U19/CO (FA1D0BWP12T40P140)                  0.043999   1.018929 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U18/CO (FA1D0BWP12T40P140)                  0.043666   1.062595 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U17/CO (FA1D0BWP12T40P140)                  0.044041   1.106636 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U16/CO (FA1D0BWP12T40P140)                  0.043817   1.150453 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U15/CO (FA1D0BWP12T40P140)                  0.043824   1.194278 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U14/CO (FA1D0BWP12T40P140)                  0.043886   1.238163 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U13/CO (FA1D0BWP12T40P140)                  0.043873   1.282037 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U12/CO (FA1D0BWP12T40P140)                  0.043866   1.325903 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U11/CO (FA1D0BWP12T40P140)                  0.043955   1.369858 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U10/CO (FA1D0BWP12T40P140)                  0.043866   1.413724 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U9/CO (FA1D0BWP12T40P140)                   0.044000   1.457724 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U8/CO (FA1D0BWP12T40P140)                   0.043918   1.501642 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U7/CO (FA1D0BWP12T40P140)                   0.044085   1.545727 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U6/CO (FA1D0BWP12T40P140)                   0.043669   1.589395 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U5/CO (FA1D0BWP12T40P140)                   0.043908   1.633303 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U4/CO (FA1D0BWP12T40P140)                   0.043694   1.676998 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U3/CO (FA1D0BWP12T40P140)                   0.040495   1.717493 r
+  subsystem/cpu/core/u_exu/u_alu/U177/Z (XOR2D1BWP12T40P140)                                     0.036274   1.753767 f
+  subsystem/cpu/core/u_exu/u_alu/U197/Z (AO21D1BWP12T40P140)                                     0.018033   1.771800 f
+  subsystem/cpu/core/u_exu/u_alu/U198/ZN (AOI31D0BWP12T40P140)                                   0.022308   1.794108 r
+  subsystem/cpu/core/u_exu/u_alu/U199/ZN (OAI211D0BWP12T40P140)                                  0.045048   1.839156 f
+  subsystem/cpu/core/u_exu/U310/ZN (AOI22D0BWP12T40P140)                                         0.029968   1.869124 r
+  subsystem/cpu/core/u_exu/U312/ZN (ND2D0BWP12T40P140)                                           0.023778   1.892902 f
+  subsystem/cpu/core/u_exu/U384/ZN (INVD0BWP12T40P140)                                           0.016105   1.909007 r
+  subsystem/cpu/core/u_exu/U386/ZN (OAI22D0BWP12T40P140)                                         0.016620   1.925627 f
+  subsystem/cpu/core/u_exu/U387/ZN (AOI221D0BWP12T40P140)                                        0.030701   1.956328 r
+  subsystem/cpu/core/u_exu/U388/ZN (ND4D0BWP12T40P140)                                           0.038562   1.994889 f
+  subsystem/cpu/core/u_exu/U389/ZN (AOI221D0BWP12T40P140)                                        0.039264   2.034153 r
+  subsystem/cpu/core/u_exu/U390/ZN (AOI31D0BWP12T40P140)                                         0.028974   2.063128 f
+  subsystem/cpu/core/U133/Z (OR2D1BWP12T40P140)                                                  0.037754   2.100882 f
+  subsystem/cpu/core/u_ifu/U5/Z (BUFFD1BWP12T40P140)                                             0.056696   2.157578 f
+  subsystem/cpu/core/u_ifu/u_ifq/U10/ZN (INVD0BWP12T40P140)                                      0.036004   2.193582 r
+  subsystem/cpu/core/u_ifu/u_ifq/U16/ZN (OAI21D0BWP12T40P140)                                    0.026991   2.220573 f
+  subsystem/cpu/core/u_ifu/u_ifq/U44/ZN (NR2D0BWP12T40P140)                                      0.149098   2.369671 r
+  subsystem/cpu/core/u_ifu/u_ifq/U45/Z (BUFFD1BWP12T40P140)                                      0.073232   2.442904 r
+  subsystem/cpu/core/u_ifu/u_ifq/U197/Z (BUFFD1BWP12T40P140)                                     0.044136   2.487039 r
+  subsystem/cpu/core/u_ifu/u_ifq/U314/Z (AO22D0BWP12T40P140)                                     0.034926   2.521965 r
+  subsystem/cpu/core/u_decoder/U4/ZN (ND2D0BWP12T40P140)                                         0.018276   2.540241 f
+  subsystem/cpu/core/u_decoder/U25/ZN (INVD0BWP12T40P140)                                        0.014782   2.555023 r
+  subsystem/cpu/core/u_decoder/U26/ZN (ND3D0BWP12T40P140)                                        0.025557   2.580580 f
+  subsystem/cpu/core/u_decoder/U27/ZN (INVD0BWP12T40P140)                                        0.021865   2.602445 r
+  subsystem/cpu/core/u_decoder/U30/ZN (ND2D0BWP12T40P140)                                        0.027548   2.629992 f
+  subsystem/cpu/core/u_decoder/U35/ZN (NR2D0BWP12T40P140)                                        0.024676   2.654669 r
+  subsystem/cpu/core/u_decoder/U36/ZN (OAI21D0BWP12T40P140)                                      0.097279   2.751947 f
+  subsystem/cpu/core/u_decoder/U79/ZN (AOI211D0BWP12T40P140)                                     0.056034   2.807981 r
+  subsystem/cpu/core/u_decoder/U81/ZN (AOI211D0BWP12T40P140)                                     0.020041   2.828022 f
+  subsystem/cpu/core/u_decoder/U93/ZN (AOI31D0BWP12T40P140)                                      0.018941   2.846963 r
+  subsystem/cpu/core/u_decoder/U95/ZN (OAI211D0BWP12T40P140)                                     0.069679   2.916643 f
+  subsystem/cpu/core/u_decoder/U99/ZN (NR2D0BWP12T40P140)                                        0.037325   2.953967 r
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_134_/D (EDFCNQD1BWP12T40P140)              0.000000   2.953967 r
+  data arrival time                                                                                         2.953967
+
+  clock core_clk (rise edge)                                                                     5.000000   5.000000
+  clock network delay (ideal)                                                                    0.000000   5.000000
+  clock reconvergence pessimism                                                                  0.000000   5.000000
+  clock uncertainty                                                                              -0.200000  4.800000
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_134_/CP (EDFCNQD1BWP12T40P140)                        4.800000 r
+  library setup time                                                                             -0.026324  4.773676
+  data required time                                                                                        4.773676
+  -------------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                        4.773676
+  data arrival time                                                                                         -2.953967
+  -------------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                               1.819709
+
+
+  Startpoint: subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_129_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                                              Incr       Path
+  -------------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                                     0.000000   0.000000
+  clock network delay (ideal)                                                                    0.000000   0.000000
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_/CP (EDFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_/Q (EDFCNQD1BWP12T40P140)              0.078565   0.078565 f
+  subsystem/cpu/core/u_exu/u_alu/U110/Z (OR4D1BWP12T40P140)                                      0.039862   0.118427 f
+  subsystem/cpu/core/u_exu/u_alu/U2/ZN (NR2D1BWP12T40P140)                                       0.107628   0.226055 r
+  subsystem/cpu/core/u_exu/u_alu/U571/Z (BUFFD1BWP12T40P140)                                     0.100319   0.326374 r
+  subsystem/cpu/core/u_exu/u_alu/U600/Z (XOR2D1BWP12T40P140)                                     0.036147   0.362521 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U33/CO (FA1D0BWP12T40P140)                  0.041483   0.404004 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U32/CO (FA1D0BWP12T40P140)                  0.044281   0.448285 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U31/CO (FA1D0BWP12T40P140)                  0.043784   0.492069 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U30/CO (FA1D0BWP12T40P140)                  0.044221   0.536290 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U29/CO (FA1D0BWP12T40P140)                  0.044086   0.580376 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U28/CO (FA1D0BWP12T40P140)                  0.043742   0.624118 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U27/CO (FA1D0BWP12T40P140)                  0.044042   0.668159 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U26/CO (FA1D0BWP12T40P140)                  0.043713   0.711873 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U25/CO (FA1D0BWP12T40P140)                  0.044041   0.755914 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U24/CO (FA1D0BWP12T40P140)                  0.043679   0.799593 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U23/CO (FA1D0BWP12T40P140)                  0.043911   0.843504 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U22/CO (FA1D0BWP12T40P140)                  0.043725   0.887229 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U21/CO (FA1D0BWP12T40P140)                  0.043911   0.931140 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U20/CO (FA1D0BWP12T40P140)                  0.043789   0.974930 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U19/CO (FA1D0BWP12T40P140)                  0.043999   1.018929 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U18/CO (FA1D0BWP12T40P140)                  0.043666   1.062595 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U17/CO (FA1D0BWP12T40P140)                  0.044041   1.106636 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U16/CO (FA1D0BWP12T40P140)                  0.043817   1.150453 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U15/CO (FA1D0BWP12T40P140)                  0.043824   1.194278 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U14/CO (FA1D0BWP12T40P140)                  0.043886   1.238163 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U13/CO (FA1D0BWP12T40P140)                  0.043873   1.282037 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U12/CO (FA1D0BWP12T40P140)                  0.043866   1.325903 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U11/CO (FA1D0BWP12T40P140)                  0.043955   1.369858 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U10/CO (FA1D0BWP12T40P140)                  0.043866   1.413724 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U9/CO (FA1D0BWP12T40P140)                   0.044000   1.457724 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U8/CO (FA1D0BWP12T40P140)                   0.043918   1.501642 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U7/CO (FA1D0BWP12T40P140)                   0.044085   1.545727 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U6/CO (FA1D0BWP12T40P140)                   0.043669   1.589395 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U5/CO (FA1D0BWP12T40P140)                   0.043908   1.633303 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U4/CO (FA1D0BWP12T40P140)                   0.043694   1.676998 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U3/CO (FA1D0BWP12T40P140)                   0.040495   1.717493 r
+  subsystem/cpu/core/u_exu/u_alu/U177/Z (XOR2D1BWP12T40P140)                                     0.036274   1.753767 f
+  subsystem/cpu/core/u_exu/u_alu/U197/Z (AO21D1BWP12T40P140)                                     0.018033   1.771800 f
+  subsystem/cpu/core/u_exu/u_alu/U198/ZN (AOI31D0BWP12T40P140)                                   0.022308   1.794108 r
+  subsystem/cpu/core/u_exu/u_alu/U199/ZN (OAI211D0BWP12T40P140)                                  0.045048   1.839156 f
+  subsystem/cpu/core/u_exu/U310/ZN (AOI22D0BWP12T40P140)                                         0.029968   1.869124 r
+  subsystem/cpu/core/u_exu/U312/ZN (ND2D0BWP12T40P140)                                           0.023778   1.892902 f
+  subsystem/cpu/core/u_exu/U384/ZN (INVD0BWP12T40P140)                                           0.016105   1.909007 r
+  subsystem/cpu/core/u_exu/U386/ZN (OAI22D0BWP12T40P140)                                         0.016620   1.925627 f
+  subsystem/cpu/core/u_exu/U387/ZN (AOI221D0BWP12T40P140)                                        0.030701   1.956328 r
+  subsystem/cpu/core/u_exu/U388/ZN (ND4D0BWP12T40P140)                                           0.038562   1.994889 f
+  subsystem/cpu/core/u_exu/U389/ZN (AOI221D0BWP12T40P140)                                        0.039264   2.034153 r
+  subsystem/cpu/core/u_exu/U390/ZN (AOI31D0BWP12T40P140)                                         0.028974   2.063128 f
+  subsystem/cpu/core/U133/Z (OR2D1BWP12T40P140)                                                  0.037754   2.100882 f
+  subsystem/cpu/core/u_ifu/U5/Z (BUFFD1BWP12T40P140)                                             0.056696   2.157578 f
+  subsystem/cpu/core/u_ifu/u_ifq/U10/ZN (INVD0BWP12T40P140)                                      0.036004   2.193582 r
+  subsystem/cpu/core/u_ifu/u_ifq/U16/ZN (OAI21D0BWP12T40P140)                                    0.026991   2.220573 f
+  subsystem/cpu/core/u_ifu/u_ifq/U44/ZN (NR2D0BWP12T40P140)                                      0.149098   2.369671 r
+  subsystem/cpu/core/u_ifu/u_ifq/U45/Z (BUFFD1BWP12T40P140)                                      0.073232   2.442904 r
+  subsystem/cpu/core/u_ifu/u_ifq/U197/Z (BUFFD1BWP12T40P140)                                     0.044136   2.487039 r
+  subsystem/cpu/core/u_ifu/u_ifq/U314/Z (AO22D0BWP12T40P140)                                     0.034926   2.521965 r
+  subsystem/cpu/core/u_decoder/U4/ZN (ND2D0BWP12T40P140)                                         0.018276   2.540241 f
+  subsystem/cpu/core/u_decoder/U25/ZN (INVD0BWP12T40P140)                                        0.014782   2.555023 r
+  subsystem/cpu/core/u_decoder/U26/ZN (ND3D0BWP12T40P140)                                        0.025557   2.580580 f
+  subsystem/cpu/core/u_decoder/U27/ZN (INVD0BWP12T40P140)                                        0.021865   2.602445 r
+  subsystem/cpu/core/u_decoder/U30/ZN (ND2D0BWP12T40P140)                                        0.027548   2.629992 f
+  subsystem/cpu/core/u_decoder/U35/ZN (NR2D0BWP12T40P140)                                        0.024676   2.654669 r
+  subsystem/cpu/core/u_decoder/U36/ZN (OAI21D0BWP12T40P140)                                      0.097279   2.751947 f
+  subsystem/cpu/core/u_decoder/U79/ZN (AOI211D0BWP12T40P140)                                     0.056034   2.807981 r
+  subsystem/cpu/core/u_decoder/U81/ZN (AOI211D0BWP12T40P140)                                     0.020041   2.828022 f
+  subsystem/cpu/core/u_decoder/U93/ZN (AOI31D0BWP12T40P140)                                      0.018941   2.846963 r
+  subsystem/cpu/core/u_decoder/U95/ZN (OAI211D0BWP12T40P140)                                     0.069679   2.916643 f
+  subsystem/cpu/core/u_decoder/U97/ZN (NR2D0BWP12T40P140)                                        0.037325   2.953967 r
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_129_/D (EDFCNQD1BWP12T40P140)              0.000000   2.953967 r
+  data arrival time                                                                                         2.953967
+
+  clock core_clk (rise edge)                                                                     5.000000   5.000000
+  clock network delay (ideal)                                                                    0.000000   5.000000
+  clock reconvergence pessimism                                                                  0.000000   5.000000
+  clock uncertainty                                                                              -0.200000  4.800000
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_129_/CP (EDFCNQD1BWP12T40P140)                        4.800000 r
+  library setup time                                                                             -0.026324  4.773676
+  data required time                                                                                        4.773676
+  -------------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                        4.773676
+  data arrival time                                                                                         -2.953967
+  -------------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                               1.819709
+
+
+  Startpoint: subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_135_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                                              Incr       Path
+  -------------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                                     0.000000   0.000000
+  clock network delay (ideal)                                                                    0.000000   0.000000
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_/CP (EDFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_/Q (EDFCNQD1BWP12T40P140)              0.078565   0.078565 f
+  subsystem/cpu/core/u_exu/u_alu/U110/Z (OR4D1BWP12T40P140)                                      0.039862   0.118427 f
+  subsystem/cpu/core/u_exu/u_alu/U2/ZN (NR2D1BWP12T40P140)                                       0.107628   0.226055 r
+  subsystem/cpu/core/u_exu/u_alu/U571/Z (BUFFD1BWP12T40P140)                                     0.100319   0.326374 r
+  subsystem/cpu/core/u_exu/u_alu/U600/Z (XOR2D1BWP12T40P140)                                     0.036147   0.362521 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U33/CO (FA1D0BWP12T40P140)                  0.041483   0.404004 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U32/CO (FA1D0BWP12T40P140)                  0.044281   0.448285 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U31/CO (FA1D0BWP12T40P140)                  0.043784   0.492069 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U30/CO (FA1D0BWP12T40P140)                  0.044221   0.536290 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U29/CO (FA1D0BWP12T40P140)                  0.044086   0.580376 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U28/CO (FA1D0BWP12T40P140)                  0.043742   0.624118 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U27/CO (FA1D0BWP12T40P140)                  0.044042   0.668159 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U26/CO (FA1D0BWP12T40P140)                  0.043713   0.711873 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U25/CO (FA1D0BWP12T40P140)                  0.044041   0.755914 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U24/CO (FA1D0BWP12T40P140)                  0.043679   0.799593 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U23/CO (FA1D0BWP12T40P140)                  0.043911   0.843504 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U22/CO (FA1D0BWP12T40P140)                  0.043725   0.887229 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U21/CO (FA1D0BWP12T40P140)                  0.043911   0.931140 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U20/CO (FA1D0BWP12T40P140)                  0.043789   0.974930 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U19/CO (FA1D0BWP12T40P140)                  0.043999   1.018929 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U18/CO (FA1D0BWP12T40P140)                  0.043666   1.062595 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U17/CO (FA1D0BWP12T40P140)                  0.044041   1.106636 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U16/CO (FA1D0BWP12T40P140)                  0.043817   1.150453 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U15/CO (FA1D0BWP12T40P140)                  0.043824   1.194278 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U14/CO (FA1D0BWP12T40P140)                  0.043886   1.238163 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U13/CO (FA1D0BWP12T40P140)                  0.043873   1.282037 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U12/CO (FA1D0BWP12T40P140)                  0.043866   1.325903 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U11/CO (FA1D0BWP12T40P140)                  0.043955   1.369858 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U10/CO (FA1D0BWP12T40P140)                  0.043866   1.413724 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U9/CO (FA1D0BWP12T40P140)                   0.044000   1.457724 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U8/CO (FA1D0BWP12T40P140)                   0.043918   1.501642 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U7/CO (FA1D0BWP12T40P140)                   0.044085   1.545727 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U6/CO (FA1D0BWP12T40P140)                   0.043669   1.589395 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U5/CO (FA1D0BWP12T40P140)                   0.043908   1.633303 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U4/CO (FA1D0BWP12T40P140)                   0.043694   1.676998 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U3/CO (FA1D0BWP12T40P140)                   0.040495   1.717493 r
+  subsystem/cpu/core/u_exu/u_alu/U177/Z (XOR2D1BWP12T40P140)                                     0.036274   1.753767 f
+  subsystem/cpu/core/u_exu/u_alu/U197/Z (AO21D1BWP12T40P140)                                     0.018033   1.771800 f
+  subsystem/cpu/core/u_exu/u_alu/U198/ZN (AOI31D0BWP12T40P140)                                   0.022308   1.794108 r
+  subsystem/cpu/core/u_exu/u_alu/U199/ZN (OAI211D0BWP12T40P140)                                  0.045048   1.839156 f
+  subsystem/cpu/core/u_exu/U310/ZN (AOI22D0BWP12T40P140)                                         0.029968   1.869124 r
+  subsystem/cpu/core/u_exu/U312/ZN (ND2D0BWP12T40P140)                                           0.023778   1.892902 f
+  subsystem/cpu/core/u_exu/U384/ZN (INVD0BWP12T40P140)                                           0.016105   1.909007 r
+  subsystem/cpu/core/u_exu/U386/ZN (OAI22D0BWP12T40P140)                                         0.016620   1.925627 f
+  subsystem/cpu/core/u_exu/U387/ZN (AOI221D0BWP12T40P140)                                        0.030701   1.956328 r
+  subsystem/cpu/core/u_exu/U388/ZN (ND4D0BWP12T40P140)                                           0.038562   1.994889 f
+  subsystem/cpu/core/u_exu/U389/ZN (AOI221D0BWP12T40P140)                                        0.039264   2.034153 r
+  subsystem/cpu/core/u_exu/U390/ZN (AOI31D0BWP12T40P140)                                         0.028974   2.063128 f
+  subsystem/cpu/core/U133/Z (OR2D1BWP12T40P140)                                                  0.037754   2.100882 f
+  subsystem/cpu/core/u_ifu/U5/Z (BUFFD1BWP12T40P140)                                             0.056696   2.157578 f
+  subsystem/cpu/core/u_ifu/u_ifq/U10/ZN (INVD0BWP12T40P140)                                      0.036004   2.193582 r
+  subsystem/cpu/core/u_ifu/u_ifq/U16/ZN (OAI21D0BWP12T40P140)                                    0.026991   2.220573 f
+  subsystem/cpu/core/u_ifu/u_ifq/U44/ZN (NR2D0BWP12T40P140)                                      0.149098   2.369671 r
+  subsystem/cpu/core/u_ifu/u_ifq/U45/Z (BUFFD1BWP12T40P140)                                      0.073232   2.442904 r
+  subsystem/cpu/core/u_ifu/u_ifq/U197/Z (BUFFD1BWP12T40P140)                                     0.044136   2.487039 r
+  subsystem/cpu/core/u_ifu/u_ifq/U314/Z (AO22D0BWP12T40P140)                                     0.034926   2.521965 r
+  subsystem/cpu/core/u_decoder/U4/ZN (ND2D0BWP12T40P140)                                         0.018276   2.540241 f
+  subsystem/cpu/core/u_decoder/U25/ZN (INVD0BWP12T40P140)                                        0.014782   2.555023 r
+  subsystem/cpu/core/u_decoder/U26/ZN (ND3D0BWP12T40P140)                                        0.025557   2.580580 f
+  subsystem/cpu/core/u_decoder/U27/ZN (INVD0BWP12T40P140)                                        0.021865   2.602445 r
+  subsystem/cpu/core/u_decoder/U30/ZN (ND2D0BWP12T40P140)                                        0.027548   2.629992 f
+  subsystem/cpu/core/u_decoder/U35/ZN (NR2D0BWP12T40P140)                                        0.024676   2.654669 r
+  subsystem/cpu/core/u_decoder/U36/ZN (OAI21D0BWP12T40P140)                                      0.097279   2.751947 f
+  subsystem/cpu/core/u_decoder/U79/ZN (AOI211D0BWP12T40P140)                                     0.056034   2.807981 r
+  subsystem/cpu/core/u_decoder/U81/ZN (AOI211D0BWP12T40P140)                                     0.020041   2.828022 f
+  subsystem/cpu/core/u_decoder/U93/ZN (AOI31D0BWP12T40P140)                                      0.018941   2.846963 r
+  subsystem/cpu/core/u_decoder/U95/ZN (OAI211D0BWP12T40P140)                                     0.069679   2.916643 f
+  subsystem/cpu/core/u_decoder/U101/ZN (NR2D0BWP12T40P140)                                       0.037325   2.953967 r
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_135_/D (EDFCNQD1BWP12T40P140)              0.000000   2.953967 r
+  data arrival time                                                                                         2.953967
+
+  clock core_clk (rise edge)                                                                     5.000000   5.000000
+  clock network delay (ideal)                                                                    0.000000   5.000000
+  clock reconvergence pessimism                                                                  0.000000   5.000000
+  clock uncertainty                                                                              -0.200000  4.800000
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_135_/CP (EDFCNQD1BWP12T40P140)                        4.800000 r
+  library setup time                                                                             -0.026324  4.773676
+  data required time                                                                                        4.773676
+  -------------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                        4.773676
+  data arrival time                                                                                         -2.953967
+  -------------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                               1.819709
+
+
+  Startpoint: subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_130_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                                              Incr       Path
+  -------------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                                     0.000000   0.000000
+  clock network delay (ideal)                                                                    0.000000   0.000000
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_/CP (EDFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_/Q (EDFCNQD1BWP12T40P140)              0.078565   0.078565 f
+  subsystem/cpu/core/u_exu/u_alu/U110/Z (OR4D1BWP12T40P140)                                      0.039862   0.118427 f
+  subsystem/cpu/core/u_exu/u_alu/U2/ZN (NR2D1BWP12T40P140)                                       0.107628   0.226055 r
+  subsystem/cpu/core/u_exu/u_alu/U571/Z (BUFFD1BWP12T40P140)                                     0.100319   0.326374 r
+  subsystem/cpu/core/u_exu/u_alu/U600/Z (XOR2D1BWP12T40P140)                                     0.036147   0.362521 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U33/CO (FA1D0BWP12T40P140)                  0.041483   0.404004 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U32/CO (FA1D0BWP12T40P140)                  0.044281   0.448285 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U31/CO (FA1D0BWP12T40P140)                  0.043784   0.492069 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U30/CO (FA1D0BWP12T40P140)                  0.044221   0.536290 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U29/CO (FA1D0BWP12T40P140)                  0.044086   0.580376 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U28/CO (FA1D0BWP12T40P140)                  0.043742   0.624118 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U27/CO (FA1D0BWP12T40P140)                  0.044042   0.668159 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U26/CO (FA1D0BWP12T40P140)                  0.043713   0.711873 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U25/CO (FA1D0BWP12T40P140)                  0.044041   0.755914 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U24/CO (FA1D0BWP12T40P140)                  0.043679   0.799593 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U23/CO (FA1D0BWP12T40P140)                  0.043911   0.843504 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U22/CO (FA1D0BWP12T40P140)                  0.043725   0.887229 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U21/CO (FA1D0BWP12T40P140)                  0.043911   0.931140 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U20/CO (FA1D0BWP12T40P140)                  0.043789   0.974930 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U19/CO (FA1D0BWP12T40P140)                  0.043999   1.018929 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U18/CO (FA1D0BWP12T40P140)                  0.043666   1.062595 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U17/CO (FA1D0BWP12T40P140)                  0.044041   1.106636 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U16/CO (FA1D0BWP12T40P140)                  0.043817   1.150453 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U15/CO (FA1D0BWP12T40P140)                  0.043824   1.194278 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U14/CO (FA1D0BWP12T40P140)                  0.043886   1.238163 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U13/CO (FA1D0BWP12T40P140)                  0.043873   1.282037 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U12/CO (FA1D0BWP12T40P140)                  0.043866   1.325903 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U11/CO (FA1D0BWP12T40P140)                  0.043955   1.369858 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U10/CO (FA1D0BWP12T40P140)                  0.043866   1.413724 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U9/CO (FA1D0BWP12T40P140)                   0.044000   1.457724 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U8/CO (FA1D0BWP12T40P140)                   0.043918   1.501642 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U7/CO (FA1D0BWP12T40P140)                   0.044085   1.545727 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U6/CO (FA1D0BWP12T40P140)                   0.043669   1.589395 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U5/CO (FA1D0BWP12T40P140)                   0.043908   1.633303 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U4/CO (FA1D0BWP12T40P140)                   0.043694   1.676998 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U3/CO (FA1D0BWP12T40P140)                   0.040495   1.717493 r
+  subsystem/cpu/core/u_exu/u_alu/U177/Z (XOR2D1BWP12T40P140)                                     0.036274   1.753767 f
+  subsystem/cpu/core/u_exu/u_alu/U197/Z (AO21D1BWP12T40P140)                                     0.018033   1.771800 f
+  subsystem/cpu/core/u_exu/u_alu/U198/ZN (AOI31D0BWP12T40P140)                                   0.022308   1.794108 r
+  subsystem/cpu/core/u_exu/u_alu/U199/ZN (OAI211D0BWP12T40P140)                                  0.045048   1.839156 f
+  subsystem/cpu/core/u_exu/U310/ZN (AOI22D0BWP12T40P140)                                         0.029968   1.869124 r
+  subsystem/cpu/core/u_exu/U312/ZN (ND2D0BWP12T40P140)                                           0.023778   1.892902 f
+  subsystem/cpu/core/u_exu/U384/ZN (INVD0BWP12T40P140)                                           0.016105   1.909007 r
+  subsystem/cpu/core/u_exu/U386/ZN (OAI22D0BWP12T40P140)                                         0.016620   1.925627 f
+  subsystem/cpu/core/u_exu/U387/ZN (AOI221D0BWP12T40P140)                                        0.030701   1.956328 r
+  subsystem/cpu/core/u_exu/U388/ZN (ND4D0BWP12T40P140)                                           0.038562   1.994889 f
+  subsystem/cpu/core/u_exu/U389/ZN (AOI221D0BWP12T40P140)                                        0.039264   2.034153 r
+  subsystem/cpu/core/u_exu/U390/ZN (AOI31D0BWP12T40P140)                                         0.028974   2.063128 f
+  subsystem/cpu/core/U133/Z (OR2D1BWP12T40P140)                                                  0.037754   2.100882 f
+  subsystem/cpu/core/u_ifu/U5/Z (BUFFD1BWP12T40P140)                                             0.056696   2.157578 f
+  subsystem/cpu/core/u_ifu/u_ifq/U10/ZN (INVD0BWP12T40P140)                                      0.036004   2.193582 r
+  subsystem/cpu/core/u_ifu/u_ifq/U16/ZN (OAI21D0BWP12T40P140)                                    0.026991   2.220573 f
+  subsystem/cpu/core/u_ifu/u_ifq/U44/ZN (NR2D0BWP12T40P140)                                      0.149098   2.369671 r
+  subsystem/cpu/core/u_ifu/u_ifq/U45/Z (BUFFD1BWP12T40P140)                                      0.073232   2.442904 r
+  subsystem/cpu/core/u_ifu/u_ifq/U197/Z (BUFFD1BWP12T40P140)                                     0.044136   2.487039 r
+  subsystem/cpu/core/u_ifu/u_ifq/U314/Z (AO22D0BWP12T40P140)                                     0.034926   2.521965 r
+  subsystem/cpu/core/u_decoder/U4/ZN (ND2D0BWP12T40P140)                                         0.018276   2.540241 f
+  subsystem/cpu/core/u_decoder/U25/ZN (INVD0BWP12T40P140)                                        0.014782   2.555023 r
+  subsystem/cpu/core/u_decoder/U26/ZN (ND3D0BWP12T40P140)                                        0.025557   2.580580 f
+  subsystem/cpu/core/u_decoder/U27/ZN (INVD0BWP12T40P140)                                        0.021865   2.602445 r
+  subsystem/cpu/core/u_decoder/U30/ZN (ND2D0BWP12T40P140)                                        0.027548   2.629992 f
+  subsystem/cpu/core/u_decoder/U35/ZN (NR2D0BWP12T40P140)                                        0.024676   2.654669 r
+  subsystem/cpu/core/u_decoder/U36/ZN (OAI21D0BWP12T40P140)                                      0.097279   2.751947 f
+  subsystem/cpu/core/u_decoder/U79/ZN (AOI211D0BWP12T40P140)                                     0.056034   2.807981 r
+  subsystem/cpu/core/u_decoder/U81/ZN (AOI211D0BWP12T40P140)                                     0.020041   2.828022 f
+  subsystem/cpu/core/u_decoder/U93/ZN (AOI31D0BWP12T40P140)                                      0.018941   2.846963 r
+  subsystem/cpu/core/u_decoder/U95/ZN (OAI211D0BWP12T40P140)                                     0.069679   2.916643 f
+  subsystem/cpu/core/u_decoder/U100/ZN (NR2D0BWP12T40P140)                                       0.037325   2.953967 r
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_130_/D (EDFCNQD1BWP12T40P140)              0.000000   2.953967 r
+  data arrival time                                                                                         2.953967
+
+  clock core_clk (rise edge)                                                                     5.000000   5.000000
+  clock network delay (ideal)                                                                    0.000000   5.000000
+  clock reconvergence pessimism                                                                  0.000000   5.000000
+  clock uncertainty                                                                              -0.200000  4.800000
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_130_/CP (EDFCNQD1BWP12T40P140)                        4.800000 r
+  library setup time                                                                             -0.026324  4.773676
+  data required time                                                                                        4.773676
+  -------------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                        4.773676
+  data arrival time                                                                                         -2.953967
+  -------------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                               1.819709
+
+
+  Startpoint: subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_136_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                                              Incr       Path
+  -------------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                                     0.000000   0.000000
+  clock network delay (ideal)                                                                    0.000000   0.000000
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_/CP (EDFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_/Q (EDFCNQD1BWP12T40P140)              0.078565   0.078565 f
+  subsystem/cpu/core/u_exu/u_alu/U110/Z (OR4D1BWP12T40P140)                                      0.039862   0.118427 f
+  subsystem/cpu/core/u_exu/u_alu/U2/ZN (NR2D1BWP12T40P140)                                       0.107628   0.226055 r
+  subsystem/cpu/core/u_exu/u_alu/U571/Z (BUFFD1BWP12T40P140)                                     0.100319   0.326374 r
+  subsystem/cpu/core/u_exu/u_alu/U600/Z (XOR2D1BWP12T40P140)                                     0.036147   0.362521 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U33/CO (FA1D0BWP12T40P140)                  0.041483   0.404004 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U32/CO (FA1D0BWP12T40P140)                  0.044281   0.448285 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U31/CO (FA1D0BWP12T40P140)                  0.043784   0.492069 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U30/CO (FA1D0BWP12T40P140)                  0.044221   0.536290 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U29/CO (FA1D0BWP12T40P140)                  0.044086   0.580376 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U28/CO (FA1D0BWP12T40P140)                  0.043742   0.624118 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U27/CO (FA1D0BWP12T40P140)                  0.044042   0.668159 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U26/CO (FA1D0BWP12T40P140)                  0.043714   0.711873 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U25/CO (FA1D0BWP12T40P140)                  0.044041   0.755914 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U24/CO (FA1D0BWP12T40P140)                  0.043679   0.799593 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U23/CO (FA1D0BWP12T40P140)                  0.043911   0.843504 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U22/CO (FA1D0BWP12T40P140)                  0.043725   0.887229 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U21/CO (FA1D0BWP12T40P140)                  0.043911   0.931141 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U20/CO (FA1D0BWP12T40P140)                  0.043789   0.974930 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U19/CO (FA1D0BWP12T40P140)                  0.043999   1.018929 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U18/CO (FA1D0BWP12T40P140)                  0.043666   1.062595 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U17/CO (FA1D0BWP12T40P140)                  0.044041   1.106636 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U16/CO (FA1D0BWP12T40P140)                  0.043817   1.150453 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U15/CO (FA1D0BWP12T40P140)                  0.043824   1.194278 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U14/CO (FA1D0BWP12T40P140)                  0.043886   1.238164 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U13/CO (FA1D0BWP12T40P140)                  0.043873   1.282037 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U12/CO (FA1D0BWP12T40P140)                  0.043866   1.325903 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U11/CO (FA1D0BWP12T40P140)                  0.043955   1.369858 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U10/CO (FA1D0BWP12T40P140)                  0.043866   1.413724 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U9/CO (FA1D0BWP12T40P140)                   0.044000   1.457724 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U8/CO (FA1D0BWP12T40P140)                   0.043918   1.501642 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U7/CO (FA1D0BWP12T40P140)                   0.044085   1.545727 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U6/CO (FA1D0BWP12T40P140)                   0.043669   1.589395 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U5/CO (FA1D0BWP12T40P140)                   0.043908   1.633303 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U4/CO (FA1D0BWP12T40P140)                   0.043694   1.676998 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U3/CO (FA1D0BWP12T40P140)                   0.040495   1.717493 r
+  subsystem/cpu/core/u_exu/u_alu/U177/Z (XOR2D1BWP12T40P140)                                     0.036274   1.753767 f
+  subsystem/cpu/core/u_exu/u_alu/U197/Z (AO21D1BWP12T40P140)                                     0.018033   1.771800 f
+  subsystem/cpu/core/u_exu/u_alu/U198/ZN (AOI31D0BWP12T40P140)                                   0.022308   1.794108 r
+  subsystem/cpu/core/u_exu/u_alu/U199/ZN (OAI211D0BWP12T40P140)                                  0.045048   1.839156 f
+  subsystem/cpu/core/u_exu/U310/ZN (AOI22D0BWP12T40P140)                                         0.029968   1.869124 r
+  subsystem/cpu/core/u_exu/U312/ZN (ND2D0BWP12T40P140)                                           0.023778   1.892902 f
+  subsystem/cpu/core/u_exu/U384/ZN (INVD0BWP12T40P140)                                           0.016105   1.909007 r
+  subsystem/cpu/core/u_exu/U386/ZN (OAI22D0BWP12T40P140)                                         0.016620   1.925627 f
+  subsystem/cpu/core/u_exu/U387/ZN (AOI221D0BWP12T40P140)                                        0.030701   1.956328 r
+  subsystem/cpu/core/u_exu/U388/ZN (ND4D0BWP12T40P140)                                           0.038562   1.994890 f
+  subsystem/cpu/core/u_exu/U389/ZN (AOI221D0BWP12T40P140)                                        0.039264   2.034153 r
+  subsystem/cpu/core/u_exu/U390/ZN (AOI31D0BWP12T40P140)                                         0.028974   2.063128 f
+  subsystem/cpu/core/U133/Z (OR2D1BWP12T40P140)                                                  0.037755   2.100882 f
+  subsystem/cpu/core/u_ifu/U5/Z (BUFFD1BWP12T40P140)                                             0.056696   2.157578 f
+  subsystem/cpu/core/u_ifu/u_ifq/U10/ZN (INVD0BWP12T40P140)                                      0.036004   2.193582 r
+  subsystem/cpu/core/u_ifu/u_ifq/U16/ZN (OAI21D0BWP12T40P140)                                    0.026991   2.220573 f
+  subsystem/cpu/core/u_ifu/u_ifq/U44/ZN (NR2D0BWP12T40P140)                                      0.149098   2.369671 r
+  subsystem/cpu/core/u_ifu/u_ifq/U45/Z (BUFFD1BWP12T40P140)                                      0.073232   2.442904 r
+  subsystem/cpu/core/u_ifu/u_ifq/U197/Z (BUFFD1BWP12T40P140)                                     0.044136   2.487039 r
+  subsystem/cpu/core/u_ifu/u_ifq/U314/Z (AO22D0BWP12T40P140)                                     0.034926   2.521965 r
+  subsystem/cpu/core/u_decoder/U4/ZN (ND2D0BWP12T40P140)                                         0.018276   2.540241 f
+  subsystem/cpu/core/u_decoder/U25/ZN (INVD0BWP12T40P140)                                        0.014782   2.555023 r
+  subsystem/cpu/core/u_decoder/U26/ZN (ND3D0BWP12T40P140)                                        0.025557   2.580580 f
+  subsystem/cpu/core/u_decoder/U27/ZN (INVD0BWP12T40P140)                                        0.021865   2.602445 r
+  subsystem/cpu/core/u_decoder/U30/ZN (ND2D0BWP12T40P140)                                        0.027548   2.629993 f
+  subsystem/cpu/core/u_decoder/U35/ZN (NR2D0BWP12T40P140)                                        0.024676   2.654669 r
+  subsystem/cpu/core/u_decoder/U36/ZN (OAI21D0BWP12T40P140)                                      0.097279   2.751948 f
+  subsystem/cpu/core/u_decoder/U79/ZN (AOI211D0BWP12T40P140)                                     0.056034   2.807982 r
+  subsystem/cpu/core/u_decoder/U81/ZN (AOI211D0BWP12T40P140)                                     0.020041   2.828022 f
+  subsystem/cpu/core/u_decoder/U93/ZN (AOI31D0BWP12T40P140)                                      0.018941   2.846963 r
+  subsystem/cpu/core/u_decoder/U95/ZN (OAI211D0BWP12T40P140)                                     0.069679   2.916643 f
+  subsystem/cpu/core/u_decoder/U115/ZN (NR3D0BWP12T40P140)                                       0.035861   2.952504 r
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_136_/D (EDFCNQD1BWP12T40P140)              0.000000   2.952504 r
+  data arrival time                                                                                         2.952504
+
+  clock core_clk (rise edge)                                                                     5.000000   5.000000
+  clock network delay (ideal)                                                                    0.000000   5.000000
+  clock reconvergence pessimism                                                                  0.000000   5.000000
+  clock uncertainty                                                                              -0.200000  4.800000
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_136_/CP (EDFCNQD1BWP12T40P140)                        4.800000 r
+  library setup time                                                                             -0.025349  4.774651
+  data required time                                                                                        4.774651
+  -------------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                        4.774651
+  data arrival time                                                                                         -2.952504
+  -------------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                               1.822146
+
+
+  Startpoint: subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_112_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                                              Incr       Path
+  -------------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                                     0.000000   0.000000
+  clock network delay (ideal)                                                                    0.000000   0.000000
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_/CP (EDFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_/Q (EDFCNQD1BWP12T40P140)              0.078565   0.078565 f
+  subsystem/cpu/core/u_exu/u_alu/U110/Z (OR4D1BWP12T40P140)                                      0.039862   0.118427 f
+  subsystem/cpu/core/u_exu/u_alu/U2/ZN (NR2D1BWP12T40P140)                                       0.107628   0.226055 r
+  subsystem/cpu/core/u_exu/u_alu/U571/Z (BUFFD1BWP12T40P140)                                     0.100319   0.326374 r
+  subsystem/cpu/core/u_exu/u_alu/U600/Z (XOR2D1BWP12T40P140)                                     0.036147   0.362521 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U33/CO (FA1D0BWP12T40P140)                  0.041483   0.404004 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U32/CO (FA1D0BWP12T40P140)                  0.044281   0.448285 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U31/CO (FA1D0BWP12T40P140)                  0.043784   0.492069 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U30/CO (FA1D0BWP12T40P140)                  0.044221   0.536290 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U29/CO (FA1D0BWP12T40P140)                  0.044086   0.580376 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U28/CO (FA1D0BWP12T40P140)                  0.043742   0.624118 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U27/CO (FA1D0BWP12T40P140)                  0.044042   0.668159 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U26/CO (FA1D0BWP12T40P140)                  0.043713   0.711873 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U25/CO (FA1D0BWP12T40P140)                  0.044041   0.755914 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U24/CO (FA1D0BWP12T40P140)                  0.043679   0.799593 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U23/CO (FA1D0BWP12T40P140)                  0.043911   0.843504 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U22/CO (FA1D0BWP12T40P140)                  0.043725   0.887229 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U21/CO (FA1D0BWP12T40P140)                  0.043911   0.931140 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U20/CO (FA1D0BWP12T40P140)                  0.043789   0.974930 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U19/CO (FA1D0BWP12T40P140)                  0.043999   1.018929 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U18/CO (FA1D0BWP12T40P140)                  0.043666   1.062595 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U17/CO (FA1D0BWP12T40P140)                  0.044041   1.106636 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U16/CO (FA1D0BWP12T40P140)                  0.043817   1.150453 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U15/CO (FA1D0BWP12T40P140)                  0.043824   1.194278 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U14/CO (FA1D0BWP12T40P140)                  0.043886   1.238163 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U13/CO (FA1D0BWP12T40P140)                  0.043873   1.282037 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U12/CO (FA1D0BWP12T40P140)                  0.043866   1.325903 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U11/CO (FA1D0BWP12T40P140)                  0.043955   1.369858 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U10/CO (FA1D0BWP12T40P140)                  0.043866   1.413724 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U9/CO (FA1D0BWP12T40P140)                   0.044000   1.457724 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U8/CO (FA1D0BWP12T40P140)                   0.043918   1.501642 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U7/CO (FA1D0BWP12T40P140)                   0.044085   1.545727 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U6/CO (FA1D0BWP12T40P140)                   0.043669   1.589395 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U5/CO (FA1D0BWP12T40P140)                   0.043908   1.633303 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U4/CO (FA1D0BWP12T40P140)                   0.043694   1.676998 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U3/CO (FA1D0BWP12T40P140)                   0.040495   1.717493 r
+  subsystem/cpu/core/u_exu/u_alu/U177/Z (XOR2D1BWP12T40P140)                                     0.036274   1.753767 f
+  subsystem/cpu/core/u_exu/u_alu/U197/Z (AO21D1BWP12T40P140)                                     0.018033   1.771800 f
+  subsystem/cpu/core/u_exu/u_alu/U198/ZN (AOI31D0BWP12T40P140)                                   0.022308   1.794108 r
+  subsystem/cpu/core/u_exu/u_alu/U199/ZN (OAI211D0BWP12T40P140)                                  0.045048   1.839156 f
+  subsystem/cpu/core/u_exu/U310/ZN (AOI22D0BWP12T40P140)                                         0.029968   1.869123 r
+  subsystem/cpu/core/u_exu/U312/ZN (ND2D0BWP12T40P140)                                           0.023778   1.892902 f
+  subsystem/cpu/core/u_exu/U384/ZN (INVD0BWP12T40P140)                                           0.016105   1.909007 r
+  subsystem/cpu/core/u_exu/U386/ZN (OAI22D0BWP12T40P140)                                         0.016620   1.925627 f
+  subsystem/cpu/core/u_exu/U387/ZN (AOI221D0BWP12T40P140)                                        0.030701   1.956328 r
+  subsystem/cpu/core/u_exu/U388/ZN (ND4D0BWP12T40P140)                                           0.038562   1.994889 f
+  subsystem/cpu/core/u_exu/U389/ZN (AOI221D0BWP12T40P140)                                        0.039264   2.034153 r
+  subsystem/cpu/core/u_exu/U390/ZN (AOI31D0BWP12T40P140)                                         0.028974   2.063128 f
+  subsystem/cpu/core/U133/Z (OR2D1BWP12T40P140)                                                  0.037754   2.100882 f
+  subsystem/cpu/core/u_ifu/U5/Z (BUFFD1BWP12T40P140)                                             0.056696   2.157578 f
+  subsystem/cpu/core/u_ifu/u_ifq/U10/ZN (INVD0BWP12T40P140)                                      0.036004   2.193581 r
+  subsystem/cpu/core/u_ifu/u_ifq/U16/ZN (OAI21D0BWP12T40P140)                                    0.026991   2.220573 f
+  subsystem/cpu/core/u_ifu/u_ifq/U44/ZN (NR2D0BWP12T40P140)                                      0.149099   2.369671 r
+  subsystem/cpu/core/u_ifu/u_ifq/U45/Z (BUFFD1BWP12T40P140)                                      0.073232   2.442904 r
+  subsystem/cpu/core/u_ifu/u_ifq/U197/Z (BUFFD1BWP12T40P140)                                     0.044136   2.487039 r
+  subsystem/cpu/core/u_ifu/u_ifq/U314/Z (AO22D0BWP12T40P140)                                     0.034926   2.521965 r
+  subsystem/cpu/core/u_decoder/U4/ZN (ND2D0BWP12T40P140)                                         0.018276   2.540241 f
+  subsystem/cpu/core/u_decoder/U25/ZN (INVD0BWP12T40P140)                                        0.014782   2.555023 r
+  subsystem/cpu/core/u_decoder/U26/ZN (ND3D0BWP12T40P140)                                        0.025557   2.580580 f
+  subsystem/cpu/core/u_decoder/U27/ZN (INVD0BWP12T40P140)                                        0.021865   2.602445 r
+  subsystem/cpu/core/u_decoder/U30/ZN (ND2D0BWP12T40P140)                                        0.027548   2.629992 f
+  subsystem/cpu/core/u_decoder/U35/ZN (NR2D0BWP12T40P140)                                        0.024676   2.654669 r
+  subsystem/cpu/core/u_decoder/U36/ZN (OAI21D0BWP12T40P140)                                      0.097279   2.751947 f
+  subsystem/cpu/core/u_decoder/U79/ZN (AOI211D0BWP12T40P140)                                     0.056034   2.807981 r
+  subsystem/cpu/core/u_decoder/U81/ZN (AOI211D0BWP12T40P140)                                     0.020041   2.828022 f
+  subsystem/cpu/core/u_decoder/U93/ZN (AOI31D0BWP12T40P140)                                      0.018941   2.846963 r
+  subsystem/cpu/core/u_decoder/U95/ZN (OAI211D0BWP12T40P140)                                     0.069679   2.916643 f
+  subsystem/cpu/core/u_decoder/U96/Z (OR2D1BWP12T40P140)                                         0.034150   2.950793 f
+  subsystem/cpu/core/u_opbuf/u_context_reg/U36/ZN (ND2D0BWP12T40P140)                            0.012022   2.962814 r
+  subsystem/cpu/core/u_opbuf/u_context_reg/U38/ZN (IOA21D0BWP12T40P140)                          0.021608   2.984422 f
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_112_/D (DFCNQD1BWP12T40P140)               0.000000   2.984422 f
+  data arrival time                                                                                         2.984422
+
+  clock core_clk (rise edge)                                                                     5.000000   5.000000
+  clock network delay (ideal)                                                                    0.000000   5.000000
+  clock reconvergence pessimism                                                                  0.000000   5.000000
+  clock uncertainty                                                                              -0.200000  4.800000
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_112_/CP (DFCNQD1BWP12T40P140)                         4.800000 r
+  library setup time                                                                             0.010776   4.810776
+  data required time                                                                                        4.810776
+  -------------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                        4.810776
+  data arrival time                                                                                         -2.984422
+  -------------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                               1.826354
+
+
+  Startpoint: subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_81_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                                              Incr       Path
+  -------------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                                     0.000000   0.000000
+  clock network delay (ideal)                                                                    0.000000   0.000000
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_/CP (EDFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_/Q (EDFCNQD1BWP12T40P140)              0.078565   0.078565 f
+  subsystem/cpu/core/u_exu/u_alu/U110/Z (OR4D1BWP12T40P140)                                      0.039862   0.118427 f
+  subsystem/cpu/core/u_exu/u_alu/U2/ZN (NR2D1BWP12T40P140)                                       0.107628   0.226055 r
+  subsystem/cpu/core/u_exu/u_alu/U571/Z (BUFFD1BWP12T40P140)                                     0.100319   0.326374 r
+  subsystem/cpu/core/u_exu/u_alu/U600/Z (XOR2D1BWP12T40P140)                                     0.036147   0.362521 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U33/CO (FA1D0BWP12T40P140)                  0.041483   0.404004 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U32/CO (FA1D0BWP12T40P140)                  0.044281   0.448285 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U31/CO (FA1D0BWP12T40P140)                  0.043784   0.492069 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U30/CO (FA1D0BWP12T40P140)                  0.044221   0.536290 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U29/CO (FA1D0BWP12T40P140)                  0.044086   0.580376 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U28/CO (FA1D0BWP12T40P140)                  0.043742   0.624118 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U27/CO (FA1D0BWP12T40P140)                  0.044042   0.668159 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U26/CO (FA1D0BWP12T40P140)                  0.043713   0.711873 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U25/CO (FA1D0BWP12T40P140)                  0.044041   0.755914 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U24/CO (FA1D0BWP12T40P140)                  0.043679   0.799593 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U23/CO (FA1D0BWP12T40P140)                  0.043911   0.843504 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U22/CO (FA1D0BWP12T40P140)                  0.043725   0.887229 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U21/CO (FA1D0BWP12T40P140)                  0.043911   0.931140 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U20/CO (FA1D0BWP12T40P140)                  0.043789   0.974930 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U19/CO (FA1D0BWP12T40P140)                  0.043999   1.018929 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U18/CO (FA1D0BWP12T40P140)                  0.043666   1.062595 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U17/CO (FA1D0BWP12T40P140)                  0.044041   1.106636 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U16/CO (FA1D0BWP12T40P140)                  0.043817   1.150453 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U15/CO (FA1D0BWP12T40P140)                  0.043824   1.194278 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U14/CO (FA1D0BWP12T40P140)                  0.043886   1.238163 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U13/CO (FA1D0BWP12T40P140)                  0.043873   1.282037 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U12/CO (FA1D0BWP12T40P140)                  0.043866   1.325903 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U11/CO (FA1D0BWP12T40P140)                  0.043955   1.369858 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U10/CO (FA1D0BWP12T40P140)                  0.043866   1.413724 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U9/CO (FA1D0BWP12T40P140)                   0.044000   1.457724 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U8/CO (FA1D0BWP12T40P140)                   0.043918   1.501642 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U7/CO (FA1D0BWP12T40P140)                   0.044085   1.545727 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U6/CO (FA1D0BWP12T40P140)                   0.043669   1.589395 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U5/CO (FA1D0BWP12T40P140)                   0.043908   1.633303 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U4/CO (FA1D0BWP12T40P140)                   0.043694   1.676998 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U3/CO (FA1D0BWP12T40P140)                   0.040495   1.717493 r
+  subsystem/cpu/core/u_exu/u_alu/U177/Z (XOR2D1BWP12T40P140)                                     0.036274   1.753767 f
+  subsystem/cpu/core/u_exu/u_alu/U197/Z (AO21D1BWP12T40P140)                                     0.018033   1.771800 f
+  subsystem/cpu/core/u_exu/u_alu/U198/ZN (AOI31D0BWP12T40P140)                                   0.022308   1.794108 r
+  subsystem/cpu/core/u_exu/u_alu/U199/ZN (OAI211D0BWP12T40P140)                                  0.045048   1.839156 f
+  subsystem/cpu/core/u_exu/U310/ZN (AOI22D0BWP12T40P140)                                         0.029968   1.869123 r
+  subsystem/cpu/core/u_exu/U312/ZN (ND2D0BWP12T40P140)                                           0.023778   1.892902 f
+  subsystem/cpu/core/u_exu/U384/ZN (INVD0BWP12T40P140)                                           0.016105   1.909007 r
+  subsystem/cpu/core/u_exu/U386/ZN (OAI22D0BWP12T40P140)                                         0.016620   1.925627 f
+  subsystem/cpu/core/u_exu/U387/ZN (AOI221D0BWP12T40P140)                                        0.030701   1.956328 r
+  subsystem/cpu/core/u_exu/U388/ZN (ND4D0BWP12T40P140)                                           0.038562   1.994889 f
+  subsystem/cpu/core/u_exu/U389/ZN (AOI221D0BWP12T40P140)                                        0.039264   2.034153 r
+  subsystem/cpu/core/u_exu/U390/ZN (AOI31D0BWP12T40P140)                                         0.028974   2.063128 f
+  subsystem/cpu/core/U133/Z (OR2D1BWP12T40P140)                                                  0.037754   2.100882 f
+  subsystem/cpu/core/u_ifu/U5/Z (BUFFD1BWP12T40P140)                                             0.056696   2.157578 f
+  subsystem/cpu/core/u_ifu/u_ifq/U10/ZN (INVD0BWP12T40P140)                                      0.036004   2.193581 r
+  subsystem/cpu/core/u_ifu/u_ifq/U16/ZN (OAI21D0BWP12T40P140)                                    0.026991   2.220573 f
+  subsystem/cpu/core/u_ifu/u_ifq/U44/ZN (NR2D0BWP12T40P140)                                      0.149099   2.369671 r
+  subsystem/cpu/core/u_ifu/u_ifq/U45/Z (BUFFD1BWP12T40P140)                                      0.073232   2.442904 r
+  subsystem/cpu/core/u_ifu/u_ifq/U197/Z (BUFFD1BWP12T40P140)                                     0.044136   2.487039 r
+  subsystem/cpu/core/u_ifu/u_ifq/U314/Z (AO22D0BWP12T40P140)                                     0.034926   2.521965 r
+  subsystem/cpu/core/u_decoder/U4/ZN (ND2D0BWP12T40P140)                                         0.018276   2.540241 f
+  subsystem/cpu/core/u_decoder/U25/ZN (INVD0BWP12T40P140)                                        0.014782   2.555023 r
+  subsystem/cpu/core/u_decoder/U26/ZN (ND3D0BWP12T40P140)                                        0.025557   2.580580 f
+  subsystem/cpu/core/u_decoder/U27/ZN (INVD0BWP12T40P140)                                        0.021865   2.602445 r
+  subsystem/cpu/core/u_decoder/U30/ZN (ND2D0BWP12T40P140)                                        0.027548   2.629992 f
+  subsystem/cpu/core/u_decoder/U35/ZN (NR2D0BWP12T40P140)                                        0.024676   2.654669 r
+  subsystem/cpu/core/u_decoder/U36/ZN (OAI21D0BWP12T40P140)                                      0.097279   2.751947 f
+  subsystem/cpu/core/u_decoder/U79/ZN (AOI211D0BWP12T40P140)                                     0.056034   2.807981 r
+  subsystem/cpu/core/u_decoder/U81/ZN (AOI211D0BWP12T40P140)                                     0.020041   2.828022 f
+  subsystem/cpu/core/u_decoder/U93/ZN (AOI31D0BWP12T40P140)                                      0.018941   2.846963 r
+  subsystem/cpu/core/u_decoder/U95/ZN (OAI211D0BWP12T40P140)                                     0.069679   2.916643 f
+  subsystem/cpu/core/u_decoder/U96/Z (OR2D1BWP12T40P140)                                         0.034150   2.950793 f
+  subsystem/cpu/core/u_opbuf/u_context_reg/U36/ZN (ND2D0BWP12T40P140)                            0.012022   2.962814 r
+  subsystem/cpu/core/u_opbuf/u_context_reg/U37/ZN (IOA21D0BWP12T40P140)                          0.021608   2.984422 f
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_81_/D (DFCNQD1BWP12T40P140)                0.000000   2.984422 f
+  data arrival time                                                                                         2.984422
+
+  clock core_clk (rise edge)                                                                     5.000000   5.000000
+  clock network delay (ideal)                                                                    0.000000   5.000000
+  clock reconvergence pessimism                                                                  0.000000   5.000000
+  clock uncertainty                                                                              -0.200000  4.800000
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_81_/CP (DFCNQD1BWP12T40P140)                          4.800000 r
+  library setup time                                                                             0.010776   4.810776
+  data required time                                                                                        4.810776
+  -------------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                        4.810776
+  data arrival time                                                                                         -2.984422
+  -------------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                               1.826354
+
+
+  Startpoint: subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_159_
+               (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: max
+
+  Point                                                                                              Incr       Path
+  -------------------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                                     0.000000   0.000000
+  clock network delay (ideal)                                                                    0.000000   0.000000
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_/CP (EDFCNQD1BWP12T40P140)             0.000000   0.000000 r
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_140_/Q (EDFCNQD1BWP12T40P140)              0.078565   0.078565 f
+  subsystem/cpu/core/u_exu/u_alu/U110/Z (OR4D1BWP12T40P140)                                      0.039862   0.118427 f
+  subsystem/cpu/core/u_exu/u_alu/U2/ZN (NR2D1BWP12T40P140)                                       0.107628   0.226055 r
+  subsystem/cpu/core/u_exu/u_alu/U571/Z (BUFFD1BWP12T40P140)                                     0.100319   0.326374 r
+  subsystem/cpu/core/u_exu/u_alu/U600/Z (XOR2D1BWP12T40P140)                                     0.036147   0.362521 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U33/CO (FA1D0BWP12T40P140)                  0.041483   0.404004 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U32/CO (FA1D0BWP12T40P140)                  0.044281   0.448285 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U31/CO (FA1D0BWP12T40P140)                  0.043784   0.492069 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U30/CO (FA1D0BWP12T40P140)                  0.044221   0.536290 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U29/CO (FA1D0BWP12T40P140)                  0.044086   0.580376 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U28/CO (FA1D0BWP12T40P140)                  0.043742   0.624118 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U27/CO (FA1D0BWP12T40P140)                  0.044042   0.668159 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U26/CO (FA1D0BWP12T40P140)                  0.043713   0.711873 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U25/CO (FA1D0BWP12T40P140)                  0.044041   0.755914 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U24/CO (FA1D0BWP12T40P140)                  0.043679   0.799593 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U23/CO (FA1D0BWP12T40P140)                  0.043911   0.843504 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U22/CO (FA1D0BWP12T40P140)                  0.043725   0.887229 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U21/CO (FA1D0BWP12T40P140)                  0.043911   0.931140 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U20/CO (FA1D0BWP12T40P140)                  0.043789   0.974930 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U19/CO (FA1D0BWP12T40P140)                  0.043999   1.018929 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U18/CO (FA1D0BWP12T40P140)                  0.043666   1.062595 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U17/CO (FA1D0BWP12T40P140)                  0.044041   1.106636 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U16/CO (FA1D0BWP12T40P140)                  0.043817   1.150453 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U15/CO (FA1D0BWP12T40P140)                  0.043824   1.194278 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U14/CO (FA1D0BWP12T40P140)                  0.043886   1.238163 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U13/CO (FA1D0BWP12T40P140)                  0.043873   1.282037 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U12/CO (FA1D0BWP12T40P140)                  0.043866   1.325903 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U11/CO (FA1D0BWP12T40P140)                  0.043955   1.369858 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U10/CO (FA1D0BWP12T40P140)                  0.043866   1.413724 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U9/CO (FA1D0BWP12T40P140)                   0.044000   1.457724 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U8/CO (FA1D0BWP12T40P140)                   0.043918   1.501642 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U7/CO (FA1D0BWP12T40P140)                   0.044085   1.545727 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U6/CO (FA1D0BWP12T40P140)                   0.043669   1.589395 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U5/CO (FA1D0BWP12T40P140)                   0.043908   1.633303 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U4/CO (FA1D0BWP12T40P140)                   0.043694   1.676998 r
+  subsystem/cpu/core/u_exu/u_alu/DP_OP_22J3_122_5665_U3/CO (FA1D0BWP12T40P140)                   0.040495   1.717493 r
+  subsystem/cpu/core/u_exu/u_alu/U177/Z (XOR2D1BWP12T40P140)                                     0.036274   1.753767 f
+  subsystem/cpu/core/u_exu/u_alu/U197/Z (AO21D1BWP12T40P140)                                     0.018033   1.771800 f
+  subsystem/cpu/core/u_exu/u_alu/U198/ZN (AOI31D0BWP12T40P140)                                   0.022308   1.794108 r
+  subsystem/cpu/core/u_exu/u_alu/U199/ZN (OAI211D0BWP12T40P140)                                  0.045048   1.839156 f
+  subsystem/cpu/core/u_exu/U310/ZN (AOI22D0BWP12T40P140)                                         0.029968   1.869123 r
+  subsystem/cpu/core/u_exu/U312/ZN (ND2D0BWP12T40P140)                                           0.023778   1.892902 f
+  subsystem/cpu/core/u_exu/U384/ZN (INVD0BWP12T40P140)                                           0.016105   1.909007 r
+  subsystem/cpu/core/u_exu/U386/ZN (OAI22D0BWP12T40P140)                                         0.016620   1.925627 f
+  subsystem/cpu/core/u_exu/U387/ZN (AOI221D0BWP12T40P140)                                        0.030701   1.956328 r
+  subsystem/cpu/core/u_exu/U388/ZN (ND4D0BWP12T40P140)                                           0.038562   1.994889 f
+  subsystem/cpu/core/u_exu/U389/ZN (AOI221D0BWP12T40P140)                                        0.039264   2.034153 r
+  subsystem/cpu/core/u_exu/U390/ZN (AOI31D0BWP12T40P140)                                         0.028974   2.063128 f
+  subsystem/cpu/core/U133/Z (OR2D1BWP12T40P140)                                                  0.037754   2.100882 f
+  subsystem/cpu/core/u_ifu/U5/Z (BUFFD1BWP12T40P140)                                             0.056696   2.157578 f
+  subsystem/cpu/core/u_ifu/u_ifq/U10/ZN (INVD0BWP12T40P140)                                      0.036004   2.193581 r
+  subsystem/cpu/core/u_ifu/u_ifq/U16/ZN (OAI21D0BWP12T40P140)                                    0.026991   2.220573 f
+  subsystem/cpu/core/u_ifu/u_ifq/U44/ZN (NR2D0BWP12T40P140)                                      0.149099   2.369671 r
+  subsystem/cpu/core/u_ifu/u_ifq/U45/Z (BUFFD1BWP12T40P140)                                      0.073232   2.442904 r
+  subsystem/cpu/core/u_ifu/u_ifq/U197/Z (BUFFD1BWP12T40P140)                                     0.044136   2.487039 r
+  subsystem/cpu/core/u_ifu/u_ifq/U314/Z (AO22D0BWP12T40P140)                                     0.034926   2.521965 r
+  subsystem/cpu/core/u_decoder/U4/ZN (ND2D0BWP12T40P140)                                         0.018276   2.540241 f
+  subsystem/cpu/core/u_decoder/U25/ZN (INVD0BWP12T40P140)                                        0.014782   2.555023 r
+  subsystem/cpu/core/u_decoder/U26/ZN (ND3D0BWP12T40P140)                                        0.025557   2.580580 f
+  subsystem/cpu/core/u_decoder/U27/ZN (INVD0BWP12T40P140)                                        0.021865   2.602445 r
+  subsystem/cpu/core/u_decoder/U30/ZN (ND2D0BWP12T40P140)                                        0.027548   2.629992 f
+  subsystem/cpu/core/u_decoder/U31/ZN (NR2D0BWP12T40P140)                                        0.024898   2.654890 r
+  subsystem/cpu/core/u_decoder/U32/ZN (INVD0BWP12T40P140)                                        0.016402   2.671292 f
+  subsystem/cpu/core/u_decoder/U104/ZN (ND3D0BWP12T40P140)                                       0.020009   2.691301 r
+  subsystem/cpu/core/u_decode_imm/U4/ZN (INVD0BWP12T40P140)                                      0.019997   2.711298 f
+  subsystem/cpu/core/u_decode_imm/U5/ZN (NR2D0BWP12T40P140)                                      0.039533   2.750830 r
+  subsystem/cpu/core/u_decode_imm/U18/ZN (NR2D0BWP12T40P140)                                     0.043191   2.794021 f
+  subsystem/cpu/core/u_decode_imm/U25/ZN (INR2D1BWP12T40P140)                                    0.057657   2.851679 r
+  subsystem/cpu/core/u_decode_imm/U26/ZN (ND2D0BWP12T40P140)                                     0.058255   2.909934 f
+  subsystem/cpu/core/u_decode_imm/U31/ZN (IOA21D0BWP12T40P140)                                   0.023990   2.933923 r
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_159_/D (EDFCNQD1BWP12T40P140)              0.000000   2.933923 r
+  data arrival time                                                                                         2.933923
+
+  clock core_clk (rise edge)                                                                     5.000000   5.000000
+  clock network delay (ideal)                                                                    0.000000   5.000000
+  clock reconvergence pessimism                                                                  0.000000   5.000000
+  clock uncertainty                                                                              -0.200000  4.800000
+  subsystem/cpu/core/u_opbuf/u_context_reg/data_q_reg_159_/CP (EDFCNQD1BWP12T40P140)                        4.800000 r
+  library setup time                                                                             -0.024716  4.775284
+  data required time                                                                                        4.775284
+  -------------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                        4.775284
+  data arrival time                                                                                         -2.933923
+  -------------------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                               1.841361
+
+
+1

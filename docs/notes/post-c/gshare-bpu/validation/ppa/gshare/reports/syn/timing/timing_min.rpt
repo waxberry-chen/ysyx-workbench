@@ -1,0 +1,727 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay min
+        -max_paths 20
+Design : ysyx_25030087
+Version: V-2023.12-SP5
+Date   : Sun Nov  1 00:03:07 2026
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: tt0p9v25c   Library: tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+Wire Load Model Mode: top
+
+  Startpoint: subsystem/cpu/core/u_ifu/fetch_pc_q_reg_28_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_ifu_axi4_adapter/request_addr_q_reg_28_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                                      Incr       Path
+  -------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_28_/CP (DFSNQD1BWP12T40P140)                   0.000000 # 0.000000 r
+  subsystem/cpu/core/u_ifu/fetch_pc_q_reg_28_/Q (DFSNQD1BWP12T40P140)                    0.070713   0.070713 f
+  subsystem/cpu/core/u_ifu/imem_req_addr[28] (ysyx_ifu_30000000_2_2_7)                   0.000000   0.070713 f
+  subsystem/cpu/core/u_ifu_axi4_adapter/imem_req_addr[28] (ysyx_ifu_axi4_adapter)        0.000000   0.070713 f
+  subsystem/cpu/core/u_ifu_axi4_adapter/request_addr_q_reg_28_/D (EDFCNQD1BWP12T40P140)  0.000000   0.070713 f
+  data arrival time                                                                                 0.070713
+
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  clock uncertainty                                                                      0.050000   0.050000
+  subsystem/cpu/core/u_ifu_axi4_adapter/request_addr_q_reg_28_/CP (EDFCNQD1BWP12T40P140) 0.000000   0.050000 r
+  library hold time                                                                      0.012003   0.062003
+  data required time                                                                                0.062003
+  -------------------------------------------------------------------------------------------------------------
+  data required time                                                                                0.062003
+  data arrival time                                                                                 -0.070713
+  -------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                       0.008710
+
+
+  Startpoint: subsystem/cpu/core/u_lsu/req_addr_q_reg_31_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_31_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                                      Incr       Path
+  -------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_31_/CP (EDFCNQD1BWP12T40P140)                  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_31_/Q (EDFCNQD1BWP12T40P140)                   0.071387   0.071387 f
+  subsystem/cpu/core/u_lsu/dmem_req_addr[31] (ysyx_lsu)                                  0.000000   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/dmem_req_addr[31] (ysyx_lsu_axi4_adapter)        0.000000   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_31_/D (EDFCNQD1BWP12T40P140)  0.000000   0.071387 f
+  data arrival time                                                                                 0.071387
+
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  clock uncertainty                                                                      0.050000   0.050000
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_31_/CP (EDFCNQD1BWP12T40P140) 0.000000   0.050000 r
+  library hold time                                                                      0.012632   0.062632
+  data required time                                                                                0.062632
+  -------------------------------------------------------------------------------------------------------------
+  data required time                                                                                0.062632
+  data arrival time                                                                                 -0.071387
+  -------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                       0.008755
+
+
+  Startpoint: subsystem/cpu/core/u_lsu/req_addr_q_reg_30_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_30_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                                      Incr       Path
+  -------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_30_/CP (EDFCNQD1BWP12T40P140)                  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_30_/Q (EDFCNQD1BWP12T40P140)                   0.071387   0.071387 f
+  subsystem/cpu/core/u_lsu/dmem_req_addr[30] (ysyx_lsu)                                  0.000000   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/dmem_req_addr[30] (ysyx_lsu_axi4_adapter)        0.000000   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_30_/D (EDFCNQD1BWP12T40P140)  0.000000   0.071387 f
+  data arrival time                                                                                 0.071387
+
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  clock uncertainty                                                                      0.050000   0.050000
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_30_/CP (EDFCNQD1BWP12T40P140) 0.000000   0.050000 r
+  library hold time                                                                      0.012632   0.062632
+  data required time                                                                                0.062632
+  -------------------------------------------------------------------------------------------------------------
+  data required time                                                                                0.062632
+  data arrival time                                                                                 -0.071387
+  -------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                       0.008755
+
+
+  Startpoint: subsystem/cpu/core/u_lsu/req_addr_q_reg_29_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_29_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                                      Incr       Path
+  -------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_29_/CP (EDFCNQD1BWP12T40P140)                  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_29_/Q (EDFCNQD1BWP12T40P140)                   0.071387   0.071387 f
+  subsystem/cpu/core/u_lsu/dmem_req_addr[29] (ysyx_lsu)                                  0.000000   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/dmem_req_addr[29] (ysyx_lsu_axi4_adapter)        0.000000   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_29_/D (EDFCNQD1BWP12T40P140)  0.000000   0.071387 f
+  data arrival time                                                                                 0.071387
+
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  clock uncertainty                                                                      0.050000   0.050000
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_29_/CP (EDFCNQD1BWP12T40P140) 0.000000   0.050000 r
+  library hold time                                                                      0.012632   0.062632
+  data required time                                                                                0.062632
+  -------------------------------------------------------------------------------------------------------------
+  data required time                                                                                0.062632
+  data arrival time                                                                                 -0.071387
+  -------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                       0.008755
+
+
+  Startpoint: subsystem/cpu/core/u_lsu/req_addr_q_reg_28_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_28_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                                      Incr       Path
+  -------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_28_/CP (EDFCNQD1BWP12T40P140)                  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_28_/Q (EDFCNQD1BWP12T40P140)                   0.071387   0.071387 f
+  subsystem/cpu/core/u_lsu/dmem_req_addr[28] (ysyx_lsu)                                  0.000000   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/dmem_req_addr[28] (ysyx_lsu_axi4_adapter)        0.000000   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_28_/D (EDFCNQD1BWP12T40P140)  0.000000   0.071387 f
+  data arrival time                                                                                 0.071387
+
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  clock uncertainty                                                                      0.050000   0.050000
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_28_/CP (EDFCNQD1BWP12T40P140) 0.000000   0.050000 r
+  library hold time                                                                      0.012632   0.062632
+  data required time                                                                                0.062632
+  -------------------------------------------------------------------------------------------------------------
+  data required time                                                                                0.062632
+  data arrival time                                                                                 -0.071387
+  -------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                       0.008755
+
+
+  Startpoint: subsystem/cpu/core/u_lsu/req_addr_q_reg_27_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_27_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                                      Incr       Path
+  -------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_27_/CP (EDFCNQD1BWP12T40P140)                  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_27_/Q (EDFCNQD1BWP12T40P140)                   0.071387   0.071387 f
+  subsystem/cpu/core/u_lsu/dmem_req_addr[27] (ysyx_lsu)                                  0.000000   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/dmem_req_addr[27] (ysyx_lsu_axi4_adapter)        0.000000   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_27_/D (EDFCNQD1BWP12T40P140)  0.000000   0.071387 f
+  data arrival time                                                                                 0.071387
+
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  clock uncertainty                                                                      0.050000   0.050000
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_27_/CP (EDFCNQD1BWP12T40P140) 0.000000   0.050000 r
+  library hold time                                                                      0.012632   0.062632
+  data required time                                                                                0.062632
+  -------------------------------------------------------------------------------------------------------------
+  data required time                                                                                0.062632
+  data arrival time                                                                                 -0.071387
+  -------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                       0.008755
+
+
+  Startpoint: subsystem/cpu/core/u_lsu/req_addr_q_reg_14_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_14_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                                      Incr       Path
+  -------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_14_/CP (EDFCNQD1BWP12T40P140)                  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_14_/Q (EDFCNQD1BWP12T40P140)                   0.071387   0.071387 f
+  subsystem/cpu/core/u_lsu/dmem_req_addr[14] (ysyx_lsu)                                  0.000000   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/dmem_req_addr[14] (ysyx_lsu_axi4_adapter)        0.000000   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_14_/D (EDFCNQD1BWP12T40P140)  0.000000   0.071387 f
+  data arrival time                                                                                 0.071387
+
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  clock uncertainty                                                                      0.050000   0.050000
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_14_/CP (EDFCNQD1BWP12T40P140) 0.000000   0.050000 r
+  library hold time                                                                      0.012632   0.062632
+  data required time                                                                                0.062632
+  -------------------------------------------------------------------------------------------------------------
+  data required time                                                                                0.062632
+  data arrival time                                                                                 -0.071387
+  -------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                       0.008755
+
+
+  Startpoint: subsystem/cpu/core/u_lsu/req_addr_q_reg_13_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_13_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                                      Incr       Path
+  -------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_13_/CP (EDFCNQD1BWP12T40P140)                  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_13_/Q (EDFCNQD1BWP12T40P140)                   0.071387   0.071387 f
+  subsystem/cpu/core/u_lsu/dmem_req_addr[13] (ysyx_lsu)                                  0.000000   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/dmem_req_addr[13] (ysyx_lsu_axi4_adapter)        0.000000   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_13_/D (EDFCNQD1BWP12T40P140)  0.000000   0.071387 f
+  data arrival time                                                                                 0.071387
+
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  clock uncertainty                                                                      0.050000   0.050000
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_13_/CP (EDFCNQD1BWP12T40P140) 0.000000   0.050000 r
+  library hold time                                                                      0.012632   0.062632
+  data required time                                                                                0.062632
+  -------------------------------------------------------------------------------------------------------------
+  data required time                                                                                0.062632
+  data arrival time                                                                                 -0.071387
+  -------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                       0.008755
+
+
+  Startpoint: subsystem/cpu/core/u_lsu/req_addr_q_reg_11_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_11_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                                      Incr       Path
+  -------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_11_/CP (EDFCNQD1BWP12T40P140)                  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_11_/Q (EDFCNQD1BWP12T40P140)                   0.071387   0.071387 f
+  subsystem/cpu/core/u_lsu/dmem_req_addr[11] (ysyx_lsu)                                  0.000000   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/dmem_req_addr[11] (ysyx_lsu_axi4_adapter)        0.000000   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_11_/D (EDFCNQD1BWP12T40P140)  0.000000   0.071387 f
+  data arrival time                                                                                 0.071387
+
+  clock core_clk (rise edge)                                                             0.000000   0.000000
+  clock network delay (ideal)                                                            0.000000   0.000000
+  clock uncertainty                                                                      0.050000   0.050000
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_11_/CP (EDFCNQD1BWP12T40P140) 0.000000   0.050000 r
+  library hold time                                                                      0.012632   0.062632
+  data required time                                                                                0.062632
+  -------------------------------------------------------------------------------------------------------------
+  data required time                                                                                0.062632
+  data arrival time                                                                                 -0.071387
+  -------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                       0.008755
+
+
+  Startpoint: subsystem/cpu/core/u_lsu/req_addr_q_reg_9_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_9_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                                                     Incr       Path
+  ------------------------------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                                            0.000000   0.000000
+  clock network delay (ideal)                                                           0.000000   0.000000
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_9_/CP (EDFCNQD1BWP12T40P140)                  0.000000 # 0.000000 r
+  subsystem/cpu/core/u_lsu/req_addr_q_reg_9_/Q (EDFCNQD1BWP12T40P140)                   0.071387   0.071387 f
+  subsystem/cpu/core/u_lsu/dmem_req_addr[9] (ysyx_lsu)                                  0.000000   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/dmem_req_addr[9] (ysyx_lsu_axi4_adapter)        0.000000   0.071387 f
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_9_/D (EDFCNQD1BWP12T40P140)  0.000000   0.071387 f
+  data arrival time                                                                                0.071387
+
+  clock core_clk (rise edge)                                                            0.000000   0.000000
+  clock network delay (ideal)                                                           0.000000   0.000000
+  clock uncertainty                                                                     0.050000   0.050000
+  subsystem/cpu/core/u_lsu_axi4_adapter/request_addr_q_reg_9_/CP (EDFCNQD1BWP12T40P140) 0.000000   0.050000 r
+  library hold time                                                                     0.012632   0.062632
+  data required time                                                                               0.062632
+  ------------------------------------------------------------------------------------------------------------
+  data required time                                                                               0.062632
+  data arrival time                                                                                -0.071387
+  ------------------------------------------------------------------------------------------------------------
+  slack (MET)                                                                                      0.008755
+
+
+  Startpoint: subsystem/cpu/arbiter/wdata_q_reg_0_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/router/data_q_reg_0_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                               Incr       Path
+  --------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                      0.000000   0.000000
+  clock network delay (ideal)                                     0.000000   0.000000
+  subsystem/cpu/arbiter/wdata_q_reg_0_/CP (EDFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/arbiter/wdata_q_reg_0_/Q (EDFCNQD1BWP12T40P140)   0.071387   0.071387 f
+  subsystem/cpu/arbiter/m_axi_wdata[0] (ysyx_axi4_arbiter)        0.000000   0.071387 f
+  subsystem/cpu/m_axi_wdata[0] (ysyx_core_axi4_30000000_2_7)      0.000000   0.071387 f
+  subsystem/router/s_axi_wdata[0] (ysyx_axi4_router)              0.000000   0.071387 f
+  subsystem/router/data_q_reg_0_/D (EDFCNQD1BWP12T40P140)         0.000000   0.071387 f
+  data arrival time                                                          0.071387
+
+  clock core_clk (rise edge)                                      0.000000   0.000000
+  clock network delay (ideal)                                     0.000000   0.000000
+  clock uncertainty                                               0.050000   0.050000
+  subsystem/router/data_q_reg_0_/CP (EDFCNQD1BWP12T40P140)        0.000000   0.050000 r
+  library hold time                                               0.012632   0.062632
+  data required time                                                         0.062632
+  --------------------------------------------------------------------------------------
+  data required time                                                         0.062632
+  data arrival time                                                          -0.071387
+  --------------------------------------------------------------------------------------
+  slack (MET)                                                                0.008755
+
+
+  Startpoint: subsystem/cpu/arbiter/wdata_q_reg_9_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/router/data_q_reg_9_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                               Incr       Path
+  --------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                      0.000000   0.000000
+  clock network delay (ideal)                                     0.000000   0.000000
+  subsystem/cpu/arbiter/wdata_q_reg_9_/CP (EDFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/arbiter/wdata_q_reg_9_/Q (EDFCNQD1BWP12T40P140)   0.071387   0.071387 f
+  subsystem/cpu/arbiter/m_axi_wdata[9] (ysyx_axi4_arbiter)        0.000000   0.071387 f
+  subsystem/cpu/m_axi_wdata[9] (ysyx_core_axi4_30000000_2_7)      0.000000   0.071387 f
+  subsystem/router/s_axi_wdata[9] (ysyx_axi4_router)              0.000000   0.071387 f
+  subsystem/router/data_q_reg_9_/D (EDFCNQD1BWP12T40P140)         0.000000   0.071387 f
+  data arrival time                                                          0.071387
+
+  clock core_clk (rise edge)                                      0.000000   0.000000
+  clock network delay (ideal)                                     0.000000   0.000000
+  clock uncertainty                                               0.050000   0.050000
+  subsystem/router/data_q_reg_9_/CP (EDFCNQD1BWP12T40P140)        0.000000   0.050000 r
+  library hold time                                               0.012632   0.062632
+  data required time                                                         0.062632
+  --------------------------------------------------------------------------------------
+  data required time                                                         0.062632
+  data arrival time                                                          -0.071387
+  --------------------------------------------------------------------------------------
+  slack (MET)                                                                0.008755
+
+
+  Startpoint: subsystem/cpu/arbiter/wdata_q_reg_8_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/router/data_q_reg_8_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                               Incr       Path
+  --------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                      0.000000   0.000000
+  clock network delay (ideal)                                     0.000000   0.000000
+  subsystem/cpu/arbiter/wdata_q_reg_8_/CP (EDFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/arbiter/wdata_q_reg_8_/Q (EDFCNQD1BWP12T40P140)   0.071387   0.071387 f
+  subsystem/cpu/arbiter/m_axi_wdata[8] (ysyx_axi4_arbiter)        0.000000   0.071387 f
+  subsystem/cpu/m_axi_wdata[8] (ysyx_core_axi4_30000000_2_7)      0.000000   0.071387 f
+  subsystem/router/s_axi_wdata[8] (ysyx_axi4_router)              0.000000   0.071387 f
+  subsystem/router/data_q_reg_8_/D (EDFCNQD1BWP12T40P140)         0.000000   0.071387 f
+  data arrival time                                                          0.071387
+
+  clock core_clk (rise edge)                                      0.000000   0.000000
+  clock network delay (ideal)                                     0.000000   0.000000
+  clock uncertainty                                               0.050000   0.050000
+  subsystem/router/data_q_reg_8_/CP (EDFCNQD1BWP12T40P140)        0.000000   0.050000 r
+  library hold time                                               0.012632   0.062632
+  data required time                                                         0.062632
+  --------------------------------------------------------------------------------------
+  data required time                                                         0.062632
+  data arrival time                                                          -0.071387
+  --------------------------------------------------------------------------------------
+  slack (MET)                                                                0.008755
+
+
+  Startpoint: subsystem/cpu/arbiter/wdata_q_reg_7_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/router/data_q_reg_7_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                               Incr       Path
+  --------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                      0.000000   0.000000
+  clock network delay (ideal)                                     0.000000   0.000000
+  subsystem/cpu/arbiter/wdata_q_reg_7_/CP (EDFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/arbiter/wdata_q_reg_7_/Q (EDFCNQD1BWP12T40P140)   0.071387   0.071387 f
+  subsystem/cpu/arbiter/m_axi_wdata[7] (ysyx_axi4_arbiter)        0.000000   0.071387 f
+  subsystem/cpu/m_axi_wdata[7] (ysyx_core_axi4_30000000_2_7)      0.000000   0.071387 f
+  subsystem/router/s_axi_wdata[7] (ysyx_axi4_router)              0.000000   0.071387 f
+  subsystem/router/data_q_reg_7_/D (EDFCNQD1BWP12T40P140)         0.000000   0.071387 f
+  data arrival time                                                          0.071387
+
+  clock core_clk (rise edge)                                      0.000000   0.000000
+  clock network delay (ideal)                                     0.000000   0.000000
+  clock uncertainty                                               0.050000   0.050000
+  subsystem/router/data_q_reg_7_/CP (EDFCNQD1BWP12T40P140)        0.000000   0.050000 r
+  library hold time                                               0.012632   0.062632
+  data required time                                                         0.062632
+  --------------------------------------------------------------------------------------
+  data required time                                                         0.062632
+  data arrival time                                                          -0.071387
+  --------------------------------------------------------------------------------------
+  slack (MET)                                                                0.008755
+
+
+  Startpoint: subsystem/cpu/arbiter/wdata_q_reg_6_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/router/data_q_reg_6_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                               Incr       Path
+  --------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                      0.000000   0.000000
+  clock network delay (ideal)                                     0.000000   0.000000
+  subsystem/cpu/arbiter/wdata_q_reg_6_/CP (EDFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/arbiter/wdata_q_reg_6_/Q (EDFCNQD1BWP12T40P140)   0.071387   0.071387 f
+  subsystem/cpu/arbiter/m_axi_wdata[6] (ysyx_axi4_arbiter)        0.000000   0.071387 f
+  subsystem/cpu/m_axi_wdata[6] (ysyx_core_axi4_30000000_2_7)      0.000000   0.071387 f
+  subsystem/router/s_axi_wdata[6] (ysyx_axi4_router)              0.000000   0.071387 f
+  subsystem/router/data_q_reg_6_/D (EDFCNQD1BWP12T40P140)         0.000000   0.071387 f
+  data arrival time                                                          0.071387
+
+  clock core_clk (rise edge)                                      0.000000   0.000000
+  clock network delay (ideal)                                     0.000000   0.000000
+  clock uncertainty                                               0.050000   0.050000
+  subsystem/router/data_q_reg_6_/CP (EDFCNQD1BWP12T40P140)        0.000000   0.050000 r
+  library hold time                                               0.012632   0.062632
+  data required time                                                         0.062632
+  --------------------------------------------------------------------------------------
+  data required time                                                         0.062632
+  data arrival time                                                          -0.071387
+  --------------------------------------------------------------------------------------
+  slack (MET)                                                                0.008755
+
+
+  Startpoint: subsystem/cpu/arbiter/wdata_q_reg_5_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/router/data_q_reg_5_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                               Incr       Path
+  --------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                      0.000000   0.000000
+  clock network delay (ideal)                                     0.000000   0.000000
+  subsystem/cpu/arbiter/wdata_q_reg_5_/CP (EDFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/arbiter/wdata_q_reg_5_/Q (EDFCNQD1BWP12T40P140)   0.071387   0.071387 f
+  subsystem/cpu/arbiter/m_axi_wdata[5] (ysyx_axi4_arbiter)        0.000000   0.071387 f
+  subsystem/cpu/m_axi_wdata[5] (ysyx_core_axi4_30000000_2_7)      0.000000   0.071387 f
+  subsystem/router/s_axi_wdata[5] (ysyx_axi4_router)              0.000000   0.071387 f
+  subsystem/router/data_q_reg_5_/D (EDFCNQD1BWP12T40P140)         0.000000   0.071387 f
+  data arrival time                                                          0.071387
+
+  clock core_clk (rise edge)                                      0.000000   0.000000
+  clock network delay (ideal)                                     0.000000   0.000000
+  clock uncertainty                                               0.050000   0.050000
+  subsystem/router/data_q_reg_5_/CP (EDFCNQD1BWP12T40P140)        0.000000   0.050000 r
+  library hold time                                               0.012632   0.062632
+  data required time                                                         0.062632
+  --------------------------------------------------------------------------------------
+  data required time                                                         0.062632
+  data arrival time                                                          -0.071387
+  --------------------------------------------------------------------------------------
+  slack (MET)                                                                0.008755
+
+
+  Startpoint: subsystem/cpu/arbiter/wdata_q_reg_4_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/router/data_q_reg_4_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                               Incr       Path
+  --------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                      0.000000   0.000000
+  clock network delay (ideal)                                     0.000000   0.000000
+  subsystem/cpu/arbiter/wdata_q_reg_4_/CP (EDFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/arbiter/wdata_q_reg_4_/Q (EDFCNQD1BWP12T40P140)   0.071387   0.071387 f
+  subsystem/cpu/arbiter/m_axi_wdata[4] (ysyx_axi4_arbiter)        0.000000   0.071387 f
+  subsystem/cpu/m_axi_wdata[4] (ysyx_core_axi4_30000000_2_7)      0.000000   0.071387 f
+  subsystem/router/s_axi_wdata[4] (ysyx_axi4_router)              0.000000   0.071387 f
+  subsystem/router/data_q_reg_4_/D (EDFCNQD1BWP12T40P140)         0.000000   0.071387 f
+  data arrival time                                                          0.071387
+
+  clock core_clk (rise edge)                                      0.000000   0.000000
+  clock network delay (ideal)                                     0.000000   0.000000
+  clock uncertainty                                               0.050000   0.050000
+  subsystem/router/data_q_reg_4_/CP (EDFCNQD1BWP12T40P140)        0.000000   0.050000 r
+  library hold time                                               0.012632   0.062632
+  data required time                                                         0.062632
+  --------------------------------------------------------------------------------------
+  data required time                                                         0.062632
+  data arrival time                                                          -0.071387
+  --------------------------------------------------------------------------------------
+  slack (MET)                                                                0.008755
+
+
+  Startpoint: subsystem/cpu/arbiter/wdata_q_reg_3_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/router/data_q_reg_3_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                               Incr       Path
+  --------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                      0.000000   0.000000
+  clock network delay (ideal)                                     0.000000   0.000000
+  subsystem/cpu/arbiter/wdata_q_reg_3_/CP (EDFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/arbiter/wdata_q_reg_3_/Q (EDFCNQD1BWP12T40P140)   0.071387   0.071387 f
+  subsystem/cpu/arbiter/m_axi_wdata[3] (ysyx_axi4_arbiter)        0.000000   0.071387 f
+  subsystem/cpu/m_axi_wdata[3] (ysyx_core_axi4_30000000_2_7)      0.000000   0.071387 f
+  subsystem/router/s_axi_wdata[3] (ysyx_axi4_router)              0.000000   0.071387 f
+  subsystem/router/data_q_reg_3_/D (EDFCNQD1BWP12T40P140)         0.000000   0.071387 f
+  data arrival time                                                          0.071387
+
+  clock core_clk (rise edge)                                      0.000000   0.000000
+  clock network delay (ideal)                                     0.000000   0.000000
+  clock uncertainty                                               0.050000   0.050000
+  subsystem/router/data_q_reg_3_/CP (EDFCNQD1BWP12T40P140)        0.000000   0.050000 r
+  library hold time                                               0.012632   0.062632
+  data required time                                                         0.062632
+  --------------------------------------------------------------------------------------
+  data required time                                                         0.062632
+  data arrival time                                                          -0.071387
+  --------------------------------------------------------------------------------------
+  slack (MET)                                                                0.008755
+
+
+  Startpoint: subsystem/cpu/arbiter/wdata_q_reg_2_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/router/data_q_reg_2_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                               Incr       Path
+  --------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                      0.000000   0.000000
+  clock network delay (ideal)                                     0.000000   0.000000
+  subsystem/cpu/arbiter/wdata_q_reg_2_/CP (EDFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/arbiter/wdata_q_reg_2_/Q (EDFCNQD1BWP12T40P140)   0.071387   0.071387 f
+  subsystem/cpu/arbiter/m_axi_wdata[2] (ysyx_axi4_arbiter)        0.000000   0.071387 f
+  subsystem/cpu/m_axi_wdata[2] (ysyx_core_axi4_30000000_2_7)      0.000000   0.071387 f
+  subsystem/router/s_axi_wdata[2] (ysyx_axi4_router)              0.000000   0.071387 f
+  subsystem/router/data_q_reg_2_/D (EDFCNQD1BWP12T40P140)         0.000000   0.071387 f
+  data arrival time                                                          0.071387
+
+  clock core_clk (rise edge)                                      0.000000   0.000000
+  clock network delay (ideal)                                     0.000000   0.000000
+  clock uncertainty                                               0.050000   0.050000
+  subsystem/router/data_q_reg_2_/CP (EDFCNQD1BWP12T40P140)        0.000000   0.050000 r
+  library hold time                                               0.012632   0.062632
+  data required time                                                         0.062632
+  --------------------------------------------------------------------------------------
+  data required time                                                         0.062632
+  data arrival time                                                          -0.071387
+  --------------------------------------------------------------------------------------
+  slack (MET)                                                                0.008755
+
+
+  Startpoint: subsystem/cpu/arbiter/wdata_q_reg_1_
+              (rising edge-triggered flip-flop clocked by core_clk)
+  Endpoint: subsystem/router/data_q_reg_1_
+            (rising edge-triggered flip-flop clocked by core_clk)
+  Path Group: core_clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  ysyx_25030087      ZeroWireload          tcbn28hpcplusbwp12t40p140tt0p9v25c_ccs
+
+  Point                                                               Incr       Path
+  --------------------------------------------------------------------------------------
+  clock core_clk (rise edge)                                      0.000000   0.000000
+  clock network delay (ideal)                                     0.000000   0.000000
+  subsystem/cpu/arbiter/wdata_q_reg_1_/CP (EDFCNQD1BWP12T40P140)  0.000000 # 0.000000 r
+  subsystem/cpu/arbiter/wdata_q_reg_1_/Q (EDFCNQD1BWP12T40P140)   0.071387   0.071387 f
+  subsystem/cpu/arbiter/m_axi_wdata[1] (ysyx_axi4_arbiter)        0.000000   0.071387 f
+  subsystem/cpu/m_axi_wdata[1] (ysyx_core_axi4_30000000_2_7)      0.000000   0.071387 f
+  subsystem/router/s_axi_wdata[1] (ysyx_axi4_router)              0.000000   0.071387 f
+  subsystem/router/data_q_reg_1_/D (EDFCNQD1BWP12T40P140)         0.000000   0.071387 f
+  data arrival time                                                          0.071387
+
+  clock core_clk (rise edge)                                      0.000000   0.000000
+  clock network delay (ideal)                                     0.000000   0.000000
+  clock uncertainty                                               0.050000   0.050000
+  subsystem/router/data_q_reg_1_/CP (EDFCNQD1BWP12T40P140)        0.000000   0.050000 r
+  library hold time                                               0.012632   0.062632
+  data required time                                                         0.062632
+  --------------------------------------------------------------------------------------
+  data required time                                                         0.062632
+  data arrival time                                                          -0.071387
+  --------------------------------------------------------------------------------------
+  slack (MET)                                                                0.008755
+
+
+1
