@@ -13,7 +13,7 @@
 
 - overview 的 PDF 页面为 257 × 107 pt，约 3.57 × 1.49 英寸（9.07 × 3.77 cm）。它保持作者的印刷布局；网页显示宽度单独设置。
 - Core architecture 来自 `docs/notes/output/playground/core-m5-s7-cropped-261031.pdf`；原图 198 × 161 pt，加白边后为 204 × 167 pt。图内内容和比例不变，源文件保留在 playground。
-- 根 README 中 overview 使用 `<img width="960">`（约 960 × 400 CSS 像素），Core architecture 使用 `<img width="800">`（约 800 × 655 CSS 像素）；在 GitHub 较窄的正文区域随可用宽度缩小。图片链接到 PDF，便于放大和下载。
+- 根 README 中 overview 使用 `<img width="600">`（约 600 × 250 CSS 像素），Core architecture 使用 `<img width="480">`（约 480 × 393 CSS 像素）。第二张图按原始 PDF 宽度比例计算为 `600 × 204 / 257 ≈ 476 px`，取整为 480 px，使两图中的同字号文字显示大小接近。在 GitHub 较窄的正文区域随可用宽度缩小。图片链接到 PDF，便于放大和下载。
 - SVG 显式绘制不透明白底，在白色和深色页面中均保持图内的黑字、浅色箭头和分组底色。使用同一张图，不随页面主题反转颜色。
 - SVG 中的文字由 PDF 转为矢量字形，显示不依赖读者安装相同字体。保留 README 的 `alt` 文本与图下说明，方便检索和辅助阅读。
 - 后续更新时，同时更新 PDF 与 SVG；导出 SVG 时保留白底，并检查桌面正文宽度和窄屏缩放效果。

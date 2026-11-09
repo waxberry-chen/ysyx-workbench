@@ -10,7 +10,7 @@ RISC-V 处理器 + SoC 集成，涉及从 RTL 实现、软件启动到系统验�
 
 <p align="center">
   <a href="docs/figures/overview.pdf">
-    <img src="docs/figures/overview.svg" width="960" alt="项目总览：软件经 AM 构建为程序镜像，RTL 经 Verilator 生成仿真模型，由 C++ harness 驱动并与 NEMU 进行差分检查。">
+    <img src="docs/figures/overview.svg" width="600" alt="项目总览：软件经 AM 构建为程序镜像，RTL 经 Verilator 生成仿真模型，由 C++ harness 驱动并与 NEMU 进行差分检查。">
   </a>
 </p>
 
@@ -18,7 +18,7 @@ RISC-V 处理器 + SoC 集成，涉及从 RTL 实现、软件启动到系统验�
 
 <p align="center">
   <a href="docs/figures/core-architecture.pdf">
-    <img src="docs/figures/core-architecture.svg" width="800" alt="Core architecture: IFU、译码、GPR、opbuf、EXU、LSU、CSR，以及 AXI 仲裁、路由和 CLINT。">
+    <img src="docs/figures/core-architecture.svg" width="480" alt="Core architecture: IFU、译码、GPR、opbuf、EXU、LSU、CSR，以及 AXI 仲裁、路由和 CLINT。">
   </a>
 </p>
 
