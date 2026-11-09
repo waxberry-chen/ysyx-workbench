@@ -20,6 +20,8 @@ nvboard/
 
 # Keep maintained documentation, including notes/output
 /docs/*
+!/docs/figures/
+!/docs/figures/**
 !/docs/notes/
 !/docs/notes/**
 !/docs/lectures/
